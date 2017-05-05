@@ -1,18 +1,20 @@
-<div id="field_{{ $id }}"{!! Html::classes(['checkbox', 'error' => $hasErrors]) !!}>
-    <label>
-        {!! $input !!}
-        {{ $label }}
-    </label>
-    
-    @if ($required)
-        <span class="label label-info">Required</span>
-    @endif
-    
-    @if (!empty($errors))
-        <div class="controls">
-            @foreach ($errors as $error)
-                <p class="help-block">{{ $error }}</p>
-            @endforeach
+<div {!! Html::classes(['form-group form-md-checkboxes', 'has-error' => $hasErrors]) !!}>
+    <div class="md-checkbox-inline">
+        <div class="md-checkbox">
+
+            {!! $input !!}
+
+            <label for="{{ $id }}">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span> {{ $label }}
+            </label>
+
+            @if (!empty($errors))
+                @foreach ($errors as $error)
+                    <span id="{{ $id }}-error" class="help-block help-block-error">{{ $error }}</span>
+                @endforeach
+            @endif
         </div>
-    @endif
+    </div>
 </div>

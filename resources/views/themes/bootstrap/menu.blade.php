@@ -1,19 +1,30 @@
-<ul class="{{ $class }}">
+<ul class="page-sidebar-menu  page-header-fixed" data-keep-expanded="false" data-auto-scroll="true"
+    data-slide-speed="200">
     @foreach ($items as $item)
-        <li @if ($item['class']) class="{{ $item['class'] }}" @endif id="menu_{{ $item['id'] }}">
+        <li @if ($item['class']) class="nav-item {{ $item['class'] }}" @else class="nav-item"
+            @endif id="menu_{{ $item['id'] }}">
             @if (empty($item['submenu']))
-                <a href="{{ $item['url'] }}">
-                    {{ $item['title'] }}
+                <a href="{{ $item['url'] }}" class="nav-link">
+                    <i class="fa {{ $item['icon'] }}"></i>
+                    <span class="title">{{ $item['title'] }}</span>
                 </a>
             @else
-                <a href="{{ $item['url'] }}" class="dropdown-toggle" data-toggle="dropdown">
-                    {{ $item['title'] }}
-                    <b class="caret"></b>
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa {{ $item['icon'] }}"></i>
+                    <span class="title">{{ $item['title'] }}</span>
+                    <span class="arrow"></span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="sub-menu">
                     @foreach ($item['submenu'] as $subitem)
-                        <li>
-                            <a href="{{ $subitem['url'] }}">{{ $subitem['title'] }}</a>
+                        <li @if ($subitem['class']) class="nav-item {{ $subitem['class'] }}"
+                            @else class="nav-item" @endif">
+                        <a href="{{ $subitem['url'] }}" class="nav-link">
+                            <i class="fa {{ $subitem['icon'] }}"></i>
+                            <span class="title">{{ $subitem['title'] }}</span>
+                            @if ($subitem['class'])
+                                <span class="selected"></span>
+                            @endif
+                        </a>
                         </li>
                     @endforeach
                 </ul>

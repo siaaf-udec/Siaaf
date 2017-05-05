@@ -1,13 +1,17 @@
-@foreach($checkboxes as $checkbox)
-    <div class="checkbox">
-        <label>
+<div class="md-checkbox-list">
+    @foreach($checkboxes as $checkbox)
+        <div class="md-checkbox">
             {!! Form::checkbox(
                 $checkbox['name'],
                 $checkbox['value'],
                 $checkbox['checked'],
-                ['id' => $checkbox['id']]
+                ['id' => $checkbox['id'], 'class' => 'md-check']
             ) !!}
-            {{ $checkbox['label'] }}
-        </label>
-    </div>
-@endforeach
+            <label for="{{ $checkbox['id'] }}">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span> {{ $checkbox['label'] }}
+            </label>
+        </div>
+    @endforeach
+</div>

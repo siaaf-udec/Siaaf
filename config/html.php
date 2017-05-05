@@ -43,7 +43,10 @@ return [
     'abbreviations' => [
         'ph' => 'placeholder',
         'max' => 'maxlength',
-        'tpl' => 'template'
+        'min' => 'minlength',
+        'tpl' => 'template',
+        'req' => 'required',
+        'auto' => 'autocomplete',
     ],
 
     /*
@@ -61,8 +64,10 @@ return [
             'field_templates' => [
                 // type => template
                 'checkbox' => 'checkbox',
-                'checkboxes' => 'collections',
-                'radios' => 'collections'
+                'checkboxes' => 'checkboxes',
+                'radios' => 'radios',
+                'color' => 'color',
+                'file' => 'image-upload',
             ],
             /*
              * Set the default classes for each field type
@@ -70,8 +75,11 @@ return [
             'field_classes' => [
                 // type => class or classes
                 'default' => 'form-control',
-                'checkbox' => '',
-                'error' => 'input-with-feedback'
+                'color' => 'form-control',
+                'date' => 'form-control date date-picker',
+                'time' => 'form-control',
+                'checkbox' => 'md-check',
+                'error' => 'help-block-error'
             ],
         ]
     ],
