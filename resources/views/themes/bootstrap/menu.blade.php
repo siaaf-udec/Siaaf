@@ -5,12 +5,12 @@
             @endif id="menu_{{ $item['id'] }}">
             @if (empty($item['submenu']))
                 <a href="{{ $item['url'] }}" class="nav-link">
-                    <i class="fa {{ $item['icon'] }}"></i>
+                    <i class="{{ $item['icon'] }}"></i>
                     <span class="title">{{ $item['title'] }}</span>
                 </a>
             @else
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa {{ $item['icon'] }}"></i>
+                    <i class="{{ $item['icon'] }}"></i>
                     <span class="title">{{ $item['title'] }}</span>
                     <span class="arrow"></span>
                 </a>
@@ -19,7 +19,7 @@
                         <li @if ($subitem['class']) class="nav-item {{ $subitem['class'] }}"
                             @else class="nav-item" @endif">
                         <a href="{{ $subitem['url'] }}" class="nav-link">
-                            <i class="fa {{ $subitem['icon'] }}"></i>
+                            <i class="{{ $subitem['icon'] }}"></i>
                             <span class="title">{{ $subitem['title'] }}</span>
                             @if ($subitem['class'])
                                 <span class="selected"></span>
