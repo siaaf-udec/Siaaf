@@ -11,6 +11,22 @@
 
 {{--
 |--------------------------------------------------------------------------
+| Styles
+|--------------------------------------------------------------------------
+|
+| Inyecta CSS requerido ya sea por un JS o para un elemento específico
+|
+| @push('styles')
+|
+| @endpush
+--}}
+@push('styles')
+    <link href="{{-- asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') --}}" rel="stylesheet" type="text/css" />
+@endpush
+
+
+{{--
+|--------------------------------------------------------------------------
 | Title
 |--------------------------------------------------------------------------
 |
@@ -96,7 +112,7 @@
 --}}
 
 @push('functions')
-<script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
+    <script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
 @endpush
 
 {{--
