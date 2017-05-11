@@ -43,8 +43,13 @@ Route::group(['prefix' => 'components'], function () {
     });
 });
 
-Route::get('forms', function ()    {
-    return view('examples.forms');
+Route::group(['prefix' => 'forms'], function () {
+    Route::get('fields', function ()    {
+        return view('examples.fields');
+    });
+    Route::get('validation', function ()    {
+        return view('examples.validation');
+    });
 });
 
 Route::post('forms', 'SampleController@store');

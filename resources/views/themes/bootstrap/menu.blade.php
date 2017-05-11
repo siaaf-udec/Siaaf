@@ -1,4 +1,4 @@
-<ul class="page-sidebar-menu  page-header-fixed" data-keep-expanded="false" data-auto-scroll="true"
+<ul class="page-sidebar-menu  page-header-fixed" data-keep-expanded="true" data-auto-scroll="true"
     data-slide-speed="200">
     @foreach ($items as $item)
         <li @if ($item['class']) class="nav-item {{ $item['class'] }}" @else class="nav-item"

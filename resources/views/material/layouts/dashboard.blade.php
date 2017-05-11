@@ -15,7 +15,7 @@
 </head>
 {{-- END HEAD --}}
 {{-- BEGIN BODY --}}
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md page-sidebar-fixed">
     {{-- BEGIN HEADER --}}
         @include('material.partials.header')
     {{-- END HEADER --}}
@@ -33,7 +33,7 @@
                         <div class="page-content">
                             {{-- BEGIN PAGE HEADER --}}
                                 {{-- BEGIN THEME PANEL --}}
-                                    @include('material.partials.theme-panel')
+                                    {{--@ include('material.partials.theme-panel')--}}
                                 {{-- END THEME PANEL --}}
                                 {{-- BEGIN PAGE TITLE & DESCRIPTION --}}
                                     <h1 class="page-title"> @yield('page-title')

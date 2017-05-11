@@ -7,7 +7,7 @@
                 <span id="{{ $id }}-error" class="help-block help-block-error">{{ $error }}</span>
             @endforeach
         @endif
-        <span class="help-block">{{ $help }}</span>
-        <i class="{{ $icon }}"></i>
+        <span class="help-block">@if(isset($help) || !empty($help)) {{ $help }} @endif</span>
+        <i class="@if(isset($icon) || !empty($icon)) {{ $icon }} @endif"></i>
     </div>
 </div>

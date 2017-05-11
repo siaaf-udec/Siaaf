@@ -76,6 +76,7 @@ return [
                 // type => class or classes
                 'default' => 'form-control',
                 'color' => 'form-control',
+                'select' => 'select2-hidden-accessible form-control pmd-select2',
                 'date' => 'form-control date date-picker',
                 'time' => 'form-control',
                 'checkbox' => 'md-check',
@@ -101,7 +102,14 @@ return [
             'title' => 'Componentes',
             'icon' => 'fa fa-building-o',
         ],
-        'forms' => ['url' => '/forms', 'icon' => 'icon-book-open', 'title' => 'Formularios'],
+        'forms' => [
+            'submenu' => [
+                'fields' => ['url' => '/forms/fields', 'icon' => 'icon-layers', 'title' => 'Input Fields'],
+                'validation' => ['url' => '/forms/validation', 'icon' => 'icon-layers', 'title' => 'Validaciones'],
+            ],
+            'title' => 'Formularios',
+            'icon' => 'icon-book-open',
+        ],
     ],
 
 ];
