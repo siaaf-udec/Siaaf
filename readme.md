@@ -5,6 +5,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+<a href="https://app.codeship.com/projects/219407"><img src="https://app.codeship.com/projects/de1c2f80-1a2d-0135-2583-4eee406cd8c3/status?branch=master" alt="Status?branch=master"></a>
 </p>
 
 ## About Laravel
