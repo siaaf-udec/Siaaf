@@ -15,52 +15,54 @@
 </head>
 {{-- END HEAD --}}
 {{-- BEGIN BODY --}}
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md page-sidebar-fixed">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md page-boxed page-sidebar-fixed">
     {{-- BEGIN HEADER --}}
         @include('material.partials.header')
     {{-- END HEADER --}}
     {{-- BEGIN HEADER & CONTENT DIVIDER --}}
         <div class="clearfix"> </div>
     {{-- END HEADER & CONTENT DIVIDER --}}
-    {{-- BEGIN CONTAINER --}}
-        <div class="page-container">
-            {{-- BEGIN SIDEBAR --}}
+        <div class="container">
+            {{-- BEGIN PAGE CONTAINER --}}
+            <div class="page-container">
+                {{-- BEGIN SIDEBAR --}}
                 @include('material.partials.sidebar')
-            {{-- END SIDEBAR --}}
-            {{-- BEGIN CONTENT --}}
+                {{-- END SIDEBAR --}}
+                {{-- BEGIN CONTENT --}}
                 <div class="page-content-wrapper">
                     {{-- BEGIN CONTENT BODY --}}
-                        <div class="page-content">
-                            {{-- BEGIN PAGE HEADER --}}
-                                {{-- BEGIN THEME PANEL --}}
-                                    {{--@ include('material.partials.theme-panel')--}}
-                                {{-- END THEME PANEL --}}
-                                {{-- BEGIN PAGE TITLE & DESCRIPTION --}}
-                                    <h1 class="page-title"> @yield('page-title')
-                                        <small>@yield('page-description')</small>
-                                    </h1>
-                                {{-- END PAGE TITLE & DESCRIPTION --}}
-                                {{-- BEGIN BREADCRUMB --}}
-                                    @include('material.partials.breadcrumb')
-                                {{-- END BREADCRUMB --}}
-                            {{-- END PAGE HEADER --}}
-                            {{-- BEGIN CUSTOM CONTENT --}}
-                            <div class="row" id="sortable_portlets">
-                                @yield('content')
-                            </div>
-                            {{-- END CUSTOM CONTENT --}}
+                    <div class="page-content">
+                        {{-- BEGIN PAGE HEADER --}}
+                        {{-- BEGIN THEME PANEL --}}
+                        {{--@ include('material.partials.theme-panel')--}}
+                        {{-- END THEME PANEL --}}
+                        {{-- BEGIN PAGE TITLE & DESCRIPTION --}}
+                        <h1 class="page-title"> @yield('page-title')
+                            <small>@yield('page-description')</small>
+                        </h1>
+                        {{-- END PAGE TITLE & DESCRIPTION --}}
+                        {{-- BEGIN BREADCRUMB --}}
+                        @include('material.partials.breadcrumb')
+                        {{-- END BREADCRUMB --}}
+                        {{-- END PAGE HEADER --}}
+                        {{-- BEGIN CUSTOM CONTENT --}}
+                        <div class="row" id="sortable_portlets">
+                            @yield('content')
                         </div>
+                        {{-- END CUSTOM CONTENT --}}
+                    </div>
                     {{-- BEGIN CONTENT BODY --}}
                 </div>
-            {{-- END CONTENT --}}
-            {{-- BEGIN QUICK SIDEBAR --}}
+                {{-- END CONTENT --}}
+                {{-- BEGIN QUICK SIDEBAR --}}
                 @include('material.partials.quick-sidebar')
-            {{-- END QUICK SIDEBAR --}}
+                {{-- END QUICK SIDEBAR --}}
+            </div>
+            {{-- END PAGE CONTAINER --}}
+            {{-- BEGIN FOOTER --}}
+            @include('material.partials.footer')
+            {{-- END FOOTER --}}
         </div>
-    {{-- END CONTAINER --}}
-    {{-- BEGIN FOOTER --}}
-        @include('material.partials.footer')
-    {{-- END FOOTER --}}
     {{-- BEGIN SCRIPTS --}}
         @include('material.partials.scripts')
     {{-- END SCRIPTS --}}

@@ -1,6 +1,6 @@
 <div class="page-header navbar navbar-fixed-top">
     {{-- BEGIN HEADER INNER --}}
-    <div class="page-header-inner ">
+    <div class="page-header-inner container">
         {{-- BEGIN LOGO --}}
         <div class="page-logo">
             <a href="javascript:;">
