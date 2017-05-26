@@ -194,6 +194,11 @@ return [
         Styde\Html\HtmlServiceProvider::class,
 
         /*
+         * Custom Service Providers...
+         */
+        App\Container\Users\Src\Providers\UserServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -256,6 +261,10 @@ return [
          */
         'Access' => Styde\Html\Facades\Access::class,
 
+        /*
+        * Custom Aliases...
+        */
+        'Users' => App\Container\Users\Src\Facades\UserFacades::class,
     ],
 
 ];

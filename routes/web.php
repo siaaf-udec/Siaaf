@@ -25,6 +25,16 @@ Route::get('/', function () {
     return view('material.sample');
 });
 
+$controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+Route::get('/container', [
+    'uses' => $controller.'UserController@index',
+    'as' => 'index'
+]);
+
+Route::get('/', function () {
+    return view('material.sample');
+});
+
 Route::group(['prefix' => 'components'], function () {
     Route::get('buttons', function ()    {
         return view('examples.buttons');
@@ -52,7 +62,7 @@ Route::group(['prefix' => 'forms'], function () {
     });
 });
 
-Route::post('forms', 'SampleController@store');
+Route::post('forms', 'UserController@store');
 
 /*
  * Fin de las rutas de ejemplo.
