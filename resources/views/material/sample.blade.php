@@ -111,7 +111,7 @@
 | @endpush
 --}}
 
-@push('functions')
+@push('plugins')
     <script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
 @endpush
 

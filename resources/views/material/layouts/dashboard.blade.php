@@ -9,9 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="{{ config( 'app.description' ) }}" name="description"/>
-    <meta content="{{ config( 'app.author' ) }}" name="author"/>
+    <meta content="{{ config( 'app.author', 'Siaaf' ) }}" name="author"/>
 
     @include('material.partials.head')
+
+    {{-- BEGIN THEME LAYOUT STYLES --}}
+    <link href="{{ asset('assets/layouts/layout2/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/layouts/layout2/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    {{-- END THEME LAYOUT STYLES --}}
 </head>
 {{-- END HEAD --}}
 {{-- BEGIN BODY --}}

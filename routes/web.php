@@ -67,3 +67,6 @@ Route::post('forms', 'UserController@store');
 /*
  * Fin de las rutas de ejemplo.
  */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

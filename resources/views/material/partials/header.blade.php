@@ -361,7 +361,7 @@
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout2/img/avatar3_small.jpg')}}" />
-                            <span class="username username-hide-on-mobile"> Nick </span>
+                            <span class="username username-hide-on-mobile"> {{ Auth::user()->name }} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
@@ -388,7 +388,11 @@
                                 <a href="javascript:;"><i class="icon-lock"></i> Lock Screen </a>
                             </li>
                             <li>
-                                <a href="javascript:;"><i class="icon-key"></i> Log Out </a>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="icon-key"></i> Salir </a>
+                                </a>
+                                {!! Form::open(['id' => 'logout-form', 'method' => 'POST', 'url' => route('logout')]) !!}
+                                {!! Form::close() !!}
                             </li>
                         </ul>
                     </li>
