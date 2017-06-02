@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,52 +22,56 @@
  * Deben ser elminadas al iniciar con el desarrollo
  * del proyecto
  */
-Route::get('/', function () {
-    return view('material.sample');
+
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/', function () {
+        return view('material.sample');
+    });
+
+    $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+    Route::get('/container', [
+        'uses' => $controller.'UserController@index',
+        'as' => 'index'
+    ]);
+
+    Route::get('/', function () {
+        return view('material.sample');
+    });
+
+    Route::group(['prefix' => 'components'], function () {
+        Route::get('buttons', function ()    {
+            return view('examples.buttons');
+        });
+        Route::get('portlet', function ()    {
+            return view('examples.portlet');
+        });
+        Route::get('icons', function ()    {
+            return view('examples.icons');
+        });
+        Route::get('sidebar', function ()    {
+            return view('examples.sidebar');
+        });
+        Route::get('tabs', function ()    {
+            return view('examples.tabs');
+        });
+    });
+
+    Route::group(['prefix' => 'forms'], function () {
+        Route::get('fields', function ()    {
+            return view('examples.fields');
+        });
+        Route::get('validation', function ()    {
+            return view('examples.validation');
+        });
+    });
 });
 
-$controller = "\\App\\Container\\Users\\Src\\Controllers\\";
-Route::get('/container', [
-    'uses' => $controller.'UserController@index',
-    'as' => 'index'
-]);
 
-Route::get('/', function () {
-    return view('material.sample');
-});
 
-Route::group(['prefix' => 'components'], function () {
-    Route::get('buttons', function ()    {
-        return view('examples.buttons');
-    });
-    Route::get('portlet', function ()    {
-        return view('examples.portlet');
-    });
-    Route::get('icons', function ()    {
-        return view('examples.icons');
-    });
-    Route::get('sidebar', function ()    {
-        return view('examples.sidebar');
-    });
-    Route::get('tabs', function ()    {
-        return view('examples.tabs');
-    });
-});
-
-Route::group(['prefix' => 'forms'], function () {
-    Route::get('fields', function ()    {
-        return view('examples.fields');
-    });
-    Route::get('validation', function ()    {
-        return view('examples.validation');
-    });
-});
-
-Route::post('forms', 'UserController@store');
 
 /*
  * Fin de las rutas de ejemplo.
  */
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

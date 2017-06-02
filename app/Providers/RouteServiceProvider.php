@@ -39,7 +39,15 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAcadSpaceRoutes();
+
+        $this->mapAudioVisualsRoutes();
+
+        $this->mapCarParkRoutes();
+
+        $this->mapFinancialRoutes();
+
+        $this->mapUnvInteractionRoutes();
     }
 
     /**
@@ -69,5 +77,45 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapAcadSpaceRoutes()
+    {
+        Route::prefix('acadspace')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/acadspace.php'));
+    }
+
+    protected function mapAudioVisualsRoutes()
+    {
+        Route::prefix('audiovisuals')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/audiovisuals.php'));
+    }
+
+    protected function mapCarParkRoutes()
+    {
+        Route::prefix('carpark')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/carpark.php'));
+    }
+
+    protected function mapFinancialRoutes()
+    {
+        Route::prefix('financial')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/financial.php'));
+    }
+
+    protected function mapUnvInteractionRoutes()
+    {
+        Route::prefix('unvinteraction')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/unvinteraction.php'));
     }
 }
