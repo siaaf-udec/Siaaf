@@ -98,6 +98,7 @@ return [
                 'icons' => ['url' => '/components/icons', 'icon' => 'icon-social-dropbox', 'title' => 'Iconografía'],
                 'sidebar' => ['url' => '/components/sidebar', 'icon' => 'icon-notebook'],
                 'tabs' => ['url' => '/components/tabs', 'icon' => 'glyphicon glyphicon-list-alt'],
+                'datatables' => ['url' => '/components/datatables', 'icon' => 'glyphicon glyphicon-list'],
             ],
             'title' => 'Componentes',
             'icon' => 'fa fa-building-o',
