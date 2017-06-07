@@ -55,6 +55,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('tabs', function ()    {
             return view('examples.tabs');
         });
+
+        Route::get('datatables', function ()    {
+            return view('examples.datatables');
+        });
     });
 
     Route::group(['prefix' => 'forms'], function () {
