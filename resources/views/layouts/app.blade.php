@@ -10,6 +10,7 @@
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta content="{{ config( 'app.description' ) }}" name="description"/>
         <meta content="{{ config( 'app.author', 'Siaaf' ) }}" name="author"/>
+        <meta content="{{ csrf_token() }}" name="csrf-token"/>
 
         @include('material.partials.head')
 
