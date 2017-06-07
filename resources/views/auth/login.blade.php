@@ -43,36 +43,6 @@
 
 {{--
 |--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
-@section('page-title', 'Login')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
-
-@section('page-description', 'Breve descripción de la página')
-
-{{--
-|--------------------------------------------------------------------------
 | Content
 |--------------------------------------------------------------------------
 |
@@ -88,13 +58,13 @@
         <div class="row bs-reset">
             <div class="col-md-6 bs-reset mt-login-5-bsfix">
                 <div class="login-bg" style="background-image:url({{ asset('assets/pages/img/login/bg1.jpg') }})">
-                    <img class="login-logo" src="{{ asset('assets/pages/img/login/logo.png') }}" /> </div>
+                    <img class="login-logo" src="{{ asset('assets/pages/img/login/siaaf.png') }}" /> </div>
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                 <div class="login-content">
                     <h1>{{ $title or config('app.name') }}</h1>
                     <p> {{ $description or config('app.description') }} </p>
-                    {!! Form::open(['role' => 'form', 'id' => 'form-login', 'class' => 'login-form', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
+                    {!! Form::open(['role' => 'form', 'id' => 'form-login', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
                      @if (Auth::guest())
                         <div class="form-body">
                             <div class="row">
@@ -108,23 +78,27 @@
                         </div>
                      @endif
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div class="rem-password">
                                     {!! Field::checkbox('remember', old('remember'), ['label' => 'Recordarme', old('remember') ? 'checked' : '']) !!}
                                 </div>
                             </div>
-                            <div class="col-sm-8 text-right">
+                            <div class="col-sm-6 text-right">
+                                {{ Form::submit('Ingresar', ['class' => 'btn green']) }}
+                            </div>
+                            <div class="col-sm-12 text-right">
                                 <div class="forgot-password">
                                     <a href="javascript:;" id="forget-password" class="forget-password">
                                         ¿Se te olvidó tu contraseña?</a>
                                 </div>
-                                {{ Form::submit('Ingresar', ['class' => 'btn green']) }}
                             </div>
                         </div>
                     {!! Form::close() !!}
+                    <!-- END : LOGIN PAGE 5-1 -->
+
                     <!-- BEGIN FORGOT PASSWORD FORM -->
                     {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
-                        <h3 class="font-green">Se te olvidó tu contraseña ?</h3>
+                        <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
                         <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
                          {!! Field::email('email-forget', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
                         <div class="form-actions">
@@ -195,7 +169,7 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/pages/scripts/login-5.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 @endpush
 
 {{--
@@ -219,10 +193,9 @@
     <script type="text/javascript">
         var rules = {
             email: { email: true, required: true },
-            password: { minlength: 5, required: true }
         };
         var messages = { };
-        var form = $('#form-login');
+        var form = $('#form-forget');
         jQuery(document).ready(function() {
             FormValidationMd.init(form, rules, messages);
         });

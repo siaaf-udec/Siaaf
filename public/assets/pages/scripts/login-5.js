@@ -2,12 +2,12 @@ var Login = function() {
 
     var handleLogin = function() {
 
-        $('.login-form').validate({
+        $('#form-login').validate({
             errorElement: 'span', //default input error message container
-            errorClass: 'help-block', // default input error message class
+            errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             rules: {
-                username: {
+                email: {
                     required: true
                 },
                 password: {
@@ -19,16 +19,16 @@ var Login = function() {
             },
 
             messages: {
-                username: {
-                    required: "Username is required."
+                email: {
+                    required: "El correo electrónico es requerido."
                 },
                 password: {
-                    required: "Password is required."
+                    required: "La contraseña es requerida."
                 }
             },
 
             invalidHandler: function(event, validator) { //display error alert on form submit   
-                $('.alert-danger', $('.login-form')).show();
+                $('.alert-danger', $('#form-login')).show();
             },
 
             highlight: function(element) { // hightlight error inputs
@@ -42,7 +42,7 @@ var Login = function() {
             },
 
             errorPlacement: function(error, element) {
-                error.insertAfter(element.closest('.input-icon'));
+                error.insertAfter(element);
             },
 
             submitHandler: function(form) {
@@ -50,10 +50,10 @@ var Login = function() {
             }
         });
 
-        $('.login-form input').keypress(function(e) {
+        $('#form-login input').keypress(function(e) {
             if (e.which == 13) {
-                if ($('.login-form').validate().form()) {
-                    $('.login-form').submit(); //form validation success, call ajax form submit
+                if ($('#form-login').validate().form()) {
+                    $('#form-login').submit(); //form validation success, call ajax form submit
                 }
                 return false;
             }
@@ -69,12 +69,12 @@ var Login = function() {
         });
 
         $('#forget-password').click(function(){
-            $('.login-form').hide();
+            $('#form-login').hide();
             $('.forget-form').show();
         });
 
         $('#back-btn').click(function(){
-            $('.login-form').show();
+            $('#form-login').show();
             $('.forget-form').hide();
         });
     }
