@@ -91,26 +91,133 @@ return [
 
     'sidebar' => [
         'home' => ['url' => '/', 'icon' => 'icon-home'],
-        'components' => [
+        'elements' => [
             'submenu' => [
-                'buttons' => ['url' => '/components/buttons', 'icon' => 'icon-layers', 'title' => 'Botones'],
-                'portlet' => ['url' => '/components/portlet', 'icon' => 'icon-frame',],
-                'icons' => ['url' => '/components/icons', 'icon' => 'icon-social-dropbox', 'title' => 'Iconografía'],
-                'sidebar' => ['url' => '/components/sidebar', 'icon' => 'icon-notebook'],
-                'tabs' => ['url' => '/components/tabs', 'icon' => 'glyphicon glyphicon-list-alt'],
-                'datatables' => ['url' => '/components/datatables', 'icon' => 'glyphicon glyphicon-list'],
+                'features' =>  [
+                    'submenu' => [
+                        'buttons' => ['url' => '/components/buttons', 'icon' => 'icon-layers', 'title' => 'Botones'],
+                        'icons' => ['url' => '/components/icons', 'icon' => 'icon-layers', 'title' => 'Iconografía'],
+                        'tabs' => ['url' => '/components/tabs', 'icon' => 'icon-layers'],
+                    ],
+                    'title' => 'Caracteristicas',
+                    'icon' => 'icon-diamond',
+                ],
+                'components' =>  [
+                    'submenu' => [
+
+                    ],
+                    'title' => 'Componentes',
+                    'icon' => 'icon-puzzle',
+                ],
+                'forms' =>  [
+                    'submenu' => [
+                        'fields' => ['url' => '/forms/fields', 'icon' => 'icon-layers', 'title' => 'Input Fields'],
+                        'validation' => ['url' => '/forms/validation', 'icon' => 'icon-layers', 'title' => 'Validaciones'],
+                    ],
+                    'title' => 'Formularios',
+                    'icon' => 'icon-settings',
+                ],
+                'elements' =>  [
+                    'submenu' => [
+
+                    ],
+                    'title' => 'Elementos',
+                    'icon' => 'icon-bulb',
+                ],
+                'tables' =>  [
+                    'submenu' => [
+                        'datatables' => ['url' => '/components/datatables', 'icon' => 'icon-layers'],
+                    ],
+                    'title' => 'Tablas',
+                    'icon' => 'icon-briefcase',
+                ],
+                'portlets' =>  [
+                    'submenu' => [
+                        'portlet' => ['url' => '/components/portlet', 'icon' => 'icon-layers',],
+                    ],
+                    'title' => 'Portlets',
+                    'icon' => 'icon-wallet',
+                ],
+                'charts' =>  [
+                    'submenu' => [
+
+                    ],
+                    'title' => 'Graficas',
+                    'icon' => 'icon-bar-chart',
+                ],
+                'maps' =>  [
+                    'submenu' => [
+
+                    ],
+                    'title' => 'Mapas',
+                    'icon' => 'icon-pointer',
+                ],
+                'sidebar' =>  [
+                    'submenu' => [
+                        'sidebar' => ['url' => '/components/sidebar', 'icon' => 'icon-layers'],
+                    ],
+                    'title' => 'Barra lateral',
+                    'icon' => 'icon-feed',
+                ],
             ],
-            'title' => 'Componentes',
+            'title' => 'Elementos',
             'icon' => 'fa fa-building-o',
         ],
-        'forms' => [
+        'geesap' =>  [
             'submenu' => [
-                'fields' => ['url' => '/forms/fields', 'icon' => 'icon-layers', 'title' => 'Input Fields'],
-                'validation' => ['url' => '/forms/validation', 'icon' => 'icon-layers', 'title' => 'Validaciones'],
+
             ],
-            'title' => 'Formularios',
-            'icon' => 'icon-book-open',
+            'title' => 'Geesap ',
+            'icon' => 'fa fa-cube',
+        ],
+        'unvinteraction' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Interacción Universitaria ',
+            'icon' => 'icon-feed',
+        ],
+        'humtalent' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Talento Humano ',
+            'icon' => 'fa fa-group',
+        ],
+        'acadspace' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Espacios académicos ',
+            'icon' => 'fa fa-graduation-cap',
+        ],
+        'audiovisuals' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Audiovisuales ',
+            'icon' => 'fa fa-desktop',
+        ],
+        'carpark' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Parqueadero',
+            'icon' => 'fa fa-car',
+        ],
+        'financial' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Financiero ',
+            'icon' => 'fa fa-industry',
+        ],
+        'calisoft' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Calisoft ',
+            'icon' => 'fa fa-archive',
         ],
     ],
-
 ];

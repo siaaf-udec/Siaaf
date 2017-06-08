@@ -221,8 +221,7 @@
 .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > i,
 .page-sidebar .page-sidebar-menu .sub-menu > li.open > a > i,
 .page-sidebar .page-sidebar-menu .sub-menu > li.active > a > i {
-    color: #4d5d7c;
-    color: #FFFFFF; } /*Icono hover opcion sidebar*//
+    color: #FFFFFF; } /*Icono hover opcion sidebar*/
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a > .arrow.open:before,
 .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > .arrow:before,
 .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > .arrow.open:before,
