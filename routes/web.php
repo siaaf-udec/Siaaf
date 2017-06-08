@@ -1,5 +1,11 @@
 <?php
 
+use Yajra\Datatables\Datatables;
+use Illuminate\Http\Request;
+
+use App\Container\Users\Src\User;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,10 +62,29 @@ Route::group(['middleware' => ['auth']], function () {
             return view('examples.tabs');
         });
 
+        /*
+         * Example Datatable
+         */
         Route::get('datatables', function ()    {
             return view('examples.datatables');
         });
+
+        Route::get('datatables/index',['as' => 'datatables/index', 'uses' => function (Request $request)    {
+            if($request->ajax()){
+                return Datatables::of(User::all())
+                    ->addIndexColumn()
+                    ->make(true);
+            }else{
+                return response()->json([
+                    'message' => 'Incorrect request',
+                    'code' => 412
+                ],412);
+            }
+        }]);
+
     });
+
+
 
     Route::group(['prefix' => 'forms'], function () {
         Route::get('fields', function ()    {
