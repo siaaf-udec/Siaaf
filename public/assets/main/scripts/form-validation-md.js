@@ -22,8 +22,8 @@ var FormValidationMd = function() {
                     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
                 } else if (element.is(':radio')) {
                     error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                } else if (element.is('.pmd-select2')) {
-                    error.insertAfter(element.closest(".select2-container"));
+                } else if (element.hasClass('.select2-hidden-accessible')) {
+                    error.insertAfter(element.parent().find(".help-block"));
                 } else {
                     error.insertAfter(element);
                 }
