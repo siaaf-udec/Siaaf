@@ -52,6 +52,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapGeesapRoutes();
 
         $this->mapCalisoftRoutes();
+
+        $this->mapHumtalentRoutes();
+
+        $this->mapSportcitRoutes();
     }
 
     /**
@@ -137,5 +141,21 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/calisoft.php'));
+    }
+
+    protected function mapHumtalentRoutes()
+    {
+        Route::prefix('humtalent')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/humtalent.php'));
+    }
+
+    protected function mapSportcitRoutes()
+    {
+        Route::prefix('sportcit')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/sportcit.php'));
     }
 }
