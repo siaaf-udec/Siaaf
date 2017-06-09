@@ -12,6 +12,16 @@
 
 Sistema de Información para el Apoyo Administrativo - UdeC Facatativá
 
+### Requerimientos Locales
+
+* PHP >= 5.6.4
+* OpenSSL PHP Extension
+* PDO PHP Extension
+* Mbstring PHP Extension
+* Tokenizer PHP Extension
+* XML PHP Extension
+* MySQL >= 5.7.*
+
 ### Instalación
 
 El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
