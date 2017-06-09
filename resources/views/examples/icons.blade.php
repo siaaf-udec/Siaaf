@@ -9,7 +9,7 @@
 @section('content')
     <div class="col-md-12">
         {{-- BEGIN COMPONENTS SAMPLE --}}
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-social-dropbox', 'title' => 'Iconografía'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-social-dropbox', 'title' => 'Iconografía'])
             @slot('actions', [
 
             'link_upload' => [

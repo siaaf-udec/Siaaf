@@ -8,7 +8,7 @@
 
 @section('content')
         <div class="col-md-6">
-            @component('themes.bootstrap.components.portlet', ['icon' => 'icon-frame', 'title' => 'Tab Izquierda'])
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Tab Izquierda'])
 
                 @slot('actions', [
 
@@ -27,7 +27,7 @@
 
                 ])
 
-                @component('themes.bootstrap.components.tabs.tab-left')
+                @component('themes.bootstrap.elements.features.tab-left')
                     @slot('tabs', [
                         'tab_1' => [
                             'title' => 'Título 1',
@@ -147,7 +147,7 @@
             @endcomponent
         </div>
         <div class="col-md-6">
-            @component('themes.bootstrap.components.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet Izquierda'])
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet Izquierda'])
 
                 @slot('actions', [
 
@@ -166,7 +166,7 @@
 
                 ])
 
-                @component('themes.bootstrap.components.tabs.tab-left')
+                @component('themes.bootstrap.elements.features.tab-left')
                     @slot('tabs', [
                         'tab_1' => [
                             'active' => true,
