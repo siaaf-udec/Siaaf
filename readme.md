@@ -58,4 +58,4 @@ $ php artisan db:seed
 
 * <a href="https://styde.net/">Styde</a>
 * <a href="https://www.youtube.com/channel/UC07xim4Gg8kOk3uZwMrGNeQ/playlists">YouTube - Raul Palacios</a>
-* <a href="https://laravel.com/docs/5.4">Documentación Lravel 5.4</a>
+* <a href="https://laravel.com/docs/5.4">Documentación Laravel 5.4</a>
