@@ -53,3 +53,9 @@ $ php artisan db:seed
 * <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
 * <a href="http://codeship.com/">Codeship, pruebas de integración contínua</a>
 * <a href="https://mailtrap.io/">Pruebas de Email</a>
+
+### Material de Apoyo
+
+* <a href="https://styde.net/">Styde</a>
+* <a href="https://www.youtube.com/channel/UC07xim4Gg8kOk3uZwMrGNeQ/playlists">YouTube - Raul Palacios</a>
+* <a href="https://laravel.com/docs/5.4">Documentación Lravel 5.4</a>
