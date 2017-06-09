@@ -12,7 +12,7 @@
 
 Sistema de Información para el Apoyo Administrativo - UdeC Facatativá
 
-### Requerimientos Locales
+### Requerimientos
 
 * PHP >= 5.6.4
 * OpenSSL PHP Extension
