@@ -17,7 +17,7 @@
 @section('content')
     <div class="col-md-12">
         {{-- BEGIN COMPONENTS SAMPLE --}}
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-book-open', 'title' => 'Formularios'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formularios'])
             @slot('actions', [
 
                 'link_upload' => [

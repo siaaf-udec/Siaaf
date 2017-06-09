@@ -48,6 +48,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapFinancialRoutes();
 
         $this->mapUnvInteractionRoutes();
+
+        $this->mapGeesapRoutes();
+
+        $this->mapCalisoftRoutes();
     }
 
     /**
@@ -117,5 +121,21 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/unvinteraction.php'));
+    }
+
+    protected function mapGeesapRoutes()
+    {
+        Route::prefix('geesap')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/geesap.php'));
+    }
+
+    protected function mapCalisoftRoutes()
+    {
+        Route::prefix('calisoft')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/calisoft.php'));
     }
 }

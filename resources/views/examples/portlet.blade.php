@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
 
             @slot('actions', [
 

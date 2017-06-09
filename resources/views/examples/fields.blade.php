@@ -40,7 +40,7 @@
 @section('content')
     <div class="col-md-12">
         {{-- BEGIN COMPONENTS SAMPLE --}}
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-book-open', 'title' => 'Formularios'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formularios'])
             @slot('actions', [
 
                 'link_upload' => [
@@ -278,7 +278,6 @@
                         </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row">
                     <div class="col-md-12">
                         {!! Field::date(
@@ -287,8 +286,8 @@
                             ['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'date-selector'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-selector', 'title' => 'Método de Creación', 'link' => 'date_picker_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'date-selector'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-selector', 'title' => 'Método de Creación', 'link' => 'date_picker_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::date(
@@ -298,7 +297,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-selector', 'title' => 'Requisitos', 'link' => 'date_picker_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-selector', 'title' => 'Requisitos', 'link' => 'date_picker_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -311,7 +310,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-selector', 'title' => 'Método de Inicialización JS', 'link' => 'date_picker_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-selector', 'title' => 'Método de Inicialización JS', 'link' => 'date_picker_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap DatePicker</h3>
@@ -368,8 +367,8 @@
                             ['php', 'js'], ['inline', 'label' => 'Selecciona un Lenguaje de Proramación']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'checkboxes'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'checkboxes', 'title' => 'Método de Creación', 'link' => 'check_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'checkboxes'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'checkboxes', 'title' => 'Método de Creación', 'link' => 'check_1'])
                                 @slot('body')
                                     <p>El atributo <pre class="mt-code">inline</pre> se puede cambiar por <pre class="mt-code">list</pre> según se requiera.</p>
                                     <pre>
@@ -396,8 +395,8 @@
                             ['list', 'label' => 'Marca una opción']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'radios'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'radios', 'title' => 'Método de Creación', 'link' => 'radios_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'radios'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'radios', 'title' => 'Método de Creación', 'link' => 'radios_1'])
                                 @slot('body')
                                     <p>El atributo <pre class="mt-code">inline</pre> se puede cambiar por <pre class="mt-code">list</pre> según se requiera.</p>
                                     <pre>
@@ -425,8 +424,8 @@
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'time-selector'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'time-selector', 'title' => 'Método de Creación', 'link' => 'time_picker_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'time-selector'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'time-selector', 'title' => 'Método de Creación', 'link' => 'time_picker_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::text(
@@ -436,7 +435,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'time-selector', 'title' => 'Requisitos', 'link' => 'time_picker_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'time-selector', 'title' => 'Requisitos', 'link' => 'time_picker_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -449,7 +448,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'time_picker_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'time_picker_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap TimePicker</h3>
@@ -494,8 +493,8 @@
                             ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'date-time-selector'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Creación', 'link' => 'date_time_picker_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'date-time-selector'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Creación', 'link' => 'date_time_picker_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::text(
@@ -505,7 +504,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Requisitos', 'link' => 'date_time_picker_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Requisitos', 'link' => 'date_time_picker_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -518,7 +517,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'date_time_picker_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'date_time_picker_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap DateTimePicker</h3>
@@ -566,8 +565,8 @@
                             ['class' => 'input-large', 'data-role' => 'tagsinput', 'required', 'auto' => 'off']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'tags_inputs'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'tags_inputs', 'title' => 'Método de Creación', 'link' => 'tagg_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'tags_inputs'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'tags_inputs', 'title' => 'Método de Creación', 'link' => 'tagg_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::text(
@@ -578,7 +577,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'tags_inputs', 'title' => 'Requisitos', 'link' => 'tagg_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'tags_inputs', 'title' => 'Requisitos', 'link' => 'tagg_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -599,13 +598,13 @@
                         {!! Field::file('image') !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'file_inputs'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'file_inputs', 'title' => 'Método de Creación', 'link' => 'file_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'file_inputs'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'file_inputs', 'title' => 'Método de Creación', 'link' => 'file_1'])
                                 @slot('body')
                                     <pre>{<span>!!</span> Field::file('name') !!}</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'file_inputs', 'title' => 'Requisitos', 'link' => 'file_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'file_inputs', 'title' => 'Requisitos', 'link' => 'file_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -630,8 +629,8 @@
                             ['help' => 'Selecciona un color.', 'icon' => '']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'color-selector'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'color-selector', 'title' => 'Método de Creación', 'link' => 'color_picker_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'color-selector'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'color-selector', 'title' => 'Método de Creación', 'link' => 'color_picker_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::text(
@@ -642,7 +641,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'color-selector', 'title' => 'Requisitos', 'link' => 'color_picker_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'color-selector', 'title' => 'Requisitos', 'link' => 'color_picker_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -654,7 +653,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'color_picker_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'color_picker_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap Color Picker</h3>
@@ -713,8 +712,8 @@
                                             [ 'label' => 'Seleccionar una talla']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'select_inputs'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'select_inputs', 'title' => 'Método de Creación', 'link' => 'select_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'select_inputs'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'select_inputs', 'title' => 'Método de Creación', 'link' => 'select_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::select('name',
@@ -730,7 +729,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'select_inputs', 'title' => 'Requisitos', 'link' => 'select_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'select_inputs', 'title' => 'Requisitos', 'link' => 'select_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -744,7 +743,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                                @component('themes.bootstrap.components.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'select_3'])
+                                @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'date-time-selector', 'title' => 'Método de Inicialización JS', 'link' => 'select_3'])
                                     @slot('body')
                                         <div class="m-heading-1 border-green m-bordered">
                                             <h3>Bootstrap Select2</h3>
@@ -788,8 +787,8 @@
                         {!! Field::text('touch', '0', ['class' => 'touchspin', 'tpl' => 'themes/bootstrap/fields/extra'], ['help' => 'Rango']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'touch_inputs'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'touch_inputs', 'title' => 'Método de Creación', 'link' => 'touch_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'touch_inputs'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'touch_inputs', 'title' => 'Método de Creación', 'link' => 'touch_1'])
                                 @slot('body')
                                     <pre>
 {<span>!!</span> Field::select('name',
@@ -805,7 +804,7 @@
 </pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'touch_inputs', 'title' => 'Requisitos', 'link' => 'touch_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'touch_inputs', 'title' => 'Requisitos', 'link' => 'touch_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -818,7 +817,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'touch-selector', 'title' => 'Método de Inicialización JS', 'link' => 'touch_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'touch-selector', 'title' => 'Método de Inicialización JS', 'link' => 'touch_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap TouchSpin</h3>
@@ -862,14 +861,14 @@
                         {!! Field::text('ion_range', ['class' => 'ion-range', 'label' => 'Sliders']) !!}
                     </div>
                     <div class="col-md-12">
-                        @component('themes.bootstrap.components.accordion.accordion', ['id' => 'slide_inputs'])
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'slide_inputs', 'title' => 'Método de Creación', 'link' => 'slide_1'])
+                        @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'slide_inputs'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'slide_inputs', 'title' => 'Método de Creación', 'link' => 'slide_1'])
                                 @slot('body')
                                     <pre>{<span>!!</span> Field::text('name', ['class' => 'ion-range', 'label' => 'Texto']) !!}</pre>
                                     <pre>{<span>!!</span> Field::text('ion_range', ['class' => 'ion-range', 'label' => 'Sliders']) !!}</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'slide_inputs', 'title' => 'Requisitos', 'link' => 'slide_2'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'slide_inputs', 'title' => 'Requisitos', 'link' => 'slide_2'])
                                 @slot('body')
                                     <p>CSS:</p>
                                     <pre><span>@</span>push('styles')
@@ -882,7 +881,7 @@
 <span>@</span>endpush</pre>
                                 @endslot
                             @endcomponent
-                            @component('themes.bootstrap.components.accordion.panel', ['id' => 'slide-inputs', 'title' => 'Método de Inicialización JS', 'link' => 'slide_3'])
+                            @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'slide-inputs', 'title' => 'Método de Inicialización JS', 'link' => 'slide_3'])
                                 @slot('body')
                                     <div class="m-heading-1 border-green m-bordered">
                                         <h3>Bootstrap Slider</h3>
@@ -947,8 +946,8 @@
                 </div>
                 <hr>
                 <div class="col-md-12">
-                    @component('themes.bootstrap.components.accordion.accordion', ['id' => 'dropzone_inputs'])
-                        @component('themes.bootstrap.components.accordion.panel', ['id' => 'dropzone_inputs', 'title' => 'Método de Creación', 'link' => 'dropzone_1'])
+                    @component('themes.bootstrap.elements.features.accordion.accordion', ['id' => 'dropzone_inputs'])
+                        @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'dropzone_inputs', 'title' => 'Método de Creación', 'link' => 'dropzone_1'])
                             @slot('body')
 <pre>{<span>!!</span> Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url' => '/forms']) !!}
         <span><</span>h3 class="sbold">Arrastra o da click aquí para cargar archivos<span><</span>/h3>
@@ -957,7 +956,7 @@
 </pre>
                             @endslot
                         @endcomponent
-                        @component('themes.bootstrap.components.accordion.panel', ['id' => 'dropzone_inputs', 'title' => 'Requisitos', 'link' => 'dropzone_2'])
+                        @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'dropzone_inputs', 'title' => 'Requisitos', 'link' => 'dropzone_2'])
                             @slot('body')
                                 <p>CSS:</p>
                                 <pre><span>@</span>push('styles')
@@ -970,7 +969,7 @@
 <span>@</span>endpush</pre>
                             @endslot
                         @endcomponent
-                        @component('themes.bootstrap.components.accordion.panel', ['id' => 'dropzone-inputs', 'title' => 'Método de Inicialización JS', 'link' => 'dropzone_3'])
+                        @component('themes.bootstrap.elements.features.accordion.panel', ['id' => 'dropzone-inputs', 'title' => 'Método de Inicialización JS', 'link' => 'dropzone_3'])
                             @slot('body')
                                 <div class="m-heading-1 border-green m-bordered">
                                     <h3>Dropzone</h3>
