@@ -6,5 +6,11 @@ use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {
+    /**
+     * The database connection used by the model.
+     *
+     * @var string
+     */
+    protected $connection = 'developer';
 
 }

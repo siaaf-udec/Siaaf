@@ -10,6 +10,20 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
+    /**
+     * The database connection used by the model.
+     *
+     * @var string
+     */
+    protected $connection = 'developer';
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
     use Notifiable, SoftDeletes;
 
     /**
