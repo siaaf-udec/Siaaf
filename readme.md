@@ -10,6 +10,8 @@
 
 # Siaaf
 
+Sistema de Información para el Apoyo Administrativo - UdeC Facatativá
+
 ### Instalación
 
 El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
@@ -22,3 +24,11 @@ $ php artisan key:generate
 $ php artisan migrate
 $ php artisan db:seed
 ```
+
+### Herramientas
+
+<a href="https://education.github.com/pack">GitHub Student Pack</a><br>
+<a href="https://www.gitkraken.com/">GitKraken</a><br>
+<a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a><br>
+<a href="http://codeship.com/">Codeship, pruebas de integración contínua</a><br>
+<a href="https://mailtrap.io/">Pruebas de Email</a>
