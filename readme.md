@@ -21,6 +21,7 @@ Sistema de Información para el Apoyo Administrativo - UdeC Facatativá
 * Tokenizer PHP Extension
 * XML PHP Extension
 * MySQL >= 5.7.*
+* <a href="https://getcomposer.org/">Composer</a>
 
 ### Instalación
 
@@ -51,4 +52,4 @@ $ php artisan db:seed
 * <a href="https://www.gitkraken.com/">GitKraken</a>
 * <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
 * <a href="http://codeship.com/">Codeship, pruebas de integración contínua</a>
-* <a href="https://mailtrap.io/">Pruebas de Email
+* <a href="https://mailtrap.io/">Pruebas de Email</a>
