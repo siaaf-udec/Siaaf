@@ -97,6 +97,7 @@ return [
                     'submenu' => [
                         'buttons' => ['url' => '/components/buttons', 'icon' => 'icon-layers', 'title' => 'Botones'],
                         'icons' => ['url' => '/components/icons', 'icon' => 'icon-layers', 'title' => 'Iconografía'],
+                        'tabs' => ['url' => '/components/tabs', 'icon' => 'icon-layers'],
                     ],
                     'title' => 'Caracteristicas',
                     'icon' => 'icon-diamond',
@@ -162,27 +163,6 @@ return [
             'title' => 'Elementos',
             'icon' => 'fa fa-building-o',
         ],
-        'geesap' =>  [
-            'submenu' => [
-
-            ],
-            'title' => 'Geesap ',
-            'icon' => 'fa fa-cube',
-        ],
-        'unvinteraction' =>  [
-            'submenu' => [
-
-            ],
-            'title' => 'Interacción Universitaria ',
-            'icon' => 'icon-feed',
-        ],
-        'humtalent' =>  [
-            'submenu' => [
-
-            ],
-            'title' => 'Talento Humano ',
-            'icon' => 'fa fa-group',
-        ],
         'acadspace' =>  [
             'submenu' => [
 
@@ -211,12 +191,40 @@ return [
             'title' => 'Financiero ',
             'icon' => 'fa fa-industry',
         ],
+        'unvinteraction' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Interacción Universitaria ',
+            'icon' => 'icon-feed',
+        ],
+        'humtalent' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Talento Humano ',
+            'icon' => 'fa fa-group',
+        ],
         'calisoft' =>  [
             'submenu' => [
 
             ],
             'title' => 'Calisoft ',
             'icon' => 'fa fa-archive',
+        ],
+        'geesap' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Geesap ',
+            'icon' => 'fa fa-cube',
+        ],
+        'sportcit' =>  [
+            'submenu' => [
+
+            ],
+            'title' => 'Escuelas Deportivas ',
+            'icon' => 'fa fa-futbol-o',
         ],
     ],
 ];
