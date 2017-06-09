@@ -20,6 +20,15 @@ Despues de clonar el proyecto crear una copia del archivo .env.example y ejecuta
 
 ```sh
 $ composer install
+$ Copiar el archivo .env.example 
+  (.env - copia.example) y cambiar el nombre a .env 
+$ Crear una base de datos y configurar el archivo .env ejemplo
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=siaaf
+  DB_USERNAME=root
+  DB_PASSWORD=
 $ php artisan key:generate
 $ php artisan migrate
 $ php artisan db:seed

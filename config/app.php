@@ -193,6 +193,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Styde\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
         /*
          * Custom Service Providers...
@@ -262,6 +263,7 @@ return [
          */
         'Access' => Styde\Html\Facades\Access::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
         /*
         * Custom Aliases...

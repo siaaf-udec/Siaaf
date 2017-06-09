@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b48454486bce2fe688aa503a2f02d93",
+    "content-hash": "ec696122b7100da824a3484b75ece173",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
-            "version": "3.0.34",
+            "version": "3.0.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caouecs/Laravel-lang.git",
-                "reference": "9cf1858cc6a59a5c0a2319c5463dca3b935a4947"
+                "reference": "7c4c87b366ee3a17860e9371f339e7158d560caf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/9cf1858cc6a59a5c0a2319c5463dca3b935a4947",
-                "reference": "9cf1858cc6a59a5c0a2319c5463dca3b935a4947",
+                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/7c4c87b366ee3a17860e9371f339e7158d560caf",
+                "reference": "7c4c87b366ee3a17860e9371f339e7158d560caf",
                 "shasum": ""
             },
             "require-dev": {
@@ -46,7 +46,7 @@
                 "laravel",
                 "lpm"
             ],
-            "time": "2017-06-06T10:45:49+00:00"
+            "time": "2017-06-09T08:16:13+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1608,16 +1608,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "reference": "dee1c8b1e040d7dec299e4133c8105538cb2e5c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/dee1c8b1e040d7dec299e4133c8105538cb2e5c7",
+                "reference": "dee1c8b1e040d7dec299e4133c8105538cb2e5c7",
                 "shasum": ""
             },
             "require": {
@@ -1663,7 +1663,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-05-29T17:37:41+00:00"
         },
         {
             "name": "symfony/process",
@@ -2082,6 +2082,74 @@
                 "laravel"
             ],
             "time": "2017-05-22T03:51:49+00:00"
+        },
+        {
+            "name": "zizaco/entrust",
+            "version": "1.9.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Zizaco/entrust.git",
+                "reference": "2a05acd5f2a81afdfc87ae41340dae26f585ed1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/2a05acd5f2a81afdfc87ae41340dae26f585ed1d",
+                "reference": "2a05acd5f2a81afdfc87ae41340dae26f585ed1d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "~5.0",
+                "illuminate/console": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "illuminate/database": "~5.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1",
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/commands"
+                ],
+                "psr-4": {
+                    "Zizaco\\Entrust\\": "src/Entrust/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Elkins",
+                    "homepage": "http://andrewelkins.com"
+                },
+                {
+                    "name": "Zizaco Zizuini",
+                    "email": "zizaco@gmail.com"
+                },
+                {
+                    "name": "Ben Batschelet",
+                    "homepage": "http://github.com/bbatsche"
+                },
+                {
+                    "name": "Michele Angioni",
+                    "email": "michele.angioni@gmail.com"
+                }
+            ],
+            "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
+            "keywords": [
+                "acl",
+                "auth",
+                "illuminate",
+                "laravel",
+                "permission",
+                "roles"
+            ],
+            "time": "2017-04-10T16:22:12+00:00"
         }
     ],
     "packages-dev": [
@@ -3559,7 +3627,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zizaco/entrust": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

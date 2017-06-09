@@ -15,7 +15,7 @@
 @section('content')
 {{-- BEGIN COMPONENTS SAMPLE --}}
     <div class="col-md-6 column sortable">
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-notebook', 'title' => 'Proyecto'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Proyecto'])
 
             @slot('actions', [
 
@@ -61,7 +61,7 @@
         @endcomponent
     </div>
     <div class="col-md-6 column sortable">
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-notebook', 'title' => 'Uso'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Uso'])
 
             @slot('actions', [
 
@@ -92,7 +92,7 @@
         @endcomponent
     </div>
     <div class="col-md-12 column sortable">
-        @component('themes.bootstrap.components.portlet', ['icon' => 'icon-notebook', 'title' => 'Código'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Código'])
 
             @slot('actions', [
 
