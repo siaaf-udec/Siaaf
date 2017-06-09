@@ -97,7 +97,6 @@ return [
                     'submenu' => [
                         'buttons' => ['url' => '/components/buttons', 'icon' => 'icon-layers', 'title' => 'Botones'],
                         'icons' => ['url' => '/components/icons', 'icon' => 'icon-layers', 'title' => 'Iconografía'],
-                        'tabs' => ['url' => '/components/tabs', 'icon' => 'icon-layers'],
                     ],
                     'title' => 'Caracteristicas',
                     'icon' => 'icon-diamond',

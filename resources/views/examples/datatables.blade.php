@@ -46,66 +46,48 @@
                             ])
                         @endcomponent
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        @component('themes.bootstrap.elements.features.tabs.tab-style')
-                            @slot('nav',[
-                            'tab_15_1' => ['Num1'],
-                            'tab_15_2' => ['Num2', ['class' =>'active']],
-                            ])
-                            <div class="tab-content">
-                                <div class="tab-pane" id="tab_15_1">
-                                    gyhgf
+                    <div class="clearfix"> </div><br><br><br>
+                    <div class="col-md-12">
+                        <div class="panel-group accordion" id="datatable-accordion-ajax">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_1"> Método de Creación </a>
+                                    </h4>
                                 </div>
-                                <div class="tab-pane  active" id="tab_15_2">
-                                    fghyfy
+                                <div id="collapse_3_1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    </div>
                                 </div>
                             </div>
-                        @endcomponent
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_2"> Requisitos </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_3_2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_3"> Método de iniciación JS</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_3_3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             @endcomponent
         </div>
-        <div class="col-md-12">
-            <div class="panel-group accordion" id="datatable-accordion-ajax">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_1"> Método de Creación </a>
-                        </h4>
-                    </div>
-                    <div id="collapse_3_1" class="panel-collapse collapse">
-                        <div class="panel-body">
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_2"> Requisitos </a>
-                        </h4>
-                    </div>
-                    <div id="collapse_3_2" class="panel-collapse collapse">
-                        <div class="panel-body">
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_3"> Método de iniciación JS</a>
-                        </h4>
-                    </div>
-                    <div id="collapse_3_3" class="panel-collapse collapse">
-                        <div class="panel-body">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
 @endsection
 
 @push('plugins')
