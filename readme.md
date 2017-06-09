@@ -27,8 +27,9 @@ $ php artisan db:seed
 
 ### Herramientas
 
-<a href="https://education.github.com/pack">GitHub Student Pack</a><br>
-<a href="https://www.gitkraken.com/">GitKraken</a><br>
-<a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a><br>
-<a href="http://codeship.com/">Codeship, pruebas de integración contínua</a><br>
-<a href="https://mailtrap.io/">Pruebas de Email</a>
+* <a href="http://keenthemes.com/preview/metronic/theme/admin_2_material_design/index.html">Plantilla Base Metronic Material Theme</a>
+* <a href="https://education.github.com/pack">GitHub Student Pack</a>
+* <a href="https://www.gitkraken.com/">GitKraken</a>
+* <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
+* <a href="http://codeship.com/">Codeship, pruebas de integración contínua</a>
+* <a href="https://mailtrap.io/">Pruebas de Email
