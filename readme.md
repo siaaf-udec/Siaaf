@@ -16,22 +16,47 @@ Sistema de Información para el Apoyo Administrativo - UdeC Facatativá
 
 El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
 
-Despues de clonar el proyecto crear una copia del archivo .env.example y ejecutar.
-
 ```sh
-$ composer install
-$ Copiar el archivo .env.example 
-  (.env - copia.example) y cambiar el nombre a .env 
-$ Crear una base de datos y configurar el archivo .env ejemplo
-  DB_CONNECTION=mysql
-  DB_HOST=127.0.0.1
-  DB_PORT=3306
-  DB_DATABASE=siaaf
-  DB_USERNAME=root
-  DB_PASSWORD=
-$ php artisan key:generate
-$ php artisan migrate
-$ php artisan db:seed
+"Los puntos con simbolo ($) son comandos desde consola
+ ubicado en la ruta del proyecto (C:\xampp\htdocs\Siaaf)"
+ 
+1- Clonar proyecto desde GitKraken
+
+2- Inicializar GifFlow y hacer Pull con la rama develop
+   (rama la cual se trabajara en el proyecto)
+   
+3. $ composer install  
+
+4- Copiar el archivo .env.example 
+   (.env - copia.example) y cambiar el nombre a .env 
+   
+5- Dejar la configuracion DB de developer
+   y del modulo asignado (Eliminar los demas modulos) ejemplo
+   
+   DB_HOST_DEVELOPER=127.0.0.1
+   DB_DATABASE_DEVELOPER=developer
+   DB_USERNAME_DEVELOPER=Miguel
+   DB_PASSWORD_DEVELOPER=123456
+   
+   DB_HOST_SPORTCIT=127.0.0.1
+   DB_DATABASE_SPORTCIT=sportcit
+   DB_USERNAME_SPORTCIT=Miguel
+   DB_PASSWORD_SPORTCIT=123456
+
+5- Crear dos bases de datos con el respectivo nombre asignado en .env	
+   y configurar el archivo .env ejemplo
+   
+   DB developer
+   DB sportcit
+   
+6- $ php artisan key:generate
+7- Migrar las bases de datos de developer y el modulo asignado ejemplo
+   
+    $ php artisan migrate --path=/database/migrations/developer --database=developer
+    $ php artisan migrate --path=/database/migrations/sportcit --database=sportcit
+
+8- php artisan db:seed
+ 
 ```
 
 ### Herramientas
@@ -42,3 +67,10 @@ $ php artisan db:seed
 * <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
 * <a href="http://codeship.com/">Codeship, pruebas de integración contínua</a>
 * <a href="https://mailtrap.io/">Pruebas de Email
+
+### Documentos
+* <a href="http://es.presidencia.gov.co/dapre/DocumentosSIGEPRE/L-TI-12-denominacion-bases_de_datos.pdf">Denominacion Base de Datos</a>
+* <a href="https://prezi.com/e9map5v-izuu/diagrama-de-caso-de-uso-y-diagrama-de-actividades/">Diagramas</a>
+* <a href="https://msdn.microsoft.com/es-es/library/bb972214.aspx">Guia UML</a>
+* <a href="http://www-2.dc.uba.ar/materias/isoft1/Apuntes/DiagramasDeActividad.pdf">Diagramas de Actividad</a>
+* <a href="http://www.cyta.com.ar/ta0604/v6n4a1.htm">Procesos del Negocio a los Casos de Uso</a>
