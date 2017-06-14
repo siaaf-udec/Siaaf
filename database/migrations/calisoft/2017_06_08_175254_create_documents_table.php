@@ -13,7 +13,7 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_Documentos', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_Documentos', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('url');
             $table->integer('FK_ProyectoId')->unsigned();

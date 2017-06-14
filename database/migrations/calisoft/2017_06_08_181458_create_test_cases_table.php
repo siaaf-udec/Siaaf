@@ -13,7 +13,7 @@ class CreateTestCasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_CasoPrueba', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_CasoPrueba', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('nombre');
             $table->text('proposito');
