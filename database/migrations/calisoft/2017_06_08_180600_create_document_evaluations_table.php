@@ -26,7 +26,7 @@ class CreateDocumentEvaluationsTable extends Migration
 
             $table->foreign('FK_UsuarioId')->references('PK_id')->on('TBL_Usuarios')
                 ->onDelete('cascade');
-            
+
         });
     }
 
