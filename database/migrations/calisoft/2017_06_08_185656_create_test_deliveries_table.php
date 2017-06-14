@@ -13,7 +13,7 @@ class CreateTestDeliveriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_EntregaPrueba', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_EntregaPrueba', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->integer('numero');
             $table->boolean('approved')->nullable();

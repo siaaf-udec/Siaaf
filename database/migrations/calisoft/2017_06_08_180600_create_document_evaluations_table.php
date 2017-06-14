@@ -13,7 +13,7 @@ class CreateDocumentEvaluationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_EvaluacionDocumento', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_EvaluacionDocumento', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->boolean('checked');
             $table->text('observacion');

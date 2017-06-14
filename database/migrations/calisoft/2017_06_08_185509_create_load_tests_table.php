@@ -13,7 +13,7 @@ class CreateLoadTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_PruebaCarga', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_PruebaCarga', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->integer('usuarios');
             $table->string('url');

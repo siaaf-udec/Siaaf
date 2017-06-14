@@ -13,7 +13,7 @@ class CreateDocumentComponentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_ComponentesDocumento', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_ComponentesDocumento', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('nombre');
             $table->boolean('required');
