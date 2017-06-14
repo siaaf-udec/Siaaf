@@ -172,7 +172,7 @@ return [
         ],
         'audiovisuals' =>  [
             'submenu' => [
-
+                
             ],
             'title' => 'Audiovisuales ',
             'icon' => 'fa fa-desktop',
@@ -207,11 +207,17 @@ return [
         ],
         'calisoft' =>  [
             'submenu' => [
-
+                'usuarios' => ['url' => '#', 'icon' => 'fa fa-users', 'title' => 'Usuarios'],
+                'peticiones' => ['url' => '#', 'icon' => 'fa fa-university', 'title' => 'Peticiones'],
+                'proyectos' => ['url' => '#', 'icon' => 'fa fa-folder-open', 'title' => 'Proyectos'],
+                'categorias' => ['url' => '#', 'icon' => 'fa fa-pie-chart', 'title' => 'Categorias'],
+                'documentos' => ['url' => '#', 'icon' => 'fa fa-book', 'title' => 'Documentos'],
+                'semilleros' => ['url' => '#', 'icon' => 'fa fa-gears', 'title' => 'Semilleros']
             ],
             'title' => 'Calisoft ',
             'icon' => 'fa fa-archive',
         ],
+
         'geesap' =>  [
             'submenu' => [
 
