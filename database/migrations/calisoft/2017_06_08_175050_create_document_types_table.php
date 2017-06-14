@@ -13,7 +13,7 @@ class CreateDocumentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_TiposDocumento', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_TiposDocumento', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('nombre')->unique();
             $table->boolean('required');

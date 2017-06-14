@@ -13,7 +13,7 @@ class CreateInvetigationGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_GruposDeInvestigacion', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_GruposDeInvestigacion', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('nombre')->unique();
             $table->timestamps();

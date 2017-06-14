@@ -13,7 +13,7 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_Proyectos', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_Proyectos', function (Blueprint $table) {
             $table->increments('PK_id');
             $table->string('nombre')->unique();
             $table->integer('FK_GrupoDeInvestigacionId')->unsigned();

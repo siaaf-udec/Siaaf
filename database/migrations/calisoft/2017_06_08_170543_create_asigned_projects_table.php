@@ -13,7 +13,7 @@ class CreateAsignedProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TBL_ProyectosAsignados', function (Blueprint $table) {
+        Schema::connection('calisoft')->create('TBL_ProyectosAsignados', function (Blueprint $table) {
             $table->integer('FK_UsuarioId')->unsigned();
             $table->integer('FK_ProyectoId')->unsigned();
             $table->timestamps();
