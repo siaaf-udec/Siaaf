@@ -11,3 +11,4 @@ npm-debug.log
 .env
 /public/access.log
 /public/error.log
+package-lock.json
