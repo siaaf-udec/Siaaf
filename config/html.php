@@ -218,11 +218,11 @@ return [
             'icon' => 'fa fa-archive',
         ],
 
-        'geesap' =>  [
+        'gesap' =>  [
             'submenu' => [
 
             ],
-            'title' => 'Geesap ',
+            'title' => 'Gesap ',
             'icon' => 'fa fa-cube',
         ],
         'sportcit' =>  [

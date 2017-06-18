@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapUnvInteractionRoutes();
 
-        $this->mapGeesapRoutes();
+        $this->mapGesapRoutes();
 
         $this->mapCalisoftRoutes();
 
@@ -127,12 +127,12 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/unvinteraction.php'));
     }
 
-    protected function mapGeesapRoutes()
+    protected function mapGesapRoutes()
     {
-        Route::prefix('geesap')
+        Route::prefix('gesap')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
-            ->group(base_path('routes/geesap.php'));
+            ->group(base_path('routes/gesap.php'));
     }
 
     protected function mapCalisoftRoutes()
