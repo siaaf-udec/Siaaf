@@ -200,7 +200,8 @@ return [
         ],
         'humtalent' =>  [
             'submenu' => [
-
+                'registrar' => ['url' => 'humtalent/rrhh/create','icon' => 'fa fa-users', 'title' => 'Registrar Usuario'],
+                'consultar' => ['url' => 'humtalent/rrhh/show','icon' => 'fa fa-book', 'title' => 'Consultar Usuario'],
             ],
             'title' => 'Talento Humano ',
             'icon' => 'fa fa-group',
