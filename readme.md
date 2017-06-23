@@ -72,7 +72,7 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
 
 ### Herramientas
 
-* <a href="http://keenthemes.com/preview/metronic/theme/admin_2_material_design/index.html">Plantilla Base Metronic Material Theme</a>
+* <a href="https://github.com/siaaf-udec/dashboard-template">Plantilla Base Metronic Material Theme</a>
 * <a href="https://education.github.com/pack">GitHub Student Pack</a>
 * <a href="https://www.gitkraken.com/">GitKraken</a>
 * <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
