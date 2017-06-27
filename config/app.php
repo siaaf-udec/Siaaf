@@ -194,6 +194,7 @@ return [
         Styde\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Custom Service Providers...
@@ -264,6 +265,7 @@ return [
         'Access' => Styde\Html\Facades\Access::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
         /*
         * Custom Aliases...
