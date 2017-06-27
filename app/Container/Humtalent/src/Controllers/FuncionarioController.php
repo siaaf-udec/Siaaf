@@ -40,7 +40,7 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        return view('humtalent.registroFuncionario');
+        return view('humtalent.funcionario.registroFuncionario');
     }
 
     /**
@@ -51,7 +51,12 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \App\Container\Users\Src\User::create([
+           'name'       => $request['name'],
+            'email'     => $request['email'],
+            'password'  => bcrypt($request['password']),
+        ]);
+        return "Usuaruio Registrado";
     }
 
     /**
@@ -62,7 +67,7 @@ class FuncionarioController extends Controller
      */
     public function show($id)
     {
-        return view('humtalent.consultaFuncionario');
+        return view('humtalent.funcionario.consultaFuncionario');
     }
 
     /**

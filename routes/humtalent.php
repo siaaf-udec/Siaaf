@@ -13,5 +13,9 @@ $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
     'as' => 'create'
 ]);*/
 
-Route::resource('rrhh', $controller.'FuncionarioController'); //Ruta para CRUD de funcionarios.
+Route::resource('rrhh', $controller.'EmpleadoController'); //Ruta para CRUD de funcionarios.
+
+Route::post('empleadolist', $controller.'accionEmpController@listar');
+
+
 
