@@ -1,21 +1,18 @@
 @extends('material.layouts.dashboard')
-
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Registro Empleados</div>
+                    <div class="panel-heading">Datos del Empleado</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                        {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['rrhh.update', $empleado->PK_PRSN_Cedula],'class'=>"form-horizontal", 'role'=>"form"])  !!}
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Nombre Completo</label>
-
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="nombre" value="{{ old('name') }}" required autofocus>
-
+                                         {!! Form:: text('PRSN_Nombres',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -27,8 +24,7 @@
                                 <label for="cedula" class="col-md-4 control-label">Cedula de Ciudadania</label>
 
                                 <div class="col-md-6">
-                                    <input id="cedula" type="text" class="form-control" name="cedula" value="{{ old('email') }}" required>
-
+                                    {!! Form:: text('PK_PRSN_Cedula',null,['class'=> 'form-control'], 'required', 'autofocus') !!}
                                     @if ($errors->has('cedula'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('cedula') }}</strong>
@@ -41,8 +37,7 @@
                                 <label for="email" class="col-md-4 control-label">Correo</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
+                                    {!! Form:: email('PRSN_Correo',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -55,8 +50,7 @@
                                 <label for="telefono" class="col-md-4 control-label">Teléfono</label>
 
                                 <div class="col-md-6">
-                                    <input id="telefono" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}" required>
-
+                                    {!! Form:: text('PRSN_Telefono',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('telefono'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('telefono') }}</strong>
@@ -69,8 +63,7 @@
                                 <label for="direccion" class="col-md-4 control-label">Dirección</label>
 
                                 <div class="col-md-6">
-                                    <input id="direccion" type="text" class="form-control" name="direccion" required>
-
+                                    {!! Form:: text('PRSN_Direccion',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('direccion'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('direccion') }}</strong>
@@ -83,8 +76,7 @@
                                 <label for="ciudad" class="col-md-4 control-label">Ciudad</label>
 
                                 <div class="col-md-6">
-                                    <input id="ciudad" type="text" class="form-control" name="ciudad" required>
-
+                                    {!! Form:: text('PRSN_Ciudad',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('ciudad'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('ciudad') }}</strong>
@@ -97,8 +89,7 @@
                                 <label for="area" class="col-md-4 control-label">Área</label>
 
                                 <div class="col-md-6">
-                                    <input id="area" type="text" class="form-control" name="area" required>
-
+                                    {!! Form:: text('PRSN_Area',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('area'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('area') }}</strong>
@@ -111,8 +102,7 @@
                                 <label for="eps" class="col-md-4 control-label">EPS</label>
 
                                 <div class="col-md-6">
-                                    <input id="eps" type="text" class="form-control" name="eps" >
-
+                                    {!! Form:: text('PRSN_Eps',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('eps'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('eps') }}</strong>
@@ -125,8 +115,7 @@
                                 <label for="fondoP" class="col-md-4 control-label">Fondo de Pensiones</label>
 
                                 <div class="col-md-6">
-                                    <input id="fondoP" type="text" class="form-control" name="fondoP" >
-
+                                    {!! Form:: text('PRSN_Fpensiones',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('fondoP'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('fondoP') }}</strong>
@@ -139,8 +128,7 @@
                                 <label for="cajaC" class="col-md-4 control-label">Caja de Compensación</label>
 
                                 <div class="col-md-6">
-                                    <input id="cajaC" type="text" class="form-control" name="cajaC" >
-
+                                    {!! Form:: text('PRSN_Caja_Compensacion',null,['class'=> 'form-control'],'required', 'autofocus') !!}
                                     @if ($errors->has('cajaC'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('cajaC') }}</strong>
@@ -148,15 +136,19 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Registrar
+                                    <button type="submit" class="btn btn-primary btn-icon edit">
+                                        Editar
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        {!! Form::close() !!}
+                        {!! Form::open ( ['method'=>'DELETE', 'route'=> ['rrhh.destroy', $empleado->PK_PRSN_Cedula],'class'=>"form-horizontal", 'role'=>"form"])  !!}
+                            {{ csrf_field() }}
+                            {!! Form::submit('Eliminar',['class'=>'btn red','btn-icon remove']) !!}
+                        {!! Form::close() !!}
+
                     </div>
                 </div>
             </div>

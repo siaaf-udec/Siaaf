@@ -11,7 +11,8 @@ namespace App\Container\Humtalent\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Humtalent\src\Modelos\Persona;
+use App\Container\Humtalent\src\Persona;
+use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
 {
@@ -30,7 +31,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        return view('');
+
     }
 
     /**
@@ -75,9 +76,9 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        return view('humtalent.funcionario.consultaFuncionario');
+        return view('humtalent.empleado.consultaEmpleado');
     }
 
     /**
@@ -88,7 +89,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $empleado = Persona::find($id);
+        return view('humtalent.empleado.editarEmpleado', compact('empleado'));
     }
 
     /**
@@ -100,7 +102,10 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $empleado= Persona::find($id);
+        $empleado->fill($request->all());
+        $empleado->save();
+        return "Usuario Actualizado";
     }
 
     /**
@@ -111,6 +116,8 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Persona::destroy($id);
+        return "Eliminando  ";
     }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Container\Humtalent\src\Modelos;
+namespace App\Container\Humtalent\src;
 
 use Illuminate\Database\Eloquent\Model;
 
