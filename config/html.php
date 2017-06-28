@@ -202,6 +202,8 @@ return [
             'submenu' => [
                 'registrar' => ['url' => 'humtalent/rrhh/create','icon' => 'fa fa-users', 'title' => 'Registrar Usuario'],
                 'consultar' => ['url' => 'humtalent/rrhh/show','icon' => 'fa fa-book', 'title' => 'Consultar Usuario'],
+                'regDoc'    => ['url' => 'humtalent/Document/create','icon' => 'fa fa-book', 'title' => 'Registrar Documento'],
+                'ConsDoc'    => ['url' => 'humtalent/Document','icon' => 'fa fa-book', 'title' => 'Consultar Documentos'],
             ],
             'title' => 'Talento Humano ',
             'icon' => 'fa fa-group',

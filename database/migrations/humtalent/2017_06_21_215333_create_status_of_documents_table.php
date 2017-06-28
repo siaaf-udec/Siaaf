@@ -19,7 +19,7 @@ class CreateStatusOfDocumentsTable extends Migration
             $table->integer('FK_TBL_Persona_Cedula')->unsigned();
             $table->integer('FK_Personal_Documento')->unsigned();
             $table->foreign('FK_TBL_Persona_Cedula')->references('PK_PRSN_Cedula')->on('TBL_Personas');
-            $table->foreign('FK_Personal_Documento')->references('PK_DCMTP_Nombre_Documento')->on('TBL_Documentacion_Personal');
+            $table->foreign('FK_Personal_Documento')->references('PK_DCMTP_Id_Documento')->on('TBL_Documentacion_Personal');
             $table->timestamps();
         });
     }

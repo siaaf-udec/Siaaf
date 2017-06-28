@@ -14,8 +14,8 @@ class CreateDocumentacionPersonasTable extends Migration
     public function up()
     {
         Schema::connection('humtalent')->create('TBL_Documentacion_Personal', function (Blueprint $table) {
-            $table->integer('PK_DCMTP_Nombre_Documento')->unsigned()->unique()->primary();
-            $table->integer('DCMTP_Estado_Documento')->unsigned();
+            $table->increments('PK_DCMTP_Id_Documento')->unique();
+            $table->String('DCMTP_Nombre_Documento', 50);
             $table->timestamps();
         });
     }
