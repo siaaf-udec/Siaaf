@@ -73,8 +73,8 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-2">
-                                {!! Form::submit('Registrar',['class' => 'btn default']) !!}
-                                {!! Form::reset('Cancelar', ['class' => 'btn default']) !!}
+                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
+                                {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
                             </div>
                         </div>
                     </div>

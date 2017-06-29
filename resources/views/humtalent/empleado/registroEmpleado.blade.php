@@ -1,165 +1,369 @@
 @extends('material.layouts.dashboard')
 
+@section('page-title')
+    <b class="page-title">Registro de empleado:<small> Personal docente y administrativo</small></b>
+@endsection
+
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Registro Empleados</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('rrhh.store') }}">
-                            {{ csrf_field() }}
-
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Nombre Completo</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
-                                <label for="cedula" class="col-md-4 control-label">Cedula de Ciudadania</label>
-
-                                <div class="col-md-6">
-                                    <input id="cedula" type="text" class="form-control" name="cedula" value="{{ old('email') }}" required>
-
-                                    @if ($errors->has('cedula'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('cedula') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">Correo</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-                                <label for="telefono" class="col-md-4 control-label">Teléfono</label>
-
-                                <div class="col-md-6">
-                                    <input id="telefono" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}" required>
-
-                                    @if ($errors->has('telefono'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('telefono') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
-                                <label for="direccion" class="col-md-4 control-label">Dirección</label>
-
-                                <div class="col-md-6">
-                                    <input id="direccion" type="text" class="form-control" name="direccion" required>
-
-                                    @if ($errors->has('direccion'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('direccion') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('ciudad') ? ' has-error' : '' }}">
-                                <label for="ciudad" class="col-md-4 control-label">Ciudad</label>
-
-                                <div class="col-md-6">
-                                    <input id="ciudad" type="text" class="form-control" name="ciudad" required>
-
-                                    @if ($errors->has('ciudad'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('ciudad') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('area') ? ' has-error' : '' }}">
-                                <label for="area" class="col-md-4 control-label">Área</label>
-
-                                <div class="col-md-6">
-                                    <input id="area" type="text" class="form-control" name="area" required>
-
-                                    @if ($errors->has('area'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('area') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('eps') ? ' has-error' : '' }}">
-                                <label for="eps" class="col-md-4 control-label">EPS</label>
-
-                                <div class="col-md-6">
-                                    <input id="eps" type="text" class="form-control" name="eps" >
-
-                                    @if ($errors->has('eps'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('eps') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('fondoP') ? ' has-error' : '' }}">
-                                <label for="fondoP" class="col-md-4 control-label">Fondo de Pensiones</label>
-
-                                <div class="col-md-6">
-                                    <input id="fondoP" type="text" class="form-control" name="fondoP" >
-
-                                    @if ($errors->has('fondoP'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('fondoP') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('cajaC') ? ' has-error' : '' }}">
-                                <label for="cajaC" class="col-md-4 control-label">Caja de Compensación</label>
-
-                                <div class="col-md-6">
-                                    <input id="cajaC" type="text" class="form-control" name="cajaC" >
-
-                                    @if ($errors->has('cajaC'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('cajaC') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Registrar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <div class="col-md-12">
+        <div class="portlet portlet-sortable light bordered portlet-form">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class=" icon-book-open font-green"></i>
+                    <span class="caption-subject bold uppercase"> Formulario de registro del personal:  </span>
                 </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="clearfix"> </div>
+                <form  role="form" method="POST" id="form_material" action="{{ route('rrhh.store') }} ">
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="40" autocomplete="off" class="form-control" id="name" name="name" type="text">
+                                    <label for="name" class="control-label">Nombre completo:</label>
+                                    <span class="help-block"> Digita el nombre completo del empleado. </span>
+                                    <i class=" fa fa-user "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="30" autocomplete="off" class="form-control" id="cedula" name="cedula" type="text">
+                                    <label for="cedula" class="control-label">Cedula de ciudadania:</label>
+                                    <span class="help-block"> Digita el numero de identificación.</span>
+                                    <i class=" fa fa-credit-card "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="50" autocomplete="off" class="form-control" id="email" name="email" type="email">
+                                    <label for="email" class="control-label">Correo electronico:</label>
+                                    <span class="help-block"> Digita un correo electronico valido.</span>
+                                    <i class=" fa fa-envelope-open "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                                <div class="col-md-7 col-md-offset-2">
+                                    <div  class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input required maxlength="20" autocomplete="off" class="form-control" id="telefono" name="telefono" type="text">
+                                            <label for="telefono" class="control-label">Teléfono</label>
+                                            <span class="help-block"> Digita un número de teléfono o celular. </span>
+                                            <i class=" fa fa-phone "></i>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="70" autocomplete="off" class="form-control" id="direccion" name="direccion" type="text">
+                                    <label for="direccion" class="control-label">Dirección:</label>
+                                    <span class="help-block"> Digita la dirección de residencia. </span>
+                                    <i class=" fa fa-building-o "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="20" autocomplete="off" class="form-control" id="ciudad" name="ciudad" type="text">
+                                    <label for="ciudad" class="control-label">Ciudad:</label>
+                                    <span class="help-block"> Digita la ciudad del empleado. </span>
+                                    <i class=" fa fa-map-o "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="25" autocomplete="off" class="form-control" id="area" name="area" type="text">
+                                    <label for="area" class="control-label">Area de trabajo:</label>
+                                    <span class="help-block"> Digita el area de trabajo. </span>
+                                    <i class=" fa fa-group"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input  maxlength="40" autocomplete="off" class="form-control" id="eps" name="eps" type="text">
+                                    <label for="eps" class="control-label">EPS:</label>
+                                    <span class="help-block"> Digita la entidad prestadora de salud. </span>
+                                    <i class=" fa fa-list-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input  maxlength="40" autocomplete="off" class="form-control" id="fondoP" name="fondoP" type="text">
+                                    <label for="fondoP" class="control-label">Fondo de pensiones:</label>
+                                    <span class="help-block"> Digita el fondo de pensiones. </span>
+                                    <i class=" fa fa-list-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input  maxlength="40" autocomplete="off" class="form-control" id="cajaC" name="cajaC" type="text">
+                                    <label for="cajaC" class="control-label">Caja de compensacion:</label>
+                                    <span class="help-block"> Digita la caja de compensacion. </span>
+                                    <i class=" fa fa-list-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div class="form-group form-md-radios">
+                                <label for="form_control">Estado del empleado:</label>
+
+                                <div class="md-radio-list">
+                                    <div class="md-radio">
+                                        <input id="radios_n" name="radios" type="radio" value="n">
+                                        <label for="radios_n">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Nuevo </label>
+                                    </div>
+                                    <div class="md-radio">
+                                        <input id="radios_a" checked="checked" name="radios" type="radio" value="a">
+                                        <label for="radios_a">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Antiguo </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                            <div class="form-actions">
+                        <div class="row">
+                            <div class=" col-md-offset-2">
+                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
+                                {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
+    </div>
+
 @endsection
+@push('plugins')
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+@endpush
+@push('functions')
+<script>
+    var FormValidationMd = function() {
+        var handleValidation = function() {
+
+            var form1 = $('#form_material');
+            var error1 = $('.alert-danger', form1);
+            var success1 = $('.alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span',
+                errorClass: 'help-block help-block-error',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+
+                    },
+                    cedula: {
+                        required: true
+                    },
+                    telefono: {
+                        required: true
+
+                    },
+                    direccion: {
+                        required: true
+
+                    },
+                    ciudad: {
+                        required: true
+
+                    },
+                    area: {
+                        required: true
+
+                    },
+                    eps: {
+                        required: true
+                    },
+                    fondoP: {
+                        required: true
+
+                    },
+                    cajaC: {
+                        required: true
+
+                    },
+
+                },
+                messages:{
+                    name: {
+                        required: "Debes digitar el nombre completo del empleado."
+                    },
+                    'radios': {
+                        required: 'Por favor marca una opción',
+                        minlength: jQuery.validator.format("Al menos {1} items deben ser seleccionados")
+                    },
+                    email: {
+                        required: "Debes ingresar un correo electronico."
+
+                    },
+                    cedula: {
+                        required: "Debes ingresar una cedula."
+                    },
+                    telefono: {
+                        required: "Debes ingresar un telefono o celular."
+
+                    },
+                    direccion: {
+                        required: "Debes ingresar una direccion."
+
+                    },
+                    ciudad: {
+                        required: "Debes ingresar una ciudad."
+
+                    },
+                    area: {
+                        required: "Debes ingresar un area de trabajo."
+
+                    },
+                    eps: {
+                        required: "Debes ingresar una EPS"
+
+                    },
+                    fondoP: {
+                        required: "Debes ingresar un fondo de pensiones."
+
+                    },
+                    cajaC: {
+                        required: "Debes ingresar una caja de compensacion."
+
+                    },
+
+                },
+
+                invalidHandler: function(event, validator) {
+                    success1.hide();
+                    error1.show();
+                    App.scrollTo(error1, -200);
+                },
+
+                errorPlacement: function(error, element) {
+                    if (element.is(':checkbox')) {
+                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                    } else if (element.is(':radio')) {
+                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+
+                highlight: function(element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error');
+                },
+
+                unhighlight: function(element) {
+                    $(element)
+                        .closest('.form-group').removeClass('has-error');
+                },
+
+                success: function(label) {
+                    label
+                        .closest('.form-group').removeClass('has-error');
+                },
+
+                submitHandler: function(form1) {
+                    success1.show();
+                    error1.hide();
+                }
+            });
+        }
+
+        return {
+            init: function() {
+                handleValidation();
+            }
+        };
+    }();
+    var ComponentsBootstrapMaxlength = function () {
+
+        var handleBootstrapMaxlength = function() {
+            $("input[maxlength], textarea[maxlength]").maxlength({
+                limitReachedClass: "label label-danger",
+                alwaysShow: true
+            });
+        };
+
+        return {
+            //main function to initiate the module
+            init: function () {
+                handleBootstrapMaxlength();
+            }
+        };
+
+    }();
+    jQuery(document).ready(function() {
+        FormValidationMd.init();
+        ComponentsBootstrapMaxlength.init();
+    });
+
+</script>
+@endpush
