@@ -15,7 +15,7 @@ class CreatePersonasTable extends Migration
     {
         Schema::connection('humtalent')->create('TBL_Personas', function (Blueprint $table) {
             $table->integer('PK_PRSN_Cedula')->unsigned()->unique()->primary();
-            $table->integer('PRSN_Rol')->unsigned();
+            $table->String('PRSN_Rol',20);
             $table->String('PRSN_Nombres',90);
             $table->String('PRSN_Apellidos',90);
             $table->String('PRSN_Telefono',45);

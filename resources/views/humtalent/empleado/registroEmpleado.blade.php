@@ -18,14 +18,41 @@
             </div>
             <div class="portlet-body">
                 <div class="clearfix"> </div>
-                <form  role="form" method="POST" id="form_material" action="{{ route('rrhh.store') }} ">
+                {!! Form::open (['method'=>'POST', 'route'=> ['rrhh.store'],'class'=>"form-horizontal", 'role'=>"form"]) !!}
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div class="form-group form-md-radios">
+                                <label for="form_control">Rol del empleado:</label>
+
+                                <div class="md-radio-list">
+                                    <div class="md-radio">
+                                        {!! Form::radios('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo']) !!}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
                                     <input required maxlength="40" autocomplete="off" class="form-control" id="name" name="name" type="text">
-                                    <label for="name" class="control-label">Nombre completo:</label>
-                                    <span class="help-block"> Digita el nombre completo del empleado. </span>
+                                    <label for="name" class="control-label">Nombre(s):</label>
+                                    <span class="help-block"> Digita el nombre del empleado. </span>
+                                    <i class=" fa fa-user "></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="40" autocomplete="off" class="form-control" id="apellido" name="apellido" type="text">
+                                    <label for="name" class="control-label">Apellido(s):</label>
+                                    <span class="help-block"> Digita el apellido del empleado. </span>
                                     <i class=" fa fa-user "></i>
                                 </div>
                             </div>
@@ -59,16 +86,16 @@
                     </div>
 
                     <div class="row">
-                                <div class="col-md-7 col-md-offset-2">
-                                    <div  class="form-group form-md-line-input">
-                                        <div class="input-icon">
-                                            <input required maxlength="20" autocomplete="off" class="form-control" id="telefono" name="telefono" type="text">
-                                            <label for="telefono" class="control-label">Teléfono</label>
-                                            <span class="help-block"> Digita un número de teléfono o celular. </span>
-                                            <i class=" fa fa-phone "></i>
-                                        </div>
-                                    </div>
+                        <div class="col-md-7 col-md-offset-2">
+                            <div  class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input required maxlength="20" autocomplete="off" class="form-control" id="telefono" name="telefono" type="text">
+                                    <label for="telefono" class="control-label">Teléfono</label>
+                                    <span class="help-block"> Digita un número de teléfono o celular. </span>
+                                    <i class=" fa fa-phone "></i>
                                 </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -149,34 +176,21 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div class="form-group form-md-radios">
-                                <label for="form_control">Estado del empleado:</label>
+                <div class="row">
+                    <div class="col-md-7 col-md-offset-2">
+                        <div class="form-group form-md-radios">
+                            <label for="form_control">Estado del empleado:</label>
 
-                                <div class="md-radio-list">
-                                    <div class="md-radio">
-                                        <input id="radios_n" name="radios" type="radio" value="n">
-                                        <label for="radios_n">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Nuevo </label>
-                                    </div>
-                                    <div class="md-radio">
-                                        <input id="radios_a" checked="checked" name="radios" type="radio" value="a">
-                                        <label for="radios_a">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Antiguo </label>
-                                    </div>
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    {!! Form::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo']) !!}
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
-
-
-                            <div class="form-actions">
+                </div>
+                    <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-2">
                                 {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
@@ -184,8 +198,7 @@
                             </div>
                         </div>
                     </div>
-
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

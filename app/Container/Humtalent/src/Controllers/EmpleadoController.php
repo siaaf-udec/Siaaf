@@ -54,9 +54,9 @@ class EmpleadoController extends Controller
     {
         Persona::create([
             'PK_PRSN_Cedula'          => $request['cedula'],
-            //'PRSN_Rol'                => $request['cedula'],
+            'PRSN_Rol'                => $request['rol'],
             'PRSN_Nombres'            => $request['name'],
-            //'PRSN_Apellidos'          => $request['cedula'],
+            'PRSN_Apellidos'          => $request['apellido'],
             'PRSN_Telefono'           => $request['telefono'],
             'PRSN_Correo'             => $request['email'],
             'PRSN_Direccion'          => $request['direccion'],
@@ -65,7 +65,7 @@ class EmpleadoController extends Controller
             'PRSN_Fpensiones'         => $request['fondoP'],
             'PRSN_Area'               => $request['area'],
             'PRSN_Caja_Compensacion'  => $request['cajaC'],
-            //'PRSN_Estado_Persona'     => $request['cedula'],
+            'PRSN_Estado_Persona'     => $request['estado'],
         ]);
         return "Usuaruio Registrado";
     }
@@ -104,6 +104,8 @@ class EmpleadoController extends Controller
     {
         $empleado= Persona::find($id);
         $empleado->fill($request->all());
+        //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
+        //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
         $empleado->save();
         return "Usuario Actualizado";
     }
