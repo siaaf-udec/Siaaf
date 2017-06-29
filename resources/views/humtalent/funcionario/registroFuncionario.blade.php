@@ -1,7 +1,7 @@
 @extends('material.layouts.dashboard')
 
 @section('page-title')
-    <h1 class="page-title">Registro de funcionario:</h1>
+    <b class="page-title">Registro de funcionario:</b>
 @endsection
 
 @section('content')
@@ -24,8 +24,8 @@
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
                                     <input required maxlength="40" autocomplete="off" class="form-control" id="name" name="name" type="text">
-                                    <label for="name" class="control-label">Nombre completo</label>
-                                    <span class="help-block"> Digita el nombre completo del funcionario </span>
+                                    <label for="name" class="control-label">Nombre completo:</label>
+                                    <span class="help-block"> Digita el nombre completo del funcionario. </span>
                                     <i class=" fa fa-user "></i>
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
                                     <input required maxlength="50" autocomplete="off" class="form-control" id="email" name="email" type="email">
-                                    <label for="email" class="control-label">Correo institucional</label>
-                                    <span class="help-block"> Digita un correo institucional </span>
+                                    <label for="email" class="control-label">Correo institucional:</label>
+                                    <span class="help-block"> Digita un correo institucional.</span>
                                     <i class=" fa fa-envelope-open "></i>
                                 </div>
                             </div>
@@ -50,8 +50,8 @@
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
                                     <input required maxlength="20" minlength="6" class="form-control" id="password" name="password" type="password" value="">
-                                    <label for="password" class="control-label">Contraseña</label>
-                                    <span class="help-block"> Digita una contraseña. </span>
+                                    <label for="password" class="control-label">Contraseña:</label>
+                                    <span class="help-block"> Digita una contraseña.</span>
                                     <i class=" fa fa-key "></i>
                                 </div>
                             </div>
@@ -63,8 +63,8 @@
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
                                     <input required maxlength="20" class="form-control" id="password_confirmation" name="password_confirmation" type="password" value="">
-                                    <label for="password_confirmation" class="control-label">Confirmacion de la contraseña</label>
-                                    <span class="help-block"> Digita la contraseña anterior. </span>
+                                    <label for="password_confirmation" class="control-label">Confirmación de la contraseña:</label>
+                                    <span class="help-block"> Digita la contraseña anterior.</span>
                                     <i class=" fa fa-key "></i>
                                 </div>
                             </div>
