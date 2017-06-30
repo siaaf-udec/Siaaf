@@ -2,6 +2,13 @@
 
 Se instaló un paquete que genera automáticamente la clase "active" que indica qué menú fue seleccionado.
 
+Al sincronizar el proyecto ejecutar el comando:
+
+
+* composer update
+* composer dump-autoload
+
+
 <a href="https://packagist.org/packages/watson/active">
 Documentación oficial para ver más funciones.
 </a>
