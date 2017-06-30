@@ -18,7 +18,8 @@
             </div>
             <div class="portlet-body">
                 <div class="clearfix"> </div>
-                {!! Form::open (['method'=>'POST', 'route'=> ['rrhh.store'],'class'=>"form-horizontal", 'role'=>"form"]) !!}
+                {!! Form::open (['method'=>'POST', 'route'=> ['rrhh.store'],'class'=>'form-horizontal', 'role'=>'form']) !!}
+                    {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-7 col-md-offset-2">
                             <div class="form-group form-md-radios">
@@ -37,7 +38,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="40" autocomplete="off" class="form-control" id="name" name="name" type="text">
+                                    {!! Form:: text('PRSN_Nombres',null,['class'=> 'form-control'],['id'=>'name'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="name" class="control-label">Nombre(s):</label>
                                     <span class="help-block"> Digita el nombre del empleado. </span>
                                     <i class=" fa fa-user "></i>
@@ -50,7 +51,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="40" autocomplete="off" class="form-control" id="apellido" name="apellido" type="text">
+                                    {!! Form:: text('PRSN_Apellidos',null,['class'=> 'form-control'],['id'=>'apellido'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="name" class="control-label">Apellido(s):</label>
                                     <span class="help-block"> Digita el apellido del empleado. </span>
                                     <i class=" fa fa-user "></i>
@@ -63,7 +64,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="30" autocomplete="off" class="form-control" id="cedula" name="cedula" type="text">
+                                    {!! Form:: text('PK_PRSN_Cedula',null,['class'=> 'form-control'],['id'=>'cedula'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="cedula" class="control-label">Cedula de ciudadania:</label>
                                     <span class="help-block"> Digita el numero de identificación.</span>
                                     <i class=" fa fa-credit-card "></i>
@@ -76,7 +77,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="50" autocomplete="off" class="form-control" id="email" name="email" type="email">
+                                    {!! Form:: email('PRSN_Correo',null,['class'=> 'form-control'],['id'=>'email'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="email" class="control-label">Correo electronico:</label>
                                     <span class="help-block"> Digita un correo electronico valido.</span>
                                     <i class=" fa fa-envelope-open "></i>
@@ -89,7 +90,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="20" autocomplete="off" class="form-control" id="telefono" name="telefono" type="text">
+                                    {!! Form:: text('PRSN_Telefono',null,['class'=> 'form-control'],['id'=>'telefono'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="telefono" class="control-label">Teléfono</label>
                                     <span class="help-block"> Digita un número de teléfono o celular. </span>
                                     <i class=" fa fa-phone "></i>
@@ -102,7 +103,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="70" autocomplete="off" class="form-control" id="direccion" name="direccion" type="text">
+                                    {!! Form:: text('PRSN_Direccion',null,['class'=> 'form-control'],['id'=>'direccion'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="direccion" class="control-label">Dirección:</label>
                                     <span class="help-block"> Digita la dirección de residencia. </span>
                                     <i class=" fa fa-building-o "></i>
@@ -115,7 +116,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="20" autocomplete="off" class="form-control" id="ciudad" name="ciudad" type="text">
+                                    {!! Form:: text('PRSN_Ciudad',null,['class'=> 'form-control'],['id'=>'ciudad'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="ciudad" class="control-label">Ciudad:</label>
                                     <span class="help-block"> Digita la ciudad del empleado. </span>
                                     <i class=" fa fa-map-o "></i>
@@ -128,7 +129,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input required maxlength="25" autocomplete="off" class="form-control" id="area" name="area" type="text">
+                                    {!! Form:: text('PRSN_Area',null,['class'=> 'form-control'],['id'=>'area'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="area" class="control-label">Area de trabajo:</label>
                                     <span class="help-block"> Digita el area de trabajo. </span>
                                     <i class=" fa fa-group"></i>
@@ -141,7 +142,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input  maxlength="40" autocomplete="off" class="form-control" id="eps" name="eps" type="text">
+                                    {!! Form:: text('PRSN_Eps',null,['class'=> 'form-control'],['id'=>'eps'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="eps" class="control-label">EPS:</label>
                                     <span class="help-block"> Digita la entidad prestadora de salud. </span>
                                     <i class=" fa fa-list-alt"></i>
@@ -154,7 +155,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input  maxlength="40" autocomplete="off" class="form-control" id="fondoP" name="fondoP" type="text">
+                                    {!! Form:: text('PRSN_Fpensiones',null,['class'=> 'form-control'],['id'=>'fondoP'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="fondoP" class="control-label">Fondo de pensiones:</label>
                                     <span class="help-block"> Digita el fondo de pensiones. </span>
                                     <i class=" fa fa-list-alt"></i>
@@ -167,7 +168,7 @@
                         <div class="col-md-7 col-md-offset-2">
                             <div  class="form-group form-md-line-input">
                                 <div class="input-icon">
-                                    <input  maxlength="40" autocomplete="off" class="form-control" id="cajaC" name="cajaC" type="text">
+                                    {!! Form:: text('PRSN_Caja_Compensacion',null,['class'=> 'form-control'],['id'=>'cajaC'],'required', 'autofocus', ['maxlength'=>'40'],['autocomplete'=>'off']) !!}
                                     <label for="cajaC" class="control-label">Caja de compensacion:</label>
                                     <span class="help-block"> Digita la caja de compensacion. </span>
                                     <i class=" fa fa-list-alt"></i>
