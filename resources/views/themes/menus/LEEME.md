@@ -1,4 +1,4 @@
-#Menú
+# Menú
 
 Se instaló un paquete que genera automáticamente la clase "active" que indica qué menú fue seleccionado.
 
@@ -6,9 +6,9 @@ Se instaló un paquete que genera automáticamente la clase "active" que indica 
 Documentación oficial para ver más funciones.
 </a>
 
-##Uso
+## Uso
 
-###Menú Simple
+### Menú Simple
 
 ```html
 
@@ -20,7 +20,7 @@ Documentación oficial para ver más funciones.
 </li>
 
 ```
-###Menú con niveles
+### Menú con niveles
 
 * Elementos
     * Componentes
