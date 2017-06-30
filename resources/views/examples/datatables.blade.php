@@ -107,7 +107,7 @@ jQuery(document).ready(function () {
 
 var table, url;
 table = $('#example-table-ajax');
-url = "{{ route('datatables/index') }}";
+url = "{{ route('components.datatables.data') }}";
 
     table.DataTable({
        lengthMenu: [
