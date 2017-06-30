@@ -6,7 +6,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Datos del Empleado</div>
                     <div class="panel-body">
-                        {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['rrhh.update', $empleado->PK_PRSN_Cedula],'class'=>"form-horizontal", 'role'=>"form"])  !!}
+                        {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['rrhh.update', $empleado->PK_PRSN_Cedula],'class'=>'form-horizontal', 'role'=>'form'])  !!}
                             {{ csrf_field() }}
 
                             <div class="row">
