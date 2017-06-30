@@ -109,6 +109,7 @@ return [
                     'title' => 'Componentes',
                     'icon' => 'icon-puzzle',
                 ],
+
                 'forms' =>  [
                     'submenu' => [
                         'fields' => ['url' => '/forms/fields', 'icon' => 'icon-layers', 'title' => 'Input Fields'],
@@ -116,7 +117,8 @@ return [
                     ],
                     'title' => 'Formularios',
                     'icon' => 'icon-settings',
-                ],
+                ], //ok
+
                 'elements' =>  [
                     'submenu' => [
 
@@ -124,13 +126,14 @@ return [
                     'title' => 'Elementos',
                     'icon' => 'icon-bulb',
                 ],
+
                 'tables' =>  [
                     'submenu' => [
                         'datatables' => ['url' => '/components/datatables', 'icon' => 'icon-layers'],
                     ],
                     'title' => 'Tablas',
                     'icon' => 'icon-briefcase',
-                ],
+                ], //ok
                 'portlets' =>  [
                     'submenu' => [
                         'portlet' => ['url' => '/components/portlet', 'icon' => 'icon-layers',],
@@ -138,6 +141,7 @@ return [
                     'title' => 'Portlets',
                     'icon' => 'icon-wallet',
                 ],
+
                 'charts' =>  [
                     'submenu' => [
 
@@ -152,6 +156,7 @@ return [
                     'title' => 'Mapas',
                     'icon' => 'icon-pointer',
                 ],
+
                 'sidebar' =>  [
                     'submenu' => [
                         'sidebar' => ['url' => '/components/sidebar', 'icon' => 'icon-layers'],
