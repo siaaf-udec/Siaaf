@@ -2,10 +2,14 @@
 /**
  * Gesap
  */
-use Yajra\Datatables\Datatables;
-use Illuminate\Http\Request;
 
-use App\Container\Users\Src\User;
+//RUTA DE EJEMPLO
+Route::get('/', [
+    'as' => 'gesap.index',
+    'uses' => function(){
+        return view('gesap.example');
+    }
+]);
 
 $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 

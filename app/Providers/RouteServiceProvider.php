@@ -89,7 +89,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapAcadSpaceRoutes()
     {
-        Route::prefix('acadspace')
+        Route::prefix('espacios-academicos')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/acadspace.php'));
@@ -97,7 +97,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapAudioVisualsRoutes()
     {
-        Route::prefix('audiovisuals')
+        Route::prefix('audiovisuales')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/audiovisuals.php'));
@@ -105,7 +105,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapCarParkRoutes()
     {
-        Route::prefix('carpark')
+        Route::prefix('parqueadero')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/carpark.php'));
@@ -113,7 +113,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapFinancialRoutes()
     {
-        Route::prefix('financial')
+        Route::prefix('financiero')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/financial.php'));
@@ -121,7 +121,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapUnvInteractionRoutes()
     {
-        Route::prefix('unvinteraction')
+        Route::prefix('interaccion-universitaria')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/unvinteraction.php'));
@@ -145,7 +145,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapHumtalentRoutes()
     {
-        Route::prefix('humtalent')
+        Route::prefix('talento-humano')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/humtalent.php'));
