@@ -53,19 +53,19 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         Persona::create([
-            'PK_PRSN_Cedula'          => $request['cedula'],
-            'PRSN_Rol'                => $request['rol'],
-            'PRSN_Nombres'            => $request['name'],
-            'PRSN_Apellidos'          => $request['apellido'],
-            'PRSN_Telefono'           => $request['telefono'],
-            'PRSN_Correo'             => $request['email'],
-            'PRSN_Direccion'          => $request['direccion'],
-            'PRSN_Ciudad'             => $request['ciudad'],
-            'PRSN_Eps'                => $request['eps'],
-            'PRSN_Fpensiones'         => $request['fondoP'],
-            'PRSN_Area'               => $request['area'],
-            'PRSN_Caja_Compensacion'  => $request['cajaC'],
-            'PRSN_Estado_Persona'     => $request['estado'],
+            'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
+            'PRSN_Rol'                => $request['PRSN_Rol'],
+            'PRSN_Nombres'            => $request['PRSN_Nombres'],
+            'PRSN_Apellidos'          => $request['PRSN_Apellidos'],
+            'PRSN_Telefono'           => $request['PRSN_Telefono'],
+            'PRSN_Correo'             => $request['PRSN_Correo'],
+            'PRSN_Direccion'          => $request['PRSN_Direccion'],
+            'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
+            'PRSN_Eps'                => $request['PRSN_Eps'],
+            'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
+            'PRSN_Area'               => $request['PRSN_Area'],
+            'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
+            'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
         return "Usuaruio Registrado";
     }
