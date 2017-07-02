@@ -37,7 +37,7 @@
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-users"></i>
-                <span class="title">Usuarios</span>
+                <span class="title">Personal</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
@@ -53,12 +53,18 @@
                         <span class="title">Consultar Usuario</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-address-book"></i>
+                        <span class="title">Requisitos</span>
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
-                <span class="title">Documentos</span>
+                <span class="title">Documentación</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
@@ -76,5 +82,83 @@
                 </li>
             </ul>
         </li>
+
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Historial</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Historial de la documentación</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Historial de la información</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Inducción</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Proceso de inducción</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Proceso de re-inducción</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Reportes</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Generar reportes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Enviar reportes</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Calendario</span>
+                <span class="arrow"></span>
+            </a>
+
+
+        </li>
+
+
     </ul>
 </li>
