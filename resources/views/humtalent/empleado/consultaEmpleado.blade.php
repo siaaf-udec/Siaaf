@@ -18,17 +18,14 @@
             </div>
             <div class="portlet-body">
                 <div class="clearfix"> </div>
-                {!! Form::open (['method'=>'POST', 'url'=> ['humtalent/empleadolist'],'class'=>'form-horizontal', 'role'=>'form']) !!}
-                {{ csrf_field() }}
                 <div class="form-actions">
                     <div class="row">
                         <div class=" col-md-offset-2">
-                            {!! Form::submit('Listar',['class' => 'btn blue']) !!}
+                            {!! link_to_route('talento.humano.empleadoList',$title='Listar',null, $atributes=  ['class' => 'btn blue']) !!}
                         </div>
                     </div>
                 </div>
-                {!! Form::close() !!}
-                {!! link_to_route('humtalent.empleadolist',$title='Consultar', $atributes=  ['class' => 'btn blue']) !!}
+
             </div>
         </div>
     </div>

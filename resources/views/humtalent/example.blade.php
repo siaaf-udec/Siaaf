@@ -16,7 +16,7 @@
             </div>
             <div class="portlet-body">
                 <div class="clearfix"> </div>
-                {!! Form::open (['method'=>'POST', 'route'=> ['rrhh.store'], 'role'=>'form']) !!}
+                {!! Form::open (['method'=>'POST', 'route'=> ['talento.humano.rrhh.store'], 'role'=>'form']) !!}
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-md-7 col-md-offset-2">

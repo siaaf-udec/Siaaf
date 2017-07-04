@@ -18,7 +18,7 @@ class accionEmpController extends Controller
     public function listar()
     {
         $empleados = Persona::all();
-        //return ("$empleados");
+
         return view('humtalent.empleado.listaEmpleados', compact('empleados'));
     }
 

@@ -40,17 +40,18 @@
                 <span class="title">Personal</span>
                 <span class="arrow"></span>
             </a>
+
             <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.rrhh.create'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.rrhh.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
-                        <span class="title">Registrar Usuario</span>
+                        <span class="title">Registrar Empleado</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.rrhh.index'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
-                        <span class="title">Consultar Usuario</span>
+                        <span class="title">Consultar Empleado</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -68,14 +69,14 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.document.create'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.document.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Registrar Documento</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.document.index'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.document.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Consultar Documento</span>
                     </a>

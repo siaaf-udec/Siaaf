@@ -1,12 +1,22 @@
 @extends('material.layouts.dashboard')
+
+@section('page-title', 'Datos del empleado:')
+
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Datos del Empleado</div>
-                    <div class="panel-body">
-                        {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['rrhh.update', $empleado->PK_PRSN_Cedula],'class'=>'form-horizontal', 'role'=>'form'])  !!}
+    <div class="col-md-12">
+        <div class="portlet portlet-sortable light bordered portlet-form">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class=" icon-book-open font-green"></i>
+                    <span class="caption-subject bold uppercase"> Datos del Empleado  </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="clearfix"> </div>
+                        {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula],'class'=>'form-horizontal', 'role'=>'form'])  !!}
                             {{ csrf_field() }}
 
                             <div class="row">
@@ -178,19 +188,17 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary btn-icon edit">
-                                        Editar
-                                    </button>
+                                    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
+                                    {!! Form::close() !!}
+                                     {!! Form::open ( ['method'=>'DELETE', 'route'=> ['talento.humano.rrhh.destroy', $empleado->PK_PRSN_Cedula],'class'=>"form-horizontal", 'role'=>"form"])  !!}
+                                         {{ csrf_field() }}
+
+                                        <div class="col-md-50 col-md-offset-6">
+                                             {!! Form::submit('Eliminar',['class'=>'btn red','btn-icon remove']) !!}
+                                        </div>
+                                     {!! Form::close() !!}
                                 </div>
                             </div>
-                        {!! Form::close() !!}
-                        {!! Form::open ( ['method'=>'DELETE', 'route'=> ['rrhh.destroy', $empleado->PK_PRSN_Cedula],'class'=>"form-horizontal", 'role'=>"form"])  !!}
-                            {{ csrf_field() }}
-                            {!! Form::submit('Eliminar',['class'=>'btn red','btn-icon remove']) !!}
-                        {!! Form::close() !!}
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>

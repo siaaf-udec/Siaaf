@@ -31,7 +31,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-
+        return view('humtalent.empleado.consultaEmpleado');
     }
 
     /**
@@ -78,7 +78,8 @@ class EmpleadoController extends Controller
      */
     public function show()
     {
-        return view('humtalent.empleado.consultaEmpleado');
+        //return "en el show";
+       // return view('humtalent.empleado.consultaEmpleado');
     }
 
     /**
