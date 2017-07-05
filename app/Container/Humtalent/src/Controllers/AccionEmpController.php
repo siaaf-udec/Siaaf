@@ -15,14 +15,25 @@ use App\Container\Humtalent\src\Persona;
 
 class accionEmpController extends Controller
 {
-    public function listar()
+    public function listarDocentes()
     {
-        $empleados = Persona::all();
-
+        $rol='Docente';
+        $empleados = Persona::where('PRSN_Rol',$rol)->get();
+        return view('humtalent.empleado.listaEmpleados', compact('empleados'));
+    }
+    public function listarFuncionarios()
+    {
+        $rol='Administrativo';
+        $empleados = Persona::where('PRSN_Rol',$rol)->get();
         return view('humtalent.empleado.listaEmpleados', compact('empleados'));
     }
 
-    public function consultarById(){
-        return "consultando por cedula";
+    public function consultarByCedula(){
+        return view('humtalent.empleado.consultaEmpleado');
+    }
+    public function buscarByCedula(Request $request){
+        $id  = $request['PK_PRSN_Cedula'];
+        $empleados = Persona::where('PK_PRSN_Cedula',$id)->get();
+        return view('humtalent.empleado.listaEmpleados', compact('empleados'));
     }
 }
