@@ -341,7 +341,7 @@
 
                     success: function(label) {
                         label
-                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                            .closest('.form-group').removeClass('has-error');
                     },
 
                     submitHandler: function(form) {
