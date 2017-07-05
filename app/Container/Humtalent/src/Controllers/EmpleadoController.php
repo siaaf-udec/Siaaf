@@ -68,7 +68,8 @@ class EmpleadoController extends Controller
             'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
-        return "Usuaruio Registrado";
+        return back()->with('success','El empleado fue registrado correctamente');
+
     }
 
     /**
@@ -109,7 +110,7 @@ class EmpleadoController extends Controller
         //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
         //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
         $empleado->save();
-        return "Usuario Actualizado";
+        return back()->with('success','El empleado fue actualizado correctamente');
     }
 
     /**
@@ -121,7 +122,7 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         Persona::destroy($id);
-        return "Eliminando  ";
+        return('El empleado fue eliminado correctamente');
     }
 
 }
