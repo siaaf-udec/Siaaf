@@ -1,8 +1,7 @@
 @extends('material.layouts.dashboard')
 
-@section('page-title')
-    <b class="page-title">Registro de funcionario:</b>
-@endsection
+@section('page-title','Registro de funcionario:')
+
 
 @section('content')
     <div class="col-md-12">

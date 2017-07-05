@@ -4,186 +4,81 @@
 
 @section('content')
     <div class="col-md-12">
-        <div class="portlet portlet-sortable light bordered portlet-form">
-            <div class="portlet-title">
-                <div class="caption font-green">
-                    <i class=" icon-book-open font-green"></i>
-                    <span class="caption-subject bold uppercase"> Formulario de registro del personal:  </span>
-                </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="clearfix"> </div>
-                {!! Form::open (['method'=>'POST', 'route'=> ['talento.humano.rrhh.store'], 'role'=>'form']) !!}
-                    {{ csrf_field() }}
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div class="form-group form-md-radios">
-                                <div class="md-radio-list">
-                                    <div class="md-radio">
-                                        {!! Field::radios('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], ['list', 'label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user']) !!}
-                                    </div>
-                                </div>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Nombres',null,['label'=>'Nombre(s)','class'=> 'form-control','id'=>'name' ,'required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-user']) !!}
-                                    <span class="help-block"> Digita el nombre del empleado. </span>
+            @include('humtalent.flash-message')
+            <div class="row">
+                <div class="col-md-7 col-md-offset-2">
+                    {!! Form::open (['method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+
+                    <div class="form-body">
+
+                        {!! Field::radios('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], ['list', 'label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user']) !!}
+
+
+                        {!! Field:: text('PRSN_Nombres',null,['label'=>'Nombre(s)','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita el nombre del empleado.','icon'=>'fa fa-user']) !!}
+
+                        {!! Field:: text('PRSN_Apellidos',null,['label'=>'Apellido(s):', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita el apellido del empleado.','icon'=>'fa fa-user'] ) !!}
+
+                        {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita la cedula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
+
+                        {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita un correo válido.','icon'=>'fa fa-envelope-open '] ) !!}
+
+                        {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita un numero de telefono o celular.','icon'=>'fa fa-phone'] ) !!}
+
+                        {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
+
+                        {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
+
+                        {!! Field:: text('PRSN_Area',null,['label'=>'Area o facultad de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita el area o facultad del empleado.','icon'=>'fa fa-group'] ) !!}
+
+                        {!! Field:: text('PRSN_Eps',null,['label'=>'EPS:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                        ['help' => 'EPS (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
+
+                        {!! Field:: text('PRSN_Fpensiones',null,['label'=>'Fondo de pensiones:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                        ['help' => 'Fondo de pensiones (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
+
+                        {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensacion:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Caja de compensacion (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
+
+                        {!! Field::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],['list', 'label'=>'Estado del empleado: Selecciona una opción']) !!}
+
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 col-md-offset-0">
+                                    {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
+                                    {{ Form::reset('Cancelar', ['class' => 'btn btn-danger']) }}
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Apellidos',null,['label'=>'Apellido(s):', 'class'=> 'form-control','id'=>'apellido','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-user'] ) !!}
-                                    <span class="help-block"> Digita el apellido del empleado. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-credit-card'] ) !!}
-                                    <span class="help-block"> Digita el numero de identificación.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control','id'=>'email','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-envelope-open '] ) !!}
-                                    <span class="help-block"> Digita un correo electronico valido.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control','id'=>'telefono','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-phone'] ) !!}
-                                    <span class="help-block"> Digita un número de teléfono o celular. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control','id'=>'direccion','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-building-o'] ) !!}
-                                    <span class="help-block"> Digita la dirección de residencia. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control','id'=>'ciudad','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-map-o'] ) !!}
-                                    <span class="help-block"> Digita la ciudad del empleado. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Area',null,['label'=>'Area o facultad de trabajo:', 'class'=> 'form-control','id'=>'area','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-group'] ) !!}
-                                    <span class="help-block"> Digita el area de trabajo. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Eps',null,['label'=>'EPS:', 'class'=> 'form-control','id'=>'eps','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-list-alt'] ) !!}
-                                    <span class="help-block"> Digita la entidad prestadora de salud. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Fpensiones',null,['label'=>'Fondo de pensiones:', 'class'=> 'form-control','id'=>'fondoP','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-list-alt'] ) !!}
-                                    <span class="help-block"> Digita el fondo de pensiones. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensacion:', 'class'=> 'form-control','id'=>'cajaC','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['icon'=>'fa fa-list-alt'] ) !!}
-                                    <span class="help-block"> Digita la caja de compensacion. </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="row">
-                    <div class="col-md-7 col-md-offset-2">
-                        <div class="form-group form-md-radios">
-                            <div class="md-radio-list">
-                                <div class="md-radio">
-                                    {!! Field::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],['list', 'label'=>'Estado del empleado: Selecciona una opción']) !!}
-                                </div>
-                            </div>
-                        </div>
+
+
+                        {!! Form::close() !!}
                     </div>
                 </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class=" col-md-offset-2">
-                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
-                                {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
-                            </div>
-                        </div>
-                    </div>
-                {!! Form::close() !!}
             </div>
-        </div>
+
+        @endcomponent
     </div>
-
 @endsection
+
 @push('plugins')
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
-<script>
+<script type="text/javascript">
     var FormValidationMd = function() {
         var handleValidation = function() {
 
@@ -197,89 +92,86 @@
                 focusInvalid: true,
                 ignore: "",
                 rules: {
-                    name: {
+                    PRSN_Nombres: {
                         required: true
                     },
-                    email: {
+                    PRSN_Apellidos: {
+                        required: true
+                    },
+                    PRSN_Correo: {
                         required: true,
                         email: true
 
                     },
-                    cedula: {
+                    PK_PRSN_Cedula: {
                         required: true
                     },
-                    telefono: {
-                        required: true
-
-                    },
-                    direccion: {
+                    PRSN_Telefono: {
                         required: true
 
                     },
-                    ciudad: {
+                    PRSN_Direccion: {
                         required: true
 
                     },
-                    area: {
+                    PRSN_Ciudad: {
                         required: true
 
                     },
-                    eps: {
-                        required: true
-                    },
-                    fondoP: {
+                    PRSN_Area: {
                         required: true
 
                     },
-                    cajaC: {
-                        required: true
 
+                    PRSN_Rol: {
+                        required: true,
+                        minlength: 1,
                     },
+                    PRSN_Estado_Persona: {
+                        required: true,
+                        minlength: 1,
+                    }
 
                 },
                 messages:{
-                    name: {
+                    PRSN_Nombres: {
                         required: "Debes digitar el nombre completo del empleado."
                     },
-                    'radios': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {1} items deben ser seleccionados")
+                    PRSN_Apellidos: {
+                        required: "Debes digitar los apellidos del empleado."
                     },
-                    email: {
+                    PRSN_Rol: {
+                        required: 'Por favor marca una opción',
+                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
+                    },
+                    PRSN_Estado_Persona: {
+                        required: 'Por favor marca una opción',
+                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
+                    },
+                    PRSN_Correo: {
                         required: "Debes ingresar un correo electronico."
 
                     },
-                    cedula: {
+                    PK_PRSN_Cedula: {
                         required: "Debes ingresar una cedula."
                     },
-                    telefono: {
+                    PRSN_Telefono: {
                         required: "Debes ingresar un telefono o celular."
 
                     },
-                    direccion: {
+                    PRSN_Direccion: {
                         required: "Debes ingresar una direccion."
 
                     },
-                    ciudad: {
+                    PRSN_Ciudad: {
                         required: "Debes ingresar una ciudad."
 
                     },
-                    area: {
+                    PRSN_Area: {
                         required: "Debes ingresar un area de trabajo."
 
                     },
-                    eps: {
-                        required: "Debes ingresar una EPS"
 
-                    },
-                    fondoP: {
-                        required: "Debes ingresar un fondo de pensiones."
-
-                    },
-                    cajaC: {
-                        required: "Debes ingresar una caja de compensacion."
-
-                    },
 
                 },
 
