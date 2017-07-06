@@ -9,7 +9,7 @@
             @include('humtalent.flash-message')
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Form::open (['id'=>'form_empleado','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
 
                     <div class="form-body">
 
@@ -82,7 +82,7 @@
     var FormValidationMd = function() {
         var handleValidation = function() {
 
-            var form1 = $('#form_material');
+            var form1 = $('#form_empleado');
             var error1 = $('.alert-danger', form1);
             var success1 = $('.alert-success', form1);
 
@@ -209,6 +209,7 @@
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    form1.submit();
                 }
             });
         }
