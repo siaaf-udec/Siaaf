@@ -3,6 +3,10 @@
  * Talento Humano.
  */
 
+use App\Container\Humtalent\src\Persona;
+use Yajra\Datatables\Datatables;
+use Illuminate\Http\Request;
+
 //RUTA DE EJEMPLO
 Route::get('/', [
     'as' => 'talento.humano.index',
@@ -23,7 +27,6 @@ Route::resource('rrhh', $controller.'EmpleadoController', [   //ruta para el CRU
         'destroy' => 'talento.humano.rrhh.destroy',
     ]
 ]);
-
 Route::resource('document', $controller.'DocumentController',[  //ruta para el CRUD de la Documentación
     'names'=>[
         'index'=> 'talento.humano.document.index',
@@ -35,20 +38,42 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el C
 
     ]
 ]);
-
-Route::get('docentesList', [    //ruta para listar los docentes registrados.
+/*Route::get('docentesList/{rol}', [    //ruta para listar los docentes registrados.
     'as' => 'talento.humano.docentesList', //Este es el alias de la ruta
     'uses' => $controller.'AccionEmpController@listarDocentes'
 ]);
-Route::get('funcList', [    //ruta para listar los funcionarios administrativos registrados.
-    'as' => 'talento.humano.funcList', //Este es el alias de la ruta
-    'uses' => $controller.'AccionEmpController@listarFuncionarios'
+*/
+Route::get('docentesList/{rol}', function ($rol)    {
+    return view('humtalent.empleado.tablasEmpleados', compact('rol'));
+})->name('talento.humano.docentesList');
+
+Route::get('tablaEmpleados/{rol}',[
+    'as' => 'talento.humano.tablaEmpleados',
+    'uses' =>  $controller.'AccionEmpController@listarDocentes'
 ]);
+
+
 Route::get('searchById', [    //ruta para buscar los empleados  registrados por cedula.
     'as' => 'talento.humano.searchById', //Este es el alias de la ruta
-    'uses' => $controller.'AccionEmpController@consultarByCedula'
+    'uses' => function(){
+                 return view('humtalent.empleado.consultaEmpleado');
+    }
 ]);
 Route::post('buscarCedula', [    //ruta para buscar los empleados  registrados por cedula.
     'as' => 'talento.humano.buscarCedula', //Este es el alias de la ruta
     'uses' => $controller.'AccionEmpController@buscarByCedula'
+]);
+Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+    'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
+    'uses' => function(){
+        return view('humtalent.empleado.buscarEmpleado');
+    }
+]);
+Route::post('listarDocsRad', [    //ruta listar los documentos requeridos y asociarlos a un empleado
+    'as' => 'talento.humano.listarDocsRad', //Este es el alias de la ruta
+    'uses' => $controller.'AccionEmpController@listarDocsRad'
+]);
+Route::post('radicarDocumentos', [    //ruta listar los documentos requeridos y asociarlos a un empleado
+    'as' => 'talento.humano.radicarDocumentos', //Este es el alias de la ruta
+    'uses' => $controller.'AccionEmpController@radicarDocumentos'
 ]);

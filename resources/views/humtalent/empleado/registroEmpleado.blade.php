@@ -37,7 +37,7 @@
                         {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
 
-                        {!! Field:: text('PRSN_Area',null,['label'=>'Area o facultad de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Area',null,['label'=>'Area o programa de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita el area o facultad del empleado.','icon'=>'fa fa-group'] ) !!}
 
                         {!! Field:: text('PRSN_Eps',null,['label'=>'EPS:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
