@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Encargados extends Model
 {
-        protected $connection = 'gesap';
+    protected $connection = 'gesap';
 
-    protected $table = 'TBL_Anteproyecto';
+    protected $table = 'TBL_Encargados';
 
-    protected $primaryKey = 'PK_NPRY_idMinr008';
+    protected $primaryKey = 'PK_NPRY_idCargo';
 
-    protected $fillable = ['NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado','FK_TBL_Radicacion_id'];
+    protected $fillable = ['FK_TBL_Anteproyecto_id','NCRD_Usuario','NCRD_Cargo'];
+    
+    
+    
+    
+
+
+
 }
