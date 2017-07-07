@@ -1,42 +1,39 @@
+
 @extends('material.layouts.dashboard')
 
 @push('styles')
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+
 @endpush
 
-@section('title', '| Listado')
+@section('title', '| Información personal contratado')
 
-@section('page-title', 'Listado de personal')
-
+@section('page-title', 'Listado del personal contratado :')
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Personal registrado:'])
-
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
 
 
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'table-ajax'])
                         @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
+                            '#',
                             'Nombres',
                             'Apellidos',
                             'Cédula',
                             'Teléfono',
                             'Email',
                             'Rol',
-                            'Acciones' => ['style' => 'width:90px;']
+                            'Acciones'
                         ])
                     @endcomponent
                 </div>
 
             </div>
-
-
-
         @endcomponent
     </div>
 @endsection
@@ -46,6 +43,7 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
@@ -58,20 +56,20 @@
 
         var table, url;
         table = $('#table-ajax');
-        url = "{{ route('components.datatables.data') }}";
+        url = "{{ route('talento.humano.tablaEmpleados',['rol'=> $rol])}}";
+        $.fn.dataTable.ext.errMode = 'throw';/*/para que no le salga errores al funcionario*/
 
         table.DataTable({
+
             lengthMenu: [
                 [5, 10, 25, 50, -1],
                 [5, 10, 25, 50, "Todo"]
             ],
-
             responsive: true,
             colReorder: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: url,
-
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -95,11 +93,10 @@
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-
             },
             columns:[
 
-                {data: 'DT_Row_Index',name:'#'},
+                {data: 'DT_Row_Index'},
                 {data: 'PRSN_Nombres', name: 'Nombres'},
                 {data: 'PRSN_Apellidos', name: 'Apellidos'},
                 {data: 'PK_PRSN_Cedula', name: 'Cédula'},
@@ -107,15 +104,15 @@
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
                 {data: 'PRSN_Rol', name: 'Rol'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-primary"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-danger"><i class="icon-trash"></i></a>',
+                    defaultContent: '<a href="" class="btn btn-primary" "><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" ><i class="icon-trash"></i></a>',
                     data:'action',
                     name:'action',
                     title:'Acciones',
                     orderable: false,
-                    searchable: false,
+                    searchable: true,
                     exportable: false,
                     printable: false,
-                    className: 'text-right',
+                    className: 'text-center',
                     render: null,
                     responsivePriority:2
                 }
@@ -138,6 +135,7 @@
             ],
             pageLength: 10,
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+
         });
     });
 </script>

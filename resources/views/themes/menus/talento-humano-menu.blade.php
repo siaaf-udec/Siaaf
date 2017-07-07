@@ -55,20 +55,20 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-item {{ active(['talento.humano.rrhh.index'], 'start active open') }}">
-                            <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
+                        <li class="nav-item ">
+                            <a href="{{ route('talento.humano.docentesList',['Todos'=>'Todos']) }}" class="nav-link nav-toggle">
                                 <i class="fa fa-address-book"></i>
                                 <span class="title">Listar todos los empleados</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ active(['talento.humano.docentesList'], 'start active open') }}">
-                            <a href="{{ route('talento.humano.docentesList') }}" class="nav-link nav-toggle">
+                        <li class="nav-item ">
+                            <a href="{{ route('talento.humano.docentesList',['Docente'=>'Docente']) }}" class="nav-link nav-toggle">
                                 <i class="fa fa-address-book"></i>
                                 <span class="title">Listar Docentes</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ active(['talento.humano.funcList'], 'start active open') }}">
-                            <a href="{{ route('talento.humano.funcList') }}" class="nav-link nav-toggle">
+                        <li class="nav-item ">
+                            <a href="{{ route('talento.humano.docentesList',['Administrativo'=>'Administrativo']) }}" class="nav-link nav-toggle">
                                 <i class="fa fa-address-book"></i>
                                 <span class="title">Listar Funcionarios</span>
                             </a>
@@ -81,10 +81,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.buscarRadicar') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
-                        <span class="title">Requisitos</span>
+                        <span class="title">Radicar Documentos</span>
                     </a>
                 </li>
             </ul>

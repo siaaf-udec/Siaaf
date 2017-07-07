@@ -31,8 +31,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Persona::all();
-        return view('humtalent.empleado.listaEmpleados', compact('empleados'));
+       // $empleados = Persona::all();
+        //return view('humtalent.empleado.listaEmpleados', compact('empleados'));
     }
 
     /**
