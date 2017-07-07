@@ -5,87 +5,35 @@
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+
 @endpush
 
-@section('title', '| Datatables')
+@section('title', '| Información personal contratado')
 
-@section('page-title', 'Datatables')
-
-@section('page-description', 'ejemplo de uso y personalización del datatable.')
+@section('page-title', 'Listado del personal contratado :')
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Datatable Ajax'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
 
-            @slot('actions', [
 
-                'link_upload' => [
-                    'link' => '',
-                    'icon' => 'icon-cloud-upload',
-                ],
-                'link_wrench' => [
-                    'link' => '',
-                    'icon' => 'icon-wrench',
-                ],
-                'link_trash' => [
-                    'link' => '',
-                    'icon' => 'icon-trash',
-                ],
-
-            ])
-            <div class="clearfix"> </div><br><br><br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'example-table-ajax'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'table-ajax'])
                         @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'id',
-                            'Nombre',
+                            '#',
+                            'Nombres',
+                            'Apellidos',
+                            'Cédula',
+                            'Teléfono',
                             'Email',
-                            'Acciones' => ['style' => 'width:90px;'],
+                            'Rol',
+                            'Acciones'
                         ])
                     @endcomponent
                 </div>
-                <div class="clearfix"> </div><br><br><br>
-                <div class="col-md-12">
-                    <div class="panel-group accordion" id="datatable-accordion-ajax">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_1"> Método de Creación </a>
-                                </h4>
-                            </div>
-                            <div id="collapse_3_1" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_2"> Requisitos </a>
-                                </h4>
-                            </div>
-                            <div id="collapse_3_2" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#datatable-accordion-ajax" href="#collapse_3_3"> Método de iniciación JS</a>
-                                </h4>
-                            </div>
-                            <div id="collapse_3_3" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+            </div>
         @endcomponent
     </div>
 @endsection
@@ -95,6 +43,7 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
@@ -106,10 +55,12 @@
          */
 
         var table, url;
-        table = $('#example-table-ajax');
+        table = $('#table-ajax');
         url = "{{ route('talento.humano.tablaEmpleados',['rol'=> $rol])}}";
+        $.fn.dataTable.ext.errMode = 'throw';/*/para que no le salga errores al funcionario*/
 
         table.DataTable({
+
             lengthMenu: [
                 [5, 10, 25, 50, -1],
                 [5, 10, 25, 50, "Todo"]
@@ -117,7 +68,7 @@
             responsive: true,
             colReorder: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
@@ -144,20 +95,24 @@
                 }
             },
             columns:[
+
                 {data: 'DT_Row_Index'},
-                {data: 'PK_PRSN_Cedula', "visible": false },
-                {data: 'PRSN_Nombres', name: 'Nombre'},
+                {data: 'PRSN_Nombres', name: 'Nombres'},
+                {data: 'PRSN_Apellidos', name: 'Apellidos'},
+                {data: 'PK_PRSN_Cedula', name: 'Cédula'},
+                {data: 'PRSN_Telefono', name: 'Teléfono'},
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
+                {data: 'PRSN_Rol', name: 'Rol'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                    defaultContent: '<a href="" class="btn btn-primary" "><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" ><i class="icon-trash"></i></a>',
                     data:'action',
                     name:'action',
                     title:'Acciones',
                     orderable: false,
-                    searchable: false,
+                    searchable: true,
                     exportable: false,
                     printable: false,
-                    className: 'text-right',
+                    className: 'text-center',
                     render: null,
                     responsivePriority:2
                 }
@@ -180,6 +135,7 @@
             ],
             pageLength: 10,
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+
         });
     });
 </script>
