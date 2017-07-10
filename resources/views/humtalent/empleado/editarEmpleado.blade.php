@@ -1,12 +1,12 @@
 @extends('material.layouts.dashboard')
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 
 @section('page-title', 'Formulario para editar los datos del empleado registrado:')
-
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
-
-            @include('humtalent.flash-message')
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
@@ -76,9 +76,19 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script type="text/javascript">
+    @if(Session::has('message'))
+        var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'info':
+            toastr.options.closeButton = true;
+            toastr.info("{{Session::get('message')}}",'Modificación exitosa:');
+            break;
+    }
+            @endif
     var FormValidationMd = function() {
         var handleValidation = function() {
 
@@ -178,6 +188,10 @@
                 invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debes corregir algunos campos','Modificación fallida:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -209,6 +223,7 @@
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    form1.submit();
                 }
             });
         }

@@ -1,144 +1,195 @@
 @extends('material.layouts.dashboard')
-
 @push('styles')
-<!-- Datatables Styles -->
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
-@section('title', '| Listado')
-
-@section('page-title', 'Listado de personal')
+@section('page-title','Registro de funcionario:')
 
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Personal registrado:'])
-
-
-
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
             <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'table-ajax'])
-                        @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Teléfono',
-                            'Email',
-                            'Rol',
-                            'Acciones' => ['style' => 'width:90px;']
-                        ])
-                    @endcomponent
+                <div class="col-md-7 col-md-offset-2">
+                    {!! Form::open (['id'=>'form_funcionario','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Field:: text('name',null,['label'=>'Nombre completo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita el nombre completo del funcionario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: email('email',null,['label'=>'Correo institucional:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
+                                                         ['help' => 'Digita un correo institucional.','icon'=>'fa fa-envelope-open '] ) !!}
+
+
+                    {!! Field:: password('password',['label'=>'Contraseña:', 'class'=> 'form-control','minlength'=>'6', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
+                                                         ['help' => 'Digita una contraseña.','icon'=>'fa fa-key '] ) !!}
+
+                    {!! Field:: password('password_confirmation',['label'=>'Confirmación de la contraseña:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
+                                                        ['help' => 'Digita la contraseña anterior.','icon'=>'fa fa-key '] ) !!}
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class=" col-md-offset-0">
+                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
+                                {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
                 </div>
-
             </div>
-
-
-
-        @endcomponent
     </div>
+    @endcomponent
+
 @endsection
-
 @push('plugins')
-<!-- Datatables Scripts -->
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 @endpush
-
 @push('functions')
 <script>
-    jQuery(document).ready(function () {
-
-        /*
-         * Referencia https://datatables.net/reference/option/
-         */
-
-        var table, url;
-        table = $('#table-ajax');
-        url = "{{ route('components.datatables.data') }}";
-
-        table.DataTable({
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "Todo"]
-            ],
-
-            responsive: true,
-            colReorder: true,
-            processing: true,
-            serverSide: true,
-            ajax: url,
-
-            language: {
-                "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-
+    var FormValidationMd = function() {
+        $.validator.addMethod(
+            'passwordStr',
+            function (value, element) {
+                return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/.test(value);
             },
-            columns:[
+            "Tu contraseña debe tener al menos 6 caracteres, al menos una letra mayúscula, una letra minúscula, números y caracteres especiales."
+        );
+        $.validator.addMethod(
+            'correo_institucional',
+            function (value, element) {
+                return this.optional(element) || /^.+@ucundinamarca.edu.co/.test(value);
+            },
+            "Solo se admiten correos electronicos con la terminacion ucundinamarca.edu.co "
+        );
 
-                {data: 'DT_Row_Index',name:'#'},
-                {data: 'PRSN_Nombres', name: 'Nombres'},
-                {data: 'PRSN_Apellidos', name: 'Apellidos'},
-                {data: 'PK_PRSN_Cedula', name: 'Cédula'},
-                {data: 'PRSN_Telefono', name: 'Teléfono'},
-                {data: 'PRSN_Correo', name: 'Correo Electronico'},
-                {data: 'PRSN_Rol', name: 'Rol'},
-                {
-                    defaultContent: '<a href="javascript:;" class="btn btn-primary"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-danger"><i class="icon-trash"></i></a>',
-                    data:'action',
-                    name:'action',
-                    title:'Acciones',
-                    orderable: false,
-                    searchable: false,
-                    exportable: false,
-                    printable: false,
-                    className: 'text-right',
-                    render: null,
-                    responsivePriority:2
-                }
-            ],
-            buttons: [
-                { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-                { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-                { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-                { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-                { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-                { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
-                {
-                    text: '<i class="fa fa-refresh"></i>',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                    action: function ( e, dt, node, config ) {
-                        dt.ajax.reload();
+        var handleValidation = function() {
+
+            var form1 = $('#form_funcionario');
+            var error1 = $('.alert-danger', form1);
+            var success1 = $('.alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span',
+                errorClass: 'help-block help-block-error',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    name: {
+
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                        correo_institucional:true
+                    },
+                    password: {
+                        passwordStr: true,
+                        required: true,
+                    },
+                    password_confirmation: {
+                        required: true,
+                        equalTo: "#password"
+                    },
+
+                },
+                messages:{
+                    name: {
+                        required: "Debes digitar el nombre completo del funcionario."
+                    },
+                    email: {
+                        required: "Debes ingresar un correo electronico.",
+
+                    },
+                    password: {
+                        required: "Debes ingresar una contraseña.",
+
+                    },
+                    password_confirmation: {
+                        required: "Debes confirmar la contraseña",
+                        equalTo:"Las contraseñas no coinciden."
+
+                    },
+
+                },
+
+                invalidHandler: function(event, validator) {
+                    success1.hide();
+                    error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debes corregir algunos campos','Registro fallido:')
+                    App.scrollTo(error1, -200);
+                },
+
+                errorPlacement: function(error, element) {
+                    if (element.is(':checkbox')) {
+                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                    } else if (element.is(':radio')) {
+                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                    } else {
+                        error.insertAfter(element);
                     }
-                }
+                },
 
-            ],
-            pageLength: 10,
-            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-        });
+                highlight: function(element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error');
+                },
+
+                unhighlight: function(element) {
+                    $(element)
+                        .closest('.form-group').removeClass('has-error');
+                },
+
+                success: function(label) {
+                    label
+                        .closest('.form-group').removeClass('has-error');
+                },
+
+                submitHandler: function(form1) {
+                    success1.show();
+                    error1.hide();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.success('Información del funcionario almacenada correctamente','Registro exitoso:')
+                    form1.submit();
+                }
+            });
+        }
+
+        return {
+            init: function() {
+                handleValidation();
+            }
+        };
+    }();
+    var ComponentsBootstrapMaxlength = function () {
+
+        var handleBootstrapMaxlength = function() {
+            $("input[maxlength], textarea[maxlength]").maxlength({
+                limitReachedClass: "label label-danger",
+                alwaysShow: true
+            });
+        };
+
+        return {
+            //main function to initiate the module
+            init: function () {
+                handleBootstrapMaxlength();
+            }
+        };
+
+    }();
+    jQuery(document).ready(function() {
+        FormValidationMd.init();
+        ComponentsBootstrapMaxlength.init();
     });
+
 </script>
 @endpush

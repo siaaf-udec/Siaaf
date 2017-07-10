@@ -70,15 +70,7 @@ class EmpleadoController extends Controller
             'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
-        $documentos =  DocumentacionPersona::all();
-        StatusOfDocument::create([
-            //'EDCMT_Fecha'          =>$request['FK_TBL_Persona_Cedula'],
-            //'EDCMT_Proceso_Documentacion'  => $request['FK_TBL_Persona_Cedula'],
-            'FK_TBL_Persona_Cedula'        => $request['FK_TBL_Persona_Cedula'],
-            'FK_Personal_Documento'        => $documentos->PK_DCMTP_Id_Documento,
-        ]);
-
-        return back()->with('success','El empleado fue registrado correctamente');
+        
 
     }
 

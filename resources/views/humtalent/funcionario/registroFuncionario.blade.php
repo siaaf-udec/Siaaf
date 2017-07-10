@@ -1,4 +1,7 @@
 @extends('material.layouts.dashboard')
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 
 @section('page-title','Registro de funcionario:')
 
@@ -6,8 +9,6 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
-
-            @include('humtalent.flash-message')
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_funcionario','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
@@ -36,15 +37,15 @@
                 </div>
             </div>
     </div>
-
     @endcomponent
-    </div>
+
 @endsection
 @push('plugins')
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script>
@@ -118,6 +119,10 @@
                 invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debes corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -149,6 +154,10 @@
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.success('Información del funcionario almacenada correctamente','Registro exitoso:')
                     form1.submit();
                 }
             });
