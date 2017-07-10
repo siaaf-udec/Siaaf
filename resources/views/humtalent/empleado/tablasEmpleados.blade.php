@@ -19,7 +19,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'table-ajax'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
                             'Nombres',
@@ -43,7 +43,6 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-
 @endpush
 
 @push('functions')
@@ -55,8 +54,8 @@
          */
 
         var table, url;
-        table = $('#table-ajax');
-        url = "{{ route('talento.humano.tablaEmpleados',['rol'=> $rol])}}";
+        table = $('#lista-empleados');
+        url = "{{ route('talento.humano.tablaEmpleados')}}";
         $.fn.dataTable.ext.errMode = 'throw';/*/para que no le salga errores al funcionario*/
 
         table.DataTable({
@@ -103,17 +102,19 @@
                 {data: 'PRSN_Telefono', name: 'Teléfono'},
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
                 {data: 'PRSN_Rol', name: 'Rol'},
+
                 {
-                    defaultContent: '<a href="" class="btn btn-primary" "><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" ><i class="icon-trash"></i></a>',
-                    data:'action',
+                    data:"PK_PRSN_Cedula",
                     name:'action',
                     title:'Acciones',
                     orderable: false,
-                    searchable: true,
+                    searchable: false,
                     exportable: false,
                     printable: false,
-                    className: 'text-center',
-                    render: null,
+                    className: '',
+                    render: function ( data, type, full, meta ) {
+                        return '<a href="rrhh/'+data+'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><form action="rrhh/'+data+'" method="POST" style="display:initial;"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                    },
                     responsivePriority:2
                 }
             ],

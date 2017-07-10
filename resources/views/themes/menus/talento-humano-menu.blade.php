@@ -56,21 +56,9 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item ">
-                            <a href="{{ route('talento.humano.docentesList',['Todos'=>'Todos']) }}" class="nav-link nav-toggle">
+                            <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
                                 <i class="fa fa-address-book"></i>
-                                <span class="title">Listar todos los empleados</span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="{{ route('talento.humano.docentesList',['Docente'=>'Docente']) }}" class="nav-link nav-toggle">
-                                <i class="fa fa-address-book"></i>
-                                <span class="title">Listar Docentes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="{{ route('talento.humano.docentesList',['Administrativo'=>'Administrativo']) }}" class="nav-link nav-toggle">
-                                <i class="fa fa-address-book"></i>
-                                <span class="title">Listar Funcionarios</span>
+                                <span class="title">Listar  empleados</span>
                             </a>
                         </li>
                         <li class="nav-item {{ active(['talento.humano.searchById'], 'start active open') }}">

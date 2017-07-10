@@ -39,10 +39,9 @@
                                 @endforeach
                             </table>
                             {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
-                            @foreach($documentos as $documento)
-                            {!!  Field::checkboxes('FK_Personal_Documento',[$documento->PK_DCMTP_Id_Documento => $documento->DCMTP_Nombre_Documento],null,
-                                                    ['list', 'label'=>'Seleccione si fue entregado el Documento']) !!}
-                            @endforeach
+
+                            {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento']) !!}
+
                          {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
                         {!! Form::close() !!}
                     </div>

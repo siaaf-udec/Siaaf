@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
+use App\Container\Humtalent\src\DocumentacionPersona;
+use App\Container\Humtalent\src\StatusOfDocument;
 use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
@@ -31,8 +33,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-       // $empleados = Persona::all();
-        //return view('humtalent.empleado.listaEmpleados', compact('empleados'));
+        //$empleados = Persona::all();
+        return view('humtalent.empleado.tablasEmpleados');
     }
 
     /**
@@ -68,6 +70,14 @@ class EmpleadoController extends Controller
             'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
+        $documentos =  DocumentacionPersona::all();
+        StatusOfDocument::create([
+            //'EDCMT_Fecha'          =>$request['FK_TBL_Persona_Cedula'],
+            //'EDCMT_Proceso_Documentacion'  => $request['FK_TBL_Persona_Cedula'],
+            'FK_TBL_Persona_Cedula'        => $request['FK_TBL_Persona_Cedula'],
+            'FK_Personal_Documento'        => $documentos->PK_DCMTP_Id_Documento,
+        ]);
+
         return back()->with('success','El empleado fue registrado correctamente');
 
     }

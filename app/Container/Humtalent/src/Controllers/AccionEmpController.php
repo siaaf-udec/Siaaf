@@ -18,31 +18,6 @@ use Yajra\Datatables\Datatables;
 
 class accionEmpController extends Controller
 {
-    public function listarDocentes(Request $request, $rol)
-    {
-       /* if($rol == 'Todos'){
-            $empleados = Persona::all();
-        }else {
-            $empleados = Persona::where('PRSN_Rol', $rol)->get();
-        }
-        return view('humtalent.empleado.listaEmpleados', compact('empleados'));*/
-        if($request->ajax()){
-            if($rol == 'Todos') {
-                return Datatables::of(Persona::all())
-                    ->addIndexColumn()
-                    ->make(true);
-            }else{
-                return Datatables::of(Persona::where('PRSN_Rol', $rol)->get())
-                    ->addIndexColumn()
-                    ->make(true);
-            }
-        }else{
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ],412);
-        }
-    }
     public function buscarByCedula(Request $request)
     {
         $id = $request['PK_PRSN_Cedula'];
@@ -53,17 +28,32 @@ class accionEmpController extends Controller
         $id  = $request['PK_PRSN_Cedula'];
         $empleados = Persona::where('PK_PRSN_Cedula',$id)->get();
         $documentos =  DocumentacionPersona::all();
-
-        return view('humtalent.documentacion.radicarDocumentos', compact('empleados', 'documentos'));
+        $docs=[];
+        foreach ($documentos as $documento){
+            $docs=$docs+[$documento->PK_DCMTP_Id_Documento => $documento->DCMTP_Nombre_Documento];
+        }
+        $selects=StatusOfDocument::where('FK_TBL_Persona_Cedula',$id)->get(['FK_Personal_Documento']);
+        $seleccion=[];
+        foreach ($selects as $select){
+            $seleccion=array_merge($seleccion, [$select->FK_Personal_Documento]);
+        }
+       // return $seleccion;
+        return view('humtalent.documentacion.radicarDocumentos', compact('empleados', 'docs', 'seleccion'));
     }
     public function radicarDocumentos(Request $request)
     {
-        StatusOfDocument::create([
-            //'EDCMT_Fecha'          =>$request['FK_TBL_Persona_Cedula'],
-            //'EDCMT_Proceso_Documentacion'  => $request['FK_TBL_Persona_Cedula'],
-            'FK_TBL_Persona_Cedula'        => $request['FK_TBL_Persona_Cedula'],
-            'FK_Personal_Documento'        => $request['FK_Personal_Documento']
-        ]);
+        $documento=$request['FK_Personal_Documento'];
+        $radicados=StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])->get(['FK_Personal_Documento']);
+        $cant=count($documento);
+
+        for($i=0; $i<$cant;$i++){
+            StatusOfDocument::create([
+                //'EDCMT_Fecha'          =>$request['FK_TBL_Persona_Cedula'],
+                //'EDCMT_Proceso_Documentacion'  => $request['FK_TBL_Persona_Cedula'],
+                'FK_TBL_Persona_Cedula'        => $request['FK_TBL_Persona_Cedula'],
+                'FK_Personal_Documento'        => $documento[$i]
+            ]);
+        }
         return "La documentación se radico correctamente";//back()->with('success','La documentación se radico correctamente');
     }
 }

@@ -43,13 +43,24 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el C
     'uses' => $controller.'AccionEmpController@listarDocentes'
 ]);
 */
-Route::get('docentesList/{rol}', function ($rol)    {
-    return view('humtalent.empleado.tablasEmpleados', compact('rol'));
-})->name('talento.humano.docentesList');
+Route::get('empleadoList', function ()    {
+    return view('humtalent.empleado.tablasEmpleados');
+})->name('talento.humano.rrhh.empleadoList');
 
-Route::get('tablaEmpleados/{rol}',[
+Route::get('tablaEmpleados',[
     'as' => 'talento.humano.tablaEmpleados',
-    'uses' =>  $controller.'AccionEmpController@listarDocentes'
+    'uses' => function (Request $request) {
+        if ($request->ajax()) {
+            return Datatables::of(Persona::all())
+                ->addIndexColumn()
+                ->make(true);
+        } else {
+            return response()->json([
+                'message' => 'Incorrect request',
+                'code' => 412
+            ], 412);
+        }
+    }
 ]);
 
 
