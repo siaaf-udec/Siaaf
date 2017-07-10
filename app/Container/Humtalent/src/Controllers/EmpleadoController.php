@@ -71,6 +71,7 @@ class EmpleadoController extends Controller
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
         
+        return back()->with('success','El empleado fue registrado correctamente');
 
     }
 
