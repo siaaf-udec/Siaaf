@@ -56,7 +56,12 @@ class DocumentController extends Controller
         DocumentacionPersona::create([
             'DCMTP_Nombre_Documento'  => $request['DCMTP_Nombre_Documento'],
         ]);
-        return "Documento  Registrado";
+        $notification=array(
+            'message'=>'La información del documento fue almacenada',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);
+
     }
 
     /**
@@ -91,10 +96,16 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $documento= DocumentacionPersona::find($id);
         $documento->fill($request->all());
         $documento->save();
-        return "Documento Actualizado";
+        $notification=array(
+            'message'=>'La información del documento fue modificada',
+            'alert-type'=>'info'
+        );
+        return back()->with($notification);
+
     }
 
     /**

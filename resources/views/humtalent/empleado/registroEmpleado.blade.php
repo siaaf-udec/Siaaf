@@ -1,12 +1,13 @@
 @extends('material.layouts.dashboard')
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 
 @section('page-title', 'Registro de empleado:')
 
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
-
-            @include('humtalent.flash-message')
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_empleado','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
@@ -46,7 +47,7 @@
                         {!! Field:: text('PRSN_Fpensiones',null,['label'=>'Fondo de pensiones:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                         ['help' => 'Fondo de pensiones (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
-                        {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensacion:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensación:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Caja de compensacion (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
                         {!! Field::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],['list', 'label'=>'Estado del empleado: Selecciona una opción']) !!}
@@ -76,9 +77,19 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script type="text/javascript">
+            @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}",'Registro exitoso:');
+            break;
+    }
+            @endif
     var FormValidationMd = function() {
         var handleValidation = function() {
 
@@ -178,6 +189,10 @@
                 invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debes corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 

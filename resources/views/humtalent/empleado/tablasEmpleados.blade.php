@@ -27,7 +27,7 @@
                             'Cédula',
                             'Teléfono',
                             'Email',
-                            'Rol',
+                            'Rol ',
                             'Acciones'
                         ])
                     @endcomponent
