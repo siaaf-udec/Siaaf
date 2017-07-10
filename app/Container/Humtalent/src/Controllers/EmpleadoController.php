@@ -128,4 +128,5 @@ class EmpleadoController extends Controller
         return('El empleado fue eliminado correctamente');
     }
 
+
 }

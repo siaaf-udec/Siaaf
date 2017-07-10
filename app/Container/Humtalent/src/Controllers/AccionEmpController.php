@@ -43,17 +43,17 @@ class accionEmpController extends Controller
     public function radicarDocumentos(Request $request)
     {
         $documento=$request['FK_Personal_Documento'];
-        $radicados=StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])->get(['FK_Personal_Documento']);
-        $cant=count($documento);
-
-        for($i=0; $i<$cant;$i++){
+        StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])->delete();
+        for($i=0; $i<count($documento);$i++){
             StatusOfDocument::create([
-                //'EDCMT_Fecha'          =>$request['FK_TBL_Persona_Cedula'],
+                'EDCMT_Fecha'          =>$request['EDCMT_Fecha'],
                 //'EDCMT_Proceso_Documentacion'  => $request['FK_TBL_Persona_Cedula'],
                 'FK_TBL_Persona_Cedula'        => $request['FK_TBL_Persona_Cedula'],
                 'FK_Personal_Documento'        => $documento[$i]
             ]);
         }
         return "La documentación se radico correctamente";//back()->with('success','La documentación se radico correctamente');
+
     }
+
 }
