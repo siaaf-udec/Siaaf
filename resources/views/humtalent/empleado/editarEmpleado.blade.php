@@ -9,7 +9,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                {!! Form::model ($empleado, ['method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
+                {!! Form::model ($empleado, ['id'=>'form_material','method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
                     {{ csrf_field() }}
                     <div class="form-body">
 
@@ -55,13 +55,7 @@
                         <div class="col-md-6 col-md-offset-4">
                             {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
                             {!! Form::close() !!}
-                             {!! Form::open ( ['method'=>'DELETE', 'route'=> ['talento.humano.rrhh.destroy', $empleado->PK_PRSN_Cedula], 'role'=>"form"])  !!}
-                                 {{ csrf_field() }}
-                                <br>
-                                <div class="col-md-offset-0">
-                                     {!! Form::submit('Eliminar',['class'=>'btn red','btn-icon remove']) !!}
-                                </div>
-                             {!! Form::close() !!}
+
                         </div>
                     </div>
                 </div>
@@ -80,8 +74,8 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-    @if(Session::has('message'))
-        var type="{{Session::get('alert-type','info')}}"
+            @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
     switch(type){
         case 'info':
             toastr.options.closeButton = true;
