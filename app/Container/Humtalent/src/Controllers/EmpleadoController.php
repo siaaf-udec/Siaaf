@@ -141,4 +141,5 @@ class EmpleadoController extends Controller
         return back()->with($notification);
     }
 
+
 }
