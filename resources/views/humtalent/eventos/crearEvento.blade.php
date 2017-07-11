@@ -1,8 +1,6 @@
 @extends('material.layouts.dashboard')
 @push('styles')
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('page-title','Creación de eventos:')
@@ -16,20 +14,12 @@
                     {!! Form::open (['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
                     {!! Field::textarea(
                             'EVNT_Descripcion',
-                            ['label' => 'Descripción del evento:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '4'],
+                            ['label' => 'Descripción del evento', 'required', 'auto' => 'off', 'max' => '300', "rows" => '3'],
                             ['help' => 'Escribe una descripción.', 'icon' => 'fa fa-quote-right']) !!}
-                    {!! Field::date(
-                            'EVNT_Fecha',
-                            ['label' => 'Fecha del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                            ['help' => 'Digita la fecha de realización del evento.', 'icon' => 'fa fa-calendar']) !!}
-                    {!! Field::text(
-                            'EVNT_Hora',
-                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
-                            ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
                     <div class="form-actions">
                         <div class="row">
-                            <div class=" col-md-offset-4">
+                            <div class=" col-md-offset-0">
                                 {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
                                 {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
                             </div>
@@ -49,38 +39,28 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script>
-    var ComponentsDateTimePickers = function () {
-        var handleTimePickers = function () {
-
-            if (jQuery().timepicker) {
-
-                $('.timepicker-no-seconds').timepicker({
-                    autoclose: true,
-                    minuteStep: 1,
-                });
-
-            }
-        }
-
-        return {
-            init: function () {
-                handleTimePickers();
-            }
-        };
-    }();
     var FormValidationMd = function() {
-
+        $.validator.addMethod(
+            'passwordStr',
+            function (value, element) {
+                return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/.test(value);
+            },
+            "Tu contraseña debe tener al menos 6 caracteres, al menos una letra mayúscula, una letra minúscula, números y caracteres especiales."
+        );
+        $.validator.addMethod(
+            'correo_institucional',
+            function (value, element) {
+                return this.optional(element) || /^.+@ucundinamarca.edu.co/.test(value);
+            },
+            "Solo se admiten correos electronicos con la terminacion ucundinamarca.edu.co "
+        );
 
         var handleValidation = function() {
 
-            var form1 = $('#form_eventos');
+            var form1 = $('#form_funcionario');
             var error1 = $('.alert-danger', form1);
             var success1 = $('.alert-success', form1);
 
@@ -202,7 +182,6 @@
     jQuery(document).ready(function() {
         FormValidationMd.init();
         ComponentsBootstrapMaxlength.init();
-        ComponentsDateTimePickers.init();
     });
 
 </script>

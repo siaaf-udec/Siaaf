@@ -86,7 +86,8 @@ jQuery(document).ready(function () {
         var table, url;
         table = $('#lista-empleados');
         url = "{{ route('talento.humano.tablaEmpleados')}}";
-        $.fn.dataTable.ext.errMode = 'throw';/*/para que no le salga errores al funcionario*/
+        $.fn.dataTable.ext.errMode = 'throw';
+        /*/para que no le salga errores al funcionario*/
 
         table.DataTable({
 
@@ -123,7 +124,7 @@ jQuery(document).ready(function () {
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-            columns:[
+            columns: [
 
                 {data: 'DT_Row_Index'},
                 {data: 'PRSN_Nombres', name: 'Nombres'},
@@ -133,32 +134,57 @@ jQuery(document).ready(function () {
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
                 {data: 'PRSN_Rol', name: 'Rol'},
 
+
                 {
-                    data:"PK_PRSN_Cedula",
-                    name:'action',
-                    title:'Acciones',
+                    data: "PK_PRSN_Cedula",
+                    name: 'action',
+                    title: 'Acciones',
                     orderable: false,
                     searchable: false,
                     exportable: false,
                     printable: false,
                     className: '',
-                    render: function ( data, type, full, meta ) {
-                        return '<a href="rrhh/'+data+'/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="rrhh/'+data+'" method="POST"  style="display:initial;"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                    render: function (data, type, full, meta) {
+                        return '<a href="rrhh/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="rrhh/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
                     },
-                    responsivePriority:2
+                    responsivePriority: 2
                 }
             ],
             buttons: [
-                { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-                { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-                { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-                { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-                { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-                { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
+                {
+                    extend: 'print',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
+                    text: '<i class="fa fa-print"></i>'
+                },
+                {
+                    extend: 'copy',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
+                    text: '<i class="fa fa-files-o"></i>'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
+                    text: '<i class="fa fa-file-pdf-o"></i>',
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
+                    text: '<i class="fa fa-file-text-o"></i>',
+                },
+                {
+                    extend: 'colvis',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
+                    text: '<i class="fa fa-bars"></i>'
+                },
                 {
                     text: '<i class="fa fa-refresh"></i>',
                     className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                    action: function ( e, dt, node, config ) {
+                    action: function (e, dt, node, config) {
                         dt.ajax.reload();
                     }
                 }
@@ -168,6 +194,45 @@ jQuery(document).ready(function () {
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
         });
+        var handleTooltips = function () {
+            $('.t-print').attr({'data-container': "body", 'data-placement': "top", 'data-original-title': "Imprimir"});
+            $('.t-copy').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Copiar al portapales"
+            });
+            $('.t-pdf').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Exportar a PDF"
+            });
+            $('.t-excel').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Exportar a EXCEL"
+            });
+            $('.t-csv').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Exportar a CSV"
+            });
+            $('.t-colvis').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Mostrar/Ocultar Columnas"
+            });
+            $('.t-refresh').attr({
+                'data-container': "body",
+                'data-placement': "top",
+                'data-original-title': "Recargar"
+            });
+
+            $('.tooltips').tooltip();
+        }
+
+        jQuery(document).ready(function () {
+            handleTooltips();
+        })
     });
 </script>
 @endpush
