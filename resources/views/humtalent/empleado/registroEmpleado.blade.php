@@ -82,13 +82,13 @@
 @push('functions')
 <script type="text/javascript">
             @if(Session::has('message'))
-    var type="{{Session::get('alert-type','info')}}"
-    switch(type){
-        case 'success':
-            toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}",'Registro exitoso:');
-            break;
-    }
+                var type="{{Session::get('alert-type','info')}}"
+                    switch(type){
+                        case 'success':
+                            toastr.options.closeButton = true;
+                            toastr.success("{{Session::get('message')}}",'Registro exitoso:');
+                            break;
+                    }
             @endif
     var FormValidationMd = function() {
         var handleValidation = function() {

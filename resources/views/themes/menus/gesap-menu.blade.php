@@ -26,6 +26,10 @@
                         <span class="title">Registrar Anteproyecto</span>
                     </a>
                 </li>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             </ul>
         </li>
         <li class="nav-item">

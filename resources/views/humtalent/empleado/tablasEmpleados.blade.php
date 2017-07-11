@@ -3,9 +3,10 @@
 
 @push('styles')
 <!-- Datatables Styles -->
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Información personal contratado')
@@ -19,6 +20,7 @@
 
             <div class="row">
                 <div class="col-md-12">
+
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
@@ -31,6 +33,7 @@
                             'Acciones'
                         ])
                     @endcomponent
+
                 </div>
 
             </div>
@@ -43,15 +46,42 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endpush
-
 @push('functions')
 <script>
-    jQuery(document).ready(function () {
+    function mifuncion(){
+        form1=$("#form-delete");
+        swal({
+                title: "Estas seguro ?",
+                text: "No podras deshacer estos cambios",         type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si, estoy seguro!",
+                cancelButtontext:"Cancelar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(confirmacion){
+                if(confirmacion){
+                    form1.submit();
+                }else {
+                    swal("Cancelado", "Tu información no ha sido eliminada.", "error");
+                }
 
-        /*
-         * Referencia https://datatables.net/reference/option/
-         */
+            });
+    };
+            @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'error':
+            toastr.options.closeButton = true;
+            toastr.info("{{Session::get('message')}}",'Eliminación exitosa:');
+            break;
+    }
+    @endif
+jQuery(document).ready(function () {
 
         var table, url;
         table = $('#lista-empleados');
@@ -113,7 +143,7 @@
                     printable: false,
                     className: '',
                     render: function ( data, type, full, meta ) {
-                        return '<a href="rrhh/'+data+'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><form action="rrhh/'+data+'" method="POST" style="display:initial;"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                        return '<a href="rrhh/'+data+'/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="rrhh/'+data+'" method="POST"  style="display:initial;"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
                     },
                     responsivePriority:2
                 }

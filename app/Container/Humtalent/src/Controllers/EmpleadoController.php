@@ -70,8 +70,12 @@ class EmpleadoController extends Controller
             'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
-        
-        return back()->with('success','El empleado fue registrado correctamente');
+
+        $notification=array(
+            'message'=>'La información del empleado fue almacenada correctamente.',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);
 
     }
 
@@ -113,7 +117,11 @@ class EmpleadoController extends Controller
         //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
         //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
         $empleado->save();
-        return back()->with('success','El empleado fue actualizado correctamente');
+        $notification=array(
+            'message'=>'La información del empleado fue modificada correctamente',
+            'alert-type'=>'info'
+        );
+        return back()->with($notification);
     }
 
     /**
@@ -124,8 +132,13 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
+
         Persona::destroy($id);
-        return('El empleado fue eliminado correctamente');
+        $notification=array(
+            'message'=>'La información del empleado fue eliminada correctamente',
+            'alert-type'=>'error'
+        );
+        return back()->with($notification);
     }
 
 

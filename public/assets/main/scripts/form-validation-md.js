@@ -5,6 +5,10 @@ var FormValidationMd = function() {
 
     var handleValidation = function(form, rules, messages, method) {
 
+        if (typeof messages === 'undefined' || messages === false) {
+            messages = {};
+        }
+
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
