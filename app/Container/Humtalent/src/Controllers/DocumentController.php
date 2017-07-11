@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\DocumentacionPersona;
+use App\Container\Humtalent\src\StatusOfDocument;
 use Illuminate\Support\Facades\DB;
 
 
@@ -29,7 +30,7 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index()//muestra todos los documentos que esten registrados
     {
         $documentos = DocumentacionPersona::all();
         return view('humtalent.documentacion.listaDocumentos', compact('documentos'));
@@ -40,7 +41,7 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create()//preseta el formulario para registrar un documento
     {
         return view('humtalent.documentacion.registroDocumento');
     }
@@ -51,7 +52,7 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//almacena un documento enviado desde el formulario del la funcion create
     {
         DocumentacionPersona::create([
             'DCMTP_Nombre_Documento'  => $request['DCMTP_Nombre_Documento'],
@@ -81,7 +82,7 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id)//presenta el formulario para editar un documento deseado
     {
         $documento = DocumentacionPersona::find($id);
         return view('humtalent.documentacion.editarDocumento', compact('documento'));
@@ -94,7 +95,7 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//se realiza la actulización de datos de los documentos
     {
 
         $documento= DocumentacionPersona::find($id);
@@ -114,9 +115,11 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id)//se elimina el registro de un documento
     {
+        StatusOfDocument::where('FK_Personal_Documento',$id)->delete();
         DocumentacionPersona::destroy($id);
+
         return "Eliminando  ";
     }
 
