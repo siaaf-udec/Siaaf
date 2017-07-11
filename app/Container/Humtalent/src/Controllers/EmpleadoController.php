@@ -31,7 +31,7 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index()//muestra todos los empleados registrados
     {
         //$empleados = Persona::all();
         return view('humtalent.empleado.tablasEmpleados');
@@ -42,7 +42,7 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create()//muestra el formulario de registro de un nuevo empleado
     {
         return view('humtalent.empleado.registroEmpleado');
     }
@@ -53,7 +53,7 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//se alamacena en la base de datos un nuevo registro del empleado
     {
         Persona::create([
             'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
@@ -97,7 +97,7 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
     {
         $empleado = Persona::find($id);
         return view('humtalent.empleado.editarEmpleado', compact('empleado'));
@@ -110,7 +110,7 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//re realiza la actualización de los datos
     {
         $empleado= Persona::find($id);
         $empleado->fill($request->all());
@@ -130,7 +130,7 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
 
         Persona::destroy($id);
