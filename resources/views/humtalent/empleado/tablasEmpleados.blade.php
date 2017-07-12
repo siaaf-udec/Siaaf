@@ -59,7 +59,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Si, estoy seguro!",
-                cancelButtontext:"Cancelar",
+                cancelButtonText:"Cancelar",
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
@@ -96,7 +96,7 @@ jQuery(document).ready(function () {
                 [5, 10, 25, 50, "Todo"]
             ],
             responsive: true,
-            colReorder: true,
+            colReorder: false,
             processing: true,
             serverSide: false,
             ajax: url,

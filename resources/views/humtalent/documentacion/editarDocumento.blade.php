@@ -35,12 +35,7 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
                                     {!! Form::close() !!}
-                                    {!! Form::open ( ['method'=>'DELETE', 'route'=> ['talento.humano.document.destroy', $documento->PK_DCMTP_Id_Documento],'class'=>"form-horizontal", 'role'=>"form"])  !!}
-                                    {{ csrf_field() }}
-                                    <div class="col-md-50 col-md-offset-6">
-                                        {!! Form::submit('Eliminar',['class'=>'btn red','btn-icon remove']) !!}
-                                    </div>
-                                    {!! Form::close() !!}
+
                                 </div>
                             </div>
                         </div>

@@ -61,12 +61,7 @@
                                 <span class="title">Listar  empleados</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ active(['talento.humano.searchById'], 'start active open') }}">
-                            <a href="{{ route('talento.humano.searchById') }}" class="nav-link nav-toggle">
-                                <i class="fa fa-address-book"></i>
-                                <span class="title">Buscar por cedula</span>
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }}">

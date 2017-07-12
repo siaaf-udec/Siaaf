@@ -32,8 +32,8 @@ class DocumentController extends Controller
      */
     public function index()//muestra todos los documentos que esten registrados
     {
-        $documentos = DocumentacionPersona::all();
-        return view('humtalent.documentacion.listaDocumentos', compact('documentos'));
+        //$documentos = DocumentacionPersona::all();
+        return view('humtalent.documentacion.listaDocumentos');
     }
 
     /**
@@ -120,7 +120,11 @@ class DocumentController extends Controller
         StatusOfDocument::where('FK_Personal_Documento',$id)->delete();
         DocumentacionPersona::destroy($id);
 
-        return "Eliminando  ";
+        $notification=array(
+            'message'=>'La información del documento fue eliminada correctamente',
+            'alert-type'=>'error'
+        );
+        return back()->with($notification);
     }
 
 
