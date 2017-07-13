@@ -27,4 +27,8 @@ Route::group(['prefix' => 'funcionario'], function () {
         'uses' => $controller.'FuncionarioController@all',
         'as' => 'funcionario.all'
     ]);
+    Route::get('editar/{id}',[
+        'uses' => $controller.'FuncionarioController@update',
+        'as' => 'funcionario.editar'
+    ]);
 });
