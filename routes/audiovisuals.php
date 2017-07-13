@@ -27,8 +27,8 @@ Route::group(['prefix' => 'funcionario'], function () {
         'uses' => $controller.'FuncionarioController@all',
         'as' => 'funcionario.all'
     ]);
-    Route::get('editar/{id}',[
-        'uses' => $controller.'FuncionarioController@update',
-        'as' => 'funcionario.editar'
-    ]);
+    Route::put('update/{id?}',[             
+    	'uses' => $controller.'FuncionarioController@update',
+    	'as' => 'funcionario.update'         
+    ])->where(['id' => '[0-9]+']);
 });

@@ -120,7 +120,7 @@ jQuery(document).ready(function () {
               
                 var value = $("#id").val();
                 var fns = $("#form_funcionario");
-                var route = "{{ route('funcionario.editar', ['id' => '1070977299']) }}";
+                var route = '{{ route('funcionario.update') }}'+'/'+value;
                 var token = $("#token").val();
 
 
