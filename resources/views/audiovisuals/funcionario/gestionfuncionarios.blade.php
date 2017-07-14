@@ -15,9 +15,11 @@
 @section('content')
 	<div class="col-md-12">
 		@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-users', 'title' => 'Gestion Funcionarios'])
+            @include('audiovisuals.funcionario.modal')
 			<div class="clearfix"> </div><br><br><br>
 			<div class="row">
 				<div class="col-md-12">
+
 					@component('themes.bootstrap.elements.tables.datatables', ['id' => 'gestionar-funcionarios-ajax'])
 						@slot('columns', [
                                 '#' => ['style' => 'width:20px;'],
@@ -60,7 +62,7 @@ jQuery(document).ready(function () {
         {data: 'FNS_Correo', name: 'Correo Electronico'},
         {data: 'FK_FNS_Programa', name: 'Programa'},
         {
-            defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
             data:'action',
             name:'action',
             title:'Acciones',
@@ -92,11 +94,57 @@ jQuery(document).ready(function () {
         e.preventDefault();
         $tr = $(this).closest('tr');
         var dataTable = table.row($tr).data();
-        alert(dataTable.PK_FNS_Cedula);
+        // alert(dataTable.PK_FNS_Cedula);
+        $.get( "../../audiovisuales/funcionario/all/"+ dataTable.PK_FNS_Cedula, function( data ) {
+            console.log(data);
+            //table.ajax.reload();
+            $("#FNS_Nombres").val(data.FNS_Nombres);
+            $("#FNS_Apellidos").val(data.FNS_Apellidos);
+            $("#id").val(data.PK_FNS_Cedula);
+            $("#PK_FNS_Cedula").val(data.PK_FNS_Cedula);
+            $("#FNS_Correo").val(data.FNS_Correo);
+            $("#FNS_Telefono").val(data.FNS_Telefono);
+            $("#FNS_Direccion").val(data.FNS_Direccion);
+            $("#FK_FNS_Estado").val(data.FK_FNS_Estado);
+            $("#FK_FNS_Programa").val(data.FK_FNS_Programa);
+            $("#FNS_Clave").val(data.FNS_Clave);
+
+            // PARA SELECCIONAR LA OPCION DE RADIO
+            if (data.FK_FNS_Rol=='Estudiante'){
+                    $("input[name=FK_FNS_Rol][value='Estudiante']").prop("checked",true);
+            }else {
+                        $("input[name=FK_FNS_Rol][value='Docente']").prop("checked",true);
+            }
+        });
+        $("#actualizar").click(function(){
+              
+                var value = $("#id").val();
+                var fns = $("#form_funcionario");
+                var route = '{{ route('funcionario.update') }}'+'/'+value;
+                var token = $("#token").val();
+
+
+              $.ajax({
+                url: route,
+                    headers: {'X-CSRF-TOKEN': token},
+                    type: 'PUT',
+                    dataType: 'json',
+                    data:$(fns).serialize(),
+                success: function(){
+
+                  
+                  $("#myModal").modal('toggle');// OCULTAR MODAL
+
+                  //$("#msj-success-actualizar").fadeIn();//MENSAJE
+                  
+                }
+              });
+        }); 
     });
     /*$('#ipdate').on('click', function(){
         var id = $('#id_usu').val();
     });*/
+     
 
 });
 </script>
