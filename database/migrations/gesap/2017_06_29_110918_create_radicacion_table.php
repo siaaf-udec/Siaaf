@@ -17,7 +17,8 @@ class CreateRadicacionTable extends Migration
             $table->increments('PK_RDCN_idRadicacion');
             $table->string('RDCN_Min',90);
             $table->String('RDCN_Requerimientos',90);
-
+            $table->integer('FK_TBL_Anteproyecto_id')->unsigned();
+            $table->foreign('FK_TBL_Anteproyecto_id')->references('PK_NPRY_idMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateRadicacionTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TBL_Radicacion');
     }
 }

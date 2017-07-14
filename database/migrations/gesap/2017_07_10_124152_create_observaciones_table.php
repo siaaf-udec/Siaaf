@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProyectoTable extends Migration
+class CreateObservacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProyectoTable extends Migration
      */
     public function up()
     {
-             Schema::connection('gesap')->create('TBL_proyecto', function (Blueprint $table) {
-            $table->increments('PK_PRYT_idProyecto');
-            $table->string('PRYT_Estado',30);
+        Schema::connection('gesap')->create('tbl_observaciones', function (Blueprint $table) {
+            $table->increments('PK_BVCS_idObservacion');
+            $table->string('BVCS_Observacion');
             $table->integer('FK_TBL_Anteproyecto_id')->unsigned();
             $table->foreign('FK_TBL_Anteproyecto_id')->references('PK_NPRY_idMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateProyectoTable extends Migration
      */
     public function down()
     {
-     Schema::dropIfExists('TBL_proyecto');
+        Schema::dropIfExists('tbl_observaciones');
     }
 }

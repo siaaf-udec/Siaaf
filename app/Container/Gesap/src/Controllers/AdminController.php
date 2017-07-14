@@ -3,27 +3,31 @@
 namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    
+     private $path='gesap';
+    protected $connection = 'gesap';
+    
+    public function index(){
+        return view($this->path.'.Administrador.UsersList');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function ListUsers(){
+        $usuarios = DB::select('SELECT * from TBL_users');
+            
+        return Datatables::of($usuarios)->addIndexColumn()->make(true);
+        
+    }
+
+    
+    
     public function create()
     {
         //

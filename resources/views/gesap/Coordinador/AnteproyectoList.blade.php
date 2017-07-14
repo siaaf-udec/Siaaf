@@ -43,6 +43,11 @@
                     'Estado',
                     'Min',
                     'Requerimientos',
+                    'Director',
+                    'Estudiante 1',
+                    'Estudiante 2',
+                    'Jurado 1',
+                    'Jurado 2',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
@@ -64,14 +69,9 @@
 @push('functions')
 <script>
 jQuery(document).ready(function () {
-
-/*
-* Referencia https://datatables.net/reference/option/
-*/
-
-var table, url;
-table = $('#lista-anteproyecto');
-url = "{{ route('anteproyecto.list') }}";
+    var table, url;
+    table = $('#lista-anteproyecto');
+    url = "{{ route('anteproyecto.list') }}";
 
     table.DataTable({
        lengthMenu: [
@@ -83,6 +83,7 @@ url = "{{ route('anteproyecto.list') }}";
        processing: true,
        serverSide: true,
        ajax: url,
+       searching: true,
        language: {
            "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
            "sLengthMenu": "Mostrar _MENU_ registros",
@@ -110,14 +111,19 @@ url = "{{ route('anteproyecto.list') }}";
        columns:[
            {data: 'DT_Row_Index'},
            {data: 'PK_NPRY_idMinr008', "visible": false },
-           {data: 'NPRY_Titulo', name: 'Title'},
-           {data: 'NPRY_Keywords', name: 'Keywords'},
-           {data: 'NPRY_Duracion', name: 'Duracion'},
-           {data: 'NPRY_FechaR', name: 'FechaR',className:'none'},
-           {data: 'NPRY_FechaL', name: 'FechaL',className:'none'},
-           {data: 'NPRY_Estado', name: 'Estado'},
-           {data: 'RDCN_Min', name: 'min',className:'none'},
-           {data: 'RDCN_Requerimientos', name: 'requerimientos',className:'none'},
+           {data: 'NPRY_Titulo', searchable: true},
+           {data: 'NPRY_Keywords', searchable: true},
+           {data: 'NPRY_Duracion',searchable: true},
+           {data: 'NPRY_FechaR', className:'none',searchable: true},
+           {data: 'NPRY_FechaL', className:'none',searchable: true},
+           {data: 'NPRY_Estado',searchable: true},
+           {data: 'RDCN_Min',className:'none',searchable: true},
+           {data: 'RDCN_Requerimientos',className:'none',searchable: true},
+           {data: 'Director',className:'none',searchable: true},
+           {data: 'estudiante1',className:'none',searchable: true},
+           {data: 'estudiante2', className:'none',searchable: true},
+           {data: 'Jurado1', className:'none',searchable: true},
+           {data: 'Jurado2',className:'none',searchable: true},
            {   data:"PK_NPRY_idMinr008",
                name:'action',
                title:'Acciones',
@@ -149,6 +155,8 @@ url = "{{ route('anteproyecto.list') }}";
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
+
+    
 });
 </script>
 @endpush
