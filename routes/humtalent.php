@@ -74,6 +74,46 @@ Route::post('radicarDocumentos', [    //ruta para  asociarlos los documentos req
     'as' => 'talento.humano.radicarDocumentos', //Este es el alias de la ruta
     'uses' => $controller.'AccionEmpController@radicarDocumentos'
 ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados registrados
     'as' => 'talento.humano.tablaDocumentos',
     'uses' => function (Request $request) {
