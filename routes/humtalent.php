@@ -75,45 +75,6 @@ Route::post('radicarDocumentos', [    //ruta para  asociarlos los documentos req
     'uses' => $controller.'AccionEmpController@radicarDocumentos'
 ]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados registrados
     'as' => 'talento.humano.tablaDocumentos',
     'uses' => function (Request $request) {
@@ -129,7 +90,7 @@ Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados
         }
     }
 ]);
-<<<<<<< HEAD
+
 Route::resource('evento', $controller.'EventoController',[  //ruta para el controlador encargado del CRUD de Eventos
     'names'=>[
         'index'=> 'talento.humano.evento.index',
@@ -140,13 +101,12 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'destroy'=> 'talento.humano.evento.destroy',
 
     ]
-=======
+]);
 Route::get('tablaInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
     'as' => 'talento.humano.Tinduccion', //Este es el alias de la ruta
     'uses' => function(){
         return view('humtalent.inducciones.tablaEmpleadosNuevos');
     }
->>>>>>> develop
 ]);
 
 Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
