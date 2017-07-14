@@ -124,7 +124,7 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                    <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Proceso de inducción</span>
                     </a>

@@ -103,4 +103,16 @@ Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados
         }
     }
 ]);
+Route::get('tablaInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+    'as' => 'talento.humano.Tinduccion', //Este es el alias de la ruta
+    'uses' => function(){
+        return view('humtalent.inducciones.tablaEmpleadosNuevos');
+    }
+]);
 
+Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+    'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
+    'uses' => function(){
+        return view('humtalent.inducciones.procesoInduccion');
+    }
+]);
