@@ -29,21 +29,30 @@
                             ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
-                    <br><br><br><br>
-                            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                                @slot('columns', [
-                                    '#',
-                                    'Nombres',
-                                    'Apellidos',
-                                    'Cédula',
-                                    'Teléfono',
-                                    'Email',
-                                    'Rol ',
-                                    'Acciones'
-                                ])
-                            @endcomponent
-
-
+                    <br><br><br>
+                            <table  id="lista-empleados" class="table table-bordered table-hover table-striped table-responsive">
+                                <thead><tr>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Cédula</th>
+                                        <th>Email</th>
+                                        <th>Rol</th>
+                                        <th>Área</th>
+                                    </tr>
+                                </thead>
+                                @foreach($empleados as $empleado)
+                                    <tbody>
+                                        <tr>
+                                        <td>{{$empleado->PRSN_Nombres}}</td>
+                                        <td>{{$empleado->PRSN_Apellidos}}</td>
+                                        <td>{{$empleado->PK_PRSN_Cedula}}</td>
+                                        <td>{{$empleado->PRSN_Correo}}</td>
+                                        <td>{{$empleado->PRSN_Rol}}</td>
+                                        <td>{{$empleado->PRSN_Area}}</td>
+                                        </tr>
+                                     </tbody>
+                                @endforeach
+                            </table>
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">
@@ -76,7 +85,7 @@
 @endpush
 @push('functions')
 <script>
-    @if(Session::has('message'))
+            @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
         case 'success':
@@ -87,13 +96,12 @@
     @endif
 jQuery(document).ready(function () {
 
-        var table, url;
-        table = $('#lista-empleados');
-        url = "{{ route('talento.humano.tablaEmpleados')}}";
+
         $.fn.dataTable.ext.errMode = 'throw';
         /*/para que no le salga errores al funcionario*/
 
-        table.DataTable({
+
+        var table=$('#lista-empleados').DataTable({
 
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -103,6 +111,8 @@ jQuery(document).ready(function () {
             colReorder: false,
             processing: true,
             serverSide: false,
+            select: {style: 'multi'
+            },
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
@@ -128,31 +138,7 @@ jQuery(document).ready(function () {
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-            columns: [
 
-                {data: 'DT_Row_Index'},
-                {data: 'PRSN_Nombres', name: 'Nombres'},
-                {data: 'PRSN_Apellidos', name: 'Apellidos'},
-                {data: 'PK_PRSN_Cedula', name: 'Cédula'},
-                {data: 'PRSN_Telefono', name: 'Teléfono'},
-                {data: 'PRSN_Correo', name: 'Correo Electronico'},
-                {data: 'PRSN_Rol', name: 'Rol'},
-
-
-                {
-                    defaultContent: '<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>',
-                    data:'action',
-                    name:'action',
-                    title:'Acciones',
-                    orderable: false,
-                    searchable: false,
-                    exportable: false,
-                    printable: false,
-                    className: 'text-center',
-                    render: null,
-                    responsivePriority:2
-                }
-            ],
             buttons: [
                 {
                     extend: 'colvis',
@@ -172,6 +158,8 @@ jQuery(document).ready(function () {
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
         });
+
+
         var handleTooltips = function () {
             $('.t-print').attr({'data-container': "body", 'data-placement': "top", 'data-original-title': "Imprimir"});
             $('.t-copy').attr({
@@ -223,7 +211,10 @@ jQuery(document).ready(function () {
 
                 $('.timepicker-no-seconds').timepicker({
                     autoclose: true,
+                    format: 'HH:mm',
                     minuteStep: 1,
+                    //defaultTime: 'current',
+                    //showMeridian: false,
                 });
 
             }

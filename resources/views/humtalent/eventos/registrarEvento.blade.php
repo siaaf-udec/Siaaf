@@ -15,7 +15,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de eventos: '])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Form::open (['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.evento.store']]) !!}
                     {!! Field::textarea(
                             'EVNT_Descripcion',
                             ['label' => 'Descripción del evento:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '4'],
@@ -26,19 +26,19 @@
                             ['help' => 'Digita la fecha de realización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::text(
                             'EVNT_Hora',
-                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
+                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "hh/mm-", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
                     <br><br><br><br>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'], ['class'=>'display'])
                         @slot('columns', [
                             '#',
                             'Nombres',
                             'Apellidos',
                             'Cédula',
-                            'Teléfono',
                             'Email',
                             'Rol ',
+                            'Área',
                             'Acciones'
                         ])
                     @endcomponent
@@ -54,6 +54,7 @@
                     </div>
 
                     {!! Form::close() !!}
+                    <button id="button">Ver</button>
                 </div>
             </div>
     </div>
@@ -87,13 +88,14 @@
     @endif
 jQuery(document).ready(function () {
 
-        var table, url;
-        table = $('#lista-empleados');
+        var  url;
+       // table = $('#lista-empleados');
         url = "{{ route('talento.humano.tablaEmpleados')}}";
         $.fn.dataTable.ext.errMode = 'throw';
         /*/para que no le salga errores al funcionario*/
 
-        table.DataTable({
+
+        var table=$('#lista-empleados').DataTable({
 
             lengthMenu: [
                 [5, 10, 25, 50, -1],
@@ -103,6 +105,8 @@ jQuery(document).ready(function () {
             colReorder: false,
             processing: true,
             serverSide: false,
+           // select: {style: 'multi'
+            // },
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
@@ -134,23 +138,24 @@ jQuery(document).ready(function () {
                 {data: 'PRSN_Nombres', name: 'Nombres'},
                 {data: 'PRSN_Apellidos', name: 'Apellidos'},
                 {data: 'PK_PRSN_Cedula', name: 'Cédula'},
-                {data: 'PRSN_Telefono', name: 'Teléfono'},
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
                 {data: 'PRSN_Rol', name: 'Rol'},
-
+                {data: 'PRSN_Area', name: 'Área'},
+    //'<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>',
 
                 {
-                    defaultContent: '<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>',
-                    data:'action',
-                    name:'action',
-                    title:'Acciones',
+                    data: "PK_PRSN_Cedula",
+                    name: 'action',
+                    title: 'Acciones',
                     orderable: false,
                     searchable: false,
                     exportable: false,
                     printable: false,
-                    className: 'text-center',
-                    render: null,
-                    responsivePriority:2
+                    className: '',
+                    render: function (data, type, full, meta) {
+                        return '<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>';
+                    },
+                    responsivePriority: 2
                 }
             ],
             buttons: [
@@ -172,6 +177,16 @@ jQuery(document).ready(function () {
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
         });
+        $('#lista-empleados tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+
+        } );
+        $('#button').click( function () {
+            var data = table.row('.selected').data();
+            alert( 'You clicked on :  '+data['PK_PRSN_Cedula']);
+        } );
+
+
         var handleTooltips = function () {
             $('.t-print').attr({'data-container': "body", 'data-placement': "top", 'data-original-title': "Imprimir"});
             $('.t-copy').attr({
@@ -223,7 +238,10 @@ jQuery(document).ready(function () {
 
                 $('.timepicker-no-seconds').timepicker({
                     autoclose: true,
+                    format: 'HH:mm',
                     minuteStep: 1,
+                    //defaultTime: 'current',
+                    //showMeridian: false,
                 });
 
             }

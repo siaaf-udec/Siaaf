@@ -18,12 +18,6 @@ use Yajra\Datatables\Datatables;
 
 class accionEmpController extends Controller
 {
-    public function buscarByCedula(Request $request) //funcion que realiza una busqueda de los empleados a partir de el número de identificación
-    {
-        $id = $request['PK_PRSN_Cedula'];   //se recibe el el número enviado por el formulario correspondiente
-        $empleados = Persona::where('PK_PRSN_Cedula', $id)->get(); //se realzia la consulta a la base de datos
-        return view('humtalent.empleado.listaEmpleados', compact('empleados')); //se retorna toda la información correspondiente en una tabla específica
-    }
     public function listarDocsRad(Request $request){ //funcion que se encarga de listar los documentos registrados y que debern ser entregados por los empleados
         $id  = $request['PK_PRSN_Cedula'];  //se recibe como parametro el numero de cedula del empleado a quien se le van a radicar los documentos
         $empleados = Persona::where('PK_PRSN_Cedula',$id)->get();//se realiza la consulta del empleado correspondiente

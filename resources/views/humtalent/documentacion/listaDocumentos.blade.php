@@ -133,7 +133,7 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '<a href="rrhh/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="rrhh/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                        return '<a href="document/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="document/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
                     },
                     responsivePriority: 2
                 }

@@ -4,6 +4,7 @@
  */
 
 use App\Container\Humtalent\src\Persona;
+use App\Container\Humtalent\src\DocumentacionPersona;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 
@@ -38,11 +39,7 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el c
 
     ]
 ]);
-/*Route::get('docentesList/{rol}', [    //ruta para listar los docentes registrados.
-    'as' => 'talento.humano.docentesList', //Este es el alias de la ruta
-    'uses' => $controller.'AccionEmpController@listarDocentes'
-]);
-*/
+
 Route::get('empleadoList', function ()    { //ruta que prsenta la lista de los empleados registrados
     return view('humtalent.empleado.tablasEmpleados');
 })->name('talento.humano.rrhh.empleadoList');
@@ -63,17 +60,6 @@ Route::get('tablaEmpleados',[   //ruta que realiza la consulta de los empleados 
     }
 ]);
 
-
-Route::get('searchById', [    //ruta para buscar los empleados  registrados por cedula.
-    'as' => 'talento.humano.searchById', //Este es el alias de la ruta
-    'uses' => function(){
-                 return view('humtalent.empleado.consultaEmpleado');
-    }
-]);
-Route::post('buscarCedula', [    //ruta para buscar los empleados  registrados por cedula.
-    'as' => 'talento.humano.buscarCedula', //Este es el alias de la ruta
-    'uses' => $controller.'AccionEmpController@buscarByCedula'
-]);
 Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
     'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
     'uses' => function(){
@@ -102,5 +88,16 @@ Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados
             ], 412);
         }
     }
+]);
+Route::resource('evento', $controller.'EventoController',[  //ruta para el controlador encargado del CRUD de Eventos
+    'names'=>[
+        'index'=> 'talento.humano.evento.index',
+        'create'=> 'talento.humano.evento.create',
+        'store'=> 'talento.humano.evento.store',
+        'edit'=> 'talento.humano.evento.edit',
+        'update'=> 'talento.humano.evento.update',
+        'destroy'=> 'talento.humano.evento.destroy',
+
+    ]
 ]);
 

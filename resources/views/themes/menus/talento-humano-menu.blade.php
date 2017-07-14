@@ -48,21 +48,11 @@
                         <span class="title">Registrar Empleado</span>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a href="javascript:" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.rrhh.index'], 'start active open') }} ">
+                    <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Consultar Empleados</span>
-                        <span class="arrow"></span>
                     </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item ">
-                            <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
-                                <i class="fa fa-address-book"></i>
-                                <span class="title">Listar  empleados</span>
-                            </a>
-                        </li>
-
-                    </ul>
                 </li>
                 <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }}">
                     <a href="{{ route('talento.humano.buscarRadicar') }}" class="nav-link nav-toggle">
@@ -88,7 +78,28 @@
                 <li class="nav-item {{ active(['talento.humano.document.index'], 'start active open') }}">
                     <a href="{{ route('talento.humano.document.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Consultar Documento</span>
+                        <span class="title">Consultar Documentos</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Eventos</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ active(['talento.humano.evento.create'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.evento.create') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Registrar Evento</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['talento.humano.evento.index'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.evento.index') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Consultar Documentos</span>
                     </a>
                 </li>
             </ul>
