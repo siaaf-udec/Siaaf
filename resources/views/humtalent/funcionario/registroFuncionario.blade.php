@@ -1,93 +1,43 @@
 @extends('material.layouts.dashboard')
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 
 @section('page-title','Registro de funcionario:')
 
 
 @section('content')
     <div class="col-md-12">
-        <div class="portlet portlet-sortable light bordered portlet-form">
-            <div class="portlet-title">
-                <div class="caption font-green">
-                    <i class=" icon-book-open font-green"></i>
-                    <span class="caption-subject bold uppercase"> Formulario de registro:  </span>
-                </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="clearfix"> </div>
-                <form  role="form" method="POST" id="form_material" action="{{ route('rrhh.store') }} ">
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    <input required maxlength="40" autocomplete="off" class="form-control" id="name" name="name" type="text">
-                                    <label for="name" class="control-label">Nombre completo:</label>
-                                    <span class="help-block"> Digita el nombre completo del funcionario. </span>
-                                    <i class=" fa fa-user "></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+            <div class="row">
+                <div class="col-md-7 col-md-offset-2">
+                    {!! Form::open (['id'=>'form_funcionario','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Field:: text('name',null,['label'=>'Nombre completo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                         ['help' => 'Digita el nombre completo del funcionario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: email('email',null,['label'=>'Correo institucional:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
+                                                         ['help' => 'Digita un correo institucional.','icon'=>'fa fa-envelope-open '] ) !!}
 
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    <input required maxlength="50" autocomplete="off" class="form-control" id="email" name="email" type="email">
-                                    <label for="email" class="control-label">Correo institucional:</label>
-                                    <span class="help-block"> Digita un correo institucional.</span>
-                                    <i class=" fa fa-envelope-open "></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    <input required maxlength="20" minlength="6" class="form-control" id="password" name="password" type="password" value="">
-                                    <label for="password" class="control-label">Contraseña:</label>
-                                    <span class="help-block"> Digita una contraseña.</span>
-                                    <i class=" fa fa-key "></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {!! Field:: password('password',['label'=>'Contraseña:', 'class'=> 'form-control','minlength'=>'6', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
+                                                         ['help' => 'Digita una contraseña.','icon'=>'fa fa-key '] ) !!}
 
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-2">
-                            <div  class="form-group form-md-line-input">
-                                <div class="input-icon">
-                                    <input required maxlength="20" class="form-control" id="password_confirmation" name="password_confirmation" type="password" value="">
-                                    <label for="password_confirmation" class="control-label">Confirmación de la contraseña:</label>
-                                    <span class="help-block"> Digita la contraseña anterior.</span>
-                                    <i class=" fa fa-key "></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {!! Field:: password('password_confirmation',['label'=>'Confirmación de la contraseña:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
+                                                        ['help' => 'Digita la contraseña anterior.','icon'=>'fa fa-key '] ) !!}
+
                     <div class="form-actions">
                         <div class="row">
-                            <div class=" col-md-offset-2">
+                            <div class=" col-md-offset-0">
                                 {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
                                 {!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
                             </div>
                         </div>
                     </div>
 
-                </form>
+                    {!! Form::close() !!}
+                </div>
             </div>
-        </div>
     </div>
-    </div>
-
-
-
-
-
+    @endcomponent
 
 @endsection
 @push('plugins')
@@ -95,6 +45,7 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script>
@@ -116,7 +67,7 @@
 
         var handleValidation = function() {
 
-            var form1 = $('#form_material');
+            var form1 = $('#form_funcionario');
             var error1 = $('.alert-danger', form1);
             var success1 = $('.alert-success', form1);
 
@@ -168,6 +119,10 @@
                 invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debes corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -199,6 +154,11 @@
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.success('Información del funcionario almacenada correctamente','Registro exitoso:')
+                    form1.submit();
                 }
             });
         }

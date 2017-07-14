@@ -6,6 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class StatusOfDocument extends Model
 {
+    protected $connection = 'humtalent';
+
+    protected $table = 'TBL_Estado_Documentacion';
+
+   // protected $primaryKey = 'PK_DCMTP_Id_Documento';
+
+    protected $fillable = [
+        'EDCMT_Fecha','EDCMT_Proceso_Documentacion','FK_TBL_Persona_Cedula','FK_Personal_Documento',
+    ];
+
+
+
     public function Personas(){
         return $this->belongsTo(Persona::class);
     }

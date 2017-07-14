@@ -1,29 +1,32 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-<!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
-@section('title', '| Información de la documentación')
+@section('title', '| Información personal nuevo')
 
-@section('page-title', 'Listado de documentación registrada :')
+@section('page-title', 'Listado del personal nuevo:')
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación registrada:'])
-
-
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
             <div class="row">
                 <div class="col-md-12">
 
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-documentos'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
-                            'Documento',
+                            'Nombres',
+                            'Apellidos',
+                            'Cédula',
+                            'Estado',
+                            'Email',
+                            'Rol ',
+                            'Teléfono',
                             'Acciones'
                         ])
                     @endcomponent
@@ -36,7 +39,6 @@
 @endsection
 
 @push('plugins')
-<!-- Datatables Scripts -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
@@ -45,41 +47,13 @@
 @endpush
 @push('functions')
 <script>
-    function mifuncion(){
-        form1=$("#form-delete");
-        swal({
-                title: "Estas seguro ?",
-                text: "No podras deshacer estos cambios",         type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Si, estoy seguro!",
-                cancelButtonText:"Cancelar",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function(confirmacion){
-                if(confirmacion){
-                    form1.submit();
-                }else {
-                    swal("Cancelado", "Tu información no ha sido eliminada.", "error");
-                }
 
-            });
-    };
-            @if(Session::has('message'))
-    var type="{{Session::get('alert-type','info')}}"
-    switch(type){
-        case 'error':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}",'Eliminación exitosa:');
-            break;
-    }
-    @endif
+
 jQuery(document).ready(function () {
 
         var table, url;
-        table = $('#lista-documentos');
-        url = "{{ route('talento.humano.tablaDocumentos')}}";
+        table = $('#lista-empleados');
+        url = "{{ route('talento.humano.tablaEmpleados')}}";
         $.fn.dataTable.ext.errMode = 'throw';
         /*/para que no le salga errores al funcionario*/
 
@@ -121,10 +95,17 @@ jQuery(document).ready(function () {
             columns: [
 
                 {data: 'DT_Row_Index'},
-                {data: 'DCMTP_Nombre_Documento', name: 'documento'},
+                {data: 'PRSN_Nombres', name: 'Nombres'},
+                {data: 'PRSN_Apellidos', name: 'Apellidos'},
+                {data: 'PK_PRSN_Cedula', name: 'Cédula'},
+                {data: 'PRSN_Estado_Persona', name: 'Estado'},
+                {data: 'PRSN_Correo', name: 'Correo Electronico'},
+                {data: 'PRSN_Rol', name: 'Rol'},
+                {data: 'PRSN_Telefono', name: 'Teléfono'},
+
 
                 {
-                    data: "PK_DCMTP_Id_Documento",
+                    data: "PK_PRSN_Cedula",
                     name: 'action',
                     title: 'Acciones',
                     orderable: false,
@@ -133,7 +114,7 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '<a href="document/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="document/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                        return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="procesoInduccion" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
                     },
                     responsivePriority: 2
                 }
