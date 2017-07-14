@@ -2,22 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: Yeison Gomez
- * Date: 28/06/2017
- * Time: 2:04 PM
+ * Date: 11/07/2017
+ * Time: 10:49 PM
  */
 
 namespace App\Container\Humtalent\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Humtalent\src\DocumentacionPersona;
-use App\Container\Humtalent\src\StatusOfDocument;
-use Illuminate\Support\Facades\DB;
+use App\Container\Humtalent\src\Event;
+use App\Container\Humtalent\src\Persona;
 
 
-class DocumentController extends Controller
+class EventoController
 {
-
     protected $userRepository;
 
     public function __construct(UserInterface $userRepository)
@@ -32,8 +30,8 @@ class DocumentController extends Controller
      */
     public function index()//muestra todos los documentos que esten registrados
     {
-        //$documentos = DocumentacionPersona::all();
-        return view('humtalent.documentacion.listaDocumentos');
+
+        //return view('humtalent.documentacion.listaDocumentos');
     }
 
     /**
@@ -43,7 +41,8 @@ class DocumentController extends Controller
      */
     public function create()//preseta el formulario para registrar un documento
     {
-        return view('humtalent.documentacion.registroDocumento');
+        //$empleados=Persona::all();
+        return view('humtalent.eventos.registrarEvento');
     }
 
     /**
@@ -54,11 +53,16 @@ class DocumentController extends Controller
      */
     public function store(Request $request)//almacena un documento enviado desde el formulario del la funcion create
     {
-        DocumentacionPersona::create([
-            'DCMTP_Nombre_Documento'  => $request['DCMTP_Nombre_Documento'],
+        $hora=$request['EVNT_Hora'];
+        $hora=strtotime($hora);
+        $hora=date("H:i",$hora);
+        Event::create([
+            'EVNT_Descripcion'  => $request['EVNT_Descripcion'],
+            'EVNT_Fecha'        => $request['EVNT_Fecha'],
+            'EVNT_Hora'         => $hora,//$request['EVNT_Hora'],
         ]);
         $notification=array(
-            'message'=>'La información del documento fue almacenada',
+            'message'=>'La información del evento fue almacenada',
             'alert-type'=>'success'
         );
         return back()->with($notification);
@@ -126,6 +130,4 @@ class DocumentController extends Controller
         );
         return back()->with($notification);
     }
-
-
 }

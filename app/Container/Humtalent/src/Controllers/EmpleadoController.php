@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
+use App\Container\Humtalent\src\DocumentacionPersona;
+use App\Container\Humtalent\src\StatusOfDocument;
 use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
@@ -29,10 +31,10 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index()//muestra todos los empleados registrados
     {
-       // $empleados = Persona::all();
-        //return view('humtalent.empleado.listaEmpleados', compact('empleados'));
+        //$empleados = Persona::all();
+        return view('humtalent.empleado.tablasEmpleados');
     }
 
     /**
@@ -40,7 +42,7 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create()//muestra el formulario de registro de un nuevo empleado
     {
         return view('humtalent.empleado.registroEmpleado');
     }
@@ -51,7 +53,7 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//se alamacena en la base de datos un nuevo registro del empleado
     {
         Persona::create([
             'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
@@ -68,7 +70,12 @@ class EmpleadoController extends Controller
             'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
             'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
         ]);
-        return back()->with('success','El empleado fue registrado correctamente');
+
+        $notification=array(
+            'message'=>'La información del empleado fue almacenada correctamente.',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);
 
     }
 
@@ -90,7 +97,7 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
     {
         $empleado = Persona::find($id);
         return view('humtalent.empleado.editarEmpleado', compact('empleado'));
@@ -103,14 +110,18 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//re realiza la actualización de los datos
     {
         $empleado= Persona::find($id);
         $empleado->fill($request->all());
         //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
         //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
         $empleado->save();
-        return back()->with('success','El empleado fue actualizado correctamente');
+        $notification=array(
+            'message'=>'La información del empleado fue modificada correctamente',
+            'alert-type'=>'info'
+        );
+        return back()->with($notification);
     }
 
     /**
@@ -119,10 +130,16 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
+
         Persona::destroy($id);
-        return('El empleado fue eliminado correctamente');
+        $notification=array(
+            'message'=>'La información del empleado fue eliminada correctamente',
+            'alert-type'=>'error'
+        );
+        return back()->with($notification);
     }
+
 
 }
