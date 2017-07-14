@@ -42,6 +42,7 @@ class accionEmpController extends Controller
     }
     public function radicarDocumentos(Request $request)//funcion que almacena las radicación de los documentos
     {
+        $id  = $request['PK_PRSN_Cedula'];
         $documento=$request['FK_Personal_Documento'];   //se toman los documentos a radicar.
         $radicados= StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])->get(['FK_Personal_Documento']); //se realiza una consulta de los documentos ya radicados para el empleado
         $docsRad=[];
@@ -87,11 +88,12 @@ class accionEmpController extends Controller
                 ]);
             }
         }
-       /* $notification=array(
-            'message'=>'La documentación se radico correctamente',
+        $notification=array(
+            'message'=>'La información del empleado fue almacenada correctamente.',
             'alert-type'=>'success'
         );
-        return back()->with($notification);*/
-       return "La documentación se radico correctamente";
+
+        return view('humtalent.empleado.buscarEmpleado')->with($notification);
+
     }
 }
