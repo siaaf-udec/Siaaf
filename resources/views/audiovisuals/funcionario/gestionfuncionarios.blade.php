@@ -271,7 +271,7 @@ jQuery(document).ready(function () {
                     formData.append('PK_FNS_Cedula', $('input:text[name="PK_FNS_Cedula_registrar"]').val());
                     formData.append('FNS_Nombres', $('input:text[name="FNS_Nombres_registrar"]').val());
                     formData.append('FNS_Apellidos', $('input:text[name="FNS_Apellidos_registrar"]').val());
-                    formData.append('FNS_Correo', $('input:mail[name="FNS_Correo_registrar"]').val());
+                    formData.append('FNS_Correo', $('input:text[name="FNS_Correo_registrar"]').val());
                     formData.append('FNS_Telefono', $('input:text[name="FNS_Telefono_registrar"]').val());
                     formData.append('FNS_Direccion', $('input:text[name="FNS_Direccion_registrar"]').val());
                     formData.append('FK_FNS_Estado', $('input:text[name="FK_FNS_Estado_registrar"]').val());
