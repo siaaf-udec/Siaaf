@@ -12,6 +12,15 @@ Route::group(['prefix' => 'lol'], function () {
   ]);
 });
 
+Route::group(['prefix' => 'icetex'], function () {
+  $controller = "\\App\\Container\\Financial\\Src\\Controllers\\";
+  Route::get('app/index', [
+      'uses' => $controller.'IcetexController@index',
+      'as' => 'icetex.index'
+  ]);
+});
+
+
 Route::get('/', [
     'as' => 'financial.index',
     'uses' => function(){
