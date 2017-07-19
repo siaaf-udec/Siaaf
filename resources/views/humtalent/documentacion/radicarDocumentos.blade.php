@@ -7,9 +7,7 @@
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
-
             {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
                     <div class="form-wizard">
                         <div class="form-body">
@@ -134,14 +132,8 @@
                             </div>
                         </div>
                     </div>
-
-
-
                         {!! Form::close() !!}
-
-
     @endcomponent
-
 @endsection
 @push('plugins')
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
