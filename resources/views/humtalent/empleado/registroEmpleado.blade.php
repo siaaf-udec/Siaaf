@@ -1,6 +1,9 @@
 @extends('material.layouts.dashboard')
 @push('styles')
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('page-title', 'Registro de empleado:')
@@ -35,10 +38,12 @@
                         {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: select('PRSN_Ciudad',['bogota','medellin'],['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
 
-                        {!! Field:: text('PRSN_Area',null,['label'=>'Area o programa de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+
+
+                        {!! Field:: text('PRSN_Area',null,['label'=>'Area o programa de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'on'],
                                                          ['help' => 'Digita el area o facultad del empleado.','icon'=>'fa fa-group'] ) !!}
 
                         {!! Field:: text('PRSN_Eps',null,['label'=>'EPS:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -78,6 +83,7 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script type="text/javascript">
@@ -252,7 +258,30 @@
         };
 
     }();
-    jQuery(document).ready(function() {
+            var ComponentsSelect2 = function() {
+
+                var handleSelect = function() {
+
+                    $.fn.select2.defaults.set("theme", "bootstrap");
+
+                    $(".pmd-select2").select2({
+                        width: null,
+                        placeholder: "Selecccionar",
+                    });
+
+                }
+
+                return {
+                    init: function() {
+                        handleSelect();
+                    }
+                };
+
+            }();
+
+
+            jQuery(document).ready(function() {
+                ComponentsSelect2.init();
         FormValidationMd.init();
         ComponentsBootstrapMaxlength.init();
     });

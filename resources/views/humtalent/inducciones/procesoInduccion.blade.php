@@ -124,7 +124,7 @@
                     {!! Form::close() !!}
 
 
-        </div>
+
     @endcomponent
 @endsection
 
