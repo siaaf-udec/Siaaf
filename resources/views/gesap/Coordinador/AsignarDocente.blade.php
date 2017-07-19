@@ -236,6 +236,10 @@ var FormWizard = function () {
                 invalidHandler: function (event, validator) { //display error alert on form submit   
                     success.hide();
                     error.show();
+                    toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
                     App.scrollTo(error, -200);
                 },
 

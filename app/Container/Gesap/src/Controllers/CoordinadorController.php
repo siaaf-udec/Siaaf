@@ -204,7 +204,13 @@ class CoordinadorController extends Controller
             
             
             
-            return redirect()->route('min.index');
+            //return redirect()->route('min.index');
+            
+            $notification=array(
+                'message'=>'La información del empleado fue almacenada correctamente.',
+                'alert-type'=>'success'
+            );
+        return back()->with($notification);
         
         }catch(Exception $e){
             return "Fatal Error =".$e->getMessage();
