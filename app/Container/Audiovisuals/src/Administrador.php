@@ -1,9 +1,9 @@
 <?php
 
+// MODELO ADMINISTRADOR
 namespace App\Container\Audiovisuals\src;
 
-use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Model; 
 class Administrador extends Model
 {
  	protected $connection = 'audiovisuals';
