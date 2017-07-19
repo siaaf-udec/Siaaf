@@ -33,26 +33,34 @@
             </div>
         </div>
     
-{!! Form::open(['route' => 'min.store', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'']) !!}
+{!! Form::open(['route' => 'min.store', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
                     
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            {!! Field::text('title',
-                ['label' => 'Titulo del proyecto', 'max' => '250', 'min' => '2', 'required', 'auto' => 'off'],
-                ['help' => 'Ingrese el titulo del proyecto', 'icon' => 'fa fa-user']) !!}
+            <div class="form-group form-md-line-input">
+            <div class="input-icon">
+                {{ Form::textarea('title', null, 
+                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],
+                [ 'icon' => 'fa fa-user']) }}
+                <label for="title" class="control-label">Titulo del proyecto</label>
+                <span class="help-block"> Ingrese el titulo del proyecto </span>
+                <i class=" fa fa-user "></i>
+            </div>
+            </div>
+            
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
             {!! Field::select('estudiante1',
-                ['1' => 'Daniel', '2' => 'Felipe'],
+                $estudiantes,
                 null,
-                [ 'label' => 'Estudiante 1']) !!}
+                [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
             {!! Field::select('estudiante2',
-                    ['1' => 'Daniel', '2' => 'Felipe'],
+                    array_replace(["0"=>"No aplica"],$estudiantes),
                     null,
-                    [ 'label' => 'Estudiante 2']) !!}
+                    [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
         </div>
         <div class="col-xs-12 col-md-12 col-lg-12">
             {!! Field::text('Keywords',
@@ -76,7 +84,7 @@
             
         </div>
         
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
             <div class="form-md-line-input" style="margin: 0 0 35px;">
                 <div class="fileinput-new input-icon" data-provides="fileinput">    
                         <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
@@ -88,13 +96,13 @@
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Requerimientos" class=""> </span>
+                        <input type="file" name="Requerimientos" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
             </div> 
         </div>
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
             <div class="form-md-line-input" style="margin: 0 0 35px;">
                 <div class="fileinput-new input-icon" data-provides="fileinput">    
                         <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
@@ -106,7 +114,7 @@
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class=""> </span>
+                        <input type="file" name="Min" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
@@ -144,6 +152,7 @@
 
 @push('functions')
 <script type="text/javascript">
+    
 var ComponentsDateTimePickers = function () {
             var handleDatePickers = function () {
                 if (jQuery().datepicker) {
@@ -199,82 +208,81 @@ var ComponentsSelect2 = function() {
     }();
     
 var FormValidationMd = function() {
+    var handleValidation = function() {
+        var form1 = $('#form-register-min');
+        var error1 = $('.alert-danger', form1);
+        var success1 = $('.alert-success', form1);
 
-            var handleValidation = function() {
-
-                var form1 = $('#form_material');
-                var error1 = $('.alert-danger', form1);
-                var success1 = $('.alert-success', form1);
-
-                form1.validate({
-                    errorElement: 'span', //default input error message container
-                    errorClass: 'help-block help-block-error', // default input error message class
-                    focusInvalid: true, // do not focus the last invalid input
-                    ignore: "", // validate all fields including form hidden input
-                    messages: {
-                        'tags[]': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        },
-                        'radios': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        }
-                    },
-                    rules: {
-                        title: {
-                            minlength: 2,
-                            required: true
-                        },
-                    },
-
-                    invalidHandler: function(event, validator) { //display error alert on form submit
-                        success1.hide();
-                        error1.show();
-                        App.scrollTo(error1, -200);
-                    },
-
-                    errorPlacement: function(error, element) {
-                        if (element.is(':checkbox')) {
-                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                        } else if (element.is(':radio')) {
-                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                        } else {
-                            error.insertAfter(element); // for other inputs, just perform default behavior
-                        }
-                    },
-
-                    highlight: function(element) { // hightlight error inputs
-                        $(element)
-                            .closest('.form-group').addClass('has-error'); // set error class to the control group
-                    },
-
-                    unhighlight: function(element) { // revert the change done by hightlight
-                        $(element)
-                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                    },
-
-                    success: function(label) {
-                        label
-                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                    },
-
-                    submitHandler: function(form) {
-                        success1.show();
-                        error1.hide();
-                    }
-                });
-            }
-
-            return {
-                //main function to initiate the module
-                init: function() {
-                    handleValidation();
+        $.validator.addMethod("xxxValidation", function(value, element) {
+            return value !== '0000-00-00'
+        }, "Falta la fecha");
+        
+        
+        form1.validate({
+            errorElement: 'span',                       //default input error message container
+            errorClass: 'help-block help-block-error',  // default input error message class
+            focusInvalid: true,                         // do not focus the last invalid input
+            ignore: "",                                 // validate all fields including form hidden input
+            invalidHandler: function(event, validator) {//display error alert on form submit
+                success1.hide();
+                error1.show();
+                App.scrollTo(error1, -500);
+            },
+            
+            rules:{
+                FechaR:{
+                    xxxValidation: true
                 }
-            };
-        }();    
+                
+                
+                
+            },
+            errorPlacement: function(error, element) {
+                if (element.hasClass('select2-hidden-accessible')) {     
+                    error.insertAfter(element.next('span'));  // select2
+                }else if (element.is(':file')) {     
+                    error.insertAfter(element.closest('.fileinput-new '));  // select2
+                }else{
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function(element) { // hightlight error inputs
+                var elem=$(element)
+                if(elem.is(':file')){
+                    elem.closest('.form-md-line-input').addClass('has-error');
+                }else
+                    elem.closest('.form-group').addClass('has-error');                           
+            },
+
+            unhighlight: function(element) { // revert the change done by hightlight
+                if(element.is(':file')){
+                    element.closest('.form-md-line-input').removeClass('has-error');
+                }else
+                    element.closest('.form-group').removeClass('has-error');
+                },
+
+            success: function(label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function(form) {
+                success1.show();
+                error1.hide();
+            }
+        });
+    }
+
+    return {
+        //main function to initiate the module
+        init: function() {
+            handleValidation();
+        }
+    };
+}();    
 
         jQuery(document).ready(function() {
+            $('.select2-selection--single').addClass('form-control');
             FormValidationMd.init();
             ComponentsSelect2.init();
             ComponentsDateTimePickers.init();

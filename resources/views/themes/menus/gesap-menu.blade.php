@@ -1,4 +1,3 @@
-
 <li class="nav-item {{ active(['gesap.*'], 'start active open') }}">
     <a href="javascript:;" class="nav-link nav-toggle">
         <i class="fa fa-cube"></i>
@@ -39,8 +38,8 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
-                <li class="nav-item {{ active(['talento.humano.document.create'], 'start active open') }}">
-                    <a href="{{ route('talento.humano.document.create') }}" class="nav-link nav-toggle">
+                <li class="nav-item ">
+                    <a href="{{ route('admin.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Asignar Rol</span>
                     </a>
@@ -55,15 +54,15 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                    <a href="{{ route('anteproyecto.index.listdirector') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Evaluar Proyecto</span>
+                        <span class="title">Director de Proyecto</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                    <a href="{{ route('anteproyecto.index.listjurado') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Estadisticas</span>
+                        <span class="title">Jurado de Proyecto</span>
                     </a>
                 </li>
             </ul>

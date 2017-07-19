@@ -12,5 +12,5 @@ class Radicacion extends Model
 
     protected $primaryKey = 'PK_RDCN_idRadicacion';
 
-    protected $fillable = ['RDCN_Min','RDCN_Requerimientos'];
+    protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_id'];
 }
