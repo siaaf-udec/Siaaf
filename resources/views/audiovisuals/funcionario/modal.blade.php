@@ -16,7 +16,10 @@
 			@include('audiovisuals.funcionario.forms.fns')
 		</div>
 		<div class="modal-footer">
-			{!!link_to('#', $title='Actualizar', $atrributes = ['id'=>'actualizar', 'class'=>'btn green'], $secure = null) !!}
+			{{-- {!!link_to('#', $title='Actualizar', $atrributes = ['id'=>'actualizar', 'class'=>'btn green'], $secure = null) !!} --}}
+			{!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+
 	{!! Form::close() !!}
 		</div>
 	</div>

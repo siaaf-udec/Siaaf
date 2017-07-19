@@ -7,6 +7,15 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a href="{{ route('talento.humano.rrhh.index') }}">
+                        <button id="sample_editable_1_new" class="btn green" >
+                            <i class="fa fa-arrow-circle-left"></i>Volver
+                        </button>
+                    </a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::model ($empleado, ['id'=>'form_material','method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
@@ -74,7 +83,7 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-            @if(Session::has('message'))
+   @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
         case 'info':
@@ -82,7 +91,7 @@
             toastr.info("{{Session::get('message')}}",'Modificación exitosa:');
             break;
     }
-            @endif
+    @endif
     var FormValidationMd = function() {
         var handleValidation = function() {
 

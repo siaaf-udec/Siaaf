@@ -100,13 +100,14 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'update'=> 'talento.humano.evento.update',
         'destroy'=> 'talento.humano.evento.destroy',
 
-    ]
-]);
+    ]]);
+
 Route::get('tablaInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
     'as' => 'talento.humano.Tinduccion', //Este es el alias de la ruta
     'uses' => function(){
         return view('humtalent.inducciones.tablaEmpleadosNuevos');
     }
+
 ]);
 
 Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos

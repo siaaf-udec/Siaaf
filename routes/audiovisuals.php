@@ -31,4 +31,14 @@ Route::group(['prefix' => 'funcionario'], function () {
     	'uses' => $controller.'FuncionarioController@update',
     	'as' => 'funcionario.update'         
     ])->where(['id' => '[0-9]+']);
+
+    Route::delete('delete/{id?}',[             
+        'uses' => $controller.'FuncionarioController@destroy',
+        'as' => 'funcionario.delete'         
+    ])->where(['id' => '[0-9]+']);
+    
+    Route::post('create',[             
+        'uses' => $controller.'FuncionarioController@store',
+        'as' => 'funcionario.create'         
+    ]);
 });
