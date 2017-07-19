@@ -8,6 +8,8 @@
     <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 
@@ -33,7 +35,7 @@
             </div>
         </div>
     
-{!! Form::open(['route' => 'min.store', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
+{!! Form::open(['route' => 'min.store', 'method' => 'POST', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
                     
 
     <div class="row">
@@ -148,6 +150,10 @@
     <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
@@ -226,6 +232,10 @@ var FormValidationMd = function() {
             invalidHandler: function(event, validator) {//display error alert on form submit
                 success1.hide();
                 error1.show();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
                 App.scrollTo(error1, -500);
             },
             
@@ -266,9 +276,13 @@ var FormValidationMd = function() {
                     .closest('.form-group').removeClass('has-error'); // set success class to the control group
             },
 
-            submitHandler: function(form) {
+            submitHandler: function(form1) {
                 success1.show();
                 error1.hide();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.success('Información guardada correctamente','Registro exitoso:')
             }
         });
     }

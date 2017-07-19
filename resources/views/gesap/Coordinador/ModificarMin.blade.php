@@ -242,6 +242,10 @@ var FormValidationMd = function() {
             invalidHandler: function(event, validator) {//display error alert on form submit
                 success1.hide();
                 error1.show();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
                 App.scrollTo(error1, -500);
             },
             rules:{

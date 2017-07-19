@@ -64,7 +64,14 @@
                             <h3 class="block">Escoger Director</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
+                                @if(!empty($director))
+                                    @foreach ($director as $direc)
+                                        {!! Field::hidden('PK_director', $direc->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('director',$docentes,$direc->Cedula)!!}
+                                    @endforeach
+                                @else
                                     {!! Field::select('director',$docentes,null) !!}
+                                @endif
                                 </div>
                             </div>
                         </div>
@@ -72,9 +79,25 @@
                             <h3 class="block">Escoger Jurados</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
+                                    @if(!empty($jurado1))
+                                    @foreach ($jurado1 as $jur1)
+                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
+                                    @endforeach
+                                @else
                                     {!! Field::select('jurado1',$docentes,null) !!}
+                                @endif
+                                    
                                     <hr>
+                                    @if(!empty($jurado2))
+                                    @foreach ($jurado2 as $jur2)
+                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}
+                                    @endforeach
+                                @else
                                     {!! Field::select('jurado2',$docentes,null) !!}
+                                @endif
+                                    
                                 </div>
                             </div>
                         </div>
@@ -213,6 +236,10 @@ var FormWizard = function () {
                 invalidHandler: function (event, validator) { //display error alert on form submit   
                     success.hide();
                     error.show();
+                    toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
                     App.scrollTo(error, -200);
                 },
 
