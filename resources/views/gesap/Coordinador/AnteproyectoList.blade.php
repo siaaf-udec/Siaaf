@@ -109,8 +109,7 @@ jQuery(document).ready(function () {
            }
        },
        columns:[
-           
-           {data: 'PK_NPRY_idMinr008' },
+           {data: 'DT_Row_Index'},
            {data: 'PK_NPRY_idMinr008', "visible": false },
            {data: 'NPRY_Titulo', searchable: true},
            {data: 'NPRY_Keywords', searchable: true},
