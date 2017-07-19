@@ -102,7 +102,9 @@ class RolePermissionController extends Controller
     {
         if($request->ajax() && $request->isMethod('POST')){
             $role = $this->roleRepository->show($id, []);
-            $role->perms()->sync($request->get('multi_permission'));
+            $role->perms()->sync(
+                ($request->get('multi_permission') !== null) ? explode(',', $request->get('multi_permission')) : []
+            );
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
