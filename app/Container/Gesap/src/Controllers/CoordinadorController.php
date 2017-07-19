@@ -24,28 +24,135 @@ class CoordinadorController extends Controller
     public function index(){
         return view($this->path.'.Coordinador.AnteproyectoList');
     }
+    
+    public function getSql($query){
+        $sql = $query->toSql();
+        foreach($query->getBindings() as $binding){
+            $value = is_numeric($binding) ? $binding : "'".$binding."'";
+            $sql = preg_replace('/\?/', $value, $sql, 1);
+        }
+        return $sql;
+    }
+    
     public function Lista(){        
+        $result="NO ASIGNADO";
+        $anteproyectos = 
+            DB::table('TBL_Anteproyecto AS A')
+                ->join('TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->select('A.*','R.RDCN_Min','R.RDCN_Requerimientos',
+                    DB::raw('IFNULL(('
+                        .$this->getSql(
+                                DB::table('tbl_encargados')
+                                    ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                    ->select(DB::raw('concat(SRS_Nombre," ",SRS_Apellido)'))
+                                    ->where('NCRD_Cargo','=','Director')
+                                    ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                                )
+                        .'),"'.$result.'")AS Director'
+                    ),
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select('FK_TBL_Usuarios_id')
+                                ->where('NCRD_Cargo','=','Director')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .')AS DirectorCedula'
+                    ),     
+                    DB::raw('IFNULL(('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select(DB::raw('concat(SRS_Nombre," ",SRS_Apellido)'))
+                                ->where('NCRD_Cargo','=','Jurado 1')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .'),"'.$result.'")AS Jurado1'
+                    ), 
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select('FK_TBL_Usuarios_id')
+                                ->where('NCRD_Cargo','=','Jurado 1')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .')AS Jurado1Cedula'
+                    ),      
+                    DB::raw('IFNULL(('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select(DB::raw('concat(SRS_Nombre," ",SRS_Apellido)'))
+                                ->where('NCRD_Cargo','=','Jurado 2')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .'),"'.$result.'")AS Jurado2'
+                    ), 
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select('FK_TBL_Usuarios_id')
+                                ->where('NCRD_Cargo','=','Jurado 2')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .')AS Jurado2Cedula'
+                    ),    
+                    DB::raw('IFNULL(('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select(DB::raw('concat(SRS_Nombre," ",SRS_Apellido)'))
+                                ->where('NCRD_Cargo','=','Estudiante 1')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .'),"'.$result.'")AS estudiante1'
+                    ),  
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select('FK_TBL_Usuarios_id')
+                                ->where('NCRD_Cargo','=','Estudiante 1')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .')AS estudiante1Cedula'
+                    ), 
+                    DB::raw('IFNULL(('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select(DB::raw('concat(SRS_Nombre," ",SRS_Apellido)'))
+                                ->where('NCRD_Cargo','=','Estudiante 2')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .'),"'.$result.'")AS estudiante2'
+                    ), 
+                         
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('tbl_encargados')
+                                ->join('tbl_users','tbl_encargados.FK_TBL_Usuarios_id','=','tbl_users.PK_SRS_Cedula')
+                                ->select('FK_TBL_Usuarios_id')
+                                ->where('NCRD_Cargo','=','Estudiante 2')
+                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=','TBL_Anteproyecto.PK_NPRY_idMinr008')
+                            )
+                        .')AS estudiante2Cedula'
+                    )
+                );
         
-        $anteproyectos = DB::select('SELECT *, 
-IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Director"),"NO ASIGNADO")AS Director, 
-(select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Director")AS DirectorCedula, 
-
-IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 1"),"NO ASIGNADO")AS Jurado1, 
-(select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 1")AS Jurado1Cedula ,
-
-IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 2"),"NO ASIGNADO")AS Jurado2, 
-(select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 2")AS Jurado2Cedula,
-
-IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 1"),"NO ASIGNADO")AS estudiante1, 
-(select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 1")AS estudiante1Cedula,
-
-IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 2"),"NO ASIGNADO") AS estudiante2, 
-(select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 2")AS estudiante2Cedula
-
-from TBL_Anteproyecto a,TBL_Radicacion r where r.FK_TBL_Anteproyecto_id=PK_NPRY_idMinr008');
-            
+       /* 
+        $anteproyectos=DB::select('select `A`.*, `R`.`RDCN_Min`, `R`.`RDCN_Requerimientos`, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Director" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = A.PK_NPRY_idMinr008),"NO ASIGNADO")AS Director, (select `FK_TBL_Usuarios_id` from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Director" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008")AS DirectorCedula, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Jurado 1" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008"),"NO ASIGNADO")AS Jurado1, (select `FK_TBL_Usuarios_id` from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Jurado 1" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008")AS Jurado1Cedula, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Jurado 2" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008"),"NO ASIGNADO")AS Jurado2, (select `FK_TBL_Usuarios_id` from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Jurado 2" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008")AS Jurado2Cedula, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Estudiante 1" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008"),"NO ASIGNADO")AS estudiante1, (select `FK_TBL_Usuarios_id` from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Estudiante 1" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008")AS estudiante1Cedula, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Estudiante 2" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008"),"NO ASIGNADO")AS estudiante2, (select `FK_TBL_Usuarios_id` from `tbl_encargados` inner join `tbl_users` on `tbl_encargados`.`FK_TBL_Usuarios_id` = `tbl_users`.`PK_SRS_Cedula` where `NCRD_Cargo` = "Estudiante 2" and `tbl_encargados`.`FK_TBL_Anteproyecto_id` = "TBL_Anteproyecto.PK_NPRY_idMinr008")AS estudiante2Cedula from `TBL_Anteproyecto` as `A` inner join `TBL_Radicacion` as `R` on R.FK_TBL_Anteproyecto_id = A.PK_NPRY_idMinr008');
+                        
         
-        return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
+        
+        
+        $anteproyectos = DB::select('SELECT *, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Director"),"NO ASIGNADO")AS Director, (select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Director")AS DirectorCedula, IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 1"),"NO ASIGNADO")AS Jurado1, (select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 1")AS Jurado1Cedula ,IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 2"),"NO ASIGNADO")AS Jurado2, (select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Jurado 2")AS Jurado2Cedula,IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 1"),"NO ASIGNADO")AS estudiante1, (select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 1")AS estudiante1Cedula,IFNULL((select concat(SRS_Nombre," ",SRS_Apellido) from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 2"),"NO ASIGNADO") AS estudiante2, (select FK_TBL_Usuarios_id from tbl_encargados e,tbl_users u where e.`FK_TBL_Anteproyecto_id`=a.PK_NPRY_idMinr008 AND e.`FK_TBL_Usuarios_id`=u.`PK_SRS_Cedula` AND e.`NCRD_Cargo`="Estudiante 2")AS estudiante2Cedulafrom TBL_Anteproyecto a,TBL_Radicacion r where r.FK_TBL_Anteproyecto_id=PK_NPRY_idMinr008');   
+        */
+        $query=$this->getSql($anteproyectos);
+        return Datatables::of(DB::select($query))->addIndexColumn()->make(true);
     }
     /*FORMULARIO DE CREACION DE ANTEPROYECTOS*/
     public function create(){
