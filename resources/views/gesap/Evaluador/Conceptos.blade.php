@@ -13,7 +13,7 @@
 @section('page-description', 'Breve descripción de la página')
 
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Concepto Final'])
 
 <div class="row">
         <div class="col-md-12" style="z-index: 1;">
@@ -40,56 +40,21 @@
             <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
                 <div class="form-group form-md-line-input">
                     <div class="input-icon">
-                        {{ Form::textarea('observacion', null, 
+                        {{ Form::textarea('Observacion Final', null, 
                         ['required', 'auto' => 'off','size' => '40x5','class'=>'form-control'],
                         [ 'icon' => 'fa fa-user']) }}
-                        <label for="title" class="control-label">Observaciones</label>
+                        <label for="title" class="control-label">Concepto</label>
                         <span class="help-block"> Ingrese el titulo del proyecto </span>
                         <i class=" fa fa-user "></i>
                     </div>
                 </div>
             </div>
         <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            <h3 class="center">Correccion Documentos(Opcional)</h3>
+            <h3 class="center">Concepto Final</h3>
         </div>
-        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-            <div class="form-md-line-input" style="margin: 0 0 35px;">
-                <div class="fileinput-new input-icon" data-provides="fileinput">    
-                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
-                    <div class="input-group input-large">
-                        <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
-                        </div>
-                        <span class="input-group-addon btn default btn-file">
-                        <span class="fileinput-new"> Select file </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class="" required> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                    </div>
-                </div>
-            </div> 
+        <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
+            {!! Field::select('concepto',["1"=>"Aprobado","2"=>"Aplazado","3"=>"Reprobado"],null) !!}
         </div>
-        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-            <div class="form-md-line-input" style="margin: 0 0 35px;">
-                <div class="fileinput-new input-icon" data-provides="fileinput">    
-                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
-                    <div class="input-group input-large">
-                        <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
-                        </div>
-                        <span class="input-group-addon btn default btn-file">
-                        <span class="fileinput-new"> Select file </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class="" required> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        
-        
         
         <div class="col-xs-12 col-md-12 col-lg-12">
             {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}

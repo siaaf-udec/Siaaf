@@ -15,9 +15,18 @@
 @section('page-description', 'Breve descripción de la página')
 
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Anteproyecto Jurado'])
         <div class="row">
-        
+        <div class="col-md-6">
+            <div class="btn-group">
+                <a href="{{ route('min.create') }}">
+                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> Add New
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </a> 
+            </div>
+        </div>
+            <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
             
@@ -123,7 +132,7 @@ jQuery(document).ready(function () {
                printable: false,
                className: '',   
                render: function ( data, type, full, meta ) {
-                 return '<a href="/gesap/evaluar/'+data+'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a><a href="/gesap/anteproyecto/asignar/'+data+'" class="btn btn-simple btn-success btn-icon edit"><i class="fa fa-commenting"></i></a><form action="/gesap/min/'+data+'" method="POST" style="display:initial;"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon edit"><i class="fa fa-commenting"> Observaciones</i></a><a href="/gesap/evaluar/concepto/'+data+'" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i>Concepto Final</a>';
                 }
                
            }

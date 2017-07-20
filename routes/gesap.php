@@ -31,12 +31,12 @@ Route::post('anteproyecto/docente/', [
 
 Route::resource('evaluar', $controller.'EvaluatorController');
 
-Route::get('ver/director', [
+Route::get('evaluar/ver/director', [
     'as' => 'anteproyecto.index.listdirector',
     'uses' => $controller.'EvaluatorController@director'
 ]);
 
-Route::get('ver/jurado', [
+Route::get('evaluar/ver/jurado', [
     'as' => 'anteproyecto.index.listjurado',
     'uses' => $controller.'EvaluatorController@jurado'
 ]);
@@ -50,6 +50,27 @@ Route::get('jurado', [
     'as' => 'anteproyecto.listjurado',
     'uses' => $controller.'EvaluatorController@ListJurado'
 ]);
+
+Route::get('evaluar/observaciones/{id}', [
+    'as' => 'anteproyecto.observaciones',
+    'uses' => $controller.'EvaluatorController@createObsevaciones'
+]);
+
+Route::post('anteproyecto/observaciones/', [
+    'as' => 'anteproyecto.guardar.observaciones',
+    'uses' => $controller.'EvaluatorController@storeObservaciones'
+]);
+
+Route::get('evaluar/concepto/{id}', [
+    'as' => 'anteproyecto.conceptos',
+    'uses' => $controller.'EvaluatorController@createConceptos'
+]);
+
+Route::post('anteproyecto/concepto/', [
+    'as' => 'anteproyecto.guardar.conceptos',
+    'uses' => $controller.'EvaluatorController@storeConceptos'
+]);
+
 
 /*Administrador*/
 
