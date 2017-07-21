@@ -102,6 +102,7 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'destroy'=> 'talento.humano.evento.destroy',
     ]
 ]);
+
 Route::get('listaEventos',[   //ruta que realiza listar los eventos registrados
     'as' => 'talento.humano.listaEventos',
     'uses' =>function() {
