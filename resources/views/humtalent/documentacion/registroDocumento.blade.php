@@ -10,7 +10,7 @@
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_documento','method'=>'POST', 'route'=> ['talento.humano.document.store'], 'role'=>"form"]) !!}
                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                        ['help'=>'Digita el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
+                                                        ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">
@@ -66,7 +66,7 @@
                 },
                 messages:{
                     DCMTP_Nombre_Documento: {
-                        required: "Debes digitar el nombre del documento."
+                        required: "Debe digitar el nombre del documento."
                     }
 
                 },
@@ -77,7 +77,7 @@
                     toastr.options.closeButton = true;
                     toastr.options.showDuration= 1000;
                     toastr.options.hideDuration= 1000;
-                    toastr.error('Debes corregir algunos campos','Registro fallido:')
+                    toastr.error('Debe corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
