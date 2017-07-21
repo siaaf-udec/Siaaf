@@ -26,49 +26,80 @@
         </div>
     
         @foreach ($anteproyectos as $anteproyecto)
-        <form class="form-horizontal" action="#" id="submit_form" method="POST">
+        {!! Form::open(['route' => 'anteproyecto.guardardocente', 'method' => 'post', 'novalidate','class'=>'form-horizontal','id'=>'submit_form']) !!}    
+            {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}    
             <div class="form-wizard">
                 <div class="form-body">
                     <ul class="nav nav-pills nav-justified steps">
                         <li>
                             <a href="#tab1" data-toggle="tab" class="step">
                                 <span class="number"> 1 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i> Escoger Director </span>
+                                <span class="desc"><i class="fa fa-check"></i> Escoger Director </span>
                             </a>
                         </li>
                         <li>
                             <a href="#tab2" data-toggle="tab" class="step">
                                 <span class="number"> 2 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i> Escoger Jurados </span>
+                                <span class="desc"><i class="fa fa-check"></i> Escoger Jurados </span>
                             </a>
                         </li>
                         <li>
                             <a href="#tab3" data-toggle="tab" class="step">
                                 <span class="number"> 3 </span>
-                                <span class="desc">
-                                    <i class="fa fa-check"></i> Confirmar </span>
+                                <span class="desc"><i class="fa fa-check"></i> Confirmar </span>
                             </a>
                         </li>
                     </ul>
                     <div id="bar" class="progress progress-striped" role="progressbar">
-                        <div class="progress-bar progress-bar-success"> </div>
+                        <div class="progress-bar progress-bar-success"></div>
                     </div>
                     <div class="tab-content">
                         <div class="alert alert-danger display-none">
-                            <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below. </div>
+                            <button class="close" data-dismiss="alert"></button> Errores.Por favor revisar nuevamente  
+                        </div>
                         <div class="alert alert-success display-none">
-                            <button class="close" data-dismiss="alert"></button> Your form validation is successful! </div>
+                            <button class="close" data-dismiss="alert"></button> La asignacion ha sido satisfactoria    
+                        </div>
                         <div class="tab-pane active" id="tab1">
                             <h3 class="block">Escoger Director</h3>
-                            {!! Field::select('director',['1' => 'Daniel', '2' => 'Felipe'],null) !!}
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
+                                @if(!empty($director))
+                                    @foreach ($director as $direc)
+                                        {!! Field::hidden('PK_director', $direc->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('director',$docentes,$direc->Cedula)!!}
+                                    @endforeach
+                                @else
+                                    {!! Field::select('director',$docentes,null) !!}
+                                @endif
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="tab2">
                             <h3 class="block">Escoger Jurados</h3>
-                            {!! Field::select('jurado1',['1' => 'Daniel', '2' => 'Felipe'],null) !!}
-                            {!! Field::select('jurado2',['1' => 'Daniel', '2' => 'Felipe'],null) !!}
-                        
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
+                                    @if(!empty($jurado1))
+                                    @foreach ($jurado1 as $jur1)
+                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
+                                    @endforeach
+                                @else
+                                    {!! Field::select('jurado1',$docentes,null) !!}
+                                @endif
+                                    
+                                    <hr>
+                                    @if(!empty($jurado2))
+                                    @foreach ($jurado2 as $jur2)
+                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NPRY_idCargo) !!}    
+                                        {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}
+                                    @endforeach
+                                @else
+                                    {!! Field::select('jurado2',$docentes,null) !!}
+                                @endif
+                                    
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="tab3">
                             <h3 class="block">Datos</h3>
@@ -102,19 +133,18 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
-                                                        <a href="javascript:;" class="btn default button-previous">
-                                                            <i class="fa fa-angle-left"></i> Back </a>
-                                                        <a href="javascript:;" class="btn btn-outline green button-next"> Continue
-                                                            <i class="fa fa-angle-right"></i>
-                                                        </a>
-                                                        <a href="javascript:;" class="btn green button-submit"> Submit
-                                                            <i class="fa fa-check"></i>
-                                                        </a>
-                                                    </div>
+                            <a href="javascript:;" class="btn default button-previous">
+                                <i class="fa fa-angle-left"></i> Volver </a>
+                            <a href="javascript:;" class="btn btn-outline green button-next"> Continuar
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                            {{Form::button('Guardar<i class="fa fa-check"></i>', array('type' => 'submit', 'class' => 'btn green button-submit'))}}
+                        </div>
                     </div>
                 </div>
             </div>
-</form>
+        {!! Form::close() !!}
+
                             
     @endforeach
 </div>
@@ -139,9 +169,7 @@
 @push('functions')
 <script type="text/javascript">
     
-    var FormWizard = function () {
-
-
+var FormWizard = function () {
     return {
         //main function to initiate the module
         init: function () {
@@ -208,6 +236,10 @@
                 invalidHandler: function (event, validator) { //display error alert on form submit   
                     success.hide();
                     error.show();
+                    toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
                     App.scrollTo(error, -200);
                 },
 
@@ -336,7 +368,7 @@
 
             $('#form_wizard_1').find('.button-previous').hide();
             $('#form_wizard_1 .button-submit').click(function () {
-                alert('Finished! Hope you like it :)');
+                
             }).hide();
 
             //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.

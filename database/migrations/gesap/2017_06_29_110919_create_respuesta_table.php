@@ -18,7 +18,7 @@ class CreateRespuestaTable extends Migration
             $table->string('RPST_RMin',90);
             $table->String('RPST_Requerimientos',90);
             $table->integer('FK_TBL_Radicacion_id')->unsigned();
-            $table->foreign('FK_TBL_Radicacion_id')->references('PK_RDCN_idRadicacion')->on('TBL_Radicacion');
+            $table->foreign('FK_TBL_Radicacion_id')->references('PK_RDCN_idRadicacion')->on('TBL_Radicacion')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateRespuestaTable extends Migration
      */
     public function down()
     {
-        //
+     Schema::dropIfExists('tbl_respuesta');
     }
 }

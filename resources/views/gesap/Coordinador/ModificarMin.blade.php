@@ -15,14 +15,16 @@
 @section('title', '| Anteproyectos')
 
 
-@section('page-title', 'Registro')
+@section('page-title', 'Modificar')
 
 
-@section('page-description', 'Añadir nuevo anteproyecto')
+@section('page-description', 'Modificar anteproyectos')
 
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-edit', 'title' => 'Modificacion'])
+
 <div class="row">
+        
         <div class="col-md-6">
             <div class="btn-group">
                 <a href="{{ route('min.index') }}">
@@ -32,49 +34,70 @@
                 </a> 
             </div>
         </div>
-    
-{!! Form::open(['route' => 'min.store', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'']) !!}
-                    
+        
 
+    @foreach ($anteproyecto as $anteproyecto)
+    {!! Form::open(['route' => array('min.update', $anteproyecto->PK_NPRY_idMinr008), 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-modificar-min']) !!}
+                    
+    {!! Field::hidden('_method', 'PUT') !!}
+    {!! Field::hidden('PK_radicacion', $anteproyecto->PK_RDCN_idRadicacion) !!}
+    
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            {!! Field::text('title',
-                ['label' => 'Titulo del proyecto', 'max' => '250', 'min' => '2', 'required', 'auto' => 'off'],
-                ['help' => 'Ingrese el titulo del proyecto', 'icon' => 'fa fa-user']) !!}
+            <div class="form-group form-md-line-input">
+            <div class="input-icon">
+                {{ Form::textarea('title', $anteproyecto->NPRY_Titulo, 
+                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],
+                [ 'icon' => 'fa fa-user']) }}
+                <label for="title" class="control-label">Titulo del proyecto</label>
+                <span class="help-block"> Ingrese el titulo del proyecto </span>
+                <i class=" fa fa-user "></i>
+            </div>
+            </div>
+            
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
-            {!! Field::select('estudiante1',
-                ['1' => 'Daniel', '2' => 'Felipe'],
-                null,
-                [ 'label' => 'Estudiante 1']) !!}
+            @if(!empty($estudiante1))
+            @foreach ($estudiante1 as $estu1)
+                {!! Field::hidden('PK_estudiante1', $estu1->PK_NPRY_idCargo) !!}    
+                {!! Field::select('estudiante1',$estudiantes,$estu1->Cedula,[ 'label' => 'Estudiante 1', 'required'])!!}
+            @endforeach
+            @else
+                {!! Field::select('estudiante1',$estudiantes,null,[ 'label' => 'Estudiante 1', 'required'])!!}
+            @endif
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
-            {!! Field::select('estudiante2',
-                    ['1' => 'Daniel', '2' => 'Felipe'],
-                    null,
-                    [ 'label' => 'Estudiante 2']) !!}
+            @if(!empty($estudiante2))
+            @foreach ($estudiante2 as $estu2)
+                {!! Field::hidden('PK_estudiante2', $estu2->PK_NPRY_idCargo) !!}
+                {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),$estu2->Cedula,[ 'label' => 'Estudiante 2', 'required']) !!}
+            @endforeach
+            @else
+                {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),0,[ 'label' => 'Estudiante 2', 'required']) !!}
+            @endif
         </div>
         <div class="col-xs-12 col-md-12 col-lg-12">
-            {!! Field::text('Keywords',
+            {!! Field::text('Keywords',$anteproyecto->NPRY_Keywords,
                 ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
                 ['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::text('duracion',
-                ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+            {!! Field::text('duracion',$anteproyecto->NPRY_Duracion,
+                ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '1', 'required', 'auto' => 'off'],
                 ['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaR',
-                ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+            {!! Field::date('FechaR',$anteproyecto->NPRY_FechaR,
+                ['label' => 'Fecha de Radicacion', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required'],
                 ['help' => '', 'icon' => 'fa fa-calendar']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaL',
-                ['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+            {!! Field::date('FechaL',$anteproyecto->NPRY_FechaL,
+                ['label' => 'Fecha Limite', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required'],
                 ['help' => '', 'icon' => 'fa fa-calendar']) !!}
-            
         </div>
+
+        
         
         <div class="col-xs-12 col-md-8 col-lg-6">
             <div class="form-md-line-input" style="margin: 0 0 35px;">
@@ -83,12 +106,13 @@
                     <div class="input-group input-large">
                         <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                             <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                            <?=$anteproyecto->RDCN_Requerimientos?>
                             <span class="fileinput-filename"> </span>
                         </div>
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Requerimientos" class=""> </span>
+                        <input type="file" name="Requerimientos" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
@@ -101,12 +125,15 @@
                     <div class="input-group input-large">
                         <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                             <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                            <?=$anteproyecto->RDCN_Min?>
                             <span class="fileinput-filename"> </span>
                         </div>
+                        
+                        
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class=""> </span>
+                        <input type="file" name="Min" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
@@ -116,14 +143,13 @@
         
         
         <div class="col-xs-12 col-md-12 col-lg-12">
-            {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
-            {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
+            {{ Form::submit('Actualizar', ['class' => 'btn green','style'=>'float:right']) }}
         </div>
         
-        </div>
+        
         {!! Form::close() !!}
+        @endforeach
     </div>
-
 @endcomponent
 @endsection
 
@@ -199,82 +225,84 @@ var ComponentsSelect2 = function() {
     }();
     
 var FormValidationMd = function() {
+    var handleValidation = function() {
+        var form1 = $('#form-modificar-min');
+        var error1 = $('.alert-danger', form1);
+        var success1 = $('.alert-success', form1);
 
-            var handleValidation = function() {
-
-                var form1 = $('#form_material');
-                var error1 = $('.alert-danger', form1);
-                var success1 = $('.alert-success', form1);
-
-                form1.validate({
-                    errorElement: 'span', //default input error message container
-                    errorClass: 'help-block help-block-error', // default input error message class
-                    focusInvalid: true, // do not focus the last invalid input
-                    ignore: "", // validate all fields including form hidden input
-                    messages: {
-                        'tags[]': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        },
-                        'radios': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        }
-                    },
-                    rules: {
-                        title: {
-                            minlength: 2,
-                            required: true
-                        },
-                    },
-
-                    invalidHandler: function(event, validator) { //display error alert on form submit
-                        success1.hide();
-                        error1.show();
-                        App.scrollTo(error1, -200);
-                    },
-
-                    errorPlacement: function(error, element) {
-                        if (element.is(':checkbox')) {
-                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                        } else if (element.is(':radio')) {
-                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                        } else {
-                            error.insertAfter(element); // for other inputs, just perform default behavior
-                        }
-                    },
-
-                    highlight: function(element) { // hightlight error inputs
-                        $(element)
-                            .closest('.form-group').addClass('has-error'); // set error class to the control group
-                    },
-
-                    unhighlight: function(element) { // revert the change done by hightlight
-                        $(element)
-                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                    },
-
-                    success: function(label) {
-                        label
-                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                    },
-
-                    submitHandler: function(form) {
-                        success1.show();
-                        error1.hide();
-                    }
-                });
-            }
-
-            return {
-                //main function to initiate the module
-                init: function() {
-                    handleValidation();
+        $.validator.addMethod("xxxValidation", function(value, element) {
+            return value !== '0000-00-00'
+        }, "Falta la fecha");
+        
+        form1.validate({
+            errorElement: 'span',                       //default input error message container
+            errorClass: 'help-block help-block-error',  // default input error message class
+            focusInvalid: true,                         // do not focus the last invalid input
+            ignore: "",                                 // validate all fields including form hidden input
+            invalidHandler: function(event, validator) {//display error alert on form submit
+                success1.hide();
+                error1.show();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
+                App.scrollTo(error1, -500);
+            },
+            rules:{
+                FechaR:{
+                    required:true,
+                    xxxValidation: true
                 }
-            };
-        }();    
+                
+                
+                
+            },
+            errorPlacement: function(error, element) {
+                if (element.hasClass('select2-hidden-accessible')) {     
+                    error.insertAfter(element.next('span'));  // select2
+                }else if (element.is(':file')) {     
+                    error.insertAfter(element.closest('.fileinput-new '));  // select2
+                }else{
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function(element) { // hightlight error inputs
+                var elem=$(element)
+                if(elem.is(':file')){
+                    elem.closest('.form-md-line-input').addClass('has-error');
+                }else
+                    elem.closest('.form-group').addClass('has-error');                           
+            },
+
+            unhighlight: function(element) { // revert the change done by hightlight
+                if(element.is(':file')){
+                    element.closest('.form-md-line-input').removeClass('has-error');
+                }else
+                    element.closest('.form-group').removeClass('has-error');
+                },
+
+            success: function(label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function(form) {
+                success1.show();
+                error1.hide();
+            }
+        });
+    }
+
+    return {
+        //main function to initiate the module
+        init: function() {
+            handleValidation();
+        }
+    };
+}();    
 
         jQuery(document).ready(function() {
+            $('.select2-selection--single').addClass('form-control');
             FormValidationMd.init();
             ComponentsSelect2.init();
             ComponentsDateTimePickers.init();

@@ -12,10 +12,10 @@ class Anteproyecto extends Model
 
     protected $primaryKey = 'PK_NPRY_idMinr008';
 
-    protected $fillable = ['NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado','FK_TBL_Radicacion_id'];
+    protected $fillable = ['NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado'];
     
     
     public function radicacion() {
-        return $this->belongsTo('App\container\gesap\src\Radicacion','FK_TBL_Radicacion_id','PK_RDCN_idRadicacion');
+        return $this->hasOne('App\container\gesap\src\Radicacion','FK_TBL_Radicacion_id','PK_RDCN_idRadicacion');
     }
 }

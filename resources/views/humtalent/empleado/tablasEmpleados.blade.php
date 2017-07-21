@@ -54,8 +54,8 @@
     function mifuncion(){
         form1=$("#form-delete");
         swal({
-                title: "Estas seguro ?",
-                text: "No podras deshacer estos cambios",         type: "warning",
+                title: "Esta seguro ?",
+                text: "No podrá deshacer estos cambios",         type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Si, estoy seguro!",
@@ -67,7 +67,7 @@
                 if(confirmacion){
                     form1.submit();
                 }else {
-                    swal("Cancelado", "Tu información no ha sido eliminada.", "error");
+                    swal("Cancelado", "La información no ha sido eliminada.", "error");
                 }
 
             });

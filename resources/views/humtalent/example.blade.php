@@ -1,23 +1,21 @@
 @extends('material.layouts.dashboard')
-
 @push('styles')
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
-@section('title', '| Información personal nuevo')
+@section('page-title','Creación de eventos:')
 
-@section('page-title', 'Listado del personal nuevo:')
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de eventos: '])
             <div class="row">
-<<<<<<< HEAD
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Form::open (['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.evento.store']]) !!}
                     {!! Field::textarea(
                             'EVNT_Descripcion',
                             ['label' => 'Descripción del evento:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '4'],
@@ -28,33 +26,24 @@
                             ['help' => 'Digita la fecha de realización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::text(
                             'EVNT_Hora',
-                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
+                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "hh/mm-", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
-                    <br><br><br>
-                            <table  id="lista-empleados" class="table table-bordered table-hover table-striped table-responsive">
-                                <thead><tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Cédula</th>
-                                        <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Área</th>
-                                    </tr>
-                                </thead>
-                                @foreach($empleados as $empleado)
-                                    <tbody>
-                                        <tr>
-                                        <td>{{$empleado->PRSN_Nombres}}</td>
-                                        <td>{{$empleado->PRSN_Apellidos}}</td>
-                                        <td>{{$empleado->PK_PRSN_Cedula}}</td>
-                                        <td>{{$empleado->PRSN_Correo}}</td>
-                                        <td>{{$empleado->PRSN_Rol}}</td>
-                                        <td>{{$empleado->PRSN_Area}}</td>
-                                        </tr>
-                                     </tbody>
-                                @endforeach
-                            </table>
+                    <br><br><br><br>
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'], ['class'=>'display'])
+                        @slot('columns', [
+                            '#',
+                            'Nombres',
+                            'Apellidos',
+                            'Cédula',
+                            'Email',
+                            'Rol ',
+                            'Área',
+                            'Acciones'
+                        ])
+                    @endcomponent
+
+
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">
@@ -65,41 +54,29 @@
                     </div>
 
                     {!! Form::close() !!}
-=======
-                <div class="col-md-12">
-
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Estado',
-                            'Email',
-                            'Rol ',
-                            'Teléfono',
-                            'Acciones'
-                        ])
-                    @endcomponent
-
->>>>>>> develop
+                    <button id="button">Ver</button>
                 </div>
-
             </div>
-        @endcomponent
     </div>
-@endsection
+    @endcomponent
 
+@endsection
 @push('plugins')
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script>
-<<<<<<< HEAD
             @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
@@ -109,13 +86,11 @@
             break;
     }
     @endif
-=======
-
-
->>>>>>> develop
 jQuery(document).ready(function () {
 
-
+        var  url;
+        // table = $('#lista-empleados');
+        url = "{{ route('talento.humano.tablaEmpleados')}}";
         $.fn.dataTable.ext.errMode = 'throw';
         /*/para que no le salga errores al funcionario*/
 
@@ -130,8 +105,8 @@ jQuery(document).ready(function () {
             colReorder: false,
             processing: true,
             serverSide: false,
-            select: {style: 'multi'
-            },
+            // select: {style: 'multi'
+            // },
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
@@ -157,20 +132,16 @@ jQuery(document).ready(function () {
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-<<<<<<< HEAD
-
-=======
             columns: [
 
                 {data: 'DT_Row_Index'},
                 {data: 'PRSN_Nombres', name: 'Nombres'},
                 {data: 'PRSN_Apellidos', name: 'Apellidos'},
                 {data: 'PK_PRSN_Cedula', name: 'Cédula'},
-                {data: 'PRSN_Estado_Persona', name: 'Estado'},
                 {data: 'PRSN_Correo', name: 'Correo Electronico'},
                 {data: 'PRSN_Rol', name: 'Rol'},
-                {data: 'PRSN_Telefono', name: 'Teléfono'},
-
+                {data: 'PRSN_Area', name: 'Área'},
+                //'<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>',
 
                 {
                     data: "PK_PRSN_Cedula",
@@ -182,38 +153,12 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="rrhh/' + data + '/edit" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
+                        return '<a href="javascript:;" " class="btn blue"><i class="fa fa-check"></i></a>';
                     },
                     responsivePriority: 2
                 }
             ],
->>>>>>> develop
             buttons: [
-                {
-                    extend: 'print',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                    text: '<i class="fa fa-print"></i>'
-                },
-                {
-                    extend: 'copy',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                    text: '<i class="fa fa-files-o"></i>'
-                },
-                {
-                    extend: 'pdf',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                    text: '<i class="fa fa-file-pdf-o"></i>',
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                    text: '<i class="fa fa-file-excel-o"></i>',
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                    text: '<i class="fa fa-file-text-o"></i>',
-                },
                 {
                     extend: 'colvis',
                     className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
@@ -232,6 +177,14 @@ jQuery(document).ready(function () {
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
         });
+        $('#lista-empleados tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+
+        } );
+        $('#button').click( function () {
+            var data = table.row('.selected').data();
+            alert( 'You clicked on :  '+data['PK_PRSN_Cedula']);
+        } );
 
 
         var handleTooltips = function () {
@@ -275,7 +228,6 @@ jQuery(document).ready(function () {
         })
     });
 </script>
-<<<<<<< HEAD
 @endpush
 @push('functions')
 <script>
@@ -424,6 +376,4 @@ jQuery(document).ready(function () {
     });
 
 </script>
-=======
->>>>>>> develop
 @endpush

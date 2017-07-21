@@ -13,16 +13,16 @@
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_funcionario','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
                     {!! Field:: text('name',null,['label'=>'Nombre completo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                         ['help' => 'Digita el nombre completo del funcionario.','icon'=>'fa fa-user']) !!}
+                                                         ['help' => 'Digite el nombre completo del funcionario.','icon'=>'fa fa-user']) !!}
                     {!! Field:: email('email',null,['label'=>'Correo institucional:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
-                                                         ['help' => 'Digita un correo institucional.','icon'=>'fa fa-envelope-open '] ) !!}
+                                                         ['help' => 'Digite un correo institucional.','icon'=>'fa fa-envelope-open '] ) !!}
 
 
                     {!! Field:: password('password',['label'=>'Contraseña:', 'class'=> 'form-control','minlength'=>'6', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
-                                                         ['help' => 'Digita una contraseña.','icon'=>'fa fa-key '] ) !!}
+                                                         ['help' => 'Digite una contraseña.','icon'=>'fa fa-key '] ) !!}
 
                     {!! Field:: password('password_confirmation',['label'=>'Confirmación de la contraseña:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
-                                                        ['help' => 'Digita la contraseña anterior.','icon'=>'fa fa-key '] ) !!}
+                                                        ['help' => 'Digite la contraseña anterior.','icon'=>'fa fa-key '] ) !!}
 
                     <div class="form-actions">
                         <div class="row">
@@ -98,18 +98,18 @@
                 },
                 messages:{
                     name: {
-                        required: "Debes digitar el nombre completo del funcionario."
+                        required: "Debe digitar el nombre completo del funcionario."
                     },
                     email: {
-                        required: "Debes ingresar un correo electronico.",
+                        required: "Debe ingresar un correo electronico.",
 
                     },
                     password: {
-                        required: "Debes ingresar una contraseña.",
+                        required: "Debe ingresar una contraseña.",
 
                     },
                     password_confirmation: {
-                        required: "Debes confirmar la contraseña",
+                        required: "Debe confirmar la contraseña",
                         equalTo:"Las contraseñas no coinciden."
 
                     },
@@ -122,7 +122,7 @@
                     toastr.options.closeButton = true;
                     toastr.options.showDuration= 1000;
                     toastr.options.hideDuration= 1000;
-                    toastr.error('Debes corregir algunos campos','Registro fallido:')
+                    toastr.error('Debe corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 

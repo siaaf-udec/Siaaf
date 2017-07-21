@@ -79,7 +79,7 @@ class FuncionarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FuncionarioRequest $request)
+    public function store(Request $request)
     {
         if($request->ajax()){
             Funcionario::create($request->all());

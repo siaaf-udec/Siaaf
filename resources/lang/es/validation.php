@@ -150,6 +150,10 @@ return [
         'date_range'            => 'rango de fechas',
         'tags'                  => 'etiquetas',
         'date_time'             => 'fecha y hora',
+        'request_type'          => 'tipo de solicitud',
+        'subject_matter'        => 'materia',
+        'program'               => 'programa',
+        'teacher'               => 'docente',
     ],
 
 ];

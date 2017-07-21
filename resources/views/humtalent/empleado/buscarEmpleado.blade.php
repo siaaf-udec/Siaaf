@@ -10,7 +10,7 @@
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form-docrad','method'=>'POST', 'route'=> ['talento.humano.listarDocsRad'], 'role'=>"form"]) !!}
                     {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                     ['help'=>'Digita el número de cedula.','icon'=>'fa fa-credit-card'] ) !!}
+                                                     ['help'=>'Digite el número de cedula.','icon'=>'fa fa-credit-card'] ) !!}
 
                 <div class="form-actions">
                     <div class="row">
@@ -64,7 +64,7 @@
                             },
                             messages:{
                                 PK_PRSN_Cedula: {
-                                    required: "Debes digitar la cédula del empleado."
+                                    required: "Debe digitar la cédula del empleado."
                                 }
                             },
 
@@ -74,7 +74,7 @@
                                 toastr.options.closeButton = true;
                                 toastr.options.showDuration= 1000;
                                 toastr.options.hideDuration= 1000;
-                                toastr.error('Debes corregir algunos campos','Error en la busqueda:')
+                                toastr.error('Debe corregir algunos campos','Error en la busqueda:')
                                 App.scrollTo(error1, -200);
                             },
 
