@@ -2,10 +2,14 @@
 
 namespace App\Container\Users\Src\Controllers;
 
+use Yajra\Datatables\Datatables;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class UserController extends Controller
 {
@@ -24,17 +28,31 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('');
+        return view('users.users');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function data(Request $request)
     {
-        //
+        if($request->ajax() && $request->isMethod('GET')){
+            $modules = $this->userRepository->index();
+            return Datatables::of($modules)
+                ->removeColumn('password')
+                ->removeColumn('remember_token')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -45,29 +63,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if($request->ajax() && $request->isMethod('POST')){
+            $this->userRepository->store($request->all());
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -79,7 +86,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax() && $request->isMethod('POST')){
+            $module = [
+                'id' => $id,
+                'name'=> $request->get('name'),
+                'display_name'=> $request->get('display_name'),
+                'description'=> $request->get('description'),
+            ];
+            $this->userRepository->update($module);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -88,8 +112,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if($request->ajax() && $request->isMethod('DELETE')){
+
+            $this->userRepository->destroy($id);
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 }

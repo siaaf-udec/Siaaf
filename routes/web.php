@@ -181,6 +181,30 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'role.permission.update'
         ])->where(['id' => '[0-9]+']);
     });
+
+    Route::group(['prefix' => 'users'], function () {
+        $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+        Route::get('index',[
+            'uses' => $controller.'UserController@index',
+            'as' => 'users.index'
+        ]);
+        Route::get('data',[
+            'uses' => $controller.'UserController@data',
+            'as' => 'users.data'
+        ]);
+        Route::post('store',[
+            'uses' => $controller.'UserController@store',
+            'as' => 'users.store'
+        ]);
+        Route::post('update/{id?}',[
+            'uses' => $controller.'UserController@update',
+            'as' => 'users.update'
+        ])->where(['id' => '[0-9]+']);
+        Route::delete('delete/{id?}',[
+            'uses' => $controller.'UserController@destroy',
+            'as' => 'users.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
 });
 
 
