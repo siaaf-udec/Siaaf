@@ -92,15 +92,6 @@ Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados
     }
 ]);
 
-
-
-
-
-
-
-
-
-
 Route::resource('evento', $controller.'EventoController',[  //ruta para el controlador encargado del CRUD de Eventos
     'names'=>[
         'index'=> 'talento.humano.evento.index',
@@ -111,10 +102,6 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'destroy'=> 'talento.humano.evento.destroy',
     ]
 ]);
-
-
-
-
 Route::get('listaEventos',[   //ruta que realiza listar los eventos registrados
     'as' => 'talento.humano.listaEventos',
     'uses' =>function() {
