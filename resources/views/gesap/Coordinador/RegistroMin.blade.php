@@ -8,6 +8,8 @@
     <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 
@@ -15,16 +17,14 @@
 @section('title', '| Anteproyectos')
 
 
-@section('page-title', 'Modificar')
+@section('page-title', 'Registro')
 
 
-@section('page-description', 'Modificar anteproyectos')
+@section('page-description', 'Añadir nuevo anteproyecto')
 
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-edit', 'title' => 'Modificacion'])
-
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
 <div class="row">
-        
         <div class="col-md-6">
             <div class="btn-group">
                 <a href="{{ route('min.index') }}">
@@ -34,90 +34,89 @@
                 </a> 
             </div>
         </div>
-
-
-    @foreach ($anteproyectos as $anteproyecto)
-{!! Form::open(['route' => array('min.update', $anteproyecto->PK_NPRY_idMinr008), 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'']) !!}
+    
+{!! Form::open(['route' => 'min.store', 'method' => 'POST', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
                     
-    {!! Field::hidden('_method', 'PUT') !!}
-    {!! Field::hidden('FK', $anteproyecto->FK_TBL_Radicacion_id) !!}
+
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            {!! Field::text('title',$anteproyecto->NPRY_Titulo,
-                ['label' => 'Titulo del proyecto', 'max' => '250', 'min' => '2', 'required', 'auto' => 'off'],
-                ['help' => 'Ingrese el titulo del proyecto', 'icon' => 'fa fa-user']) !!}
+            <div class="form-group form-md-line-input">
+            <div class="input-icon">
+                {{ Form::textarea('title', null, 
+                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],
+                [ 'icon' => 'fa fa-user']) }}
+                <label for="title" class="control-label">Titulo del proyecto</label>
+                <span class="help-block"> Ingrese el titulo del proyecto </span>
+                <i class=" fa fa-user "></i>
+            </div>
+            </div>
+            
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
             {!! Field::select('estudiante1',
-                ['1' => 'Daniel', '2' => 'Felipe'],
+                $estudiantes,
                 null,
-                [ 'label' => 'Estudiante 1']) !!}
+                [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
             {!! Field::select('estudiante2',
-                    ['1' => 'Daniel', '2' => 'Felipe'],
+                    array_replace(["0"=>"No aplica"],$estudiantes),
                     null,
-                    [ 'label' => 'Estudiante 2']) !!}
+                    [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
         </div>
         <div class="col-xs-12 col-md-12 col-lg-12">
-            {!! Field::text('Keywords',$anteproyecto->NPRY_Keywords,
+            {!! Field::text('Keywords',
                 ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
                 ['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::text('duracion',$anteproyecto->NPRY_Duracion,
+            {!! Field::text('duracion',
                 ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
                 ['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaR',$anteproyecto->NPRY_FechaR,
+            {!! Field::date('FechaR',
                 ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                 ['help' => '', 'icon' => 'fa fa-calendar']) !!}
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaL',$anteproyecto->NPRY_FechaL,
+            {!! Field::date('FechaL',
                 ['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                 ['help' => '', 'icon' => 'fa fa-calendar']) !!}
             
         </div>
-
         
-        
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
             <div class="form-md-line-input" style="margin: 0 0 35px;">
                 <div class="fileinput-new input-icon" data-provides="fileinput">    
                         <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
                     <div class="input-group input-large">
                         <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                             <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <?=$anteproyecto->RDCN_Requerimientos?>
                             <span class="fileinput-filename"> </span>
                         </div>
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Requerimientos" class="" value=""> </span>
+                        <input type="file" name="Requerimientos" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
             </div> 
         </div>
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
             <div class="form-md-line-input" style="margin: 0 0 35px;">
                 <div class="fileinput-new input-icon" data-provides="fileinput">    
                         <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
                     <div class="input-group input-large">
                         <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                             <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <?=$anteproyecto->RDCN_Min?>
                             <span class="fileinput-filename"> </span>
                         </div>
-                        
-                        
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class=""> </span>
+                        <input type="file" name="Min" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
@@ -127,13 +126,14 @@
         
         
         <div class="col-xs-12 col-md-12 col-lg-12">
-            {{ Form::submit('Actualizar', ['class' => 'btn green','style'=>'float:right']) }}
+            {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
+            {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
         </div>
         
-        
+        </div>
         {!! Form::close() !!}
-        @endforeach
     </div>
+
 @endcomponent
 @endsection
 
@@ -150,10 +150,15 @@
     <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
 <script type="text/javascript">
+    
 var ComponentsDateTimePickers = function () {
             var handleDatePickers = function () {
                 if (jQuery().datepicker) {
@@ -209,82 +214,89 @@ var ComponentsSelect2 = function() {
     }();
     
 var FormValidationMd = function() {
+    var handleValidation = function() {
+        var form1 = $('#form-register-min');
+        var error1 = $('.alert-danger', form1);
+        var success1 = $('.alert-success', form1);
 
-            var handleValidation = function() {
-
-                var form1 = $('#form_material');
-                var error1 = $('.alert-danger', form1);
-                var success1 = $('.alert-success', form1);
-
-                form1.validate({
-                    errorElement: 'span', //default input error message container
-                    errorClass: 'help-block help-block-error', // default input error message class
-                    focusInvalid: true, // do not focus the last invalid input
-                    ignore: "", // validate all fields including form hidden input
-                    messages: {
-                        'tags[]': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        },
-                        'radios': {
-                            required: 'Por favor marca una opción',
-                            minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                        }
-                    },
-                    rules: {
-                        title: {
-                            minlength: 2,
-                            required: true
-                        },
-                    },
-
-                    invalidHandler: function(event, validator) { //display error alert on form submit
-                        success1.hide();
-                        error1.show();
-                        App.scrollTo(error1, -200);
-                    },
-
-                    errorPlacement: function(error, element) {
-                        if (element.is(':checkbox')) {
-                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                        } else if (element.is(':radio')) {
-                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                        } else {
-                            error.insertAfter(element); // for other inputs, just perform default behavior
-                        }
-                    },
-
-                    highlight: function(element) { // hightlight error inputs
-                        $(element)
-                            .closest('.form-group').addClass('has-error'); // set error class to the control group
-                    },
-
-                    unhighlight: function(element) { // revert the change done by hightlight
-                        $(element)
-                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                    },
-
-                    success: function(label) {
-                        label
-                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                    },
-
-                    submitHandler: function(form) {
-                        success1.show();
-                        error1.hide();
-                    }
-                });
-            }
-
-            return {
-                //main function to initiate the module
-                init: function() {
-                    handleValidation();
+        $.validator.addMethod("xxxValidation", function(value, element) {
+            return value !== '0000-00-00'
+        }, "Falta la fecha");
+        
+        
+        form1.validate({
+            errorElement: 'span',                       //default input error message container
+            errorClass: 'help-block help-block-error',  // default input error message class
+            focusInvalid: true,                         // do not focus the last invalid input
+            ignore: "",                                 // validate all fields including form hidden input
+            invalidHandler: function(event, validator) {//display error alert on form submit
+                success1.hide();
+                error1.show();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.error('Campos Incorrectos','Error en el Registro:')
+                App.scrollTo(error1, -500);
+            },
+            
+            rules:{
+                FechaR:{
+                    xxxValidation: true
                 }
-            };
-        }();    
+                
+                
+                
+            },
+            errorPlacement: function(error, element) {
+                if (element.hasClass('select2-hidden-accessible')) {     
+                    error.insertAfter(element.next('span'));  // select2
+                }else if (element.is(':file')) {     
+                    error.insertAfter(element.closest('.fileinput-new '));  // select2
+                }else{
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function(element) { // hightlight error inputs
+                var elem=$(element)
+                if(elem.is(':file')){
+                    elem.closest('.form-md-line-input').addClass('has-error');
+                }else
+                    elem.closest('.form-group').addClass('has-error');                           
+            },
+
+            unhighlight: function(element) { // revert the change done by hightlight
+                if(element.is(':file')){
+                    element.closest('.form-md-line-input').removeClass('has-error');
+                }else
+                    element.closest('.form-group').removeClass('has-error');
+                },
+
+            success: function(label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function(form1) {
+                success1.show();
+                error1.hide();
+                toastr.options.closeButton = true;
+                toastr.options.showDuration= 1000;
+                toastr.options.hideDuration= 1000;
+                toastr.success('Información guardada correctamente','Registro exitoso:')
+            }
+        });
+    }
+
+    return {
+        //main function to initiate the module
+        init: function() {
+            handleValidation();
+        }
+    };
+}();    
 
         jQuery(document).ready(function() {
+            $('.select2-selection--single').addClass('form-control');
             FormValidationMd.init();
             ComponentsSelect2.init();
             ComponentsDateTimePickers.init();

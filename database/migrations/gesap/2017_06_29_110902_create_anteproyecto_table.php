@@ -21,8 +21,6 @@ class CreateAnteproyectoTable extends Migration
             $table->date('NPRY_FechaR',90);
             $table->date('NPRY_FechaL',90);
             $table->String('NPRY_Estado',90)->default("EN ESPERA");
-            $table->integer('FK_TBL_Radicacion_id')->unsigned();
-            $table->foreign('FK_TBL_Radicacion_id')->references('PK_RDCN_idRadicacion')->on('TBL_Radicacion')->delete();
             $table->timestamps();
         });
             
@@ -35,6 +33,6 @@ class CreateAnteproyectoTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TBL_Anteproyecto');
     }
 }

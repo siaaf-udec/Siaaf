@@ -6,11 +6,12 @@ use Zizaco\Entrust\EntrustPermission;
 
 class Permission extends EntrustPermission
 {
-    /**
-     * The database connection used by the model.
-     *
-     * @var string
-     */
     protected $connection = 'developer';
-
+    /**
+     * Get the permission that owns the module.
+     */
+    public function module()
+    {
+        return $this->belongsTo(Module::class);
+    }
 }

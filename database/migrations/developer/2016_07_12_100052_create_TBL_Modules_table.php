@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRadicacionTable extends Migration
+class CreateTBLModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreateRadicacionTable extends Migration
      * @return void
      */
     public function up()
-    {          
-        Schema::connection('gesap')->create('TBL_Radicacion', function (Blueprint $table) {
-            $table->increments('PK_RDCN_idRadicacion');
-            $table->string('RDCN_Min',90);
-            $table->String('RDCN_Requerimientos',90);
-
+    {
+        Schema::create('TBL_Modules', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRadicacionTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TBL_Modules');
     }
 }

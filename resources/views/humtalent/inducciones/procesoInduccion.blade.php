@@ -55,52 +55,52 @@
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab1">
-                                    <h3 class="block">&nbsp;&nbsp;Selecciona si el proceso finalizo exitosamente:</h3>
+                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
                                     <div class="form-group">
                                     <div class="col-md-offset-1 col-md-9">
                                     {!! Field::checkboxes('estado1',
                                         ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                        ['label' => 'Selecciona una opción: ']) !!}
+                                        ['label' => 'Seleccione una opción: ']) !!}
                                     </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab2">
-                                    <h3 class="block">&nbsp;&nbsp;Selecciona si el proceso finalizo exitosamente:</h3>
+                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
                                     <div class="form-group">
                                         <div class="col-md-offset-1 col-md-9">
                                             {!! Field::checkboxes('estado2',
                                                 ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Selecciona una opción: ']) !!}
+                                                ['label' => 'Seleccione una opción: ']) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab3">
-                                    <h3 class="block">&nbsp;&nbsp;Selecciona si el proceso finalizo exitosamente:</h3>
+                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
                                     <div class="form-group">
                                         <div class="col-md-offset-1 col-md-9">
                                             {!! Field::checkboxes('estado3',
                                                 ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Selecciona una opción: ']) !!}
+                                                ['label' => 'Seleccione una opción: ']) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab4">
-                                    <h3 class="block">&nbsp;&nbsp;Selecciona si el proceso finalizo exitosamente:</h3>
+                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
                                     <div class="form-group">
                                         <div class="col-md-offset-1 col-md-9">
                                             {!! Field::checkboxes('estado4',
                                                 ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Selecciona una opción: ']) !!}
+                                                ['label' => 'Seleccione una opción: ']) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab5">
-                                    <h3 class="block">&nbsp;&nbsp;Selecciona si el proceso finalizo exitosamente:</h3>
+                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
                                     <div class="form-group">
                                         <div class="col-md-offset-1 col-md-9">
                                             {!! Field::checkboxes('estado5',
                                                 ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Selecciona una opción: ']) !!}
+                                                ['label' => 'Seleccione una opción: ']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                     {!! Form::close() !!}
 
 
-        </div>
+
     @endcomponent
 @endsection
 
@@ -205,24 +205,24 @@
 
                     messages: { // custom messages for radio buttons and checkboxes
                         'estado1[]': {
-                            required: "Debes seleccionar una opción",
-                            maxlength: jQuery.validator.format("Solo puedes seleccionar una opción")
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
                         'estado2[]': {
-                            required: "Debes seleccionar una opción",
-                            maxlength: jQuery.validator.format("Solo puedes seleccionar una opción")
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
                         'estado3[]': {
-                            required: "Debes seleccionar una opción",
-                            maxlength: jQuery.validator.format("Solo puedes seleccionar una opción")
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
                         'estado4[]': {
-                            required: "Debes seleccionar una opción",
-                            maxlength: jQuery.validator.format("Solo puedes seleccionar una opción")
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
                         'estado5[]': {
-                            required: "Debes seleccionar una opción",
-                            maxlength: jQuery.validator.format("Solo puedes seleccionar una opción")
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         }
 
                     },
@@ -243,7 +243,7 @@
                         toastr.options.closeButton = true;
                         toastr.options.showDuration= 1000;
                         toastr.options.hideDuration= 1000;
-                        toastr.error('Debes corregir algunos campos','Error:')
+                        toastr.error('Debe corregir algunos campos','Error:')
                         App.scrollTo(error, -200);
                     },
 

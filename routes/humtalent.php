@@ -100,6 +100,9 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'edit'=> 'talento.humano.evento.edit',
         'update'=> 'talento.humano.evento.update',
         'destroy'=> 'talento.humano.evento.destroy',
+
+    ]]);
+
     ]
 ]);
 
@@ -159,6 +162,7 @@ Route::get('tablaInduccion', [    //ruta para buscar los empleados  para hacer l
     'uses' => function(){
         return view('humtalent.inducciones.tablaEmpleadosNuevos');
     }
+
 ]);
 
 Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos

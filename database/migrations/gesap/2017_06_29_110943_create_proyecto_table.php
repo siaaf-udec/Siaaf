@@ -17,7 +17,7 @@ class CreateProyectoTable extends Migration
             $table->increments('PK_PRYT_idProyecto');
             $table->string('PRYT_Estado',30);
             $table->integer('FK_TBL_Anteproyecto_id')->unsigned();
-            $table->foreign('FK_TBL_Anteproyecto_id')->references('PK_NPRY_idMinr008')->on('TBL_Anteproyecto');
+            $table->foreign('FK_TBL_Anteproyecto_id')->references('PK_NPRY_idMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateProyectoTable extends Migration
      */
     public function down()
     {
-        //
+     Schema::dropIfExists('TBL_proyecto');
     }
 }
