@@ -101,8 +101,6 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'update'=> 'talento.humano.evento.update',
         'destroy'=> 'talento.humano.evento.destroy',
 
-    ]]);
-
     ]
 ]);
 
