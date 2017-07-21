@@ -99,7 +99,7 @@
                 <li class="nav-item {{ active(['talento.humano.evento.index'], 'start active open') }}">
                     <a href="{{ route('talento.humano.evento.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Consultar Documentos</span>
+                        <span class="title">Consultar Eventos</span>
                     </a>
                 </li>
             </ul>
