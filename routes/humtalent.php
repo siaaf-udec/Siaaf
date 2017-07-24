@@ -140,7 +140,7 @@ Route::get('evento/regAsist/saveAsist/{id}/{ced}',[   //ruta que registrar los e
     'as' => 'talento.humano.evento.regAsist.saveAsists',
     'uses' => $controller.'EventoController@registrarAsistentes'
 ]);
-Route::post('evento/regAsist/regTotAsist',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
+Route::post('evento/regAsist/regTotAsist/{id?}/{datos?}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
     'as' => 'talento.humano.evento.regAsist.regTotAsist',
     'uses' => $controller.'EventoController@registrarTodosAsistentes'
 ]);
@@ -160,7 +160,10 @@ Route::get('tablaInduccion', [    //ruta para buscar los empleados  para hacer l
     'uses' => function(){
         return view('humtalent.inducciones.tablaEmpleadosNuevos');
     }
-
+]);
+Route::get('tablaEmpleadosNuevos',[   //ruta que eliminar un asistente a un evento, recibe la cedula  del empleado seleccionado y el id del evento
+    'as' => 'talento.humano.tablaEmpleadosNuevos',
+    'uses' => $controller.'induccionController@listarEmpleadosNuevos'
 ]);
 
 Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos

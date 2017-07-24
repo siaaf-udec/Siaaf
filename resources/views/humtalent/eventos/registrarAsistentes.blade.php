@@ -19,9 +19,7 @@
 
             <div id="response" class="row">
                 <div class="col-md-12">
-                    {!! Form::open(['route' =>['talento.humano.evento.regAsist.regTotAsist'],'method'=>'POST', 'id'=>'form-create' ])!!}
-                        {!! Form::button('Registrar Todos',['class' => 'btn blue', 'id'=>'button'] ) !!}
-                    {!! Form::close() !!}
+                    <button id="button" class="btn blue">Registrar todos</button><br><br>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
@@ -36,7 +34,9 @@
                     @endcomponent
                 </div>
             </div>
-            {!! Field::hidden('FK_TBL_Eventos_IdEvento',$id,['id'=>'idEvent']) !!}
+            {!! Form::open(['route' =>['talento.humano.evento.regAsist.regTotAsist'],'method'=>'POST', 'id'=>'form-create' ])!!}
+                {!! Field::hidden('FK_TBL_Eventos_IdEvento',$id,['id'=>'idEvent']) !!}
+            {!! Form::close() !!}
         @endcomponent
     </div>
 @endsection
@@ -48,6 +48,7 @@
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+
 @endpush
 @push('functions')
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
@@ -199,29 +200,40 @@ jQuery(document).ready(function () {
 
         });
         $('#button').click( function () {
-            var datos=Array.prototype.slice.call(table.rows({page:'current', search:'applied'}).data());
-            var id= document.getElementById("idEvent").value;
-            var form= $('#form-create');
-            var url= form.attr('action');
-            var data= form.serialize();
-            //alert(url);
-           /* $.post(url,data,function (result) {
-                alert(result);
-            });*/
-
+            var data = Array.from(table.rows({page: 'current', search: 'applied'}).data());
+            var datos="";
+            for (i in data){
+                datos=datos+data[i].PK_PRSN_Cedula+';';
+            }
+            var id = $('input[id="idEvent"]').val();//document.getElementById("idEvent").value;
+            var route = '{{ route('talento.humano.evento.regAsist.regTotAsist') }}' + '/' + id + '/' + datos;
+            var type = 'POST';
+            var async = async || false;
 
             $.ajax({
-               // data: id,
                 url: route,
-                type: get,
-                success: function(data){
-                   alert("salio");// $('#response') .html(data)
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                cache: false,
+                type: type,
+                contentType: false,
+                processData: false,
+                async: async,
+                beforeSend: function () {
+                },
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        table.ajax.reload();
+                        UIToastr.init(xhr , response.title , response.message  );
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'success') {
+                        UIToastr.init(xhr, response.title, response.message);
+                    }
                 }
+
             });
-            /*$.post(route,id,function (result) {
-                alert(result);
-            });*/
-        } );
+        });
 
         var handleTooltips = function () {
             $('.t-print').attr({'data-container': "body", 'data-placement': "top", 'data-original-title': "Imprimir"});
@@ -259,9 +271,7 @@ jQuery(document).ready(function () {
             $('.tooltips').tooltip();
         }
 
-        jQuery(document).ready(function () {
-            handleTooltips();
-        })
+
     });
 </script>
 @endpush

@@ -10,7 +10,6 @@
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers font-blue', 'title' => 'Proceso de inducción'])
         {!! Form::open (['id'=>'form-induccion','class'=>'form-horizontal','method'=>'POST']) !!}
-
                     <div class="form-wizard">
                         <div class="form-body">
                             <ul class="nav nav-pills nav-justified steps">

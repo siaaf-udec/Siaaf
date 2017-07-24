@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Event;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Asistent;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
-class EventoController
+class EventoController extends Controller
 {
     protected $userRepository;
     protected $id;
@@ -84,9 +86,35 @@ class EventoController
         );
         return back()->with($notification);
     }
-    public function registrarTodosAsistentes($id){
-        return $id;
+
+    public function registrarTodosAsistentes(Request $request,$id, $datos){
+        $datos=explode(';',$datos);
+        if($request->ajax() && $request->isMethod('POST')){
+            foreach ($datos as $dato){
+               Asistent::create([
+                    'ASIST_Informe' => 'No',
+                    'FK_TBL_Eventos_IdEvento' => $id,
+                    'FK_TBL_Persona_Cedula'   => $dato,
+                ]);
+            }
+            return AjaxResponse::success(
+                '¡Operación exitosa!',
+                'Asistentes registrados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+       /* $notification=array(
+            'message'=>'Asistentes registrados correctamente',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);*/
     }
+
+
     public function deleteAsistentes($id, $ced){
         Asistent::where('FK_TBL_Persona_Cedula',$ced)
                 ->where('FK_TBL_Eventos_IdEvento',$id)->delete();
@@ -199,7 +227,7 @@ class EventoController
      */
     public function destroy($id)//se elimina el registro de un documento
     {
-        //Event::where('PK_EVNT_IdEvento',$id)->delete();
+        Asistent::where('FK_TBL_Eventos_IdEvento',$id)->delete();
         Event::destroy($id);
 
         $notification=array(
