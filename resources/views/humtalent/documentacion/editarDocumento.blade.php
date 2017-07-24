@@ -20,7 +20,7 @@
                         {!! Form::model ($documento, ['id'=>'form-documento','method'=>'PUT', 'route'=> ['talento.humano.document.update', $documento->PK_DCMTP_Id_Documento], 'role'=>"form"]) !!}
 
                                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                            ['help'=>'Digita el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
+                                                            ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
                         <div class="row">
                             <div class="form-actions">
                                 <div class="col-md-6 col-md-offset-4">
@@ -76,7 +76,7 @@
                     },
                     messages:{
                         DCMTP_Nombre_Documento: {
-                            required: "Debes digitar el nombre del documento."
+                            required: "Debe digitar el nombre del documento."
                         }
 
                     },
@@ -87,7 +87,7 @@
                         toastr.options.closeButton = true;
                         toastr.options.showDuration= 1000;
                         toastr.options.hideDuration= 1000;
-                        toastr.error('Debes corregir algunos campos','Registro fallido:')
+                        toastr.error('Debe corregir algunos campos','Registro fallido:')
                         App.scrollTo(error1, -200);
                     },
 

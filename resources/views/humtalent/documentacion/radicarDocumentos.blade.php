@@ -16,28 +16,28 @@
                                     <a href="#tab1" data-toggle="tab" class="step">
                                         <span class="number"> 1 </span>
                                         <span class="desc">
-                                    <i class="fa fa-check"></i> Documentación sin entregar </span>
+                                    <i class="fa fa-check-square"></i> Documentación sin entregar </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#tab2" data-toggle="tab" class="step">
                                         <span class="number"> 2 </span>
                                         <span class="desc">
-                                    <i class="fa fa-check"></i> Documentación pendiente </span>
+                                    <i class="fa fa-check-square"></i> Documentación pendiente </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#tab3" data-toggle="tab" class="step">
                                         <span class="number"> 3 </span>
                                         <span class="desc">
-                                    <i class="fa fa-check"></i> Documentación completa </span>
+                                    <i class="fa fa-check-square"></i> Documentación completa </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#tab4" data-toggle="tab" class="step">
                                         <span class="number"> 4 </span>
                                         <span class="desc">
-                                    <i class="fa fa-check"></i> Docente afiliado </span>
+                                    <i class="fa fa-check-square"></i> Docente afiliado </span>
                                     </a>
                                 </li>
 

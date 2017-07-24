@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::model ($empleado, ['id'=>'form_material','method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
-                    {{ csrf_field() }}
+
                     <div class="form-body">
 
                         {!! Field::radios('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], ['list', 'label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user']) !!}
@@ -148,40 +148,40 @@
                 },
                 messages:{
                     PRSN_Nombres: {
-                        required: "Debes digitar el nombre completo del empleado."
+                        required: "Debe digitar el nombre completo del empleado."
                     },
                     PRSN_Apellidos: {
-                        required: "Debes digitar los apellidos del empleado."
+                        required: "Debe digitar los apellidos del empleado."
                     },
                     PRSN_Rol: {
-                        required: 'Por favor marca una opción',
+                        required: 'Por favor marcar una opción',
                         minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
                     },
                     PRSN_Estado_Persona: {
-                        required: 'Por favor marca una opción',
+                        required: 'Por favor marcar una opción',
                         minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
                     },
                     PRSN_Correo: {
-                        required: "Debes ingresar un correo electronico."
+                        required: "Debe ingresar un correo electronico."
 
                     },
                     PK_PRSN_Cedula: {
-                        required: "Debes ingresar una cedula."
+                        required: "Debe ingresar una cedula."
                     },
                     PRSN_Telefono: {
-                        required: "Debes ingresar un telefono o celular."
+                        required: "Debe ingresar un telefono o celular."
 
                     },
                     PRSN_Direccion: {
-                        required: "Debes ingresar una direccion."
+                        required: "Debe ingresar una direccion."
 
                     },
                     PRSN_Ciudad: {
-                        required: "Debes ingresar una ciudad."
+                        required: "Debe ingresar una ciudad."
 
                     },
                     PRSN_Area: {
-                        required: "Debes ingresar un area de trabajo."
+                        required: "Debe ingresar un area de trabajo."
 
                     },
 
@@ -194,7 +194,7 @@
                     toastr.options.closeButton = true;
                     toastr.options.showDuration= 1000;
                     toastr.options.hideDuration= 1000;
-                    toastr.error('Debes corregir algunos campos','Modificación fallida:')
+                    toastr.error('Debe corregir algunos campos','Modificación fallida:')
                     App.scrollTo(error1, -200);
                 },
 

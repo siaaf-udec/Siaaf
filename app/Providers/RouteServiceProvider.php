@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $financialNamespace = 'App\Container\Financial\src\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -115,7 +116,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('financiero')
             ->middleware(['web','auth'])
-            ->namespace($this->namespace)
+            ->namespace($this->financialNamespace)
             ->group(base_path('routes/financial.php'));
     }
 

@@ -45,7 +45,7 @@
 @endpush
 @push('functions')
 <script>
-    function mifuncion(){
+    function mifuncion(data){
         form1=$("#form-delete");
         swal({
                 title: "Estas seguro ?",
@@ -59,7 +59,8 @@
             },
             function(confirmacion){
                 if(confirmacion){
-                    form1.submit();
+                    var url=" {route ['talento.humano.document.destroy'']}"/data
+
                 }else {
                     swal("Cancelado", "Tu información no ha sido eliminada.", "error");
                 }
@@ -133,7 +134,7 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '<a href="document/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="document/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion()" type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
+                        return '<a href="document/' + data + '/edit" class="btn btn-primary"><i class="icon-pencil"></i></a><form id="form-delete" action="document/' + data + '" method="POST"  style="display:initial"><input name="_method"  type="hidden" value="DELETE" ><input name="_token"  type="hidden" value="{{csrf_token()}}"><button  onclick="mifuncion('+data+')" type="button" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
                     },
                     responsivePriority: 2
                 }
