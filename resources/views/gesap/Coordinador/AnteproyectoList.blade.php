@@ -124,19 +124,16 @@ jQuery(document).ready(function () {
            {data: 'estudiante2', className:'none',searchable: true},
            {data: 'Jurado1', className:'none',searchable: true},
            {data: 'Jurado2',className:'none',searchable: true},
-           {   data:"PK_NPRY_idMinr008",
-               name:'action',
-               title:'Acciones',
-               orderable: false,
-               searchable: false,
-               exportable: false,
-               printable: false,
-               className: '',   
-               render: function ( data, type, full, meta ) {
-                 return '<a href="/gesap/min/'+data+'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="/gesap/anteproyecto/asignar/'+data+'" class="btn btn-simple btn-success btn-icon edit"><i class="icon-users"></i></a><form action="/gesap/min/'+data+'" method="POST" style="display:initial;"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>';
-                }
-               
-           }
+           {data:'action',className:'',searchable: false,
+            name:'action',
+            title:'Acciones',
+            orderable: false,
+            exportable: false,
+            printable: false,
+            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><form action="#" method="POST" style="display:initial;" id="delete-anteproyect"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>',
+
+            
+        }
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -155,6 +152,49 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
+    
+    
+    table = table.DataTable();
+    table.on('click', '.edit', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+	    $.ajax({
+            type: "GET",
+            url: '',
+            dataType: "html",
+        }).done(function (data) {
+            window.location.href = '/gesap/min/'+O.PK_NPRY_idMinr008+'/edit';
+        });
+    });
+    
+    table.on('click', '.assign', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+	    $.ajax({
+            type: "GET",
+            url: '',
+            dataType: "html",
+        }).done(function (data) {
+            window.location.href = '/gesap/anteproyecto/asignar/'+O.PK_NPRY_idMinr008;
+        });
+    });
+    
+     table.on('submit', '#delete-anteproyect', function (e) {
+        e.preventDefault();
+       $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+        $.ajax({
+            url: '/gesap/min/'+O.PK_NPRY_idMinr008,
+            type: $(this).attr("method"),
+            data:$(this).serialize(),
+            success: function(){
+              table.ajax.reload();              
+            }
+          });
+    });
+   
 
     
 });
