@@ -15,6 +15,7 @@ use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Humtalent\src\StatusOfDocument;
 use Illuminate\Support\Facades\DB;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EmpleadoController extends Controller
 {
@@ -130,15 +131,20 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
+    public function destroy(Request $request,$id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
-
-        Persona::destroy($id);
-        $notification=array(
-            'message'=>'La información del empleado fue eliminada correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
+        if($request->ajax() && $request->isMethod('DELETE')){
+            Persona::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 
