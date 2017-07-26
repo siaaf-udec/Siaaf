@@ -5,11 +5,12 @@ namespace App\Container\Users\Src\Controllers;
 use Yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+
+use App\Container\Users\Src\Country;
 
 class UserController extends Controller
 {
@@ -28,7 +29,28 @@ class UserController extends Controller
      */
     public function index()
     {
+
         return view('users.users');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            $countries = Country::all()->pluck('name', 'id');
+            return view('users.content-ajax.ajax-update-user', [
+                    'countries' => $countries->toArray()
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -39,10 +61,33 @@ class UserController extends Controller
     public function data(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')){
-            $modules = $this->userRepository->index();
+            $modules = $this->userRepository->index([]);
             return Datatables::of($modules)
+                ->addColumn('roles', function ($roles){
+                    if ( !empty($roles->roles) ) {
+                        foreach ($roles->roles as $role) {
+                            $aux[] = $role->display_name;
+                        }
+                        return implode(',', $aux);
+                    }
+                    return '';
+                })
+                ->addColumn('state', function ($state){
+                    if(strcmp($state->display_name, 'Aprobado')){
+                        return "<span class='label label-sm label-warning'>".$state->display_name. "</span>";
+                    }
+                })
+                ->removeColumn('birthday')
+                ->removeColumn('identity_type')
+                ->removeColumn('identity_no')
+                ->removeColumn('identity_expe_place')
+                ->removeColumn('identity_expe_date')
+                ->removeColumn('sexo')
+                ->removeColumn('phone')
                 ->removeColumn('password')
-                ->removeColumn('remember_token')
+                ->removeColumn('cities_id')
+                ->removeColumn('countries_id')
+                ->removeColumn('regions_id')
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()

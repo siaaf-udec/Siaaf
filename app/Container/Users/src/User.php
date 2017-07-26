@@ -50,4 +50,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the user that owns the city.
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    /**
+     * Get the user that owns the country.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the user that owns the region.
+     */
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 }
