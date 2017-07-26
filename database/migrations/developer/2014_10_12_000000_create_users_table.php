@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->integer('identity_no')->nullable()->unsigned();
             $table->string('identity_expe_place')->nullable();
             $table->date('identity_expe_date')->nullable();
+            $table->string('address')->nullable();
             $table->enum('sexo', ['Masculino', 'Femenino'])->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->unique();
