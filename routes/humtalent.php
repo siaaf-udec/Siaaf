@@ -24,9 +24,9 @@ Route::resource('rrhh', $controller.'EmpleadoController', [   //ruta para el con
         'create' => 'talento.humano.rrhh.create',
         'store' => 'talento.humano.rrhh.store',
         'index' => 'talento.humano.rrhh.index',
-        'edit' => 'talento.humano.rrhh.edit',
+        //'edit' => 'talento.humano.rrhh.edit',
         'update' => 'talento.humano.rrhh.update',
-        'destroy' => 'talento.humano.rrhh.destroy',
+        //'destroy' => 'talento.humano.rrhh.destroy',
     ]
 ]);
 Route::resource('document', $controller.'DocumentController',[  //ruta para el controlador encargado del CRUD de la Documentación
@@ -34,9 +34,9 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el c
         'index'=> 'talento.humano.document.index',
         'create'=> 'talento.humano.document.create',
         'store'=> 'talento.humano.document.store',
-        'edit'=> 'talento.humano.document.edit',
+        //'edit'=> 'talento.humano.document.edit',
         'update'=> 'talento.humano.document.update',
-        'destroy'=> 'talento.humano.document.destroy',
+        //'destroy'=> 'talento.humano.document.destroy',
 
     ]
 ]);
@@ -171,4 +171,20 @@ Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer
     'uses' => function(){
         return view('humtalent.inducciones.procesoInduccion');
     }
+]);
+Route::delete('document/destroy/{id?}',[
+    'uses' => $controller.'DocumentController@destroy',
+    'as' => 'talento.humano.document.destroy'
+]);
+Route::get('document/edit/{id?}',[
+    'uses' => $controller.'DocumentController@edit',
+    'as' => 'talento.humano.document.edit'
+]);
+Route::delete('rrhh/destroy/{id?}',[
+    'uses' => $controller.'EmpleadoController@destroy',
+    'as' => 'talento.humano.rrhh.destroy'
+]);
+Route::get('rrhh/edit/{id?}',[
+    'uses' => $controller.'EmpleadoController@edit',
+    'as' => 'talento.humano.rrhh.edit'
 ]);

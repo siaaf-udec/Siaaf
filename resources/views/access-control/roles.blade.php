@@ -124,89 +124,88 @@
                     ])
                 @endcomponent
             </div>
-    </div>
 
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Modal -->
-            <div class="modal fade" id="modal-update-permission" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        {!! Form::open(['id' => 'from_roles_update', 'class' => '', 'url' => '/forms']) !!}
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Modificar rol</h1>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {!! Field::hidden('id_edit') !!}
-                                    {!! Field::text(
-                                        'name_edit',
-                                        ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                        ['help' => 'Ingrese el Nombre', 'icon' => 'fa fa-user']) !!}
-                                    {!! Field::text(
-                                        'display_name_edit',
-                                        ['label' => 'Nombre para Mostrar', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                        ['help' => 'Ingrese el Nombre para Mostrar', 'icon' => 'fa fa-user']) !!}
-                                    {!! Field::textarea(
-                                        'description_edit',
-                                        ['label' => 'Descripción', 'max' => '100', 'min' => '2', 'auto' => 'off'],
-                                        ['help' => 'Ingrese la Descripción']) !!}
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-update-permission" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                {!! Form::open(['id' => 'from_roles_update', 'class' => '', 'url' => '/forms']) !!}
+                                <div class="modal-header modal-header-success">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> Modificar rol</h1>
                                 </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {!! Field::hidden('id_edit') !!}
+                                            {!! Field::text(
+                                                'name_edit',
+                                                ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['help' => 'Ingrese el Nombre', 'icon' => 'fa fa-user']) !!}
+                                            {!! Field::text(
+                                                'display_name_edit',
+                                                ['label' => 'Nombre para Mostrar', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['help' => 'Ingrese el Nombre para Mostrar', 'icon' => 'fa fa-user']) !!}
+                                            {!! Field::textarea(
+                                                'description_edit',
+                                                ['label' => 'Descripción', 'max' => '100', 'min' => '2', 'auto' => 'off'],
+                                                ['help' => 'Ingrese la Descripción']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                </div>
+                                {!! Form::close() !!}
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-create-permission" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                {!! Form::open(['id' => 'from_roles_create', 'class' => '', 'url' => '/forms']) !!}
+                                <div class="modal-header modal-header-success">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> Crear rol</h1>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {!! Field::text(
+                                                'name_create',
+                                                ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['help' => 'Ingrese el Nombre', 'icon' => 'fa fa-user']) !!}
+                                            {!! Field::text(
+                                                'display_name_create',
+                                                ['label' => 'Nombre para Mostrar', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['help' => 'Ingrese el Nombre para Mostrar', 'icon' => 'fa fa-user']) !!}
+                                            {!! Field::textarea(
+                                                'description_create',
+                                                ['label' => 'Descripción', 'max' => '100', 'min' => '2', 'auto' => 'off'],
+                                                ['help' => 'Ingrese la Descripción']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                </div>
+                                {!! Form::close() !!}
+                            </div>
                         </div>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <!-- Modal -->
-            <div class="modal fade" id="modal-create-permission" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        {!! Form::open(['id' => 'from_roles_create', 'class' => '', 'url' => '/forms']) !!}
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Crear rol</h1>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {!! Field::text(
-                                        'name_create',
-                                        ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                        ['help' => 'Ingrese el Nombre', 'icon' => 'fa fa-user']) !!}
-                                    {!! Field::text(
-                                        'display_name_create',
-                                        ['label' => 'Nombre para Mostrar', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                        ['help' => 'Ingrese el Nombre para Mostrar', 'icon' => 'fa fa-user']) !!}
-                                    {!! Field::textarea(
-                                        'description_create',
-                                        ['label' => 'Descripción', 'max' => '100', 'min' => '2', 'auto' => 'off'],
-                                        ['help' => 'Ingrese la Descripción']) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endcomponent
+        @endcomponent
     </div>
 @endsection
 
