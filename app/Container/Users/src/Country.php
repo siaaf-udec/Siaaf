@@ -8,7 +8,7 @@ class Country extends Model
 {
     protected $connection = 'developer';
     protected $table = 'countries';
-    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *

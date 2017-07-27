@@ -21,10 +21,24 @@ class UserRepository extends ControllerRepository implements UserInterface
         parent::__construct(User::class);
     }
 
-    protected function process($module, $data)
+    protected function process($user, $data)
     {
-        $module['name'] = $data['name'];
-        $module->save();
-        return $module;
+        $user['name'] = $data['name'];
+        $user['lastname'] = $data['lastname'];
+        $user['birthday'] = $data['birthday'];
+        $user['identity_type'] = $data['identity_type'];
+        $user['identity_no'] = $data['identity_no'];
+        $user['identity_expe_place'] = $data['identity_expe_place'];
+        $user['identity_expe_date'] = $data['identity_expe_date'];
+        $user['sexo'] = $data['sexo'];
+        $user['phone'] = $data['phone'];
+        $user['email'] = $data['email'];
+        $user['password'] = bcrypt($data['password']);
+        $user['state'] = $data['state'];
+        $user['cities_id'] = $data['cities_id'];
+        $user['countries_id'] = $data['countries_id'];
+        $user['regions_id'] = $data['regions_id'];
+        $user->save();
+        return $user;
     }
 }

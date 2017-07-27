@@ -8,7 +8,7 @@ class Region extends Model
 {
     protected $connection = 'developer';
     protected $table = 'regions';
-    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *

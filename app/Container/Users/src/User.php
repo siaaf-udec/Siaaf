@@ -74,4 +74,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Region::class);
     }
+
+    /*
+     * morphMany() Identifica que existe relacion polimorfica
+     * Parametros(Entidad de comentarios, Metodo en la entidad de comentario)
+     * */
+    public function images()
+    {
+        //seoble, likeable, votable....
+        return $this->morphMany(Image::class, 'imageble');
+    }
 }

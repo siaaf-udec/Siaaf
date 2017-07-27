@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <div class="portlet light " id="form_wizard_1">
                     <div class="portlet-body form">
-                        {!! Form::open(['id' => 'submit_form', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'from_users_create', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
                             <div class="form-wizard">
                                 <div class="form-body">
                                     <ul class="nav nav-pills nav-justified steps">
@@ -419,10 +419,14 @@
             }
         });
 
+        //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
+        $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
 
-        var form = $('#submit_form');
+        var form = $('#from_users_create');
         var rules = {
-            name_create: { minlength: 5, required: true },
+           name_create: { minlength: 5, required: true },
             lastname_create: { minlength: 5, required: true },
             email_create: { required: true, email: true },
             password_create: { minlength: 5, required: true },
@@ -430,7 +434,7 @@
             phone_create: { minlength: 5 },
             sexo_create: { required: true },
             identity_expe_place_create: { minlength: 5 },
-            identity_no_create: { minlength: 5 },
+            identity_no_create: { minlength: 5, number: true },
             address_create: { minlength: 5 },
             image_profile_create: { extension: "jpg|png"},
             'multi_select_roles_create[]': { minlength: 1 }
@@ -440,14 +444,78 @@
 
 
 
-        //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
-        $('#country_list', form).change(function () {
-            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-        });
 
 
 
-        FormWizard.init(wizard, form, rules, messages, false);
+        /*Crear Usuarios*/
+        var createUsers = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('users.store') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('name', $('input:text[name="name_create"]').val());
+                    formData.append('lastname', $('input:text[name="lastname_create"]').val());
+                    formData.append('birthday', $('#date_birthday').val());
+                    formData.append('sexo', $('select[name="sexo_create"]').val());
+                    formData.append('identity_type', $('select[name="identity_type_create"]').val());
+                    formData.append('identity_no', $('input:text[name="identity_no_create"]').val());
+                    formData.append('identity_expe_date', $('#identity_expe_create').val());
+                    formData.append('identity_expe_place', $('input:text[name="identity_expe_place_create"]').val());
+                    formData.append('phone', $('input:text[name="phone_create"]').val());
+                    formData.append('state', $('select[name="state_create"]').val());
+                    formData.append('email', $('input:text[name="email_create"]').val());
+                    formData.append('password', $('input:text[name="password_create"]').val());
+                    formData.append('address_create', $('input:text[name="address_create"]').val());
+                    formData.append('countries_id', $('select[name="countries_create"]').val());
+                    formData.append('regions_id', $('select[name="regions_create"]').val());
+                    formData.append('cities_id', $('select[name="cities_create"]').val());
+
+                    /*Roles*/
+                    var roles_create = $('#multi_select_roles_create');
+                    formData.append('multi_select_roles_create',
+                        (roles_create.val()===null)? [] : roles_create.val()
+                    );
+
+                    /*Imagen*/
+                    var FileImage =  document.getElementById("image_profile_create");
+                    formData.append('image_profile_create', FileImage.files[0]);
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            console.log(response);
+                            if (request.status === 200 && xhr === 'success') {
+                                /*$('#from_users_create')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );*/
+                                var route = '{{ route('users.index.ajax') }}';
+                               /* $(".content-ajax").load(route);*/
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+
+        FormWizard.init(wizard, form, rules, messages, createUsers());
 
     });
 </script>
