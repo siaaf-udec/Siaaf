@@ -18,7 +18,7 @@ class Induction extends Model
     ];
 
     public function Personas(){
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Persona::class, 'FK_TBL_Persona_Cedula', 'PK_PRSN_Cedula');
     }
     //
 }
