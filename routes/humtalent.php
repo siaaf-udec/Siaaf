@@ -154,6 +154,7 @@ Route::get('evento/asistentes/deleteAsist/{id?}/{ced?}',[   //ruta que eliminar 
 })->name('talento.humano.docentesList');
 */
 
+
 Route::group(['prefix' => 'induccion'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
@@ -164,9 +165,18 @@ Route::group(['prefix' => 'induccion'], function () {
         }
     ]);
 
-Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
-    'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
-    'uses' => function(){
-        return view('humtalent.inducciones.procesoInduccion');
-    }
-]);
+    Route::get('tablaEmpleadosNuevos',[   //ruta para realizar la cosnulta de los empleados nuevos
+        'as' => 'talento.humano.tablaEmpleadosNuevos',
+        'uses' => $controller.'InduccionController@listarEmpleadosNuevos'
+    ]);
+
+    Route::get('procesoInduccion/{id}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
+        'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
+        'uses' => $controller . 'InduccionController@index'
+    ]);
+
+    Route::post('induccion/store', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.induccion.store',
+        'uses' => $controller . 'InduccionController@store'
+    ]);
+});
