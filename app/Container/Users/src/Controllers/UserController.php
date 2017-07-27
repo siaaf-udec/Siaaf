@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Container\Permissions\Src\Interfaces\ModuleInterface;
+use App\Container\Permissions\Src\Interfaces\RoleInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Container\Users\Src\Country;
@@ -16,10 +18,14 @@ class UserController extends Controller
 {
 
     protected $userRepository;
+    protected $moduleRepository;
+    protected $roleRepository;
 
-    public function __construct(UserInterface $userRepository)
+    public function __construct(UserInterface $userRepository,  ModuleInterface $moduleRepository, RoleInterface $roleRepository)
     {
         $this->userRepository = $userRepository;
+        $this->moduleRepository = $moduleRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -29,7 +35,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
         return view('users.users');
     }
 
@@ -41,9 +46,9 @@ class UserController extends Controller
     public function create(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')){
-            $countries = Country::all()->pluck('name', 'id');
+            $roles =  $this->roleRepository->index([]);
             return view('users.content-ajax.ajax-update-user', [
-                    'countries' => $countries->toArray()
+                    'roles' => $roles
             ]);
         }else{
             return AjaxResponse::fail(
@@ -74,9 +79,10 @@ class UserController extends Controller
                 })
                 ->addColumn('state', function ($state){
                     if(strcmp($state->display_name, 'Aprobado')){
-                        return "<span class='label label-sm label-warning'>".$state->display_name. "</span>";
+                        return "<span class='label label-sm label-warning'>dfsf".$state->display_name. "</span>";
                     }
                 })
+                ->rawColumns(['state'])
                 ->removeColumn('birthday')
                 ->removeColumn('identity_type')
                 ->removeColumn('identity_no')

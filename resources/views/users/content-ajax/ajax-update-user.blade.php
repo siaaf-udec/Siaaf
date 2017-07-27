@@ -29,28 +29,28 @@
                                             <a href="#tab1" data-toggle="tab" class="step">
                                                 <span class="number"> 1 </span>
                                                 <span class="desc">
-                                                                <i class="fa fa-check"></i> Account Setup </span>
+                                                                <i class="fa fa-check"></i> Configuracion de Cuenta </span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#tab2" data-toggle="tab" class="step">
                                                 <span class="number"> 2 </span>
                                                 <span class="desc">
-                                                                <i class="fa fa-check"></i> Profile Setup </span>
+                                                                <i class="fa fa-check"></i> Configuración del Perfil </span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#tab3" data-toggle="tab" class="step active">
                                                 <span class="number"> 3 </span>
                                                 <span class="desc">
-                                                                <i class="fa fa-check"></i> Billing Setup </span>
+                                                                <i class="fa fa-check"></i> Configuración de Permisos </span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#tab4" data-toggle="tab" class="step">
                                                 <span class="number"> 4 </span>
                                                 <span class="desc">
-                                                                <i class="fa fa-check"></i> Confirm </span>
+                                                                <i class="fa fa-check"></i> Confirmación </span>
                                             </a>
                                         </li>
                                     </ul>
@@ -59,71 +59,72 @@
                                     </div>
                                     <div class="tab-content">
                                         <div class="alert alert-danger display-none">
-                                            <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below. </div>
+                                            <button class="close" data-dismiss="alert"></button> Usted tiene algunos errores de forma. Por favor, compruebe a continuación. </div>
                                         <div class="alert alert-success display-none">
-                                            <button class="close" data-dismiss="alert"></button> Your form validation is successful! </div>
+                                            <button class="close" data-dismiss="alert"></button> ¡La validación de su formulario es exitosa! </div>
                                         <div class="tab-pane active" id="tab1">
                                             <h3 class="block">Datos Personales</h3>
                                             <div class="row">
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
                                                             'name_create',
-                                                            ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                            ['help' => 'Ingrese el Nombre']) !!}
+                                                            ['label' => 'Nombre', 'auto' => 'off'],
+                                                            ['help' => 'Digite su Nombre']) !!}
                                                     {!! Field::date(
-                                                            'date',
-                                                            ['label' => 'Fecha de Nacimiento', 'required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                                                            ['help' => 'Digita tu fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
+                                                            'date_birthday',
+                                                            ['label' => 'Fecha de Nacimiento', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                            ['help' => 'Digite su fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
                                                     {!! Field::select(
-                                                            'sizes',
-                                                            ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'],null,
-                                                            [ 'label' => 'Tipo de Identificación']) !!}
+                                                            'identity_type_create',
+                                                            ['T.I' => 'T.I', 'C.C' => 'C.C'],null,
+                                                            [ 'label' => 'Tipo de identificación']) !!}
                                                     {!! Field::date(
-                                                            'date',
-                                                            ['label' => 'Fecha de Expedición', 'required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                                                            ['help' => 'Digita tu fecha de expedición', 'icon' => 'fa fa-calendar']) !!}
+                                                            'identity_expe_create',
+                                                            ['label' => 'Fecha de Expedición', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                            ['help' => 'Digite su fecha de expedición', 'icon' => 'fa fa-calendar']) !!}
                                                     {!! Field::text(
-                                                            'name_create',
-                                                            ['label' => 'Numero Telefonico', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                            ['help' => 'Numero Telefonico']) !!}
+                                                            'phone_create',
+                                                            ['label' => 'Numero Telefonico', 'auto' => 'off'],
+                                                            ['help' => 'Digite su numero telefonico']) !!}
                                                     {!! Field::email(
-                                                            'name_create',
-                                                            ['label' => 'Correo Electronico', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                            ['help' => 'Correo Electronico']) !!}
+                                                            'email_create',
+                                                            ['label' => 'Correo Electronico', 'auto' => 'off'],
+                                                            ['help' => 'Digite su correo electronico']) !!}
                                                 </div>
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
                                                         'lastname_create',
-                                                        ['label' => 'Apellido', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                        ['help' => 'Ingrese el Apellido']) !!}
+                                                        ['label' => 'Apellido', 'auto' => 'off'],
+                                                        ['help' => 'Digite su Apellido']) !!}
                                                     {!! Field::select(
-                                                        'sizes',
+                                                        'sexo_create',
                                                         ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'],null,
                                                         [ 'label' => 'Sexo']) !!}
                                                     {!! Field::text(
-                                                            'name_create',
-                                                            ['label' => 'Numero de Identificación', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                            'identity_no_create',
+                                                            ['label' => 'Numero de Identificación', 'auto' => 'off'],
                                                             ['help' => 'Numero de Identificación']) !!}
                                                     {!! Field::text(
-                                                            'name_create',
-                                                            ['label' => 'Lugar de expedición', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                            'identity_expe_place_create',
+                                                            ['label' => 'Lugar de expedición', 'auto' => 'off'],
                                                             ['help' => 'Lugar de expedición']) !!}
                                                     {!! Field::select(
-                                                            'sizes',
-                                                            ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'],null,
+                                                            'state_create',
+                                                            ['Aprobado' => 'Aprobado', 'Pendiente' => 'Pendiente', 'Denegado' => 'Denegado'],null,
                                                             [ 'label' => 'Estado']) !!}
-                                                    {!! Field::password('password',
-                                                            ['required', 'label' => 'Contraseña'],
-                                                            ['help' => 'Digita la contreaseña.']) !!}
+                                                    {!! Field::password(
+                                                            'password_create',
+                                                            ['label' => 'Contraseña'],
+                                                            ['help' => 'Digite su contreaseña.']) !!}
                                                 </div>
                                             </div>
                                             <h3 class="block">Datos de Ubicación</h3>
                                             <div class="row">
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
-                                                            'name_create',
-                                                            ['label' => 'Dirección Procedencia', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                            ['help' => 'Dirección Procedencia']) !!}
+                                                            'address_create',
+                                                            ['label' => 'Dirección Procedencia', 'auto' => 'off'],
+                                                            ['help' => 'Digite su dirección de procedencia']) !!}
                                                     {!! Field::select(
                                                             'Departamento', null,
                                                             ['name' => 'regions_create']) !!}
@@ -140,100 +141,123 @@
                                         </div>
                                         <div class="tab-pane" id="tab2">
                                             <h3 class="block">Proporcione los detalles deL perfil</h3>
-
-
+                                            <div class="row">
+                                                <div class="col-md-4 col-md-offset-1">
+                                                    {!!  Field::file('image_profile_create') !!}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab3">
                                             <h3 class="block">Proporcione el roll</h3>
-
+                                            <div class="row">
+                                                <div class="col-md-4 col-md-offset-1">
+                                                    <select multiple="multiple" class="multi-select" id="multi_select_roles_create" name="multi_select_roles_create[]">
+                                                        @foreach($roles as $role)
+                                                            <option value="{{$role->id}}">{{$role->display_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab4">
-                                            <h3 class="block">Confirm your account</h3>
-                                            <h4 class="form-section">Account</h4>
+                                            <h3 class="block">Confirme su cuenta</h3>
+                                            <h4 class="form-section">Datos Personales</h4>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Username:</label>
+                                                <label class="control-label col-md-3">Nombre:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="username"> </p>
+                                                    <p class="form-control-static" data-display="name_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Email:</label>
+                                                <label class="control-label col-md-3">Apellido:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="email"> </p>
-                                                </div>
-                                            </div>
-                                            <h4 class="form-section">Profile</h4>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Fullname:</label>
-                                                <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="fullname"> </p>
+                                                    <p class="form-control-static" data-display="lastname_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Gender:</label>
+                                                <label class="control-label col-md-3">Fecha de Nacimiento:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="gender"> </p>
+                                                    <p class="form-control-static" data-display="date_birthday"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Phone:</label>
+                                                <label class="control-label col-md-3">Sexo:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="phone"> </p>
+                                                    <p class="form-control-static" data-display="sexo_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Address:</label>
+                                                <label class="control-label col-md-3">Tipo de identificación:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="address"> </p>
+                                                    <p class="form-control-static" data-display="identity_type_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">City/Town:</label>
+                                                <label class="control-label col-md-3">Numero de Identificación:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="city"> </p>
+                                                    <p class="form-control-static" data-display="identity_no_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Country:</label>
+                                                <label class="control-label col-md-3">Fecha de Expedición:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="country"> </p>
+                                                    <p class="form-control-static" data-display="identity_expe_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Remarks:</label>
+                                                <label class="control-label col-md-3">Lugar de expedición:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="remarks"> </p>
-                                                </div>
-                                            </div>
-                                            <h4 class="form-section">Billing</h4>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Card Holder Name:</label>
-                                                <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="card_name"> </p>
+                                                    <p class="form-control-static" data-display="identity_expe_place_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Card Number:</label>
+                                                <label class="control-label col-md-3">Numero Telefonico:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="card_number"> </p>
+                                                    <p class="form-control-static" data-display="phone_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">CVC:</label>
+                                                <label class="control-label col-md-3">Estado:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="card_cvc"> </p>
+                                                    <p class="form-control-static" data-display="state_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Expiration:</label>
+                                                <label class="control-label col-md-3">Correo Electronico:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="card_expiry_date"> </p>
+                                                    <p class="form-control-static" data-display="email_create"> </p>
+                                                </div>
+                                            </div>
+                                            <h4 class="form-section">Datos de Ubicación</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Dirección Procedencia:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="address_create"> </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Payment Options:</label>
+                                                <label class="control-label col-md-3">Pais:</label>
                                                 <div class="col-md-4">
-                                                    <p class="form-control-static" data-display="payment[]"> </p>
+                                                    <p class="form-control-static" data-display="countries_create"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Departamento:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="regions_create"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Ciudad:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="cities_create"> </p>
+                                                </div>
+                                            </div>
+                                            <h4 class="form-section">Datos de Permisos</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Roles:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="multi_select_roles_create[]"> </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,7 +291,46 @@
 
         var $widget_select_countries_create = $('select[name="countries_create"]'),
             $widget_select_regions_create = $('select[name="regions_create"]'),
-            $widget_select_cities_create = $('select[name="cities_create"]');
+            $widget_select_cities_create = $('select[name="cities_create"]'),
+            $widget_select = $("#multi_select_roles_create");
+
+        /*Asignacion de roles*/
+        $widget_select.multiSelect({
+            selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' '>",
+            selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' '>",
+            afterInit: function(ms){
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    $selectionSearch = that.$selectionUl.prev(),
+                    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+                    selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                    .on('keydown', function(e){
+                        if (e.which === 40){
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
+
+                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                    .on('keydown', function(e){
+                        if (e.which == 40){
+                            that.$selectionUl.focus();
+                            return false;
+                        }
+                    });
+            },
+            afterSelect: function(){
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function(){
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            selectableOptgroup: true
+        });
 
         /*Carga todos los paises*/
         var route_country = '{{ route('location.countries') }}';
@@ -323,6 +386,7 @@
             });
         });
 
+        /*Configuracion de input tipo fecha*/
         $('.date-picker').datepicker({
             rtl: App.isRTL(),
             orientation: "left",
@@ -344,92 +408,37 @@
             yearSuffix: ''
         });
 
+        /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
-            width: null,
             placeholder: "Selecccionar",
-        });
-
-
-        var form = $('#submit_form');
-        var rules = {
-            //account
-            username: {
-                minlength: 5,
-                required: true
-            },
-            password: {
-                minlength: 5,
-                required: true
-            },
-            rpassword: {
-                minlength: 5,
-                required: true,
-                equalTo: "#submit_form_password"
-            },
-            //profile
-            fullname: {
-                required: true
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            phone: {
-                required: true
-            },
-            gender: {
-                required: true
-            },
-            address: {
-                required: true
-            },
-            city: {
-                required: true
-            },
-            country: {
-                required: true
-            },
-            //payment
-            card_name: {
-                required: true
-            },
-            card_number: {
-                minlength: 16,
-                maxlength: 16,
-                required: true
-            },
-            card_cvc: {
-                digits: true,
-                required: true,
-                minlength: 3,
-                maxlength: 4
-            },
-            card_expiry_date: {
-                required: true
-            },
-            'payment[]': {
-                required: true,
-                minlength: 1
-            }
-        };
-        var messages = { // custom messages for radio buttons and checkboxes
-            'payment[]': {
-                required: "Please select at least one option",
-                minlength: jQuery.validator.format("Please select at least one option")
-            }
-        };
-
-        var wizard =  $('#form_wizard_1');
-
-        $("#country_list").select2({
-            placeholder: "Select",
             allowClear: true,
             width: 'auto',
             escapeMarkup: function (m) {
                 return m;
             }
         });
+
+
+        var form = $('#submit_form');
+        var rules = {
+            name_create: { minlength: 5, required: true },
+            lastname_create: { minlength: 5, required: true },
+            email_create: { required: true, email: true },
+            password_create: { minlength: 5, required: true },
+            state_create: { required: true },
+            phone_create: { minlength: 5 },
+            sexo_create: { required: true },
+            identity_expe_place_create: { minlength: 5 },
+            identity_no_create: { minlength: 5 },
+            address_create: { minlength: 5 },
+            image_profile_create: { extension: "jpg|png"},
+            'multi_select_roles_create[]': { minlength: 1 }
+        };
+        var messages = {};
+        var wizard =  $('#form_wizard_1');
+
+
 
         //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
         $('#country_list', form).change(function () {
