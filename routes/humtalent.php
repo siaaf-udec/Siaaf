@@ -24,9 +24,9 @@ Route::resource('rrhh', $controller.'EmpleadoController', [   //ruta para el con
         'create' => 'talento.humano.rrhh.create',
         'store' => 'talento.humano.rrhh.store',
         'index' => 'talento.humano.rrhh.index',
-        'edit' => 'talento.humano.rrhh.edit',
+        //'edit' => 'talento.humano.rrhh.edit',
         'update' => 'talento.humano.rrhh.update',
-        'destroy' => 'talento.humano.rrhh.destroy',
+        //'destroy' => 'talento.humano.rrhh.destroy',
     ]
 ]);
 Route::resource('document', $controller.'DocumentController',[  //ruta para el controlador encargado del CRUD de la Documentación
@@ -34,9 +34,11 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el c
         'index'=> 'talento.humano.document.index',
         'create'=> 'talento.humano.document.create',
         'store'=> 'talento.humano.document.store',
-        'edit'=> 'talento.humano.document.edit',
+        //'edit'=> 'talento.humano.document.edit',
         'update'=> 'talento.humano.document.update',
         'destroy'=> 'talento.humano.document.destroy',
+        //'destroy'=> 'talento.humano.document.destroy',
+
     ]
 ]);
 
@@ -96,10 +98,9 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'index'=> 'talento.humano.evento.index',
         'create'=> 'talento.humano.evento.create',
         'store'=> 'talento.humano.evento.store',
-        'edit'=> 'talento.humano.evento.edit',
+        //'edit'=> 'talento.humano.evento.edit',
         'update'=> 'talento.humano.evento.update',
-        'destroy'=> 'talento.humano.evento.destroy',
-
+        //'destroy'=> 'talento.humano.evento.destroy',
     ]
 ]);
 
@@ -115,7 +116,7 @@ Route::get('tablaEventos',[   //ruta que realiza la consulta de los eventos regi
     'uses' => $controller.'EventoController@tablaEventos'
 ]);
 
-Route::get('evento/asistentes/{id}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
+Route::get('evento/asistentes/{id?}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
     'as' => 'talento.humano.evento.asistentes', //Este es el alias de la ruta
     'uses' => function($id){
         return view('humtalent.eventos.consultarAsistentes',compact('id'));
@@ -135,7 +136,7 @@ Route::get('evento/regAsist/{id}', [    //ruta para listar los empleados  para a
         return view('humtalent.eventos.registrarAsistentes',compact('id'));
     }
 ]);
-Route::get('evento/regAsist/saveAsist/{id}/{ced}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
+Route::get('evento/regAsist/saveAsist/{id?}/{ced?}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
     'as' => 'talento.humano.evento.regAsist.saveAsists',
     'uses' => $controller.'EventoController@registrarAsistentes'
 ]);
@@ -143,7 +144,7 @@ Route::post('evento/regAsist/regTotAsist/{id?}/{datos?}',[   //ruta que registra
     'as' => 'talento.humano.evento.regAsist.regTotAsist',
     'uses' => $controller.'EventoController@registrarTodosAsistentes'
 ]);
-Route::get('evento/asistentes/deleteAsist/{id}/{ced}',[   //ruta que eliminar un asistente a un evento, recibe la cedula  del empleado seleccionado y el id del evento
+Route::get('evento/asistentes/deleteAsist/{id?}/{ced?}',[   //ruta que eliminar un asistente a un evento, recibe la cedula  del empleado seleccionado y el id del evento
     'as' => 'talento.humano.evento.asistentes.deleteAsist',
     'uses' => $controller.'EventoController@deleteAsistentes'
 ]);
@@ -163,18 +164,9 @@ Route::group(['prefix' => 'induccion'], function () {
         }
     ]);
 
-    Route::get('tablaEmpleadosNuevos',[   //ruta para realizar la cosnulta de los empleados nuevos
-        'as' => 'talento.humano.tablaEmpleadosNuevos',
-        'uses' => $controller.'InduccionController@listarEmpleadosNuevos'
-    ]);
-
-    Route::get('procesoInduccion/{id}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
-        'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
-        'uses' => $controller . 'InduccionController@index'
-    ]);
-
-    Route::post('induccion/store', [   //ruta para registrar el proceso de inducción para un empleado
-        'as' => 'talento.humano.induccion.store',
-        'uses' => $controller . 'InduccionController@store'
-    ]);
-});
+Route::get('procesoInduccion', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+    'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
+    'uses' => function(){
+        return view('humtalent.inducciones.procesoInduccion');
+    }
+]);

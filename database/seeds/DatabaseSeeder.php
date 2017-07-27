@@ -15,8 +15,5 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(ModulesTableSeeder::class);
-        //$this->call(AdmonSeeder::class);//llama la clase
-       
-        
     }
 }

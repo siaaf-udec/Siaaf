@@ -15,6 +15,7 @@ use App\Container\Humtalent\src\StatusOfDocument;
 use App\Container\Humtalent\src\Persona;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
 class DocumentController extends Controller
@@ -163,8 +164,9 @@ class DocumentController extends Controller
      */
     public function edit($id)//presenta el formulario para editar un documento deseado
     {
-        $documento = DocumentacionPersona::find($id);
-        return view('humtalent.documentacion.editarDocumento', compact('documento'));
+            $documento = DocumentacionPersona::find($id);
+            return view('humtalent.documentacion.editarDocumento', compact('documento'));
+
     }
 
     /**
@@ -194,16 +196,22 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)//se elimina el registro de un documento
+    public function destroy(Request $request,$id)//se elimina el registro de un documento
     {
+        if($request->ajax() && $request->isMethod('DELETE')){
         StatusOfDocument::where('FK_Personal_Documento',$id)->delete();
         DocumentacionPersona::destroy($id);
 
-        $notification=array(
-            'message'=>'La información del documento fue eliminada correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 

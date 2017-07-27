@@ -50,4 +50,38 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the user that owns the city.
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    /**
+     * Get the user that owns the country.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the user that owns the region.
+     */
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    /*
+     * morphMany() Identifica que existe relacion polimorfica
+     * Parametros(Entidad de comentarios, Metodo en la entidad de comentario)
+     * */
+    public function images()
+    {
+        //seoble, likeable, votable....
+        return $this->morphMany(Image::class, 'imageble');
+    }
 }

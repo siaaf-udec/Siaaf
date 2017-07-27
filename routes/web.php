@@ -35,12 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
-    $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
-    Route::get('/container', [
-        'uses' => $controller.'UserController@index',
-        'as' => 'index'
-    ]);
-
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1
         Route::get('buttons', function ()    {
@@ -188,6 +182,14 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller.'UserController@index',
             'as' => 'users.index'
         ]);
+        Route::get('index/ajax',[
+            'uses' => $controller.'UserController@index_ajax',
+            'as' => 'users.index.ajax'
+        ]);
+        Route::get('create',[
+            'uses' => $controller.'UserController@create',
+            'as' => 'users.create'
+        ]);
         Route::get('data',[
             'uses' => $controller.'UserController@data',
             'as' => 'users.data'
@@ -205,7 +207,24 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'users.destroy'
         ])->where(['id' => '[0-9]+']);
     });
+
+    Route::group(['prefix' => 'location'], function () {
+        $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+        Route::get('countries',[
+            'uses' => $controller.'LocationController@to_list_countries',
+            'as' => 'location.countries'
+        ]);
+        Route::get('regions/find/country/{id?}',[
+            'uses' => $controller.'LocationController@to_list_regions_find',
+            'as' => 'location.regions.find'
+        ]);
+        Route::get('cities/find/country/{id_region?}/{id_city?}',[
+            'uses' => $controller.'LocationController@to_list_cities_find',
+            'as' => 'location.cities.find'
+        ]);
+    });
 });
+
 
 
 

@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Container\Audiovisuals\Src\Administrador;
-class AdmonSeeder extends Seeder
+
+class Gesap/momSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,6 @@ class AdmonSeeder extends Seeder
      */
     public function run()
     {
-        factory(Administrador::class, 100)->create();
-        
+        //
     }
 }

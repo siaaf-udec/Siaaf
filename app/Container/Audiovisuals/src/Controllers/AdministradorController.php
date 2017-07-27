@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AdministradorController extends Controller
@@ -13,8 +14,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        //
-        return ;
+        return view('audiovisuals.administrador.gestionAdministradores');
     }
 
     /**

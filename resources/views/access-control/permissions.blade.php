@@ -108,7 +108,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>                    </div>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+                    </div>
                     </div>
                 </div>
                 <div class="clearfix"> </div><br>
