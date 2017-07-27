@@ -23,9 +23,6 @@
 @push('styles')
 <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 
@@ -91,11 +88,6 @@ de la plantilla
     {{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Administradores'])
-    
-        {!! Field::select('sizes', 
-        ['L' => 'Large', 'S' => 'Small'],null,
-        ['label' => 'Seleccionar una talla'])
-        !!}
     <a class="btn btn-outline dark" data-toggle="modal" href="#responsive">
         Nuevo Administrador
     </a>
@@ -216,8 +208,6 @@ de la plantilla
 </script>
 <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
 </script>
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
-</script>
 @endpush
 
 {{--
@@ -238,31 +228,4 @@ de la plantilla
 | @endpush
 --}}
 @push('functions')
-<script>
-    var ComponentsSelect2 = function() {
-
-        var handleSelect = function() {
-
-            $.fn.select2.defaults.set("theme", "bootstrap");
-
-            $(".pmd-select2").select2({
-                width: null,
-                placeholder: "Selecccionar",
-            });
-
-        }
-
-        return {
-            init: function() {
-                handleSelect();
-            }
-        };
-
-    }();
-    jQuery(document).ready(function() {
-        
-        ComponentsSelect2.init();
-        
-    });
-</script>
 @endpush
