@@ -87,7 +87,11 @@ class accionEmpController extends Controller
             'alert-type'=>'success'
         );
 
-        return view('humtalent.empleado.buscarEmpleado')->with($notification);
+        $notification=array(
+            'message'=>'La información fue almacenada correctamente.',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);
 
     }
 }

@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Event;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Asistent;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
-class EventoController
+class EventoController extends Controller
 {
     protected $userRepository;
     protected $id;
@@ -71,30 +73,61 @@ class EventoController
             ], 412);
         }
     }
-    public function registrarAsistentes($id, $ced){
-        Asistent::create([
-            'ASIST_Informe' => 'No',
-            'FK_TBL_Eventos_IdEvento' => $id,
-            'FK_TBL_Persona_Cedula'   => $ced,
-        ]);
+    public function registrarAsistentes(Request $request,$id, $ced){
+        if($request->ajax() && $request->isMethod('GET')) {
+            Asistent::create([
+                'ASIST_Informe' => 'No',
+                'FK_TBL_Eventos_IdEvento' => $id,
+                'FK_TBL_Persona_Cedula' => $ced,
+            ]);
+            return AjaxResponse::success(
+                '¡Registro exitoso!',
+                'El asistente fue registrado correctamente.'
+            );
+        }else{
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
 
-        $notification=array(
-            'message'=>'Asistente registrado corectamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
     }
-    public function registrarTodosAsistentes($id){
-        return $id;
+
+    public function registrarTodosAsistentes(Request $request,$id, $datos){
+        $datos=explode(';',$datos);
+        if($request->ajax() && $request->isMethod('POST')){
+            for ($i=0; $i< count($datos)-1; $i++){
+                Asistent::create([
+                    'ASIST_Informe' => 'No',
+                    'FK_TBL_Eventos_IdEvento' => $id,
+                    'FK_TBL_Persona_Cedula'   => $datos[$i],
+                ]);
+            }
+            return AjaxResponse::success(
+                '¡Registro exitoso!',
+                'Todos los asistentes fueron registrados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
     }
-    public function deleteAsistentes($id, $ced){
+    public function deleteAsistentes(Request $request,$id, $ced){
+        if($request->ajax() && $request->isMethod('GET')){
         Asistent::where('FK_TBL_Persona_Cedula',$ced)
                 ->where('FK_TBL_Eventos_IdEvento',$id)->delete();
-        $notification=array(
-            'message'=>'El asistente se ha eliminado correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
+        return AjaxResponse::success(
+            '¡Proceso exitoso!',
+            'El asistente fue eliminado correctamente.'
+        );}else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     /**
      * @return UserInterface
@@ -197,15 +230,20 @@ class EventoController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)//se elimina el registro de un documento
+    public function destroy(Request $request,$id)//se elimina el registro de un documento
     {
-        //Event::where('PK_EVNT_IdEvento',$id)->delete();
+        if($request->ajax() && $request->isMethod('DELETE')){
+        Asistent::where('FK_TBL_Eventos_IdEvento',$id)->delete();
         Event::destroy($id);
-
-        $notification=array(
-            'message'=>'La información del evento fue eliminada correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 }

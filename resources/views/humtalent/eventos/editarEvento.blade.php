@@ -11,6 +11,15 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de eventos: '])
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a href="{{ route('talento.humano.evento.index') }}">
+                        <button id="sample_editable_1_new" class="btn green" >
+                            <i class="fa fa-arrow-circle-left"></i>Volver
+                        </button>
+                    </a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::model ($evento,['id'=>'form_eventos','method'=>'PUT', 'route'=> ['talento.humano.evento.update', $evento->PK_EVNT_IdEvento],'role'=>"form"]) !!}
@@ -120,7 +129,7 @@
                 messages:{
                     EVNT_Descripcion: {
 
-                        required: "Debes ingresar la descripci'on del evento"
+                        required: "Debes ingresar la descripción del evento"
                     },
                     EVNT_Fecha: {
                         required: "Debes ingresar cuando se realizara el evento"

@@ -38,7 +38,7 @@
                         {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digite la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Field:: select('PRSN_Ciudad',['bogota','medellin'],['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digite la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
 
 

@@ -9,121 +9,166 @@
 @section('page-title', 'Estado del proceso de inducción:')
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers font-blue', 'title' => 'Proceso de inducción'])
-        {!! Form::open (['id'=>'form-induccion','class'=>'form-horizontal','method'=>'POST']) !!}
-
-                    <div class="form-wizard">
-                        <div class="form-body">
-                            <ul class="nav nav-pills nav-justified steps">
-                                <li>
-                                    <a href="#tab1" data-toggle="tab" class="step">
-                                        <span class="number"> 1 </span>
-                                        <span class="desc">
-                                    <i class="fa fa-check"></i> Identificación del personal que ingresa por primera vez </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#tab2" data-toggle="tab" class="step">
-                                        <span class="number"> 2 </span>
-                                        <span class="desc">
-                                    <i class="fa fa-check"></i> Ejecución de inducción </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#tab3" data-toggle="tab" class="step">
-                                        <span class="number"> 3 </span>
-                                        <span class="desc">
-                                    <i class="fa fa-check"></i> Controles participantes de inducción y reinducción </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#tab4" data-toggle="tab" class="step">
-                                        <span class="number"> 4 </span>
-                                        <span class="desc">
+        <div class="form-wizard">
+            <div class="form-body">
+                <ul class="nav nav-pills nav-justified steps">
+                    <li>
+                        <a href="#tab0" data-toggle="tab" class="step">
+                            <span class="number"> 0 </span>
+                            <span class="desc">
+                                    <i class="fa fa-check"></i>  Proceso de inducción </span>
+                        </a>
+                    </li>
+                    <li>
+                         <a href="#tab1" data-toggle="tab" class="step">
+                            <span class="number"> 1 </span>
+                            <span class="desc">
+                                    <i class="fa fa-check"></i>  Ejecución de inducción </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab2" data-toggle="tab" class="step">
+                            <span class="number"> 2 </span>
+                            <span class="desc">
+                                    <i class="fa fa-check"></i> Controles participantes de inducción o reinducción </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab3" data-toggle="tab" class="step">
+                            <span class="number"> 3 </span>
+                            <span class="desc">
                                     <i class="fa fa-check"></i> Evaluación de inducción </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#tab5" data-toggle="tab" class="step">
-                                        <span class="number"> 5 </span>
-                                        <span class="desc">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab4" data-toggle="tab" class="step">
+                            <span class="number"> 4 </span>
+                            <span class="desc">
                                     <i class="fa fa-check"></i> Resultados de la evaluación </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div id="bar" class="progress progress-striped" role="progressbar">
-                                <div class="progress-bar progress-bar-success"> </div>
-                            </div>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab1">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
-                                    <div class="form-group">
-                                    <div class="col-md-offset-1 col-md-9">
-                                    {!! Field::checkboxes('estado1',
-                                        ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                        ['label' => 'Seleccione una opción: ']) !!}
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab2">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado2',
-                                                ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Seleccione una opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab3">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado3',
-                                                ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Seleccione una opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab4">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado4',
-                                                ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Seleccione una opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab5">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado5',
-                                                ['exito' => 'Se finalizo exitosamente', 'noexito' => 'No ha finalizado'],null,
-                                                ['label' => 'Seleccione una opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <a href="javascript:;" class="btn default button-previous">
-                                        <i class="fa fa-angle-left"></i> Atrás </a>
-                                    <a href="javascript:;" class="btn btn-outline green button-next"> Continuar
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                    <a href="javascript:;" class="btn green button-submit"> Finalizar
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                </div>
+                        </a>
+                    </li>
+                </ul>
+                <div id="bar" class="progress progress-striped" role="progressbar">
+                    <div class="progress-bar progress-bar-success"> </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab0">
+                        <h3 class="block"> Presione en el proceso de inducción a realizar</h3>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
                             </div>
                         </div>
                     </div>
-                    {!! Form::close() !!}
-
-
+                    <div class="tab-pane active" id="tab1">
+                        <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                    {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
+                                @if ($proceso === 'Ejecución de inducción' )
+                                    {!! Field::checkbox('INDC_ProcesoInduccion1','Ejecución de inducción',true,
+                                           ['label' => 'Se finalizo exitosamente']) !!}
+                                @else
+                                    {!! Field::checkbox('INDC_ProcesoInduccion1','Ejecución de inducción',
+                                           ['label' => 'Se finalizo exitosamente']) !!}
+                                @endif
+                                    {!! Field::hidden('numCheck','INDC_ProcesoInduccion1') !!}
+                                    {!! Field::hidden('INDC_Aprobacion','0') !!}
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="tab2">
+                        <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
+                                @if ($proceso === 'Control de participación' )
+                                     {!! Field::checkbox('INDC_ProcesoInduccion2','Control de participación',true,
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @else
+                                    {!! Field::checkbox('INDC_ProcesoInduccion2','Control de participación',
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @endif
+                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion2') !!}
+                                     {!! Field::hidden('INDC_Aprobacion','0') !!}
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="tab3">
+                        <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                    {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
+                                @if ($proceso === 'Evaluación de inducción' )
+                                    {!! Field::checkbox('INDC_ProcesoInduccion3','Evaluación de inducción',true,
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @else
+                                    {!! Field::checkbox('INDC_ProcesoInduccion3','Evaluación de inducción',
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @endif
+                                    {!! Field::hidden('numCheck','INDC_ProcesoInduccion3') !!}
+                                    {!! Field::hidden('INDC_Aprobacion','0') !!}
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="tab4">
+                        <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
+                        <h5 class="block">&nbsp;&nbsp;Al finalizar este proceso se cambiara el estado del empleado de nuevo a antiguo.</h5>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
+                                @if ($proceso === 'Resultados de evaluación' )
+                                     {!! Field::checkbox('INDC_ProcesoInduccion4','Resultados de evaluación',true,
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @else
+                                    {!! Field::checkbox('INDC_ProcesoInduccion4','Resultados de evaluación',
+                                       ['label' => 'Se finalizo exitosamente']) !!}
+                                @endif
+                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion4') !!}
+                                     {!! Field:: text('INDC_Aprobacion',null,['label'=>'Calificación de la inducción: ','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                        ['help'=>'Digite la calificación que obtuvo el empleado en la inducción.','icon'=>' fa fa-credit-card']) !!}
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {!! Field::hidden('proceso',$proceso,['id'=>'tipoProceso']) !!}
+        </div>
 
     @endcomponent
 @endsection
@@ -143,6 +188,13 @@
 @push('functions')
 <script type="text/javascript">
 
+    jQuery(document).ready(function() {
+        $('.caption-subject').append( "<span class='step-title'> Paso 1 de 4 </span>" );
+        $('.portlet-sortable').attr("id","form_wizard_1");
+        FormWizard.init();
+        ComponentsSelect2.init();
+    });
+
     var FormWizard = function () {
 
 
@@ -158,16 +210,6 @@
                     return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
                 }
 
-                $("#country_list").select2({
-                    placeholder: "Select",
-                    allowClear: true,
-                    formatResult: format,
-                    width: 'auto',
-                    formatSelection: format,
-                    escapeMarkup: function (m) {
-                        return m;
-                    }
-                });
 
                 var form = $('#form-induccion');
                 var error = $('.alert-danger', form);
@@ -180,19 +222,19 @@
                     focusInvalid: false, // do not focus the last invalid input
                     rules: {
                         //account
-                        'estado1[]': {
+                        'INDC_ProcesoInduccion1[]': {
                             required: true,
                             maxlength:1
                         },
-                        'estado2[]': {
+                        'INDC_ProcesoInduccion2[]': {
                             required: true,
                             maxlength:1
                         },
-                        'estado3[]': {
+                        'INDC_ProcesoInduccion3[]': {
                             required: true,
                             maxlength:1
                         },
-                        'estado4[]': {
+                        'INDC_ProcesoInduccion4[]': {
                             required: true,
                             maxlength:1
                         },
@@ -204,19 +246,19 @@
                     },
 
                     messages: { // custom messages for radio buttons and checkboxes
-                        'estado1[]': {
+                        'INDC_ProcesoInduccion1[]': {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'estado2[]': {
+                        'INDC_ProcesoInduccion2[]': {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'estado3[]': {
+                        'INDC_ProcesoInduccion3[]': {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'estado4[]': {
+                        'INDC_ProcesoInduccion4[]': {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
@@ -279,7 +321,7 @@
                 });
 
                 var displayConfirm = function() {
-                    $('#tab3 .form-control-static', form).each(function(){
+                    $('#tab2 .form-control-static', form).each(function(){
                         var input = $('[name="'+$(this).attr("data-display")+'"]', form);
                         if (input.is(":radio")) {
                             input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
@@ -304,7 +346,7 @@
                     var total = navigation.find('li').length;
                     var current = index + 1;
                     // set wizard title
-                    $('.step-title', $('#form_wizard_1')).text('Paso ' + (index + 1) + ' de ' + total);
+                    $('.step-title', $('#form_wizard_1')).text('Paso ' + (index) + ' de ' + (total-1));
                     // set done steps
                     jQuery('li', $('#form_wizard_1')).removeClass("done");
                     var li_list = navigation.find('li');
@@ -312,13 +354,13 @@
                         jQuery(li_list[i]).addClass("done");
                     }
 
-                    if (current == 1) {
+                    if (index == 1) {
                         $('#form_wizard_1').find('.button-previous').hide();
                     } else {
                         $('#form_wizard_1').find('.button-previous').show();
                     }
 
-                    if (current >= total) {
+                    if (index >= total) {
                         $('#form_wizard_1').find('.button-next').hide();
                         $('#form_wizard_1').find('.button-submit').show();
                         displayConfirm();
@@ -326,7 +368,7 @@
                         $('#form_wizard_1').find('.button-next').show();
                         $('#form_wizard_1').find('.button-submit').hide();
                     }
-                    App.scrollTo($('.page-title'));
+                   // App.scrollTo($('.page-title'));
                 }
 
                 // default form wizard
@@ -334,33 +376,73 @@
                     'nextSelector': '.button-next',
                     'previousSelector': '.button-previous',
                     onTabClick: function (tab, navigation, index, clickedIndex) {
-                        return false;
+                        //return false;
 
                         success.hide();
                         error.hide();
                         if (form.valid() == false) {
                             return false;
+                        }
+                        var proceso= $('input[id="tipoProceso"]').val();
+                        switch(proceso){
+                            case "Inicio":
+                                index=1;
+                                break;
+                            case "Ejecución de inducción":
+                                index=2;
+                                break;
+                            case "Control de participación":
+                                index=3;
+                                break;
+                            case "Evaluación de inducción":
+                                index=4;
+                                break;
                         }
 
                         handleTitle(tab, navigation, clickedIndex);
                     },
                     onNext: function (tab, navigation, index) {
-                        success.hide();
+                        return false;
+                        /*success.hide();
                         error.hide();
 
                         if (form.valid() == false) {
                             return false;
                         }
 
-                        handleTitle(tab, navigation, index);
+                        handleTitle(tab, navigation, index);*/
                     },
                     onPrevious: function (tab, navigation, index) {
+                        return false;
+                        /*
                         success.hide();
                         error.hide();
 
-                        handleTitle(tab, navigation, index);
+                        handleTitle(tab, navigation, index);*/
                     },
                     onTabShow: function (tab, navigation, index) {
+                        var proceso= $('input[id="tipoProceso"]').val();
+                        switch(proceso){
+                            case "Inicio":
+                                index=0;
+                                break;
+                            case "Ejecución de inducción":
+                                index=1;
+                                break;
+                            case "Control de participación":
+                                index=2;
+                                break;
+                            case "Evaluación de inducción":
+                                index=3;
+                                break;
+                            case "Resultados de evaluación":
+                                index=4;
+                                break;
+                        }
+                        var li_list = navigation.find('li');
+                        for (var i = 0; i <= index; i++) {
+                            jQuery(li_list[i]).addClass("done");
+                        }
                         var total = navigation.find('li').length;
                         var current = index + 1;
                         var $percent = (current / total) * 100;
@@ -375,10 +457,6 @@
                     swal("Inducción finalizada!", "Se ha cambiado el estado del docente", "success");
                 }).hide();
 
-                //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
-                $('#country_list', form).change(function () {
-                    form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-                });
             }
 
         };
@@ -405,14 +483,6 @@
         };
 
     }();
-
-    jQuery(document).ready(function() {
-        $('.caption-subject').append( "<span class='step-title'> Paso 1 de 5 </span>" );
-        $('.portlet-sortable').attr("id","form_wizard_1");
-        FormWizard.init();
-        ComponentsSelect2.init();
-    });
-
 
 
 </script>

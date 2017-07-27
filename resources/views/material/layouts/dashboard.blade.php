@@ -52,7 +52,7 @@
                         {{-- END BREADCRUMB --}}
                         {{-- END PAGE HEADER --}}
                         {{-- BEGIN CUSTOM CONTENT --}}
-                        <div class="row" id="sortable_portlets">
+                        <div class="row content-ajax" id="sortable_portlets">
                             @yield('content')
                         </div>
                         {{-- END CUSTOM CONTENT --}}

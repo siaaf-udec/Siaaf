@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdministradorController extends Controller
+class ArticuloController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        //
+        return view('audiovisuals.articulo.gestionArticulos');
     }
 
     /**

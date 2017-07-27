@@ -2,14 +2,11 @@
 
 namespace App\Container\Permissions\Src\Controllers;
 
-use Yajra\Datatables\Datatables;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-
-use App\Container\Permissions\Src\Interfaces\RoleInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Permissions\Src\Interfaces\RoleInterface;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class RoleController extends Controller
 {
@@ -38,14 +35,14 @@ class RoleController extends Controller
      */
     public function data(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')){
+        if ($request->ajax() && $request->isMethod('GET')) {
             $roles = $this->roleRepository->index();
             return Datatables::of($roles)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -61,13 +58,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
             $this->roleRepository->store($request->all());
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -84,19 +81,19 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
             $roles = [
-                'id' => $id,
-                'name'=> $request->get('name'),
-                'display_name'=> $request->get('display_name'),
-                'description'=> $request->get('description'),
+                'id'           => $id,
+                'name'         => $request->get('name'),
+                'display_name' => $request->get('display_name'),
+                'description'  => $request->get('description'),
             ];
             $this->roleRepository->update($roles);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -112,7 +109,7 @@ class RoleController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('DELETE')){
+        if ($request->ajax() && $request->isMethod('DELETE')) {
 
             $this->roleRepository->destroy($id);
 
@@ -120,7 +117,7 @@ class RoleController extends Controller
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
             );
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'

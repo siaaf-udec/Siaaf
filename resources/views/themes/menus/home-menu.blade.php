@@ -74,20 +74,20 @@
         </li>
     </ul>
 </li>
-<li class="nav-item {{ active(['access-control.*'], 'start active open') }}">
+<li class="nav-item {{ active(['access-control.*','roles.permissions.index'], 'start active open') }}">
     <a href="javascript:;" class="nav-link nav-toggle">
         <i class="fa fa-lock"></i>
         <span class="title">Permisos</span>
         <span class="arrow {{ active(['access-control.*'], 'open') }}"></span>
     </a>
     <ul class="sub-menu">
-        <li class="nav-item {{ active(['access-control.permissions'], 'start active open') }}">
+        <li class="nav-item {{ active(['roles.permissions.index'], 'start active open') }}">
             <a href="{{ route('roles.permission.index') }}" class="nav-link">
                 <i class="fa fa-clone"></i>
                 <span class="title">Asignaciones</span>
             </a>
         </li>
-        <li class="nav-item {{ active(['access-control.permissions'], 'start active open') }}">
+        <li class="nav-item {{ active(['permissions.index'], 'start active open') }}">
             <a href="{{ route('permissions.index') }}" class="nav-link">
                 <i class="fa fa-get-pocket"></i>
                 <span class="title">Gestion de Permisos</span>
@@ -106,4 +106,10 @@
             </a>
         </li>
     </ul>
+</li>
+<li class="nav-item {{ active(['access-control.*','roles.permissions.index'], 'start active open') }}">
+    <a href="{{ route('users.index') }}" class="nav-link nav-toggle">
+        <i class="fa fa-users"></i>
+        <span class="title">Usuarios</span>
+    </a>
 </li>

@@ -85,7 +85,8 @@
     <div class="col-md-12">
         <div class="note note-info">
             <p>
-                {{$users[0]}}
+                Página en blanco con dependencias de "assets" para usar como base en
+                cualquier nueva página personalizada que se cree.
             </p>
         </div>
     </div>

@@ -53,7 +53,7 @@ jQuery(document).ready(function () {
 
         var table, url;
         table = $('#lista-empleados');
-        url = "{{ route('talento.humano.tablaEmpleados')}}";
+        url = "{{ route('talento.humano.tablaEmpleadosNuevos')}}";
         $.fn.dataTable.ext.errMode = 'throw';
         /*/para que no le salga errores al funcionario*/
 
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="procesoInduccion" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
+                        return '<a href="procesoInduccion/'+data+'" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
                     },
                     responsivePriority: 2
                 }

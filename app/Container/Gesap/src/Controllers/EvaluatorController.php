@@ -25,7 +25,8 @@ class EvaluatorController extends Controller
         $anteproyectos = DB::select('select PK_NPRY_idMinr008,NPRY_Titulo from TBL_Anteproyecto where PK_NPRY_idMinr008= ?',[$id]);
         return view($this->path.'.Evaluador.Observaciones',compact('anteproyectos'));
     }
-    public function storeObservaciones(Request $request, $id){
+    public function storeObservaciones(Request $request){
+        return "OK";
     }
     
     public function createConceptos($id){
