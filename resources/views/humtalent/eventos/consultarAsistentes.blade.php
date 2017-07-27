@@ -59,15 +59,6 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
-@if(Session::has('message'))
-    var type="{{Session::get('alert-type','info')}}"
-    switch(type){
-        case 'success':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}",'Eliminación exitosa:');
-            break;
-    }
-@endif
 jQuery(document).ready(function () {
     //var id= document.getElementById("idEvent").value;
     var table, url, columns;
@@ -103,11 +94,30 @@ jQuery(document).ready(function () {
         $tr = $(this).closest('tr');
         var dataTable = table.row($tr).data();
         var id = document.getElementById("idEvent").value;
+        var route = '{{ route('talento.humano.evento.asistentes.deleteAsist') }}' + '/' + id + '/' + dataTable.PK_PRSN_Cedula;
+        var type = 'GET';
+        var async = async || false;
         $.ajax({
+            url: route,
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            cache: false,
+            type: type,
+            contentType: false,
+            processData: false,
+            async: async,
+            success: function (response, xhr, request) {
+                if (request.status === 200 && xhr === 'success') {
+                    table.ajax.reload();
+                    UIToastr.init(xhr, response.title, response.message);
+                }
+            },
+            error: function (response, xhr, request) {
+                if (request.status === 422 &&  xhr === 'success') {
+                    UIToastr.init(xhr, response.title, response.message);
+                }
+            }
 
-        }).done(function(){
-            window.location.href='{{ route('talento.humano.evento.asistentes.deleteAsist') }}' + '/' + id + '/' + dataTable.PK_PRSN_Cedula;
-        });
+        })
     });
 });
 

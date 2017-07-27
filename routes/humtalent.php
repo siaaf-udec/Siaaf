@@ -135,7 +135,7 @@ Route::get('evento/regAsist/{id}', [    //ruta para listar los empleados  para a
         return view('humtalent.eventos.registrarAsistentes',compact('id'));
     }
 ]);
-Route::get('evento/regAsist/saveAsist/{id}/{ced}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
+Route::get('evento/regAsist/saveAsist/{id?}/{ced?}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
     'as' => 'talento.humano.evento.regAsist.saveAsists',
     'uses' => $controller.'EventoController@registrarAsistentes'
 ]);

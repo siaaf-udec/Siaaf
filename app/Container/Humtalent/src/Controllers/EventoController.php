@@ -73,35 +73,39 @@ class EventoController extends Controller
             ], 412);
         }
     }
-    public function registrarAsistentes($id, $ced){
-        Asistent::create([
-            'ASIST_Informe' => 'No',
-            'FK_TBL_Eventos_IdEvento' => $id,
-            'FK_TBL_Persona_Cedula'   => $ced,
-        ]);
+    public function registrarAsistentes(Request $request,$id, $ced){
+        if($request->ajax() && $request->isMethod('GET')) {
+            Asistent::create([
+                'ASIST_Informe' => 'No',
+                'FK_TBL_Eventos_IdEvento' => $id,
+                'FK_TBL_Persona_Cedula' => $ced,
+            ]);
+            return AjaxResponse::success(
+                '¡Registro exitoso!',
+                'El asistente fue registrado correctamente.'
+            );
+        }else{
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
 
-        $notification=array(
-            'message'=>'Asistente registrado corectamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
     }
 
     public function registrarTodosAsistentes(Request $request,$id, $datos){
         $datos=explode(';',$datos);
         if($request->ajax() && $request->isMethod('POST')){
-            foreach ($datos as $dato){
-
-               Asistent::create([
-
+            for ($i=0; $i< count($datos)-1; $i++){
+                Asistent::create([
                     'ASIST_Informe' => 'No',
                     'FK_TBL_Eventos_IdEvento' => $id,
-                    'FK_TBL_Persona_Cedula'   => $dato
+                    'FK_TBL_Persona_Cedula'   => $datos[$i],
                 ]);
             }
             return AjaxResponse::success(
-                '¡Operación exitosa!',
-                'Asistentes registrados correctamente.'
+                '¡Registro exitoso!',
+                'Todos los asistentes fueron registrados correctamente.'
             );
         }else{
             return AjaxResponse::fail(
@@ -111,15 +115,19 @@ class EventoController extends Controller
         }
 
     }
-    public function deleteAsistentes($id, $ced){
-
+    public function deleteAsistentes(Request $request,$id, $ced){
+        if($request->ajax() && $request->isMethod('GET')){
         Asistent::where('FK_TBL_Persona_Cedula',$ced)
                 ->where('FK_TBL_Eventos_IdEvento',$id)->delete();
-        $notification=array(
-            'message'=>'El asistente se ha eliminado correctamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+        return AjaxResponse::success(
+            '¡Proceso exitoso!',
+            'El asistente fue eliminado correctamente.'
+        );}else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     /**
      * @return UserInterface
