@@ -91,10 +91,12 @@ class EventoController extends Controller
         $datos=explode(';',$datos);
         if($request->ajax() && $request->isMethod('POST')){
             foreach ($datos as $dato){
+
                Asistent::create([
+
                     'ASIST_Informe' => 'No',
                     'FK_TBL_Eventos_IdEvento' => $id,
-                    'FK_TBL_Persona_Cedula'   => $dato,
+                    'FK_TBL_Persona_Cedula'   => $dato
                 ]);
             }
             return AjaxResponse::success(
@@ -107,20 +109,15 @@ class EventoController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
-       /* $notification=array(
-            'message'=>'Asistentes registrados correctamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);*/
+
     }
-
-
     public function deleteAsistentes($id, $ced){
+
         Asistent::where('FK_TBL_Persona_Cedula',$ced)
                 ->where('FK_TBL_Eventos_IdEvento',$id)->delete();
         $notification=array(
             'message'=>'El asistente se ha eliminado correctamente',
-            'alert-type'=>'error'
+            'alert-type'=>'success'
         );
         return back()->with($notification);
     }
@@ -225,15 +222,20 @@ class EventoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)//se elimina el registro de un documento
+    public function destroy(Request $request,$id)//se elimina el registro de un documento
     {
+        if($request->ajax() && $request->isMethod('DELETE')){
         Asistent::where('FK_TBL_Eventos_IdEvento',$id)->delete();
         Event::destroy($id);
-
-        $notification=array(
-            'message'=>'La información del evento fue eliminada correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 }

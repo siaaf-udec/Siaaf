@@ -97,10 +97,9 @@ Route::resource('evento', $controller.'EventoController',[  //ruta para el contr
         'index'=> 'talento.humano.evento.index',
         'create'=> 'talento.humano.evento.create',
         'store'=> 'talento.humano.evento.store',
-        'edit'=> 'talento.humano.evento.edit',
+        //'edit'=> 'talento.humano.evento.edit',
         'update'=> 'talento.humano.evento.update',
-        'destroy'=> 'talento.humano.evento.destroy',
-
+        //'destroy'=> 'talento.humano.evento.destroy',
     ]
 ]);
 
@@ -116,7 +115,7 @@ Route::get('tablaEventos',[   //ruta que realiza la consulta de los eventos regi
     'uses' => $controller.'EventoController@tablaEventos'
 ]);
 
-Route::get('evento/asistentes/{id}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
+Route::get('evento/asistentes/{id?}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
     'as' => 'talento.humano.evento.asistentes', //Este es el alias de la ruta
     'uses' => function($id){
         return view('humtalent.eventos.consultarAsistentes',compact('id'));
@@ -144,7 +143,7 @@ Route::post('evento/regAsist/regTotAsist/{id?}/{datos?}',[   //ruta que registra
     'as' => 'talento.humano.evento.regAsist.regTotAsist',
     'uses' => $controller.'EventoController@registrarTodosAsistentes'
 ]);
-Route::get('evento/asistentes/deleteAsist/{id}/{ced}',[   //ruta que eliminar un asistente a un evento, recibe la cedula  del empleado seleccionado y el id del evento
+Route::get('evento/asistentes/deleteAsist/{id?}/{ced?}',[   //ruta que eliminar un asistente a un evento, recibe la cedula  del empleado seleccionado y el id del evento
     'as' => 'talento.humano.evento.asistentes.deleteAsist',
     'uses' => $controller.'EventoController@deleteAsistentes'
 ]);
@@ -187,4 +186,12 @@ Route::delete('rrhh/destroy/{id?}',[
 Route::get('rrhh/edit/{id?}',[
     'uses' => $controller.'EmpleadoController@edit',
     'as' => 'talento.humano.rrhh.edit'
+]);
+Route::delete('evento/destroy/{id?}',[
+    'uses' => $controller.'EventoController@destroy',
+    'as' => 'talento.humano.evento.destroy'
+]);
+Route::get('evento/edit/{id?}',[
+    'uses' => $controller.'EventoController@edit',
+    'as' => 'talento.humano.evento.edit'
 ]);

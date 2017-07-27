@@ -13,7 +13,7 @@ var dataTableServer = function () {
             responsive: true,
             colReorder: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',

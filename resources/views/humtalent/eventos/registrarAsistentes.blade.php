@@ -15,11 +15,10 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-
-
             <div id="response" class="row">
-                <div class="col-md-12">
-                    <button id="button" class="btn blue">Registrar todos</button><br><br>
+                <div class="col-md-12"><br>
+                    <button id="button" class="btn blue">Registrar todos</button>&nbsp&nbsp&nbsp<a href="{{ route('talento.humano.evento.index') }}"><button id="volver" class="btn green" >
+                            <i class="fa fa-arrow-circle-left"></i>Volver</button></a> <br><br>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
@@ -51,7 +50,7 @@
 
 @endpush
 @push('functions')
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
 <script>
@@ -80,7 +79,7 @@
             @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
-        case 'error':
+        case 'success   ':
             toastr.options.closeButton = true;
             toastr.info("{{Session::get('message')}}",'Eliminación exitosa:');
             break;
