@@ -180,3 +180,27 @@ Route::group(['prefix' => 'induccion'], function () {
         'uses' => $controller . 'InduccionController@store'
     ]);
 });
+Route::delete('evento/destroy/{id?}',[
+    'uses' => $controller.'EventoController@destroy',
+    'as' => 'talento.humano.evento.destroy'
+]);
+Route::get('evento/edit/{id?}',[
+    'uses' => $controller.'EventoController@edit',
+    'as' => 'talento.humano.evento.edit'
+]);
+Route::delete('document/destroy/{id?}',[
+    'uses' => $controller.'DocumentController@destroy',
+    'as' => 'talento.humano.document.destroy'
+]);
+Route::get('document/edit/{id?}',[
+    'uses' => $controller.'DocumentController@edit',
+    'as' => 'talento.humano.document.edit'
+]);
+Route::delete('rrhh/destroy/{id?}',[
+    'uses' => $controller.'EmpleadoController@destroy',
+    'as' => 'talento.humano.rrhh.destroy'
+]);
+Route::get('rrhh/edit/{id?}',[
+    'uses' => $controller.'EmpleadoController@edit',
+    'as' => 'talento.humano.rrhh.edit'
+]);
