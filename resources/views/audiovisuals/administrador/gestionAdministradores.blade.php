@@ -208,6 +208,9 @@ de la plantilla
 </script>
 <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
 </script>
+<!-- Validacion Campos Maxlength -->
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript">
+</script>
 @endpush
 
 {{--
@@ -228,4 +231,27 @@ de la plantilla
 | @endpush
 --}}
 @push('functions')
+<script>
+    var ComponentsBootstrapMaxlength = function () {
+        var handleBootstrapMaxlength = function() {
+            $("input[maxlength], textarea[maxlength]").maxlength({
+                alwaysShow: true,
+                appendToParent: true
+            });
+            
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+                handleBootstrapMaxlength();
+            }
+        };
+    }();
+    
+    jQuery(document).ready(function() {
+        
+        ComponentsBootstrapMaxlength.init();
+        
+    });
+</script>
 @endpush
