@@ -14,7 +14,6 @@ class Induction extends Model
     protected $primaryKey = 'PK_INDC_ID_Induccion';
 
     protected $fillable = [
-
         'INDC_ProcesoInduccion','INDC_Aprobacion','FK_TBL_Persona_Cedula',
     ];
 
