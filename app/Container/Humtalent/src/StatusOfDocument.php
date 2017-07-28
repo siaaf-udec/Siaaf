@@ -19,7 +19,7 @@ class StatusOfDocument extends Model
 
 
     public function Personas(){
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Persona::class,'FK_Personal_Documento','PK_PRSN_Cedula');
     }
     public function Notifications(){
         return $this->belongsTo(Notification::class);

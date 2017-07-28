@@ -13,7 +13,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Acadspace\src\Roles;
-use App\Container\Acadspace\src\Modulos;
+use App\Container\Acadspace\src\PerimisosAcadSpace;
 
 class DatabaseAcadSpaceSeeder extends Seeder
 {
@@ -41,9 +41,41 @@ class DatabaseAcadSpaceSeeder extends Seeder
             'name' => "secretaria", 'display_name' => "Secretaria", 'description' => "Rol Secretaria",
         ]);
 
-        Modulos::create([
-            'name'   => 'formAcad',  'description'   => 'Formatos Academicos'
+        PerimisosAcadSpace::create([
+            'name' => "formAcad", 'display_name' => "Formatos Academicos", 'description' => "Modulo Formatos Academicos", 'module_id' => "1",
 
         ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "auxapoyo", 'display_name' => "Auxiliar Apoyo", 'description' => "Modulo Rol Auxiliar Apoyo", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "docentes", 'display_name' => "Docentes", 'description' => "Modulo Rol Docentes", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "solicitudes", 'display_name' => "Solicitudes", 'description' => "Modulo Solicitudes", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "horarios", 'display_name' => "Horarios", 'description' => "Modulo Horarios", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "asistencia", 'display_name' => "Asistencia", 'description' => "Modulo Asistencia Docentes", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "reportes", 'display_name' => "Reportes", 'description' => "Modulo Reportes", 'module_id' => "1",
+
+        ]);
+
+
     }
 }
