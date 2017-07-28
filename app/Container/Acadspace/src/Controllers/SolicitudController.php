@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Solicitud;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class SolicitudController extends Controller
 {
@@ -46,30 +47,30 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
-        $cadena='';
+        $diasSemana='';
         foreach ($request['SOL_dias'] as $id){
-            $s = '|';
-            if($cadena == ''){
-                $cadena =$id;
+            $separador = '|';
+            if($diasSemana == ''){
+                $diasSemana = $id;
             }else{
-                $cadena .= $s.$id;
+                $diasSemana .= $separador.$id;
             }
         }
-        echo $cadena;
+
 
 
         //return "Aqui refirige";
         Solicitud::create([
- //           'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
+ //         'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
             'SOL_guia_practica'    => $request['SOL_ReqGuia'],
             'SOL_software'         => $request['SOL_ReqSoft'],
             'SOL_grupo'            => $request['SOL_grupo'],
             'SOL_cant_estudiantes' => $request['SOL_cant_estudiantes'],
-            'SOL_dias'             => $cadena,
+            'SOL_dias'             => $diasSemana,
             'SOL_hora_inicio'      => $request['SOL_hora_inicio'],
             'SOL_hora_fin'         => $request['SOL_hora_fin'],
             'SOL_estado'           => 0,
-            'SOL_fechas'           => $request['SOL_list'],
+            'SOL_fechas'           => $request['fechas_Solicitadas'],
             'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico']
         ]);
         return back()->with('success','Solicitud registrada correctamente');

@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
-use Yajra\Datatables\Datatables;
 use App\Container\Humtalent\src\Induction;
+use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 
-class induccionController extends Controller
+class InduccionController extends Controller
 {
     protected $userRepository;
 
@@ -43,10 +43,17 @@ class induccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()//muestra todos los empleados registrados
+    public function index($id)//muestra todos los empleados registrados
     {
-        //$empleados = Persona::all();
-        return view('humtalent.empleado.tablasEmpleados');
+        $procesoInduccion=Induction::where('FK_TBL_Persona_Cedula',$id)->get(['INDC_ProcesoInduccion']);
+        if(count($procesoInduccion)>0) {
+            foreach ($procesoInduccion as $value) {
+                $proceso = $value->INDC_ProcesoInduccion;
+            }
+        }else{
+            $proceso='Inicio';
+        }
+        return view('humtalent.inducciones.procesoInduccion', compact('id', 'proceso'));
     }
 
     /**
@@ -56,7 +63,8 @@ class induccionController extends Controller
      */
     public function create()//muestra el formulario de registro de un nuevo empleado
     {
-        return view('humtalent.empleado.registroEmpleado');
+
+
     }
 
     /**
@@ -65,30 +73,30 @@ class induccionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)//se alamacena en la base de datos un nuevo registro del empleado
-    {
-        Persona::create([
-            'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
-            'PRSN_Rol'                => $request['PRSN_Rol'],
-            'PRSN_Nombres'            => $request['PRSN_Nombres'],
-            'PRSN_Apellidos'          => $request['PRSN_Apellidos'],
-            'PRSN_Telefono'           => $request['PRSN_Telefono'],
-            'PRSN_Correo'             => $request['PRSN_Correo'],
-            'PRSN_Direccion'          => $request['PRSN_Direccion'],
-            'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
-            'PRSN_Eps'                => $request['PRSN_Eps'],
-            'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
-            'PRSN_Area'               => $request['PRSN_Area'],
-            'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
-            'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
-        ]);
-
+    public function store(Request $request){
+        $induccion=Induction::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])->get(['PK_INDC_ID_Induccion']);
+        if(count($induccion) > 0){
+            $induccion=Induction::find($induccion[0]['PK_INDC_ID_Induccion']);
+            $induccion->INDC_ProcesoInduccion = $request[$request['numCheck']];
+            $induccion->INDC_Aprobacion = $request['INDC_Aprobacion'];
+            $induccion->save();
+            if(strcasecmp( $request[$request['numCheck']], "Resultados de evaluación") == 0){
+                $empleado=Persona::find($request['FK_TBL_Persona_Cedula']);
+                $empleado->PRSN_Estado_Persona="Antiguo";
+                $empleado->save();
+            }
+        }else {
+            Induction::create([
+                'INDC_ProcesoInduccion' => $request[$request['numCheck']],
+                'INDC_Aprobacion' => $request['INDC_Aprobacion'],
+                'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
+            ]);
+        }
         $notification=array(
             'message'=>'La información del empleado fue almacenada correctamente.',
             'alert-type'=>'success'
         );
         return back()->with($notification);
-
     }
 
     /**
@@ -111,8 +119,7 @@ class induccionController extends Controller
      */
     public function edit($id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
     {
-        $empleado = Persona::find($id);
-        return view('humtalent.empleado.editarEmpleado', compact('empleado'));
+
     }
 
     /**
@@ -124,16 +131,7 @@ class induccionController extends Controller
      */
     public function update(Request $request, $id)//re realiza la actualización de los datos
     {
-        $empleado= Persona::find($id);
-        $empleado->fill($request->all());
-        //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
-        //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
-        $empleado->save();
-        $notification=array(
-            'message'=>'La información del empleado fue modificada correctamente',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+
     }
 
     /**
@@ -145,11 +143,5 @@ class induccionController extends Controller
     public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
 
-        Persona::destroy($id);
-        $notification=array(
-            'message'=>'La información del empleado fue eliminada correctamente',
-            'alert-type'=>'error'
-        );
-        return back()->with($notification);
     }
 }

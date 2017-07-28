@@ -35,12 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
-    $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
-    Route::get('/container', [
-        'uses' => $controller.'UserController@index',
-        'as' => 'index'
-    ]);
-
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1
         Route::get('buttons', function ()    {
@@ -188,9 +182,17 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller.'UserController@index',
             'as' => 'users.index'
         ]);
+        Route::get('index/ajax',[
+            'uses' => $controller.'UserController@index_ajax',
+            'as' => 'users.index.ajax'
+        ]);
         Route::get('create',[
             'uses' => $controller.'UserController@create',
             'as' => 'users.create'
+        ]);
+        Route::get('edit/{id?}',[
+            'uses' => $controller.'UserController@edit',
+            'as' => 'users.edit'
         ]);
         Route::get('data',[
             'uses' => $controller.'UserController@data',
@@ -226,6 +228,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
     });
 });
+
 
 
 

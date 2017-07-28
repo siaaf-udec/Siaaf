@@ -8,7 +8,7 @@ class City extends Model
 {
     protected $connection = 'developer';
     protected $table = 'cities';
-    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -2,12 +2,11 @@
 
 namespace App\Container\Audiovisuals\src\Controllers;
 
+use App\Container\Audiovisuals\src\Funcionario;
+use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Container\Audiovisuals\src\Requests\FuncionarioRequest;
-use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Audiovisuals\src\Funcionario;
 
 class FuncionarioController extends Controller
 {
@@ -24,37 +23,39 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listing(Request $request){
+    public function listing(Request $request)
+    {
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return Datatables::of(
-            Funcionario::select(
-                'PK_FNS_Cedula', 
-                'FNS_Nombres', 
-                'FNS_Correo', 
-                'FK_FNS_Programa')->get()
-                )->addIndexColumn()
-                 ->make(true);
-         }else{
-                return response()->json([
-                    'message' => 'Incorrect request',
-                    'code' => 412
-                ],412);
-         }
+                Funcionario::select(
+                    'PK_FNS_Cedula',
+                    'FNS_Nombres',
+                    'FNS_Correo',
+                    'FK_FNS_Programa')->get()
+            )->addIndexColumn()
+                ->make(true);
+        } else {
+            return response()->json([
+                'message' => 'Incorrect request',
+                'code'    => 412,
+            ], 412);
+        }
 
     }
 
-    public function all(Request $request, $id){
+    public function all(Request $request, $id)
+    {
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return Funcionario::find($id);
 
-         }else{
+        } else {
             return response()->json([
                 'message' => 'Incorrect request',
-                'code' => 412
-            ],412);
-         }
+                'code'    => 412,
+            ], 412);
+        }
 
     }
 
@@ -81,13 +82,13 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             Funcionario::create($request->all());
             return response()->json([
-                    "mensaje" => "creado",
-                ]);
+                "mensaje" => "creado",
+            ]);
         }
-       
+
     }
 
     /**
@@ -99,7 +100,7 @@ class FuncionarioController extends Controller
     public function show()
     {
         //return "en el show";
-       // return view('humtalent.empleado.consultaEmpleado');
+        // return view('humtalent.empleado.consultaEmpleado');
     }
 
     /**
@@ -113,8 +114,8 @@ class FuncionarioController extends Controller
 
         $funcionario = Funcionario::find($id);
         return response()->json(
-                $funcionario->toArray()
-            );
+            $funcionario->toArray()
+        );
         // return view('audiovisuals.funcionario.editarFuncionario', compact('funcionario'));
     }
 
@@ -128,11 +129,11 @@ class FuncionarioController extends Controller
     public function update(Request $request, $id)
     {
 
-        $funcionario= Funcionario::find($id);
+        $funcionario = Funcionario::find($id);
         $funcionario->fill($request->all());
         $funcionario->save();
         return response()->json([
-            "mensaje"=>"listo"
+            "mensaje" => "listo",
 
         ]);
     }
@@ -146,7 +147,7 @@ class FuncionarioController extends Controller
     public function destroy($id)
     {
         Funcionario::destroy($id);
-        return response()->json(["mensaje"=>"borrado"]);
+        return response()->json(["mensaje" => "borrado"]);
     }
 
 }

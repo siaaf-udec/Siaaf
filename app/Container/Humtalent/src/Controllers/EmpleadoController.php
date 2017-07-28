@@ -8,6 +8,8 @@
 
 namespace App\Container\Humtalent\src\Controllers;
 
+use App\Container\Humtalent\src\Asistent;
+use App\Container\Humtalent\src\Induction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
@@ -134,6 +136,9 @@ class EmpleadoController extends Controller
     public function destroy(Request $request,$id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
     {
         if($request->ajax() && $request->isMethod('DELETE')){
+            Induction::with('Persona')->where('FK_TBL_Persona_Cedula',$id)->delete();
+            StatusOfDocument::with('Persona')->where('FK_TBL_Persona_Cedula',$id)->delete();
+            Asistent::with('Persona')->where('FK_TBL_Persona_Cedula',$id)->delete();
             Persona::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',

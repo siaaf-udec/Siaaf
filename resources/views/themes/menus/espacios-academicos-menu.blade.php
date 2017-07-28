@@ -1,4 +1,5 @@
 {{-- MENÚ DE EJEMPLO --}}
+@permission('formAcad')
 
 <li class="nav-item {{ active(['espacios.academicos.*'], 'start active open') }}">
     <a href="javascript:;" class="nav-link nav-toggle">
@@ -76,6 +77,7 @@
             </ul>
         </li>
 
+        @permission('report')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -97,7 +99,10 @@
                 </li>
             </ul>
         </li>
+        @endpermission
 
     </ul>
 
 </li>
+
+@endpermission

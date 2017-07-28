@@ -5,12 +5,16 @@ namespace App\Container\Users\Src\Controllers;
 use Yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
+
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\Src\Facades\UploadFile;
 
 use App\Container\Users\Src\Country;
 
@@ -18,13 +22,11 @@ class UserController extends Controller
 {
 
     protected $userRepository;
-    protected $moduleRepository;
     protected $roleRepository;
 
-    public function __construct(UserInterface $userRepository,  ModuleInterface $moduleRepository, RoleInterface $roleRepository)
+    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
     {
         $this->userRepository = $userRepository;
-        $this->moduleRepository = $moduleRepository;
         $this->roleRepository = $roleRepository;
     }
 
@@ -39,6 +41,23 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_ajax(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            return view('users.content-ajax.ajax-user');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -47,7 +66,7 @@ class UserController extends Controller
     {
         if($request->ajax() && $request->isMethod('GET')){
             $roles =  $this->roleRepository->index([]);
-            return view('users.content-ajax.ajax-update-user', [
+            return view('users.content-ajax.ajax-create-user', [
                     'roles' => $roles
             ]);
         }else{
@@ -115,11 +134,52 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST')){
-            $this->userRepository->store($request->all());
+
+            /*Guarda Usuario*/
+            $user = $this->userRepository->store($request->all());
+
+            /*Guarda la imagen */
+            $url = Storage::disk('developer')->putFile('avatars', $request->file('image_profile_create'));
+            $user->images()->create([
+                'url' => $url
+            ]);
+
+            /*Guarda los Roles*/
+            $roles =  $request->get('multi_select_roles_create');
+            $user->roles()->sync(
+                ($roles !== null) ? explode(',', $roles) : []
+            );
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            $user = $this->userRepository->show($id,[]);
+
+            return view('users.content-ajax.ajax-update-user', [
+                    'user' => $user,
+                    'user-roll' => $user->roles,
+                    'roles' => $this->roleRepository->index([]),
+                    'image' => ''
+            ]);
+
         }else{
             return AjaxResponse::fail(
                 '¡Lo sentimos!',

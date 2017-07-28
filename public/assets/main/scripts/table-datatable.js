@@ -13,7 +13,7 @@ var dataTableServer = function () {
             responsive: true,
             colReorder: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: url,
             language: {
                 "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
@@ -64,7 +64,7 @@ var dataTableServer = function () {
     var handleTooltips = function () {
         $('.t-add').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Añadir nuevo registro"});
         $('.t-print').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Imprimir"});
-        $('.t-copy').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Cipoar al portapales"});
+        $('.t-copy').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Copiar al portapales"});
         $('.t-pdf').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Exportar a PDF"});
         $('.t-excel').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Exportar a EXCEL"});
         $('.t-csv').attr({'data-container':"body", 'data-placement':"top", 'data-original-title':"Exportar a CSV"});

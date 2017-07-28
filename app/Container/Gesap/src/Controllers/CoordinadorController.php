@@ -20,7 +20,7 @@ class CoordinadorController extends Controller
 {
     
     private $path='gesap';
-    protected $connection = 'gesap';
+    
 
     /*TABLA DE ANTEPROYECTOS*/
     public function index(){
@@ -157,11 +157,14 @@ class CoordinadorController extends Controller
     }
     /*FORMULARIO DE CREACION DE ANTEPROYECTOS*/
     public function create(){
-        $estudiantes=DB::table('TBL_Users')
-            ->select(DB::raw('CONCAT(SRS_Nombre, " ", SRS_Apellido) AS name'),'PK_SRS_Cedula')
-            ->where('FK_TBL_Rol_id','=',4)
+        $estudiantes=DB::table('developer.users')
+            ->select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+            ->join('developer.role_user', function ($join) {
+                $join->on('users.id', '=', 'role_user.user_id')
+                    ->where('role_user.role_id', '=', 3);
+            })
             ->orderBy('name', 'asc')
-            ->pluck('name','PK_SRS_Cedula')
+            ->pluck('name','id')
             ->toArray();
         
         return view($this->path.'.Coordinador.RegistroMin',compact('estudiantes'));
@@ -219,15 +222,24 @@ class CoordinadorController extends Controller
 
     
     public function asignar($id){
-        $anteproyectos = DB::select('select PK_NPRY_idMinr008,NPRY_Titulo from TBL_Anteproyecto where PK_NPRY_idMinr008= ?',[$id]);
         
-        $docentes=DB::table('tbl_users')
-                    ->select(DB::raw('CONCAT(SRS_Nombre, " ", SRS_Apellido) AS name'),'PK_SRS_Cedula')
-                    ->where('FK_TBL_Rol_id','=',2)
-                    ->orWhere('FK_TBL_Rol_id','=',3)
-                    ->orderBy('name', 'asc')
-                    ->pluck('name','PK_SRS_Cedula')
-                    ->toArray();
+        $anteproyectos = DB::table('gesap.TBL_Anteproyecto')
+                        ->select('PK_NPRY_idMinr008','NPRY_Titulo')
+                        ->where('PK_NPRY_idMinr008','=',$id)
+                        ->get();
+        
+        $docentes=DB::table('developer.users')
+            ->select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+            ->join('developer.role_user', function ($join) {
+                $join->on('users.id', '=', 'role_user.user_id')
+                    ->where(function($query){
+                      $query->where('role_user.role_id', '=', 2)  ;
+                      $query->orwhere('role_user.role_id', '=', 1);
+                    });
+            })
+            ->orderBy('name', 'asc')
+            ->pluck('name','id')
+            ->toArray();
         
         $director=DB::select('select PK_NPRY_idMinr008,`FK_TBL_Usuarios_id` as Cedula,concat(SRS_Nombre," ",SRS_Apellido) as name , PK_NPRY_idCargo from TBL_Anteproyecto,tbl_encargados,tbl_users where `FK_TBL_Anteproyecto_id`=PK_NPRY_idMinr008 AND `FK_TBL_Usuarios_id`=`PK_SRS_Cedula` AND `NCRD_Cargo`="Director" AND PK_NPRY_idMinr008= ?',[$id]);     
         

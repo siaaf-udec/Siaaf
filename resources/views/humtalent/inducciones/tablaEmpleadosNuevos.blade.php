@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
                     printable: false,
                     className: '',
                     render: function (data, type, full, meta) {
-                        return '<a href="procesoInduccion" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
+                        return '<a href="procesoInduccion/'+data+'" class="btn btn-primary"><i class="fa fa-list-ol"></i></a>';
                     },
                     responsivePriority: 2
                 }

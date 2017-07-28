@@ -14,7 +14,7 @@ class CreateInductionsTable extends Migration
     public function up()
     {
         Schema::connection('humtalent')->create('TBL_Inducciones', function (Blueprint $table){
-            $table->increments('PK_INDC_ID_Induccion')->unique();
+            $table->increments('PK_INDC_ID_Induccion')->unsigned()->unique();
             $table->String('INDC_ProcesoInduccion',45);
             $table->Integer('INDC_Aprobacion')->unsigned();
             $table->integer('FK_TBL_Persona_Cedula')->unsigned();
