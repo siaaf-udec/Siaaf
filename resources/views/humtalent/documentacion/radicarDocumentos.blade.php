@@ -84,16 +84,32 @@
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-9">
-                                            {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-                                            @if($cantidadDocumentos == $cantidadRadicados)
-                                                {!! link_to_route('talento.humano.afiliarEmpleado', 'Empleado Afiliado', [$empleado->PK_PRSN_Cedula],
-                                                                    ['class'=>'btn blue','btn-icon remove'])!!}
-                                            @endif
+                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
                                         </div>
                                     </div>
                                 </div>
                         </div>
                                     {!! Form::close() !!}
+
+                        @if($cantidadDocumentos == $cantidadRadicados)
+                            {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.afiliarEmpleado']]) !!}
+                                 {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                 {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado') !!}
+                                 {!! Field::date('EDCMT_Fecha',
+                                   ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                   ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
+                                {!! Form::submit('Empleado Afiliado',['class'=>'btn blue','btn-icon remove']) !!}
+                            {!! Form::close() !!}
+                        @endif
+
+                        @if($estado == 'Afiliado')
+                            {!! link_to_route('talento.humano.reiniciarRadicacion','Reiniciar Proceso',
+                                            $empleado->PK_PRSN_Cedula,['class'=>'btn red','btn-icon remove'] ) !!}
+                        @endif
+
+
+
+
                         {!! Field::hidden('cantDocumentos',$cantidadDocumentos,['id'=>'cantDocs']) !!}
                         {!! Field::hidden('cantRadicados',$cantidadRadicados,['id'=>'cantRad']) !!}
                         {!! Field::hidden('estado',$estado,['id'=>'estado']) !!}

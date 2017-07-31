@@ -17,7 +17,7 @@ class CreateStatusOfDocumentsTable extends Migration
             $table->date('EDCMT_Fecha');
             $table->String('EDCMT_Proceso_Documentacion',60);
             $table->integer('FK_TBL_Persona_Cedula')->unsigned();
-            $table->integer('FK_Personal_Documento')->unsigned();
+            $table->integer('FK_Personal_Documento')->unsigned()->nullable();
             $table->foreign('FK_TBL_Persona_Cedula')->references('PK_PRSN_Cedula')->on('TBL_Personas');
             $table->foreign('FK_Personal_Documento')->references('PK_DCMTP_Id_Documento')->on('TBL_Documentacion_Personal');
             $table->timestamps();
