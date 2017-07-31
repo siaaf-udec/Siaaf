@@ -47,6 +47,22 @@ Route::group(['prefix' => 'administrador'], function () {
         'uses' => $controller . 'AdministradorController@index',
         'as'   => 'audiovisuales.administrador.index',
     ]);
+    Route::get('data', [
+        'uses' => $controller . 'AdministradorController@data',
+        'as'   => 'administrador.data',
+    ]);
+    Route::get('all/{id}', [
+        'uses' => $controller . 'AdministradorController@all',
+        'as'   => 'administrador.all',
+    ]);
+    Route::post('store', [
+        'uses' => $controller . 'AdministradorController@store',
+        'as'   => 'administrador.store',
+    ]);
+    Route::delete('delete/{id?}', [
+        'uses' => $controller . 'AdministradorController@destroy',
+        'as'   => 'administrador.destroy',
+    ])->where(['id' => '[0-9]+']);
 });
 // RUTAS SUPERADMIN
 Route::group(['prefix' => 'superAdmin'], function () {

@@ -93,7 +93,7 @@ class InduccionController extends Controller
             ]);
         }
         $notification=array(
-            'message'=>'La información del empleado fue almacenada correctamente.',
+            'message'=>'El proceso de inducción fue almacenado correctamente',
             'alert-type'=>'success'
         );
         return back()->with($notification);

@@ -4,17 +4,17 @@ namespace App\Container\Acadspace\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Modulos extends Model
+class PerimisosAcadSpace extends Model
 {
     protected $connection = 'developer';
 
-    protected $table = 'tbl_modules';
+    protected $table = 'permissions';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
 
-        'name','description',
+        'name','display_name','description','module_id'
     ];
 
 
