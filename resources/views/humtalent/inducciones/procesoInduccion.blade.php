@@ -15,7 +15,7 @@
                 <ul class="nav nav-pills nav-justified steps">
                     <li>
                         <a href="#tab0" data-toggle="tab" class="step">
-                            <span class="number"> 0 </span>
+                            <span class="number">  </span>
                             <span class="desc">
                                     <i class="fa fa-check"></i>  Proceso de inducción </span>
                         </a>
@@ -185,7 +185,7 @@
     }
     @endif
     jQuery(document).ready(function() {
-        $('.caption-subject').append( "<span class='step-title'> Paso 1 de 4 </span>" );
+        $('.caption-subject').append( "<span class='step-title'>  </span>" );
         $('.portlet-sortable').attr("id","form_wizard_1");
         FormWizard.init();
         ComponentsSelect2.init();
