@@ -8,7 +8,6 @@
 @endpush
 @section('content')
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
-            {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
                     <div class="form-wizard">
                         <div class="form-body">
                             <ul class="nav nav-pills nav-justified steps">
@@ -37,7 +36,7 @@
                                     <a href="#tab4" data-toggle="tab" class="step">
                                         <span class="number"> 4 </span>
                                         <span class="desc">
-                                    <i class="fa fa-check-square"></i> Docente afiliado </span>
+                                    <i class="fa fa-check-square"></i> Empleado afiliado </span>
                                     </a>
                                 </li>
 
@@ -45,94 +44,60 @@
                             <div id="bar" class="progress progress-striped" role="progressbar">
                                 <div class="progress-bar progress-bar-success"> </div>
                             </div>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab1">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si desea iniciar la radicación de documentos:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado1',
-                                                ['iniciar' => 'Iniciar el proceso'],null,
-                                                ['label' => 'Seleccione la opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab2">
+                                <div class="form-group">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <br><br>
+                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
+                                            <thead>
+                                            <th>Número de Cedula</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Rol</th>
+                                            <th>Área o Programa</th>
+                                            </thead>
+                                            @foreach($empleados as $empleado)
+                                                <tbody>
+                                                <td>{{$empleado->PK_PRSN_Cedula}}</td>
+                                                <td>{{$empleado->PRSN_Nombres}}</td>
+                                                <td>{{$empleado->PRSN_Apellidos}}</td>
+                                                <td>{{$empleado->PRSN_Rol}}</td>
+                                                <td>{{$empleado->PRSN_Area}}</td>
+                                                </tbody>
+                                            @endforeach
+                                        </table>
+                                        <br>
+                                    {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
+                                        {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
 
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-10">
-                                            <br><br>
-                                            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
-                                                <thead>
-                                                <th>Número de Cedula</th>
-                                                <th>Nombre</th>
-                                                <th>Apellido</th>
-                                                <th>Rol</th>
-                                                <th>Área o Programa</th>
-                                                </thead>
-                                                @foreach($empleados as $empleado)
-                                                    <tbody>
-                                                    <td>{{$empleado->PK_PRSN_Cedula}}</td>
-                                                    <td>{{$empleado->PRSN_Nombres}}</td>
-                                                    <td>{{$empleado->PRSN_Apellidos}}</td>
-                                                    <td>{{$empleado->PRSN_Rol}}</td>
-                                                    <td>{{$empleado->PRSN_Area}}</td>
-                                                    </tbody>
-                                                @endforeach
-                                            </table>
-                                            <br>
-                                            {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
-
-                                            {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento']) !!}
-                                            <div class="row">
-                                                <div class="col-md-9 col-md-offset-0    ">
-                                            {!! Field::date('EDCMT_Fecha',
-                                               ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                                               ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
-                                                </div>
+                                        {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento']) !!}
+                                        <div class="row">
+                                            <div class="col-md-9 col-md-offset-0    ">
+                                                {!! Field::date('EDCMT_Fecha',
+                                                   ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                   ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                             </div>
-                                            <br>
+
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
                                             {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-
+                                            @if($cantidadDocumentos == $cantidadRadicados)
+                                                {!! link_to_route('talento.humano.afiliarEmpleado', 'Empleado Afiliado', [$empleado->PK_PRSN_Cedula],
+                                                                    ['class'=>'btn blue','btn-icon remove'])!!}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane active" id="tab3">
-                                    <h3 class="block">&nbsp;&nbsp;Seleccione si se entrego toda la documentación del empleado:</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::checkboxes('estado3',
-                                                ['exito' => 'La documentación fue entregada'],null,
-                                                ['label' => 'Seleccione la opción: ']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane active" id="tab4">
-                                    <h3 class="block">&nbsp;&nbsp;Presione el boton para finalizar el estado del empleado</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-1 col-md-9">
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <a href="javascript:;" class="btn default button-previous">
-                                        <i class="fa fa-angle-left"></i> Atrás </a>
-                                    <a href="javascript:;" class="btn btn-outline green button-next"> Continuar
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                    <a href="javascript:;" class="btn green button-submit"> Finalizar
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                                    {!! Form::close() !!}
+                        {!! Field::hidden('cantDocumentos',$cantidadDocumentos,['id'=>'cantDocs']) !!}
+                        {!! Field::hidden('cantRadicados',$cantidadRadicados,['id'=>'cantRad']) !!}
+                        {!! Field::hidden('estado',$estado,['id'=>'estado']) !!}
                     </div>
-                        {!! Form::close() !!}
     @endcomponent
 @endsection
 @push('plugins')
@@ -357,16 +322,18 @@
                     'previousSelector': '.button-previous',
                     onTabClick: function (tab, navigation, index, clickedIndex) {
                         return false;
-
+                        /*
                         success.hide();
                         error.hide();
                         if (form.valid() == false) {
                             return false;
                         }
 
-                        handleTitle(tab, navigation, clickedIndex);
+                        handleTitle(tab, navigation, clickedIndex);*/
                     },
                     onNext: function (tab, navigation, index) {
+                        return false;
+                        /*
                         success.hide();
                         error.hide();
 
@@ -374,15 +341,34 @@
                             return false;
                         }
 
-                        handleTitle(tab, navigation, index);
+                        handleTitle(tab, navigation, index); */
                     },
                     onPrevious: function (tab, navigation, index) {
+                        return false;
+                        /*
                         success.hide();
                         error.hide();
 
-                        handleTitle(tab, navigation, index);
+                        handleTitle(tab, navigation, index);*/
                     },
                     onTabShow: function (tab, navigation, index) {
+                        var radicados=$('input[id="cantRad"]').val();
+                        var documentos= $('input[id="cantDocs"]').val();
+                        var estado = $('input[id="estado"]').val();
+                        if(radicados > 0){
+                            index=1;
+                        }
+                        if(radicados == documentos){
+                            index = 2;
+                        }
+                        if(estado == 'Afiliado'){
+                            index = 3;
+                        }
+
+                        var li_list = navigation.find('li');
+                        for (var i = 0; i <= index; i++) {
+                            jQuery(li_list[i]).addClass("done");
+                        }
                         var total = navigation.find('li').length;
                         var current = index + 1;
                         var $percent = (current / total) * 100;
@@ -435,7 +421,6 @@
         ComponentsSelect2.init();
         ComponentsDateTimePickers.init();
     });
-
 
 
 

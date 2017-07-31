@@ -163,6 +163,32 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            $user = $this->userRepository->show($id,[]);
+
+            return view('users.content-ajax.ajax-update-user', [
+                    'user' => $user,
+                    'user-roll' => $user->roles,
+                    'roles' => $this->roleRepository->index([]),
+                    'image' => ''
+            ]);
+
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
