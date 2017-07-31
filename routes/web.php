@@ -190,6 +190,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller.'UserController@create',
             'as' => 'users.create'
         ]);
+        Route::get('edit/{id?}',[
+            'uses' => $controller.'UserController@edit',
+            'as' => 'users.edit'
+        ]);
         Route::get('data',[
             'uses' => $controller.'UserController@data',
             'as' => 'users.data'

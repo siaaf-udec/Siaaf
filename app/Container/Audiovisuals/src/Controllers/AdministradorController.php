@@ -2,11 +2,21 @@
 
 namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Container\Audiovisuals\Src\Interfaces\AdminInterface;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class AdministradorController extends Controller
 {
+    protected $adminRepository;
+
+    public function __construct(AdminInterface $adminRepository)
+    {
+        $this->adminRepository = $adminRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +32,30 @@ class AdministradorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function data(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $admins = $this->adminRepository->index();
+            return Datatables::of($admins)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->removeColumn('deleted_at')
+                ->removeColumn('remember_token')
+                ->removeColumn('ADMIN_Clave')
+                ->removeColumn('FK_ADMIN_Rol')
+                ->removeColumn('ADMIN_Direccion')
+                ->removeColumn('ADMIN_Apellidos')
+                ->removeColumn('FK_ADMIN_Estado')
+                ->addIndexColumn()
+                ->make(true);
+
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
     public function create()
     {
         //
@@ -35,7 +69,18 @@ class AdministradorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $this->adminRepository->store($request->all());
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Administrador registrado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -78,8 +123,21 @@ class AdministradorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+
+            $this->adminRepository->destroy($id);
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Administrador eliminado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 }

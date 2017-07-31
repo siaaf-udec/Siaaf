@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de solicitud'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario registro de solicitud'])
 
-            @include('humtalent.flash-message')
+
 
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
@@ -15,18 +15,17 @@
             ['label' => 'Seleccione las fechas en las que usara el espacio', 'required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
             ['help' => 'Seleccione las fechas.', 'icon' => 'fa fa-calendar']) !!}
 
-            <ul id="lista"></ul>
-            <button onclick="agregarArticulo()" id="agregar" class="btn blue"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+           <!-- <ul id="lista"></ul> -->
+
+            <button onclick="copiar()" id="agregar" class="btn blue"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
         </div>
             </div>
                 <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.espacad.store']]) !!}
-
                     <div class="form-body">
-
-                        {!! Field:: text('cedula',null,['label'=>'Cedula:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                         ['help' => 'Digita la cedula','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('fechas_Solicitadas',null,['label'=>'Fechas seleccionadas:', 'class'=> 'form-control', 'autofocus', 'autocomplete'=>'off'],
+                                                         ['help' => 'Fecchas seleccionadas desde el calendario','icon'=>'fa fa-calendar'] ) !!}
 
 
                         {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'Requiere guia de practica', 'icon'=>'fa fa-user']) !!}
@@ -63,14 +62,6 @@
                         'SOL_hora_fin',
                         ['label' => 'Hora de fin', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                         ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
-
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -106,22 +97,20 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-function agregarArticulo()
+var prueba="a";
+/*function agregarArticulo()
 {
     var textarea=document.getElementById("articulo").value;
+    copiar();
     if(textarea.length>0)
     {
         if(find_li(textarea))
         {
             var li=document.createElement('li');
-
             var text=document.createTextNode(textarea);
-            li.innerHTML="<button onclick='eliminar(this)' class='btn btn-danger' '><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button> ";
-            li.appendChild(text);
-
+            li.innerHTML="<button onclick='eliminar(this)' class='btn btn-danger' '><span class='glyphicon glyphicon-trash'></span></button> ";
+            prueba = li.appendChild(text);
             document.getElementById("lista").appendChild(li);
-
-
         }
     }
     return false;
@@ -135,137 +124,26 @@ function find_li(contenido)
         if(el[i].innerHTML==contenido)
             return false;
     }
+    copiar();
     return true;
 }
 
 function eliminar(elemento)
 {
+    cadena = document.getElementById("cedula").value+",";
+    valorEliminado = document.getElementById("articulo").value;
+    nuevoValor = "";
+    document.getElementById("cedula").value = cadena.replace(valorEliminado, nuevoValor);
     elemento.parentNode.remove();
+
+}*/
+function copiar()
+{
+    if(fechas_Solicitadas.value==""){
+        document.getElementById("fechas_Solicitadas").value=document.getElementById("articulo").value;
+    }else{
+        document.getElementById("fechas_Solicitadas").value=document.getElementById("fechas_Solicitadas").value+","+document.getElementById("articulo").value;
+    }
 }
-
-    //--1
-    var ComponentsDateTimePickers = function () {
-        var handleTimePickers = function () {
-
-            if (jQuery().timepicker) {
-
-                $('.timepicker-no-seconds').timepicker({
-                    autoclose: true,
-                    minuteStep: 5,
-                });
-
-            }
-        }
-
-        return {
-            init: function () {
-                handleTimePickers();
-            }
-        };
-    }();
-    jQuery(document).ready(function() {
-        ComponentsDateTimePickers.init();
-    });
-
-    var FormValidationMd = function() {
-        var handleValidation = function() {
-
-            var form1 = $('#form_material');
-            var error1 = $('.alert-danger', form1);
-            var success1 = $('.alert-success', form1);
-
-            form1.validate({
-                errorElement: 'span',
-                errorClass: 'help-block help-block-error',
-                focusInvalid: true,
-                ignore: "",
-                rules: {
-                    SOL_ReqGuia: {
-                        required: true
-                    },
-                    SOL_ReqSoft: {
-                        required: true
-                    }
-
-                },
-                messages:{
-                    SOL_ReqGuia: {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    },
-                    SOL_ReqSoft: {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    },
-
-
-                },
-
-                invalidHandler: function(event, validator) {
-                    success1.hide();
-                    error1.show();
-                    App.scrollTo(error1, -200);
-                },
-
-                errorPlacement: function(error, element) {
-                    if (element.is(':checkbox')) {
-                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                    } else if (element.is(':radio')) {
-                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else {
-                        error.insertAfter(element);
-                    }
-                },
-
-                highlight: function(element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error');
-                },
-
-                unhighlight: function(element) {
-                    $(element)
-                        .closest('.form-group').removeClass('has-error');
-                },
-
-                success: function(label) {
-                    label
-                        .closest('.form-group').removeClass('has-error');
-                },
-
-                submitHandler: function(form1) {
-                    success1.show();
-                    error1.hide();
-                }
-            });
-        }
-
-        return {
-            init: function() {
-                handleValidation();
-            }
-        };
-    }();
-    var ComponentsBootstrapMaxlength = function () {
-
-        var handleBootstrapMaxlength = function() {
-            $("input[maxlength], textarea[maxlength]").maxlength({
-                limitReachedClass: "label label-danger",
-                alwaysShow: true
-            });
-        };
-
-        return {
-            //main function to initiate the module
-            init: function () {
-                handleBootstrapMaxlength();
-            }
-        };
-
-    }();
-    jQuery(document).ready(function() {
-        FormValidationMd.init();
-        ComponentsBootstrapMaxlength.init();
-    });
-
 </script>
 @endpush
