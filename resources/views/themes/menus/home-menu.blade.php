@@ -70,6 +70,12 @@
                         <span class="title">Validaciones</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['forms.dropzone'], 'start active open') }}">
+                    <a href="{{ route('forms.dropzone') }}" class="nav-link">
+                        <i class="icon-wrench"></i>
+                        <span class="title">Dropzone</span>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>
