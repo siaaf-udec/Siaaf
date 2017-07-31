@@ -85,20 +85,20 @@ class UserController extends Controller
     public function data(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')){
-            $modules = $this->userRepository->index([]);
-            return Datatables::of($modules)
-                ->addColumn('roles', function ($roles){
-                    if ( !empty($roles->roles) ) {
-                        foreach ($roles->roles as $role) {
+            $users = $this->userRepository->index([]);
+            return Datatables::of($users)
+                ->addColumn('roles', function ($users){
+                    if ( !empty($users->roles) ) {
+                        foreach ($users->roles as $role) {
                             $aux[] = $role->display_name;
                         }
                         return implode(',', $aux);
                     }
                     return '';
                 })
-                ->addColumn('state', function ($state){
-                    if(strcmp($state->display_name, 'Aprobado')){
-                        return "<span class='label label-sm label-warning'>dfsf".$state->display_name. "</span>";
+                ->addColumn('state', function ($users){
+                    if(strcmp($users->state, 'APROBADO')){
+                        return "<span class='label label-sm label-warning'>".$users->state. "</span>";
                     }
                 })
                 ->rawColumns(['state'])

@@ -266,9 +266,12 @@
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-9">
+                                            <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                                                Cancelar
+                                            </a>
                                             <a href="javascript:;" class="btn default button-previous">
-                                                <i class="fa fa-angle-left"></i> Back </a>
-                                            <a href="javascript:;" class="btn btn-outline green button-next"> Continue
+                                                <i class="fa fa-angle-left"></i> Atras </a>
+                                            <a href="javascript:;" class="btn btn-outline green button-next"> Continuar
                                                 <i class="fa fa-angle-right"></i>
                                             </a>
                                             {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
@@ -517,6 +520,12 @@
 
 
         FormWizard.init(wizard, form, rules, messages, createUsers());
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('users.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
 
     });
 </script>
