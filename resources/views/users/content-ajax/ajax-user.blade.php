@@ -113,11 +113,10 @@
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            $('input[name="id_edit"]').val(dataTable.id);
-            $('input[name="name_edit"]').val(dataTable.name);
-            $('#description_edit').val(dataTable.description);
-            //$('#modal-update-module').modal('toggle');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('users.edit') }}'+ '/'+ dataTable.id;
+
+            $(".content-ajax").load(route_edit);
         });
 
         $( ".create" ).on('click', function (e) {

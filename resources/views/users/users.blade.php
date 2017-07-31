@@ -283,12 +283,10 @@
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-
             var dataTable = table.row($tr).data(),
                 route_edit = '{{ route('users.edit') }}'+ '/'+ dataTable.id;
 
             $(".content-ajax").load(route_edit);
-
         });
 
         $( ".create" ).on('click', function (e) {
