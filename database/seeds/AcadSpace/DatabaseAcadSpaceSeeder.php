@@ -76,6 +76,10 @@ class DatabaseAcadSpaceSeeder extends Seeder
 
         ]);
 
+        PerimisosAcadSpace::create([
+            'name' => "regisHorario", 'display_name' => "Registrar Horario", 'description' => "Registrar Horario", 'module_id' => "1",
+
+        ]);
 
     }
 }
