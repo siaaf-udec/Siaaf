@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 
+use App\Notifications\UserRegistration;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
@@ -139,16 +140,31 @@ class UserController extends Controller
             $user = $this->userRepository->store($request->all());
 
             /*Guarda la imagen */
-            $url = Storage::disk('developer')->putFile('avatars', $request->file('image_profile_create'));
-            $user->images()->create([
-                'url' => $url
-            ]);
+            $img = $request->file('image_profile_create');
+            if($img !== null){
+                $url = Storage::disk('developer')->putFile('avatars', $img);
+                $user->images()->create([
+                    'url' => $url
+                ]);
+            }else{
+                $user->images()->create([
+                    'url' => $request->get('identicon')
+                ]);
+            }
 
             /*Guarda los Roles*/
             $roles =  $request->get('multi_select_roles_create');
             $user->roles()->sync(
                 ($roles !== null) ? explode(',', $roles) : []
             );
+
+            /*Crea Notificacion*/
+            $data = [
+                'url' => 'https://www.google.com.co/',
+                'description' => '¡Bienvenidos a Siaaf!',
+                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+            ];
+            $user->notify(new UserRegistration($data));
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

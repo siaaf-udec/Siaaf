@@ -22,6 +22,8 @@ class CreateImagesTable extends Migration
              * */
             $table->integer('imageble_id'); //Toma el id de la tabla pages o posts
             $table->string('imageble_type'); //Guarda la entidad ya sea pages o posts
+
+            $table->timestamps();
         });
     }
 
