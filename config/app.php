@@ -206,6 +206,8 @@ return [
         App\Container\Permissions\Src\Providers\ModuleServiceProvider::class,
         App\Container\Users\Src\Providers\UserServiceProvider::class,
         App\Container\Audiovisuals\Src\Providers\AdminServiceProvider::class, //Audiovisuales
+        App\Container\Audiovisuals\Src\Providers\FuncionarioServiceProvider::class, //Audiovisuales
+        App\Container\Audiovisuals\Src\Providers\CarrerasServiceProvider::class, //Audiovisuales
 
         /*
          * Application Service Providers...
@@ -287,6 +289,8 @@ return [
          * Audiovisuales Custom Aliases...
          */
         'Admins'       => App\Container\Audiovisuals\Src\Facades\AdminFacades::class,
+        'Funcionarios' => App\Container\Audiovisuals\Src\Facades\FuncionarioFacades::class,
+        'Carreras'     => App\Container\Audiovisuals\Src\Facades\CarrerasFacades::class,
     ],
 
 ];

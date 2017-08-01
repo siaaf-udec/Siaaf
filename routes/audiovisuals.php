@@ -15,30 +15,24 @@ Route::group(['prefix' => 'funcionario'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
     Route::get('index', [
         'uses' => $controller . 'FuncionarioController@index',
-        'as'   => 'funcionario.index',
+        'as'   => 'audiovisuales.funcionario.index',
     ]);
-    Route::get('listing', [
-        'uses' => $controller . 'FuncionarioController@listing',
-        'as'   => 'funcionario.listing',
+    Route::get('data', [
+        'uses' => $controller . 'FuncionarioController@data',
+        'as'   => 'funcionario.data',
     ]);
     Route::get('all/{id}', [
         'uses' => $controller . 'FuncionarioController@all',
         'as'   => 'funcionario.all',
     ]);
-    Route::put('update/{id?}', [
-        'uses' => $controller . 'FuncionarioController@update',
-        'as'   => 'funcionario.update',
-    ])->where(['id' => '[0-9]+']);
-
+    Route::post('store', [
+        'uses' => $controller . 'FuncionarioController@store',
+        'as'   => 'funcionario.store',
+    ]);
     Route::delete('delete/{id?}', [
         'uses' => $controller . 'FuncionarioController@destroy',
-        'as'   => 'funcionario.delete',
+        'as'   => 'funcionario.destroy',
     ])->where(['id' => '[0-9]+']);
-
-    Route::post('create', [
-        'uses' => $controller . 'FuncionarioController@store',
-        'as'   => 'funcionario.create',
-    ]);
 });
 // RUTAS ADMINISTRADOR
 Route::group(['prefix' => 'administrador'], function () {

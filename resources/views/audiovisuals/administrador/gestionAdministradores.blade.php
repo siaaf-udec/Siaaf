@@ -484,28 +484,6 @@ de la plantilla
             var dataTable = table.row($tr).data();
             $('input[name="id_edit"]').val(dataTable.PK_ADMIN_Cedula);            
             $('#modal-update-admin').modal('toggle');
-       
-            // $.get( "../../audiovisuales/administrador/all/"+ dataTable.PK_FNS_Cedula, function( data ) {
-            //     console.log(data);
-            //     //table.ajax.reload();
-            //     $("#FNS_Nombres").val(data.FNS_Nombres);
-            //     $("#FNS_Apellidos").val(data.FNS_Apellidos);
-            //     $("#id_edit").val(data.PK_FNS_Cedula);
-            //     $("#PK_FNS_Cedula").val(data.PK_FNS_Cedula);
-            //     $("#FNS_Correo").val(data.FNS_Correo);
-            //     $("#FNS_Telefono").val(data.FNS_Telefono);
-            //     $("#FNS_Direccion").val(data.FNS_Direccion);
-            //     $("#FK_FNS_Estado").val(data.FK_FNS_Estado);
-            //     $("#FK_FNS_Programa").val(data.FK_FNS_Programa);
-            //     $("#FNS_Clave").val(data.FNS_Clave);
-
-            //     // PARA SELECCIONAR LA OPCION DE RADIO
-            //     if (data.FK_FNS_Rol=='Estudiante'){
-            //             $("input[name=FK_FNS_Rol][value='Estudiante']").prop("checked",true);
-            //     }else {
-            //                 $("input[name=FK_FNS_Rol][value='Docente']").prop("checked",true);
-            //     }
-            // });
         });
 
         $( ".create" ).on('click', function (e) {
@@ -567,16 +545,6 @@ de la plantilla
                 }
             }
         };
-
-
-        // var form_edit = $('#from_roles_update');
-        // var rules_edit = {
-        //     name_edit: {minlength: 5, required: true},
-        //     display_name_edit: {minlength: 5, required: true},
-        //     description_edit: {minlength: 5},
-        // };
-        // FormValidationMd.init(form_edit,rules_edit,false,updatePermissions());
-
         var form_create = $('#from_admin_create');
         var rules_create = {
             PK_ADMIN_Cedula:{minlength: 5, required: true, digits: true},
