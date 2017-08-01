@@ -72,12 +72,4 @@ Route::post('anteproyecto/concepto/', [
 ]);
 
 
-/*Administrador*/
-
-Route::get('admin/users', [
-    'as' => 'admin.listusers',
-    'uses' => $controller.'AdminController@ListUsers'
-]);
-
-Route::resource('admin', $controller.'AdminController');
 
