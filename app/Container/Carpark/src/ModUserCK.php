@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Container\Audiovisuals\src;
+namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Funcionario extends Model
+class ModUserCK extends Model
 {
-    protected $connection = 'audiovisuals';
+    protected $connection = 'carpark';
 
-    protected $table = 'TBL_Funcionarios';
+    protected $table = 'TBL_User_Parks';
 
-    protected $primaryKey = 'PK_FUNCIONARIO_Cedula';
+    protected $primaryKey = 'PK_CK_Cedula';
 
     protected $fillable = [
 
-        'PK_FUNCIONARIO_Cedula', 'FUNCIONARIO_Clave', 'FK_FUNCIONARIO_Rol', 'FUNCIONARIO_Nombres', 'FUNCIONARIO_Apellidos', 'FUNCIONARIO_Direccion', 'FUNCIONARIO_Correo', 'FUNCIONARIO_Telefono', 'FK_FUNCIONARIO_Estado', 'FK_FUNCIONARIO_Programa',
+      'PK_CK_Cedula','CK_Nombres','CK_Apellidos','CK_Telefono','CK_Correo','CK_Direccion',
+      'CK_Ciudad','CK_Codigo','CK_IdPrograma',
     ];
 
     public function Asistents()
@@ -33,5 +34,4 @@ class Funcionario extends Model
     {
         return $this->hasMany(Permission::class);
     }
-    //
 }

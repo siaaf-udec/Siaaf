@@ -24,6 +24,7 @@
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
+
 <div class="row">
         <div class="col-md-6">
             <div class="btn-group">

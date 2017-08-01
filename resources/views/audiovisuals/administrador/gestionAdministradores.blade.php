@@ -28,6 +28,8 @@
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+<!-- Styles SREETALERT  -->
+<link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
 
 
@@ -146,19 +148,19 @@ de la plantilla
                                         <div class="col-md-6">
                                             <p>
                                                 {!! Field::text('PK_ADMIN_Cedula',
-                                                ['label' => 'Cedula:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Cedula:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                                 ['help' => 'Ingrese Cedula', 'icon' => 'fa fa-user'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::text('ADMIN_Apellidos',
-                                                ['label' => 'Apellidos:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Apellidos:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'3'],
                                                 ['help' => 'Ingrese Apellidos', 'icon' => 'fa fa-user'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::email('ADMIN_Correo',
-                                                ['label' => 'Correo Electronico:', 'max' => '40', 'min' => '10', 'required', 'auto' => 'off'],
+                                                ['label' => 'Correo Electronico:', 'max' => '40', 'min' => '10', 'required', 'auto' => 'off','tabindex'=>'5'],
                                                 ['help' => 'Ingrese Email', 'icon' => ' fa fa-envelope-open'])
                                                 !!}
                                             </p>
@@ -170,7 +172,7 @@ de la plantilla
                                             </p>
                                             <p>
                                                 {!! Field::password('ADMIN_Clave', 
-                                                ['label' => 'Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'7'],
                                                 ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
@@ -178,19 +180,19 @@ de la plantilla
                                         <div class="col-md-6">
                                             <p>
                                                 {!! Field::text('ADMIN_Nombres',
-                                                ['label' => 'Nombres:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Nombres:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'2'],
                                                 ['help' => 'Ingrese Nombres', 'icon' => 'fa fa-user'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::text('ADMIN_Direccion',
-                                                ['label' => 'Dirección:', 'max' => '50', 'min' => '5', 'required', 'auto' => 'off'],
+                                                ['label' => 'Dirección:', 'max' => '50', 'min' => '5', 'required', 'auto' => 'off','tabindex'=>'4'],
                                                 ['help' => 'Ingrese Direccion', 'icon' => 'fa fa-map-marker'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::tel('ADMIN_Telefono',
-                                                ['label' => 'Telefono:','required', 'auto' => 'off', 'max' => '10'],
+                                                ['label' => 'Telefono:','required', 'auto' => 'off', 'max' => '10','tabindex'=>'6'],
                                                 ['help' => 'Digita un número de teléfono.', 'icon' => 'fa fa-phone'])
                                                 !!}
                                             </p>
@@ -202,8 +204,8 @@ de la plantilla
                                             </p>
                                             <p>
                                                 {!! Field::password('ADMIN_RClave', 
-                                                ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                                                ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
+                                                ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'8'],
+                                                ['help' => 'Confirmar Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
                                         </div>
@@ -237,19 +239,19 @@ de la plantilla
                                             <p>
                                                 {!! Field::hidden('id_edit') !!}
                                                 {!! Field::text('PK_ADMIN_Cedula_editar',
-                                                ['label' => 'Cedula:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                                                ['help' => 'Ingrese Cedula', 'icon' => 'fa fa-user'])
+                                                ['label' => 'Cedula:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off', 'tabindex'=>'1' ],
+                                                ['help' => 'Ingrese Cedula', 'icon' => 'fa fa-user','tabindex'=>'1'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::text('ADMIN_Apellidos_editar',
-                                                ['label' => 'Apellidos:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Apellidos:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'3'],
                                                 ['help' => 'Ingrese Apellidos', 'icon' => 'fa fa-user'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::email('ADMIN_Correo_editar',
-                                                ['label' => 'Correo Electronico:', 'max' => '40', 'min' => '10', 'required', 'auto' => 'off'],
+                                                ['label' => 'Correo Electronico:', 'max' => '40', 'min' => '10', 'required', 'auto' => 'off','tabindex'=>'5'],
                                                 ['help' => 'Ingrese Email', 'icon' => ' fa fa-envelope-open'])
                                                 !!}
                                             </p>
@@ -261,7 +263,7 @@ de la plantilla
                                             </p>
                                             <p>
                                                 {!! Field::password('ADMIN_Clave_editar', 
-                                                ['label' => 'Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'7'],
                                                 ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
@@ -269,19 +271,19 @@ de la plantilla
                                         <div class="col-md-6">
                                             <p>
                                                 {!! Field::text('ADMIN_Nombres_editar',
-                                                ['label' => 'Nombres:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Nombres:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'2'],
                                                 ['help' => 'Ingrese Nombres', 'icon' => 'fa fa-user'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::text('ADMIN_Direccion_editar',
-                                                ['label' => 'Dirección:', 'max' => '50', 'min' => '5', 'required', 'auto' => 'off'],
+                                                ['label' => 'Dirección:', 'max' => '50', 'min' => '5', 'required', 'auto' => 'off','tabindex'=>'4'],
                                                 ['help' => 'Ingrese Direccion', 'icon' => 'fa fa-map-marker'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::tel('ADMIN_Telefono_editar',
-                                                ['label' => 'Telefono:','required', 'auto' => 'off', 'max' => '10'],
+                                                ['label' => 'Telefono:','required', 'auto' => 'off', 'max' => '10','tabindex'=>'6'],
                                                 ['help' => 'Digita un número de teléfono.', 'icon' => 'fa fa-phone'])
                                                 !!}
                                             </p>
@@ -293,8 +295,8 @@ de la plantilla
                                             </p>
                                             <p>
                                                 {!! Field::password('ADMIN_RClave_editar', 
-                                                ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                                                ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
+                                                ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'8'],
+                                                ['help' => 'Confirmar Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
                                         </div>
@@ -354,6 +356,9 @@ de la plantilla
 </script>
 <!-- SCRIPT Validacion Maxlength -->
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript">
+</script>
+<!-- SCRIPT Confirmacion Sweetalert -->
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
 </script>
 <!-- SCRIPT Validacion Personalizadas -->
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript">
@@ -427,7 +432,7 @@ de la plantilla
             {data: 'ADMIN_Correo', name: 'Correo'},
             {data: 'ADMIN_Telefono', name: 'Telefono'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -447,65 +452,67 @@ de la plantilla
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-
-            var route = '{{ route('administrador.destroy') }}'+'/'+dataTable.PK_ADMIN_Cedula;
-            var type = 'DELETE';
-            var async = async || false;
-
-            $.ajax({
-                url: route,
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                cache: false,
-                type: type,
-                contentType: false,
-                processData: false,
-                async: async,
-                beforeSend: function () {
-
-                },
-                success: function (response, xhr, request) {
-                    if (request.status === 200 && xhr === 'success') {
-                        table.ajax.reload();
-                        UIToastr.init(xhr , response.title , response.message  );
-                    }
-                },
-                error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
-                        UIToastr.init(xhr, response.title, response.message);
-                    }
-                }
-            });
+            var adminId= dataTable.PK_ADMIN_Cedula;
+            deleteAdmin(adminId);   
 
 
         });
+
+        function deleteAdmin(adminId){
+            
+            var route = '{{ route('administrador.destroy') }}'+'/'+adminId;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+              title: "¿Esta seguro?", 
+              text: "¿Seguro que quiere eliminar este Administrador?", 
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              confirmButtonText: "Si, eliminar",
+              confirmButtonColor: "#ec6c62",
+              confirmButtonClass: "btn blue",
+              cancelButtonText: "Cancelar",
+              cancelButtonClass: "btn red",
+            },function() {
+              
+                $.ajax({
+                    url: route,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr , response.title , response.message  );
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                    })
+                  .done(function(data) {
+                    swal("Deleted!", "Your file was successfully deleted!", "success");
+                  })
+                  .error(function(data) {
+                    swal("Oops", "We couldn't connect to the server!", "error");
+                  });
+                });  
+        }
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $('input[name="id_edit"]').val(dataTable.PK_ADMIN_Cedula);            
             $('#modal-update-admin').modal('toggle');
-       
-            // $.get( "../../audiovisuales/administrador/all/"+ dataTable.PK_FNS_Cedula, function( data ) {
-            //     console.log(data);
-            //     //table.ajax.reload();
-            //     $("#FNS_Nombres").val(data.FNS_Nombres);
-            //     $("#FNS_Apellidos").val(data.FNS_Apellidos);
-            //     $("#id_edit").val(data.PK_FNS_Cedula);
-            //     $("#PK_FNS_Cedula").val(data.PK_FNS_Cedula);
-            //     $("#FNS_Correo").val(data.FNS_Correo);
-            //     $("#FNS_Telefono").val(data.FNS_Telefono);
-            //     $("#FNS_Direccion").val(data.FNS_Direccion);
-            //     $("#FK_FNS_Estado").val(data.FK_FNS_Estado);
-            //     $("#FK_FNS_Programa").val(data.FK_FNS_Programa);
-            //     $("#FNS_Clave").val(data.FNS_Clave);
-
-            //     // PARA SELECCIONAR LA OPCION DE RADIO
-            //     if (data.FK_FNS_Rol=='Estudiante'){
-            //             $("input[name=FK_FNS_Rol][value='Estudiante']").prop("checked",true);
-            //     }else {
-            //                 $("input[name=FK_FNS_Rol][value='Docente']").prop("checked",true);
-            //     }
-            // });
         });
 
         $( ".create" ).on('click', function (e) {
@@ -567,16 +574,6 @@ de la plantilla
                 }
             }
         };
-
-
-        // var form_edit = $('#from_roles_update');
-        // var rules_edit = {
-        //     name_edit: {minlength: 5, required: true},
-        //     display_name_edit: {minlength: 5, required: true},
-        //     description_edit: {minlength: 5},
-        // };
-        // FormValidationMd.init(form_edit,rules_edit,false,updatePermissions());
-
         var form_create = $('#from_admin_create');
         var rules_create = {
             PK_ADMIN_Cedula:{minlength: 5, required: true, digits: true},

@@ -7,16 +7,21 @@ use Illuminate\Support\Facades\DB;
 
 $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 
-/*COORDINADOR*/
+/*COORDINADOR
 
-Route::resource('min', $controller.'CoordinadorController');
-
-Route::get('anteproyecto', [
-    'as' => 'anteproyecto.list',
-    'uses' => $controller.'CoordinadorController@Lista'
+@permission('Create_Project_Gesap')
+        @endpermission
+*/
+//Route::group(['prefix'=>'Coordinador','middleware'=>['role:Coordinator_Gesap']],function()use($controller){
+    Route::resource('min', $controller.'CoordinadorController');
+    
+    Route::get('anteproyecto', [
+        'as' => 'anteproyecto.list',
+        'uses' => $controller.'CoordinadorController@Lista'
 ]);
 
 Route::get('anteproyecto/asignar/{id}', [
+    'middleware'=>['permission:Create_Project_Gesap'],
     'as' => 'anteproyecto.asignar',
     'uses' => $controller.'CoordinadorController@asignar'
 ]);
@@ -25,6 +30,12 @@ Route::post('anteproyecto/docente/', [
     'as' => 'anteproyecto.guardardocente',
     'uses' => $controller.'CoordinadorController@saveAssign'
 ]);
+  
+//});
+
+
+
+
 
 
 /*Evaluador*/
@@ -72,12 +83,4 @@ Route::post('anteproyecto/concepto/', [
 ]);
 
 
-/*Administrador*/
-
-Route::get('admin/users', [
-    'as' => 'admin.listusers',
-    'uses' => $controller.'AdminController@ListUsers'
-]);
-
-Route::resource('admin', $controller.'AdminController');
 

@@ -12,7 +12,7 @@ class Encargados extends Model
 
     protected $primaryKey = 'PK_NPRY_idCargo';
 
-    protected $fillable = ['FK_TBL_Anteproyecto_id','FK_TBL_Usuarios_id','NCRD_Cargo'];
+    protected $fillable = ['FK_TBL_Anteproyecto_id','FK_developer_user_id','NCRD_Cargo'];
     
     
     
