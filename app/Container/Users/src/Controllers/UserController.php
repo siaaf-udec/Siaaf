@@ -140,10 +140,17 @@ class UserController extends Controller
             $user = $this->userRepository->store($request->all());
 
             /*Guarda la imagen */
-            $url = Storage::disk('developer')->putFile('avatars', $request->file('image_profile_create'));
-            $user->images()->create([
-                'url' => $url
-            ]);
+            $img = $request->file('image_profile_create');
+            if($img !== null){
+                $url = Storage::disk('developer')->putFile('avatars', $img);
+                $user->images()->create([
+                    'url' => $url
+                ]);
+            }else{
+                $user->images()->create([
+                    'url' => $request->get('identicon')
+                ]);
+            }
 
             /*Guarda los Roles*/
             $roles =  $request->get('multi_select_roles_create');

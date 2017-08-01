@@ -66,7 +66,7 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
     $ php artisan migrate --path=/database/migrations/developer --database=developer
     $ php artisan migrate --path=/database/migrations/sportcit --database=sportcit
 
-8- $ php artisan db:seed
+8- $ php artisan db:seed --class=DatabaseDeveloperSeeder
  
 ```
 
