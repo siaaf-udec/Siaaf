@@ -23,18 +23,23 @@ class EvaluatorController extends Controller
     
     public function createObsevaciones($id){
         $anteproyectos = DB::table('TBL_Anteproyecto')
-                            ->select('PK_NPRY_idMinr008,NPRY_Titulo')
+                            ->select('PK_NPRY_idMinr008','NPRY_Titulo')
                             ->where('PK_NPRY_idMinr008','=',$id)
                             ->get();
         return view($this->path.'.Evaluador.Observaciones',compact('anteproyectos'));
     }
     public function storeObservaciones(Request $request){
-        return "OK";
+        echo $request['user']."<br>";
+        echo $request['PK_anteproyecto']."<br>";
+        echo $request['observacion']."<br>";
+        //echo $request['Min']->getClientOriginalName();
+        //echo $request['requerimientos']->getClientOriginalName();
+        
     }
     
     public function createConceptos($id){
         $anteproyectos = DB::table('TBL_Anteproyecto')
-                            ->select('PK_NPRY_idMinr008,NPRY_Titulo')
+                            ->select('PK_NPRY_idMinr008','NPRY_Titulo')
                             ->where('PK_NPRY_idMinr008','=',$id)
                             ->get();
         

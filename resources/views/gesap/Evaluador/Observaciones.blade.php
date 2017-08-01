@@ -30,6 +30,7 @@
     @foreach ($anteproyectos as $anteproyecto)
     {!! Form::open(['route' => 'anteproyecto.guardar.observaciones', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-obser']) !!}
         {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}
+        {!! Field::hidden('user', Auth::user()->id) !!}
             
             <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
                 <div class="form-group">
@@ -84,7 +85,7 @@
                         <span class="input-group-addon btn default btn-file">
                         <span class="fileinput-new"> Select file </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class="" required> </span>
+                        <input type="file" name="requerimientos" class="" required> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>

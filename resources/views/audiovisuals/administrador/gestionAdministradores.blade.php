@@ -28,6 +28,8 @@
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+<!-- Styles SREETALERT  -->
+<link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
 
 
@@ -203,7 +205,7 @@ de la plantilla
                                             <p>
                                                 {!! Field::password('ADMIN_RClave', 
                                                 ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                                                ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
+                                                ['help' => 'Confirmar Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
                                         </div>
@@ -294,7 +296,7 @@ de la plantilla
                                             <p>
                                                 {!! Field::password('ADMIN_RClave_editar', 
                                                 ['label' => 'Confimar Contraseña:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                                                ['help' => 'Ingrese Contraseña', 'icon' => 'fa fa-key'])
+                                                ['help' => 'Confirmar Contraseña', 'icon' => 'fa fa-key'])
                                                 !!}
                                             </p>
                                         </div>
@@ -354,6 +356,9 @@ de la plantilla
 </script>
 <!-- SCRIPT Validacion Maxlength -->
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript">
+</script>
+<!-- SCRIPT Confirmacion Sweetalert -->
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
 </script>
 <!-- SCRIPT Validacion Personalizadas -->
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript">
@@ -427,7 +432,7 @@ de la plantilla
             {data: 'ADMIN_Correo', name: 'Correo'},
             {data: 'ADMIN_Telefono', name: 'Telefono'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -447,37 +452,59 @@ de la plantilla
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-
-            var route = '{{ route('administrador.destroy') }}'+'/'+dataTable.PK_ADMIN_Cedula;
-            var type = 'DELETE';
-            var async = async || false;
-
-            $.ajax({
-                url: route,
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                cache: false,
-                type: type,
-                contentType: false,
-                processData: false,
-                async: async,
-                beforeSend: function () {
-
-                },
-                success: function (response, xhr, request) {
-                    if (request.status === 200 && xhr === 'success') {
-                        table.ajax.reload();
-                        UIToastr.init(xhr , response.title , response.message  );
-                    }
-                },
-                error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
-                        UIToastr.init(xhr, response.title, response.message);
-                    }
-                }
-            });
+            var adminId= dataTable.PK_ADMIN_Cedula;
+            deleteAdmin(adminId);   
 
 
         });
+
+        function deleteAdmin(adminId){
+            
+            var route = '{{ route('administrador.destroy') }}'+'/'+adminId;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+              title: "¿Esta seguro?", 
+              text: "¿Seguro que quiere eliminar este Administrador?", 
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              confirmButtonText: "Si, eliminar",
+              confirmButtonColor: "#ec6c62",
+              cancelButtonText: "Cancelar"
+            },function() {
+              
+                $.ajax({
+                    url: route,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr , response.title , response.message  );
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                    })
+                  .done(function(data) {
+                    swal("Deleted!", "Your file was successfully deleted!", "success");
+                  })
+                  .error(function(data) {
+                    swal("Oops", "We couldn't connect to the server!", "error");
+                  });
+                });  
+        }
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
