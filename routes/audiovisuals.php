@@ -74,3 +74,27 @@ Route::group(['prefix' => 'articulo'], function () {
         'as'   => 'audiovisuales.articulo.index',
     ]);
 });
+//RUTAS FUNCIONES ADMINISTRADPR
+Route::group(['prefix' => 'adminView'], function () {
+    $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    Route::get('index', [
+        'uses' => $controller . 'AdminviewController@index',
+        'as'   => 'audiovisuales.adminview.index',
+    ]);
+    Route::get('data', [
+        'uses' => $controller . 'AdminviewController@data',
+        'as'   => 'adminview.data',
+    ]);
+    Route::get('all/{id}', [
+        'uses' => $controller . 'AdminviewController@all',
+        'as'   => 'adminview.all',
+    ]);
+    Route::post('store', [
+        'uses' => $controller . 'AdminviewController@store',
+        'as'   => 'adminview.store',
+    ]);
+    Route::delete('delete/{id?}', [
+        'uses' => $controller . 'AdminviewController@destroy',
+        'as'   => 'adminview.destroy',
+    ])->where(['id' => '[0-9]+']);
+});

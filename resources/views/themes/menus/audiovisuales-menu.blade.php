@@ -10,6 +10,15 @@
         </span>
     </a>
     <ul class="sub-menu">
+        <li class="nav-item {{ active(['audiovisuales.adminview.index'], 'start active open') }}">
+            <a class="nav-link" href="{{ route('audiovisuales.adminview.index') }}">
+                <i class="fa fa-users">
+                </i>
+                <span class="title">
+                    Menu Administrador
+                </span>
+            </a>
+        </li>
         <li class="nav-item {{ active(['audiovisuales.funcionario.index'], 'start active open') }}">
             <a class="nav-link" href="{{ route('audiovisuales.funcionario.index') }}">
                 <i class="fa fa-users">
