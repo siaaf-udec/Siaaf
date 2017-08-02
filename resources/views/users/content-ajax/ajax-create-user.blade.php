@@ -341,6 +341,9 @@
             $( response.data ).each(function( key,value ) {
                 $widget_select_countries_create.append(new Option(value.name, value.id));
             });
+            $widget_select_countries_create.val([]);
+            $widget_select_regions_create.val([]);
+            $widget_select_cities_create.val([]);
         });
 
         /*Carga todos los Departamentos*/
@@ -362,6 +365,8 @@
                         $( response.data ).each(function( key,value ) {
                             $widget_select_regions_create.append(new Option(value.name, value.id));
                         });
+                        $widget_select_regions_create.val([]);
+                        $widget_select_cities_create.val([]);
                     }
                 }
             });
@@ -384,6 +389,7 @@
                         $(response.data).each(function (key, value) {
                             $widget_select_cities_create.append(new Option(value.name, value.id));
                         });
+                        $widget_select_cities_create.val([]);
                     }
                 }
             });

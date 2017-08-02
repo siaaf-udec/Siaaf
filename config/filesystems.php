@@ -62,6 +62,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'audiovisuals' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/audiovisuals'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         'financial' => [
             'driver' => 'local',
             'root' => storage_path('app/public/financial'),
