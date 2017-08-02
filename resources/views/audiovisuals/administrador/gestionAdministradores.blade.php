@@ -500,10 +500,10 @@ de la plantilla
                     }
                     })
                   .done(function(data) {
-                    swal("Deleted!", "Your file was successfully deleted!", "success");
+                    swal("Eliminado", "El administradir se ha eliminado correctamente", "success");
                   })
                   .error(function(data) {
-                    swal("Oops", "We couldn't connect to the server!", "error");
+                    swal("Oops", "No pudimos conectar con el servidor", "error");
                   });
                 });  
         }
