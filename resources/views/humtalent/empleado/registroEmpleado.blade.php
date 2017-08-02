@@ -13,7 +13,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form_empleado','method'=>'POST', 'route'=> ['talento.humano.rrhh.store']]) !!}
+                    {!! Form::open (['id'=>'form_empleado','method'=>'POST', 'route'=> ['talento.humano.empleado.store']]) !!}
 
                     <div class="form-body">
 

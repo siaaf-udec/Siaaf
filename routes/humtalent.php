@@ -19,16 +19,49 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
-Route::resource('rrhh', $controller.'EmpleadoController', [   //ruta para el controlador encargado del CRUD de empleados
-    'names' => [ // 'método' => 'alias'
-        'create' => 'talento.humano.rrhh.create',
-        'store' => 'talento.humano.rrhh.store',
-        'index' => 'talento.humano.rrhh.index',
-        //'edit' => 'talento.humano.rrhh.edit',
-        'update' => 'talento.humano.rrhh.update',
-        //'destroy' => 'talento.humano.rrhh.destroy',
-    ]
-]);
+//Rutas para el manejo de los empleados
+Route::group(['prefix' => 'empleado'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('index',[
+        'uses' => $controller.'EmpleadoController@index',
+        'as' => 'talento.humano.empleado.index'
+    ]);
+    Route::get('create',[
+        'uses' => $controller.'EmpleadoController@create',
+        'as' => 'talento.humano.empleado.create'
+    ]);
+    Route::post('store',[
+        'uses' => $controller.'EmpleadoController@store',
+        'as' => 'talento.humano.empleado.store'
+    ]);
+    Route::delete('empleado/destroy/{id?}',[
+        'uses' => $controller.'EmpleadoController@destroy',
+        'as' => 'talento.humano.empleado.destroy'
+    ]);
+    Route::get('empleado/edit/{id?}',[
+        'uses' => $controller.'EmpleadoController@edit',
+        'as' => 'talento.humano.empleado.edit'
+    ]);
+    Route::post('empleado/update/{id?}',[
+        'uses' => $controller.'EmpleadoController@update',
+        'as' => 'talento.humano.empleado.update'
+    ]);
+    Route::get('tablaEmpleados',[   //ruta que realiza la consulta de los empleados registrados
+        'as' => 'talento.humano.tablaEmpleados',
+        'uses' => function (Request $request) {
+            if ($request->ajax()) {
+                return Datatables::of(Persona::all())
+                    ->addIndexColumn()
+                    ->make(true);
+            } else {
+                return response()->json([
+                    'message' => 'Incorrect request',
+                    'code' => 412
+                ], 412);
+            }
+        }
+    ]);
+});
 Route::resource('document', $controller.'DocumentController',[  //ruta para el controlador encargado del CRUD de la Documentación
     'names'=>[
         'index'=> 'talento.humano.document.index',
@@ -42,25 +75,9 @@ Route::resource('document', $controller.'DocumentController',[  //ruta para el c
     ]
 ]);
 
-Route::get('empleadoList', function ()    { //ruta que prsenta la lista de los empleados registrados
+/*Route::get('empleadoList', function ()    { //ruta que prsenta la lista de los empleados registrados
     return view('humtalent.empleado.tablasEmpleados');
-})->name('talento.humano.rrhh.empleadoList');
-
-Route::get('tablaEmpleados',[   //ruta que realiza la consulta de los empleados registrados
-    'as' => 'talento.humano.tablaEmpleados',
-    'uses' => function (Request $request) {
-        if ($request->ajax()) {
-            return Datatables::of(Persona::all())
-                ->addIndexColumn()
-                ->make(true);
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
-        }
-    }
-]);
+})->name('talento.humano.rrhh.empleadoList');*/
 
 Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
     'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
@@ -204,11 +221,4 @@ Route::get('document/edit/{id?}',[
     'uses' => $controller.'DocumentController@edit',
     'as' => 'talento.humano.document.edit'
 ]);
-Route::delete('rrhh/destroy/{id?}',[
-    'uses' => $controller.'EmpleadoController@destroy',
-    'as' => 'talento.humano.rrhh.destroy'
-]);
-Route::get('rrhh/edit/{id?}',[
-    'uses' => $controller.'EmpleadoController@edit',
-    'as' => 'talento.humano.rrhh.edit'
-]);
+

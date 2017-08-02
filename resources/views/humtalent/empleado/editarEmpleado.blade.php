@@ -9,7 +9,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
             <div class="col-md-6">
                 <div class="btn-group">
-                    <a href="{{ route('talento.humano.rrhh.index') }}">
+                    <a href="{{ route('talento.humano.empleado.index') }}">
                         <button id="sample_editable_1_new" class="btn green" >
                             <i class="fa fa-arrow-circle-left"></i>Volver
                         </button>
@@ -18,7 +18,7 @@
             </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                {!! Form::model ($empleado, ['id'=>'form_material','method'=>'PATCH', 'route'=> ['talento.humano.rrhh.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
+                {!! Form::model ($empleado, ['id'=>'form_material','method'=>'POST', 'route'=> ['talento.humano.empleado.update', $empleado->PK_PRSN_Cedula], 'role'=>'form'])  !!}
 
                     <div class="form-body">
 

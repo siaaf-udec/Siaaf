@@ -42,14 +42,14 @@
             </a>
 
             <ul class="sub-menu">
-                <li class="nav-item {{ active(['talento.humano.rrhh.create'], 'start active open') }}">
-                    <a href="{{ route('talento.humano.rrhh.create') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.empleado.create'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.empleado.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
                         <span class="title">Registrar Empleado</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['talento.humano.rrhh.index'], 'start active open') }} ">
-                    <a href="{{ route('talento.humano.rrhh.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.empleado.index'], 'start active open') }} ">
+                    <a href="{{ route('talento.humano.empleado.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Consultar Empleados</span>
                     </a>
