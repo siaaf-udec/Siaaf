@@ -62,6 +62,15 @@ Route::get('jurado', [
     'uses' => $controller.'EvaluatorController@ListJurado'
 ]);
 
+Route::get('observaciones/{id}', [
+    'as' => 'anteproyecto.ListObservation',
+    'uses' => $controller.'EvaluatorController@ListObservation'
+]);
+
+
+
+
+
 Route::get('evaluar/observaciones/{id}', [
     'as' => 'anteproyecto.observaciones',
     'uses' => $controller.'EvaluatorController@createObsevaciones'

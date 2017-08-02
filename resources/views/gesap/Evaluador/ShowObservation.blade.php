@@ -19,25 +19,15 @@
         <div class="row">
         
         <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
+            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
             
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id',
-                    'Titulo',
-                    'Palabras Clave',
-                    'Duracion',
-                    'Fecha Radicacion',
-                    'Fecha Limite',
-                    'Estado',
-                    'Min',
-                    'Requerimientos',
-                    'Director',
-                    'Estudiante 1',
-                    'Estudiante 2',
-                    'Jurado 1',
-                    'Jurado 2',
-                    'Acciones' => ['style' => 'width:160px;']
+                    'Texto',
+                    'Jurado',
+                    'Respuesta Min',
+                    'Respuesta Requerimientos'
                 ])
             @endcomponent
         </div>
@@ -60,8 +50,8 @@
 <script>
 jQuery(document).ready(function () {
     var table, url;
-    table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.listdirector') }}";
+    table = $('#lista-observaciones');
+    url = "{{ route('anteproyecto.ListObservation',['id' => 1]) }}";
 
     table.DataTable({
        lengthMenu: [
@@ -98,33 +88,14 @@ jQuery(document).ready(function () {
                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
            }
        },
-       columns:[
+        
+    columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_NPRY_idMinr008', "visible": false },
-           {data: 'NPRY_Titulo', searchable: true},
-           {data: 'NPRY_Keywords', searchable: true},
-           {data: 'NPRY_Duracion',searchable: true},
-           {data: 'NPRY_FechaR', className:'none',searchable: true},
-           {data: 'NPRY_FechaL', className:'none',searchable: true},
-           {data: 'NPRY_Estado',searchable: true},
-           {data: 'RDCN_Min',className:'none',searchable: true},
-           {data: 'RDCN_Requerimientos',className:'none',searchable: true},
-           {data: 'Director',className:'none',searchable: true},
-           {data: 'estudiante1',className:'none',searchable: true},
-           {data: 'estudiante2', className:'none',searchable: true},
-           {data: 'Jurado1', className:'none',searchable: true},
-           {data: 'Jurado2',className:'none',searchable: true},
-            {data:'action',className:'',searchable: false,
-            name:'action',
-            title:'Acciones',
-            orderable: false,
-            exportable: false,
-            printable: false,
-            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>',
-
-            
-            }
-      
+           {data: 'PK_BVCS_idObservacion', "visible": false },
+           {data: 'BVCS_Observacion', className:'none', searchable: true},
+           {data: 'Jurado', searchable: true},
+           {data: 'Rmin',searchable: true},
+           {data: 'Rreq',searchable: true},
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -143,19 +114,7 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
-table = table.DataTable();
-    table.on('click', '.edit', function (e) {
-        e.preventDefault();
-        $tr = $(this).closest('tr');
-        var O = table.row($tr).data();
-	    $.ajax({
-            type: "GET",
-            url: '',
-            dataType: "html",
-        }).done(function (data) {
-            window.location.href = '/gesap/evaluar/'+O.PK_NPRY_idMinr008;
-        });
-    });
+
     
 });
 </script>

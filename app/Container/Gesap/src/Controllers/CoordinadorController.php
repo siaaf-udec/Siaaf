@@ -15,6 +15,7 @@ use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 
+
 use Exception;
 class CoordinadorController extends Controller
 {
@@ -367,7 +368,7 @@ class CoordinadorController extends Controller
         $radicacion= Radicacion::findOrFail($request['PK_radicacion']);
         if(!empty($request['Min']))
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
-        if(!empty($request['Requerimientos']!=0))
+        if(!empty($request['Requerimientos']))
             $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();
         $radicacion->save();
             

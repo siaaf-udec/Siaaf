@@ -15,9 +15,9 @@ class CreateCkeckObservacionesTable extends Migration
     {
         Schema::connection('gesap')->create('tbl_check_observaciones', function (Blueprint $table) {
             $table->increments('PK_CBSV_id');
-            $table->integer('CBSV_Estudiante1');
-            $table->integer('CBSV_Estudiante2');
-            $table->integer('CBSV_Director');
+            $table->boolean('CBSV_Estudiante1')->default(0);
+            $table->boolean('CBSV_Estudiante2')->default(0);
+            $table->boolean('CBSV_Director')->default(0);
             $table->integer('FK_TBL_Observaciones_id')->unsigned();
             $table->foreign('FK_TBL_Observaciones_id')->references('PK_BVCS_idObservacion')->on('tbl_observaciones')->onDelete('cascade');
             $table->timestamps();

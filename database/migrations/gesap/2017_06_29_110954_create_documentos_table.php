@@ -14,8 +14,8 @@ class CreateDocumentosTable extends Migration
     public function up()
     {
         Schema::connection('gesap')->create('TBL_Documentos', function (Blueprint $table) {
-            $table->increments('PK_PRYT_idProyecto');
-            $table->string('PRYT_Estado',30);
+            $table->increments('PK_DMNT_idProyecto');
+            $table->string('DMNT_Estado',30);
             $table->integer('FK_TBL_Proyecto_id')->unsigned();
             $table->foreign('FK_TBL_Proyecto_id')->references('PK_PRYT_idProyecto')->on('TBL_proyecto')->onDelete('cascade');
             $table->timestamps();
