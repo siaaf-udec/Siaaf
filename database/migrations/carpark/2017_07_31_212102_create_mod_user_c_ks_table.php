@@ -13,7 +13,7 @@ class CreateModUserCKsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_user_parks', function (Blueprint $table) {
+        Schema::connection('carpark')->create('TBL_User_Parks', function (Blueprint $table) {
           $table->integer('PK_CK_Cedula')->unsigned()->unique()->primary();
           $table->String('CK_Nombres',90);
           $table->String('CK_Apellidos',90);
@@ -21,7 +21,7 @@ class CreateModUserCKsTable extends Migration
           $table->String('CK_Correo',60);
           $table->String('CK_Direccion',90);
           $table->String('CK_Ciudad',35);
-          $table->integer('CK_Codigo')->unsigned();
+          $table->integer('CK_Codigo')->unsigned()->unique();
           $table->integer('CK_IdPrograma')->unsigned();
 
 
@@ -36,6 +36,6 @@ class CreateModUserCKsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mod_user_c_ks');
+        Schema::dropIfExists('TBL_User_Parks');
     }
 }
