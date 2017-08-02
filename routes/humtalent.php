@@ -62,22 +62,50 @@ Route::group(['prefix' => 'empleado'], function () {
         }
     ]);
 });
-Route::resource('document', $controller.'DocumentController',[  //ruta para el controlador encargado del CRUD de la Documentación
-    'names'=>[
-        'index'=> 'talento.humano.document.index',
-        'create'=> 'talento.humano.document.create',
-        'store'=> 'talento.humano.document.store',
-        //'edit'=> 'talento.humano.document.edit',
-        'update'=> 'talento.humano.document.update',
-        'destroy'=> 'talento.humano.document.destroy',
-        //'destroy'=> 'talento.humano.document.destroy',
 
-    ]
-]);
-
-/*Route::get('empleadoList', function ()    { //ruta que prsenta la lista de los empleados registrados
-    return view('humtalent.empleado.tablasEmpleados');
-})->name('talento.humano.rrhh.empleadoList');*/
+//Rutas para el manejo de la documentación
+Route::group(['prefix' => 'document'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('index',[
+        'uses' => $controller.'DocumentController@index',
+        'as' => 'talento.humano.document.index'
+    ]);
+    Route::get('create',[
+        'uses' => $controller.'DocumentController@create',
+        'as' => 'talento.humano.document.create'
+    ]);
+    Route::post('store',[
+        'uses' => $controller.'DocumentController@store',
+        'as' => 'talento.humano.document.store'
+    ]);
+    Route::delete('document/destroy/{id?}',[
+        'uses' => $controller.'DocumentController@destroy',
+        'as' => 'talento.humano.document.destroy'
+    ]);
+    Route::get('document/edit/{id?}',[
+        'uses' => $controller.'DocumentController@edit',
+        'as' => 'talento.humano.document.edit'
+    ]);
+    Route::post('document/update/{id?}',[
+        'uses' => $controller.'DocumentController@update',
+        'as' => 'talento.humano.document.update'
+    ]);
+    Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados registrados
+        'as' => 'talento.humano.tablaDocumentos',
+        'uses' => function (Request $request) {
+            if ($request->ajax()) {
+                return Datatables::of(DocumentacionPersona::all())
+                    ->addIndexColumn()
+                    ->make(true);
+            } else {
+                return response()->json([
+                    'message' => 'Incorrect request',
+                    'code' => 412
+                ], 412);
+            }
+        }
+    ]);
+});
 
 Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
     'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
@@ -102,21 +130,7 @@ Route::get('reiniciarRadicacion/{id}', [    //ruta para  asociarlos los document
     'uses' => $controller.'DocumentController@reiniciarRadicacion'
 ]);
 
-Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los empleados registrados
-    'as' => 'talento.humano.tablaDocumentos',
-    'uses' => function (Request $request) {
-        if ($request->ajax()) {
-            return Datatables::of(DocumentacionPersona::all())
-                ->addIndexColumn()
-                ->make(true);
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
-        }
-    }
-]);
+
 
 Route::resource('evento', $controller.'EventoController',[  //ruta para el controlador encargado del CRUD de Eventos
     'names'=>[
@@ -213,12 +227,5 @@ Route::get('evento/edit/{id?}',[
     'uses' => $controller.'EventoController@edit',
     'as' => 'talento.humano.evento.edit'
 ]);
-Route::delete('document/destroy/{id?}',[
-    'uses' => $controller.'DocumentController@destroy',
-    'as' => 'talento.humano.document.destroy'
-]);
-Route::get('document/edit/{id?}',[
-    'uses' => $controller.'DocumentController@edit',
-    'as' => 'talento.humano.document.edit'
-]);
+
 

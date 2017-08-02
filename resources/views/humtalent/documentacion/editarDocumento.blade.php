@@ -17,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                        {!! Form::model ($documento, ['id'=>'form-documento','method'=>'PUT', 'route'=> ['talento.humano.document.update', $documento->PK_DCMTP_Id_Documento], 'role'=>"form"]) !!}
+                        {!! Form::model ($documento, ['id'=>'form-documento','method'=>'POST', 'route'=> ['talento.humano.document.update', $documento->PK_DCMTP_Id_Documento], 'role'=>"form"]) !!}
 
                                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                             ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
