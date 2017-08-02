@@ -84,4 +84,5 @@ class User extends Authenticatable
         //seoble, likeable, votable....
         return $this->morphMany(Image::class, 'imageble');
     }
+
 }

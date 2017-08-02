@@ -106,6 +106,10 @@
             <div class="clearfix"> </div><br><br><br>
             <div class="row">
                 <div class="col-md-12">
+                    {!! Field::text(
+                        'name_create',
+                        ['label' => 'Nombre', 'auto' => 'off'],
+                        ['help' => 'Digite su Nombre']) !!}
                     {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url' => '/forms']) !!}
                     <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
                     <p> This is just a demo dropzone. Selected files are not actually uploaded. </p>
@@ -171,17 +175,18 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
+        var name = {'name' : 'Miguel'};
         var x = function () {
           return {
               init: function () {
-                alert('Oks');
+                alert(name);
               }
           };
         };
         var route = '{{route('forms.dropzone.store')}}';
         var formatfile = 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF';
         var numfile = 2;
-        FormDropzone.init(route, formatfile, numfile, x());
+        FormDropzone.init(route, formatfile, numfile, x(), name);
     });
 
 </script>

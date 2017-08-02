@@ -1,7 +1,7 @@
 var FormDropzone = function () {
     return {
         //main function to initiate the module
-        init: function (route, formatfile, numfile, method) {
+        init: function (route, formatfile, numfile, method, params) {
             Dropzone.options.autoDiscover = false;
             Dropzone.options.myDropzone = {
                 url: route,
@@ -37,13 +37,20 @@ var FormDropzone = function () {
 
                     });
 
+                    myDropzone.params = name;
+
                     /*Cuando la subida era correcta o errónea*/
                     myDropzone.on("complete", function(file) {
                         myDropzone.removeFile(file);
                     });
 
                     /*Antes de enviar cada archivo.*/
-                    myDropzone.on("sending", function(file) {
+                    myDropzone.on("sending", function(file, xhr, formData) {
+                        $(params).each(function (key, value) {
+                            console.log(params[1]);
+                            formData.append(params[key], value.name)
+                        });
+
                         UIToastr.init('success', 'Procesando',
                             ''
                         );
