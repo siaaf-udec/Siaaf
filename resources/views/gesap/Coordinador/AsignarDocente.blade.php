@@ -64,7 +64,7 @@
                             <h3 class="block">Escoger Director</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
-                                @if(!empty($director))
+                                @if(isset($director[0]))
                                     @foreach ($director as $direc)
                                         {!! Field::hidden('PK_director', $direc->PK_NPRY_idCargo) !!}    
                                         {!! Field::select('director',$docentes,$direc->Cedula)!!}
@@ -79,7 +79,7 @@
                             <h3 class="block">Escoger Jurados</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
-                                    @if(!empty($jurado1))
+                                    @if(isset($jurado1[0]))
                                     @foreach ($jurado1 as $jur1)
                                         {!! Field::hidden('PK_jurado1', $jur1->PK_NPRY_idCargo) !!}    
                                         {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
@@ -89,7 +89,7 @@
                                 @endif
                                     
                                     <hr>
-                                    @if(!empty($jurado2))
+                                    @if(isset($jurado2[0]))
                                     @foreach ($jurado2 as $jur2)
                                         {!! Field::hidden('PK_jurado2', $jur2->PK_NPRY_idCargo) !!}    
                                         {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}

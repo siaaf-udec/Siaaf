@@ -10,24 +10,27 @@ class Funcionario extends Model
 
     protected $table = 'TBL_Funcionarios';
 
-    protected $primaryKey = 'PK_FNS_Cedula';
+    protected $primaryKey = 'PK_FUNCIONARIO_Cedula';
 
     protected $fillable = [
 
-        'PK_FNS_Cedula','FNS_Clave','FK_FNS_Rol','FNS_Nombres','FNS_Apellidos','FNS_Direccion','FNS_Correo','FNS_Telefono','FK_FNS_Estado','FK_FNS_Programa',
+        'PK_FUNCIONARIO_Cedula', 'FUNCIONARIO_Clave', 'FK_FUNCIONARIO_Rol', 'FUNCIONARIO_Nombres', 'FUNCIONARIO_Apellidos', 'FUNCIONARIO_Direccion', 'FUNCIONARIO_Correo', 'FUNCIONARIO_Telefono', 'FK_FUNCIONARIO_Estado', 'FK_FUNCIONARIO_Programa',
     ];
 
-
-    public function Asistents(){
+    public function Asistents()
+    {
         return $this->hasMany(Asistent::class);
     }
-    public function StatusOfDocuments(){
+    public function StatusOfDocuments()
+    {
         return $this->hasMany(StatusOfDocument::class);
     }
-    public function Inductions(){
+    public function Inductions()
+    {
         return $this->hasMany(Induction::class);
     }
-    public function Permissions(){
+    public function Permissions()
+    {
         return $this->hasMany(Permission::class);
     }
     //

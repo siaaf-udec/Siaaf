@@ -266,9 +266,12 @@
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-9">
+                                            <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                                                Cancelar
+                                            </a>
                                             <a href="javascript:;" class="btn default button-previous">
-                                                <i class="fa fa-angle-left"></i> Back </a>
-                                            <a href="javascript:;" class="btn btn-outline green button-next"> Continue
+                                                <i class="fa fa-angle-left"></i> Atras </a>
+                                            <a href="javascript:;" class="btn btn-outline green button-next"> Continuar
                                                 <i class="fa fa-angle-right"></i>
                                             </a>
                                             {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
@@ -338,6 +341,9 @@
             $( response.data ).each(function( key,value ) {
                 $widget_select_countries_create.append(new Option(value.name, value.id));
             });
+            $widget_select_countries_create.val([]);
+            $widget_select_regions_create.val([]);
+            $widget_select_cities_create.val([]);
         });
 
         /*Carga todos los Departamentos*/
@@ -359,6 +365,8 @@
                         $( response.data ).each(function( key,value ) {
                             $widget_select_regions_create.append(new Option(value.name, value.id));
                         });
+                        $widget_select_regions_create.val([]);
+                        $widget_select_cities_create.val([]);
                     }
                 }
             });
@@ -381,6 +389,7 @@
                         $(response.data).each(function (key, value) {
                             $widget_select_cities_create.append(new Option(value.name, value.id));
                         });
+                        $widget_select_cities_create.val([]);
                     }
                 }
             });
@@ -483,6 +492,19 @@
                     var FileImage =  document.getElementById("image_profile_create");
                     formData.append('image_profile_create', FileImage.files[0]);
 
+                    var hash = "c157a79031e1c40f85931829bc5fc552";  // 15+ hex chars
+                    var options = {
+                        foreground: [0, 0, 0, 255],               // rgba black
+                        background: [255, 255, 255, 255],         // rgba white
+                        margin: 0.2,                              // 20% margin
+                        size: 420,                                // 420px square
+                        format: 'svg'                             // use SVG instead of PNG
+                    };
+                    var data = new Identicon(hash, options).toString();
+                    data = 'data:image/svg+xml;base64,' + data;
+                    formData.append('identicon', data);
+
+
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -517,6 +539,12 @@
 
 
         FormWizard.init(wizard, form, rules, messages, createUsers());
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('users.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
 
     });
 </script>

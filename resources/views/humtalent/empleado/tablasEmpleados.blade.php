@@ -84,7 +84,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('talento.humano.rrhh.destroy') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            var route = '{{ route('talento.humano.empleado.destroy') }}'+'/'+dataTable.PK_PRSN_Cedula;
             var type = 'DELETE';
             var async = async || false;
             $.ajax({
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('talento.humano.rrhh.edit') }}'+'/'+dataTable.PK_PRSN_Cedula;
+                window.location.href='{{ route('talento.humano.empleado.edit') }}'+'/'+dataTable.PK_PRSN_Cedula;
             });
         });
     });

@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::model ($evento,['id'=>'form_eventos','method'=>'PUT', 'route'=> ['talento.humano.evento.update', $evento->PK_EVNT_IdEvento],'role'=>"form"]) !!}
+                    {!! Form::model ($evento,['id'=>'form_eventos','method'=>'POST', 'route'=> ['talento.humano.evento.update', $evento->PK_EVNT_IdEvento],'role'=>"form"]) !!}
                     {!! Field::textarea(
                             'EVNT_Descripcion',
                             ['label' => 'Descripción del evento:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '4'],

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Container\Audiovisuals\src\Controllers;
+namespace App\Container\Audiovisuals\Src\Controllers;
 
-use App\Container\Audiovisuals\src\Funcionario;
-use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Container\Audiovisuals\Src\Interfaces\CarrerasInterface;
+use App\Container\Audiovisuals\Src\Interfaces\FuncionarioInterface;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -11,11 +12,13 @@ use Yajra\Datatables\Datatables;
 class FuncionarioController extends Controller
 {
 
-    protected $userRepository;
+    protected $funcionarioRepository;
+    protected $carrerasRepository;
 
-    public function __construct(UserInterface $userRepository)
+    public function __construct(FuncionarioInterface $funcionarioRepository, CarrerasInterface $carrerasRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->funcionarioRepository = $funcionarioRepository;
+        $this->carrerasRepository    = $carrerasRepository;
     }
 
     /**
@@ -23,57 +26,42 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listing(Request $request)
-    {
-
-        if ($request->ajax()) {
-            return Datatables::of(
-                Funcionario::select(
-                    'PK_FNS_Cedula',
-                    'FNS_Nombres',
-                    'FNS_Correo',
-                    'FK_FNS_Programa')->get()
-            )->addIndexColumn()
-                ->make(true);
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code'    => 412,
-            ], 412);
-        }
-
-    }
-
-    public function all(Request $request, $id)
-    {
-
-        if ($request->ajax()) {
-            return Funcionario::find($id);
-
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code'    => 412,
-            ], 412);
-        }
-
-    }
-
     public function index()
     {
-        return view('audiovisuals.funcionario.gestionfuncionarios');
+        $carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
+        return view('audiovisuals.funcionario.gestionfuncionarios',
+            ['carreras' => $carreras->toArray(),
+            ]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function data(Request $request)
     {
-        return view('audiovisuals.funcionario.registroFuncionario');
-    }
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $admins = $this->funcionarioRepository->index();
+            return Datatables::of($admins)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->removeColumn('deleted_at')
+                ->removeColumn('remember_token')
+                ->removeColumn('FUNCIONARIO_Clave')
+                ->removeColumn('FK_FUNCIONARIO_Rol')
+                ->removeColumn('FUNCIONARIO_Direccion')
+                ->removeColumn('FUNCIONARIO_Apellidos')
+                ->removeColumn('FK_FUNCIONARIO_Estado')
+                ->addIndexColumn()
+                ->make(true);
 
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -82,11 +70,17 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->ajax()) {
-            Funcionario::create($request->all());
-            return response()->json([
-                "mensaje" => "creado",
-            ]);
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $this->funcionarioRepository->store($request->all());
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Funcionario registrado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
 
     }
@@ -97,10 +91,9 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //return "en el show";
-        // return view('humtalent.empleado.consultaEmpleado');
+        //
     }
 
     /**
@@ -111,12 +104,7 @@ class FuncionarioController extends Controller
      */
     public function edit($id)
     {
-
-        $funcionario = Funcionario::find($id);
-        return response()->json(
-            $funcionario->toArray()
-        );
-        // return view('audiovisuals.funcionario.editarFuncionario', compact('funcionario'));
+        //
     }
 
     /**
@@ -128,14 +116,7 @@ class FuncionarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $funcionario = Funcionario::find($id);
-        $funcionario->fill($request->all());
-        $funcionario->save();
-        return response()->json([
-            "mensaje" => "listo",
-
-        ]);
+        //
     }
 
     /**
@@ -144,10 +125,22 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Funcionario::destroy($id);
-        return response()->json(["mensaje" => "borrado"]);
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+
+            $this->funcionarioRepository->destroy($id);
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Funcionario eliminado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 }

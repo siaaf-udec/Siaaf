@@ -57,7 +57,7 @@
             
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
-            @if(!empty($estudiante1))
+            @if(isset($estudiante1[0]))
             @foreach ($estudiante1 as $estu1)
                 {!! Field::hidden('PK_estudiante1', $estu1->PK_NPRY_idCargo) !!}    
                 {!! Field::select('estudiante1',$estudiantes,$estu1->Cedula,[ 'label' => 'Estudiante 1', 'required'])!!}
@@ -67,7 +67,7 @@
             @endif
         </div>
         <div class="col-xs-12 col-md-8 col-lg-6">
-            @if(!empty($estudiante2))
+            @if(isset($estudiante2[0]))
             @foreach ($estudiante2 as $estu2)
                 {!! Field::hidden('PK_estudiante2', $estu2->PK_NPRY_idCargo) !!}
                 {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),$estu2->Cedula,[ 'label' => 'Estudiante 2', 'required']) !!}

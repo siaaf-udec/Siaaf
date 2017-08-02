@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 
+use App\Notifications\UserRegistration;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
@@ -85,20 +86,20 @@ class UserController extends Controller
     public function data(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')){
-            $modules = $this->userRepository->index([]);
-            return Datatables::of($modules)
-                ->addColumn('roles', function ($roles){
-                    if ( !empty($roles->roles) ) {
-                        foreach ($roles->roles as $role) {
+            $users = $this->userRepository->index([]);
+            return Datatables::of($users)
+                ->addColumn('roles', function ($users){
+                    if ( !empty($users->roles) ) {
+                        foreach ($users->roles as $role) {
                             $aux[] = $role->display_name;
                         }
                         return implode(',', $aux);
                     }
                     return '';
                 })
-                ->addColumn('state', function ($state){
-                    if(strcmp($state->display_name, 'Aprobado')){
-                        return "<span class='label label-sm label-warning'>dfsf".$state->display_name. "</span>";
+                ->addColumn('state', function ($users){
+                    if(strcmp($users->state, 'APROBADO')){
+                        return "<span class='label label-sm label-warning'>".$users->state. "</span>";
                     }
                 })
                 ->rawColumns(['state'])
@@ -139,16 +140,31 @@ class UserController extends Controller
             $user = $this->userRepository->store($request->all());
 
             /*Guarda la imagen */
-            $url = Storage::disk('developer')->putFile('avatars', $request->file('image_profile_create'));
-            $user->images()->create([
-                'url' => $url
-            ]);
+            $img = $request->file('image_profile_create');
+            if($img !== null){
+                $url = Storage::disk('developer')->putFile('avatars', $img);
+                $user->images()->create([
+                    'url' => $url
+                ]);
+            }else{
+                $user->images()->create([
+                    'url' => $request->get('identicon')
+                ]);
+            }
 
             /*Guarda los Roles*/
             $roles =  $request->get('multi_select_roles_create');
             $user->roles()->sync(
                 ($roles !== null) ? explode(',', $roles) : []
             );
+
+            /*Crea Notificacion*/
+            $data = [
+                'url' => 'https://www.google.com.co/',
+                'description' => '¡Bienvenidos a Siaaf!',
+                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+            ];
+            $user->notify(new UserRegistration($data));
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

@@ -1,5 +1,5 @@
 {{-- MENÚ DE EJEMPLO --}}
-@permission('formAcad')
+
 
 <li class="nav-item {{ active(['espacios.academicos.*'], 'start active open') }}">
     <a href="javascript:;" class="nav-link nav-toggle">
@@ -10,7 +10,7 @@
 
     <ul class="sub-menu">
 
-
+        @permission('formAcad')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -21,7 +21,7 @@
                 <li class="nav-item {{ active(['espacios.academicos.formacad.create'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.formacad.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Registrar</span>
+                        <span class="title">Solicitar</span>
                     </a>
                 </li>
                 <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
@@ -32,7 +32,9 @@
                 </li>
             </ul>
         </li>
+        @endpermission
 
+        @permission('solicitudes')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -54,7 +56,9 @@
                 </li>
             </ul>
         </li>
+        @endpermission
 
+        @permission('horarios')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -62,12 +66,14 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
+                @permission('regisHorario')
                 <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Registrar</span>
                     </a>
                 </li>
+                @endpermission
                 <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
@@ -76,8 +82,9 @@
                 </li>
             </ul>
         </li>
+        @endpermission
 
-        @permission('report')
+        @permission('reportes')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -104,5 +111,3 @@
     </ul>
 
 </li>
-
-@endpermission

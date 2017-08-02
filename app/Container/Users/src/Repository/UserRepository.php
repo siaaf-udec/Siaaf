@@ -35,9 +35,9 @@ class UserRepository extends ControllerRepository implements UserInterface
         $user['email'] = $data['email'];
         $user['password'] = bcrypt($data['password']);
         $user['state'] = $data['state'];
-        $user['cities_id'] = $data['cities_id'];
-        $user['countries_id'] = $data['countries_id'];
-        $user['regions_id'] = $data['regions_id'];
+        $user['cities_id'] = (!isset($data['cities_id']) || empty($data['cities_id'])) ? $data['cities_id'] : 1 ;
+        $user['countries_id'] =(!isset($data['countries_id']) || empty($data['countries_id'])) ? $data['countries_id'] : 1 ;
+        $user['regions_id'] = (!isset($data['regions_id']) || empty($data['regions_id'])) ? $data['regions_id'] : 1 ;
         $user->save();
         return $user;
     }

@@ -23,5 +23,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'root@app.com',
             'password' => bcrypt('root'),
         ]);
+
+        $user = User::find(1);
+        $user->roles()->sync(1);
     }
 }
