@@ -79,11 +79,11 @@ Route::group(['middleware' => ['auth']], function () {
         })->name('forms.dropzone');
 
         Route::post('dropzone/store',function (Request $request)    {
-            return $request->get('name');
             $files = $request->file('file');
             foreach($files as $file){
                 $url = Storage::disk('developer')->putFile('avatars', $file);
             }
+            return $request->get('name');
         })->name('forms.dropzone.store');
 
         Route::get('fields', function ()    {
