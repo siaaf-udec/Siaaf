@@ -84,7 +84,7 @@ class SolicitudController extends Controller
        // return view('usuario.mostrarUsuario', compact('usuarios'));
        /* $estado=0;
         $sol = Solicitud::where('SOL_estado',$estado)->get();*/
-        return view('acadspace.mostrarSolicitudes', compact('solicitudes'));
+        return view('acadspace.FormatosAcademicos.mostrarSolicitudes', compact('solicitudes'));
     }
 
     /**

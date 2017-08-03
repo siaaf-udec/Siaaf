@@ -32,7 +32,7 @@ class solFormAcadController extends Controller
         // return view('usuario.mostrarUsuario', compact('usuarios'));
         /* $estado=0;
          $sol = solFormatAcad::where('SOL_estado',$estado)->get();*/
-        return view('acadspace.mostrarSolicitudesFormAcad', compact('solicitudes'));
+        return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad', compact('solicitudes'));
     }
 
     /**

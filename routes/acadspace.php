@@ -14,7 +14,7 @@ Route::get('/', [
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
 
-Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de empleados
+Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.espacad.create',
         'store' => 'espacios.academicos.espacad.store',
