@@ -36,7 +36,7 @@ class SolicitudController extends Controller
      */
     public function create()
     {
-        return view('acadspace.registroSolicitud');
+        return view('acadspace.Solicitudes.registroSolicitud');
     }
 
     /**

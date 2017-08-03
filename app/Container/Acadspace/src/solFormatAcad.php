@@ -22,10 +22,10 @@ class solFormatAcad extends Model
         'estado'
     ];
 
-    public function setPathAttribute($path){
-        $nombre_doc = Carbon::now()->second.$path->getClientOriginalName();
+    public function setFileAttribute($file){
+        $nombre_doc = Carbon::now()->second.$file->getClientOriginalName();
         $this->attributes['nombre_doc'] = $nombre_doc;
-        \Storage::disk('local')->put($nombre_doc, \File::get($path));
+        \Storage::disk('local')->put($nombre_doc, \File::get($file));
     }
 
     public function Asistents(){

@@ -7,8 +7,18 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario registro de solicitud'])
 
 
-
         <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="actions">
+                        <a class="btn btn-outline dark create" data-toggle="modal">
+                            <i class="fa fa-plus">
+                            </i>
+                            Nuevo Administrador
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-7 col-md-offset-2">
             {!! Field::date(
             'articulo',
@@ -20,6 +30,9 @@
             <button onclick="copiar()" id="agregar" class="btn blue"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
         </div>
             </div>
+
+
+
                 <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.espacad.store']]) !!}
@@ -89,7 +102,7 @@
 @endpush
 @push('plugins')
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></scripts>
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
