@@ -34,10 +34,6 @@ Route::post('anteproyecto/docente/', [
 //});
 
 
-
-
-
-
 /*Evaluador*/
 
 Route::resource('evaluar', $controller.'EvaluatorController');
@@ -66,8 +62,6 @@ Route::get('observaciones/{id}', [
     'as' => 'anteproyecto.ListObservation',
     'uses' => $controller.'EvaluatorController@ListObservation'
 ]);
-
-
 
 
 

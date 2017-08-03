@@ -35,6 +35,12 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
+    Route::get('/pdf', function () {
+        $data = [];
+        $pdf = PDF::loadView('welcome', $data);
+        return $pdf->download('invoice.pdf');
+    })->name('root');
+
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1
         Route::get('buttons', function ()    {
@@ -79,11 +85,11 @@ Route::group(['middleware' => ['auth']], function () {
         })->name('forms.dropzone');
 
         Route::post('dropzone/store',function (Request $request)    {
-            return $request->get('name');
             $files = $request->file('file');
             foreach($files as $file){
                 $url = Storage::disk('developer')->putFile('avatars', $file);
             }
+            return $request->get('name');
         })->name('forms.dropzone.store');
 
         Route::get('fields', function ()    {
