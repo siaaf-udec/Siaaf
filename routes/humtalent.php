@@ -19,6 +19,7 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
+
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
