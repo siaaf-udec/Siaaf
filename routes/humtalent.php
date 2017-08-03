@@ -127,6 +127,20 @@ Route::group(['prefix' => 'document'], function () {
         'as' => 'talento.humano.reiniciarRadicacion', //Este es el alias de la ruta
         'uses' => $controller.'DocumentController@reiniciarRadicacion'
     ]);
+    Route::get('historialDocumentos/empleados', [    //ruta para listar  los empleados y realizar la consulta de documentación entregada
+        'as' => 'talento.humano.historialDocumentos.empleados',
+        'uses' => function(){
+            return view('humtalent.empleado.listaEmpleados');
+        }
+    ]);
+    Route::get('historialDocumentos/documentos/{id?}',[
+        'uses' => $controller.'DocumentController@tablaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+        'as' => 'talento.humano.historialDocumentos.documentos'
+    ]);
+    Route::get('historialDocumentos/documentosRadicados/{id?}',[
+        'uses' => $controller.'DocumentController@consultaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+        'as' => 'talento.humano.historialDocumentos.documentosRadicados'
+    ]);
 });
 
 //Rutas para el manejo de los eventos

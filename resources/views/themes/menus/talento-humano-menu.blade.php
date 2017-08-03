@@ -112,8 +112,8 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['talento.humano.historialDocumentos.empleados'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.historialDocumentos.empleados') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Historial de la documentación</span>
                     </a>
