@@ -35,6 +35,12 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
+    Route::get('/pdf', function () {
+        $data = [];
+        $pdf = PDF::loadView('welcome', $data);
+        return $pdf->download('invoice.pdf');
+    })->name('root');
+
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1
         Route::get('buttons', function ()    {
