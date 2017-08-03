@@ -14,6 +14,8 @@ use App\Container\gesap\src\Encargados;
 use App\Container\gesap\src\Check_Observaciones;
 use App\Container\gesap\src\Respuesta;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+
 class EvaluatorController extends Controller
 {
     private $path='gesap';
@@ -99,7 +101,18 @@ class EvaluatorController extends Controller
         
         return view($this->path.'.Evaluador.Conceptos',compact('anteproyectos'));
     }
-    public function storeConceptos(Request $request, $id){
+    public function storeConceptos(Request $request){
+        if($request->ajax() && $request->isMethod('POST')){
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     
     public function director(){
