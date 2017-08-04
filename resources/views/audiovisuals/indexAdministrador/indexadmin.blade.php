@@ -113,22 +113,14 @@ de la plantilla
                     <!-- SIDEBAR USER TITLE -->
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
-                            Marcus Doe
+                            Cristian Jojoa
                         </div>
                         <div class="profile-usertitle-job">
-                            Developer
+                            Administrador
                         </div>
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR BUTTONS -->
-                    <div class="profile-userbuttons">
-                        <button class="btn btn-circle green btn-sm" type="button">
-                            Follow
-                        </button>
-                        <button class="btn btn-circle red btn-sm" type="button">
-                            Message
-                        </button>
-                    </div>
                     <!-- END SIDEBAR BUTTONS -->
                     <!-- SIDEBAR MENU -->
                     <div class="profile-usermenu">
@@ -137,21 +129,21 @@ de la plantilla
                                 <a href="app_ticket.html">
                                     <i class="icon-home">
                                     </i>
-                                    Ticket List
+                                    Inicio
                                 </a>
                             </li>
                             <li>
                                 <a href="app_ticket_staff.html">
                                     <i class="icon-settings">
                                     </i>
-                                    Support Staff
+                                    Datos Personales
                                 </a>
                             </li>
                             <li>
                                 <a href="app_ticket_config.html">
                                     <i class="icon-info">
                                     </i>
-                                    Configurations
+                                    Configuraciones
                                 </a>
                             </li>
                         </ul>
@@ -165,33 +157,33 @@ de la plantilla
                     <div class="row list-separated profile-stat">
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <div class="uppercase profile-stat-title">
-                                37
+                                22
                             </div>
                             <div class="uppercase profile-stat-text">
-                                New
+                                Prestamos
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <div class="uppercase profile-stat-title">
-                                51
+                                10
                             </div>
                             <div class="uppercase profile-stat-text">
-                                Processed
+                                Solicitudes
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <div class="uppercase profile-stat-title">
-                                61
+                                32
                             </div>
                             <div class="uppercase profile-stat-text">
-                                Completed
+                                Total
                             </div>
                         </div>
                     </div>
                     <!-- END STAT -->
                     <div>
                         <h4 class="profile-desc-title">
-                            About Marcus Doe
+                            Acerca Marcus Doe
                         </h4>
                         <span class="profile-desc-text">
                             Lorem ipsum dolor sit amet diam nonummy nibh dolore.
@@ -232,7 +224,7 @@ de la plantilla
                                     <i class="icon-globe theme-font hide">
                                     </i>
                                     <span class="caption-subject font-blue-madison bold uppercase">
-                                        Ticket List
+                                        Tabla Prestamos
                                     </span>
                                 </div>
                             </div>
@@ -242,7 +234,7 @@ de la plantilla
                                         <div class="col-md-6">
                                             <div class="btn-group">
                                                 <button class="btn sbold green" id="sample_editable_1_new">
-                                                    Add New
+                                                    Nuevo Prestamo
                                                     <i class="fa fa-plus">
                                                     </i>
                                                 </button>
@@ -251,7 +243,7 @@ de la plantilla
                                         <div class="col-md-6">
                                             <div class="btn-group pull-right">
                                                 <button class="btn green btn-outline dropdown-toggle" data-toggle="dropdown">
-                                                    Tools
+                                                    Herramientas
                                                     <i class="fa fa-angle-down">
                                                     </i>
                                                 </button>
@@ -384,7 +376,7 @@ de la plantilla
                                                 10/12/15 1:45pm
                                             </td>
                                             <td>
-                                                Marcus Doe
+                                                Cristian Jojoa
                                             </td>
                                             <td>
                                                 <span class="label label-sm label-info">
@@ -422,7 +414,7 @@ de la plantilla
                                                 10/12/15 1:45pm
                                             </td>
                                             <td>
-                                                Marcus Doe
+                                                Cristian Jojoa
                                             </td>
                                             <td>
                                                 <span class="label label-sm label-success">
@@ -460,7 +452,7 @@ de la plantilla
                                                 10/12/15 1:45pm
                                             </td>
                                             <td>
-                                                Marcus Doe
+                                                Cristian Jojoa
                                             </td>
                                             <td>
                                                 <span class="label label-sm label-default">
