@@ -19,6 +19,7 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
+
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
@@ -126,6 +127,20 @@ Route::group(['prefix' => 'document'], function () {
     Route::get('reiniciarRadicacion/{id}', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.reiniciarRadicacion', //Este es el alias de la ruta
         'uses' => $controller.'DocumentController@reiniciarRadicacion'
+    ]);
+    Route::get('historialDocumentos/empleados', [    //ruta para listar  los empleados y realizar la consulta de documentación entregada
+        'as' => 'talento.humano.historialDocumentos.empleados',
+        'uses' => function(){
+            return view('humtalent.empleado.listaEmpleados');
+        }
+    ]);
+    Route::get('historialDocumentos/documentos/{id?}',[
+        'uses' => $controller.'DocumentController@tablaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+        'as' => 'talento.humano.historialDocumentos.documentos'
+    ]);
+    Route::get('historialDocumentos/documentosRadicados/{id?}',[
+        'uses' => $controller.'DocumentController@consultaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+        'as' => 'talento.humano.historialDocumentos.documentosRadicados'
     ]);
 });
 

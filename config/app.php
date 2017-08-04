@@ -196,6 +196,8 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
 
         /*
          * Custom Service Providers...
@@ -275,6 +277,8 @@ return [
         'Entrust'      => Zizaco\Entrust\EntrustFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Active'       => Watson\Active\Facades\Active::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
         /*
          * Custom Aliases...

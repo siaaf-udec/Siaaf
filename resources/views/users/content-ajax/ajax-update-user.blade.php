@@ -66,51 +66,52 @@
                                             <h3 class="block">Datos Personales</h3>
                                             <div class="row">
                                                 <div class="col-md-4 col-md-offset-1">
+                                                    {!! Field::hidden('id_edit', $user->id) !!}
                                                     {!! Field::text(
-                                                            'name_create',
+                                                            'name_create', $user->name,
                                                             ['label' => 'Nombre', 'auto' => 'off'],
                                                             ['help' => 'Digite su Nombre']) !!}
                                                     {!! Field::date(
-                                                            'date_birthday',
+                                                            'date_birthday', $user->birthday,
                                                             ['label' => 'Fecha de Nacimiento', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                                             ['help' => 'Digite su fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
                                                     {!! Field::select(
                                                             'identity_type_create',
-                                                            ['T.I' => 'T.I', 'C.C' => 'C.C'],null,
+                                                            ['T.I' => 'T.I', 'C.C' => 'C.C'],$user->identity_type,
                                                             [ 'label' => 'Tipo de identificación']) !!}
                                                     {!! Field::date(
-                                                            'identity_expe_create',
+                                                            'identity_expe_create', $user->birthday,
                                                             ['label' => 'Fecha de Expedición', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                                             ['help' => 'Digite su fecha de expedición', 'icon' => 'fa fa-calendar']) !!}
                                                     {!! Field::text(
-                                                            'phone_create',
+                                                            'phone_create', $user->phone,
                                                             ['label' => 'Numero Telefonico', 'auto' => 'off'],
                                                             ['help' => 'Digite su numero telefonico']) !!}
                                                     {!! Field::email(
-                                                            'email_create',
+                                                            'email_create', $user->email,
                                                             ['label' => 'Correo Electronico', 'auto' => 'off'],
                                                             ['help' => 'Digite su correo electronico']) !!}
                                                 </div>
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
-                                                        'lastname_create',
+                                                        'lastname_create', $user->lastname,
                                                         ['label' => 'Apellido', 'auto' => 'off'],
                                                         ['help' => 'Digite su Apellido']) !!}
                                                     {!! Field::select(
                                                         'sexo_create',
-                                                        ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'],null,
+                                                        ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'], $user->sexo,
                                                         [ 'label' => 'Sexo']) !!}
                                                     {!! Field::text(
-                                                            'identity_no_create',
+                                                            'identity_no_create', $user->identity_no,
                                                             ['label' => 'Numero de Identificación', 'auto' => 'off'],
                                                             ['help' => 'Numero de Identificación']) !!}
                                                     {!! Field::text(
-                                                            'identity_expe_place_create',
+                                                            'identity_expe_place_create', $user->identity_expe_place,
                                                             ['label' => 'Lugar de expedición', 'auto' => 'off'],
                                                             ['help' => 'Lugar de expedición']) !!}
                                                     {!! Field::select(
                                                             'state_create',
-                                                            ['Aprobado' => 'Aprobado', 'Pendiente' => 'Pendiente', 'Denegado' => 'Denegado'],null,
+                                                            ['Aprobado' => 'Aprobado', 'Pendiente' => 'Pendiente', 'Denegado' => 'Denegado'], $user->state,
                                                             [ 'label' => 'Estado']) !!}
                                                     {!! Field::password(
                                                             'password_create',
@@ -122,7 +123,7 @@
                                             <div class="row">
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
-                                                            'address_create',
+                                                            'address_create', $user->address,
                                                             ['label' => 'Dirección Procedencia', 'auto' => 'off'],
                                                             ['help' => 'Digite su dirección de procedencia']) !!}
                                                     {!! Field::select(
@@ -521,11 +522,18 @@
 
         FormWizard.init(wizard, form, rules, messages, createUsers());
 
+        var loadData = function(){
+            $('select[name="countries_create"]').val('{{ $user->country->id }}');
+        }();
+
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('users.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+
+
 
     });
 </script>

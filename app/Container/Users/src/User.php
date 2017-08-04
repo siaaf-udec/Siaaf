@@ -6,9 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuditableContract
 {
     /**
      * The database connection used by the model.
@@ -24,7 +26,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
 
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, Auditable;
 
     /**
      * Informamos a la clase EntrustUserTrait que usara restore
@@ -56,7 +58,7 @@ class User extends Authenticatable
      */
     public function city()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'cities_id');
     }
 
     /**
@@ -64,7 +66,7 @@ class User extends Authenticatable
      */
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'countries_id');
     }
 
     /**
@@ -72,7 +74,7 @@ class User extends Authenticatable
      */
     public function region()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class, 'regions_id');
     }
 
     /*

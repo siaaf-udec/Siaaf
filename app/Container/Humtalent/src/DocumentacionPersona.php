@@ -18,7 +18,7 @@ class DocumentacionPersona extends Model
 
 
     public function StatusOfDocuments(){
-        return $this->hasMany(StatusOfDocument::class);
+        return $this->hasMany(StatusOfDocument::class,'FK_Personal_Documento');
     }
 
     //
