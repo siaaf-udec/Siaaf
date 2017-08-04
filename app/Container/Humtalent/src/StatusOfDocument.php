@@ -19,13 +19,13 @@ class StatusOfDocument extends Model
 
 
     public function Personas(){
-        return $this->belongsTo(Persona::class,'FK_Personal_Documento','PK_PRSN_Cedula');
+        return $this->belongsTo(Persona::class,'FK_TBL_Persona_Cedula','PK_PRSN_Cedula');
     }
     public function Notifications(){
         return $this->belongsTo(Notification::class);
     }
     public function DocumentacionPersonas(){
-        return $this->belongsTo(DocumentacionPersona::class);
+        return $this->belongsTo(DocumentacionPersona::class,'FK_Personal_Documento', 'PK_DCMTP_Id_Documento');
     }
     //
 }

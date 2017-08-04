@@ -9,12 +9,13 @@
 @section('page-title', 'Estado del proceso de inducción:')
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers font-blue', 'title' => 'Proceso de inducción'])
+        {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
         <div class="form-wizard">
             <div class="form-body">
                 <ul class="nav nav-pills nav-justified steps">
                     <li>
                         <a href="#tab0" data-toggle="tab" class="step">
-                            <span class="number"> 0 </span>
+                            <span class="number">  </span>
                             <span class="desc">
                                     <i class="fa fa-check"></i>  Proceso de inducción </span>
                         </a>
@@ -63,7 +64,7 @@
                         <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-9">
-                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                {!! Form::open (['id'=>'form-induccion1','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
                                 @if ($proceso === 'Ejecución de inducción' )
                                     {!! Field::checkbox('INDC_ProcesoInduccion1','Ejecución de inducción',true,
@@ -74,22 +75,17 @@
                                 @endif
                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion1') !!}
                                     {!! Field::hidden('INDC_Aprobacion','0') !!}
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-offset-3 col-md-9">
-                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {!! Form::close() !!}
+
                             </div>
+                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                     <div class="tab-pane active" id="tab2">
                         <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-9">
-                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                {!! Form::open (['id'=>'form-induccion2','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
                                      {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
                                 @if ($proceso === 'Control de participación' )
                                      {!! Field::checkbox('INDC_ProcesoInduccion2','Control de participación',true,
@@ -100,22 +96,17 @@
                                 @endif
                                      {!! Field::hidden('numCheck','INDC_ProcesoInduccion2') !!}
                                      {!! Field::hidden('INDC_Aprobacion','0') !!}
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-offset-3 col-md-9">
-                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {!! Form::close() !!}
+
                             </div>
+                            {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                     <div class="tab-pane active" id="tab3">
-                        <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
+                        <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-9">
-                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+                                {!! Form::open (['id'=>'form-induccion3','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
                                 @if ($proceso === 'Evaluación de inducción' )
                                     {!! Field::checkbox('INDC_ProcesoInduccion3','Evaluación de inducción',true,
@@ -126,24 +117,23 @@
                                 @endif
                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion3') !!}
                                     {!! Field::hidden('INDC_Aprobacion','0') !!}
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-offset-3 col-md-9">
-                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {!! Form::close() !!}
+
                             </div>
+                            {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                     <div class="tab-pane active" id="tab4">
-                        <h3 class="block">&nbsp;&nbsp;Seleccione si el proceso finalizo exitosamente:</h3>
+                        <div class="row">
+                        <h3 class="block">Seleccione si el proceso finalizo exitosamente:</h3>
                         <h5 class="block">&nbsp;&nbsp;Al finalizar este proceso se cambiara el estado del empleado de nuevo a antiguo.</h5>
+
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-9">
-                                {!! Form::open (['id'=>'form-induccion','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
+
+                                {!! Form::open (['id'=>'form-induccion4','method'=>'POST', 'route'=> ['talento.humano.induccion.store'], 'role'=>"form"]) !!}
                                      {!! Field::hidden('FK_TBL_Persona_Cedula',$id ) !!}
+
                                 @if ($proceso === 'Resultados de evaluación' )
                                      {!! Field::checkbox('INDC_ProcesoInduccion4','Resultados de evaluación',true,
                                        ['label' => 'Se finalizo exitosamente']) !!}
@@ -154,21 +144,19 @@
                                      {!! Field::hidden('numCheck','INDC_ProcesoInduccion4') !!}
                                      {!! Field:: text('INDC_Aprobacion',null,['label'=>'Calificación de la inducción: ','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                         ['help'=>'Digite la calificación que obtuvo el empleado en la inducción.','icon'=>' fa fa-credit-card']) !!}
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-offset-3 col-md-9">
-                                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {!! Form::close() !!}
+
+
                             </div>
+                            {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                            {!! Form::close() !!}
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
             {!! Field::hidden('proceso',$proceso,['id'=>'tipoProceso']) !!}
         </div>
+        {!! Form::close() !!}
 
     @endcomponent
 @endsection
@@ -187,33 +175,232 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-
+    @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}",'¡Bien hecho!');
+            break;
+    }
+    @endif
     jQuery(document).ready(function() {
-        $('.caption-subject').append( "<span class='step-title'> Paso 1 de 4 </span>" );
+        $('.caption-subject').append( "<span class='step-title'>  </span>" );
         $('.portlet-sortable').attr("id","form_wizard_1");
         FormWizard.init();
         ComponentsSelect2.init();
     });
 
     var FormWizard = function () {
-
-
         return {
             //main function to initiate the module
             init: function () {
                 if (!jQuery().bootstrapWizard) {
                     return;
                 }
-
                 function format(state) {
                     if (!state.id) return state.text; // optgroup
                     return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
                 }
-
-
                 var form = $('#form-induccion');
+                var form2 = $('#form-induccion2');
+                var form3 = $('#form-induccion3');
+                var form4 = $('#form-induccion4');
                 var error = $('.alert-danger', form);
                 var success = $('.alert-success', form);
+                form4.validate({
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+
+                        INDC_ProcesoInduccion4: {
+                            required: true,
+                            maxlength:1
+                        },
+                        INDC_Aprobacion: {
+                            required: true
+                        }
+                    },
+
+                    messages: { // custom messages for radio buttons and checkboxes
+                        INDC_ProcesoInduccion4: {
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
+                        },
+                        INDC_Aprobacion: {
+                            required: "Debe digitar una calificación"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.is(':checkbox')) {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } else if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success.hide();
+                        error.show();
+                        toastr.options.closeButton = true;
+                        toastr.options.showDuration= 1000;
+                        toastr.options.hideDuration= 1000;
+                        toastr.error('Debe corregir algunos campos','Error:')
+                        App.scrollTo(error, -200);
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    },
+                    submitHandler: function (form4 ) {
+                        success.show();
+                        error.hide();
+
+                        form4.submit();
+                    }
+                });
+                form3.validate({
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+
+                        INDC_ProcesoInduccion3: {
+                            required: true,
+                            maxlength:1
+                        }
+                    },
+
+                    messages: { // custom messages for radio buttons and checkboxes
+                        INDC_ProcesoInduccion3: {
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.is(':checkbox')) {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } else if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success.hide();
+                        error.show();
+                        toastr.options.closeButton = true;
+                        toastr.options.showDuration= 1000;
+                        toastr.options.hideDuration= 1000;
+                        toastr.error('Debe corregir algunos campos','Error:')
+                        App.scrollTo(error, -200);
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    },
+                    submitHandler: function (form3 ) {
+                        success.show();
+                        error.hide();
+                        form3.submit();
+                    }
+                });
+                form2.validate({
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+
+                        INDC_ProcesoInduccion2: {
+                            required: true,
+                            maxlength:1
+                        }
+                    },
+
+                    messages: { // custom messages for radio buttons and checkboxes
+                        INDC_ProcesoInduccion2: {
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.is(':checkbox')) {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } else if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success.hide();
+                        error.show();
+                        toastr.options.closeButton = true;
+                        toastr.options.showDuration= 1000;
+                        toastr.options.hideDuration= 1000;
+                        toastr.error('Debe corregir algunos campos','Error:')
+                        App.scrollTo(error, -200);
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    },
+                    submitHandler: function (form2 ) {
+                        success.show();
+                        error.hide();
+                        form2.submit();
+                    }
+                });
 
                 form.validate({
                     doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
@@ -222,23 +409,23 @@
                     focusInvalid: false, // do not focus the last invalid input
                     rules: {
                         //account
-                        'INDC_ProcesoInduccion1[]': {
+                        INDC_ProcesoInduccion1: {
                             required: true,
                             maxlength:1
                         },
-                        'INDC_ProcesoInduccion2[]': {
+                        INDC_ProcesoInduccion2: {
                             required: true,
                             maxlength:1
                         },
-                        'INDC_ProcesoInduccion3[]': {
+                        INDC_ProcesoInduccion3: {
                             required: true,
                             maxlength:1
                         },
-                        'INDC_ProcesoInduccion4[]': {
+                        INDC_ProcesoInduccion4: {
                             required: true,
                             maxlength:1
                         },
-                        'estado5[]': {
+                        INDC_Aprobacion: {
                             required: true,
                             maxlength:1
                         }
@@ -246,19 +433,19 @@
                     },
 
                     messages: { // custom messages for radio buttons and checkboxes
-                        'INDC_ProcesoInduccion1[]': {
+                        INDC_ProcesoInduccion1: {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'INDC_ProcesoInduccion2[]': {
+                        INDC_ProcesoInduccion2: {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'INDC_ProcesoInduccion3[]': {
+                        INDC_ProcesoInduccion3: {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
-                        'INDC_ProcesoInduccion4[]': {
+                        INDC_ProcesoInduccion4: {
                             required: "Debe seleccionar una opción",
                             maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         },
@@ -453,7 +640,7 @@
                 });
 
                 $('#form_wizard_1').find('.button-previous').hide();
-                $('#form_wizard_1 .button-submit').click(function () {
+                $('#form_wizard_1 .fin').click(function () {
                     swal("Inducción finalizada!", "Se ha cambiado el estado del docente", "success");
                 }).hide();
 

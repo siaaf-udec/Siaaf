@@ -35,6 +35,12 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
+    Route::get('/pdf', function () {
+        $data = [];
+        $pdf = PDF::loadView('welcome', $data);
+        return $pdf->download('invoice.pdf');
+    })->name('root');
+
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1
         Route::get('buttons', function ()    {
@@ -74,6 +80,18 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'forms'], function () {
+        Route::get('dropzone', function ()    {
+            return view('examples.dropzone');
+        })->name('forms.dropzone');
+
+        Route::post('dropzone/store',function (Request $request)    {
+            $files = $request->file('file');
+            foreach($files as $file){
+                $url = Storage::disk('developer')->putFile('avatars', $file);
+            }
+            return $request->get('name');
+        })->name('forms.dropzone.store');
+
         Route::get('fields', function ()    {
             return view('examples.fields');
         })->name('forms.fields');
@@ -189,6 +207,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create',[
             'uses' => $controller.'UserController@create',
             'as' => 'users.create'
+        ]);
+        Route::get('edit/{id?}',[
+            'uses' => $controller.'UserController@edit',
+            'as' => 'users.edit'
         ]);
         Route::get('data',[
             'uses' => $controller.'UserController@data',

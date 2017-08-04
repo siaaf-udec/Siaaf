@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesTable extends Migration
+class CreateModEstadosCKsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('tbl_Rol', function (Blueprint $table) {
-            $table->increments('PK_ROL_idRol');
-            $table->string('ROL_Nombre');
+        Schema::create('TBL_Estados_Parks', function (Blueprint $table) {
+            $table->integer('PK_ES_IdEstado')->unsigned()->unique()->primary();
+            $table->String('ES_Estado',90);
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_Rol');
+        Schema::dropIfExists('TBL_Estados_Parks');
     }
 }

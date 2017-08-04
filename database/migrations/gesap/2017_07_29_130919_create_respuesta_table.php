@@ -15,10 +15,10 @@ class CreateRespuestaTable extends Migration
     {
         Schema::connection('gesap')->create('tbl_respuesta', function (Blueprint $table) {
             $table->increments('PK_RPST_idMinr008');
-            $table->string('RPST_RMin',90);
-            $table->String('RPST_Requerimientos',90);
-            $table->integer('FK_TBL_Radicacion_id')->unsigned();
-            $table->foreign('FK_TBL_Radicacion_id')->references('PK_RDCN_idRadicacion')->on('TBL_Radicacion')->onDelete('cascade');
+            $table->string('RPST_RMin');
+            $table->string('RPST_Requerimientos');
+            $table->integer('FK_TBL_Observaciones_id')->unsigned();
+            $table->foreign('FK_TBL_Observaciones_id')->references('PK_BVCS_idObservacion')->on('tbl_observaciones')->onDelete('cascade');
             $table->timestamps();
         });
     }

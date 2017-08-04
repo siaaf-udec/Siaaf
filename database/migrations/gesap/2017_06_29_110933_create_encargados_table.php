@@ -17,8 +17,8 @@ class CreateEncargadosTable extends Migration
             $table->increments('PK_NPRY_idCargo');
             $table->integer('FK_TBL_Anteproyecto_id')->unsigned();
             $table->foreign('FK_TBL_Anteproyecto_id')->references('PK_NPRY_idMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
-            $table->integer('FK_TBL_Usuarios_id')->unsigned();
-            $table->foreign('FK_TBL_Usuarios_id')->references('PK_SRS_Cedula')->on('tbl_users')->onDelete('cascade');
+            $table->integer('FK_developer_user_id')->unsigned();
+            //$table->foreign('FK_TBL_Usuarios_id')->references('PK_SRS_Cedula')->on('tbl_users')->onDelete('cascade');
             //$table->string('NCRD_Usuario',90);
             $table->string('NCRD_Cargo',90);
             

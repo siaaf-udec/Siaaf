@@ -114,19 +114,17 @@ jQuery(document).ready(function () {
            {data: 'estudiante2', className:'none',searchable: true},
            {data: 'Jurado1', className:'none',searchable: true},
            {data: 'Jurado2',className:'none',searchable: true},
-           {data:"PK_NPRY_idMinr008",
+            {data:'action',className:'',searchable: false,
             name:'action',
-               title:'Acciones',
-               orderable: false,
-               searchable: false,
-               exportable: false,
-               printable: false,
-               className: '',   
-               render: function ( data, type, full, meta ) {
-                 return '<a href="/gesap/evaluar/'+data+'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';
-                }
-               
-           }
+            title:'Acciones',
+            orderable: false,
+            exportable: false,
+            printable: false,
+            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>',
+
+            
+            }
+      
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -145,7 +143,19 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
-
+table = table.DataTable();
+    table.on('click', '.edit', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+	    $.ajax({
+            type: "GET",
+            url: '',
+            dataType: "html",
+        }).done(function (data) {
+            window.location.href = '/gesap/evaluar/'+O.PK_NPRY_idMinr008;
+        });
+    });
     
 });
 </script>

@@ -1,42 +1,95 @@
+
 @extends('material.layouts.dashboard')
 
-@section('page-title', 'Lista de empleados:')
+@push('styles')
+<!-- Datatables Styles -->
+<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<!-- toastr Styles -->
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+@section('title', '| Consulta de Documentación')
+
+@section('page-title', 'Consulta de la documentación entregada por los empleados :')
 
 @section('content')
     <div class="col-md-12">
-        <div class="portlet portlet-sortable light bordered portlet-form">
-            <div class="portlet-title">
-                <div class="caption font-green">
-                    <i class=" icon-book-open font-green"></i>
-                    <span class="caption-subject bold uppercase"> Lista de Empleados Registrados</span>
-                </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
+            <div class="row">
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                        @slot('columns', [
+                            '#',
+                            'Nombres',
+                            'Apellidos',
+                            'Cédula',
+                            'Teléfono',
+                            'Email',
+                            'Rol ',
+                            'Acciones'
+                        ])
+                    @endcomponent
                 </div>
             </div>
-            <div class="portlet-body">
-                <div class="clearfix"> </div><br><br><br>
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
-                                <thead>
-                                <th>Nombre</th>
-                                <th>Correo</th>
-                                <th>Acción</th>
-                                </thead>
-                                @foreach($empleados as $empleado)
-                                    <tbody>
-                                    <td>{{$empleado->PRSN_Nombres}}</td>
-                                    <td>{{$empleado->PRSN_Correo}}</td>
-                                    <td>{!! link_to_route('talento.humano.rrhh.edit',$title='Consultar', $parameters=$empleado->PK_PRSN_Cedula,
-                                                             $atributes=  ['class' => 'btn blue']) !!}</td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
-            </div>
-        </div>
+        @endcomponent
     </div>
 @endsection
+
+@push('plugins')
+<!-- Datatables Scripts -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+@endpush
+@push('functions')
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        var table, url,columns;
+        table = $('#lista-empleados');
+        url = "{{ route('talento.humano.tablaEmpleados')}}";
+        columns = [
+            {data: 'DT_Row_Index'},
+            {data: 'PRSN_Nombres', name: 'Nombres'},
+            {data: 'PRSN_Apellidos', name: 'Apellidos'},
+            {data: 'PK_PRSN_Cedula', name: 'Cedula'},
+            {data: 'PRSN_Telefono', name: 'Teléfono'},
+            {data: 'PRSN_Correo', name: 'Correo Electronico'},
+            {data: 'PRSN_Rol', name: 'Rol'},
+            {
+                defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
+                data:'action',
+                name:'action',
+                title:'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority:2
+            }
+        ];
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+
+        table.on('click', '.documents', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.location.href='{{ route('talento.humano.historialDocumentos.documentos') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            });
+        });
+    });
+</script>
+@endpush
