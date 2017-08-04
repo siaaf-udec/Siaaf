@@ -197,6 +197,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
 
         /*
          * Custom Service Providers...
