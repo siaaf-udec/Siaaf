@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function city()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'cities_id');
     }
 
     /**
@@ -64,7 +64,7 @@ class User extends Authenticatable
      */
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'countries_id');
     }
 
     /**
@@ -72,7 +72,7 @@ class User extends Authenticatable
      */
     public function region()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class, 'regions_id');
     }
 
     /*

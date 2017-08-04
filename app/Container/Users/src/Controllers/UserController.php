@@ -89,17 +89,24 @@ class UserController extends Controller
             $users = $this->userRepository->index([]);
             return Datatables::of($users)
                 ->addColumn('roles', function ($users){
-                    if ( !empty($users->roles) ) {
+                    if ( !empty($users->roles)) {
                         foreach ($users->roles as $role) {
                             $aux[] = $role->display_name;
                         }
-                        return implode(',', $aux);
+                        if(!empty($aux)){
+                            return implode(',', $aux);
+                        }else{
+                            return 'No Definido';
+                        }
                     }
-                    return '';
                 })
                 ->addColumn('state', function ($users){
-                    if(strcmp($users->state, 'APROBADO')){
+                    if(!strcmp($users->state, 'Aprobado')){
+                        return "<span class='label label-sm label-success'>".$users->state. "</span>";
+                    }elseif (!strcmp($users->state, 'Pendiente')){
                         return "<span class='label label-sm label-warning'>".$users->state. "</span>";
+                    }else{
+                        return "<span class='label label-sm label-danger'>".$users->state. "</span>";
                     }
                 })
                 ->rawColumns(['state'])
@@ -191,9 +198,7 @@ class UserController extends Controller
 
             return view('users.content-ajax.ajax-update-user', [
                     'user' => $user,
-                    'user-roll' => $user->roles,
                     'roles' => $this->roleRepository->index([]),
-                    'image' => ''
             ]);
 
         }else{
