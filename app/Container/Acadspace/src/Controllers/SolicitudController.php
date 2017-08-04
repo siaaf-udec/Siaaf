@@ -74,16 +74,17 @@ class SolicitudController extends Controller
 
     }
 
-    public function listarSolicitud()
-    {
-        /*$solicitudes = Solicitud::all();
+    public function listarSolicitud(){
+        $solicitudes = Solicitud::all();
         $solicitudes = Solicitud::paginate(10);
-       // return view('usuario.mostrarUsuario', compact('usuarios'));
-       /* $estado=0;
-        $sol = Solicitud::where('SOL_estado',$estado)->get();*/
-        return view('acadspace.FormatosAcademicos.mostrarSolicitudes', compact('solicitudes'));
+        return view('acadspace.mostrarSolicitudes', compact('solicitudes'));
     }
 
+    public function listarSolicitudAprobada(){
+        $solicitudes = Solicitud::all();
+        $solicitudes = Solicitud::paginate(10);
+        return view('acadspace.solicitudesAprobadas', compact('solicitudes'));
+    }
     /**
      * Display the specified resource.
      *

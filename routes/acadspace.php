@@ -53,6 +53,11 @@ Route::get('/solicitudesLista', [    //ruta para listar los docentes registrados
     'uses' => $controller.'SolicitudController@listarSolicitud'
 ]);
 
+Route::get('/solicitudesAprobadas', [    //ruta para listar los docentes registrados.
+    'as' => 'espacios.academicos.solicitudesAprobadas', //Este es el alias de la ruta
+    'uses' => $controller.'SolicitudController@listarSolicitudAprobada'
+]);
+
 Route::get('/descargarArchivo/{id}', [
     'as' => 'espacios.academicos.descargarArchivo',
     'uses' => $controller.'solFormAcadController@descargar_publicacion'
