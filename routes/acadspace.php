@@ -21,7 +21,7 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
         'index' => 'espacios.academicos.espacad.index',
         'edit' => 'espacios.academicos.espacad.edit',
         'update' => 'espacios.academicos.espacad.update',
-        'destroy' => 'espacios.academicos.espacad.destroy',
+        'destroy' => 'espacios.academicos.espacad.destroy'
     ]
 ]);
 

@@ -511,9 +511,25 @@ de la plantilla
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            $('input[name="id_edit"]').val(dataTable.PK_ADMIN_Cedula);            
-            $('#modal-update-admin').modal('toggle');
-        });
+                route_edit = '{{ route('administrador.edit') }}'+ '/'+ dataTable.PK_ADMIN_Cedula;
+           
+            $.get( route_edit, function( info ) {   
+                console.log(info);
+                $('input[name="id_edit"]').val(info.data.PK_ADMIN_Cedula);
+                $('input:text[name="PK_ADMIN_Cedula_editar"]').val(info.data.PK_ADMIN_Cedula);
+                $('input:text[name="ADMIN_Nombres_editar"]').val(info.data.ADMIN_Nombres);
+                $('input:text[name="ADMIN_Apellidos_editar"]').val(info.data.ADMIN_Apellidos);
+                $('input:text[name="ADMIN_Estado_editar"]').val(info.data.ADMIN_Estado);
+                $('input:text[name="ADMIN_Direccion_editar"]').val(info.data.ADMIN_Direccion);
+                $('#ADMIN_Correo_editar').val(info.data.ADMIN_Correo);
+                $('#ADMIN_Clave_editar').val(info.data.ADMIN_Clave);
+                $('#ADMIN_RClave_editar').val(info.data.ADMIN_Clave);
+                $('#ADMIN_Telefono_editar').val(info.data.ADMIN_Telefono);
+                $('#modal-update-admin').modal('toggle');
+
+                 
+            });                 
+        }); 
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
@@ -574,6 +590,56 @@ de la plantilla
                 }
             }
         };
+        /*Editar Administrador*/
+        var updateAdmins = function () {
+            return{
+                init: function () {
+                    var id_edit = $('input[name="id_edit"]').val();
+                    var route = '{{ route('administrador.update') }}'+'/'+id_edit;
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('PK_ADMIN_Cedula', $('input:text[name="PK_ADMIN_Cedula_editar"]').val());
+                    formData.append('ADMIN_Apellidos', $('input:text[name="ADMIN_Apellidos_editar"]').val());
+                    formData.append('FK_ADMIN_Estado', $('input:text[name="FK_ADMIN_Estado_editar"]').val());
+                    formData.append('ADMIN_Nombres', $('input:text[name="ADMIN_Nombres_editar"]').val());
+                    formData.append('ADMIN_Direccion', $('input:text[name="ADMIN_Direccion_editar"]').val());
+                    formData.append('FK_ADMIN_Rol', $('input:text[name="FK_ADMIN_Rol_editar"]').val());
+                    formData.append('ADMIN_Correo', $('#ADMIN_Correo_editar').val());
+                    formData.append('ADMIN_Clave', $('#ADMIN_Clave_editar').val());
+                    formData.append('ADMIN_Telefono', $('#ADMIN_Telefono_editar').val());
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                $('#modal-update-admin').modal('hide');
+                                $('#from_admin_update')[0].reset(); //Limpia formulario
+                                $(":password").pwstrength("forceUpdate");
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
         var form_create = $('#from_admin_create');
         var rules_create = {
             PK_ADMIN_Cedula:{minlength: 5, required: true, digits: true},
@@ -589,6 +655,22 @@ de la plantilla
             
         };
         FormValidationMd.init(form_create,rules_create,false,createAdmins());
+
+        var form_update = $('#from_admin_update');
+        var rules_update = {
+            PK_ADMIN_Cedula_editar:{minlength: 5, required: true, digits: true},
+            ADMIN_Apellidos_editar:{minlength: 5, required: true},
+            FK_ADMIN_Estado_editar:{required: true},
+            ADMIN_Nombres_editar:{minlength: 5, required: true},
+            ADMIN_Direccion_editar:{minlength: 5, required: true},
+            FK_ADMIN_Rol_editar:{required: true},
+            ADMIN_Correo_editar:{email: true, required: true},
+            ADMIN_Clave_editar:{minlength: 5, required: true},
+            ADMIN_Telefono_editar:{minlength: 5, required: true, digits: true},
+            ADMIN_RClave_editar:{minlength: 5, required: true, equalTo:"#ADMIN_Clave_editar"},
+            
+        };
+        FormValidationMd.init(form_update,rules_update,false,updateAdmins());
 
         
     });
