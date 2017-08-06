@@ -57,6 +57,15 @@ Route::group(['prefix' => 'administrador'], function () {
         'uses' => $controller . 'AdministradorController@destroy',
         'as'   => 'administrador.destroy',
     ])->where(['id' => '[0-9]+']);
+
+    Route::get('edit/{id?}', [
+        'uses' => $controller . 'AdministradorController@edit',
+        'as'   => 'administrador.edit',
+    ])->where(['id' => '[0-9]+']);
+    Route::post('update/{id?}', [
+        'uses' => $controller . 'AdministradorController@update',
+        'as'   => 'administrador.update',
+    ])->where(['id' => '[0-9]+']);
 });
 // RUTAS SUPERADMIN
 Route::group(['prefix' => 'superAdmin'], function () {

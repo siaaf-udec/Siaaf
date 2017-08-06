@@ -107,7 +107,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapCarParkRoutes()
     {
         Route::prefix('parqueadero')
-            ->middleware(['web','auth'])
+            ->middleware(['web'])
             ->namespace($this->namespace)
             ->group(base_path('routes/carpark.php'));
     }
