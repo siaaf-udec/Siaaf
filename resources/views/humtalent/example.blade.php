@@ -14,7 +14,7 @@
                 <h3 class="event-form-title margin-bottom-20">Crear un evento: </h3>
                 <div id="external-events">
                     <form class="inline-form">
-                        <input type="text" value="" class="form-control" placeholder="Nombre del evento..." id="event_title" />
+                        <input autocomplete="off" value="" class="form-control" placeholder="Nombre del evento..." id="event_title" />
                         <br/>
                         <a href="javascript:;" id="event_add" class="btn green"> Añadir </a>
                     </form>
@@ -28,7 +28,7 @@
                         <div class="external-event label label-default ui-draggable ui-draggable-handle" style="position: relative;">Prueba 6</div>
 
 
-                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline" for="drop-remove"> Eliminar evento luego de arrastrarlo
+                    <br><br><label class="mt-checkbox mt-checkbox-single mt-checkbox-outline" for="drop-remove"> Eliminar evento del listado luego de arrastrarlo
                         <input type="checkbox" class="group-checkable" id="drop-remove" />
                         <span></span>
                     </label>
