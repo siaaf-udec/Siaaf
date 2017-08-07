@@ -30,7 +30,7 @@
                         {!! Field:: text('PRSN_Apellidos',null,['label'=>'Apellido(s):', 'class'=> 'form-control','id'=>'apellido','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-user'] ) !!}
 
-                        {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                        {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off', 'disabled'=>'on'],
                                                  ['icon'=>'fa fa-credit-card'] ) !!}
 
                         {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control','id'=>'email','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -57,7 +57,7 @@
                         {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensacion:', 'class'=> 'form-control','id'=>'cajaC', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-list-alt'] ) !!}
 
-                        {!! Field::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],['list', 'label'=>'Estado del empleado: Selecciona una opción']) !!}
+                        {!! Field::radios('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo', 'Retirado'=>'Retirado'],['list', 'label'=>'Estado del empleado: Selecciona una opción']) !!}
 
                 <div class="row">
                     <div class="form-group">
