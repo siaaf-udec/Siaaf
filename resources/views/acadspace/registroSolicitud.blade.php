@@ -137,7 +137,7 @@ function eliminar(elemento)
     elemento.parentNode.remove();
 
 }*/
-function copiar()
+function copiarFechasATxt()
 {
     if(fechas_Solicitadas.value==""){
         document.getElementById("fechas_Solicitadas").value=document.getElementById("articulo").value;
