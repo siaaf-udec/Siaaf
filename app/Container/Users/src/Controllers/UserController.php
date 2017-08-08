@@ -86,7 +86,12 @@ class UserController extends Controller
     public function data(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')){
-            $users = $this->userRepository->index([]);
+            /*
+             * Forma Incorrecta
+             * $users = $this->userRepository->index([]);
+             * $users = $this->userRepository->getModel()::with('roles')->get();
+             * */
+            $users = $this->userRepository->index(['roles']);
             return Datatables::of($users)
                 ->addColumn('roles', function ($users){
                     if ( !empty($users->roles)) {
