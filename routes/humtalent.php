@@ -244,5 +244,14 @@ Route::group(['prefix' => 'induccion'], function () {
     ]);
 });
 
+//rutas para el Calendario.
+Route::group(['prefix' => 'calendario'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
+    Route::get('getEvent',[
+        'as'=>'talento.humano.calendario.getEvent',
+        'uses'=>$controller.'CalendarioController@getEvent'
+    ]);
+
+});
 

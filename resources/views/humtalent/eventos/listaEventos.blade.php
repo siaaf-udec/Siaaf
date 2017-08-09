@@ -36,7 +36,8 @@
                             '#',
                             'llave',
                             'Evento',
-                            'Fecha',
+                            'Fecha Inicio',
+                            'Fecha Fin',
                             'Hora',
                             'Acciones'
                         ])
@@ -70,7 +71,8 @@
                 {data: 'DT_Row_Index'},
                 {data: 'PK_EVNT_IdEvento', "visible": false },
                 {data: 'EVNT_Descripcion', name: 'Evento'},
-                {data: 'EVNT_Fecha', name: 'Fecha'},
+                {data: 'EVNT_Fecha_Inicio', name: 'Fecha Inicio'},
+                {data: 'EVNT_Fecha_Fin', name: 'Fecha Fin'},
                 {data: 'EVNT_Hora', name: 'Hora'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>',

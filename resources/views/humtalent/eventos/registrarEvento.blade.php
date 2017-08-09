@@ -19,13 +19,21 @@
                             ['label' => 'Descripción del evento:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '4'],
                             ['help' => 'Escribe una descripción.', 'icon' => 'fa fa-quote-right']) !!}
                     {!! Field::date(
-                            'EVNT_Fecha',
-                            ['label' => 'Fecha del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                            ['help' => 'Digita la fecha de realización del evento.', 'icon' => 'fa fa-calendar']) !!}
+                            'EVNT_Fecha_Inicio',
+                            ['label' => 'Fecha de inicio del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['help' => 'Digite la fecha de inicio de la realización del evento.', 'icon' => 'fa fa-calendar']) !!}
+                    {!! Field::date(
+                            'EVNT_Fecha_Fin',
+                            ['label' => 'Fecha de finalización del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['help' => 'Digite la fecha de finalización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::text(
                             'EVNT_Hora',
                             ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "hh/mm-", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
+                    {!! Field::date(
+                            'EVNT_Fecha_Notificacion',
+                            ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['help' => 'Digite la fecha de notificación del evento .', 'icon' => 'fa fa-calendar']) !!}
 
                     <div class="form-actions">
                         <div class="row">
