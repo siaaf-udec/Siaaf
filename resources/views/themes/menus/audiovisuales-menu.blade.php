@@ -10,8 +10,8 @@
         </span>
     </a>
     <ul class="sub-menu">
-        <li class="nav-item {{ active(['audiovisuales.adminview.index'], 'start active open') }}">
-            <a class="nav-link" href="{{ route('audiovisuales.adminview.index') }}">
+        <li class="nav-item {{ active(['audiovisuales.autenticacion.index'], 'start active open') }}">
+            <a class="nav-link" href="{{ route('audiovisuales.autenticacion.index') }}">
                 <i class="fa fa-users">
                 </i>
                 <span class="title">
