@@ -6,7 +6,9 @@ use App\Container\Audiovisuals\Src\Interfaces\CarrerasInterface;
 use App\Container\Audiovisuals\Src\Interfaces\FuncionarioInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 
 class FuncionarioController extends Controller
@@ -28,10 +30,10 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        $carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
-        return view('audiovisuals.funcionario.gestionfuncionarios',
-            ['carreras' => $carreras->toArray(),
-            ]);
+        $carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
+		//$carreras = $this->carrerasRepository->create(['id'=>2,'PRO_Nombre'=>'psicologia']);
+        return view('audiovisuals.funcionario.gestionReservas', ['programas' => $carreras->toArray(),
+        ]);
     }
     /**
      * Show the form for creating a new resource.
@@ -40,8 +42,8 @@ class FuncionarioController extends Controller
      */
     public function data(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            $admins = $this->funcionarioRepository->index();
+        /*if ($request->ajax() && $request->isMethod('GET')) {
+            $admins = $this->funcionarioRepository->index([]);
             return Datatables::of($admins)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
@@ -60,7 +62,7 @@ class FuncionarioController extends Controller
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
-        }
+        }*/
     }
     /**
      * Store a newly created resource in storage.
@@ -70,8 +72,12 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
+
         if ($request->ajax() && $request->isMethod('POST')) {
-            $this->funcionarioRepository->store($request->all());
+			$user = Auth::user();
+			$user->audiovisual()->create(['USER_FK_Programa' => $request->get('USER_FK_Programa')]);
+
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Funcionario registrado correctamente.'

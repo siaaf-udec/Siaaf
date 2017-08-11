@@ -24,7 +24,7 @@
                 <i class="fa fa-users">
                 </i>
                 <span class="title">
-                    Gestion Funcionarios
+                    Gestion Reservas
                 </span>
             </a>
         </li>

@@ -16,7 +16,7 @@ class UsuarioAudiovisuales extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id', 'USER_FK_Programa'
+		'USER_FK_User', 'USER_FK_Programa'
 	];
 	/**
 	 * The attributes that should be hidden for arrays.
@@ -31,8 +31,8 @@ class UsuarioAudiovisuales extends Model
 	* morphTo() Transformarce a..
 	*/
 	//seoble, likeable, votable....
-	public function usuarioble()
+	public function user()
 	{
-		return $this->morphTo();
+		return $this->belongsTo('App\Container\Users\Src\User');
 	}
 }

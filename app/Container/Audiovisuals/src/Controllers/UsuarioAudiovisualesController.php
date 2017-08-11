@@ -3,14 +3,14 @@
 namespace App\Container\Audiovisuals\Src\Controllers;
 
 use App\Container\Audiovisuals\Src\Interfaces\UsuarioAudiovisualesInterface;
+use App\Container\Audiovisuals\src\Phone;
+use App\Container\Audiovisuals\src\Userpractice;
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Users\Src\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Yajra\Datatables\Datatables;
+
 class UsuarioAudiovisualesController extends Controller
 {
     /**
@@ -18,25 +18,40 @@ class UsuarioAudiovisualesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-	protected $usuarioAudiovisualesRepository;
-	protected $usuarioDeveloperRepository;
+    protected $usuarioAudiovisualesRepository;
+    protected $usuarioDeveloperRepository;
 
-	public function __construct(UsuarioAudiovisualesInterface $usuarioAudiovisualesRepository,
-								UserInterface $usuarioDeveloperRepository)
-	{
-		$this->usuarioAudiovisualesRepository=$usuarioAudiovisualesRepository;
-		$this->usuarioDeveloperRepository=$usuarioDeveloperRepository;
-	}
+    public function __construct(UsuarioAudiovisualesInterface $usuarioAudiovisualesRepository,
+        UserInterface $usuarioDeveloperRepository) {
+        $this->usuarioAudiovisualesRepository = $usuarioAudiovisualesRepository;
+        $this->usuarioDeveloperRepository     = $usuarioDeveloperRepository;
+    }
     public function index()
     {
-
-        //
-		$user=Auth::id();
-		$prueba=$this->usuarioDeveloperRepository->index([]);
-
+		//$phone =Userpractice::find(1)->comentarios;//()->where('nombre','319')->get();
+		//$phone =Userpractice::doesnthave('comentarios')->get();
+		//$phone =Userpractice::withCount('comentarios')->get();
+		/*$phone = Userpractice::withCount([
+			'comentarios',
+			'comentarios AS pending_comments' => function ($query) {
+				$query->where('nombre', '319');
+			}
+		])->get();*/
+		//$phone = Phone::all();
+		/*$phone = Phone::with('consultaUsuario')->get();
 		return view('audiovisuals.prueba',
-		['usuarioId' => $prueba
-		]);
+			['programas' => $phone
+			]);
+        //
+		*/
+
+        $user     = Auth::id();
+        $prueba   = $this->usuarioDeveloperRepository->index([]);
+        $carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
+        return view('audiovisuals.prueba',
+            ['usuarioId' => $prueba,
+            ]);
+
 
     }
 
@@ -59,7 +74,6 @@ class UsuarioAudiovisualesController extends Controller
     public function store(Request $request)
     {
         //
-
 
     }
 

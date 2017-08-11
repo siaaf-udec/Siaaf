@@ -14,10 +14,12 @@ class CreateUsuarioAudiovisualesTable extends Migration
     public function up()
     {
         Schema::connection('audiovisuals')->create('TBL_Usuario_Audiovisuales', function (Blueprint $table) {
-            $table->integer('id')->unsigned()->unique()->primary();
-            $table->integer('USER_FK_Programa')->unsigned()->nullable();
+			$table->increments('id');
+			$table->integer('USER_FK_User')->unsigned()->unique()->nullable();
+            $table->integer('USER_FK_Programa')->unsigned()->unique()->nullable();
 
             $table->foreign('USER_FK_Programa')->references('id')->on('TBL_Programas');
+
 
             $table->timestamps();
         });
