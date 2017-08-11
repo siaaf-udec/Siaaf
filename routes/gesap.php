@@ -87,3 +87,10 @@ Route::post('anteproyecto/concepto/', [
 
 
 
+/*ESTUDIANTE*/
+
+Route::get('Estudiante', [
+    'as' => 'anteproyecto.listStudent',
+    'uses' => $controller.'StudentController@ListStudent'
+]);
+

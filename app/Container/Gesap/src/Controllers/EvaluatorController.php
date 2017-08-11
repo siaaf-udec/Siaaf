@@ -10,9 +10,11 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 
 use App\Container\gesap\src;
 use App\Container\gesap\src\Observaciones;
+use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Encargados;
 use App\Container\gesap\src\Check_Observaciones;
 use App\Container\gesap\src\Respuesta;
+use App\Container\gesap\src\Conceptos;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
@@ -37,12 +39,7 @@ class EvaluatorController extends Controller
     }
     public function storeObservaciones(Request $request){
         try{
-            /*echo ."<br>";
-            echo ."<br>";
-            echo $request['observacion']."<br>";
-            //echo $request['Min']->getClientOriginalName();
-            //echo $request['requerimientos']->getClientOriginalName();
-            */
+            
             $jurado = Encargados::select('PK_NPRY_idCargo')
                         ->where('FK_TBL_Anteproyecto_id','=',$request['PK_anteproyecto'])
                         ->where('FK_developer_user_id','=',$request['user'])
@@ -102,11 +99,88 @@ class EvaluatorController extends Controller
         return view($this->path.'.Evaluador.Conceptos',compact('anteproyectos'));
     }
     public function storeConceptos(Request $request){
-        if($request->ajax() && $request->isMethod('POST')){
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
-            );
+         if($request->ajax() && $request->isMethod('POST')) {
+             //Busco el ID del Encargado(Usuario respecto al proyecto)
+             $jurado = Encargados::select('PK_NPRY_idCargo','NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
+                ->where('FK_developer_user_id','=',$request->user()->id)
+                ->where(function($query){
+                    $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
+                    $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
+                })
+                ->firstOrFail();
+            
+            if($jurado->NCRD_Cargo=="Jurado 1") $other="Jurado 2";
+            else $other="Jurado 1";
+             
+             $jurado2=Encargados::select('PK_NPRY_idCargo','NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
+                ->where('NCRD_Cargo','=',$other)
+                ->firstOrFail();
+             
+             
+             //Consulto si los jurados ya ha realizado un concepto anteriormente
+            $encargado=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
+                        ->where('FK_TBL_Encargado_id','=',$jurado->PK_NPRY_idCargo)
+                        ->where('CNPT_Tipo','=','Anteproyecto')
+                        ->first();
+            
+             $encargado2=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
+                        ->where('FK_TBL_Encargado_id','=',$jurado2->PK_NPRY_idCargo)
+                        ->where('CNPT_Tipo','=','Anteproyecto')
+                        ->first();
+             
+             $anteproyecto = Anteproyecto::findOrFail($request['proyecto']);
+            
+             if($encargado==null){//Averiguo si se encontro un concepto previo
+                 //si no lo hay se crea el concepto nuevo de este jurado respecto al proyecto
+                Conceptos::create([
+                    'CNPT_Concepto'=>$request['concepto'] ,
+                    'CNPT_Tipo'    =>"Anteproyecto",    
+                    'FK_TBL_Encargado_id'=>$jurado->PK_NPRY_idCargo
+                ]);
+                 if($encargado2!=null){
+                     if($request['concepto']!=$encargado2->CNPT_Concepto){
+                         $anteproyecto->NPRY_Estado="PENDIENTE";
+                        $anteproyecto->save();
+                         return AjaxResponse::success(
+                            '¡Registro exitoso!',
+                            'Los conceptos no estan deacuerdo.'
+                            ); 
+                     }
+                 }
+                 $anteproyecto->NPRY_Estado="COMPLETADO";
+                 $anteproyecto->save();
+                 return AjaxResponse::success(
+                    '¡Registro exitoso!',
+                    'El concepto fue registrado correctamente.'
+                );
+                
+             }else{
+                //Si existe ya un concepto se actualiza el mismo
+                 Conceptos::updateOrCreate(
+                    ['PK_CNPT_Conceptos'=>$encargado->PK_CNPT_Conceptos],
+                    ['CNPT_Concepto'=>$request['concepto'] ,
+                    'CNPT_Tipo'    =>"Anteproyecto",    
+                    'FK_TBL_Encargado_id'=>$jurado->PK_NPRY_idCargo]
+                );
+                 if($encargado2!=null){
+                     if($request['concepto']!=$encargado2->CNPT_Concepto){
+                         $anteproyecto->NPRY_Estado="PENDIENTE";
+                        $anteproyecto->save();
+                         return AjaxResponse::success(
+                            '¡Registro exitoso!',
+                            'Los conceptos no estan deacuerdo.'
+                            ); 
+                     }
+                 }
+                 $anteproyecto->NPRY_Estado="COMPLETADO";
+                 $anteproyecto->save();
+                return AjaxResponse::success(
+                    '¡Actualizacion exitosa!',
+                    'El concepto se ha actualizado correctamente.'
+                );
+             }
         }else{
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -182,20 +256,16 @@ class EvaluatorController extends Controller
                 ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NPRY_idCargo');
         return Datatables::of(DB::select($this->getSql($observaciones)))->addIndexColumn()->make(true);
     }
-    
-    
 
-    
-    
-    public function ListDirector(){
+    public function ListDirector(Request $request){
         $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
                 ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->join('gesap.tbl_encargados AS E',function($join){
+                ->join('gesap.tbl_encargados AS E',function($join)use($request){
                     $join->on(DB::raw('E.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
                     ->where('NCRD_Cargo','=',"Director")
-                    ->where('FK_developer_user_id','=',1);
+                    ->where('FK_developer_user_id','=',$request->user()->id);
                 })                       
                 
                 ->select('A.*','R.RDCN_Min','R.RDCN_Requerimientos',
@@ -304,19 +374,19 @@ class EvaluatorController extends Controller
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
     
-    public function ListJurado(){
+    public function ListJurado(Request $request){
        
             $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
                 ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->join('gesap.tbl_encargados AS E',function($join){
+                ->join('gesap.tbl_encargados AS E',function($join)use($request){
                     $join->on(DB::raw('E.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
                     ->where(function($query){
                       $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
                       $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
                     })
-                    ->where('FK_developer_user_id','=',1);
+                    ->where('FK_developer_user_id','=',$request->user()->id);
                 })                       
                 
                 ->select('A.*','R.RDCN_Min','R.RDCN_Requerimientos',
@@ -420,7 +490,21 @@ class EvaluatorController extends Controller
                                 ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
                             )
                         .')AS estudiante2Cedula'
-                    )
+                    ),
+                    DB::raw('('
+                        .$this->getSql(
+                            DB::table('gesap.tbl_encargados')
+                                    ->join('tbl_conceptos',function($join)use($request){
+                                        $join->on('tbl_encargados.PK_NPRY_idCargo','=','FK_TBL_Encargado_id')
+                                        ->where('CNPT_Tipo','=','Anteproyecto')
+                                        ->where('FK_developer_user_id','=',$request->user()->id)
+                                        ;
+                                    })
+                                    ->select('CNPT_Concepto')
+                            ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                            )
+                        .')AS Concepto'
+                    )    
                 );
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }

@@ -48,6 +48,7 @@
                     'Estudiante 2',
                     'Jurado 1',
                     'Jurado 2',
+                    'Concepto',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
@@ -170,6 +171,7 @@ jQuery(document).ready(function () {
            {data: 'estudiante2', className:'none',searchable: true},
            {data: 'Jurado1', className:'none',searchable: true},
            {data: 'Jurado2',className:'none',searchable: true},
+           {data: 'Concepto',"visible": false },
            {data:"PK_NPRY_idMinr008",
             name:'action',
                title:'Acciones',
@@ -207,15 +209,22 @@ jQuery(document).ready(function () {
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $('input[name="PK_anteproyecto"]').val(dataTable.PK_NPRY_idMinr008);
+            $('select[name="concepto"]').val(dataTable.Concepto);
             $('#modal-create-concept').modal('toggle');
         });
     
-            var updatePermissions = function () {
+         var updatePermissions = function () {
             return{
                 init: function () {
-                    var route = '{{ route('anteproyecto.guardar.conceptos') }}';
+                    var id_edit = $('input[name="id_edit"]').val();
+                      var route = '{{ route('anteproyecto.guardar.conceptos') }}';
                     var type = 'POST';
-   
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('concepto', $('select[name="concepto"]').val());
+                    formData.append('user', $('input[name="user"]').val());
+                    formData.append('proyecto', $('input[name="PK_anteproyecto"]').val());
 
                     $.ajax({
                         url: route,
@@ -223,9 +232,9 @@ jQuery(document).ready(function () {
                         cache: false,
                         type: type,
                         contentType: false,
-                        data: $(this).serialize(),
+                        data: formData,
                         processData: false,
-                        async: false,
+                        async: async,
                         beforeSend: function () {
 
                         },
@@ -250,7 +259,7 @@ jQuery(document).ready(function () {
     
      var form_edit = $('#from_concept_create');
         var rules_edit = {
-            concepto: {required: true},
+            concepto: {required: true}
         };
         FormValidationMd.init(form_edit,rules_edit,false,updatePermissions());
 
