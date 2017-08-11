@@ -175,11 +175,14 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
-        var name = {'name' : 'Miguel'};
+        var name = {
+            'name' : 'Miguel',
+            'apell' : 'Ortiz'
+        };
         var x = function () {
           return {
               init: function () {
-                alert(name);
+                    alert('Prueba');
               }
           };
         };

@@ -85,6 +85,8 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
 * <a href="https://www.youtube.com/channel/UC07xim4Gg8kOk3uZwMrGNeQ/playlists">YouTube - Raul Palacios</a>
 * <a href="https://laravel.com/docs/5.4">Documentación Laravel 5.4</a>
 * <a href="https://mailtrap.io/">Pruebas de Email</a>
+* <a href="https://wkhtmltopdf.org/downloads.html">Binarios Snappy</a>
+
 
 ### Documentos
 * <a href="http://es.presidencia.gov.co/dapre/DocumentosSIGEPRE/L-TI-12-denominacion-bases_de_datos.pdf">Denominacion Base de Datos</a>

@@ -42,7 +42,7 @@ class DatabaseAcadSpaceSeeder extends Seeder
         ]);
 
         PerimisosAcadSpace::create([
-            'name' => "formAcad", 'display_name' => "Formatos Academicos", 'description' => "Modulo Formatos Academicos", 'module_id' => "1",
+            'name' => "formAcad", 'display_name' => "FormatosAcademicos", 'description' => "Modulo FormatosAcademicos", 'module_id' => "1",
 
         ]);
 

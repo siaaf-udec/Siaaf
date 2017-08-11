@@ -15,6 +15,7 @@ use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 
+
 use Exception;
 class CoordinadorController extends Controller
 {
@@ -367,7 +368,7 @@ class CoordinadorController extends Controller
         $radicacion= Radicacion::findOrFail($request['PK_radicacion']);
         if(!empty($request['Min']))
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
-        if(!empty($request['Requerimientos']!=0))
+        if(!empty($request['Requerimientos']))
             $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();
         $radicacion->save();
             
@@ -380,7 +381,7 @@ class CoordinadorController extends Controller
                 $estudiante1->FK_developer_user_id=$request['estudiante1'];
                 $estudiante1->save();
             }else
-                $estudiante2->delete();
+                $estudiante1->delete();
         }else{
             if($request['estudiante1']!=0)
                 Encargados::create([
@@ -396,7 +397,7 @@ class CoordinadorController extends Controller
             $estudiante2 = Encargados::findOrFail($request['PK_estudiante2']);
             if($request['estudiante2']!=0){    
                 $estudiante2->FK_developer_user_id=$request['estudiante2'];
-                $estudiante1->save();
+                $estudiante2->save();
             }else
                 $estudiante2->delete();
         }else{

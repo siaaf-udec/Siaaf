@@ -15,7 +15,7 @@
                 <ul class="nav nav-pills nav-justified steps">
                     <li>
                         <a href="#tab0" data-toggle="tab" class="step">
-                            <span class="number">  </span>
+                            <span class="number"> # </span>
                             <span class="desc">
                                     <i class="fa fa-check"></i>  Proceso de inducción </span>
                         </a>

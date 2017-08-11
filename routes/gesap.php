@@ -34,10 +34,6 @@ Route::post('anteproyecto/docente/', [
 //});
 
 
-
-
-
-
 /*Evaluador*/
 
 Route::resource('evaluar', $controller.'EvaluatorController');
@@ -62,6 +58,13 @@ Route::get('jurado', [
     'uses' => $controller.'EvaluatorController@ListJurado'
 ]);
 
+Route::get('observaciones/{id}', [
+    'as' => 'anteproyecto.ListObservation',
+    'uses' => $controller.'EvaluatorController@ListObservation'
+]);
+
+
+
 Route::get('evaluar/observaciones/{id}', [
     'as' => 'anteproyecto.observaciones',
     'uses' => $controller.'EvaluatorController@createObsevaciones'
@@ -83,4 +86,11 @@ Route::post('anteproyecto/concepto/', [
 ]);
 
 
+
+/*ESTUDIANTE*/
+
+Route::get('Estudiante', [
+    'as' => 'anteproyecto.listStudent',
+    'uses' => $controller.'StudentController@ListStudent'
+]);
 

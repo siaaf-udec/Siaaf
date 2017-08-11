@@ -409,7 +409,7 @@ de la plantilla
 </script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        
+         
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         //DATATABLE

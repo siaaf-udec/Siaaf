@@ -1,4 +1,3 @@
-{{--
 <li class="nav-item {{ active(['gesap.*'], 'start active open') }}">
     <a class="nav-link nav-toggle" href="javascript:;">
         <i class="fa fa-cube">
@@ -10,7 +9,7 @@
         </span>
     </a>
     <ul class="sub-menu">
-        @role('Evaluator_Gesap')
+        
         @role('Coordinator_Gesap')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
                 <a href="{{ route('min.index') }}" class="nav-link nav-toggle">
@@ -43,7 +42,7 @@
                         </span>
                     </a>
                 </li>
-        @endrole
+        
         @role('Student_Gesap')
                 <li class="nav-item">
                     <a class="nav-link nav-toggle" href="javascript:;">
@@ -67,4 +66,3 @@
 
     </ul>
 </li>
---}}

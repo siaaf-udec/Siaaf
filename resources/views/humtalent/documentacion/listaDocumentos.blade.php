@@ -15,6 +15,18 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación registrada:'])
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="actions">
+                        <a class="btn btn-simple btn-success btn-icon create" href="{{ route('talento.humano.document.create') }}">
+                            <i class="fa fa-plus">
+                            </i>Nuevo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-md-12">
 

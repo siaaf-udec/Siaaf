@@ -15,7 +15,7 @@ class CreateObservacionesTable extends Migration
     {
         Schema::connection('gesap')->create('tbl_observaciones', function (Blueprint $table) {
             $table->increments('PK_BVCS_idObservacion');
-            $table->string('BVCS_Observacion');
+            $table->string('BVCS_Observacion',600);
             $table->integer('FK_TBL_Encargado_id')->unsigned();
             $table->foreign('FK_TBL_Encargado_id')->references('PK_NPRY_idCargo')->on('TBL_Encargados')->onDelete('cascade');
             $table->timestamps();

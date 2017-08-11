@@ -100,9 +100,21 @@ class AdministradorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $admin = $this->adminRepository->show($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos cargados correctamente.',
+                $admin
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -114,7 +126,30 @@ class AdministradorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $admin = [
+                'id'              => $id,
+                'PK_ADMIN_Cedula' => $request->get('PK_ADMIN_Cedula'),
+                'ADMIN_Clave'     => $request->get('ADMIN_Clave'),
+                'FK_ADMIN_Rol'    => $request->get('FK_ADMIN_Rol'),
+                'ADMIN_Nombres'   => $request->get('ADMIN_Nombres'),
+                'ADMIN_Apellidos' => $request->get('ADMIN_Apellidos'),
+                'ADMIN_Direccion' => $request->get('ADMIN_Direccion'),
+                'ADMIN_Correo'    => $request->get('ADMIN_Correo'),
+                'ADMIN_Telefono'  => $request->get('ADMIN_Telefono'),
+                'FK_ADMIN_Estado' => $request->get('FK_ADMIN_Estado'),
+            ];
+            $this->adminRepository->update($admin);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**

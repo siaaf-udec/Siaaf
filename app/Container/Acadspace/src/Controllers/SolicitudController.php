@@ -36,7 +36,7 @@ class SolicitudController extends Controller
      */
     public function create()
     {
-        return view('acadspace.registroSolicitud');
+        return view('acadspace.Solicitudes.registroSolicitud');
     }
 
     /**
@@ -47,7 +47,7 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
-        $diasSemana='';
+       /* $diasSemana='';
         foreach ($request['SOL_dias'] as $id){
             $separador = '|';
             if($diasSemana == ''){
@@ -56,9 +56,6 @@ class SolicitudController extends Controller
                 $diasSemana .= $separador.$id;
             }
         }
-
-
-
         //return "Aqui refirige";
         Solicitud::create([
  //         'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
@@ -73,20 +70,21 @@ class SolicitudController extends Controller
             'SOL_fechas'           => $request['fechas_Solicitadas'],
             'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico']
         ]);
-        return back()->with('success','Solicitud registrada correctamente');
+        return back()->with('success','Solicitud registrada correctamente');*/
 
     }
 
-    public function listarSolicitud()
-    {
+    public function listarSolicitud(){
         $solicitudes = Solicitud::all();
         $solicitudes = Solicitud::paginate(10);
-       // return view('usuario.mostrarUsuario', compact('usuarios'));
-       /* $estado=0;
-        $sol = Solicitud::where('SOL_estado',$estado)->get();*/
         return view('acadspace.mostrarSolicitudes', compact('solicitudes'));
     }
 
+    public function listarSolicitudAprobada(){
+        $solicitudes = Solicitud::all();
+        $solicitudes = Solicitud::paginate(10);
+        return view('acadspace.solicitudesAprobadas', compact('solicitudes'));
+    }
     /**
      * Display the specified resource.
      *
@@ -99,19 +97,12 @@ class SolicitudController extends Controller
        // return view('humtalent.empleado.consultaEmpleado');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
 
-            $empleado = Solicitud::find($id);
-            $empleado->SOL_estado = 1;
-            $empleado->save();
-            return back()->with('success','La solicitud fue aprobada correctamente');
+    public function edit($id){
+      /*  $empleado = Solicitud::find($id);
+        $empleado->SOL_estado = 1;
+        $empleado->save();
+        return back()->with('success','La solicitud fue aprobada correctamente');*/
 
         //return view('humtalent.empleado.editarEmpleado', compact('empleado'));
     }
@@ -125,19 +116,13 @@ class SolicitudController extends Controller
      */
     public function update($id)
     {
-        $empleado = Solicitud::find($id);
+       /* $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 2;
         $empleado->save();
-        return back()->with('success','La solicitud fue rechazada correctamente');
-        //return view('humtalent.empleado.editarEmpleado', compact('empleado'));
+        return back()->with('success','Solicitud registrada correctamente');*/
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
 

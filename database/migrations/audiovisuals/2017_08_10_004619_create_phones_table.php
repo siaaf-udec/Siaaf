@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuperAdminsTable extends Migration
+class CreatePhonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateSuperAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('super_admins', function (Blueprint $table) {
-            $table->increments('id');
+
+        Schema::connection('audiovisuals')->create('telefono', function (Blueprint $table) {
+            $table->integer('id')->unsigned()->unique()->primary();
+            $table->integer('user_id')->unsigned();
+			$table->string('nombre');
+
+			$table->foreign('user_id')->references('id')->on('usuariopractica');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateSuperAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('super_admins');
+        Schema::dropIfExists('telefono');
     }
 }

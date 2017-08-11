@@ -149,12 +149,30 @@ class DocumentController extends Controller
         StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->delete();
         return "Se ha reiniciado el proceso";
     }
+    public function consultaRadicados(Request $request, $id){
+        $radicados=StatusOfDocument::with('DocumentacionPersonas')->where('FK_TBL_Persona_Cedula',$id)->get(['EDCMT_Fecha','FK_Personal_Documento']);
+        if ($request->ajax()) {
+            return Datatables::of($radicados )
+                ->addIndexColumn()
+                ->make(true);
+        } else {
+            return response()->json([
+                'message' => 'Incorrect request',
+                'code' => 412
+            ], 412);
+        }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    }
+    public function tablaRadicados($id){
+        $empleado=Persona::where('PK_PRSN_Cedula', $id)->get(['PK_PRSN_Cedula','PRSN_Nombres','PRSN_Apellidos','PRSN_Telefono','PRSN_Correo'])->first();
+        return view('humtalent.documentacion.listaDocumentosRadicados', compact('empleado', 'id'));
+     }
+
+     /**
+      * Display a listing of the resource.
+      *
+      * @return \Illuminate\Http\Response
+      */
     public function index()//muestra todos los documentos que esten registrados
     {
         //$documentos = DocumentacionPersona::all();

@@ -54,6 +54,17 @@
                         <span class="title">Consultar</span>
                     </a>
                 </li>
+
+                @permission('docentes')
+
+                <li class="nav-item {{ active(['espacios.academicos.solicitudesAprobadas'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.solicitudesAprobadas') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Consultar</span>
+                    </a>
+                </li>
+                @endpermission
+
             </ul>
         </li>
         @endpermission

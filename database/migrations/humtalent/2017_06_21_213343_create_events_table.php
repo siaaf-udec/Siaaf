@@ -16,7 +16,9 @@ class CreateEventsTable extends Migration
         Schema::connection('humtalent')->create('TBL_Eventos', function (Blueprint $table) {
             $table->increments('PK_EVNT_IdEvento')->unsigned()->unique();
             $table->String('EVNT_Descripcion',300);
-            $table->date('EVNT_Fecha');
+            $table->date('EVNT_Fecha_Inicio');
+            $table->date('EVNT_Fecha_Fin');
+            $table->date('EVNT_Fecha_Notificacion')->nullable();
             $table->time('EVNT_Hora');
             $table->timestamps();
         });

@@ -9,7 +9,29 @@ Route::get('/', [
         return view('audiovisuals.example');
     },
 ]);
-
+Route::group(['prefix' => 'autenticacion'], function () {
+	$controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+	Route::get('index', [
+		'uses' => $controller . 'UsuarioAudiovisualesController@index',
+		'as'   => 'audiovisuales.autenticacion.index',
+	]);
+	Route::get('data', [
+		'uses' => $controller . 'AdministradorController@data',
+		'as'   => 'administrador.data',
+	]);
+	Route::get('all/{id}', [
+		'uses' => $controller . 'AdministradorController@all',
+		'as'   => 'administrador.all',
+	]);
+	Route::post('store', [
+		'uses' => $controller . 'AdministradorController@store',
+		'as'   => 'administrador.store',
+	]);
+	Route::delete('delete/{id?}', [
+		'uses' => $controller . 'AdministradorController@destroy',
+		'as'   => 'administrador.destroy',
+	])->where(['id' => '[0-9]+']);
+});
 // RUTAS FUNCIONARIO
 Route::group(['prefix' => 'funcionario'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
@@ -56,6 +78,15 @@ Route::group(['prefix' => 'administrador'], function () {
     Route::delete('delete/{id?}', [
         'uses' => $controller . 'AdministradorController@destroy',
         'as'   => 'administrador.destroy',
+    ])->where(['id' => '[0-9]+']);
+
+    Route::get('edit/{id?}', [
+        'uses' => $controller . 'AdministradorController@edit',
+        'as'   => 'administrador.edit',
+    ])->where(['id' => '[0-9]+']);
+    Route::post('update/{id?}', [
+        'uses' => $controller . 'AdministradorController@update',
+        'as'   => 'administrador.update',
     ])->where(['id' => '[0-9]+']);
 });
 // RUTAS SUPERADMIN

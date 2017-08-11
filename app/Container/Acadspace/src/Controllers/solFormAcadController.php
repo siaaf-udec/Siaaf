@@ -32,7 +32,7 @@ class solFormAcadController extends Controller
         // return view('usuario.mostrarUsuario', compact('usuarios'));
         /* $estado=0;
          $sol = solFormatAcad::where('SOL_estado',$estado)->get();*/
-        return view('acadspace.mostrarSolicitudesFormAcad', compact('solicitudes'));
+        return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad', compact('solicitudes'));
     }
 
     /**
@@ -43,7 +43,7 @@ class solFormAcadController extends Controller
     public function create()
     {
 
-        return view('acadspace.registroSolicitudFormAcad');
+        return view('acadspace.FormatosAcademicos.registroSolicitudFormAcad');
     }
 
     /**
@@ -54,27 +54,29 @@ class solFormAcadController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->ajax() && $request->isMethod('POST')){
 
-        $archivo = $request->file('path');
-        $input  = array('path' => $archivo) ;
-        $reglas = array('path' => 'required|mimes:pdf|max:50000');  //recordar que para activar mimes se debe descomentar la linea de codigo  'extension=php_fileinfo.dll' del php.ini
-        $validacion = Validator::make($input,  $reglas);
-        if ($validacion->fails())
-        {
-            return "El archivo no es un pdf o es demasiado Grande para subirlo";
-        }else {
+
             solFormatAcad::create([
-                //           'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
-                'titulo_doc' => $request['txt_nombre'],
-                'descripcion_doc' => $request['txt_descripcion'],
-                'nombre_doc' => $request['path'],
-                'id_secretaria' => 1,
-                'estado' => 0
-            ]);
+                    'titulo_doc' => $request['titulo'],
+                    'descripcion_doc' => $request['descripcion'],
+                    'nombre_doc' => $request['file'],
+                    'id_secretaria' => 3,
+                    'estado' => 0
+                ]);
 
-            //return back()->with('success','Solicitud registrada correctamente');
-            return "listo";
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Solicitud registrada correctamente.'
+                );
+
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
+
 
     }
 

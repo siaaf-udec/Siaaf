@@ -167,8 +167,10 @@ class EventoController extends Controller
         $hora=date("H:i",$hora);
         Event::create([
             'EVNT_Descripcion'  => $request['EVNT_Descripcion'],
-            'EVNT_Fecha'        => $request['EVNT_Fecha'],
-            'EVNT_Hora'         => $hora,//$request['EVNT_Hora'],
+            'EVNT_Fecha_Inicio' => $request['EVNT_Fecha_Inicio'],
+            'EVNT_Fecha_Fin' => $request['EVNT_Fecha_Fin'],
+            'EVNT_Fecha_Notificacion' => $request['EVNT_Fecha_Notificacion'],
+            'EVNT_Hora'         => $hora,
         ]);
         $notification=array(
             'message'=>'La información del evento fue almacenada',

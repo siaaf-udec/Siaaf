@@ -15,7 +15,7 @@ class Event extends Model
 
     protected $fillable = [
 
-        'EVNT_Descripcion', 'EVNT_Fecha','EVNT_Hora',
+        'EVNT_Descripcion', 'EVNT_Fecha_Inicio','EVNT_Fecha_Fin','EVNT_Fecha_Notificacion','EVNT_Hora',
     ];
 
 
