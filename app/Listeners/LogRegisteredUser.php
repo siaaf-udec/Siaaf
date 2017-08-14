@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,5 +36,16 @@ class LogRegisteredUser implements ShouldQueue
     public function handle(Registered $event)
     {
         $this->log->info("Tuiteando sobre usuario:  {$event->user->name} ");
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        $this->log->error("Error :  {$exception} ");
     }
 }

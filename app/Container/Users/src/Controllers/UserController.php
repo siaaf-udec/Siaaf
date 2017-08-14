@@ -6,6 +6,7 @@ use Yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 
 use App\Notifications\UserRegistration;
@@ -91,7 +92,9 @@ class UserController extends Controller
              * $users = $this->userRepository->index([]);
              * $users = $this->userRepository->getModel()::with('roles')->get();
              * */
-            $users = $this->userRepository->index(['roles']);
+            $users = Cache::remember('roles', 60, function () {
+                return $this->userRepository->index(['roles']);
+            });
             return Datatables::of($users)
                 ->addColumn('roles', function ($users){
                     if ( !empty($users->roles)) {
