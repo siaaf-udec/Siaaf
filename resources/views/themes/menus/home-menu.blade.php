@@ -78,6 +78,21 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{ active(['forms.*'], 'start active open') }}">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-speech"></i>
+                <span class="title">Socket</span>
+                <span class="arrow {{ active(['socket.*'], 'open') }}"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ active(['socket.client'], 'start active open') }}">
+                    <a href="{{ route('socket.client') }}" class="nav-link">
+                        <i class="icon-equalizer"></i>
+                        <span class="title">Chat</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </li>
 <li class="nav-item {{ active(['access-control.*','roles.permissions.index'], 'start active open') }}">
