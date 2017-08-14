@@ -15,8 +15,8 @@ $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 //Route::group(['prefix'=>'Coordinador','middleware'=>['role:Coordinator_Gesap']],function()use($controller){
     Route::resource('min', $controller.'CoordinadorController');
     
-    Route::get('anteproyecto', [
-        'as' => 'anteproyecto.list',
+Route::get('anteproyecto', [
+    'as' => 'anteproyecto.list',
         'uses' => $controller.'CoordinadorController@Lista'
 ]);
 
@@ -89,8 +89,12 @@ Route::post('anteproyecto/concepto/', [
 
 /*ESTUDIANTE*/
 
-Route::get('Estudiante', [
+Route::get('estudiante', [
     'as' => 'anteproyecto.listStudent',
     'uses' => $controller.'StudentController@ListStudent'
 ]);
 
+Route::get('evaluar/ver/proyecto', [
+    'as' => 'anteproyecto.index.liststudent',
+    'uses' => $controller.'StudentController@proyecto'
+]);

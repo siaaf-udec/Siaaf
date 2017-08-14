@@ -3,10 +3,16 @@
 namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\gesap\src;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
+use App\Http\Controllers\Controller;
+
+
+use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Container\gesap\src\Anteproyecto;
+use App\Container\gesap\src\Radicacion;
+use App\Container\gesap\src\Encargados;
 class StudentController extends Controller
 {
     /**
@@ -14,11 +20,27 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $path='gesap';
+    protected $connection = 'gesap';
+    
+     public function getSql($query){
+        $sql = $query->toSql();
+        foreach($query->getBindings() as $binding){
+            $value = is_numeric($binding) ? $binding : "'".$binding."'";
+            $sql = preg_replace('/\?/', $value, $sql, 1);
+        }
+        return $sql;
+    }
+    
     public function index()
     {
-        //
+        return redirect()->route('anteproyecto.index.listjurado');
     }
 
+    public function proyecto(){
+        return view($this->path.'.Estudiante.ProyectList');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -86,9 +108,8 @@ class StudentController extends Controller
     }
     
     
-     public function ListStudent(Request $request){
-       
-            $result="NO ASIGNADO";
+public function ListStudent(Request $request){
+        $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
                 ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
@@ -202,21 +223,7 @@ class StudentController extends Controller
                                 ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
                             )
                         .')AS estudiante2Cedula'
-                    ),
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                    ->join('tbl_conceptos',function($join)use($request){
-                                        $join->on('tbl_encargados.PK_NPRY_idCargo','=','FK_TBL_Encargado_id')
-                                        ->where('CNPT_Tipo','=','Anteproyecto')
-                                        ->where('FK_developer_user_id','=',$request->user()->id)
-                                        ;
-                                    })
-                                    ->select('CNPT_Concepto')
-                            ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS Concepto'
-                    )    
+                    )
                 );
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }

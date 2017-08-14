@@ -172,9 +172,25 @@ class EvaluatorController extends Controller
                             '¡Registro exitoso!',
                             'Los conceptos no estan deacuerdo.'
                             ); 
+                     }else{
+                         if($request['concepto']==1)
+                            $anteproyecto->NPRY_Estado="APROBADO";    
+                        else
+                            if($request['concepto']==2)
+                                $anteproyecto->NPRY_Estado="APLAZADO";
+                            else
+                                if($request['concepto']==3)
+                                    $anteproyecto->NPRY_Estado="RECHAZADO";
+                                else
+                                    $anteproyecto->NPRY_Estado="COMPLETADO";
+                         $anteproyecto->save();
+                         return AjaxResponse::success(
+                    '¡Actualizacion exitosa!',
+                    'El concepto se ha actualizado correctamente.'
+                );
                      }
                  }
-                 $anteproyecto->NPRY_Estado="COMPLETADO";
+                 $anteproyecto->NPRY_Estado="EN REVISION";
                  $anteproyecto->save();
                 return AjaxResponse::success(
                     '¡Actualizacion exitosa!',
@@ -200,7 +216,7 @@ class EvaluatorController extends Controller
     }
 
     public function show($id){
-        return view($this->path.'.Evaluador.ShowObservation');
+        return view($this->path.'.Evaluador.ShowObservation',compact('id'));
     }
 
     public function edit($id){
