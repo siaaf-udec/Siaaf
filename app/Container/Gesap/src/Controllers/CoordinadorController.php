@@ -381,7 +381,7 @@ class CoordinadorController extends Controller
                 $estudiante1->FK_developer_user_id=$request['estudiante1'];
                 $estudiante1->save();
             }else
-                $estudiante2->delete();
+                $estudiante1->delete();
         }else{
             if($request['estudiante1']!=0)
                 Encargados::create([
@@ -397,7 +397,7 @@ class CoordinadorController extends Controller
             $estudiante2 = Encargados::findOrFail($request['PK_estudiante2']);
             if($request['estudiante2']!=0){    
                 $estudiante2->FK_developer_user_id=$request['estudiante2'];
-                $estudiante1->save();
+                $estudiante2->save();
             }else
                 $estudiante2->delete();
         }else{

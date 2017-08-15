@@ -78,6 +78,27 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{ active(['forms.*'], 'start active open') }}">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-speech"></i>
+                <span class="title">Socket</span>
+                <span class="arrow {{ active(['socket.*'], 'open') }}"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ active(['socket.socket.index'], 'start active open') }}">
+                    <a href="{{ route('socket.socket.index') }}" class="nav-link">
+                        <i class="icon-equalizer"></i>
+                        <span class="title">Socket</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['socket.redis.index'], 'start active open') }}">
+                    <a href="{{ route('socket.redis.index') }}" class="nav-link">
+                        <i class="icon-equalizer"></i>
+                        <span class="title">Redis</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </li>
 <li class="nav-item {{ active(['access-control.*','roles.permissions.index'], 'start active open') }}">

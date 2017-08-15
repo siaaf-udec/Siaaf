@@ -9,7 +9,29 @@ Route::get('/', [
         return view('audiovisuals.example');
     },
 ]);
-
+Route::group(['prefix' => 'autenticacion'], function () {
+    $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    Route::get('index', [
+        'uses' => $controller . 'UsuarioAudiovisualesController@index',
+        'as'   => 'audiovisuales.autenticacion.index',
+    ]);
+    Route::get('data', [
+        'uses' => $controller . 'AdministradorController@data',
+        'as'   => 'administrador.data',
+    ]);
+    Route::get('all/{id}', [
+        'uses' => $controller . 'AdministradorController@all',
+        'as'   => 'administrador.all',
+    ]);
+    Route::post('store', [
+        'uses' => $controller . 'AdministradorController@store',
+        'as'   => 'administrador.store',
+    ]);
+    Route::delete('delete/{id?}', [
+        'uses' => $controller . 'AdministradorController@destroy',
+        'as'   => 'administrador.destroy',
+    ])->where(['id' => '[0-9]+']);
+});
 // RUTAS FUNCIONARIO
 Route::group(['prefix' => 'funcionario'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
@@ -21,14 +43,23 @@ Route::group(['prefix' => 'funcionario'], function () {
         'uses' => $controller . 'FuncionarioController@data',
         'as'   => 'funcionario.data',
     ]);
+    Route::get('reserva', [
+        'uses' => $controller . 'FuncionarioController@reserva',
+        'as'   => 'funcionario.reserva',
+    ]);
     Route::get('all/{id}', [
         'uses' => $controller . 'FuncionarioController@all',
         'as'   => 'funcionario.all',
+    ]);
+    Route::get('modal', [
+        'uses' => $controller . 'FuncionarioController@modal',
+        'as'   => 'funcionario.modal',
     ]);
     Route::post('store', [
         'uses' => $controller . 'FuncionarioController@store',
         'as'   => 'funcionario.store',
     ]);
+
     Route::delete('delete/{id?}', [
         'uses' => $controller . 'FuncionarioController@destroy',
         'as'   => 'funcionario.destroy',

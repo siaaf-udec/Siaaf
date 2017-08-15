@@ -13,11 +13,13 @@
 @section('page-title', 'Dashboard')
 
 @section('page-description', 'Breve descripción de la página')
-
 @section('content')
+
+    
+
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
         <div class="row">
-        
+        {!! Field::hidden('id', $id) !!}
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
             
@@ -51,8 +53,9 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-observaciones');
-    url = "{{ route('anteproyecto.ListObservation',['id' => 1]) }}";
-
+    var id = $('input[name="id"]').val();
+    url = '{{ route("anteproyecto.ListObservation",":id") }}';
+    url = url.replace(':id',id);
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],

@@ -87,4 +87,12 @@ class User extends Authenticatable implements AuditableContract
         return $this->morphMany(Image::class, 'imageble');
     }
 
+    /**
+     * Get the UsuarioAudiovisuales record associated with the user.
+     */
+    public function audiovisual()
+    {
+        return $this->hasOne('App\Container\Audiovisuals\Src\UsuarioAudiovisuales', 'USER_FK_User');
+    }
+
 }

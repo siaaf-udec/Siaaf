@@ -210,6 +210,7 @@ return [
         App\Container\Audiovisuals\Src\Providers\AdminServiceProvider::class, //Audiovisuales
         App\Container\Audiovisuals\Src\Providers\FuncionarioServiceProvider::class, //Audiovisuales
         App\Container\Audiovisuals\Src\Providers\CarrerasServiceProvider::class, //Audiovisuales
+		App\Container\Audiovisuals\Src\Providers\UsuarioAudiovisualesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -287,7 +288,7 @@ return [
         'Permissions'  => App\Container\Permissions\Src\Facades\PermissionFacades::class,
         'Roles'        => App\Container\Permissions\Src\Facades\RoleFacades::class,
         'Modules'      => App\Container\Permissions\Src\Facades\ModuleFacades::class,
-        'Users'        => App\Container\Users\Src\Facades\UserFacades::class,
+
 
         /*
          * Audiovisuales Custom Aliases...
@@ -295,6 +296,7 @@ return [
         'Admins'       => App\Container\Audiovisuals\Src\Facades\AdminFacades::class,
         'Funcionarios' => App\Container\Audiovisuals\Src\Facades\FuncionarioFacades::class,
         'Carreras'     => App\Container\Audiovisuals\Src\Facades\CarrerasFacades::class,
+		'UsuarioAudivisuals'=> App\Container\Audiovisuals\Src\Facades\UsuarioAudiovisualesFacades::class,
     ],
 
 ];

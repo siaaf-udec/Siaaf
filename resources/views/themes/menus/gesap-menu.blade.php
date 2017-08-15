@@ -27,6 +27,7 @@
                     </a>
                 </li>
         @endrole
+        @role(['Evaluator_Gesap','Coordinator_Gesap'])
         <li class="nav-item">
                     <a href="{{ route('anteproyecto.index.listdirector') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
@@ -43,9 +44,10 @@
                     </a>
                 </li>
         
+        @endrole
         @role('Student_Gesap')
                 <li class="nav-item">
-                    <a class="nav-link nav-toggle" href="javascript:;">
+                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.liststudent') }}">
                         <i class="fa fa-book">
                         </i>
                         <span class="title">
