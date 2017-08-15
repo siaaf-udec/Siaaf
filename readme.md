@@ -86,6 +86,7 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
 * <a href="https://laravel.com/docs/5.4">Documentación Laravel 5.4</a>
 * <a href="https://mailtrap.io/">Pruebas de Email</a>
 * <a href="https://wkhtmltopdf.org/downloads.html">Binarios Snappy</a>
+* <a href="https://github.com/MicrosoftArchive/redis/releases">Redis Windows</a>
 
 
 ### Documentos

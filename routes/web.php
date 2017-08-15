@@ -45,6 +45,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('client', function () {
             return view('examples.socket-client');
         })->name('socket.client');
+        Route::get('test-event', function () {
+            event(new \App\Events\TestEvent());
+        })->name('socket.test-event');
     });
 
     Route::group(['prefix' => 'components'], function () {
