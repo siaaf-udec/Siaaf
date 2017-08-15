@@ -85,7 +85,7 @@
 --}}
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Socket'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Redis'])
 
             @slot('actions', [
 
@@ -106,24 +106,35 @@
             <div class="clearfix"> </div><br><br><br>
             <div class="row">
                 <div class="col-md-12">
-                    {!! Form::open(['id' => 'form_socket', 'class' => '', 'url' => '']) !!}
-                        {!! Field::text(
-                           'name',
-                           ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                           ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ Form::submit('Enviar', ['class' => 'btn green']) }}
-                                    {{ Form::button('Cancelar', ['class' => 'btn red']) }}
-                                    {{ Form::reset('Reset', ['class' => 'btn yellow-gold']) }}
-                                </div>
+                    {!! Form::open(['id' => 'form_redis', 'class' => '', 'url' => route('socket.redis.store')]) !!}
+                    {!! Field::text(
+                       'author',
+                       ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                       ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}
+                    {!! Field::textarea(
+                       'content',
+                       ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                       ['help' => 'Texto de ayuda']) !!}
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ Form::submit('Enviar', ['class' => 'btn green']) }}
+                                {{ Form::button('Cancelar', ['class' => 'btn red']) }}
+                                {{ Form::reset('Reset', ['class' => 'btn yellow-gold']) }}
                             </div>
                         </div>
+                    </div>
                     {!! Form::close() !!}
                 </div>
                 <div class="col-md-12">
-                    <ul class='chat'></ul>
+                    <ul class='chat'>
+                        @foreach($messages as $message)
+                            <li>
+                                <b>{{ $message->author }}</b>
+                                <p>{{ $message->contect }}</p>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         @endcomponent
@@ -184,7 +195,7 @@
         });*/
 
         //N2
-        $('#form_socket').on('submit', function (e) {
+        /*$('#form_socket').on('submit', function (e) {
             e.preventDefault();
             var name = $('input:text[name="name"]').val(),
                 msg = {message : name};
@@ -205,7 +216,7 @@
             $('.chat').append(
                 $('<li/>').text(data.message)
             );
-        };
+        };*/
     });
 
 </script>

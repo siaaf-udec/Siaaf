@@ -42,12 +42,20 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('root');
 
     Route::group(['prefix' => 'socket'], function () {
-        Route::get('client', function () {
+        Route::get('socket/index', function () {
             return view('examples.socket-client');
-        })->name('socket.client');
+        })->name('socket.socket.index');
         Route::get('test-event', function () {
             event(new \App\Events\TestEvent());
         })->name('socket.test-event');
+        Route::get('redis/index', function () {
+            $messages = \App\Container\Users\Src\Message::all();
+            return view('examples.redis-client', ['messages' => $messages]);
+        })->name('socket.redis.index');
+        Route::post('redis/store', function () {
+            $messages = \App\Container\Users\Src\Message::all();
+            return view('examples.redis-client', ['messages' => $messages]);
+        })->name('socket.redis.store');
     });
 
     Route::group(['prefix' => 'components'], function () {

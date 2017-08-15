@@ -37,3 +37,5 @@ redis.on('pmessage', function (pattern, channel, message) {
 });*/
 
 //php artisan serve --host=127.0.0.1 --port=6379
+//node resources/assets/socket/server.js
+
