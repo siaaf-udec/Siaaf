@@ -3,7 +3,6 @@
 namespace App\Container\Audiovisuals\Src\Controllers;
 
 use App\Container\Audiovisuals\Src\Interfaces\UsuarioAudiovisualesInterface;
-use App\Container\Audiovisuals\src\Phone;
 use App\Container\Audiovisuals\src\Userpractice;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Http\Controllers\Controller;
@@ -28,30 +27,39 @@ class UsuarioAudiovisualesController extends Controller
     }
     public function index()
     {
-		//$phone =Userpractice::find(1)->comentarios;//()->where('nombre','319')->get();
-		//$phone =Userpractice::doesnthave('comentarios')->get();
-		//$phone =Userpractice::withCount('comentarios')->get();
-		/*$phone = Userpractice::withCount([
-			'comentarios',
-			'comentarios AS pending_comments' => function ($query) {
-				$query->where('nombre', '319');
-			}
-		])->get();*/
-		//$phone = Phone::all();
-		/*$phone = Phone::with('consultaUsuario')->get();
-		return view('audiovisuals.prueba',
-			['programas' => $phone
-			]);
-        //
-		*/
-
-        $user     = Auth::id();
-        $prueba   = $this->usuarioDeveloperRepository->index([]);
-        $carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
+        $user = Auth::user();
+        $userid=$user->id;
+        /*$phone = Userpractice::find(2); //()->where('nombre','319')->get();
+        if($phone==null){
+            $phone=2;
+        }else{
+            $phone=1;
+        }*/
+        //$phone =Userpractice::doesnthave('comentarios')->get();
+        //$phone =Userpractice::withCount('comentarios')->get();
+        /*$phone = User::withCount([
+        'audiovisual',
+        'audiovisuals AS pending_comments' => function ($query) {
+        $query->where('nombre', '319');
+        }
+        ])->get();
+         */
+        //$phone = Phone::all();
+        //$phone = Phone::with('consultaUsuario')->get();
+        //$phone = User::find(1)->audiovisuals;
         return view('audiovisuals.prueba',
-            ['usuarioId' => $prueba,
+            ['programas' =>$userid,
             ]);
+        //
 
+/*
+$user     = Auth::id();
+$prueba   = $this->usuarioDeveloperRepository->index([]);
+$carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
+return view('audiovisuals.prueba',
+['usuarioId' => $prueba,
+]);
+ */
 
     }
 

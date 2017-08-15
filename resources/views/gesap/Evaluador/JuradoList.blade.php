@@ -217,7 +217,7 @@ jQuery(document).ready(function () {
             return{
                 init: function () {
                     var id_edit = $('input[name="id_edit"]').val();
-                      var route = '{{ route('anteproyecto.guardar.conceptos') }}';
+                    var route = '{{ route('anteproyecto.guardar.conceptos') }}';
                     var type = 'POST';
                     var async = async || false;
 

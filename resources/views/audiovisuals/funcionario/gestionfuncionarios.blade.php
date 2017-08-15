@@ -474,6 +474,7 @@ de la plantilla
 
 
         });
+        
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');

@@ -158,5 +158,5 @@ table = table.DataTable();
     });
     
 });
-</script>
+</script>5
 @endpush

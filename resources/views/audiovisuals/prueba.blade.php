@@ -6,20 +6,19 @@
  * Time: 5:35 PM
  */
 
-foreach ($programas as $usuario):
-    /*echo $programas[0]->comentarios_count;
+//foreach ($programas as $usuario):
+    /*echo $programas[0]->
+comentarios_count;
     echo $programas[0]->pending_comments_count;
     echo $programas[1]->comentarios_count;
     echo $programas[1]->pending_comments_count;*/
-    echo $usuario->consultaUsuario->nombre;
+    //echo $usuario->consultaUsuario->nombre;
+    echo $programas;
 ?>
-
-
-
 <br>
-<?php
+    <?php
 
 
-endforeach;
+//endforeach;
 ?>
-
+</br>

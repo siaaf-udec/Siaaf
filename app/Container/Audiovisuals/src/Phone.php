@@ -13,6 +13,6 @@ class Phone extends Model
 	protected $fillable   = ['user_id', 'nombre'];
 
 	public function consultaUsuario(){
-		return $this->belongsTo(Userpractice::class,'user_id','id');
+		return $this->belongsTo(Userpractice::class,'user_id','id')->withDefault();
 	}
 }
