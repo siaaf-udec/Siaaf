@@ -172,7 +172,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Calendario</span>
                 <span class="arrow"></span>

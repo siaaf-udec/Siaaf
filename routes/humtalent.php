@@ -247,10 +247,41 @@ Route::group(['prefix' => 'induccion'], function () {
 //rutas para el Calendario.
 Route::group(['prefix' => 'calendario'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-
+    Route::get('index',[
+        'uses' => $controller.'CalendarioController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
+        'as' => 'talento.humano.calendario.index'
+    ]);
     Route::get('getEvent',[
         'as'=>'talento.humano.calendario.getEvent',
         'uses'=>$controller.'CalendarioController@getEvent'
+    ]);
+    Route::post('storeNotification', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.storeNotification',
+        'uses' => $controller . 'CalendarioController@store'
+    ]);
+    Route::post('storeDateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.storeDateNotification',
+        'uses' => $controller . 'CalendarioController@storeDate'
+    ]);
+    Route::post('updateDateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.updateDateNotification',
+        'uses' => $controller . 'CalendarioController@updateDateNotification'
+    ]);
+    Route::post('updateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.updateNotification',
+        'uses' => $controller . 'CalendarioController@updateNotification'
+    ]);
+    Route::post('updateEvent', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.updateEvent',
+        'uses' => $controller . 'CalendarioController@updateEvent'
+    ]);
+    Route::post('storeDateEvent', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.storeDateEvent',
+        'uses' => $controller . 'CalendarioController@storeDateEvent'
+    ]);
+    Route::post('deleteNotification', [   //ruta para registrar el proceso de inducción para un empleado
+        'as' => 'talento.humano.calendario.deleteNotification',
+        'uses' => $controller . 'CalendarioController@deleteNotification'
     ]);
 
 });
