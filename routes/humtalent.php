@@ -19,10 +19,7 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
-<<<<<<< Updated upstream
-=======
-Route::resource('rrhh', $controller.'FuncionarioController'); //Ruta para CRUD de funcionarios.
->>>>>>> Stashed changes
+//Route::resource('rrhh', $controller.'FuncionarioController'); //Ruta para CRUD de funcionarios.
 
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
