@@ -2,13 +2,14 @@
 
 namespace App\Container\Users\Src\Controllers;
 
-use App\Notifications\HeaderSiaaf;
 use Yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
+
+use App\Notifications\UserRegistration;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
@@ -178,7 +179,7 @@ class UserController extends Controller
                 'description' => '¡Bienvenidos a Siaaf!',
                 'image' => 'assets/layouts/layout2/img/avatar3.jpg'
             ];
-            $user->notify(new HeaderSiaaf($data));
+            $user->notify(new UserRegistration($data));
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

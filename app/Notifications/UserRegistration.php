@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class HeaderSiaaf extends Notification
+class UserRegistration extends Notification
 {
     use Queueable;
 

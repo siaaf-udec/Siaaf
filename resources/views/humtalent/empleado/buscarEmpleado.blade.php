@@ -38,13 +38,9 @@
     @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
-        case 'info':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}",'Radicación:');
-            break;
         case 'success':
             toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}",'Radicación:');
+            toastr.success("{{Session::get('message')}}",'Radicación exitosa:');
             break;
     }
     @endif

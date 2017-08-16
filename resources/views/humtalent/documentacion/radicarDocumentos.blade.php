@@ -8,7 +8,7 @@
 @endpush
 @section('content')
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
-            <div class="form-wizard">
+                    <div class="form-wizard">
                         <div class="form-body">
                             <ul class="nav nav-pills nav-justified steps">
                                 <li>
@@ -44,7 +44,7 @@
                             <div id="bar" class="progress progress-striped" role="progressbar">
                                 <div class="progress-bar progress-bar-success"> </div>
                             </div>
-                                <div class="row">
+                                <div class="form-group">
                                     <div class="col-md-offset-1 col-md-10">
                                         <br><br>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
@@ -66,68 +66,50 @@
                                             @endforeach
                                         </table>
                                         <br>
-                                    {!! Form::open (['id'=>'form-radicar','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
+                                    {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
                                         {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
 
-                                        {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento: ']) !!}
+                                        {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento']) !!}
                                         <div class="row">
-                                            <div class="col-md-7 col-md-offset-0    ">
+                                            <div class="col-md-9 col-md-offset-0    ">
                                                 {!! Field::date('EDCMT_Fecha',
                                                    ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                                    ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                             </div>
 
                                         </div>
-
+                                        <br>
                                     </div>
                                 </div>
-
+                                <div class="form-actions">
                                     <div class="row">
-                                        <div class="col-md-offset-1 col-md-10">
+                                        <div class="col-md-offset-3 col-md-9">
                                                 {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
                                         </div>
                                     </div>
-
+                                </div>
                         </div>
                                     {!! Form::close() !!}
 
                         @if($cantidadDocumentos == $cantidadRadicados)
-                            <div class="col-md-offset-1 col-md-10">
-                            <hr>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <div class="col-md-7 col-md-offset-0"><br>
-                            {!! Form::open (['id'=>'form-radicar2','method'=>'POST', 'route'=> ['talento.humano.afiliarEmpleado']]) !!}
-
+                            {!! Form::open (['id'=>'form-radicar','class'=>'form-horizontal','method'=>'POST', 'route'=> ['talento.humano.afiliarEmpleado']]) !!}
                                  {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
                                  {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado') !!}
                                  {!! Field::date('EDCMT_Fecha',
                                    ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                    ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                 {!! Form::submit('Empleado Afiliado',['class'=>'btn blue','btn-icon remove']) !!}
-                                    </div>
-                                </div>
-                            </div>
                             {!! Form::close() !!}
-                            <hr class="visible-xs" />
                         @endif
 
                         @if($estado == 'Afiliado')
-                            <div class="col-md-offset-1 col-md-10">
-                                <hr>
-                                <hr class="visible-xs" />
-                            </div>
-                            <div class="row">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <div class="col-md-7 col-md-offset-0">
-                                        {!! link_to_route('talento.humano.reiniciarRadicacion','Reiniciar Proceso',
-                                                        $empleado->PK_PRSN_Cedula,['class'=>'btn red','btn-icon remove'] ) !!}
-                                    </div>
-                                </div>
-                            </div>
+                            {!! link_to_route('talento.humano.reiniciarRadicacion','Reiniciar Proceso',
+                                            $empleado->PK_PRSN_Cedula,['class'=>'btn red','btn-icon remove'] ) !!}
                         @endif
+
+
+
+
                         {!! Field::hidden('cantDocumentos',$cantidadDocumentos,['id'=>'cantDocs']) !!}
                         {!! Field::hidden('cantRadicados',$cantidadRadicados,['id'=>'cantRad']) !!}
                         {!! Field::hidden('estado',$estado,['id'=>'estado']) !!}
@@ -148,7 +130,6 @@
 @endpush
 @push('functions')
 <script>
-
     var ComponentsDateTimePickers = function () {
         var handleDatePickers = function () {
             if (jQuery().datepicker) {
@@ -208,85 +189,47 @@
                 });
 
                 var form = $('#form-radicar');
-                var form2 = $('#form-radicar2');
                 var error = $('.alert-danger', form);
                 var success = $('.alert-success', form);
-                form2.validate({
-                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
-                    errorElement: 'span', //default input error message container
-                    errorClass: 'help-block help-block-error', // default input error message class
-                    focusInvalid: false, // do not focus the last invalid input
-                    rules: {
-                        EDCMT_Fecha: {
-                            required: true,
-                        },
-                    },
-                    messages: { // custom messages for radio buttons and checkboxes
-                        EDCMT_Fecha: {
-                            required: "Debe seleccionar una fecha",
-                        },
-                    },
-                    errorPlacement: function(error, element) {
-                        if (element.is(':checkbox')) {
-                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                        } else if (element.is(':radio')) {
-                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                        } else {
-                            error.insertAfter(element); // for other inputs, just perform default behavior
-                        }
-                    },
 
-                    invalidHandler: function (event, validator) { //display error alert on form submit
-                        success.hide();
-                        error.show();
-                        toastr.options.closeButton = true;
-                        toastr.options.showDuration= 1000;
-                        toastr.options.hideDuration= 1000;
-                        toastr.error('Debe corregir algunos campos','Error:')
-                        App.scrollTo(error, -200);
-                    },
-
-                    highlight: function (element) { // hightlight error inputs
-                        $(element)
-                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
-                    },
-
-                    unhighlight: function (element) { // revert the change done by hightlight
-                        $(element)
-                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                    },
-
-                    success: function () {
-                        toastr.options.closeButton = true;
-                        toastr.success('Empleado afiliado correctamente','Radicación:')
-
-                    },
-
-                    submitHandler: function (form2) {
-                        success.show();
-                        error.hide();
-                        form2.submit();
-                        //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
-                    },
-
-
-
-                });
                 form.validate({
                     doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                     errorElement: 'span', //default input error message container
                     errorClass: 'help-block help-block-error', // default input error message class
                     focusInvalid: false, // do not focus the last invalid input
                     rules: {
+                        //account
+                        'estado1[]': {
+                            required: true,
+                            maxlength:1
+                        },
                         EDCMT_Fecha: {
                             required: true,
+
                         },
+                        'estado3[]': {
+                            required: true,
+                            maxlength:1
+                        }
+
                     },
+
                     messages: { // custom messages for radio buttons and checkboxes
+                        'estado1[]': {
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
+                        },
                         EDCMT_Fecha: {
                             required: "Debe seleccionar una fecha",
+
+                        },
+                        'estado3[]': {
+                            required: "Debe seleccionar una opción",
+                            maxlength: jQuery.validator.format("Solo puede seleccionar una opción")
                         }
+
                     },
+
                     errorPlacement: function(error, element) {
                         if (element.is(':checkbox')) {
                             error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
@@ -296,6 +239,7 @@
                             error.insertAfter(element); // for other inputs, just perform default behavior
                         }
                     },
+
                     invalidHandler: function (event, validator) { //display error alert on form submit
                         success.hide();
                         error.show();
@@ -305,26 +249,36 @@
                         toastr.error('Debe corregir algunos campos','Error:')
                         App.scrollTo(error, -200);
                     },
+
                     highlight: function (element) { // hightlight error inputs
                         $(element)
                             .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
                     },
+
                     unhighlight: function (element) { // revert the change done by hightlight
                         $(element)
                             .closest('.form-group').removeClass('has-error'); // set error class to the control group
                     },
 
-                    success: function () {
-                        toastr.options.closeButton = true;
-                        toastr.success('Cambios almacenados correctamente','Radicación:')
-
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
                     },
+
                     submitHandler: function (form) {
                         success.show();
                         error.hide();
                         form.submit();
                         //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
-                    },
+                    }
+
                 });
 
                 var displayConfirm = function() {
@@ -477,14 +431,11 @@
     }();
 
     jQuery(document).ready(function() {
-
-
-        $('.caption-subject').append( "<span class='step-title'>  </span>" );
+        $('.caption-subject').append( "<span class='step-title'> Paso 1 de 4 </span>" );
         $('.portlet-sortable').attr("id","form_wizard_1");
         FormWizard.init();
         ComponentsSelect2.init();
         ComponentsDateTimePickers.init();
-
     });
 
 

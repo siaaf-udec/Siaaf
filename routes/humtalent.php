@@ -122,8 +122,7 @@ Route::group(['prefix' => 'document'], function () {
     ]);
     Route::post('radicarDocumentos', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.radicarDocumentos', //Este es el alias de la ruta
-        'uses' => $controller.'DocumentController@radicarDocumentos',
-
+        'uses' => $controller.'DocumentController@radicarDocumentos'
     ]);
     Route::post('afiliarEmpleado', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.afiliarEmpleado', //Este es el alias de la ruta
