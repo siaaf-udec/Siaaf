@@ -101,19 +101,24 @@ Route::group(['prefix' => 'administrador'], function () {
 // RUTAS SUPERADMIN
 Route::group(['prefix' => 'superAdmin'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
-    Route::get('index', [
-        'uses' => $controller . 'SuperAdminController@index',
-        'as'   => 'audiovisuales.superAdmin.index',
-    ]);
-});
-// RUTAS ARTICULO
-Route::group(['prefix' => 'articulo'], function () {
-    $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    //GESTION ARTICULO
     Route::get('index', [
         'uses' => $controller . 'ArticuloController@index',
         'as'   => 'audiovisuales.articulo.index',
     ]);
+    Route::post('store', [
+        'uses' => $controller . 'ArticuloController@store',
+        'as'   => 'tipoArticulos.store',
+    ]);
+
+    Route::post('articles/check_unique', [
+        'uses' => $controller . 'ArticuloController@ajaxUnique',
+        'as'   => 'tipoArticulo.validar',
+
+    ]);
+
 });
+
 //RUTAS FUNCIONES ADMINISTRADPR
 Route::group(['prefix' => 'adminView'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";

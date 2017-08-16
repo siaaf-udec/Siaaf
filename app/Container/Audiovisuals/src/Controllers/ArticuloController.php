@@ -2,6 +2,11 @@
 
 namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Container\Audiovisuals\src\Estado;
+use App\Container\Audiovisuals\src\Kit;
+use App\Container\Audiovisuals\Src\TipoArticulo;
+use App\Container\Overall\Src\Facades\AjaxResponse;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +19,17 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        return view('audiovisuals.articulo.gestionArticulos');
+        $tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
+        $kit    = Kit::all()->pluck('KIT_Nombre', 'id');
+        $estado = Estado::all()->pluck('EST_Descripcion', 'id');
+        return view('audiovisuals.articulo.gestionArticulos',
+            [
+                'programas' => $tipo->toArray(),
+                'kit'       => $kit->toArray(),
+                'estado'       => $estado->toArray(),
+            ]
+        );
+
     }
 
     /**
@@ -35,7 +50,22 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            TipoArticulo::create([
+                'TPART_Nombre' => $request['TPART_Nombre'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Tipo de Articulo registrado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -47,6 +77,27 @@ class ArticuloController extends Controller
     public function show($id)
     {
         //
+
+    }
+    // public function validar(Request $id)
+    // {
+    //     $validar = TipoArticulo::where('TPART_Nombre', 'control')->get();
+    //     if ($validar == null) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    //     //$sql = TipoArticulo::select('id')->where('TPART_Nombre', '=', $req->CrearNombre)->get();
+
+    // }
+    public function ajaxUnique(Request $request)
+    {
+
+        if (TipoArticulo::where('TPART_Nombre', $request->get('TPART_Nombre'))->exists()) {
+            return \Response::json(false);
+        } else {
+            return \Response::json(true);
+        }
     }
 
     /**

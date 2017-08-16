@@ -15,18 +15,18 @@ class CreateArticulosTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Articulos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('FK_Tipo_id')->unsigned()->nullable();
-            $table->String('descripcion');
-            $table->integer('FK_kit_id')->unsigned()->nullable();
-            $table->integer('FK_estado_id')->unsigned()->nullable();
+            $table->integer('FK_ART_Tipo_id')->unsigned()->nullable();
+            $table->String('ART_Descripcion');
+            $table->integer('FK_ART_Kit_id')->unsigned()->nullable();
+            $table->integer('FK_ART_Estado_id')->unsigned()->nullable();
 
             $table->timestamps();
 
-            $table->foreign('FK_Tipo_id')->references('id')->on('TBL_Tipo_articulos');
+            $table->foreign('FK_ART_Tipo_id')->references('id')->on('TBL_Tipo_articulos');
 
-            $table->foreign('FK_kit_id')->references('id')->on('TBL_Kits');
+            $table->foreign('FK_ART_Kit_id')->references('id')->on('TBL_Kits');
 
-            $table->foreign('FK_estado_id')->references('id')->on('TBL_Estados');
+            $table->foreign('FK_ART_Estado_id')->references('id')->on('TBL_Estados');
 
         });
     }
