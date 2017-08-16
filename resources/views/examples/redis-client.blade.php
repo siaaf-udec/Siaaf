@@ -113,7 +113,7 @@
                        ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}
                     {!! Field::textarea(
                        'content',
-                       ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                       ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'style' => 'height:50px', 'required', 'auto' => 'off'],
                        ['help' => 'Texto de ayuda']) !!}
                     <div class="form-actions">
                         <div class="row">
@@ -131,7 +131,7 @@
                         @foreach($messages as $message)
                             <li>
                                 <b>{{ $message->author }}</b>
-                                <p>{{ $message->contect }}</p>
+                                <p>{{ $message->content }}</p>
                             </li>
                         @endforeach
                     </ul>
@@ -185,38 +185,33 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
-        var socket = io(':6001');
+        var socket = io(':6001'),
+            channel = 'private-chat:message';
 
-        // N1
-        /*socket.on('message', function (data) {
-            console.log('Form server: ', data);
-        }).on('server-info',function(data){
-            console.info('Server: ', data);
-        });*/
-
-        //N2
-        /*$('#form_socket').on('submit', function (e) {
-            e.preventDefault();
-            var name = $('input:text[name="name"]').val(),
-                msg = {message : name};
-
-            socket.send(msg);
-            appendMessage(msg);
-            $('#form_socket')[0].reset();
-
-            return false;
+        socket.on('connect', function (error) {
+            socket.emit('sub', channel)
         });
 
-        socket.on('message', function (data) {
-            console.log(data);
-            appendMessage(data);
+        socket.on('message', function (message) {
+            console.info(message)
+        });
+
+        socket.on('error', function (error) {
+            console.warn('Error', error)
+        });
+
+        socket.on(channel, function (data) {
+           appendMessage(data);
         });
 
         var appendMessage = function (data) {
             $('.chat').append(
-                $('<li/>').text(data.message)
+                $('<li>').append(
+                    $('<b>').text(data.author),
+                    $('<p>').text(data.content),
+                )
             );
-        };*/
+        };
     });
 
 </script>
