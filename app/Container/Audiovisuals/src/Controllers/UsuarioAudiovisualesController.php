@@ -5,6 +5,7 @@ namespace App\Container\Audiovisuals\Src\Controllers;
 use App\Container\Audiovisuals\Src\Interfaces\UsuarioAudiovisualesInterface;
 use App\Container\Audiovisuals\src\Userpractice;
 use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Container\Users\Src\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ class UsuarioAudiovisualesController extends Controller
     }
     public function index()
     {
+<<<<<<< Updated upstream
         $user = Auth::user();
         $userid=$user->id;
         /*$phone = Userpractice::find(2); //()->where('nombre','319')->get();
@@ -47,9 +49,32 @@ class UsuarioAudiovisualesController extends Controller
         //$phone = Phone::all();
         //$phone = Phone::with('consultaUsuario')->get();
         //$phone = User::find(1)->audiovisuals;
+=======
+		//$phone =Userpractice::find(1)->comentarios;//()->where('nombre','319')->get();
+		//$phone =Userpractice::doesnthave('comentarios')->get();
+		//$phone =Userpractice::withCount('comentarios')->get();
+		/*$phone = User::withCount([
+			'comentarios',
+			'comentarios AS pending_comments' => function ($query) {
+				$query->where('nombre', '319');
+			}
+		])->get();*/
+		//$phone = Phone::all();
+		$phone = Phone::with('consultaUsuario')->get();
+		return view('audiovisuals.prueba',
+			['programas' => $phone
+			]);
+        //
+
+/*
+        $user     = Auth::id();
+        $prueba   = $this->usuarioDeveloperRepository->index([]);
+        $carreras = $this->carrerasRepository->index([])->pluck('Nombre', 'id');
+>>>>>>> Stashed changes
         return view('audiovisuals.prueba',
             ['programas' =>$userid,
             ]);
+<<<<<<< Updated upstream
         //
 
 /*
@@ -60,6 +85,9 @@ return view('audiovisuals.prueba',
 ['usuarioId' => $prueba,
 ]);
  */
+=======
+*/
+>>>>>>> Stashed changes
 
     }
 

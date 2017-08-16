@@ -12,8 +12,12 @@ comentarios_count;
     echo $programas[0]->pending_comments_count;
     echo $programas[1]->comentarios_count;
     echo $programas[1]->pending_comments_count;*/
+<<<<<<< Updated upstream
     //echo $usuario->consultaUsuario->nombre;
     echo $programas;
+=======
+    echo $usuario->nombre;
+>>>>>>> Stashed changes
 ?>
 <br>
     <?php
