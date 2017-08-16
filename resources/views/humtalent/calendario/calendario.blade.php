@@ -189,14 +189,7 @@
         }
          @endif
 
-        var currentMousePos = {
-                x: -1,
-                y: -1
-        };
-        jQuery(document).on("mousemove", function (event) {
-            currentMousePos.x = event.pageX;
-            currentMousePos.y = event.pageY;
-        });
+
 
         var initDrag = function(el) {
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
@@ -233,17 +226,8 @@
             addEvent(title);
         });
 
-        $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
-            header:{
-                left:'prev,next today',
-                center:'title',
-                right:'month,basicWeek,basicDay'
-            },
-            lang:'es',
-            editable: true,
-            droppable: true,
-            eventLimit:true,
+
             events: function(start, end, timezone, callback) {
                 var route = "{{ route('talento.humano.calendario.getEvent')}}";
                 $.ajax({
@@ -267,10 +251,11 @@
             eventReceive: function(event){
                 var title = event.title;
                 var start = event.start.format("YYYY-MM-DD");
+                var end   = event.start.format("YYYY-MM-DD");
                 var route = "{{ route('talento.humano.calendario.storeNotification')}}";
                 $.ajax({
                     url: route,
-                    data: 'type=new&title='+title+'&startdate='+start,
+                    data: 'type=new&title='+title+'&startdate='+start+'&endDate='+end,
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
@@ -306,8 +291,8 @@
             },
             eventDrop: function(event, delta, revertFunc) {
                 var title = event.title;
-                var start = event.start.format("YYYY-MM-DD");
-                var end   = event.end.format("YYYY-MM-DD");
+                var start = event.start.format();
+                var end = (event.end == null) ? start : event.end.format();
                 var id    = event.id;
                 var eventType  =  event.type;
                 var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";
@@ -348,9 +333,9 @@
                     $('#modal-update-titleEvent').modal('toggle');
                 }
             },
-           /* eventRender: function(event,element, jsEvent, ui, view) {
+            eventRender: function(event,element, jsEvent, ui, view) {
                  var el = element.html();
-                 element.html(el+'<div style="text-align:right;" class="closeE"><a href="javascript:;" ><i style="color: #f9fffd;" class="icon-trash"></i></a></div>');
+                 element.html(el+'<div style="text-align:right;" class="closeE"><i style="color: #f9fffd;" class="icon-trash"></i></div>');
                  element.find('.closeE').click(function (e){
                      e.preventDefault();
                 //if (isElemOverDiv()){
@@ -378,8 +363,16 @@
                     });
                // }
                 });
-
-            },*/
+            },
+            header:{
+                left:'prev,next today',
+                center:'title',
+                right:'month,basicWeek,basicDay'
+            },
+            lang:'es',
+            editable: true,
+            droppable: true,
+            eventLimit:true,
             drop: function()
             {
                 // is the "remove after drop" checkbox checked?
@@ -390,22 +383,6 @@
                 }
             }
         })
-        function isElemOverDiv() {
-            var trashEl = jQuery('#trash');
-
-            var ofs = trashEl.offset();
-
-            var x1 = ofs.left;
-            var x2 = ofs.left + trashEl.outerWidth(true);
-            var y1 = ofs.top;
-            var y2 = ofs.top + trashEl.outerHeight(true);
-
-            if (currentMousePos.x >= x1 && currentMousePos.x <= x2 &&
-                currentMousePos.y >= y1 && currentMousePos.y <= y2) {
-                return true;
-            }
-            return false;
-        }
 
     });
 

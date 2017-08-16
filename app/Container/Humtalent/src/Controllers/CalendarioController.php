@@ -68,7 +68,7 @@ class CalendarioController extends Controller
             Notification::create([
                 'NOTIF_Descripcion' => $request['title'],
                 'NOTIF_Fecha_Inicio' => $request['startdate'],
-                'NOTIF_Fecha_Fin' => $request['startdate'],
+                'NOTIF_Fecha_Fin' => $request['endDate'],
                 'NOTIF_Estado_Notificacion' => "Activa",
             ]);
             $idNotif=Notification::where('NOTIF_Descripcion',$request['title'])
