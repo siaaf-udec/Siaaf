@@ -2,6 +2,7 @@
 
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Container\Users\Src\User;
 
@@ -40,6 +41,34 @@ Route::group(['middleware' => ['auth']], function () {
         $pdf = PDF::loadView('welcome', $data);
         return $pdf->download('invoice.pdf');
     })->name('root');
+
+    Route::group(['prefix' => 'socket'], function () {
+        Route::get('socket/index', function () {
+            return view('examples.socket-client');
+        })->name('socket.socket.index');
+        Route::get('test-event', function () {
+            event(new \App\Events\TestEvent());
+        })->name('socket.test-event');
+        Route::get('redis/index', function () {
+            $messages = \App\Container\Users\Src\Message::all();
+            return view('examples.redis-client', ['messages' => $messages]);
+        })->name('socket.redis.index');
+        Route::post('redis/store', function (Request $request) {
+            $message = \App\Container\Users\Src\Message::create($request->all());
+            event(new \App\Events\NewMessage($message));
+            return back()->withInput();
+        })->name('socket.redis.store');
+        Route::get('check-auth', function () {
+            return response()->json([
+                'auth' => Auth::check()
+            ]);
+        })->name('socket.check-auth');
+        Route::get('check-sub/{channel}', function () {
+            return response()->json([
+                'can' => Auth::check() && Auth::user()->name === 'root'
+            ]);
+        })->name('socket.check-sub');
+    });
 
     Route::group(['prefix' => 'components'], function () {
         //Submenu 1

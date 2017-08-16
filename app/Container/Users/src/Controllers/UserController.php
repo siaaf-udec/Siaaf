@@ -2,13 +2,13 @@
 
 namespace App\Container\Users\Src\Controllers;
 
+use App\Notifications\HeaderSiaaf;
 use Yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
-
-use App\Notifications\UserRegistration;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
@@ -91,7 +91,9 @@ class UserController extends Controller
              * $users = $this->userRepository->index([]);
              * $users = $this->userRepository->getModel()::with('roles')->get();
              * */
-            $users = $this->userRepository->index(['roles']);
+            $users = Cache::remember('roles', 60, function () {
+                return $this->userRepository->index(['roles']);
+            });
             return Datatables::of($users)
                 ->addColumn('roles', function ($users){
                     if ( !empty($users->roles)) {
@@ -176,7 +178,7 @@ class UserController extends Controller
                 'description' => '¡Bienvenidos a Siaaf!',
                 'image' => 'assets/layouts/layout2/img/avatar3.jpg'
             ];
-            $user->notify(new UserRegistration($data));
+            $user->notify(new HeaderSiaaf($data));
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

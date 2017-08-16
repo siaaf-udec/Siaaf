@@ -52,7 +52,7 @@
             toastr.info("{{Session::get('message')}}",'Modificación exitosa:');
             break;
     }
-            @endif
+    @endif
     var FormValidationMd = function() {
 
             var handleValidation = function() {
