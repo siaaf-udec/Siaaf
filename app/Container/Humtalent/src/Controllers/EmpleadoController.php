@@ -67,6 +67,7 @@ class EmpleadoController extends Controller
             'PRSN_Correo'             => $request['PRSN_Correo'],
             'PRSN_Direccion'          => $request['PRSN_Direccion'],
             'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
+            'PRSN_Salario'             => $request['PRSN_Salario'],
             'PRSN_Eps'                => $request['PRSN_Eps'],
             'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
             'PRSN_Area'               => $request['PRSN_Area'],

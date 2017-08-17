@@ -40,6 +40,8 @@
                             'Teléfono',
                             'Email',
                             'Rol ',
+                            'Área',
+                            'Salario',
                             'Acciones'
                         ])
                     @endcomponent
@@ -75,6 +77,8 @@ jQuery(document).ready(function () {
             {data: 'PRSN_Telefono', name: 'Teléfono'},
             {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
+            {data: 'PRSN_Area', name: 'Área'},
+            {data: 'PRSN_Salario', name: 'Salario'},
             {
             defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
             data:'action',
