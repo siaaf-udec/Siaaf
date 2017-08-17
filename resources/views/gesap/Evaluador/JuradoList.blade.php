@@ -118,7 +118,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.listjurado') }}";
+    url = "{{ route('anteproyecto.juryList') }}";
 
     table.DataTable({
        lengthMenu: [

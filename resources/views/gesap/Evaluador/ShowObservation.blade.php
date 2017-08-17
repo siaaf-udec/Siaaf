@@ -54,7 +54,7 @@ jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-observaciones');
     var id = $('input[name="id"]').val();
-    url = '{{ route("anteproyecto.ListObservation",":id") }}';
+    url = '{{ route("anteproyecto.observationsList",":id") }}';
     url = url.replace(':id',id);
     table.DataTable({
        lengthMenu: [

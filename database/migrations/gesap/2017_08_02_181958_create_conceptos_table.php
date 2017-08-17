@@ -18,7 +18,7 @@ class CreateConceptosTable extends Migration
             $table->string('CNPT_Concepto');
             $table->string('CNPT_Tipo');
             $table->integer('FK_TBL_Encargado_id')->unsigned();
-            $table->foreign('FK_TBL_Encargado_id')->references('PK_NPRY_idCargo')->on('TBL_Encargados')->onDelete('cascade');
+            $table->foreign('FK_TBL_Encargado_id')->references('PK_NCRD_idCargo')->on('TBL_Encargados')->onDelete('cascade');
             $table->timestamps();
         });
 

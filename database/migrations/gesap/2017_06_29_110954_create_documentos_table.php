@@ -13,7 +13,7 @@ class CreateDocumentosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Documentos', function (Blueprint $table) {
+        Schema::connection('gesap')->create('tbl_Documentos', function (Blueprint $table) {
             $table->increments('PK_DMNT_idProyecto');
             $table->string('DMNT_Estado',30);
             $table->integer('FK_TBL_Proyecto_id')->unsigned();

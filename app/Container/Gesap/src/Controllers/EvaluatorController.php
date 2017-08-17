@@ -20,27 +20,26 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EvaluatorController extends Controller
 {
-    private $path='gesap';
+    private $path='gesap.Evaluador.';
     protected $connection = 'gesap';
+    
     public function index(){
-        return redirect()->route('anteproyecto.index.listjurado');
+        return redirect()->route('anteproyecto.index.juryList');
     }
 
-    public function jurado(){
-        return view($this->path.'.Evaluador.JuradoList');
+    public function jury(){
+        return view($this->path.'JuradoList');
     }
     
-    public function createObsevaciones($id){
-        $anteproyectos = DB::table('TBL_Anteproyecto')
-                            ->select('PK_NPRY_idMinr008','NPRY_Titulo')
+    public function createObservations($id){
+        $anteproyectos = Anteproyecto::select('PK_NPRY_idMinr008','NPRY_Titulo')
                             ->where('PK_NPRY_idMinr008','=',$id)
                             ->get();
-        return view($this->path.'.Evaluador.Observaciones',compact('anteproyectos'));
+        return view($this->path.'Observaciones',compact('anteproyectos'));
     }
-    public function storeObservaciones(Request $request){
+    public function storeObservations(Request $request){
         try{
-            
-            $jurado = Encargados::select('PK_NPRY_idCargo')
+            $jurado = Encargados::select('PK_NCRD_idCargo')
                         ->where('FK_TBL_Anteproyecto_id','=',$request['PK_anteproyecto'])
                         ->where('FK_developer_user_id','=',$request['user'])
                         ->where(function($query){
@@ -53,7 +52,7 @@ class EvaluatorController extends Controller
             
             $observacion= new Observaciones();
             $observacion->BVCS_Observacion=$request['observacion'];
-            $observacion->FK_TBL_Encargado_id=$jurado->PK_NPRY_idCargo;
+            $observacion->FK_TBL_Encargado_id=$jurado->PK_NCRD_idCargo;
             $observacion->save();
             
             $checkobservacion= new Check_Observaciones();
@@ -75,14 +74,7 @@ class EvaluatorController extends Controller
                 $respuesta->save();
             }
         
-            
-            
-            
-            
-            
-            return redirect()->route('anteproyecto.index.listjurado');
-            
-
+            return redirect()->route('anteproyecto.index.juryList');
         
         }catch(Exception $e){
             return "Fatal Error =".$e->getMessage();
@@ -90,18 +82,16 @@ class EvaluatorController extends Controller
         
     }
     
-    public function createConceptos($id){
-        $anteproyectos = DB::table('TBL_Anteproyecto')
-                            ->select('PK_NPRY_idMinr008','NPRY_Titulo')
+    public function createConcepts($id){
+        $anteproyectos = Anteproyecto::select('PK_NPRY_idMinr008','NPRY_Titulo')
                             ->where('PK_NPRY_idMinr008','=',$id)
                             ->get();
-        
-        return view($this->path.'.Evaluador.Conceptos',compact('anteproyectos'));
+        return view($this->path.'Conceptos',compact('anteproyectos'));
     }
-    public function storeConceptos(Request $request){
+    public function storeConcepts(Request $request){
          if($request->ajax() && $request->isMethod('POST')) {
              //Busco el ID del Encargado(Usuario respecto al proyecto)
-             $jurado = Encargados::select('PK_NPRY_idCargo','NCRD_Cargo')
+             $jurado = Encargados::select('PK_NCRD_idCargo','NCRD_Cargo')
                 ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
                 ->where('FK_developer_user_id','=',$request->user()->id)
                 ->where(function($query){
@@ -113,7 +103,7 @@ class EvaluatorController extends Controller
             if($jurado->NCRD_Cargo=="Jurado 1") $other="Jurado 2";
             else $other="Jurado 1";
              
-             $jurado2=Encargados::select('PK_NPRY_idCargo','NCRD_Cargo')
+             $jurado2=Encargados::select('PK_NCRD_idCargo','NCRD_Cargo')
                 ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
                 ->where('NCRD_Cargo','=',$other)
                 ->firstOrFail();
@@ -121,12 +111,12 @@ class EvaluatorController extends Controller
              
              //Consulto si los jurados ya ha realizado un concepto anteriormente
             $encargado=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
-                        ->where('FK_TBL_Encargado_id','=',$jurado->PK_NPRY_idCargo)
+                        ->where('FK_TBL_Encargado_id','=',$jurado->PK_NCRD_idCargo)
                         ->where('CNPT_Tipo','=','Anteproyecto')
                         ->first();
             
              $encargado2=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
-                        ->where('FK_TBL_Encargado_id','=',$jurado2->PK_NPRY_idCargo)
+                        ->where('FK_TBL_Encargado_id','=',$jurado2->PK_NCRD_idCargo)
                         ->where('CNPT_Tipo','=','Anteproyecto')
                         ->first();
              
@@ -137,7 +127,7 @@ class EvaluatorController extends Controller
                 Conceptos::create([
                     'CNPT_Concepto'=>$request['concepto'] ,
                     'CNPT_Tipo'    =>"Anteproyecto",    
-                    'FK_TBL_Encargado_id'=>$jurado->PK_NPRY_idCargo
+                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo
                 ]);
                  if($encargado2!=null){
                      if($request['concepto']!=$encargado2->CNPT_Concepto){
@@ -162,7 +152,7 @@ class EvaluatorController extends Controller
                     ['PK_CNPT_Conceptos'=>$encargado->PK_CNPT_Conceptos],
                     ['CNPT_Concepto'=>$request['concepto'] ,
                     'CNPT_Tipo'    =>"Anteproyecto",    
-                    'FK_TBL_Encargado_id'=>$jurado->PK_NPRY_idCargo]
+                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo]
                 );
                  if($encargado2!=null){
                      if($request['concepto']!=$encargado2->CNPT_Concepto){
@@ -206,7 +196,7 @@ class EvaluatorController extends Controller
     }
     
     public function director(){
-        return view($this->path.'.Evaluador.DirectorList');
+        return view($this->path.'DirectorList');
     }
     
     public function create(){
@@ -216,11 +206,11 @@ class EvaluatorController extends Controller
     }
 
     public function show($id){
-        return view($this->path.'.Evaluador.ShowObservation',compact('id'));
+        return view($this->path.'ShowObservation',compact('id'));
     }
 
     public function edit($id){
-        return view($this->path.'.Evaluador.Observaciones');
+        return view($this->path.'Observaciones');
     }
     public function update(Request $request, $id){
     }
@@ -228,7 +218,7 @@ class EvaluatorController extends Controller
     public function destroy($id){
     }
 
-      public function getSql($query){
+    public function getSql($query){
         $sql = $query->toSql();
         foreach($query->getBindings() as $binding){
             $value = is_numeric($binding) ? $binding : "'".$binding."'";
@@ -237,7 +227,7 @@ class EvaluatorController extends Controller
         return $sql;
     }
     
-    public function ListObservation($id){
+    public function observationsList($id){
         $observaciones=
             DB::table('gesap.tbl_observaciones AS O')
                 ->select('PK_BVCS_idObservacion','BVCS_Observacion',
@@ -246,7 +236,7 @@ class EvaluatorController extends Controller
                             DB::table('gesap.tbl_encargados')
                                 ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
                                 ->select(DB::raw('concat(name," ",lastname)'))
-                                ->where('tbl_encargados.PK_NPRY_idCargo','=',DB::raw('O.FK_TBL_Encargado_id'))
+                                ->where('tbl_encargados.PK_NCRD_idCargo','=',DB::raw('O.FK_TBL_Encargado_id'))
                         )
                     .'),"error")AS Jurado'),
                     DB::raw('IFNULL(('
@@ -269,11 +259,11 @@ class EvaluatorController extends Controller
                         $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
                         })
-                ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NPRY_idCargo');
+                ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NCRD_idCargo');
         return Datatables::of(DB::select($this->getSql($observaciones)))->addIndexColumn()->make(true);
     }
 
-    public function ListDirector(Request $request){
+    public function directorList(Request $request){
         $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
@@ -390,10 +380,9 @@ class EvaluatorController extends Controller
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
     
-    public function ListJurado(Request $request){
-       
-            $result="NO ASIGNADO";
-        $anteproyectos = 
+    public function juryList(Request $request){
+       $result="NO ASIGNADO";
+       $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
                 ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
                 ->join('gesap.tbl_encargados AS E',function($join)use($request){
@@ -511,7 +500,7 @@ class EvaluatorController extends Controller
                         .$this->getSql(
                             DB::table('gesap.tbl_encargados')
                                     ->join('tbl_conceptos',function($join)use($request){
-                                        $join->on('tbl_encargados.PK_NPRY_idCargo','=','FK_TBL_Encargado_id')
+                                        $join->on('tbl_encargados.PK_NCRD_idCargo','=','FK_TBL_Encargado_id')
                                         ->where('CNPT_Tipo','=','Anteproyecto')
                                         ->where('FK_developer_user_id','=',$request->user()->id)
                                         ;

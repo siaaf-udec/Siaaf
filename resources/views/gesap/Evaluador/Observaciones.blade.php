@@ -20,7 +20,7 @@
 <div class="row">
         <div class="col-md-12" style="z-index: 1;">
             <div class="btn-group">
-                <a href="{{ route('anteproyecto.index.listjurado') }}">
+                <a href="{{ route('anteproyecto.index.juryList') }}">
                     <button id="sample_editable_1_new" class="btn green" > 
                         <i class="fa fa-list"></i>Listar
                     </button>

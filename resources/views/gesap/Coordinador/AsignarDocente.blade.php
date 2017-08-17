@@ -66,7 +66,7 @@
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
                                 @if(isset($director[0]))
                                     @foreach ($director as $direc)
-                                        {!! Field::hidden('PK_director', $direc->PK_NPRY_idCargo) !!}    
+                                        {!! Field::hidden('PK_director', $direc->PK_NCRD_idCargo) !!}    
                                         {!! Field::select('director',$docentes,$direc->Cedula)!!}
                                     @endforeach
                                 @else
@@ -81,7 +81,7 @@
                                 <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
                                     @if(isset($jurado1[0]))
                                     @foreach ($jurado1 as $jur1)
-                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NPRY_idCargo) !!}    
+                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NCRD_idCargo) !!}    
                                         {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
                                     @endforeach
                                 @else
@@ -91,7 +91,7 @@
                                     <hr>
                                     @if(isset($jurado2[0]))
                                     @foreach ($jurado2 as $jur2)
-                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NPRY_idCargo) !!}    
+                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NCRD_idCargo) !!}    
                                         {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}
                                     @endforeach
                                 @else

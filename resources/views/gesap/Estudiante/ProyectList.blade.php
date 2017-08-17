@@ -61,7 +61,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.listStudent') }}";
+    url = "{{ route('anteproyecto.studentList') }}";
 
     table.DataTable({
        lengthMenu: [

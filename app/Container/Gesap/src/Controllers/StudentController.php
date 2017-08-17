@@ -13,17 +13,13 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
+
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    private $path='gesap';
+    private $path='gesap.Estudiante.';
     protected $connection = 'gesap';
     
-     public function getSql($query){
+    public function getSql($query){
         $sql = $query->toSql();
         foreach($query->getBindings() as $binding){
             $value = is_numeric($binding) ? $binding : "'".$binding."'";
@@ -32,83 +28,39 @@ class StudentController extends Controller
         return $sql;
     }
     
-    public function index()
-    {
-        return redirect()->route('anteproyecto.index.listjurado');
+    public function index(){
+        return redirect()->route('anteproyecto.index.juryList');
     }
 
     public function proyecto(){
-        return view($this->path.'.Estudiante.ProyectList');
+        return view($this->path.'ProyectList');
     }
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    public function create(){
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    public function show($id){
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    public function edit($id){
+    //
+    }
+
+    public function update(Request $request, $id){
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    public function destroy($id){
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-    
-    
-public function ListStudent(Request $request){
+    public function studentList(Request $request){
         $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')

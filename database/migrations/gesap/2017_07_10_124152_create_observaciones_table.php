@@ -17,7 +17,7 @@ class CreateObservacionesTable extends Migration
             $table->increments('PK_BVCS_idObservacion');
             $table->string('BVCS_Observacion',600);
             $table->integer('FK_TBL_Encargado_id')->unsigned();
-            $table->foreign('FK_TBL_Encargado_id')->references('PK_NPRY_idCargo')->on('TBL_Encargados')->onDelete('cascade');
+            $table->foreign('FK_TBL_Encargado_id')->references('PK_NCRD_idCargo')->on('TBL_Encargados')->onDelete('cascade');
             $table->timestamps();
         });
     }
