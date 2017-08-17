@@ -15,6 +15,10 @@ class TipoArticulo extends Model
 
         'TPART_Nombre',
     ];
+    public function consultaTipoArticulo2()
+    {
+        return $this->hasMany(Articulo::class,'FK_ART_Tipo_id');
+    }
 
     public function Asistents()
     {

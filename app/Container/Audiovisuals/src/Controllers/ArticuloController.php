@@ -2,6 +2,7 @@
 
 namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Container\Audiovisuals\src\Articulo;
 use App\Container\Audiovisuals\src\Estado;
 use App\Container\Audiovisuals\src\Kit;
 use App\Container\Audiovisuals\Src\TipoArticulo;
@@ -22,11 +23,15 @@ class ArticuloController extends Controller
         $tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
         $kit    = Kit::all()->pluck('KIT_Nombre', 'id');
         $estado = Estado::all()->pluck('EST_Descripcion', 'id');
+        $consultaTipo = Articulo::with(['consultaTipoArticulo' ])->get();
+
+
         return view('audiovisuals.articulo.gestionArticulos',
             [
                 'programas' => $tipo->toArray(),
                 'kit'       => $kit->toArray(),
                 'estado'       => $estado->toArray(),
+                'tipo' =>$consultaTipo,
             ]
         );
 

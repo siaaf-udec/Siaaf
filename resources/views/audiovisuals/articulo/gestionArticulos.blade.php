@@ -180,6 +180,13 @@ de la plantilla
                                                !!}
                                             </p>
                                             <p>
+
+                                                    {{$tipo}}
+
+
+
+                                            </p>
+                                            <p>
                                                 {!! Field::select('FK_ART_Estado_id',
                                                 ['1' => 'Bueno', '2' => 'Reparación'],null,
                                                 ['label' => 'Seleccionar Estado', 'disabled'])
@@ -363,6 +370,7 @@ de la plantilla
 <!-- Estandar Datatable -->
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
 </script>
+
 <script>
     var ComponentsSelect2 = function() {
 
@@ -374,16 +382,16 @@ de la plantilla
             $(".pmd-select2").select2({
                 width: null,
                 placeholder: placeholder,
-                escapeMarkup: function(m) { 
-                   return m; 
+                escapeMarkup: function(m) {
+                   return m;
                 }
             });
             $("#FK_ART_Estado_id").select2({
                 width: null,
                 placeholder: placeholderEstado,
-                
-                escapeMarkup: function(m) { 
-                   return m; 
+                value: 1,
+                escapeMarkup: function(m) {
+                   return m;
                 }
             });
 
@@ -402,7 +410,7 @@ de la plantilla
                 alwaysShow: true,
                 appendToParent: true
             });
-            
+
         }
         return {
             //main function to initiate the module
