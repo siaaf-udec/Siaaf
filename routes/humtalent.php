@@ -250,38 +250,38 @@ Route::group(['prefix' => 'induccion'], function () {
 Route::group(['prefix' => 'calendario'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
     Route::get('index',[
-        'uses' => $controller.'CalendarioController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
+        'uses' => $controller.'CalendarioController@index',   //ruta que conduce al controlador para mostrar  el calendario
         'as' => 'talento.humano.calendario.index'
     ]);
     Route::get('getEvent',[
-        'as'=>'talento.humano.calendario.getEvent',
+        'as'=>'talento.humano.calendario.getEvent',     //ruta que llama al controlador para mostrar los enventos y recordatorios guardados
         'uses'=>$controller.'CalendarioController@getEvent'
     ]);
-    Route::post('storeNotification', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('storeNotification', [   //ruta para registrar un recordatorio nuevo
         'as' => 'talento.humano.calendario.storeNotification',
         'uses' => $controller . 'CalendarioController@store'
     ]);
-    Route::post('storeDateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('storeDateNotification', [   //ruta para registrar la fecha de notificación de los eventos o recordatoriso
         'as' => 'talento.humano.calendario.storeDateNotification',
         'uses' => $controller . 'CalendarioController@storeDate'
     ]);
-    Route::post('updateDateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('updateDateNotification', [   //ruta para actualizar las fechas de los recordatorios o eventos.
         'as' => 'talento.humano.calendario.updateDateNotification',
         'uses' => $controller . 'CalendarioController@updateDateNotification'
     ]);
-    Route::post('updateNotification', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('updateNotification', [   //ruta para actualizar los recordatorios o notificaciones
         'as' => 'talento.humano.calendario.updateNotification',
         'uses' => $controller . 'CalendarioController@updateNotification'
     ]);
-    Route::post('updateEvent', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('updateEvent', [   //ruta para actualizar los eventos desde el calendario
         'as' => 'talento.humano.calendario.updateEvent',
         'uses' => $controller . 'CalendarioController@updateEvent'
     ]);
-    Route::post('storeDateEvent', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('storeDateEvent', [   //ruta para registrar la fecha de los eventos desde el calendario
         'as' => 'talento.humano.calendario.storeDateEvent',
         'uses' => $controller . 'CalendarioController@storeDateEvent'
     ]);
-    Route::post('deleteNotification', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('deleteNotification', [   //ruta para eliminar ya sea un evento o una notificación
         'as' => 'talento.humano.calendario.deleteNotification',
         'uses' => $controller . 'CalendarioController@deleteNotification'
     ]);

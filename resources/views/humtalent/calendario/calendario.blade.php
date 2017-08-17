@@ -189,7 +189,14 @@
         }
          @endif
 
-
+        var currentMousePos = { //variable que guarda la posición del puntero del mause
+                x: -1,
+                y: -1
+            };
+        jQuery(document).on("mousemove", function (event) { //funcion que es llamada cuando el puntero del mause se mueve dentro del aplicativo
+            currentMousePos.x = event.pageX; //se almacenan las cordenadas X Y
+            currentMousePos.y = event.pageY;
+        });
 
         var initDrag = function(el) {
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
@@ -209,28 +216,28 @@
             });
         };
 
-        var addEvent = function(title) {
-            title = title.length === 0 ? "Evento sin titulo" : title;
+        var addEvent = function(title) { //cuando se añade una nueva notificación es llamada esta función para agregar el codigo html correspondiente
+            title = title.length === 0 ? "Evento sin titulo" : title; //con el respectivo titulo creado o sin titulo en caso de que no se digite nada
             var html = $('<div class="external-event label label-default ui-draggable ui-draggable-handle" >' + title + '</div>');
             jQuery('#event_box').append(html);
             initDrag(html);
         };
 
-        $('#external-events div.external-event').each(function() {
+        $('#external-events div.external-event').each(function() { //se inicializa  el recordatorio arrastrable
             initDrag($(this));
 
         });
 
-        $('#event_add').unbind('click').click(function() {
+        $('#event_add').unbind('click').click(function() { // y se agrega el recordatorio a guardar
             var title = $('#NOTIF_Descripcion').val();
             addEvent(title);
         });
 
-        $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar({ //se inicializa el calendario de la libreria full calendar
 
-            events: function(start, end, timezone, callback) {
-                var route = "{{ route('talento.humano.calendario.getEvent')}}";
-                $.ajax({
+            events: function(start, end, timezone, callback) { //se realiza una llamada al controlador para traer tanto los eneventos como los redordatorios de la BD
+                var route = "{{ route('talento.humano.calendario.getEvent')}}"; //ruta que dirige al controlador para realizar la consulta a ala BD
+                $.ajax({ //se envian los datos correspondientes mediante ajax
                     url: route,
                     type: 'GET',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -239,44 +246,42 @@
                     processData: false,
                     beforeSend: function () {
                     },
-                    success: function(eventos) {
-                        var events= JSON.parse(eventos);
-
-                        callback(events);
-
+                    success: function(eventos) {//se reciben los eventos enviados desde el controlador
+                        var events= JSON.parse(eventos); //se realiza la conversíon para poder ser implementados por la libreria
+                        callback(events);//se cargan los datos recibidos en el calendario
                     }
                 });
             },
 
-            eventReceive: function(event){
-                var title = event.title;
-                var start = event.start.format("YYYY-MM-DD");
+            eventReceive: function(event){ //esta función es llamada cuando se crea un recordatorio y es arrastardo al calendario
+                var title = event.title; //se gurada el titulo del recordatorio
+                var start = event.start.format("YYYY-MM-DD"); //y la fecha donde fue ubicado
                 var end   = event.start.format("YYYY-MM-DD");
-                var route = "{{ route('talento.humano.calendario.storeNotification')}}";
+                var route = "{{ route('talento.humano.calendario.storeNotification')}}";//ruta que dirige al controlador para almacenar los datos en la BD
                 $.ajax({
                     url: route,
-                    data: 'type=new&title='+title+'&startdate='+start+'&endDate='+end,
+                    data: 'type=new&title='+title+'&startdate='+start+'&endDate='+end,//se envian los datos del recordatorio para ser almacenados
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function(response){
-                       $('input[name="PK_NOTIF_Id_Notificacion"]').val(response);
-                        $('#modal-update-notify').modal('toggle');
+                    success: function(response){ //una vez guardados se recibe el id del recordatorio guardado
+                       $('input[name="PK_NOTIF_Id_Notificacion"]').val(response); //se pone en un formulario para actualizar la fecha de notioficación
+                        $('#modal-update-notify').modal('toggle');//se llama una ventana modal que contiene el formulario que recibe la fecha de notificación del recordatorio
                     },
-                    error: function(e){
+                    error: function(e){//en caso de que la petición falle se muestra el error por consola
                         console.log(e.responseText);
                     }
                 });
-                $('#calendar').fullCalendar('updateEvent',event);
+                $('#calendar').fullCalendar('updateEvent',event);//se realiza la actulización del calendario
             },
-            eventResize: function(event){
-                var end   = event.end.format("YYYY-MM-DD");
-                var id    = event.id;
+            eventResize: function(event){//esta función es llamada cuando el usuario cambiia la fecha final del evento o recordatorio
+                var end   = event.end.format("YYYY-MM-DD"); //se toma la nueva fecha de finalización
+                var id    = event.id;//se guarda el id del evento o recordatorio
                 var eventType= event.type;
-                var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";
+                var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";//ruta que conduce al controlador para actulizar el dato mencionado
                 $.ajax({
                     url: route,
-                    data: 'type=endDateUpdate&endDate='+end+'&eventId='+id+'&eventType='+eventType,
+                    data: 'type=endDateUpdate&endDate='+end+'&eventId='+id+'&eventType='+eventType,//se ennvian los datos nuevos
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
@@ -284,31 +289,31 @@
 
                     },
                     error: function(e){
-                        console.log(e.responseText);
+                        console.log(e.responseText); //en caso de error en la petición se carga el error en consola
                     }
                 });
-                $('#calendar').fullCalendar('updateEvent',event);
+                $('#calendar').fullCalendar('updateEvent',event);//se actuliza el calendario
             },
-            eventDrop: function(event, delta, revertFunc) {
+            eventDrop: function(event, delta, revertFunc) { //esta función es llamada cuando es cambiado de fecha un evento o recordatorio
                 var title = event.title;
-                var start = event.start.format();
-                var end = (event.end == null) ? start : event.end.format();
-                var id    = event.id;
-                var eventType  =  event.type;
-                var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";
+                var start = event.start.format();//se guarda la nueva fecha
+                var end = (event.end == null) ? start : event.end.format();//si no tiene una fecha de fin diferente a la de inicio se tomarára la misma del inicio
+                var id    = event.id;//se alamacena el id del evento o recordatorio a actualizar
+                var eventType  =  event.type; //se guarda el tipo ya sea evento o recordatorio
+                var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";//ruta para actualizar los datos
                 $.ajax({
                     url: route,
-                    data: 'type=resetDate&startdate='+start+'&endDate='+end+'&eventId='+id+'&eventType='+eventType,
+                    data: 'type=resetDate&startdate='+start+'&endDate='+end+'&eventId='+id+'&eventType='+eventType,//se envian los datos
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function(response){
-                        if(response.eventType == "Evento"){
-                            $('input[name="PK_EVNT_IdEvento"]').val(response.id);
-                            $('#modal-update-Event').modal('toggle');
+                    success: function(response){ //se recibe el id y el tipo ya sea  evento o recordatorio
+                        if(response.eventType == "Evento"){ //se es evento se muetsra el pop up correspondiente
+                            $('input[name="PK_EVNT_IdEvento"]').val(response.id); //se pone en el formulario para actualizar la fecha de notificación
+                            $('#modal-update-Event').modal('toggle');// se muestra el formulario en una ventana modal
                         }
-                        if(response.eventType == "Recordatorio"){
-                            $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.id);
+                        if(response.eventType == "Recordatorio"){ //si es recordatorio se muestra el formulario correspondiente
+                            $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.id);//y se realiza el mismo proceso en caso de que sea evento
                             $('#modal-update-notify').modal('toggle');
                         }
 
@@ -318,14 +323,14 @@
                     }
                 });
             },
-           eventClick: function(calEvent, jsEvent, view) {
-                if(calEvent.type == "Recordatorio") {
-                    $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id);
+           eventClick: function(calEvent, jsEvent, view) {//esta funció es llamada cuando se hace clic ya sea sobre la notificación o el evento  paera actualizar datos
+                if(calEvent.type == "Recordatorio") {//si es recordatorio
+                    $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id); //se cargan los datos correspondientes
                     $('input[name="NOTIF_Descripcion"]').val(calEvent.title);
                     $('input[name="NOTIF_Fecha_Notificacion"]').val(calEvent.notif);
-                    $('#modal-update-titleNotify').modal('toggle');
+                    $('#modal-update-titleNotify').modal('toggle'); //y se muestran en un formulario en una ventana modal y se realiza la respectiva actualización
                 }
-                if(calEvent.type == "Evento"){
+                if(calEvent.type == "Evento"){//si es evento se realiza de igual forma que en el recordatorio  solo que con un formulario diferente
                     $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id);
                     $('input[name="EVNT_Descripcion"]').val(calEvent.title);
                     $('input[name="EVNT_Hora"]').val(calEvent.hora);
@@ -333,27 +338,26 @@
                     $('#modal-update-titleEvent').modal('toggle');
                 }
             },
-            eventRender: function(event,element, jsEvent, ui, view) {
-                 var el = element.html();
+            eventDragStop: function(event, jsEvent, ui, view) {//esta función es llamada en el momento que se arrastre un evento o recordatorio  para ser eliminado
+                /* var el = element.html();
                  element.html(el+'<div style="text-align:right;" class="closeE"><i style="color: #f9fffd;" class="icon-trash"></i></div>');
                  element.find('.closeE').click(function (e){
-                     e.preventDefault();
-                //if (isElemOverDiv()){
-                    var id = event.id;
-                    var eventType = event.type;
-                    var route = "{{ route('talento.humano.calendario.deleteNotification')}}";
+                     e.preventDefault();*/
+                if (isElemOverDiv()){ //se llama la función que determina la posición del puntero y si esta en el espacio de eliminación
+                    var id = event.id; //se toma el id del evento a eliminar
+                    var eventType = event.type;//y el tipo
+                    var route = "{{ route('talento.humano.calendario.deleteNotification')}}";//ruta que conduce al controlador para realizar la respectiva eliminación
                     $.ajax({
                         url: route,
-                        data: 'eventId=' + id + '&eventType=' + eventType,
+                        data: 'eventId=' + id + '&eventType=' + eventType,//se envian los datos a elimianr
                         type: 'POST',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: 'json',
-                        success: function (response, xhr, request) {
+                        success: function (response, xhr, request) { //se muestra el mensaje de notificación
                             if (request.status === 200 && xhr === 'success') {
                                 $('#calendar').fullCalendar('removeEvents', event.id);
                                 UIToastr.init(xhr, response.title, response.message);
                             }
-
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 && xhr === 'success') {
@@ -361,8 +365,8 @@
                             }
                         }
                     });
-               // }
-                });
+                }
+               // });
             },
             header:{
                 left:'prev,next today',
@@ -382,7 +386,23 @@
                     $(this).remove();
                 }
             }
-        })
+        });
+        function isElemOverDiv() {//función que determina la posición del puntero del mause
+            var trashEl = jQuery('#trash');//ubica el elimento que se señalizao para realizar la eliminación
+
+            var ofs = trashEl.offset();
+
+            var x1 = ofs.left; //se alamcena la ubicación del elemento señalizado
+            var x2 = ofs.left + trashEl.outerWidth(true);
+            var y1 = ofs.top;
+            var y2 = ofs.top + trashEl.outerHeight(true);
+
+            if (currentMousePos.x >= x1 && currentMousePos.x <= x2 &&
+                currentMousePos.y >= y1 && currentMousePos.y <= y2) {//y si el mause esta ubicado sobre el elemento delimitado
+                return true; //permite la eliminación del evento o recordatorio arrastrado hasta allí
+            }
+            return false;
+        }
 
     });
 
