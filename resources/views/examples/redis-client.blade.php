@@ -161,7 +161,6 @@
 
 @push('plugins')
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js') }}" type="text/javascript"></script>
 @endpush
 
 {{--
@@ -208,7 +207,7 @@
             $('.chat').append(
                 $('<li>').append(
                     $('<b>').text(data.author),
-                    $('<p>').text(data.content),
+                    $('<p>').text(data.content)
                 )
             );
         };

@@ -3,10 +3,14 @@
 namespace App\Notifications;
 
 use App\Container\Users\Src\User;
+use Carbon\Carbon;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class HeaderSiaaf extends Notification
 {
@@ -32,7 +36,7 @@ class HeaderSiaaf extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -47,6 +51,43 @@ class HeaderSiaaf extends Notification
           'description' => $this->data['description'],
           'image' =>  $this->data['image'],
         ];
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast()
+    {
+        return new BroadcastMessage([
+            'url' => $this->data['url'],
+            'description' => $this->data['description'],
+            'image' =>  $this->data['image'],
+            'created_at' =>  Carbon::now()->toDateTimeString(),
+        ]);
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return PrivateChannel
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('notification');
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+
+    public function broadcastAs()
+    {
+        return 'head-notify';
     }
 
     /**

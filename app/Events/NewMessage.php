@@ -39,8 +39,24 @@ class NewMessage implements ShouldBroadcast
         return new PrivateChannel('chat');
     }
 
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+
     public function broadcastAs()
     {
         return 'message';
     }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    /*public function broadcastWith()
+    {
+        return ['id' => $this->message->id];
+    }*/
 }

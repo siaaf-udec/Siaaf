@@ -39,7 +39,6 @@ var Redis = require('ioredis'),
 });*/
 
 //php artisan serve --host=127.0.0.1 --port=6379
-//node resources/assets/socket/server.js
 
 //N3
 //redis.psubscribe('*', function (error, count) {
@@ -77,7 +76,7 @@ var io = require('socket.io')(6001);
 io.on('connection', function (socket) {
     "use strict";
     socket.on('sub', function (channel) {
-        console.log('I want to subscribe on: ', channel);
+        //console.log('I want to subscribe on: ', channel);
 
         request.get({
             url : 'http://localhost/Siaaf/public/socket/check-sub/' + channel,
@@ -86,6 +85,7 @@ io.on('connection', function (socket) {
         }, function (error, response, json) {
             if(json.can){
                 socket.join(channel, function (error) {
+                    //Envía un message evento.
                     socket.send('Join to ' + channel);
                 });
                 return;
@@ -100,7 +100,11 @@ redis.psubscribe('*', function (error, count) {
 redis.on('pmessage', function (pattern, channel, message) {
   "use strict";
   message = JSON.parse(message);
-  //console.log(channel, message);
   io.emit(channel + ':' + message.event, message.data.message );
   //channel: message.event
 });
+
+/*
+ * Inicializar Servidor
+ * node resources/assets/developer/js/socket/server.js
+ */
