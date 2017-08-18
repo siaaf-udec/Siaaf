@@ -246,6 +246,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller.'UserController@create',
             'as' => 'users.create'
         ]);
+        Route::post('check/email',[
+            'uses' => $controller.'UserController@checkEmail',
+            'as' => 'users.check.email'
+        ]);
         Route::get('edit/{id?}',[
             'uses' => $controller.'UserController@edit',
             'as' => 'users.edit'

@@ -25,7 +25,7 @@
 
 //N2
 var Redis = require('ioredis'),
-    redis = new Redis();
+    redis = new Redis({ showFriendlyErrorStack: true }); //Optimizará la pila de errores para usted
 
 //redis.psubscribe('*', function (error, count) {
     //

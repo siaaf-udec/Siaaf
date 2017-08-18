@@ -437,7 +437,11 @@
         var rules = {
            name_create: { minlength: 5, required: true },
             lastname_create: { minlength: 5, required: true },
-            email_create: { required: true, email: true },
+            email_create: { required: true, email: true, remote : {
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    url: '{{ route('users.check.email') }}',
+                    type: "POST"
+            }},
             password_create: { minlength: 5, required: true },
             state_create: { required: true },
             phone_create: { minlength: 5 },
@@ -448,13 +452,12 @@
             image_profile_create: { extension: "jpg|png"},
             'multi_select_roles_create[]': { minlength: 1 }
         };
-        var messages = {};
+        var messages = {
+            email_create: {
+                remote: "El correo electronico ya ha sido registrado."
+            }
+        };
         var wizard =  $('#form_wizard_1');
-
-
-
-
-
 
         /*Crear Usuarios*/
         var createUsers = function () {
@@ -536,7 +539,6 @@
                 }
             }
         };
-
 
         FormWizard.init(wizard, form, rules, messages, createUsers());
 

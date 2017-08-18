@@ -1,6 +1,6 @@
 //Redis
 var Redis = require('ioredis'),
-    redis = new Redis(); //Nueva instancia de redis.
+    redis = new Redis({ showFriendlyErrorStack: true }); //Nueva instancia de redis mostrando errores.
 
 //Socket
 var io = require('socket.io')(6001);
