@@ -63,6 +63,27 @@ Route::group(['prefix' => 'empleado'], function () {
             }
         }
     ]);
+    Route::get('tablaEmpleadosRetirados',[      //ruta que retorna la vista con el datatable para listar los empleados con estado retirado
+        'as'=>'talento.humano.empleado.tablaEmpleadosRetirados',
+        'uses' => function(){
+            return view('humtalent.empleado.empleadosRetirados');
+        }
+    ]);
+    Route::get('empleadosRetirados',[ //ruta que realiza el datatable para consultar los empleados con estado de retirado
+        'as'=>'talento.humano.empleado.empleadosRetirados',
+        'uses'=> function(Request $request){
+                    if ($request->ajax()) {
+                        return Datatables::of(Persona::where('PRSN_Estado_Persona', 'Retirado')->get())
+                            ->addIndexColumn()
+                            ->make(true);
+                    } else {
+                        return response()->json([
+                            'message' => 'Incorrect request',
+                            'code' => 412
+                        ], 412);
+                    }
+                }
+    ]);
 });
 
 //Rutas para el manejo de la documentación
