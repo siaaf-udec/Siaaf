@@ -289,9 +289,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-
-
-
+// Lenguaje
+Route::get('lang/{lang}', function ($lang) {
+    session(['lang' => $lang]);
+    return back()->withInput();
+})->where(['lang' => 'en|es']);
 
 /*
  * Fin de las rutas de ejemplo.
