@@ -256,7 +256,7 @@ Route::group(['prefix' => 'induccion'], function () {
         'uses' => $controller.'InduccionController@listarEmpleadosNuevos'
     ]);
 
-    Route::get('procesoInduccion/{id}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
+    Route::get('procesoInduccion/{id?}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
         'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
         'uses' => $controller . 'InduccionController@index'
     ]);
