@@ -133,27 +133,11 @@
                 <span class="title">Inducción</span>
             </a>
         </li>
-
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
-                <span class="title">Reportes</span>
-                <span class="arrow"></span>
+                <span class="title">Permisos</span>
             </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Generar reportes</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Enviar reportes</span>
-                    </a>
-                </li>
-            </ul>
         </li>
 
         <li class="nav-item">

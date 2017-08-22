@@ -308,4 +308,35 @@ Route::group(['prefix' => 'calendario'], function () {
     ]);
 
 });
+//rutas para el manejo del modulo de permisos e incapacidades para los empleados.
+Route::group(['prefix' => 'permisos'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
+        'as' => 'talento.humano.permisos.listaEmpleados',
+        'uses' => function(){
+            return view('humtalent.permisos.listaEmpleados');
+        }
+    ]);
+    Route::get('tablaPermisos/{id?}', [    //ruta para mostrar la tabla de los permisos.
+        'as' => 'talento.humano.permisos.tablaPermisos',
+        'uses' => $controller.'PermisosController@listaPermisos'
+    ]);
+    Route::post('store', [   //ruta para registrar permisos nuevos a un empleado
+        'as' => 'talento.humano.permisos.store',
+        'uses' => $controller . 'PermisosController@store'
+    ]);
+    Route::get('consultaPermisos/{id?}',[
+        'uses' => $controller.'PermisosController@consultaPermisos', //ruta para consultar los permisos registrados
+        'as' => 'talento.humano.permisos.consultaPermisos'
+    ]);
+    Route::post('update', [   //ruta para actualizar los permisos
+        'as' => 'talento.humano.permisos.update',
+        'uses' => $controller . 'PermisosController@update'
+    ]);
+    Route::delete('destroy/{id?}',[
+        'uses' => $controller.'PermisosController@destroy', //ruta para eliminar un permiso registrado
+        'as' => 'talento.humano.permisos.destroy'
+    ]);
+
+});
 
