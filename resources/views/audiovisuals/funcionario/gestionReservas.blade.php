@@ -21,6 +21,9 @@
 | @endpush
 --}}
 @push('styles')
+
+ <!--DATATIME -->
+ <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Styles DATATABLE  -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
@@ -154,6 +157,13 @@ de la plantilla
                                                 {!! Field::text('TPART_Nombre',
                                                 ['label' => 'Tipo Articulo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                                 ['help' => 'Ingrese Tipo articulo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                                                !!}
+                                            </p>
+                                            <p>
+                                                {!! Field::text(
+                                                    'date_time',
+                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                                 !!}
                                             </p>
                                         </div>
