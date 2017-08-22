@@ -72,6 +72,52 @@ class ArticuloController extends Controller
             );
         }
     }
+<<<<<<< Updated upstream
+=======
+	public function storeKit(Request $request)
+	{
+
+		if ($request->ajax() && $request->isMethod('POST')) {
+
+			Kit::create([
+				'KIT_Nombre' => $request['KIT_Nombre'],
+			]);
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'El kit se ha registrado correctamente.'
+			);
+		} else {
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+	public function storeArticulos(Request $request)
+	{
+
+		if ($request->ajax() && $request->isMethod('POST')) {
+			Articulo::create([
+				'FK_ART_Tipo_id' => $request['FK_ART_Tipo_id'],
+				'TPART_Nombre' => $request['TPART_Nombre'],
+				'ART_Descripcion' => $request['ART_Descripcion'],
+				'FK_ART_Kit_id' => $request['FK_ART_Kit_id'],
+				'FK_ART_Estado_id' => 1,
+				'ART_Codigo' => $request['ART_Codigo'],
+			]);
+
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'El kit se ha registrado correctamente.'
+			);
+		} else {
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+>>>>>>> Stashed changes
 
     /**
      * Display the specified resource.

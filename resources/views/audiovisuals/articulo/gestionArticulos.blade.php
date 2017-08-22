@@ -163,7 +163,7 @@ de la plantilla
                                             <p>
                                                 {!! Field::select('Seleccione un Tipo de Articulo',
                                                 $programas,
-                                                ['name' => 'TPART_Nombre'])
+                                                ['name' => 'FK_ART_Tipo_id'])
                                                 !!}
                                             </p>
                                             <p>
@@ -510,8 +510,148 @@ de la plantilla
             
             $("#from_art_tipo_create").validate({
                onkeyup: false //turn off auto validate whilst typing
+<<<<<<< Updated upstream
             }); 
             
+=======
+            });
+            var createKit = function () {
+                return{
+                    init: function () {
+                        var route = '{{ route('kit.store') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('KIT_Nombre', $('input:text[name="KIT_Nombre"]').val());
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+
+                                    $('#modal-create-kit').modal('hide');
+                                    $('#from_kit_create')[0].reset(); //Limpia formulario
+                                    location.reload();
+                                    UIToastr.init(xhr , response.title , response.message  );
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            $.ajaxSetup({
+                headers:
+                    {
+                        'X-CSRF-Token': $('input[name="_token"]').val()
+                    }
+            });
+            var form_kit_create = $('#from_kit_create');
+            var rules_kit_create = {
+                KIT_Nombre:{minlength: 3, required: true,
+                    remote: {
+                        url: "{{ route('kit.validar') }}",
+                        type: "post"
+                    }
+                },
+
+            };
+
+            var messagesKit= {
+                KIT_Nombre: {
+                    remote: 'El Kit ya Existe.'
+                },
+            };
+
+            FormValidationMd.init(form_kit_create,rules_kit_create,messagesKit,createKit());
+
+            $("#from_kit_create").validate({
+                onkeyup: false //turn off auto validate whilst typing
+            });
+
+            var createArticulo = function () {
+                return{
+                    init: function () {
+                        var route = '{{ route('articulo.store') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+
+                        formData.append('FK_ART_Tipo_id', $('select[name="FK_ART_Tipo_id"]').val());
+                        formData.append('TPART_Nombre', $('select[name="TPART_Nombre"]').val());
+                        formData.append('ART_Descripcion',  $('#ART_Descripcion').val());
+                        formData.append('FK_ART_Kit_id', $('select[name="FK_ART_Kit_id"]').val());
+                        formData.append('ART_Codigo', $('input:text[name="ART_Codigo"]').val());
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+
+                                    $('#modal-create-art').modal('hide');
+                                    $('#from_art_create')[0].reset(); //Limpia formulario
+                                    location.reload();
+                                    UIToastr.init(xhr , response.title , response.message  );
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            $.ajaxSetup({
+                headers:
+                    {
+                        'X-CSRF-Token': $('input[name="_token"]').val()
+                    }
+            });
+            var from_art_create = $('#from_art_create');
+            var rules_arti_create = {
+                TPART_Nombre:{ required: true},
+                ART_Descripcion:{minlength: 3, required: true},
+                KIT_Nombre:{ required: true},
+                FK_ART_Estado_id:{ required: true},
+                ART_Codigo:{minlength: 3, required: true},
+
+
+            };
+
+
+            FormValidationMd.init(from_art_create,rules_arti_create,false,createArticulo());
+
+            $("#from_art_create").validate({
+                onkeyup: false //turn off auto validate whilst typing
+            });
+
+>>>>>>> Stashed changes
 
         })
 </script>

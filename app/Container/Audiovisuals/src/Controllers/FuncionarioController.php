@@ -59,43 +59,36 @@ class FuncionarioController extends Controller
      */
     public function data(Request $request)
     {
-        /*if ($request->ajax() && $request->isMethod('GET')) {
-    $admins = $this->funcionarioRepository->index([]);
-    return Datatables::of($admins)
-    ->removeColumn('created_at')
-    ->removeColumn('updated_at')
-    ->removeColumn('deleted_at')
-    ->removeColumn('remember_token')
-    ->removeColumn('FUNCIONARIO_Clave')
-    ->removeColumn('FK_FUNCIONARIO_Rol')
-    ->removeColumn('FUNCIONARIO_Direccion')
-    ->removeColumn('FUNCIONARIO_Apellidos')
-    ->removeColumn('FK_FUNCIONARIO_Estado')
-    ->addIndexColumn()
-    ->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+			$admins = $this->funcionarioRepository->index([]);
+			return Datatables::of($admins)
+			->removeColumn('created_at')
+			->removeColumn('updated_at')
+			->removeColumn('deleted_at')
+			->removeColumn('remember_token')
+			->removeColumn('FUNCIONARIO_Clave')
+			->removeColumn('FK_FUNCIONARIO_Rol')
+			->removeColumn('FUNCIONARIO_Direccion')
+			->removeColumn('FUNCIONARIO_Apellidos')
+			->removeColumn('FK_FUNCIONARIO_Estado')
+			->addIndexColumn()
+			->make(true);
 
-    } else {
-    return AjaxResponse::fail(
-    '¡Lo sentimos!',
-    'No se pudo completar tu solicitud.'
-    );
-    }*/
+			} else {
+				return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+				);
+			}
     }
     public function reserva(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             //$admins = $this->funcionarioRepository->index([]);
-            $admins =Solicitudes::where('PRT_FK_Tipo_Solicitud', '2')->first();
+            $admins =Solicitudes::all();//where('PRT_FK_Tipo_Solicitud', '2')->first();
             return Datatables::of($admins)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
-                ->removeColumn('deleted_at')
-                ->removeColumn('remember_token')
-                ->removeColumn('FUNCIONARIO_Clave')
-                ->removeColumn('FK_FUNCIONARIO_Rol')
-                ->removeColumn('FUNCIONARIO_Direccion')
-                ->removeColumn('FUNCIONARIO_Apellidos')
-                ->removeColumn('FK_FUNCIONARIO_Estado')
                 ->addIndexColumn()
                 ->make(true);
 

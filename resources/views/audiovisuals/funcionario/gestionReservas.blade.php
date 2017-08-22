@@ -134,6 +134,40 @@ de la plantilla
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                        {{-- BEGIN HTML MODAL CREATE --}}
+                        <!-- responsive -->
+                            <div class="modal fade" data-width="680" id="modal-create-reserva" tabindex="-1">
+                                <div class="modal-header modal-header-success">
+                                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                                    </button>
+                                    <h2 class="modal-title">
+                                        <i class="glyphicon glyphicon-tv">
+                                        </i>
+                                        Registrar Tipo De articulo
+                                    </h2>
+                                </div>
+                                <div class="modal-body">
+                                    {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                {!! Field::text('TPART_Nombre',
+                                                ['label' => 'Tipo Articulo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                                ['help' => 'Ingrese Tipo articulo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                                                !!}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                </div>
+                                {!! Form::close() !!}
+                            </div>
+                            {{-- END HTML MODAL CREATE--}}
+                        </div>
+                        <div class="col-md-12">
                             {{-- BEGIN HTML MODAL CREATE --}}
                             <!-- static -->
                             <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
@@ -287,7 +321,7 @@ de la plantilla
                 responsivePriority:2
             }
         ];
-        dataTableServer.init(table, url, columns);
+        //dataTableServer.init(table, url, columns);
 
         table = table.DataTable();
         table.on('click', '.remove', function (e) {
@@ -375,14 +409,10 @@ de la plantilla
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-admin').modal('toggle');
+
+            $('#modal-create-reserva').modal('toggle');
 
         });
-
-
-
-        
-
         var createPrograma = function () {
             return{
                 init: function () {
