@@ -161,7 +161,14 @@ de la plantilla
                                             </p>
                                             <p>
                                                 {!! Field::text(
-                                                    'date_time',
+                                                    'Fecha_Recibir_Reserva',
+                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
+                                                !!}
+                                            </p>
+                                            <p>
+                                                {!! Field::text(
+                                                    'Fecha_Devolver_Reserva',
                                                     ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                                     ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                                 !!}
@@ -236,6 +243,8 @@ de la plantilla
 --}}
 
 @push('plugins')
+    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 <!-- SCRIPT DATATABLE -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript">
 </script>
@@ -294,9 +303,20 @@ de la plantilla
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
 </script>
 <script type="text/javascript">
-    jQuery(document).ready(function() {    
-        ComponentsSelect2.init();
+    $( document ).scroll(function(){
+        $('#modal-create-reserva .timepicker').datetimepicker('place'); //#modal is the id of the modal
+    });
+    jQuery(document).ready(function() {
+        $(function() {
+            $('#Fecha_Recibir_Reserva').datetimepicker({
+            }
 
+            );
+        });
+        $(function() {
+            $('#Fecha_Devolver_Reserva').datetimepicker();
+        });
+        ComponentsSelect2.init();
        // $('#static').modal('toggle');
         //consulta si el programa esta seleccionado o esta vacio    
         var route_modal = '{{ route('funcionario.modal') }}';
@@ -306,7 +326,6 @@ de la plantilla
                      $('#static').modal('toggle');
                  }
         });
-
         //DATATABLE
         var table, url, columns;
         table = $('#fun-table-ajax');
@@ -343,7 +362,6 @@ de la plantilla
 
 
         });
-
         function deleteAdmin(adminId){
             
             var route = '{{ route('administrador.destroy') }}'+'/'+adminId;
@@ -415,7 +433,7 @@ de la plantilla
 
                  
             });                 
-        }); 
+        });
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
