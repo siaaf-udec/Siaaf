@@ -198,6 +198,7 @@ return [
         Watson\Active\ActiveServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        Tightenco\Ziggy\ZiggyServiceProvider::class,
 
         /*
          * Custom Service Providers...
