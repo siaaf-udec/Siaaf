@@ -17,14 +17,14 @@
             <div class="col-md-3 col-sm-12">
                 <!-- Selección de eventos-->
                 <div id="external-events">
-                    {!! Form::open (['id'=>'form_calendar']) !!}
+
                     {!! Field::text(
                         'NOTIF_Descripcion',null,
                         ['label'=>'Crear un evento:','class'=> 'form-control','required','placeholder'=>'Nombre del evento...', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                         ['help' => 'Digite el nombre del evento', 'icon' => 'fa fa-calendar']) !!}
 
                     <a href="javascript:;" id="event_add" class="btn green"> Añadir </a>
-                    {!! Form::close() !!}
+                    
                     <hr/>
                     <div id="event_box" class="margin-bottom-10"></div>
                     <p>
