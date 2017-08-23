@@ -15,7 +15,7 @@ class Articulo extends Model
         'FK_ART_Tipo_id', 'ART_Nombre', 'FK_ART_Kit_id', 'FK_ART_Estado_id',
         'FK_ART_Tipo_id', 'ART_Descripcion', 'ART_Codigo', 'FK_ART_Kit_id', 'FK_ART_Estado_id',
     ];
-<<<<<<< Updated upstream
+
 
 	public function consultaTipoArticulo()
 	{
