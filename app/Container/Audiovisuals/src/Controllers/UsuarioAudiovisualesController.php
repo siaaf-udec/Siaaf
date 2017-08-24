@@ -28,7 +28,7 @@ class UsuarioAudiovisualesController extends Controller
     }
     public function index()
     {
-<<<<<<< Updated upstream
+
         $user = Auth::user();
         $userid=$user->id;
         /*$phone = Userpractice::find(2); //()->where('nombre','319')->get();
@@ -49,7 +49,7 @@ class UsuarioAudiovisualesController extends Controller
         //$phone = Phone::all();
         //$phone = Phone::with('consultaUsuario')->get();
         //$phone = User::find(1)->audiovisuals;
-=======
+
 		//$phone =Userpractice::find(1)->comentarios;//()->where('nombre','319')->get();
 		//$phone =Userpractice::doesnthave('comentarios')->get();
 		//$phone =Userpractice::withCount('comentarios')->get();
@@ -85,9 +85,7 @@ return view('audiovisuals.prueba',
 ['usuarioId' => $prueba,
 ]);
  */
-=======
-*/
->>>>>>> Stashed changes
+
 
     }
 

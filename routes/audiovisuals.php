@@ -35,10 +35,17 @@ Route::group(['prefix' => 'autenticacion'], function () {
 // RUTAS FUNCIONARIO
 Route::group(['prefix' => 'funcionario'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    //ruta para vista reservar Articulos
     Route::get('index', [
-        'uses' => $controller . 'FuncionarioController@index',
-        'as'   => 'audiovisuales.funcionario.index',
+        'uses' => $controller . 'FuncionarioController@reserva',
+        'as'   => 'audiovisuales.reservas.articulos.index',
     ]);
+    //ruta para guardar reserva articulos
+	Route::post('Store', [
+		'uses' => $controller . 'FuncionarioController@store',
+		'as'   => 'reservaArticulo.store',
+	]);
+
     Route::get('data', [
         'uses' => $controller . 'FuncionarioController@data',
         'as'   => 'funcionario.data',

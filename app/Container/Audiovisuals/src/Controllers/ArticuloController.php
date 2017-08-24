@@ -29,7 +29,7 @@ class ArticuloController extends Controller
 
         return view('audiovisuals.articulo.gestionArticulos',
             [
-                'programas' => $tipo->toArray(),
+			'programas' => $tipo->toArray(),
                 'kit'       => $kit->toArray(),
                 'estado'       => $estado->toArray(),
                 'tipo' =>$consultaTipo,
@@ -76,8 +76,8 @@ class ArticuloController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             TipoArticulo::create([
-                'TPART_Nombre' => $request['TPART_Nombre'],
-            ]);
+				'TPART_Nombre' => $request['TPART_Nombre'],
+			]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Tipo de Articulo registrado correctamente.'
