@@ -45,7 +45,7 @@ Route::get('evaluar/ver/director', [
 
 Route::get('evaluar/ver/jurado', [
     'as' => 'anteproyecto.index.juryList',
-    'uses' => $controller.'EvaluatorController@jurado'
+    'uses' => $controller.'EvaluatorController@jury'
 ]);
 
 Route::get('director', [

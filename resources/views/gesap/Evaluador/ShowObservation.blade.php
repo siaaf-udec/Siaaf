@@ -10,9 +10,9 @@
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'Observaciones')
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Detalles de Observaciones')
 @section('content')
 
     

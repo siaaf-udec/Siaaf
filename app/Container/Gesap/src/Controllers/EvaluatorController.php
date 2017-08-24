@@ -139,7 +139,7 @@ class EvaluatorController extends Controller
                             ); 
                      }
                  }
-                 $anteproyecto->NPRY_Estado="COMPLETADO";
+                 $anteproyecto->NPRY_Estado="EN REVISION";
                  $anteproyecto->save();
                  return AjaxResponse::success(
                     '¡Registro exitoso!',

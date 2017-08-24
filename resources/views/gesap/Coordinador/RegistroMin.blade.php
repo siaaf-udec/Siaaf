@@ -36,102 +36,78 @@
             </div>
         </div>
     
-{!! Form::open(['route' => 'min.store', 'method' => 'POST', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
-                    
-
-    <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            <div class="form-group form-md-line-input">
-            <div class="input-icon">
-                {{ Form::textarea('title', null, 
-                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],
-                [ 'icon' => 'fa fa-user']) }}
-                <label for="title" class="control-label">Titulo del proyecto</label>
-                <span class="help-block"> Ingrese el titulo del proyecto </span>
-                <i class=" fa fa-user "></i>
-            </div>
-            </div>
-            
-        </div>
-        <div class="col-xs-12 col-md-8 col-lg-6">
-            {!! Field::select('estudiante1',
-                $estudiantes,
-                null,
-                [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
-        </div>
-        <div class="col-xs-12 col-md-8 col-lg-6">
-            {!! Field::select('estudiante2',
-                    array_replace(["0"=>"No aplica"],$estudiantes),
-                    null,
-                    [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
-        </div>
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            {!! Field::text('Keywords',
-                ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
-                ['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
-        </div>
-        <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::text('duracion',
-                ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                ['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
-        </div>
-        <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaR',
-                ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                ['help' => '', 'icon' => 'fa fa-calendar']) !!}
-        </div>
-        <div class="col-xs-12 col-md-4 col-lg-4">
-            {!! Field::date('FechaL',
-                ['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                ['help' => '', 'icon' => 'fa fa-calendar']) !!}
-            
-        </div>
-        
-        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-            <div class="form-md-line-input" style="margin: 0 0 35px;">
-                <div class="fileinput-new input-icon" data-provides="fileinput">    
-                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
-                    <div class="input-group input-large">
-                        <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
+        {!! Form::open(['route' => 'min.store', 'method' => 'POST', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-icon">
+                            {{ Form::textarea('title', null, ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],[ 'icon' => 'fa fa-user']) }}
+                            <label for="title" class="control-label">Titulo del proyecto</label>
+                            <span class="help-block"> Ingrese el titulo del proyecto </span>
+                            <i class=" fa fa-user "></i>
                         </div>
-                        <span class="input-group-addon btn default btn-file">
-                        <span class="fileinput-new"> Select file </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Requerimientos" class="" required> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
                 </div>
-            </div> 
-        </div>
-        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-            <div class="form-md-line-input" style="margin: 0 0 35px;">
-                <div class="fileinput-new input-icon" data-provides="fileinput">    
-                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
-                    <div class="input-group input-large">
-                        <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
-                        </div>
-                        <span class="input-group-addon btn default btn-file">
-                        <span class="fileinput-new"> Select file </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class="" required> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                    </div>
+                <div class="col-xs-12 col-md-8 col-lg-6">
+                    {!! Field::select('estudiante1',$estudiantes,null,[ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
                 </div>
-            </div> 
-        </div>
-
-        
-        
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
-            {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
-        </div>
-        
-        </div>
+                <div class="col-xs-12 col-md-8 col-lg-6">
+                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),null,[ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
+                </div>
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    {!! Field::text('Keywords',['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    {!! Field::text('duracion',['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    {!! Field::date('FechaR',['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => '', 'icon' => 'fa fa-calendar']) !!}
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    {!! Field::date('FechaL',['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => '', 'icon' => 'fa fa-calendar']) !!}
+                </div>
+                <div class="col-xs-12 col-md-8 col-lg-6" id="file">
+                    <div class="form-md-line-input" style="margin: 0 0 35px;">
+                        <div class="fileinput-new input-icon" data-provides="fileinput">    
+                            <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
+                            <div class="input-group input-large">
+                                <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                    <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                                    <span class="fileinput-filename"> </span>
+                                </div>
+                                <span class="input-group-addon btn default btn-file">
+                                    <span class="fileinput-new"> Select file </span>
+                                    <span class="fileinput-exists"> Change </span>
+                                    <input type="file" name="Requerimientos" class="" required> 
+                                </span>
+                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-md-8 col-lg-6" id="file">
+                    <div class="form-md-line-input" style="margin: 0 0 35px;">
+                        <div class="fileinput-new input-icon" data-provides="fileinput">    
+                            <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
+                            <div class="input-group input-large">
+                                <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                    <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                                    <span class="fileinput-filename"> </span>
+                                </div>
+                                <span class="input-group-addon btn default btn-file">
+                                <span class="fileinput-new"> Select file </span>
+                                <span class="fileinput-exists"> Change </span>
+                                <input type="file" name="Min" class="" required> </span>
+                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
+                    {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
+                </div>
+            </div>
         {!! Form::close() !!}
     </div>
 
@@ -230,6 +206,32 @@ var FormValidationMd = function() {
             errorClass: 'help-block help-block-error',  // default input error message class
             focusInvalid: true,                         // do not focus the last invalid input
             ignore: "",                                 // validate all fields including form hidden input
+            rules:{
+                FechaR:{
+                    required: true
+                }  
+                ,title:{
+                    required: true
+                }
+                ,estudiante1:{
+                    required: true
+                }
+                ,estudiante2:{
+                    required: true
+                }
+                ,Keywords:{
+                    required: true
+                }
+                ,duracion:{
+                    required: true
+                }
+                ,FechaR:{
+                    required: true
+                }
+                ,FechaL:{
+                    required: true
+                }
+            },
             invalidHandler: function(event, validator) {//display error alert on form submit
                 success1.hide();
                 error1.show();
@@ -240,14 +242,7 @@ var FormValidationMd = function() {
                 App.scrollTo(error1, -500);
             },
             
-            rules:{
-                FechaR:{
-                    xxxValidation: true
-                }
-                
-                
-                
-            },
+            
             errorPlacement: function(error, element) {
                 if (element.hasClass('select2-hidden-accessible')) {     
                     error.insertAfter(element.next('span'));  // select2

@@ -10,9 +10,9 @@
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'PROYECTOS REGISTRADOS')
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Listado de anteproyectos y proyectos registrados')
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
