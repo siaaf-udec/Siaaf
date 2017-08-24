@@ -79,15 +79,15 @@
                     <li class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
-                            <span class="badge badge-default"> 7 </span>
+                            <span class="badge badge-default"> {{ Auth::user()->num_status_read_notifications }} </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="external">
-                                <h3><span class="bold">12 pending</span> notifications</h3>
-                                <a href="javascript:;">view all</a>
+                                <h3><span class="bold">{{ Auth::user()->num_status_read_notifications }} notificaciones</span> pendientes</h3>
+                                <a href="javascript:;">ver todo</a>
                             </li>
                             <li>
-                                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                <ul class="dropdown-menu-list notifications-users scroller" style="height: 250px;" data-handle-color="#637283">
                                     @foreach (Auth::user()->notifications as $notification)
                                         <li>
                                             <a href="{{ $notification->data['url'] }}" target="_blank">

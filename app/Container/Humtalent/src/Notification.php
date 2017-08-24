@@ -1,11 +1,23 @@
 <?php
 
-namespace App\Container\Humtalent\src\Modelos;
+namespace App\Container\Humtalent\src;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
+
+    protected $connection = 'humtalent';
+
+    protected $table = 'TBL_Notificaciones';
+
+    protected $primaryKey = 'PK_NOTIF_Id_Notificacion';
+
+    protected $fillable = [
+
+        'NOTIF_Estado_Notificacion','NOTIF_Fecha_Inicio','NOTIF_Fecha_Fin','NOTIF_Descripcion','NOTIF_Fecha_Notificacion',
+        'FK_TBL_Estado_Documentacion_Persona',
+    ];
     public function StatusOfDocuments(){
         return $this->belongsTo(StatusOfDocument::class);
     }

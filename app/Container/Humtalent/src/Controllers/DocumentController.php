@@ -27,6 +27,36 @@ class DocumentController extends Controller
     {
         $this->userRepository = $userRepository;
     }
+    public function consulta($id){
+        $empleados = Persona::where('PK_PRSN_Cedula',$id)->get();//se realiza la consulta del empleado correspondiente
+        if(count($empleados) > 0) {
+            $documentos = DocumentacionPersona::all();//se realiza la consulta de los documentos requeridos que esten registrados
+            $docs = [];//array para almacenar con indices numericos los documentos consultados
+            foreach ($documentos as $documento) {
+                $docs = $docs + [$documento->PK_DCMTP_Id_Documento => $documento->DCMTP_Nombre_Documento];//se realiza la conversion del array con clave a array con indices numéricos
+            }
+            $selects = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->get(['FK_Personal_Documento']); //se realiza la consulta a la tabla estado documentación para saber que documentos ya han sido radicados por el empleado
+            $seleccion = [];//array para almacenar con indices numericos los documentos consultados
+            foreach ($selects as $select) {
+                $seleccion = array_merge($seleccion, [$select->FK_Personal_Documento]);//se realiza la conversion del array con clave a array con indices numéricos
+            }
+            $cantidadDocumentos = DocumentacionPersona::all()->count();
+            $cantidadRadicados = count($seleccion);
+            $estado=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
+                ->where('EDCMT_Proceso_Documentacion', 'Afiliado')
+                ->get(['EDCMT_Proceso_Documentacion'])->first();
+            if(count($estado)> 0) {
+                $estado = $estado->EDCMT_Proceso_Documentacion;
+            }else{
+                $estado='No Afiliado';
+            }
+
+
+            return view('humtalent.documentacion.radicarDocumentos',
+                compact('empleados', 'docs', 'seleccion', 'cantidadDocumentos', 'cantidadRadicados', 'estado'));//y se muestran todas las consultas en el formuario de radicacion
+        }
+
+    }
 
     public function listarDocsRad(Request $request){ //funcion que se encarga de listar los documentos registrados y que debern ser entregados por los empleados
         $id  = $request['PK_PRSN_Cedula'];  //se recibe como parametro el numero de cedula del empleado a quien se le van a radicar los documentos
@@ -57,7 +87,7 @@ class DocumentController extends Controller
         }else{
             $notification=array(
                 'message'=>'El empleado no se encuentra registrado',
-                'alert-type'=>'success'
+                'alert-type'=>'info'
             );
             return back()->with($notification);
         }
@@ -124,12 +154,7 @@ class DocumentController extends Controller
                 ]);
             }
         }
-        /*$notification=array(
-            'message'=>'La información fue almacenada correctamente.',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);*/
-        return "Se radico la documentación";
+        return $this->consulta($request['FK_TBL_Persona_Cedula']);
     }
     public function afiliarEmpleado(Request $request){
 
@@ -143,11 +168,11 @@ class DocumentController extends Controller
             'alert-type'=>'success'
         );
         return back()->with($notification);*/
-        return "El empleado fua afiliado";
+        return $this->consulta($request['FK_TBL_Persona_Cedula']);
     }
     public function reiniciarRadicacion($id){
         StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->delete();
-        return "Se ha reiniciado el proceso";
+        return $this->consulta($id);
     }
     public function consultaRadicados(Request $request, $id){
         $radicados=StatusOfDocument::with('DocumentacionPersonas')->where('FK_TBL_Persona_Cedula',$id)->get(['EDCMT_Fecha','FK_Personal_Documento']);

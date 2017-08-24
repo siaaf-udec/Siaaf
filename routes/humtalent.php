@@ -19,6 +19,7 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
+//Route::resource('rrhh', $controller.'FuncionarioController'); //Ruta para CRUD de funcionarios.
 
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
@@ -61,6 +62,27 @@ Route::group(['prefix' => 'empleado'], function () {
                 ], 412);
             }
         }
+    ]);
+    Route::get('tablaEmpleadosRetirados',[      //ruta que retorna la vista con el datatable para listar los empleados con estado retirado
+        'as'=>'talento.humano.empleado.tablaEmpleadosRetirados',
+        'uses' => function(){
+            return view('humtalent.empleado.empleadosRetirados');
+        }
+    ]);
+    Route::get('empleadosRetirados',[ //ruta que realiza el datatable para consultar los empleados con estado de retirado
+        'as'=>'talento.humano.empleado.empleadosRetirados',
+        'uses'=> function(Request $request){
+                    if ($request->ajax()) {
+                        return Datatables::of(Persona::where('PRSN_Estado_Persona', 'Retirado')->get())
+                            ->addIndexColumn()
+                            ->make(true);
+                    } else {
+                        return response()->json([
+                            'message' => 'Incorrect request',
+                            'code' => 412
+                        ], 412);
+                    }
+                }
     ]);
 });
 
@@ -118,7 +140,8 @@ Route::group(['prefix' => 'document'], function () {
     ]);
     Route::post('radicarDocumentos', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.radicarDocumentos', //Este es el alias de la ruta
-        'uses' => $controller.'DocumentController@radicarDocumentos'
+        'uses' => $controller.'DocumentController@radicarDocumentos',
+
     ]);
     Route::post('afiliarEmpleado', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.afiliarEmpleado', //Este es el alias de la ruta
@@ -233,7 +256,7 @@ Route::group(['prefix' => 'induccion'], function () {
         'uses' => $controller.'InduccionController@listarEmpleadosNuevos'
     ]);
 
-    Route::get('procesoInduccion/{id}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
+    Route::get('procesoInduccion/{id?}', [    //ruta que muestra el proceso de inducción o re-inducción para un empleado nuevo.
         'as' => 'talento.humano.procesoInduccion', //Este es el alias de la ruta
         'uses' => $controller . 'InduccionController@index'
     ]);
@@ -247,10 +270,72 @@ Route::group(['prefix' => 'induccion'], function () {
 //rutas para el Calendario.
 Route::group(['prefix' => 'calendario'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-
+    Route::get('index',[
+        'uses' => $controller.'CalendarioController@index',   //ruta que conduce al controlador para mostrar  el calendario
+        'as' => 'talento.humano.calendario.index'
+    ]);
     Route::get('getEvent',[
-        'as'=>'talento.humano.calendario.getEvent',
+        'as'=>'talento.humano.calendario.getEvent',     //ruta que llama al controlador para mostrar los enventos y recordatorios guardados
         'uses'=>$controller.'CalendarioController@getEvent'
+    ]);
+    Route::post('storeNotification', [   //ruta para registrar un recordatorio nuevo
+        'as' => 'talento.humano.calendario.storeNotification',
+        'uses' => $controller . 'CalendarioController@store'
+    ]);
+    Route::post('storeDateNotification', [   //ruta para registrar la fecha de notificación de los eventos o recordatoriso
+        'as' => 'talento.humano.calendario.storeDateNotification',
+        'uses' => $controller . 'CalendarioController@storeDate'
+    ]);
+    Route::post('updateDateNotification', [   //ruta para actualizar las fechas de los recordatorios o eventos.
+        'as' => 'talento.humano.calendario.updateDateNotification',
+        'uses' => $controller . 'CalendarioController@updateDateNotification'
+    ]);
+    Route::post('updateNotification', [   //ruta para actualizar los recordatorios o notificaciones
+        'as' => 'talento.humano.calendario.updateNotification',
+        'uses' => $controller . 'CalendarioController@updateNotification'
+    ]);
+    Route::post('updateEvent', [   //ruta para actualizar los eventos desde el calendario
+        'as' => 'talento.humano.calendario.updateEvent',
+        'uses' => $controller . 'CalendarioController@updateEvent'
+    ]);
+    Route::post('storeDateEvent', [   //ruta para registrar la fecha de los eventos desde el calendario
+        'as' => 'talento.humano.calendario.storeDateEvent',
+        'uses' => $controller . 'CalendarioController@storeDateEvent'
+    ]);
+    Route::post('deleteNotification', [   //ruta para eliminar ya sea un evento o una notificación
+        'as' => 'talento.humano.calendario.deleteNotification',
+        'uses' => $controller . 'CalendarioController@deleteNotification'
+    ]);
+
+});
+//rutas para el manejo del modulo de permisos e incapacidades para los empleados.
+Route::group(['prefix' => 'permisos'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
+        'as' => 'talento.humano.permisos.listaEmpleados',
+        'uses' => function(){
+            return view('humtalent.permisos.listaEmpleados');
+        }
+    ]);
+    Route::get('tablaPermisos/{id?}', [    //ruta para mostrar la tabla de los permisos.
+        'as' => 'talento.humano.permisos.tablaPermisos',
+        'uses' => $controller.'PermisosController@listaPermisos'
+    ]);
+    Route::post('store', [   //ruta para registrar permisos nuevos a un empleado
+        'as' => 'talento.humano.permisos.store',
+        'uses' => $controller . 'PermisosController@store'
+    ]);
+    Route::get('consultaPermisos/{id?}',[
+        'uses' => $controller.'PermisosController@consultaPermisos', //ruta para consultar los permisos registrados
+        'as' => 'talento.humano.permisos.consultaPermisos'
+    ]);
+    Route::post('update', [   //ruta para actualizar los permisos
+        'as' => 'talento.humano.permisos.update',
+        'uses' => $controller . 'PermisosController@update'
+    ]);
+    Route::delete('destroy/{id?}',[
+        'uses' => $controller.'PermisosController@destroy', //ruta para eliminar un permiso registrado
+        'as' => 'talento.humano.permisos.destroy'
     ]);
 
 });

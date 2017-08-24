@@ -21,6 +21,9 @@
 | @endpush
 --}}
 @push('styles')
+
+ <!--DATATIME -->
+ <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Styles DATATABLE  -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
@@ -134,6 +137,54 @@ de la plantilla
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                        {{-- BEGIN HTML MODAL CREATE --}}
+                        <!-- responsive -->
+                            <div class="modal fade" data-width="680" id="modal-create-reserva" tabindex="-1">
+                                <div class="modal-header modal-header-success">
+                                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                                    </button>
+                                    <h2 class="modal-title">
+                                        <i class="glyphicon glyphicon-tv">
+                                        </i>
+                                        Registrar Tipo De articulo
+                                    </h2>
+                                </div>
+                                <div class="modal-body">
+                                    {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                {!! Field::text('TPART_Nombre',
+                                                ['label' => 'Tipo Articulo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                                ['help' => 'Ingrese Tipo articulo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                                                !!}
+                                            </p>
+                                            <p>
+                                                {!! Field::text(
+                                                    'Fecha_Recibir_Reserva',
+                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
+                                                !!}
+                                            </p>
+                                            <p>
+                                                {!! Field::text(
+                                                    'Fecha_Devolver_Reserva',
+                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
+                                                !!}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                </div>
+                                {!! Form::close() !!}
+                            </div>
+                            {{-- END HTML MODAL CREATE--}}
+                        </div>
+                        <div class="col-md-12">
                             {{-- BEGIN HTML MODAL CREATE --}}
                             <!-- static -->
                             <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
@@ -192,6 +243,8 @@ de la plantilla
 --}}
 
 @push('plugins')
+    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 <!-- SCRIPT DATATABLE -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript">
 </script>
@@ -250,9 +303,20 @@ de la plantilla
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
 </script>
 <script type="text/javascript">
-    jQuery(document).ready(function() {    
-        ComponentsSelect2.init();
+    $( document ).scroll(function(){
+        $('#modal-create-reserva .timepicker').datetimepicker('place'); //#modal is the id of the modal
+    });
+    jQuery(document).ready(function() {
+        $(function() {
+            $('#Fecha_Recibir_Reserva').datetimepicker({
+            }
 
+            );
+        });
+        $(function() {
+            $('#Fecha_Devolver_Reserva').datetimepicker();
+        });
+        ComponentsSelect2.init();
        // $('#static').modal('toggle');
         //consulta si el programa esta seleccionado o esta vacio    
         var route_modal = '{{ route('funcionario.modal') }}';
@@ -262,7 +326,6 @@ de la plantilla
                      $('#static').modal('toggle');
                  }
         });
-
         //DATATABLE
         var table, url, columns;
         table = $('#fun-table-ajax');
@@ -287,7 +350,7 @@ de la plantilla
                 responsivePriority:2
             }
         ];
-        dataTableServer.init(table, url, columns);
+        //dataTableServer.init(table, url, columns);
 
         table = table.DataTable();
         table.on('click', '.remove', function (e) {
@@ -299,7 +362,6 @@ de la plantilla
 
 
         });
-
         function deleteAdmin(adminId){
             
             var route = '{{ route('administrador.destroy') }}'+'/'+adminId;
@@ -371,18 +433,14 @@ de la plantilla
 
                  
             });                 
-        }); 
+        });
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-admin').modal('toggle');
+
+            $('#modal-create-reserva').modal('toggle');
 
         });
-
-
-
-        
-
         var createPrograma = function () {
             return{
                 init: function () {

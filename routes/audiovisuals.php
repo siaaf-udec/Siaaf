@@ -101,19 +101,45 @@ Route::group(['prefix' => 'administrador'], function () {
 // RUTAS SUPERADMIN
 Route::group(['prefix' => 'superAdmin'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
-    Route::get('index', [
-        'uses' => $controller . 'SuperAdminController@index',
-        'as'   => 'audiovisuales.superAdmin.index',
-    ]);
-});
-// RUTAS ARTICULO
-Route::group(['prefix' => 'articulo'], function () {
-    $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    //GESTION ARTICULO
     Route::get('index', [
         'uses' => $controller . 'ArticuloController@index',
         'as'   => 'audiovisuales.articulo.index',
     ]);
+    Route::post('stores', [
+        'uses' => $controller . 'ArticuloController@storeTipoArt',
+        'as'   => 'tipoArticulos.store',
+    ]);
+
+    Route::post('articles/check_unique', [
+        'uses' => $controller . 'ArticuloController@ajaxUniqueTipoArt',
+        'as'   => 'tipoArticulo.validar',
+
+    ]);
+    Route::post('store', [
+        'uses' => $controller . 'ArticuloController@storeKit',
+        'as'   => 'kit.store',
+
+    ]);
+    Route::post('kits/check_unique', [
+        'uses' => $controller . 'ArticuloController@ajaxUniqueKit',
+        'as'   => 'kit.validar',
+
+    ]);
+
+    Route::post('storeArticulo', [
+        'uses' => $controller . 'ArticuloController@storeArticulos',
+        'as'   => 'articulo.store',
+
+    ]);
+    Route::get('listar', [
+        'uses' => $controller . 'ArticuloController@data',
+        'as'   => 'listarArticulo.data',
+    ]);
+
+
 });
+
 //RUTAS FUNCIONES ADMINISTRADPR
 Route::group(['prefix' => 'adminView'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";

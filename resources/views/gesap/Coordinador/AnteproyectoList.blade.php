@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <div class="btn-group">
                 <a href="{{ route('min.create') }}">
-                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> Add New
+                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
                         <i class="fa fa-plus"></i>
                     </button>
                 </a> 

@@ -74,7 +74,6 @@
                                            ['label' => 'Se finalizo exitosamente']) !!}
                                 @endif
                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion1') !!}
-                                    {!! Field::hidden('INDC_Aprobacion','0') !!}
 
                             </div>
                                 {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
@@ -95,7 +94,6 @@
                                        ['label' => 'Se finalizo exitosamente']) !!}
                                 @endif
                                      {!! Field::hidden('numCheck','INDC_ProcesoInduccion2') !!}
-                                     {!! Field::hidden('INDC_Aprobacion','0') !!}
 
                             </div>
                             {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
@@ -116,7 +114,6 @@
                                        ['label' => 'Se finalizo exitosamente']) !!}
                                 @endif
                                     {!! Field::hidden('numCheck','INDC_ProcesoInduccion3') !!}
-                                    {!! Field::hidden('INDC_Aprobacion','0') !!}
 
                             </div>
                             {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
@@ -142,8 +139,6 @@
                                        ['label' => 'Se finalizo exitosamente']) !!}
                                 @endif
                                      {!! Field::hidden('numCheck','INDC_ProcesoInduccion4') !!}
-                                     {!! Field:: text('INDC_Aprobacion',null,['label'=>'Calificación de la inducción: ','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                        ['help'=>'Digite la calificación que obtuvo el empleado en la inducción.','icon'=>' fa fa-credit-card']) !!}
 
 
                             </div>

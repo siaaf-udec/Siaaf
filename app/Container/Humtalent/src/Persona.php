@@ -15,7 +15,7 @@ class Persona extends Model
     protected $fillable = [
 
         'PK_PRSN_Cedula','PRSN_Rol','PRSN_Nombres','PRSN_Apellidos','PRSN_Telefono','PRSN_Correo','PRSN_Direccion',
-        'PRSN_Ciudad','PRSN_Eps','PRSN_Fpensiones','PRSN_Area','PRSN_Caja_Compensacion','PRSN_Estado_Persona',
+        'PRSN_Ciudad','PRSN_Salario','PRSN_Eps','PRSN_Fpensiones','PRSN_Area','PRSN_Caja_Compensacion','PRSN_Estado_Persona',
     ];
 
 

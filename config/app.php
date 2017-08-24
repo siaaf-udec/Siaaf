@@ -198,6 +198,8 @@ return [
         Watson\Active\ActiveServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        Tightenco\Ziggy\ZiggyServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Custom Service Providers...
@@ -217,7 +219,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -278,8 +280,9 @@ return [
         'Entrust'      => Zizaco\Entrust\EntrustFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Active'       => Watson\Active\Facades\Active::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'PDF'          => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage'  => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
 
         /*
          * Custom Aliases...

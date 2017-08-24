@@ -22,6 +22,7 @@ class CreatePersonasTable extends Migration
             $table->String('PRSN_Correo',60);
             $table->String('PRSN_Direccion',90);
             $table->String('PRSN_Ciudad',35);
+            $table->String('PRSN_Salario',20)->nullable();
             $table->String('PRSN_Eps',35)->nullable();
             $table->String('PRSN_Fpensiones',35)->nullable();
             $table->String('PRSN_Area',45);

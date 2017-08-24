@@ -39,19 +39,10 @@
         </li>
         <li class="nav-item {{ active(['audiovisuales.articulo.index'], 'start active open') }}">
             <a class="nav-link" href="{{ route('audiovisuales.articulo.index') }}">
-                <i class="fa fa-users">
+                <i class="fa fa-television">
                 </i>
                 <span class="title">
                     Gestion Articulos
-                </span>
-            </a>
-        </li>
-        <li class="nav-item {{ active(['audiovisuales.superAdmin.index'], 'start active open') }}">
-            <a class="nav-link" href="{{ route('audiovisuales.superAdmin.index') }}">
-                <i class="fa fa-users">
-                </i>
-                <span class="title">
-                    Gestion SuperAdmin
                 </span>
             </a>
         </li>

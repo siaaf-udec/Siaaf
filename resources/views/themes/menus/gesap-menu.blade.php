@@ -29,13 +29,13 @@
         @endrole
         @role(['Evaluator_Gesap','Coordinator_Gesap'])
         <li class="nav-item">
-                    <a href="{{ route('anteproyecto.index.listdirector') }}" class="nav-link nav-toggle">
+                    <a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Director de Proyecto</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.listjurado') }}">
+                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }}">
                         <i class="fa fa-book">
                         </i>
                         <span class="title">
@@ -47,7 +47,7 @@
         @endrole
         @role('Student_Gesap')
                 <li class="nav-item">
-                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.liststudent') }}">
+                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.studentList') }}">
                         <i class="fa fa-book">
                         </i>
                         <span class="title">

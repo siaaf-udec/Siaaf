@@ -106,12 +106,11 @@
             <div class="clearfix"> </div><br><br><br>
             <div class="row">
                 <div class="col-md-12">
-                    {!! Form::open(['id' => 'form_socket', 'class' => '', 'url' => '/forms']) !!}
+                    {!! Form::open(['id' => 'form_socket', 'class' => '', 'url' => '']) !!}
                         {!! Field::text(
                            'name',
                            ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
-                           ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}.
-
+                           ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12">
@@ -177,12 +176,14 @@
     jQuery(document).ready(function() {
         var socket = io(':6001');
 
+        // N1
         /*socket.on('message', function (data) {
             console.log('Form server: ', data);
         }).on('server-info',function(data){
             console.info('Server: ', data);
         });*/
 
+        //N2
         $('#form_socket').on('submit', function (e) {
             e.preventDefault();
             var name = $('input:text[name="name"]').val(),

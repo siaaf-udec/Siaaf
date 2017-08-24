@@ -10,9 +10,9 @@
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'DIRECTOR')
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Lista de proyectos como director')
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
@@ -61,7 +61,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.listdirector') }}";
+    url = "{{ route('anteproyecto.directorList') }}";
 
     table.DataTable({
        lengthMenu: [

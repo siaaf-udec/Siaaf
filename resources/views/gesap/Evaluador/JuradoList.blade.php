@@ -7,14 +7,14 @@
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" /><link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
 
-<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'JURADO')
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Lista de proyectos como jurado')
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Anteproyecto Jurado'])
@@ -22,13 +22,13 @@
         <div class="col-md-6">
             <div class="btn-group">
                 <a href="{{ route('min.create') }}">
-                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> Add New
+                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
                         <i class="fa fa-plus"></i>
                     </button>
                 </a> 
             </div>
         </div>
-            <div class="clearfix"> </div><br><br>
+        <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
             
@@ -99,8 +99,8 @@
     <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
 
 
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
     <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -118,7 +118,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.listjurado') }}";
+    url = "{{ route('anteproyecto.juryList') }}";
 
     table.DataTable({
        lengthMenu: [

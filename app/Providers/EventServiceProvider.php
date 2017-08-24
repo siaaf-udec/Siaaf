@@ -23,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\Registered' => [
             'App\Listeners\LogRegisteredUser',
         ],
+        'App\Events\NewMessage' => [
+
+        ],
     ];
 
     /**

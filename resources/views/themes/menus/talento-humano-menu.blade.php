@@ -118,67 +118,34 @@
                         <span class="title">Historial de la documentación</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item" {{ active(['talento.humano.empleado.tablaEmpleadosRetirados'], 'start active open') }}>
+                    <a href="{{ route('talento.humano.empleado.tablaEmpleadosRetirados') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Historial de la información</span>
+                        <span class="title">Historial Empleados</span>
                     </a>
                 </li>
             </ul>
         </li>
 
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Inducción</span>
-                <span class="arrow"></span>
             </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Proceso de inducción</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Proceso de re-inducción</span>
-                    </a>
-                </li>
-            </ul>
         </li>
-
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
-                <span class="title">Reportes</span>
-                <span class="arrow"></span>
+                <span class="title">Permisos</span>
             </a>
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Generar reportes</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Enviar reportes</span>
-                    </a>
-                </li>
-            </ul>
         </li>
 
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Calendario</span>
                 <span class="arrow"></span>
             </a>
-
-
         </li>
 
 

@@ -45,6 +45,9 @@
                         {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control','id'=>'ciudad','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-map-o'] ) !!}
 
+                        {!! Field:: text('PRSN_Salario',null,['label'=>'Salario del empleado:', 'class'=> 'form-control','id'=>'salario','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                 ['icon'=>'fa fa-map-o'] ) !!}
+
                         {!! Field:: text('PRSN_Area',null,['label'=>'Area o programa de trabajo:', 'class'=> 'form-control','id'=>'area','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-group'] ) !!}
 

@@ -78,7 +78,6 @@ class InduccionController extends Controller
         if(count($induccion) > 0){
             $induccion=Induction::find($induccion[0]['PK_INDC_ID_Induccion']);
             $induccion->INDC_ProcesoInduccion = $request[$request['numCheck']];
-            $induccion->INDC_Aprobacion = $request['INDC_Aprobacion'];
             $induccion->save();
             if(strcasecmp( $request[$request['numCheck']], "Resultados de evaluación") == 0){
                 $empleado=Persona::find($request['FK_TBL_Persona_Cedula']);
@@ -88,7 +87,6 @@ class InduccionController extends Controller
         }else {
             Induction::create([
                 'INDC_ProcesoInduccion' => $request[$request['numCheck']],
-                'INDC_Aprobacion' => $request['INDC_Aprobacion'],
                 'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
             ]);
         }

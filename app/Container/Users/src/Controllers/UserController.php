@@ -2,14 +2,14 @@
 
 namespace App\Container\Users\Src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use App\Notifications\HeaderSiaaf;
 
+use Validator;
+use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
-
-use App\Notifications\UserRegistration;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
@@ -92,7 +92,7 @@ class UserController extends Controller
              * $users = $this->userRepository->index([]);
              * $users = $this->userRepository->getModel()::with('roles')->get();
              * */
-            $users = Cache::remember('roles', 60, function () {
+            $users = Cache::remember('roles', 1, function () {
                 return $this->userRepository->index(['roles']);
             });
             return Datatables::of($users)
@@ -179,12 +179,40 @@ class UserController extends Controller
                 'description' => '¡Bienvenidos a Siaaf!',
                 'image' => 'assets/layouts/layout2/img/avatar3.jpg'
             ];
-            $user->notify(new UserRegistration($data));
+            $user->notify(new HeaderSiaaf($data));
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkEmail(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('POST')){
+
+            $validator = Validator::make($request->all(), [
+                'email_create' => 'unique:users,email'
+            ]);
+
+            if(empty($validator->errors()->all())){
+                return response('true');
+            }else{
+                return response('false');
+            }
+
         }else{
             return AjaxResponse::fail(
                 '¡Lo sentimos!',

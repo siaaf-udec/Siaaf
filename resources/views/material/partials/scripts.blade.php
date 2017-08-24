@@ -25,3 +25,7 @@
 <script src="{{ asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 {{-- END THEME LAYOUT SCRIPTS --}}
+
+{{-- SOCKETS CLIENT--}}
+<script src="{{ asset('assets/main/scripts/client-notifications.js') }}" type="text/javascript"></script>
+{{-- END SOCKETS CLIENT --}}

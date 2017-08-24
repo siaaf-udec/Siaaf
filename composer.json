@@ -18,9 +18,11 @@
         "owen-it/laravel-auditing": "^4.1",
         "predis/predis": "^1.1",
         "styde/html": "~1.3",
+        "tightenco/ziggy": "^0.3.0",
         "watson/active": "^2.0",
         "yajra/laravel-datatables-oracle": "7.5",
-        "zizaco/entrust": "1.9.0-beta1"
+        "zizaco/entrust": "1.9.0-beta1",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
