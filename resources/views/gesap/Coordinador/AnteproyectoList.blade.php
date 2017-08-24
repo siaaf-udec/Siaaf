@@ -117,8 +117,12 @@ jQuery(document).ready(function () {
            {data: 'NPRY_FechaR', className:'none',searchable: true},
            {data: 'NPRY_FechaL', className:'none',searchable: true},
            {data: 'NPRY_Estado',searchable: true},
-           {data: 'RDCN_Min',className:'none',searchable: true},
-           {data: 'RDCN_Requerimientos',className:'none',searchable: true},
+           {data: 'RDCN_Min',className:'none',
+           render: function (data, type, full, meta) {
+               return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';}},
+           {data: 'RDCN_Requerimientos',className:'none',searchable: true,
+           render: function (data, type, full, meta) {
+               return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';}},   
            {data: 'Director',className:'none',searchable: true},
            {data: 'estudiante1',className:'none',searchable: true},
            {data: 'estudiante2', className:'none',searchable: true},

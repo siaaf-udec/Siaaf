@@ -98,3 +98,19 @@ Route::get('evaluar/ver/proyecto', [
     'as' => 'anteproyecto.index.studentList',
     'uses' => $controller.'StudentController@proyecto'
 ]);
+
+
+
+
+Route::get('download/{archivo}', function ($archivo) {
+     $public_path = public_path();
+     $url = 'C:\xampp\htdocs\Siaaf\storage\app/'.$archivo;
+     //verificamos si el archivo existe y lo retornamos
+     if (Storage::exists($archivo))
+     {
+       return response()->download($url);
+     }
+     //si no se encuentra lanzamos un error 404.
+     abort(404);
+
+});
