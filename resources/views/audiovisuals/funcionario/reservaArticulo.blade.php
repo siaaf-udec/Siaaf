@@ -32,7 +32,8 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     {{--TOAST--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
-
+    <!-- Styles SREETALERT  -->
+    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
 
 
@@ -236,7 +237,7 @@
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
     </script>
     <!-- SCRIPT REPEATER -->
-    <script src="{{ asset('assets/pages/scripts/form-repeater.min.js') }} " type="text/javascript"></script>
+    {{--<script src="{{ asset('assets/pages/scripts/form-repeater.min.js') }} " type="text/javascript"></script>--}}
     <script src="{{ asset('assets/global/plugins/jquery-repeater/jquery.repeater.js') }} " type="text/javascript"></script>
     <!-- SCRIPT DATEPICKER -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
@@ -280,6 +281,9 @@
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
     </script>
+    <!-- SCRIPT Confirmacion Sweetalert -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+    </script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
@@ -289,12 +293,24 @@
                     if (!jQuery().datetimepicker) {
                         return;
                     }
+                    var tres=3;
+                    var fecha = new Date();
+                    fecha.setDate(fecha.getDate() + 1);
+                    var fecha2 = new Date();
+                    fecha2.setDate(fecha2.getDate() + tres);
+
                     $(".date-time-picker").datetimepicker({
                         autoclose: true,
                         isRTL: App.isRTL(),
-                        format: "yyyy-mm-dd hh:ii",
+                        format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO
+                        //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
                         fontAwesome: true,
-                        pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+                        todayBtn: true,//BOTON DE HOY
+                        //startDate: new Date(),//EMPIEZE DESDE LA FECHA ACTUAL
+                        startDate: fecha,//Fecha Actual pero sin la hora
+                        endDate: fecha2,//Fecha Actual + 5 dias
+                        showMeridian: true, // HORA EN 24 HORAS
+                        pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
                     });
                 }
                 return {
@@ -328,9 +344,62 @@
                 };
 
             }();
+            var FormRepeater = function () {
 
-            $(document).ready(function()
+                return {
+                    //main function to initiate the module
+                    init: function () {
+                        $('.mt-repeater').each(function(){
+                            $(this).repeater({
+                                show: function () {
+                                    $(this).slideDown();
+                                    $('.date-picker').datepicker({
+                                        rtl: App.isRTL(),
+                                        orientation: "left",
+                                        autoclose: true
+                                    });
+                                },
+
+                                hide: function (deleteElement) {
+                                    swal({
+                                            title: "¿Esta seguro?",
+                                            text: "¿Seguro que quiere eliminar esta Reserva?",
+                                            type: "warning",
+                                            showCancelButton: true,
+                                            closeOnConfirm: false,
+                                            confirmButtonText: "Si, eliminar",
+                                            confirmButtonColor: "#ec6c62",
+                                            confirmButtonClass: "btn blue",
+                                            cancelButtonText: "Cancelar",
+                                            cancelButtonClass: "btn red",
+                                        },
+                                        function(isConfirm){
+                                            if (isConfirm) {
+                                                $(this).slideUp(deleteElement);
+                                                swal("Eliminado", "La reserva se ha eliminado correctamente", "success");
+                                            }
+                                        });
+
+                                },
+
+                                ready: function (setIndexes) {
+
+                                }
+
+                            });
+                        });
+                    }
+
+                };
+
+            }();
+
+
+
+
+            jQuery(document).ready(function()
             {
+                FormRepeater.init();
                 $( ".create" ).on('click', function (e) {
                     e.preventDefault();
                     ComponentsDateTimePickers.init();
@@ -372,6 +441,8 @@
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         UIToastr.init(xhr , response.title , response.message  );
+                                        //$('#from_reserva_articulo_create')[0].reset(); //Limpia formulario
+                                        location.reload();
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -426,9 +497,12 @@
                                     if (request.status === 200 && xhr === 'success') {
                                         //table.ajax.reload();
                                         $('#static').modal('hide');
+                                        //location.reload();
+                                        //$('.mt-repeater').empty();
                                         $('#from_programa')[0].reset(); //Limpia formulario
                                         //$(":password").pwstrength("forceUpdate");
                                         UIToastr.init(xhr , response.title , response.message  );
+
                                     }
                                 },
                                 error: function (response, xhr, request) {

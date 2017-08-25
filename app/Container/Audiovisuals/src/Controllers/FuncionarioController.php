@@ -88,9 +88,9 @@ class FuncionarioController extends Controller
 			foreach ($x->group as $reserva){
 				$valores=$this->consultarArticulo($reserva->PRT_FK_Articulos_id);
 				Solicitudes::create([
-					'PRT_FK_Articulos_id' =>$valores['id'],
+					'PRT_FK_Articulos_id' =>$reserva->PRT_FK_Articulos_id,
 					'PRT_FK_Funcionario_id'=> $id,
-					'PRT_FK_Kits_id'=> $valores['FK_ART_Kit_id'],
+					'PRT_FK_Kits_id'=> 1,
 					'PRT_Fecha_Inicio'=> $reserva->PRT_Fecha_Inicio,
 					'PRT_Fecha_Fin'=> $reserva->PRT_Fecha_Fin,
 					'PRT_Observacion_Entrega'=> '',
@@ -103,7 +103,7 @@ class FuncionarioController extends Controller
 			}
 			return AjaxResponse::success(
 				'¡Bien hecho!',
-				'Funcionario registrado correctamente.'
+				'Reserva registrada correctamente.'
 			);
 		} else {
 			return AjaxResponse::fail(
