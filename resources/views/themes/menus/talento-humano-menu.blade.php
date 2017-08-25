@@ -33,7 +33,7 @@
 
         --}}
         {{-- FIN MENÚ ITEM ES SOLO DE EJEMPLO DE CÓMO SE DEBE CREAR EL MENÚ --}}
-
+        @permission('FUNC_RRHH')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-users"></i>
@@ -62,6 +62,7 @@
                 </li>
             </ul>
         </li>
+
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -147,7 +148,7 @@
                 <span class="arrow"></span>
             </a>
         </li>
-
+        @endpermission
 
     </ul>
 </li>

@@ -1,16 +1,12 @@
 <?php
-/**
- * Copyright (c) 2017 - 2017. Todos los derechos reservados. Ley N° 23 de 1982 Colombia.
- */
-
-/**
- * Created by PhpStorm.
- * User: Daniel Prado
- * Date: 21/07/2017
- * Time: 11:28 AM
- */
 
 use Illuminate\Database\Seeder;
+/*
+ * Modelos
+ */
+use App\Container\Permissions\Src\Permission;
+use App\Container\Permissions\Src\Role;
+use App\Container\Users\Src\User;
 
 class DatabaseTalentoHumanoSeeder extends Seeder
 {
@@ -22,5 +18,17 @@ class DatabaseTalentoHumanoSeeder extends Seeder
     public function run()
     {
         //$this->call(UsersFinancialTableSeeder::class);
+        factory( Role::class, 1 )->create([
+            'name' => 'RRHH',
+            'display_name' => 'Funcionario RRHH',
+            'description' => 'Acceso completo a la modulo de recursos humanos.',
+        ]);
+
+        $permission= new Permission;
+        $permission->name = 'FUNC_RRHH';
+        $permission->display_name = 'HumTalent';
+        $permission->description = 'Acceso completo a la modulo de recursos humanos.';
+        $permission->module_id = 6;
+        $permission ->save();
     }
 }
