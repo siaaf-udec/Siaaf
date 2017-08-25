@@ -11,12 +11,19 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 
 //RUTA DE EJEMPLO
-Route::get('/', [
+/*/Route::get('/', [
     'as' => 'talento.humano.index',
     'uses' => function(){
         return view('humtalent.empleado.empleadosDocumentosCompletos');
     }
+]);/*/
+Route::get('/', [
+    'as' => 'talento.humano.index',
+    'uses' => function(){
+        return view('humtalent.example');
+    }
 ]);
+
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
