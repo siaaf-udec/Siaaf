@@ -21,6 +21,14 @@
 | @endpush
 --}}
 @push('styles')
+    <!-- STYLES SELECT -->
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css"/>
+    {{--MODAL--}}
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
+    {{--DATEPICKER--}}
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     {{--TOAST--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
@@ -85,6 +93,37 @@
 --}}
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
+    {{-- Modal static registro programa--}}
+    <div class="col-md-12">
+    {{-- BEGIN HTML MODAL CREATE --}}
+    <!-- static -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
+            <div class="modal-header modal-header-success">
+                <h3 class="modal-title">
+                    <i class="glyphicon glyphicon-user">
+                    </i>
+                    Seleccionar Programa
+                </h3>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            {!! Field::select('Seleccione Programa',$programas,
+                                ['name' => 'FK_FUNCIONARIO_Programa'])
+                            !!}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+            </div>
+            {!! Form::close() !!}
+        </div>
+        {{-- END HTML MODAL CREATE--}}
+    </div>
    <div class="col-md-12">
        <div class="portlet box red">
            <div class="portlet-title">
@@ -188,6 +227,14 @@
 --}}
 
 @push('plugins')
+    <!-- SCRIPT MODAL -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript">
+    </script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
+    </script>
+    <!-- SCRIPT SELECT -->
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
+    </script>
     <!-- SCRIPT REPEATER -->
     <script src="{{ asset('assets/pages/scripts/form-repeater.min.js') }} " type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-repeater/jquery.repeater.js') }} " type="text/javascript"></script>
@@ -236,8 +283,7 @@
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
-
-        <script>
+    <script>
             var ComponentsDateTimePickers = function () {
                 var handleDatetimePicker = function () {
                     if (!jQuery().datetimepicker) {
@@ -259,39 +305,48 @@
                 };
             }();
 
+            var ComponentsSelect2 = function() {
+
+                var handleSelect = function() {
+
+                    $.fn.select2.defaults.set("theme", "bootstrap");
+                    var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
+                    $(".pmd-select2").select2({
+                        width: null,
+                        placeholder: placeholder,
+                        escapeMarkup: function(m) {
+                            return m;
+                        }
+                    });
+
+                }
+
+                return {
+                    init: function() {
+                        handleSelect();
+                    }
+                };
+
+            }();
+
             $(document).ready(function()
             {
+                $( ".create" ).on('click', function (e) {
+                    e.preventDefault();
+                    ComponentsDateTimePickers.init();
+                    ComponentsSelect2.init();
+                });
                 ComponentsDateTimePickers.init();
-
-                $('.create').on('click',function (e){
-                    e.preventDefault();
-                    // setup the repeater
-                    //$('.mt-repeater').repeater();
-                    var i=$('.mt-repeater').repeaterVal();
-                    var info=Array.from(i);
-                    //get the values of the inputs as a formatted object
-                    console.log(info);
-                });
-                $('.finalizar').on('click',function (e){
-                    e.preventDefault();
-                    console.log("boton finalizar");
-
-                });
-                $.ajaxSetup({
-                    headers:
-                        {
-                            'X-CSRF-Token': $('input[name="_token"]').val()
-                        }
-                });
-                var from_res_create = $('#from_reserva_articulo_create');
-                var rules_res_create = {
-                    FK_ART_Tipo_id:{ required: true},
-                    Recibir_Reserva:{required: true},
-                    Devolver_Reserva:{ required: true},
+                ComponentsSelect2.init();
+                //abre o cierra modal para que el funcionario se registre con el programa
+                var abrirModal = JSON.stringify({{$numero}});
+                //sino se encuentran registros abrir el modal para registrar
+                if( abrirModal == 0 ){
+                   $('#static').modal('toggle');
+                }
 
 
-
-                };
+                //funcionario solicita crear una reserva
                 var createReserva = function () {
                     return{
                         init: function () {
@@ -329,7 +384,69 @@
                     }
 
                 };
+                               var from_res_create = $('#from_reserva_articulo_create');
+                var rules_res_create = {
+                    FK_ART_Tipo_id:{ required: true},
+                    //validaciones campos fechas
+                    Recibir_Reserva:{required: true},
+                    Devolver_Reserva:{ required: true},
+
+
+
+                };
                 FormValidationMd.init(from_res_create,rules_res_create,false,createReserva());
+                //fin solicitud reserva
+
+                //inicio de registrar funcionario audivisuales con programa
+                var createPrograma = function () {
+                    return{
+                        init: function () {
+                            //aqui toca guardar eso con auth id
+                            var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
+                            var type = 'POST';
+                            var async = async || false;
+
+                            var formData = new FormData();
+                            //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+                            formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+
+                            $.ajax({
+                                url: route,
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                cache: false,
+                                type: type,
+                                contentType: false,
+                                data: formData,
+                                processData: false,
+                                async: async,
+                                beforeSend: function () {
+
+                                },
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        //table.ajax.reload();
+                                        $('#static').modal('hide');
+                                        $('#from_programa')[0].reset(); //Limpia formulario
+                                        //$(":password").pwstrength("forceUpdate");
+                                        UIToastr.init(xhr , response.title , response.message  );
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 &&  xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                };
+
+                var form_create = $('#from_programa');
+                var rules_create = {
+
+                    FK_FUNCIONARIO_Programa:{required: true}
+                };
+                FormValidationMd.init(form_create,rules_create,false,createPrograma());
 
             });
 

@@ -17,16 +17,16 @@
                 <span class="arrow {{ active(['audiovisuales.reservas.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
-                <li class="nav-item {{ active(['audiovisuales.reservas.kit.index'], 'start active open') }}">
+                <li class="nav-item {{ active(['audiovisuales.reservas.articulos.index'], 'start active open') }}">
                     <a href="{{ route('audiovisuales.reservas.articulos.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-cloud-upload"></i>
-                        <span class="title">Reserva Por Kit</span>
+                        <span class="title">Reserva Por Articulo</span>
                     </a>
                 </li>
                 <li class="nav-item {{ active(['financial.files.request.index'], 'start active open') }}">
                     <a href="{{ route('financial.files.request.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-check"></i>
-                        <span class="title">Reserva Por Articulo</span>
+                        <span class="title">Reserva Por Kit</span>
                     </a>
                 </li>
             </ul>

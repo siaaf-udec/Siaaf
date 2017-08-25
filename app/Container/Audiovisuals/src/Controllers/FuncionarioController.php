@@ -2,6 +2,7 @@
 
 namespace App\Container\Audiovisuals\Src\Controllers;
 
+use App\Container\Audiovisuals\src\Articulo;
 use App\Container\Audiovisuals\Src\Interfaces\CarrerasInterface;
 use App\Container\Audiovisuals\Src\Interfaces\FuncionarioInterface;
 use App\Container\Audiovisuals\src\Solicitudes;
@@ -23,40 +24,16 @@ class FuncionarioController extends Controller
         $this->funcionarioRepository = $funcionarioRepository;
         $this->carrerasRepository    = $carrerasRepository;
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
-    {
-
+	{
         $carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
-        //$carreras = $this->carrerasRepository->create(['id'=>2,'PRO_Nombre'=>'psicologia']);
-        return view('audiovisuals.funcionario.gestionReservas', ['programas' => $carreras->toArray(),
-
-        ]);
+        return view('audiovisuals.funcionario.gestionReservas',
+			[
+				'programas' => $carreras->toArray()
+			]
+		);
     }
 
-    public function modal()
-    {
-        $bandera = 1;
-        $user    = Auth::user();
-        $userid  = $user->id;
-        $phone   = UsuarioAudiovisuales::where('USER_FK_User', $userid)->first();
-        if ($phone == null) {
-            $bandera = 0;
-        }
-        return $bandera;
-        //consulta usario ya ingreso programa
-
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -83,53 +60,46 @@ class FuncionarioController extends Controller
     }
     public function reserva(Request $request)
     {
+		$user    = Auth::user();
+		$userid  = $user->id;
+		$usuario  = UsuarioAudiovisuales::where('USER_FK_User', $userid)->first();
+		$bandera=1;
+		if ($usuario == null) {
+			$bandera = 0;
+		}
+		$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
 		$tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
-		return view('audiovisuals.funcionario.reservaKit',[
-			'tipos' =>$tipo->toArray(),
-		]);
-        /*if ($request->ajax() && $request->isMethod('GET')) {
-            //$admins = $this->funcionarioRepository->index([]);
-            $admins =Solicitudes::all();//where('PRT_FK_Tipo_Solicitud', '2')->first();
-            return Datatables::of($admins)
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addIndexColumn()
-                ->make(true);
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }*/
+		return view('audiovisuals.funcionario.reservaArticulo',[
+			'tipos' =>$tipo->toArray(),
+			'programas'=>$carreras->toArray(),
+			'numero'=>$bandera
+
+		]);
+
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
 			$x = json_decode($request->get('info'));
-			//return dd($x->group);
+			$user=Auth::user();
+			$id=$user->id;
 			foreach ($x->group as $reserva){
+				$valores=$this->consultarArticulo($reserva->PRT_FK_Articulos_id);
 				Solicitudes::create([
-					'PRT_FK_Articulos_id' => $reserva->PRT_FK_Articulos_id,
-					'PRT_FK_Funcionario_id'=> 1,
-					'PRT_FK_Kits_id'=> $reserva->PRT_FK_Articulos_id,
+					'PRT_FK_Articulos_id' =>$valores['id'],
+					'PRT_FK_Funcionario_id'=> $id,
+					'PRT_FK_Kits_id'=> $valores['FK_ART_Kit_id'],
 					'PRT_Fecha_Inicio'=> $reserva->PRT_Fecha_Inicio,
 					'PRT_Fecha_Fin'=> $reserva->PRT_Fecha_Fin,
 					'PRT_Observacion_Entrega'=> '',
 					'PRT_Observacion_Recibe'=> '',
 					'PRT_FK_Estado'=> 1,
 					'PRT_FK_Tipo_Solicitud'=> 1,
-					'PRT_FK_Administrador_Entrega_id'=>1,
-					'PRT_FK_Administrador_Recibe_id'=>1
+					'PRT_FK_Administrador_Entrega_id'=>0,
+					'PRT_FK_Administrador_Recibe_id'=>0
 				]);
-
-
 			}
 			return AjaxResponse::success(
 				'¡Bien hecho!',
@@ -144,7 +114,25 @@ class FuncionarioController extends Controller
 
 
     }
+	public function storePrograma(Request $request){
 
+		if ($request->ajax() && $request->isMethod('POST')) {
+			$user = Auth::user();
+			$user->audiovisual()->create(['USER_FK_Programa' => $request->get('FK_FUNCIONARIO_Programa')]);
+
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Programa registrado correctamente.'
+			);
+		} else {
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+
+
+	}
     /**
      * Display the specified resource.
      *
@@ -202,5 +190,18 @@ class FuncionarioController extends Controller
             );
         }
     }
+    public function consultarArticulo($reserva){
+		$query=Articulo::where([
+			['FK_ART_Tipo_id','=',$reserva],
+			['FK_ART_Estado_id','=',1]
+
+		])->first();
+		Articulo::where([
+			['id','=',$query['id']],
+
+		])->update(['FK_ART_Estado_id'=>3]);
+    	return $query;
+
+	}
 
 }

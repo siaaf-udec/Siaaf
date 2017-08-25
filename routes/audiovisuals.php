@@ -40,10 +40,15 @@ Route::group(['prefix' => 'funcionario'], function () {
         'uses' => $controller . 'FuncionarioController@reserva',
         'as'   => 'audiovisuales.reservas.articulos.index',
     ]);
-    //ruta para guardar reserva articulos
+    //ruta para crear reserva articulos
 	Route::post('Store', [
 		'uses' => $controller . 'FuncionarioController@store',
 		'as'   => 'reservaArticulo.store',
+	]);
+	//ruta para crear funcionario
+	Route::post('CrearFuncionario', [
+		'uses' => $controller . 'FuncionarioController@storePrograma',
+		'as'   => 'crearFuncionarioPrograma.storePrograma',
 	]);
 
     Route::get('data', [
