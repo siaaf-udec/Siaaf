@@ -97,27 +97,45 @@ jQuery(document).ready(function () {
         var route = '{{ route('talento.humano.evento.asistentes.deleteAsist') }}' + '/' + id + '/' + dataTable.PK_PRSN_Cedula;
         var type = 'GET';
         var async = async || false;
-        $.ajax({
-            url: route,
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            cache: false,
-            type: type,
-            contentType: false,
-            processData: false,
-            async: async,
-            success: function (response, xhr, request) {
-                if (request.status === 200 && xhr === 'success') {
-                    table.ajax.reload();
-                    UIToastr.init(xhr, response.title, response.message);
-                }
+        swal({
+                title: "¿Esta seguro?",
+                text: "¿Esta seguro de eliminar el asistente seleccionado?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "De acuerdo",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: true,
+                closeOnCancel: false
             },
-            error: function (response, xhr, request) {
-                if (request.status === 422 &&  xhr === 'success') {
-                    UIToastr.init(xhr, response.title, response.message);
-                }
-            }
+            function(isConfirm){
+                if (isConfirm) {
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        processData: false,
+                        async: async,
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
 
-        })
+                    })
+                } else {
+                    swal("Cancelado", "No se eliminó ningun asistente", "error");
+                }
+            });
+
     });
 });
 

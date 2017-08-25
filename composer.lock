@@ -2700,6 +2700,7 @@
             ],
             "time": "2017-06-14T15:44:48+00:00"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         },
         {
             "name": "symfony/polyfill-php56",
@@ -2808,6 +2809,8 @@
                 "shim"
             ],
             "time": "2017-07-05T15:09:33+00:00"
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         },

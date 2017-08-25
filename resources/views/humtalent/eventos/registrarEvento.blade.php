@@ -7,7 +7,6 @@
 
 @section('page-title','Creación de eventos:')
 
-
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de eventos: '])
@@ -28,7 +27,7 @@
                             ['help' => 'Digite la fecha de finalización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::text(
                             'EVNT_Hora',
-                            ['label'=>'Hora:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "hh/mm-", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
+                            ['label'=>'Hora del evento:','class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                     {!! Field::date(
                             'EVNT_Fecha_Notificacion',
@@ -56,14 +55,13 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
-<script>
-            @if(Session::has('message'))
+    <script>
+    @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
         case 'success':
@@ -72,10 +70,7 @@
             break;
     }
     @endif
-</script>
-@endpush
-@push('functions')
-<script>
+
     var ComponentsDateTimePickers = function () {
         var handleTimePickers = function () {
 
@@ -117,15 +112,19 @@
 
                         required: true
                     },
-                    EVNT_Fecha: {
+                    EVNT_Fecha_Inicio: {
                         required: true,
 
                     },
-                    EVNT_Hora: {
-                        passwordStr: true,
+                    EVNT_Fecha_Fin: {
                         required: true,
+
                     },
 
+                    EVNT_Fecha_Notificacion:{
+                        required: true,
+
+                    }
 
                 },
                 messages:{
@@ -133,14 +132,18 @@
 
                         required: "Debes ingresar la descripci'on del evento"
                     },
-                    EVNT_Fecha: {
-                        required: "Debes ingresar cuando se realizara el evento"
+                    EVNT_Fecha_Inicio: {
+                        required: "Digite la fecha de inicio de la realización del evento."
 
                     },
-                    EVNT_Hora: {
+                    EVNT_Fecha_Fin: {
+                        required: "Digite la fecha de finalización de la realización del evento."
 
-                        required: "Debes ingresar la hora del evento"
                     },
+
+                    EVNT_Fecha_Notificacion:{
+                        required: "Digite la fecha en la que quiere ser notificado del evento"
+                    }
 
                 },
 
@@ -182,10 +185,6 @@
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
-                    toastr.options.closeButton = true;
-                    toastr.options.showDuration= 1000;
-                    toastr.options.hideDuration= 1000;
-                    toastr.success('Información del funcionario almacenada correctamente','Registro exitoso:')
                     form1.submit();
                 }
             });
