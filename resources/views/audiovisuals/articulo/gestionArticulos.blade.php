@@ -440,6 +440,7 @@ de la plantilla
             $( ".create" ).on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-art').modal('toggle');
+
             });
             $( ".createTipo" ).on('click', function (e) {
                 e.preventDefault();

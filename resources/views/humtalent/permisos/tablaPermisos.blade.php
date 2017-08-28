@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>                    </div>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Nuevo</a>                    </div>
                 </div>
             </div>
             <br>
@@ -64,7 +64,7 @@
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_permission_create', 'method'=>'POST', 'route'=> ['talento.humano.permisos.store']]) !!}
+                        {!! Form::open(['id' => 'form_permission_create', 'method'=>'POST', 'route'=> ['talento.humano.permisos.store']]) !!}
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> Regitro de permisos o incapacidades</h1>
@@ -75,8 +75,8 @@
                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula,['id'=>'FK_TBL_Persona_Cedula']) !!}
 
                                     {!! Field::textarea(
-                                        'PERM_Descripcion',
-                                        ['label' => 'Descripción del permiso o incapacidad', 'max' => '300', 'min' => '2', 'auto' => 'off'],
+                                        'PERM_Descripcion',null,
+                                        ['label' => 'Descripción del permiso o incapacidad', 'maxlength' => '300','auto' => 'off'],
                                         ['help' => 'Ingrese la Descripción del permiso a registrar']) !!}
                                     {!! Field::date('PERM_Fecha',
                                                    ['label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
@@ -97,7 +97,7 @@
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_permission_update', 'method'=>'POST', 'route'=> ['talento.humano.permisos.update']]) !!}
+                        {!! Form::open(['id' => 'form_permission_update', 'method'=>'POST', 'route'=> ['talento.humano.permisos.update']]) !!}
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> Edición de permisos o incapacidades</h1>
@@ -107,9 +107,9 @@
                                 <div class="col-md-12">
                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula,['id'=>'FK_TBL_Persona_Cedula']) !!}
                                     {!! Field::hidden('PK_PERM_IdPermiso') !!}
-                                    {!! Field::text(
+                                    {!! Field::textarea(
                                         'PERM_Descripcion',
-                                        ['label' => 'Descripción del permiso o incapacidad', 'max' => '300', 'min' => '2', 'auto' => 'off'],
+                                        ['id'=>'descUpdate','label' => 'Descripción del permiso o incapacidad', 'maxlength' => '300','required', 'auto' => 'off'],
                                         ['help' => 'Ingrese la Descripción del permiso a registrar']) !!}
                                     {!! Field::date('PERM_Fecha',
                                                    ['label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
@@ -136,13 +136,18 @@
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-
     jQuery(document).ready(function () {
+
         @if(Session::has('message'))
             var type="{{Session::get('alert-type','info')}}"
             switch(type){
@@ -185,39 +190,80 @@
             var route = '{{ route('talento.humano.permisos.destroy') }}'+'/'+dataTable.PK_PERM_IdPermiso;
             var type = 'DELETE';
             var async = async || false;
-            $.ajax({
-                url: route,
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                cache: false,
-                type: type,
-                contentType: false,
-                processData: false,
-                async: async,
-                success: function (response, xhr, request) {
-                    if (request.status === 200 && xhr === 'success') {
-                        table.ajax.reload();
-                        UIToastr.init(xhr, response.title, response.message);
-                    }
+            swal({
+                    title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el permiso seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
                 },
-                error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
-                        UIToastr.init(xhr, response.title, response.message);
+                function(isConfirm){
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun permiso", "error");
                     }
-                }
-            });
+                });
         });
         table.on('click', '.edit', function (e) {
             e.preventDefault();
+            var form_update = $('#form_permission_update');
+            var rules_update = {
+                PERM_Descripcion: { maxlength: '300', required: true },
+                PERM_Fecha: { required: true },
+
+            };
+            var messages_update={
+                PERM_Descripcion:{required:"Debe ingresar la Descripción del permiso a modificarr"},
+                PERM_Fecha:{required:"Debe ingresar la fecha del permiso a modificar"}
+            };
+            FormValidationMd.init(form_update,rules_update,messages_update,false);
+
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $('input[name="PK_PERM_IdPermiso"]').val(dataTable.PK_PERM_IdPermiso);
-            $('input[name="PERM_Descripcion"]').val(dataTable.PERM_Descripcion);
+            $('#descUpdate').val(dataTable.PERM_Descripcion);
             $('input[name="PERM_Fecha"]').val(dataTable.PERM_Fecha);
             $('#modal-update-permission').modal('toggle');
+
         });
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
+            var form_create = $('#form_permission_create');
+            var rules_create = {
+                PERM_Descripcion: { maxlength: 300, required: true },
+                PERM_Fecha: { required: true },
+
+            };
+            var messages_create={
+                PERM_Descripcion:{required:"Debe ingresar la Descripción del permiso a registrar"},
+                PERM_Fecha:{required:"Debe ingresar la fecha del permiso a registrar"}
+            };
+            FormValidationMd.init(form_create,rules_create,messages_create,false);
             $('#modal-create-permission').modal('toggle');
         });
     });

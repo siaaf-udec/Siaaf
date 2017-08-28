@@ -6,16 +6,24 @@
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\DocumentacionPersona;
+use App\Container\Humtalent\src\StatusOfDocument;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 
 //RUTA DE EJEMPLO
+/*/Route::get('/', [
+    'as' => 'talento.humano.index',
+    'uses' => function(){
+        return view('humtalent.empleado.empleadosDocumentosCompletos');
+    }
+]);/*/
 Route::get('/', [
     'as' => 'talento.humano.index',
     'uses' => function(){
         return view('humtalent.example');
     }
 ]);
+
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
@@ -336,6 +344,30 @@ Route::group(['prefix' => 'permisos'], function () {
     Route::delete('destroy/{id?}',[
         'uses' => $controller.'PermisosController@destroy', //ruta para eliminar un permiso registrado
         'as' => 'talento.humano.permisos.destroy'
+    ]);
+
+});
+
+Route::group(['prefix' => 'notificaciones'], function () {
+    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+
+    Route::get('listaEmpleadosDocumentosCompletos',[
+        'uses' => $controller.'EmpleadoController@listaEmpleadosDocumentosCompletos', //ruta para consultar los permisos registrados
+        'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
+        /*'uses' => function(Request $request){
+            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación completa')
+                ->get();
+            if ($request->ajax()) {
+                return Datatables::of($empleados)
+                    ->addIndexColumn()
+                    ->make(true);
+            } else {
+                return response()->json([
+                    'message' => 'Incorrect request',
+                    'code' => 412
+                ], 412);
+            }
+        }*/
     ]);
 
 });

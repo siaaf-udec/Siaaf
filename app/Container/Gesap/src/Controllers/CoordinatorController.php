@@ -51,10 +51,17 @@ class CoordinatorController extends Controller
             
             $idanteproyecto=$anteproyecto->PK_NPRY_idMinr008;
         
+            
+            
             $radicacion= new Radicacion();
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
             $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();
             $radicacion->FK_TBL_Anteproyecto_id=$idanteproyecto;
+            
+            \Storage::disk('local')->put($request['Min']->getClientOriginalName(),  \File::get($request->file('Min')));
+            \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(),  \File::get($request->file('Requerimientos')));
+            
+            
             $radicacion->save();
             
             $idRadicacion=$radicacion->PK_RDCN_idRadicacion;
