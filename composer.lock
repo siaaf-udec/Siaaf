@@ -2699,8 +2699,6 @@
                 "shim"
             ],
             "time": "2017-06-14T15:44:48+00:00"
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         },
         {
             "name": "symfony/polyfill-php56",
@@ -2809,10 +2807,6 @@
                 "shim"
             ],
             "time": "2017-07-05T15:09:33+00:00"
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         },
         {
             "name": "symfony/process",
@@ -3223,23 +3217,23 @@
         },
         {
             "name": "watson/active",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dwightwatson/active.git",
-                "reference": "6019c05a14ed1a84cf0acae80a1a52df191eed3d"
+                "reference": "b29ed98e831d31695279d509167d05c1f57495fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dwightwatson/active/zipball/6019c05a14ed1a84cf0acae80a1a52df191eed3d",
-                "reference": "6019c05a14ed1a84cf0acae80a1a52df191eed3d",
+                "url": "https://api.github.com/repos/dwightwatson/active/zipball/b29ed98e831d31695279d509167d05c1f57495fe",
+                "reference": "b29ed98e831d31695279d509167d05c1f57495fe",
                 "shasum": ""
             },
             "require": {
-                "illuminate/config": "~5.0",
-                "illuminate/http": "~5.0",
-                "illuminate/routing": "~5.0",
-                "illuminate/support": "~5.0",
+                "illuminate/config": "~5.2",
+                "illuminate/http": "~5.2",
+                "illuminate/routing": "~5.2",
+                "illuminate/support": "~5.2",
                 "php": ">=5.5.0"
             },
             "require-dev": {
@@ -3281,7 +3275,7 @@
                 "laravel",
                 "routing"
             ],
-            "time": "2017-07-09T07:37:50+00:00"
+            "time": "2017-08-26T01:42:01+00:00"
         },
         {
             "name": "yajra/laravel-datatables-oracle",
