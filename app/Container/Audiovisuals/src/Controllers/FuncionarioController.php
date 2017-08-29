@@ -53,29 +53,30 @@ class FuncionarioController extends Controller
 				);
 			}
     }
+    //vista formulario de reserva articulo
     public function reserva(Request $request)
     {
-		$user    = Auth::user();
-		$userid  = $user->id;
-		$usuario  = UsuarioAudiovisuales::where('USER_FK_User', $userid)->first();
-		$bandera=1;
-		if ($usuario == null) {
-			$bandera = 0;
-		}
+		$validacionFuncionario=$this->validarFuncionario();
 		$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
-		$tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
+		$tipo = TipoArticulo::whereHas('consultarArticulos',
+			function ($query) {
+				$query->where('FK_ART_Estado_id', '=', 1);
+			})->pluck('TPART_Nombre','id');
+		//$validacionFuncionario = json_encode($validacionFuncionario);
+		//dd($validacionFuncionario);
 
 		return view('audiovisuals.funcionario.reservarArticulo',[
 			'tipos' =>$tipo->toArray(),
 			'programas'=>$carreras->toArray(),
-			'numero'=>$bandera
+			'numero'=>$validacionFuncionario
 
 		]);
 
     }
-
+	//funcion para guardar la reserva del articulo
     public function store(Request $request)
     {
+<<<<<<< Updated upstream
 		if ($request->ajax() && $request->isMethod('POST')) {
 //			$x = json_decode($request->get('info'));
 			$user=Auth::user();
@@ -97,6 +98,29 @@ class FuncionarioController extends Controller
             ]);
 //		}
         return AjaxResponse::success(
+=======
+		if ( $request->ajax() && $request->isMethod('POST') ) {
+			$x = json_decode( $request->get('info') );
+			$user = Auth::user();
+			$id = $user->id;
+			foreach ( $x->group as $reserva ){
+				$valores = $this->consultarArticulo( $reserva->PRT_FK_Articulos_id );
+				Solicitudes::create([
+					'PRT_FK_Articulos_id' => $valores['id'],
+					'PRT_FK_Funcionario_id' => $id,
+					'PRT_FK_Kits_id' => $valores['FK_ART_Kit_id'],
+					'PRT_Fecha_Inicio' => $reserva->PRT_Fecha_Inicio,
+					'PRT_Fecha_Fin '=> $reserva->PRT_Fecha_Fin,
+					'PRT_Observacion_Entrega' => '',
+					'PRT_Observacion_Recibe' => '',
+					'PRT_FK_Estado' => 1,
+					'PRT_FK_Tipo_Solicitud' => 1,
+					'PRT_FK_Administrador_Entrega_id' => 0,
+					'PRT_FK_Administrador_Recibe_id' => 0
+				]);
+			}
+			return AjaxResponse::success(
+>>>>>>> Stashed changes
 				'¡Bien hecho!',
 				'Reserva registrada correctamente.'
 			);
@@ -109,6 +133,7 @@ class FuncionarioController extends Controller
 
 
     }
+    //funcion para registrar el programa del funcionario
 	public function storePrograma(Request $request){
 
 		if ($request->ajax() && $request->isMethod('POST')) {
@@ -127,6 +152,14 @@ class FuncionarioController extends Controller
 		}
 
 
+	}
+	//funcion para consultar y listar las reservas del funcionario
+    public function consultaReservasArticulos(){
+		$validacionFuncionario=$this->validarFuncionario();
+
+		$reservas=Solicitudes::find(1);
+		dd($reservas);
+		return view('audiovisuals.funcionario.conusltarReservasArticulos');
 	}
     /**
      * Display the specified resource.
@@ -197,6 +230,22 @@ class FuncionarioController extends Controller
 		])->update(['FK_ART_Estado_id'=>3]);
     	return $query;
 
+	}
+	public function validarFuncionario(){
+		$user    = Auth::user();
+		$userid  = $user->id;
+		$usuario  = UsuarioAudiovisuales::where('USER_FK_User', $userid)->first();
+		$bandera=1;
+		if ($usuario == null) {
+			$bandera = 0;
+		}
+		return $bandera;
+	}
+	/////////////////////////////////////////////////////////////
+	/// funciones para reservas kit
+	/// /////////////////////////////////////////////////////
+    public  function indexReservaKit(){
+		return view('audiovisuals.funcionario.gestionReservasKit');
 	}
 
 }

@@ -34,23 +34,41 @@ Route::group(['prefix' => 'autenticacion'], function () {
 });
 // RUTAS FUNCIONARIO
 Route::group(['prefix' => 'funcionario'], function () {
+
+	$controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    Route::get('indexKit', [
+		'uses' => $controller . 'FuncionarioController@indexReservaKit',
+		'as'   => 'audiovisuales.reservas.kit.index',
+	]);
+	///////////////////////////////////////////////////////////////
+	/// fin rutas gesion kit(crear, cancelar,reserva kit)
+	/// //////////////////////////////////////////////////////////
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+<<<<<<< Updated upstream
     //ruta para vista reservar Articulos
     Route::get('reservas', [
+=======
+    //ruta para vista reservar Articulos(index reserva articulo)
+    Route::get('index', [
+>>>>>>> Stashed changes
         'uses' => $controller . 'FuncionarioController@reserva',
         'as'   => 'audiovisuales.reservas.articulos.index',
     ]);
-    //ruta para crear reserva articulos
+    //ruta para crear reserva articulos del formulario form repeat
 	Route::post('Store', [
 		'uses' => $controller . 'FuncionarioController@store',
 		'as'   => 'reservaArticulo.store',
 	]);
-	//ruta para crear funcionario
+	//ruta para crear funcionario desde el modal
 	Route::post('CrearFuncionario', [
 		'uses' => $controller . 'FuncionarioController@storePrograma',
 		'as'   => 'crearFuncionarioPrograma.storePrograma',
 	]);
-
+	//ruta para consultar las reservas realizadas por kit
+	Route::get('ConsultarReservaArticulo', [
+		'uses' => $controller . 'FuncionarioController@consultaReservasArticulos',
+		'as'   => 'audiovisuales.reservas.consultarArticulos.index',
+	]);
     Route::get('data', [
         'uses' => $controller . 'FuncionarioController@data',
         'as'   => 'funcionarioReservas.data',

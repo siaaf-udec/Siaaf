@@ -409,6 +409,7 @@
                 ComponentsSelect2.init();
                 //abre o cierra modal para que el funcionario se registre con el programa
                 var abrirModal = JSON.stringify({{$numero}});
+                // console.log(JSON.stringify({{$numero}}));
                 //sino se encuentran registros abrir el modal para registrar
                 if( abrirModal == 0 ){
                    $('#static').modal('toggle');

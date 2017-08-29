@@ -23,10 +23,16 @@
                         <span class="title">Reserva Por Articulo</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['financial.files.request.index'], 'start active open') }}">
-                    <a href="{{ route('financial.files.request.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['audiovisuales.reservas.kit.index'], 'start active open') }}">
+                    <a href="{{ route('audiovisuales.reservas.kit.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-check"></i>
                         <span class="title">Reserva Por Kit</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['audiovisuales.reservas.consultarArticulos.index'], 'start active open') }}">
+                    <a href="{{ route('audiovisuales.reservas.consultarArticulos.index') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-check"></i>
+                        <span class="title">Consultar Reserva</span>
                     </a>
                 </li>
             </ul>

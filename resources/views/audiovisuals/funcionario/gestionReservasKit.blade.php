@@ -125,10 +125,10 @@ de la plantilla
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'fun-table-ajax'])
                             @slot('columns', [
                                 '#' => ['style' => 'width:20px;'],
-                                'Nombre Articulo',
+                                'Nombre Kit',
                                 'Fecha Inicio',
                                 'Fecha Fin',
-                                'Estado',
+                                'Verificar Kit',
                                 'Acciones' => ['style' => 'width:90px;']
                             ])
                         @endcomponent
@@ -146,7 +146,7 @@ de la plantilla
                                     <h2 class="modal-title">
                                         <i class="glyphicon glyphicon-tv">
                                         </i>
-                                        Registrar Tipo De articulo
+                                        Reservar Kit
                                     </h2>
                                 </div>
                                 <div class="modal-body">
@@ -155,7 +155,7 @@ de la plantilla
                                         <div class="col-md-12">
                                             <p>
                                                 {!! Field::text('TPART_Nombre',
-                                                ['label' => 'Tipo Articulo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                                ['label' => 'Kit:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                                 ['help' => 'Ingrese Tipo articulo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
                                                 !!}
                                             </p>
@@ -200,7 +200,7 @@ de la plantilla
                                     <div class="row">
                                         <div class="col-md-12">
                                             <p>
-                                                {!! Field::select('Seleccione Programa',$programas,    
+                                                {!! Field::select('Seleccione Programa',null,
                                 ['name' => 'FK_FUNCIONARIO_Programa'])
                                 !!}
                                             </p>
@@ -335,7 +335,7 @@ de la plantilla
             {data: 'PRT_FK_Articulos_id', name: 'Nombre' },
             {data: 'PRT_Fecha_Inicio', name: 'Fecha Inicio'},
             {data: 'PRT_Fecha_Fin', name: 'Fecha Fin'},
-            {data: 'PRT_FK_Estado', name: 'Estado'},
+            {data: 'PRT_FK_Estado', name: 'Verificar Kit'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                 data:'action',
