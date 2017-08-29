@@ -13,4 +13,10 @@ class Respuesta extends Model
     protected $primaryKey = 'PK_RPST_idMinr008';
 
     protected $fillable = ['RPST_RMin','RPST_Requerimientos','FK_TBL_Radicacion_id'];
+    
+    public function observaciones() {
+        return $this->belongsto('App\container\Users\src\Observaciones','FK_TBL_Observaciones_id','PK_BVCS_idObservacion');
+    }
+
+    
 }
