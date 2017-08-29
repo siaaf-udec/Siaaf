@@ -339,6 +339,7 @@ de la plantilla
 --}}
 
 @push('plugins')
+
 <!-- SCRIPT DATATABLE -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript">
 </script>
@@ -346,6 +347,9 @@ de la plantilla
 </script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript">
 </script>
+<!-- SCRIPT DATEPICKER -->
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 <!-- SCRIPT MODAL -->
 <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript">
 </script>

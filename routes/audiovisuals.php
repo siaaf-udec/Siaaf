@@ -36,7 +36,7 @@ Route::group(['prefix' => 'autenticacion'], function () {
 Route::group(['prefix' => 'funcionario'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
     //ruta para vista reservar Articulos
-    Route::get('index', [
+    Route::get('reservas', [
         'uses' => $controller . 'FuncionarioController@reserva',
         'as'   => 'audiovisuales.reservas.articulos.index',
     ]);
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'funcionario'], function () {
 
     Route::get('data', [
         'uses' => $controller . 'FuncionarioController@data',
-        'as'   => 'funcionario.data',
+        'as'   => 'funcionarioReservas.data',
     ]);
     Route::get('reserva', [
         'uses' => $controller . 'FuncionarioController@reserva',
@@ -113,11 +113,17 @@ Route::group(['prefix' => 'administrador'], function () {
 // RUTAS SUPERADMIN
 Route::group(['prefix' => 'superAdmin'], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    //GESTION VALIDACIONES
+    Route::get('validaciones', [
+        'uses' => $controller . 'ValidacionController@index',
+        'as'   => 'audiovisuales.validaciones.index',
+    ]);
     //GESTION ARTICULO
     Route::get('index', [
         'uses' => $controller . 'ArticuloController@index',
         'as'   => 'audiovisuales.articulo.index',
     ]);
+
     Route::post('stores', [
         'uses' => $controller . 'ArticuloController@storeTipoArt',
         'as'   => 'tipoArticulos.store',
