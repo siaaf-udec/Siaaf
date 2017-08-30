@@ -2,32 +2,21 @@
 
 @section('page-title', 'Registro de solicitud:')
 
-<script type="text/javascript">
-    function capturar() {
-        codigo = document.getElementById("txt_codigo");
-
-            element.style.display='none';
-            document.getElementById('codigo').removeAttribute('required', 'required');
-
-    }
-</script>
-
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de solicitud'])
 
-            @include('humtalent.flash-message')
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.est.store']]) !!}
 
                     <div class="form-body">
 
-                        {!! Field:: text('txt_codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita el codigo','icon'=>'fa fa-desktop'] ) !!}
 
 
-                        {!! Field:: text('txt_nombre',null,['label'=>'Nombre estudiante','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('nombre',null,['label'=>'Nombre estudiante','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                          ['help' => 'Digita tu nombre.','icon'=>'fa fa-user']) !!}
 
 

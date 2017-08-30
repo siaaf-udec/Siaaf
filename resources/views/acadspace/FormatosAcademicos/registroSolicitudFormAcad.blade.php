@@ -3,7 +3,6 @@
 
 @push('styles')
 <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-
 <link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
@@ -119,7 +118,7 @@
         };
 
         var route = '{{route('espacios.academicos.formacad.store')}}';
-        var formatfile = 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF';
+        var formatfile = 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.pdf';
         var numfile = 2;
         FormDropzone.init(route, formatfile, numfile, createSolicitud());
     });

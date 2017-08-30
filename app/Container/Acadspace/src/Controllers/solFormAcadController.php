@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\solFormatAcad;
+use App\Container\Users\src\User;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class solFormAcadController extends Controller
 {
@@ -29,10 +31,12 @@ class solFormAcadController extends Controller
     {
         $solicitudes = solFormatAcad::all();
         $solicitudes = solFormatAcad::paginate(10);
+
+        $usuarios = User::all();
         // return view('usuario.mostrarUsuario', compact('usuarios'));
         /* $estado=0;
          $sol = solFormatAcad::where('SOL_estado',$estado)->get();*/
-        return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad', compact('solicitudes'));
+        return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad', compact('solicitudes','usuarios'));
     }
 
     /**
@@ -56,14 +60,16 @@ class solFormAcadController extends Controller
     {
         if($request->ajax() && $request->isMethod('POST')){
 
+            $id = Auth::id();
 
-            solFormatAcad::create([
-                    'titulo_doc' => $request['titulo'],
-                    'descripcion_doc' => $request['descripcion'],
-                    'nombre_doc' => $request['file'],
-                    'id_secretaria' => 3,
-                    'estado' => 0
-                ]);
+                $model = new solFormatAcad();
+
+                $model->titulo_doc = $request['titulo'];
+                $model->descripcion_doc = $request['descripcion'];
+                $model->nombre_doc = $request['file'];
+                $model->id_secretaria = $id;
+                $model->estado = 0;
+                $model->save();
 
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -100,15 +106,21 @@ class solFormAcadController extends Controller
      */
     public function edit($id)
     {
+        $solicitud = solFormatAcad::find($id);
+        $solicitud->estado = 1;
+        $solicitud->save();
+        return back()->with('success','La solicitud fue aprobada correctamente');
 
-            $empleado = Solicitud::find($id);
-            $empleado->SOL_estado = 1;
-            $empleado->save();
-            return back()->with('success','La solicitud fue aprobada correctamente');
-
-        //return view('humtalent.empleado.editarEmpleado', compact('empleado'));
     }
 
+    public function editAct($id)
+    {
+        $solicitud = solFormatAcad::find($id);
+        $solicitud->estado = 2;
+        $solicitud->save();
+        return back()->with('success','La solicitud fue aprobada correctamente');
+
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -116,13 +128,9 @@ class solFormAcadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        $empleado = Solicitud::find($id);
-        $empleado->SOL_estado = 2;
-        $empleado->save();
-        return back()->with('success','La solicitud fue rechazada correctamente');
-        //return view('humtalent.empleado.editarEmpleado', compact('empleado'));
+
     }
 
     /**
@@ -139,8 +147,19 @@ class solFormAcadController extends Controller
     public function descargar_publicacion($id){
 
         $solicitudess= solFormatAcad::find($id);
-        $rutaarchivo= "../storage/app/".$solicitudess->nombre_doc;
+        $rutaarchivo= "../storage/app/public/acadspace/".$solicitudess->nombre_doc;
         return response()->download($rutaarchivo);
 
+    }
+
+    public function listarporSec()
+    {
+        $id = Auth::id();
+        $solicitudes = solFormatAcad::all();
+        $solicitudes = solFormatAcad::paginate(10);
+        // return view('usuario.mostrarUsuario', compact('usuarios'));
+        /* $estado=0;
+         $sol = solFormatAcad::where('SOL_estado',$estado)->get();*/
+        return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad', compact('solicitudes','id'));
     }
 }

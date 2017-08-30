@@ -12,8 +12,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Solicitud;
+use App\Container\Acadspace\src\solSoftware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudController extends Controller
 {
@@ -47,7 +49,7 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
-       /* $diasSemana='';
+        $diasSemana='';
         foreach ($request['SOL_dias'] as $id){
             $separador = '|';
             if($diasSemana == ''){
@@ -70,7 +72,7 @@ class SolicitudController extends Controller
             'SOL_fechas'           => $request['fechas_Solicitadas'],
             'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico']
         ]);
-        return back()->with('success','Solicitud registrada correctamente');*/
+        return back()->with('success','Solicitud registrada correctamente');
 
     }
 
@@ -81,9 +83,16 @@ class SolicitudController extends Controller
     }
 
     public function listarSolicitudAprobada(){
+        $id = Auth::id();
+
         $solicitudes = Solicitud::all();
         $solicitudes = Solicitud::paginate(10);
-        return view('acadspace.solicitudesAprobadas', compact('solicitudes'));
+
+        $SoftwareSol = solSoftware::all();
+        $SoftwareSol = solSoftware::paginate(10);
+
+
+        return view('acadspace.solicitudesAprobadas', compact('solicitudes','SoftwareSol','id'));
     }
     /**
      * Display the specified resource.
@@ -99,12 +108,19 @@ class SolicitudController extends Controller
 
 
     public function edit($id){
-      /*  $empleado = Solicitud::find($id);
+        $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 1;
         $empleado->save();
-        return back()->with('success','La solicitud fue aprobada correctamente');*/
+        return back()->with('success','La solicitud fue aprobada correctamente');
 
-        //return view('humtalent.empleado.editarEmpleado', compact('empleado'));
+    }
+
+    public function editActPrac($id){
+        $empleado = Solicitud::find($id);
+        $empleado->SOL_estado = 2;
+        $empleado->save();
+        return back()->with('success','La solicitud fue aprobada correctamente');
+
     }
 
     /**
@@ -114,7 +130,7 @@ class SolicitudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
        /* $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 2;

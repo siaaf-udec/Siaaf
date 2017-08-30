@@ -14,6 +14,7 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Estudiantes;
 use App\Container\Acadspace\src\Solicitud;
 use Illuminate\Support\Facades\DB;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EstudiantesController extends Controller
 {
@@ -47,15 +48,60 @@ class EstudiantesController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
 
-        Estudiantes::create([
-            'codigo'          => $request['txt_codigo' ],
-            'nombre'          => $request['txt_nombre' ],
-        ]);
-        return back()->with('success','El estudiante fue registrado correctamente');
+        $code = $data['codigo'];
+        $rest = substr($code, -8, -6);
+        if($rest == '61' || $rest == '63' || $rest == '60' || $rest == '10' || $rest == '14' || $rest == '40') {
+
+            $model = new Estudiantes();
+
+            $model->id_carrera =$this->obtenerCarrera($code);
+            $model->nombre = $data['nombre'];
+            $model->codigo = $data['codigo'];
+            $model->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Codigo invalido!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+
 
     }
 
+    public function obtenerCarrera($codigo){
+
+        $rest = substr($codigo, -8, -6); // devuelve "d"
+
+            if($rest == '61'){
+                $id_carr = 1;//Ing Sistemas
+            }
+            if($rest == '63'){
+                $id_carr = 2;//Ing Ambiental
+            }
+            if($rest == '60'){
+                $id_carr = 3;//Ing Agronomica
+            }
+            if($rest == '10'){
+                $id_carr = 4;//Administracion
+            }
+            if($rest == '14'){
+                $id_carr = 5;//Contaduria
+            }
+            if($rest == '40'){
+                $id_carr = 6;//Piscologia
+            }
+
+        return $id_carr;
+    }
     /**
      * Display the specified resource.
      *
@@ -79,7 +125,6 @@ class EstudiantesController extends Controller
         $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 2;
         $empleado->save();
-        return back()->with('success','La solicitud fue rechazada correctamente');
     }
 
     /**
