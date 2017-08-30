@@ -43,14 +43,12 @@ class DocumentController extends Controller
             $cantidadDocumentos = DocumentacionPersona::all()->count();
             $cantidadRadicados = count($seleccion);
             $estado=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                ->where('EDCMT_Proceso_Documentacion', 'Afiliado')
                 ->get(['EDCMT_Proceso_Documentacion'])->first();
             if(count($estado)> 0) {
                 $estado = $estado->EDCMT_Proceso_Documentacion;
             }else{
                 $estado='No Afiliado';
             }
-
 
             return view('humtalent.documentacion.radicarDocumentos',
                 compact('empleados', 'docs', 'seleccion', 'cantidadDocumentos', 'cantidadRadicados', 'estado'));//y se muestran todas las consultas en el formuario de radicacion
@@ -75,7 +73,6 @@ class DocumentController extends Controller
             $cantidadDocumentos = DocumentacionPersona::all()->count();
             $cantidadRadicados = count($seleccion);
             $estado=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                                    ->where('EDCMT_Proceso_Documentacion', 'Afiliado')
                                     ->get(['EDCMT_Proceso_Documentacion'])->first();
             if(count($estado)> 0) {
                 $estado = $estado->EDCMT_Proceso_Documentacion;
@@ -157,12 +154,16 @@ class DocumentController extends Controller
         return $this->consulta($request['FK_TBL_Persona_Cedula']);
     }
     public function afiliarEmpleado(Request $request){
+        $fecha=$request['EDCMT_Fecha'];
+        StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])
+            ->update(['EDCMT_Proceso_Documentacion'=> $request['EDCMT_Proceso_Documentacion'],
+                'updated_at'=>$fecha]);
 
-        StatusOfDocument::create([ //se realiza un registro completo de los documentos enviados para radicar
+        /*StatusOfDocument::create([ //se realiza un registro completo de los documentos enviados para radicar
             'EDCMT_Fecha' => $request['EDCMT_Fecha'],
             'EDCMT_Proceso_Documentacion'  => $request['EDCMT_Proceso_Documentacion'],
             'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
-        ]);
+        ]);*/
         /*$notification=array(
             'message'=>'El docente se encuentra Afiliado .',
             'alert-type'=>'success'
@@ -190,7 +191,10 @@ class DocumentController extends Controller
     }
     public function tablaRadicados($id){
         $empleado=Persona::where('PK_PRSN_Cedula', $id)->get(['PK_PRSN_Cedula','PRSN_Nombres','PRSN_Apellidos','PRSN_Telefono','PRSN_Correo'])->first();
-        return view('humtalent.documentacion.listaDocumentosRadicados', compact('empleado', 'id'));
+        $afiliacion=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->get(['EDCMT_Proceso_Documentacion','updated_at'])->first();
+        $fecha=$afiliacion->updated_at->format('d-m-Y');
+        $estado=$afiliacion->EDCMT_Proceso_Documentacion;
+        return view('humtalent.documentacion.listaDocumentosRadicados', compact('empleado', 'id', 'estado','fecha'));
      }
 
      /**

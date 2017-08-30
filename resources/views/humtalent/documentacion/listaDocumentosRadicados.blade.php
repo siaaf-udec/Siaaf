@@ -36,9 +36,14 @@
                         </tbody>
                 </table>
                 <br>
+                @if($estado == 'Afiliado')
+                    <h4>Fecha de afiliación: {{$fecha}}</h4>
+                @endif
+                <br>
+                <br>
             </div>
         </div>
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => ''])
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
