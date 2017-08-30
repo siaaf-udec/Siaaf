@@ -153,28 +153,21 @@ class DocumentController extends Controller
         }
         return $this->consulta($request['FK_TBL_Persona_Cedula']);
     }
-    public function afiliarEmpleado(Request $request){
-        $fecha=$request['EDCMT_Fecha'];
+    public function afiliarEmpleado(Request $request)
+    {
+
         StatusOfDocument::where('FK_TBL_Persona_Cedula',$request['FK_TBL_Persona_Cedula'])
             ->update(['EDCMT_Proceso_Documentacion'=> $request['EDCMT_Proceso_Documentacion'],
-                'updated_at'=>$fecha]);
+                'updated_at'=>$request['EDCMT_Fecha']]);
 
-        /*StatusOfDocument::create([ //se realiza un registro completo de los documentos enviados para radicar
-            'EDCMT_Fecha' => $request['EDCMT_Fecha'],
-            'EDCMT_Proceso_Documentacion'  => $request['EDCMT_Proceso_Documentacion'],
-            'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
-        ]);*/
-        /*$notification=array(
-            'message'=>'El docente se encuentra Afiliado .',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);*/
         return $this->consulta($request['FK_TBL_Persona_Cedula']);
     }
+
     public function reiniciarRadicacion($id){
         StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->delete();
         return $this->consulta($id);
     }
+
     public function consultaRadicados(Request $request, $id){
         $radicados=StatusOfDocument::with('DocumentacionPersonas')->where('FK_TBL_Persona_Cedula',$id)->get(['EDCMT_Fecha','FK_Personal_Documento']);
         if ($request->ajax()) {

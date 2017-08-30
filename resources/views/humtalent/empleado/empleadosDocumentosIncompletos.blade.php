@@ -54,7 +54,7 @@
 
         var table, url,columns;
         table = $('#lista-empleados');
-        url = "{{ route('talento.humano.notificaciones.listaEmpleadosDocumentosCompletos')}}";
+        url = "{{ route('talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos')}}";
         columns = [
             {data: 'DT_Row_Index'},
             {data: 'personas.PRSN_Nombres', name: 'Nombres'},
