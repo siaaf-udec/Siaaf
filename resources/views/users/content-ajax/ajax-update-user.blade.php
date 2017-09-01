@@ -94,13 +94,13 @@
                                                 </div>
                                                 <div class="col-md-4 col-md-offset-1">
                                                     {!! Field::text(
-                                                        'lastname_create', $user->lastname,
-                                                        ['label' => 'Apellido', 'auto' => 'off'],
-                                                        ['help' => 'Digite su Apellido']) !!}
+                                                            'lastname_create', $user->lastname,
+                                                            ['label' => 'Apellido', 'auto' => 'off'],
+                                                            ['help' => 'Digite su Apellido']) !!}
                                                     {!! Field::select(
-                                                        'sexo_create',
-                                                        ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'], $user->sexo,
-                                                        [ 'label' => 'Sexo']) !!}
+                                                            'sexo_create',
+                                                            ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'], $user->sexo,
+                                                            [ 'label' => 'Sexo']) !!}
                                                     {!! Field::text(
                                                             'identity_no_create', $user->identity_no,
                                                             ['label' => 'Numero de Identificación', 'auto' => 'off'],

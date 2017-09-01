@@ -479,7 +479,7 @@
                     formData.append('phone', $('input:text[name="phone_create"]').val());
                     formData.append('state', $('select[name="state_create"]').val());
                     formData.append('email', $('input[name="email_create"]').val());
-                    formData.append('password', $('input:text[name="password_create"]').val());
+                    formData.append('password', $('input[name="password_create"]').val());
                     formData.append('address_create', $('input:text[name="address_create"]').val());
                     formData.append('countries_id', $('select[name="countries_create"]').val());
                     formData.append('regions_id', $('select[name="regions_create"]').val());
