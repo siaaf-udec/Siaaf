@@ -7,7 +7,7 @@
 Route::get('/', [
     'as' => 'espacios.academicos.index',
     'uses' => function(){
-        return view('acadspace.example');
+        return view('acadspace.controlEstudiante');
     }
 ]);
 
