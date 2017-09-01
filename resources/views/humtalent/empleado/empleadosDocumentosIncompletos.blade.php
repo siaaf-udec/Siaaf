@@ -1,4 +1,3 @@
-
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -16,47 +15,24 @@
 
 @section('content')
     <div class="col-md-12">
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <br><br>
-                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
-                    <thead>
-                    <th>Número de Cedula</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    </thead>
-                        <tbody>
-                        <td>{{$empleado->PK_PRSN_Cedula}}</td>
-                        <td>{{$empleado->PRSN_Nombres}}</td>
-                        <td>{{$empleado->PRSN_Apellidos}}</td>
-                        <td>{{$empleado->PRSN_Telefono}}</td>
-                        <td>{{$empleado->PRSN_Correo}}</td>
-                        </tbody>
-                </table>
-                <br>
-                @if($estado == 'Afiliado')
-                    <h4>Fecha de afiliación: {{$fecha}}</h4>
-                @endif
-                <br>
-                <br>
-            </div>
-        </div>
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => ''])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
-                            'Documento',
-                            'Fecha',
+                            'Nombres',
+                            'Apellidos',
+                            'Cédula',
+                            'Teléfono',
+                            'Email',
+                            'Rol ',
+                            'Área',
                             'Acciones'
                         ])
                     @endcomponent
                 </div>
             </div>
-            {!! Field::hidden('cedula',$id,['id'=>'cedula']) !!}
         @endcomponent
     </div>
 @endsection
@@ -75,14 +51,19 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-        var cedula=$('input[id="cedula"]').val();
+
         var table, url,columns;
         table = $('#lista-empleados');
-        url = '{{ route('talento.humano.historialDocumentos.documentosRadicados')}}'+'/'+cedula;
+        url = "{{ route('talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: "documentacion_personas.DCMTP_Nombre_Documento", name: 'Documento'},
-            {data: 'EDCMT_Fecha', name: 'Fecha'},
+            {data: 'personas.PRSN_Nombres', name: 'Nombres'},
+            {data: 'personas.PRSN_Apellidos', name: 'Apellidos'},
+            {data: 'personas.PK_PRSN_Cedula', name: 'Cedula'},
+            {data: 'personas.PRSN_Telefono', name: 'Teléfono'},
+            {data: 'personas.PRSN_Correo', name: 'Correo Electronico'},
+            {data: 'personas.PRSN_Rol', name: 'Rol'},
+            {data: 'personas.PRSN_Area', name: 'Área'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
                 data:'action',
@@ -107,7 +88,7 @@
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('talento.humano.historialDocumentos.documentos') }}'+'/'+dataTable.PK_PRSN_Cedula;
+                window.location.href='{{ route('talento.humano.notificaciones.consultarDocsRadicados') }}'+'/'+dataTable.personas.PK_PRSN_Cedula;
             });
         });
     });

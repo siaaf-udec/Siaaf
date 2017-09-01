@@ -16,6 +16,7 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
 use App\Container\Humtalent\src\StatusOfDocument;
+use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EmpleadoController extends Controller

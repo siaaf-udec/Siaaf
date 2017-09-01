@@ -55,15 +55,16 @@ Route::group(['middleware' => ['auth']], function () {
             return view('examples.redis-client', ['messages' => $messages]);
         })->name('socket.redis.index');
         Route::post('redis/store', function (Request $request) {
-            $message = \App\Container\Users\Src\Message::create($request->all());
-            /*$user = Auth::user();
+            //$message = \App\Container\Users\Src\Message::create($request->all());
+            $user = Auth::user();
             $data = [
-                'url' => 'https://www.google.com.co/',
+                'url' => route('components.buttons'),
+                //'url' => env('APP_URL').'Siaaf/public/components/buttons',
                 'description' => '¡Bienvenidos a Siaaf!',
                 'image' => 'assets/layouts/layout2/img/avatar3.jpg'
             ];
-            $user->notify(new HeaderSiaaf($data));*/
-            event(new \App\Events\NewMessage($message));
+            $user->notify(new HeaderSiaaf($data));
+            //event(new \App\Events\NewMessage($message));
             return back()->withInput();
         })->name('socket.redis.store');
         Route::get('check-auth', function () {

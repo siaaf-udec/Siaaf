@@ -91,7 +91,7 @@
                         </div>
                                     {!! Form::close() !!}
 
-                        @if($cantidadDocumentos == $cantidadRadicados)
+                        @if($cantidadDocumentos == $cantidadRadicados && $estado != 'Afiliado')
                             <div class="col-md-offset-1 col-md-10">
                             <hr>
                             </div>

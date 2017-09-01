@@ -12,6 +12,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
 
 class FuncionarioController extends Controller
 {
@@ -37,17 +38,11 @@ class FuncionarioController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-			$admins = $this->funcionarioRepository->index([]);
-			return Datatables::of($admins)
-			->removeColumn('created_at')
-			->removeColumn('updated_at')
-			->removeColumn('deleted_at')
-			->removeColumn('remember_token')
-			->removeColumn('FUNCIONARIO_Clave')
-			->removeColumn('FK_FUNCIONARIO_Rol')
-			->removeColumn('FUNCIONARIO_Direccion')
-			->removeColumn('FUNCIONARIO_Apellidos')
-			->removeColumn('FK_FUNCIONARIO_Estado')
+            //solicitudes con el usuario autenticado
+            $solicitudes   = Solicitudes::all();
+			//$admins = $this->funcionarioRepository->index([]);
+			return Datatables::of($solicitudes)
+
 			->addIndexColumn()
 			->make(true);
 
@@ -70,7 +65,7 @@ class FuncionarioController extends Controller
 		$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
 		$tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
 
-		return view('audiovisuals.funcionario.reservaArticulo',[
+		return view('audiovisuals.funcionario.reservarArticulo',[
 			'tipos' =>$tipo->toArray(),
 			'programas'=>$carreras->toArray(),
 			'numero'=>$bandera
@@ -82,26 +77,26 @@ class FuncionarioController extends Controller
     public function store(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
-			$x = json_decode($request->get('info'));
+//			$x = json_decode($request->get('info'));
 			$user=Auth::user();
-			$id=$user->id;
-			foreach ($x->group as $reserva){
-				$valores=$this->consultarArticulo($reserva->PRT_FK_Articulos_id);
-				Solicitudes::create([
-					'PRT_FK_Articulos_id' =>$reserva->PRT_FK_Articulos_id,
+            $id=$user->id;
+//			foreach ($x->group as $reserva){
+				//$valores=$this->consultarArticulo($reserva->PRT_FK_Articulos_id);
+            Solicitudes::create([
+                    'PRT_FK_Articulos_id'               => $request['PRT_FK_Articulos_id'],
+                    'PRT_Fecha_Inicio'  => $request['PRT_Fecha_Inicio'],
+                    'PRT_Fecha_Fin'     => $request['PRT_Fecha_Fin'],
 					'PRT_FK_Funcionario_id'=> $id,
 					'PRT_FK_Kits_id'=> 1,
-					'PRT_Fecha_Inicio'=> $reserva->PRT_Fecha_Inicio,
-					'PRT_Fecha_Fin'=> $reserva->PRT_Fecha_Fin,
 					'PRT_Observacion_Entrega'=> '',
 					'PRT_Observacion_Recibe'=> '',
 					'PRT_FK_Estado'=> 1,
 					'PRT_FK_Tipo_Solicitud'=> 1,
 					'PRT_FK_Administrador_Entrega_id'=>0,
 					'PRT_FK_Administrador_Recibe_id'=>0
-				]);
-			}
-			return AjaxResponse::success(
+            ]);
+//		}
+        return AjaxResponse::success(
 				'¡Bien hecho!',
 				'Reserva registrada correctamente.'
 			);

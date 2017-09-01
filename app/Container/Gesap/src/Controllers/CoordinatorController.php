@@ -50,8 +50,6 @@ class CoordinatorController extends Controller
             $anteproyecto->save();
             
             $idanteproyecto=$anteproyecto->PK_NPRY_idMinr008;
-        
-            
             
             $radicacion= new Radicacion();
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();

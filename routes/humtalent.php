@@ -352,11 +352,10 @@ Route::group(['prefix' => 'notificaciones'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
     Route::get('listaEmpleadosDocumentosCompletos',[
-        'uses' => $controller.'EmpleadoController@listaEmpleadosDocumentosCompletos', //ruta para consultar los permisos registrados
         'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
-        /*'uses' => function(Request $request){
+        'uses' => function(Request $request){
             $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación completa')
-                ->get();
+                ->distinct()->get(['FK_TBL_Persona_Cedula']);
             if ($request->ajax()) {
                 return Datatables::of($empleados)
                     ->addIndexColumn()
@@ -367,7 +366,28 @@ Route::group(['prefix' => 'notificaciones'], function () {
                     'code' => 412
                 ], 412);
             }
-        }*/
+        }
+    ]);
+    Route::get('listaEmpleadosDocumentosIncompletos',[
+        'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos',
+        'uses' => function(Request $request){
+            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación incompleta')
+                ->distinct()->get(['FK_TBL_Persona_Cedula']);
+            if ($request->ajax()) {
+                return Datatables::of($empleados)
+                    ->addIndexColumn()
+                    ->make(true);
+            } else {
+                return response()->json([
+                    'message' => 'Incorrect request',
+                    'code' => 412
+                ], 412);
+            }
+        }
+    ]);
+    Route::get('consultarDocsRadicados/{id?}',[
+        'uses' => $controller.'DocumentController@consulta', //ruta para consultar los permisos registrados
+        'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
     ]);
 
 });

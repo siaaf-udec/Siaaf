@@ -18,18 +18,28 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
+                @permission('secret')
                 <li class="nav-item {{ active(['espacios.academicos.formacad.create'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.formacad.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Solicitar</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.listarporSec'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.listarporSec') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Consultar</span>
+                    </a>
+                </li>
+                @endpermission
+                @permission('administ')
                 <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Consultar</span>
                     </a>
                 </li>
+                @endpermission
             </ul>
         </li>
         @endpermission
@@ -42,19 +52,34 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
+                @permission('docentes')
                 <li class="nav-item {{ active(['espacios.academicos.espacad.create'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.espacad.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Registrar</span>
+                        <span class="title">Practica</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.soft.create'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.soft.create') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Software</span>
+                    </a>
+                </li>
+                @endpermission
+                @permission('auxapoyo')
                 <li class="nav-item {{ active(['espacios.academicos.mostrarSolicitudes'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.mostrarSolicitudes') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Consultar</span>
+                        <span class="title">Practica</span>
                     </a>
                 </li>
-
+                <li class="nav-item {{ active(['espacios.academicos.solicitudesSoft'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.solicitudesSoft') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Software</span>
+                    </a>
+                </li>
+                @endpermission
                 @permission('docentes')
 
                 <li class="nav-item {{ active(['espacios.academicos.solicitudesAprobadas'], 'start active open') }}">
@@ -103,14 +128,14 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
-                <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.reportesDoc'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.reportesDoc') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Docentes</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.reportesEst'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.reportesEst') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Estudiantes</span>
                     </a>

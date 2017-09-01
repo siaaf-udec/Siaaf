@@ -51,6 +51,15 @@
                 </span>
             </a>
         </li>
+        <li class="nav-item {{ active(['audiovisuales.validaciones.index'], 'start active open') }}">
+            <a class="nav-link" href="{{ route('audiovisuales.validaciones.index') }}">
+                <i class="fa fa-users">
+                </i>
+                <span class="title">
+                    Tabla Validaciones
+                </span>
+            </a>
+        </li>
         <li class="nav-item {{ active(['audiovisuales.articulo.index'], 'start active open') }}">
             <a class="nav-link" href="{{ route('audiovisuales.articulo.index') }}">
                 <i class="fa fa-television">
