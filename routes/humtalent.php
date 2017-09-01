@@ -390,5 +390,25 @@ Route::group(['prefix' => 'notificaciones'], function () {
         'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
     ]);
 
+    Route::get('notificar', [
+       'uses' => $controller.'CalendarioController@crearNotificaciones',
+        'as' => 'talento.humano.notificaciones.notificar'
+    ]);
+
+    Route::get('empleadosDocumentosCompletos', [
+        'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosCompletos',
+        'uses' => function(){
+            return view('humtalent.empleado.empleadosDocumentosCompletos');
+        }
+    ]);
+
+    Route::get('empleadosDocumentosIncompletos', [
+        'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosIncompletos',
+        'uses' => function(){
+            return view('humtalent.empleado.empleadosDocumentosIncompletos');
+        }
+    ]);
+
+
 });
 
