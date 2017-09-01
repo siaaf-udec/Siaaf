@@ -47,6 +47,15 @@ class DatabaseAcadSpaceSeeder extends Seeder
         ]);
 
         PerimisosAcadSpace::create([
+            'name' => "administ", 'display_name' => "Administrador", 'description' => "Modulo Administrador", 'module_id' => "1",
+
+        ]);
+
+        PerimisosAcadSpace::create([
+            'name' => "secret", 'display_name' => "Secretaria", 'description' => "Modulo Secretaria", 'module_id' => "1",
+
+        ]);
+        PerimisosAcadSpace::create([
             'name' => "auxapoyo", 'display_name' => "Auxiliar Apoyo", 'description' => "Modulo Rol Auxiliar Apoyo", 'module_id' => "1",
 
         ]);
