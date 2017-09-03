@@ -46,6 +46,8 @@ class softwareController extends Controller
     public function store(Request $request)
     {
         solSoftware::create($request->all());
+        return view('acadspace.Solicitudes.registroSolSoftware');
+
     }
 
     /**
@@ -78,11 +80,16 @@ class softwareController extends Controller
         return view('acadspace.Solicitudes.listaSolSoftware', compact('solicitudes'));
     }
 
-    public function edit2($id)
+    public function mostrarSelect(){
+        $software = solSoftware::all();
+        echo $software;
+        return view('espacios.academicos.espacad.create', compact('$software'));
+    }
+
+    public function eliminarSoftware($id)
     {
         $solicitud = solSoftware::find($id);
-        $solicitud->estado = 2;
-        $solicitud->save();
+        $solicitud->delete();
 
         $solicitudes = solSoftware::all();
         $solicitudes = solSoftware::paginate(10);

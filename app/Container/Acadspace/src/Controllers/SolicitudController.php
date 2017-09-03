@@ -8,6 +8,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use App\Container\Acadspace\src\comentariosSolicitud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
@@ -82,7 +83,7 @@ class SolicitudController extends Controller
     public function listarSolicitud(){
         $solicitudes = Solicitud::all();
         $solicitudes = Solicitud::paginate(10);
-        return view('acadspace.mostrarSolicitudes', compact('solicitudes'));
+        return view('acadspace.Solicitudes.mostrarSolicitudes', compact('solicitudes'));
     }
 
     public function listarSolicitudAprobada(){
@@ -105,8 +106,7 @@ class SolicitudController extends Controller
      */
     public function show()
     {
-        //return "en el show";
-       // return view('humtalent.empleado.consultaEmpleado');
+
     }
 
 
@@ -118,9 +118,29 @@ class SolicitudController extends Controller
 
     }
 
-    public function edit2(Request $request){
-        echo $reques['txt_anotacion'];
+    public function agregarAnotacion(Request $request){
+       /* echo $request['txt_anotacion'];
+        return ("hola"); */
+        //if($request->ajax() && $request->isMethod('POST')){
 
+                $model = new comentariosSolicitud();
+
+                $model->COM_comentario = $request['anotacion'];
+                $model->FK_COM_id_solicitud = $request['id_solicitud'];
+                $model->save();
+             /*   return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Solicitud registrada correctamente.'
+                );
+
+            }else{
+
+        return AjaxResponse::fail(
+        '¡Lo sentimos!',
+        'No se pudo completar tu solicitud.'
+        );
+
+        }*/
     }
 
     public function editActPrac($id){
@@ -138,12 +158,13 @@ class SolicitudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
        /* $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 2;
         $empleado->save();
         return back()->with('success','Solicitud registrada correctamente');*/
+
 
     }
 
