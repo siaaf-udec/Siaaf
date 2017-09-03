@@ -50,27 +50,30 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         $diasSemana='';
-        foreach ($request['SOL_dias'] as $id){
-            $separador = '|';
+        foreach ($request['SOL_dias'] as $id)
+        {
+
+            $separador = ', ';
             if($diasSemana == ''){
                 $diasSemana = $id;
             }else{
                 $diasSemana .= $separador.$id;
             }
+
         }
-        //return "Aqui refirige";
+
         Solicitud::create([
- //         'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
             'SOL_guia_practica'    => $request['SOL_ReqGuia'],
-            'SOL_software'         => $request['SOL_ReqSoft'],
+            'SOL_software'         => $request['SOL_NombSoft'],
             'SOL_grupo'            => $request['SOL_grupo'],
             'SOL_cant_estudiantes' => $request['SOL_cant_estudiantes'],
             'SOL_dias'             => $diasSemana,
             'SOL_hora_inicio'      => $request['SOL_hora_inicio'],
             'SOL_hora_fin'         => $request['SOL_hora_fin'],
             'SOL_estado'           => 0,
-            'SOL_fechas'           => $request['fechas_Solicitadas'],
-            'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico']
+            'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico'],
+            'SOL_fecha_inicio'     => $request['SOL_fecha_inicial'],
+            'SOL_fecha_fin'        => $request['SOL_fecha_final']
         ]);
         return back()->with('success','Solicitud registrada correctamente');
 

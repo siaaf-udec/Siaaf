@@ -21,7 +21,8 @@ class Solicitud extends Model
         'SOL_hora_inicio',
         'SOL_hora_fin',
         'SOL_estado',
-      //  'SOL_fechas',
+        'SOL_fecha_inicio',
+        'SOL_fecha_fin',
         'SOL_nucleo_tematico'
     ];
 
