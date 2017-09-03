@@ -11,12 +11,16 @@ Route::get('/', [
     }
 ]);
 
+/***RUTA ASIGNADA A POPUP (AGREGAR ANOTACION SOLICITUD ESPACIO ACADEMICO **/
+
+
 
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
-Route::patch('/edit2',[
-    'as' => 'espacios.academicos.espacad.edit2',
-    'uses' => 'SolicitudController@edit2'
+
+Route::post('x',[
+    'uses' => $controller.'SolicitudController@agregarAnotacion',  //ruta que conduce al controlador para mostrar el formulario para registrar un empleado
+    'as' => 'espacios.academicos.espacad.solicitud'
 ]);
 
 Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
@@ -25,7 +29,7 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
         'store' => 'espacios.academicos.espacad.store',
         'index' => 'espacios.academicos.espacad.index',
         'edit' => 'espacios.academicos.espacad.edit',
-        'edit2' => 'espacios.academicos.espacad.edit2',
+        'show' => 'espacios.academicos.espacad.show',
         'update' => 'espacios.academicos.espacad.update',
         'destroy' => 'espacios.academicos.espacad.destroy'
     ]
@@ -80,7 +84,7 @@ Route::resource('soft', $controller.'softwareController', [   //ruta para el CRU
 
 Route::get('/edit2/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.edit2', //Este es el alias de la ruta
-    'uses' => $controller.'softwareController@edit2'
+    'uses' => $controller.'softwareController@eliminarSoftware'
 ]);
 
 Route::get('/solicitudesSoft', [    //ruta para listar los docentes registrados.

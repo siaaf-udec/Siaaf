@@ -40,6 +40,9 @@
                     {!! Field:: text('txt_descripcion',null,['label'=>'Descripcion','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                      ['help' => 'Digita la descripcion.','icon'=>'fa fa-user']) !!}
 
+                    {!! Field:: text('txt_correo',null,['label'=>'Correo destinatario','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                    ['help' => 'Ingrese el correo.','icon'=>'fa fa-user']) !!}
+
 
                 </div>
                 <div class="col-md-12">

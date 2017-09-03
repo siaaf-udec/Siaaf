@@ -19,6 +19,7 @@
                         {!! Field::text('SOL_nucleo_tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
 
+                        {!! Form::select('prueba', $software ) !!}
 
                         {!! Field::select('SOL_NombSoft',['Ninguno' => 'Ninguno', 'Matlab'=> 'Matlab',
                         'Argis'=>'Argis', 'Helisa'=>'Helisa', 'SimVenture'=>'SimVenture', 'Kgis'=>'Kgis',

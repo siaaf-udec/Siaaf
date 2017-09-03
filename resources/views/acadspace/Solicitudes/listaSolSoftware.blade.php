@@ -45,11 +45,8 @@
                                                         <td>{{$solicitud->version}}</td>
                                                         <td>{{$solicitud->licencias}}</td>
                                                         <td class=" text-right">
-                                                            {!! link_to_route('espacios.academicos.soft.edit',$title='Aceptar', $parameters=$solicitud->id,
-                                                            $atributes=  ['class' => 'btn blue']) !!}
-
-                                                            {!! link_to_route('espacios.academicos.edit2',$title='Rechazar', $parameters=$solicitud->id,
-                                                            $atributes=  ['class' => 'btn red']) !!}
+                                                            {!! link_to_route('espacios.academicos.edit2',$title='', $parameters=$solicitud->id,
+                                                            $atributes=  ['class' => 'btn red glyphicon glyphicon-remove']) !!}
                                                         </td>
                                                     </tr>
                                                 </tbody>
