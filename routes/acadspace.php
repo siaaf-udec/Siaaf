@@ -11,8 +11,13 @@ Route::get('/', [
     }
 ]);
 
+
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
+Route::patch('/edit2',[
+    'as' => 'espacios.academicos.espacad.edit2',
+    'uses' => 'SolicitudController@edit2'
+]);
 
 Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
     'names' => [ // 'método' => 'alias'
@@ -20,6 +25,7 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
         'store' => 'espacios.academicos.espacad.store',
         'index' => 'espacios.academicos.espacad.index',
         'edit' => 'espacios.academicos.espacad.edit',
+        'edit2' => 'espacios.academicos.espacad.edit2',
         'update' => 'espacios.academicos.espacad.update',
         'destroy' => 'espacios.academicos.espacad.destroy'
     ]
@@ -30,7 +36,7 @@ Route::get('/editActPrac/{id}', [    //ruta para listar los docentes registrados
     'uses' => $controller.'SolicitudController@editActPrac'
 ]);
 
-Route::resource('est', $controller.'EstudiantesController', [   //ruta para el CRUD de empleados
+Route::resource('est', $controller.'EstudiantesController', [   //ruta para el CRUD de estudiantes
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.est.create',
         'store' => 'espacios.academicos.est.store',
@@ -41,7 +47,7 @@ Route::resource('est', $controller.'EstudiantesController', [   //ruta para el C
     ]
 ]);
 
-Route::resource('formacad', $controller.'solFormAcadController', [   //ruta para el CRUD de empleados
+Route::resource('formacad', $controller.'solFormAcadController', [   //ruta para el CRUD de formatos academicos
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.formacad.create',
         'store' => 'espacios.academicos.formacad.store',

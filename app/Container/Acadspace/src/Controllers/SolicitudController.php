@@ -115,6 +115,11 @@ class SolicitudController extends Controller
 
     }
 
+    public function edit2(Request $request){
+        echo $reques['txt_anotacion'];
+
+    }
+
     public function editActPrac($id){
         $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 2;

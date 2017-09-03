@@ -45,10 +45,47 @@
                                             <td>{{$solicitud->SOL_grupo}}</td>
                                             <td>{{$solicitud->SOL_cant_estudiantes}}</td>
                                             <td class=" text-right">
-                                                {!! link_to_route('espacios.academicos.espacad.edit',$title='Aceptar', $parameters=$solicitud->PK_SOL_id_solicitud,
-                            $atributes=  ['class' => 'btn blue']) !!}
-                                                {!! link_to_route('espacios.academicos.editActPrac',$title='Rechazar', $parameters=$solicitud->PK_SOL_id_solicitud,
-                                                $atributes=  ['class' => 'btn red']) !!}
+                                                {!! link_to_route('espacios.academicos.espacad.edit',$title='', $parameters=$solicitud->PK_SOL_id_solicitud,
+                            $atributes=  ['class' => 'btn blue glyphicon glyphicon-ok']) !!}
+
+                                                    <!-- Trigger the modal with a button -->
+                                                    <span class="btn btn-warning glyphicon glyphicon-pencil" data-toggle="modal" data-target="#{{ $solicitud->PK_SOL_id_solicitud }}"></span>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="{{ $solicitud->PK_SOL_id_solicitud }}" role="dialog">
+                                                        <div class="modal-dialog">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">Agregar anotacion</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <label class="form-control">Nucleo tematico: {{ $solicitud->SOL_nucleo_tematico }}</label>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <label class="form-control">Hora inicio: {{ $solicitud->SOL_hora_inicio }}</label></div>
+                                                                        <div class="col-sm-6"><label class="form-control">Hora fin: {{ $solicitud->SOL_hora_fin }}</label></div>
+                                                                    </div>
+                                                                    <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
+                                                                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.espacad.edit2']]) !!}
+                                                                        {{ Form::textarea('txt_anotacion', null, ['class' => 'form-control']) }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn blue" data-dismiss="modal">Agregar</button>
+
+                                                                       {{ Form::submit('Agregar', ['class' => 'btn blue']) }}
+                                                                    {!! Form::close() !!}
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
                                             </td>
                                         </tr>
                                         </tbody>
