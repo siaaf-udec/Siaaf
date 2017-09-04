@@ -13,7 +13,7 @@ class HorarioController extends Controller
 
     public function index()
     {
-        return view('acadspace.controlEstudiante');
+        return view('acadspace.GestionHorarios.creacionHorario');
     }
 
 }
