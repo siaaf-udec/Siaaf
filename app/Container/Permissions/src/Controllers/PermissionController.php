@@ -2,7 +2,7 @@
 
 namespace App\Container\Permissions\Src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,7 +70,7 @@ class PermissionController extends Controller
     {
         if($request->ajax() && $request->isMethod('GET')){
             $permissions = $this->permissionRepository->index([]);
-            return Datatables::of($permissions)
+            return DataTables::of($permissions)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()

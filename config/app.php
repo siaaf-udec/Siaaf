@@ -192,7 +192,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Styde\Html\HtmlServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
@@ -276,7 +276,7 @@ return [
          * Package Aliases...
          */
         'Access'       => Styde\Html\Facades\Access::class,
-        'Datatables'   => Yajra\Datatables\Facades\Datatables::class,
+        'Datatables'   => Yajra\DataTables\Facades\DataTables::class,
         'Entrust'      => Zizaco\Entrust\EntrustFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Active'       => Watson\Active\Facades\Active::class,

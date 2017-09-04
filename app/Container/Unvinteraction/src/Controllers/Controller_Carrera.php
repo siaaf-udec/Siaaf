@@ -1,7 +1,7 @@
 <?php
 
 namespace App\container\Unvinteraction\src\Controllers; 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use App\Container\Unvinteraction\src\TBL_Carrera;
@@ -32,7 +32,7 @@ class Controller_Carrera extends Controller
             ->get();
         
       //return view($this->path.'.Listar_Usuarios');
-        return Datatables::of( $Carrera)->addIndexColumn()->make(true);   
+        return DataTables::of( $Carrera)->addIndexColumn()->make(true);
     }
     /**
      * Show the form for creating a new resource.

@@ -6,7 +6,7 @@ use App\Container\Audiovisuals\Src\Interfaces\AdminInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class ValidacionController extends Controller
 {
@@ -36,7 +36,7 @@ class ValidacionController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $admins = $this->adminRepository->index();
-            return Datatables::of($admins)
+            return DataTables::of($admins)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->removeColumn('deleted_at')

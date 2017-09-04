@@ -4,7 +4,7 @@ namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 
@@ -260,7 +260,7 @@ class EvaluatorController extends Controller
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
                         })
                 ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NCRD_idCargo');
-        return Datatables::of(DB::select($this->getSql($observaciones)))->addIndexColumn()->make(true);
+        return DataTables::of(DB::select($this->getSql($observaciones)))->addIndexColumn()->make(true);
     }
 
     public function directorList(Request $request){
@@ -377,7 +377,7 @@ class EvaluatorController extends Controller
                         .')AS estudiante2Cedula'
                     )
                 );
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+        return DataTables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
     
     public function juryList(Request $request){
@@ -511,7 +511,7 @@ class EvaluatorController extends Controller
                         .')AS Concepto'
                     )    
                 );
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+        return DataTables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
 
 }

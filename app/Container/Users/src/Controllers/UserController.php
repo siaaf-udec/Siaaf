@@ -5,7 +5,7 @@ namespace App\Container\Users\Src\Controllers;
 use App\Notifications\HeaderSiaaf;
 
 use Validator;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
@@ -95,7 +95,7 @@ class UserController extends Controller
             $users = Cache::remember('roles', 1, function () {
                 return $this->userRepository->index(['roles']);
             });
-            return Datatables::of($users)
+            return DataTables::of($users)
                 ->addColumn('roles', function ($users){
                     if ( !empty($users->roles)) {
                         foreach ($users->roles as $role) {

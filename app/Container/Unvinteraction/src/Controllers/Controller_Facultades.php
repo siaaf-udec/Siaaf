@@ -1,7 +1,7 @@
 <?php
 
 namespace App\container\Unvinteraction\src\Controllers; 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use App\Container\Unvinteraction\src\TBL_Facultad;
@@ -30,7 +30,7 @@ class Controller_Facultades extends Controller
             ->get();
         
       //return view($this->path.'.Listar_Usuarios');
-        return Datatables::of( $Facultad)->addIndexColumn()->make(true); 
+        return DataTables::of( $Facultad)->addIndexColumn()->make(true);
         
     }
   

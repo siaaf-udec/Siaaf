@@ -14,7 +14,7 @@ use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Humtalent\src\StatusOfDocument;
 use App\Container\Humtalent\src\Persona;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
@@ -171,7 +171,7 @@ class DocumentController extends Controller
     public function consultaRadicados(Request $request, $id){
         $radicados=StatusOfDocument::with('DocumentacionPersonas')->where('FK_TBL_Persona_Cedula',$id)->get(['EDCMT_Fecha','FK_Personal_Documento']);
         if ($request->ajax()) {
-            return Datatables::of($radicados )
+            return DataTables::of($radicados )
                 ->addIndexColumn()
                 ->make(true);
         } else {

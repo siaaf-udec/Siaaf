@@ -2,7 +2,7 @@
 
 namespace App\Container\Permissions\Src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

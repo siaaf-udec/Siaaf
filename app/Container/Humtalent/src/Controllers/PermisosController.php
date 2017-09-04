@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
@@ -46,7 +46,7 @@ class PermisosController extends Controller
     public function consultaPermisos(Request $request, $id){//función ejecutada por el dataTable que consulta los permisos de un empleado seleccionado
         $permisos=Permission::where('FK_TBL_Persona_Cedula',$id)->get(['PERM_Fecha','PERM_Descripcion','PK_PERM_IdPermiso']); //realiza la consulta de los permisos
         if ($request->ajax()) {
-            return Datatables::of($permisos ) //se retorna al dataTable la información consultada
+            return DataTables::of($permisos ) //se retorna al dataTable la información consultada
                 ->addIndexColumn()
                 ->make(true);
         } else {

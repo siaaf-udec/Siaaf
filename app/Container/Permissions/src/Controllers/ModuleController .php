@@ -2,7 +2,7 @@
 
 namespace App\Container\Permissions\Src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +40,7 @@ class ModuleController extends Controller
     {
         if($request->ajax() && $request->isMethod('GET')){
             $modules = $this->moduleRepository->index();
-            return Datatables::of($modules)
+            return DataTables::of($modules)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
