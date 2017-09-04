@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78604ddc8240c5b4e5b0293b83a3184",
+    "content-hash": "b42855d7a7de449fafb891ddabc91eea",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -57,21 +57,21 @@
         },
         {
             "name": "barryvdh/laravel-snappy",
-            "version": "v0.3.3",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-snappy.git",
-                "reference": "dea728426bd867652c2f3a307a9cbea3f1ed7dff"
+                "reference": "f08c7e5b4ddea585bfcd48ab4f40f920e58dd1cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-snappy/zipball/dea728426bd867652c2f3a307a9cbea3f1ed7dff",
-                "reference": "dea728426bd867652c2f3a307a9cbea3f1ed7dff",
+                "url": "https://api.github.com/repos/barryvdh/laravel-snappy/zipball/f08c7e5b4ddea585bfcd48ab4f40f920e58dd1cf",
+                "reference": "f08c7e5b4ddea585bfcd48ab4f40f920e58dd1cf",
                 "shasum": ""
             },
             "require": {
-                "illuminate/filesystem": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x",
-                "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x",
+                "illuminate/filesystem": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.x",
+                "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.x",
                 "knplabs/knp-snappy": "*",
                 "php": ">=5.4.0"
             },
@@ -79,6 +79,15 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "0.3-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Snappy\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Barryvdh\\Snappy\\Facades\\SnappyPdf",
+                        "SnappyImage": "Barryvdh\\Snappy\\Facades\\SnappyImage"
+                    }
                 }
             },
             "autoload": {
@@ -105,7 +114,7 @@
                 "wkhtmltoimage",
                 "wkhtmltopdf"
             ],
-            "time": "2017-02-09T23:18:54+00:00"
+            "time": "2017-08-14T06:48:50+00:00"
         },
         {
             "name": "caouecs/laravel-lang",

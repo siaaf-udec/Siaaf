@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-debugbar": "^2.4",
-        "barryvdh/laravel-snappy": "^0.3.3",
+        "barryvdh/laravel-snappy": "^0.4.0",
         "caouecs/laravel-lang": "~3.0",
         "doctrine/dbal": "2.5.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
