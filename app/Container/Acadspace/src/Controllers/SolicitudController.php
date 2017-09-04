@@ -123,11 +123,13 @@ class SolicitudController extends Controller
         return ("hola"); */
         //if($request->ajax() && $request->isMethod('POST')){
 
+
                 $model = new comentariosSolicitud();
 
-                $model->COM_comentario = $request['anotacion'];
-                $model->FK_COM_id_solicitud = $request['id_solicitud'];
+                $model->COM_comentario = $request['txt_anotacion'];
+                $model->FK_COM_id_solicitud = $request['invisible'];
                 $model->save();
+                return back()->with('success','Anotacion agregada correctamente');
              /*   return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Solicitud registrada correctamente.'

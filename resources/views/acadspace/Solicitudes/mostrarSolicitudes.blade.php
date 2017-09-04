@@ -73,7 +73,8 @@
                                                                     <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
                                                                     {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitud']]) !!}
                                                                         {{ Form::textarea('txt_anotacion', null, ['class' => 'form-control']) }}
-                                                                        {{ Form::hidden('invisible', '$solicitud->PK_SOL_id_solicitud') }}
+                                                                        {{ Form::hidden('invisible', $solicitud->PK_SOL_id_solicitud) }}
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <!--<button type="button" class="btn blue" data-dismiss="modal">Agregar</button>-->
