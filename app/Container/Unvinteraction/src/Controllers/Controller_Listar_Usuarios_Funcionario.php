@@ -2,7 +2,7 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use App\Container\Unvinteraction\src\TBL_Usuarios;
@@ -32,7 +32,7 @@ public function listar()
             ->get();
         
       //return view($this->path.'.Listar_Usuarios');
-        return Datatables::of( $usuario)->addIndexColumn()->make(true); 
+        return DataTables::of( $usuario)->addIndexColumn()->make(true);
         
     }
   
@@ -143,7 +143,7 @@ public function listar()
     {
         
         $documento = TBL_Documentacion_Extra::where('FK_TBL_Usuarios',$id)->get();
-        return Datatables::of( $documento)->addIndexColumn()->make(true);
+        return DataTables::of( $documento)->addIndexColumn()->make(true);
     }
     
     

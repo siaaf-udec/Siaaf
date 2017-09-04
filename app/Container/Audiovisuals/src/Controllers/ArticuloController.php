@@ -10,7 +10,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class ArticuloController extends Controller
 {
@@ -51,7 +51,7 @@ class ArticuloController extends Controller
 	{
 		if ($request->ajax() && $request->isMethod('GET')) {
 			$articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo','consultaEstadoArticulo' ])->get();
-			return Datatables::of($articulos)
+			return DataTables::of($articulos)
 				->removeColumn('created_at')
 				->removeColumn('updated_at')
 				->addIndexColumn()

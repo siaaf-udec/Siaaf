@@ -2,7 +2,7 @@
 
 namespace App\container\Unvinteraction\src\Controllers;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\Request;
 use App\Container\Unvinteraction\src\TBL_Documentacion;
@@ -36,7 +36,7 @@ class Controller_Listar_Convenios_Funcionario extends Controller
              ->join('TBL_Sede','TBL_Convenios.FK_TBL_Sede','=','TBL_Sede.PK_Sede')
              ->select('TBL_Convenios.PK_Convenios','TBL_Convenios.Nombre','TBL_Convenios.Fecha_Inicio','TBL_Convenios.Fecha_Fin','TBL_Estado.Estado','TBL_Sede.Sede')
              ->get(); 
-         return Datatables::of( $Convenio)->addIndexColumn()->make(true); 
+         return DataTables::of( $Convenio)->addIndexColumn()->make(true);
      }
 
     /**
@@ -147,7 +147,7 @@ class Controller_Listar_Convenios_Funcionario extends Controller
         $documento = TBL_Documentacion::join('TBL_Tipo_Documentos','TBL_Documentacion.FK_TBL_Tipo_Documentos','=','TBL_Tipo_Documentos.PK_Tipo_Documentos')
              ->select('TBL_Documentacion.PK_Documentacion','TBL_Documentacion.Entidad','TBL_Documentacion.Ubicacion','TBL_Tipo_Documentos.Descripcion')
              ->where('FK_TBL_Convenios',$id)->get();
-        return Datatables::of($documento)->addIndexColumn()->make(true);
+        return DataTables::of($documento)->addIndexColumn()->make(true);
     }
      public function ListarPC( $id)
     {
@@ -156,7 +156,7 @@ class Controller_Listar_Convenios_Funcionario extends Controller
             ->join('TBL_Convenios','TBL_Participantes.FK_TBL_Convenios','=','TBL_Convenios.PK_Convenios')
              ->select('TBL_Participantes.PK_Participantes','TBL_Participantes.FK_TBL_Usuarios','TBL_Usuarios.Nombre','TBL_Usuarios.Apellido')
              ->where('FK_TBL_Convenios',$id)->get();
-        return Datatables::of($participante)->addIndexColumn()->make(true);
+        return DataTables::of($participante)->addIndexColumn()->make(true);
     }
     public function ListarEPC( $id)
     {
@@ -164,7 +164,7 @@ class Controller_Listar_Convenios_Funcionario extends Controller
         $EM_participante = TBL_Empresas_Participantes::join('TBL_Empresa','TBL_Empresas_Participantes.FK_TBL_Empresa','=','TBL_Empresa.PK_Empresa')
              ->select('TBL_Empresas_Participantes.PK_Empresas_Participantes','TBL_Empresa.PK_Empresa','TBL_Empresa.Nombre_Empresa')
              ->where('FK_TBL_Convenios',$id)->get();
-        return Datatables::of($EM_participante)->addIndexColumn()->make(true);
+        return DataTables::of($EM_participante)->addIndexColumn()->make(true);
     }
     //  ;
     public function evaluaciones(Request $request)

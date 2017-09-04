@@ -13,7 +13,7 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Event;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Asistent;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -30,7 +30,7 @@ class EventoController extends Controller
 
     public function tablaEventos(Request $request){ //funcion que consulta los eventos registrados y los envía al datatable correspondiente
         if ($request->ajax()) {
-            return Datatables::of(Event::all())
+            return DataTables::of(Event::all())
                 ->addIndexColumn()
                 ->make(true);
         } else {
@@ -47,7 +47,7 @@ class EventoController extends Controller
             $empleados=array_merge($empleados,[$asistente->personas]);
         }
         if ($request->ajax()) {
-            return Datatables::of($empleados)
+            return DataTables::of($empleados)
                 ->addIndexColumn()
                 ->make(true);
         } else {
@@ -63,7 +63,7 @@ class EventoController extends Controller
             $query->where('FK_TBL_Eventos_IdEvento',$this->id);
         })->get();
         if ($request->ajax()) {
-            return Datatables::of($asistentes)
+            return DataTables::of($asistentes)
                 ->addIndexColumn()
                 ->make(true);
         } else {

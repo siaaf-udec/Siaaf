@@ -12,7 +12,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class FuncionarioController extends Controller
 {
@@ -41,7 +41,7 @@ class FuncionarioController extends Controller
             //solicitudes con el usuario autenticado
             $solicitudes   = Solicitudes::all();
 			//$admins = $this->funcionarioRepository->index([]);
-			return Datatables::of($solicitudes)
+			return DataTables::of($solicitudes)
 
 			->addIndexColumn()
 			->make(true);

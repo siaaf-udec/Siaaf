@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Induction;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 
 class InduccionController extends Controller
@@ -27,7 +27,7 @@ class InduccionController extends Controller
 
     public function listarEmpleadosNuevos(Request $request){
         if ($request->ajax()) {
-            return Datatables::of(Persona::where('PRSN_Estado_Persona', 'Nuevo')->get())
+            return DataTables::of(Persona::where('PRSN_Estado_Persona', 'Nuevo')->get())
                 ->addIndexColumn()
                 ->make(true);
         } else {

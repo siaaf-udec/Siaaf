@@ -6,7 +6,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
@@ -37,7 +37,7 @@ class RoleController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $roles = $this->roleRepository->index();
-            return Datatables::of($roles)
+            return DataTables::of($roles)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
