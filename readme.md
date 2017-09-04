@@ -70,6 +70,13 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
  
 ```
 
+### Actualización Laravel 5.5
+
+```sh
+1- composer update
+2- php artisan package:discover
+```
+
 ### Instalacion Node
 
 Activación de notificaciones de tiempo real (No es obligatorio)
