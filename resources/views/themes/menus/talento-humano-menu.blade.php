@@ -48,6 +48,12 @@
                         <span class="title">Registrar Empleado</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['talento.humano.empleado.regisArchivo'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.empleado.regisArchivo') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Registro por archivo</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ active(['talento.humano.empleado.index'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
@@ -60,6 +66,7 @@
                         <span class="title">Radicar Documentos</span>
                     </a>
                 </li>
+
             </ul>
         </li>
 

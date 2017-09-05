@@ -44,6 +44,10 @@ Route::group(['prefix' => 'empleado'], function () {
         'uses' => $controller.'EmpleadoController@store',   //ruta que conduce al controlador para alamacenar los datos del empleado en la base de datos
         'as' => 'talento.humano.empleado.store'
     ]);
+    Route::post('importUsers',[
+        'uses' => $controller.'EmpleadoController@importUsers',   //ruta que conduce al controlador para alamacenar los datos del empleado que tenga el archivo de excel
+            'as' => 'talento.humano.empleado.importUsers'
+    ]);
     Route::delete('empleado/destroy/{id?}',[
         'uses' => $controller.'EmpleadoController@destroy', //ruta que conduce al controlador para eliminar un registro de empleado
         'as' => 'talento.humano.empleado.destroy'
@@ -77,6 +81,12 @@ Route::group(['prefix' => 'empleado'], function () {
             return view('humtalent.empleado.empleadosRetirados');
         }
     ]);
+    Route::get('vistaArchivo',[      //ruta que retorna la vista del registro a traves de excel
+        'as'=>'talento.humano.empleado.regisArchivo',
+        'uses' => function(){
+            return view('humtalent.empleado.registroExcel');
+        }
+    ]);
     Route::get('empleadosRetirados',[ //ruta que realiza el datatable para consultar los empleados con estado de retirado
         'as'=>'talento.humano.empleado.empleadosRetirados',
         'uses'=> function(Request $request){
@@ -97,6 +107,13 @@ Route::group(['prefix' => 'empleado'], function () {
 //Rutas para el manejo de la documentación
 Route::group(['prefix' => 'document'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('prueba',[
+        'as'=>'talento.humano.document.prueba' ,
+        'uses'=> function () {
+        $data = [];
+        $pdf = PDF::loadView('humtalent.example', $data);
+        return $pdf->download('invoice.pdf');
+    }]);
     Route::get('index',[
         'uses' => $controller.'DocumentController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
         'as' => 'talento.humano.document.index'

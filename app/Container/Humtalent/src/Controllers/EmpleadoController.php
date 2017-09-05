@@ -18,6 +18,8 @@ use App\Container\Humtalent\src\Permission;
 use App\Container\Humtalent\src\StatusOfDocument;
 use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use Illuminate\Support\Facades\Input;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpleadoController extends Controller
 {
@@ -80,6 +82,38 @@ class EmpleadoController extends Controller
             'alert-type'=>'success'
         );
         return back()->with($notification);
+
+    }
+    public function importUsers()//se almacena en la base de datos el registro del archivo de excel
+    {
+        $path = Input::file('import-file')->getRealPath();
+        $data = Excel::load($path, function($reader) {
+        })->get();
+          foreach ($data as $key=>$row) {
+              Persona::create([
+                  'PK_PRSN_Cedula' => $row->cedula,
+                  'PRSN_Rol' => $row->rol,
+                  'PRSN_Nombres' => $row->nombres,
+                  'PRSN_Apellidos' => $row->apellidos,
+                  'PRSN_Telefono' => $row->telefono,
+                  'PRSN_Correo' => $row->correo,
+                  'PRSN_Direccion' => $row->direccion,
+                  'PRSN_Ciudad' => $row->ciudad,
+                  'PRSN_Salario' => $row->salario,
+                  'PRSN_Eps' => $row->eps,
+                  'PRSN_Fpensiones' => $row->fpensiones,
+                  'PRSN_Area' => $row->area,
+                  'PRSN_Caja_Compensacion' => $row->cajacompensacion,
+                  'PRSN_Estado_Persona' => $row->estado,
+              ]);
+          }
+        $notification=array(
+            'message'=>'La información del archivo fue almacenada correctamente.',
+            'alert-type'=>'success'
+        );
+        return back()->with($notification);
+
+
 
     }
 

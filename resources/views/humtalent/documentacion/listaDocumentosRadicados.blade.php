@@ -50,8 +50,7 @@
                         @slot('columns', [
                             '#',
                             'Documento',
-                            'Fecha',
-                            'Acciones'
+                            'Fecha'
                         ])
                     @endcomponent
                 </div>
@@ -83,33 +82,10 @@
             {data: 'DT_Row_Index'},
             {data: "documentacion_personas.DCMTP_Nombre_Documento", name: 'Documento'},
             {data: 'EDCMT_Fecha', name: 'Fecha'},
-            {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
-                data:'action',
-                name:'action',
-                title:'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority:2
-            }
+
         ];
         dataTableServer.init(table, url, columns);
-        table = table.DataTable();
 
-        table.on('click', '.documents', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            $.ajax({
-            }).done(function(){
-                window.location.href='{{ route('talento.humano.historialDocumentos.documentos') }}'+'/'+dataTable.PK_PRSN_Cedula;
-            });
-        });
     });
 </script>
 @endpush
