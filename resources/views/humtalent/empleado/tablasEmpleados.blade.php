@@ -31,7 +31,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaEmpleados'])
                         @slot('columns', [
                             '#',
                             'Nombres',
@@ -67,7 +67,7 @@
 jQuery(document).ready(function () {
 
         var table, url,columns;
-        table = $('#lista-empleados');
+        table = $('#listaEmpleados');
         url = "{{ route('talento.humano.tablaEmpleados')}}";
         columns = [
             {data: 'DT_Row_Index'},

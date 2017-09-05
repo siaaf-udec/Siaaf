@@ -7,7 +7,7 @@ use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Humtalent\src\StatusOfDocument;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 
 //RUTA DE EJEMPLO
