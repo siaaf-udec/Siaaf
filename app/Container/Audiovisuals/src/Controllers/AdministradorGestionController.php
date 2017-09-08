@@ -5,7 +5,7 @@ namespace App\Container\Audiovisuals\Src\Controllers;
 use App\Container\Audiovisuals\src\Solicitudes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 
 class AdministradorGestionController extends Controller

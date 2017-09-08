@@ -220,36 +220,7 @@ de la plantilla
                             </div>
                             {{-- END HTML MODAL CREATE--}}
                         </div>
-                        <div class="col-md-12">
-                            {{-- BEGIN HTML MODAL CREATE --}}
-                            <!-- static -->
-                            <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
-                                <div class="modal-header modal-header-success">
-                                    <h3 class="modal-title">
-                                        <i class="glyphicon glyphicon-user">
-                                        </i>
-                                        Seleccionar Programa
-                                    </h3>
-                                </div>
-                                <div class="modal-body">
-                                    {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p>
-                                                {!! Field::select('Seleccione Programa',null,
-                                                         ['name' => 'FK_FUNCIONARIO_Programa'])
-                                                !!}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
-                            {{-- END HTML MODAL CREATE--}}
-                        </div>
+
                     </div>
                     @endcomponent
                 </br>
@@ -590,58 +561,10 @@ de la plantilla
             });
         });
         //inicio de registrar funcionario audivisuales con programa
-        var createPrograma = function () {
-            return{
-                init: function () {
-                    //aqui toca guardar eso con auth id
-                    var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
-                    var type = 'POST';
-                    var async = async || false;
 
-                    var formData = new FormData();
-                    //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
-                    formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
 
-                    $.ajax({
-                        url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                        cache: false,
-                        type: type,
-                        contentType: false,
-                        data: formData,
-                        processData: false,
-                        async: async,
-                        beforeSend: function () {
 
-                        },
-                        success: function (response, xhr, request) {
-                            if (request.status === 200 && xhr === 'success') {
-                                //table.ajax.reload();
-                                $('#static').modal('hide');
-                                //location.reload();
-                                //$('.mt-repeater').empty();
-                                $('#from_programa')[0].reset(); //Limpia formulario
-                                //$(":password").pwstrength("forceUpdate");
-                                UIToastr.init(xhr , response.title , response.message  );
 
-                            }
-                        },
-                        error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
-                        }
-                    });
-                }
-            }
-        };
-
-        var form_create = $('#from_programa');
-        var rules_create = {
-
-            FK_FUNCIONARIO_Programa:{required: true}
-        };
-        FormValidationMd.init(form_create,rules_create,false,createPrograma());
         /*Registrar Reserva kit*/
         var createKit = function () {
             return{
@@ -694,6 +617,58 @@ de la plantilla
         };
         FormValidationMd.init(form_create_kit,rules_create_kit,false,createKit());
 
+        var createPrograma = function () {
+            return{
+                init: function () {
+                    //aqui toca guardar eso con auth id
+                    var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+                    formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+                    console.log( $('select[name="FK_FUNCIONARIO_Programa"]').val());
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                //table.ajax.reload();
+                                $('#static').modal('hide');
+                                //location.reload();
+                                //$('.mt-repeater').empty();
+                                $('#from_programa')[0].reset(); //Limpia formulario
+                                //$(":password").pwstrength("forceUpdate");
+                                UIToastr.init(xhr , response.title , response.message  );
+
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_create = $('#from_programa');
+        var rules_create = {
+
+            FK_FUNCIONARIO_Programa:{required: true}
+        };
+        FormValidationMd.init(form_create,rules_create,false,createPrograma());
     });
 
 </script>

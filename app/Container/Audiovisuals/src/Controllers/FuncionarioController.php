@@ -13,7 +13,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class FuncionarioController extends Controller
 {

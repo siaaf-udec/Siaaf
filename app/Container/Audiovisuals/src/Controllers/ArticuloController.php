@@ -10,7 +10,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class ArticuloController extends Controller
 {

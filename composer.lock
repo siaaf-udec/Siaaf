@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec14300eb01ed3c52a191ea7fd01f8a8",
+    "content-hash": "bc5724cee1b8d20aadfb3499f3b06196",
     "packages": [
         {
             "name": "barryvdh/laravel-snappy",
@@ -69,16 +69,16 @@
         },
         {
             "name": "caouecs/laravel-lang",
-            "version": "3.0.35",
+            "version": "3.0.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caouecs/Laravel-lang.git",
-                "reference": "7c4c87b366ee3a17860e9371f339e7158d560caf"
+                "reference": "fce0289a05fe35a6ba2d0625654efce6dd4fa553"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/7c4c87b366ee3a17860e9371f339e7158d560caf",
-                "reference": "7c4c87b366ee3a17860e9371f339e7158d560caf",
+                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/fce0289a05fe35a6ba2d0625654efce6dd4fa553",
+                "reference": "fce0289a05fe35a6ba2d0625654efce6dd4fa553",
                 "shasum": ""
             },
             "require-dev": {
@@ -107,7 +107,7 @@
                 "laravel",
                 "lpm"
             ],
-            "time": "2017-06-09T08:16:13+00:00"
+            "time": "2017-09-05T11:25:47+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1064,16 +1064,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.2",
+            "version": "v5.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "65da63c8ad4836e2bcddcff75becd49c71c5041c"
+                "reference": "779a98d3b2ebed2128db1a668dcc10a65c9b01be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/65da63c8ad4836e2bcddcff75becd49c71c5041c",
-                "reference": "65da63c8ad4836e2bcddcff75becd49c71c5041c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/779a98d3b2ebed2128db1a668dcc10a65c9b01be",
+                "reference": "779a98d3b2ebed2128db1a668dcc10a65c9b01be",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1192,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-04T14:09:04+00:00"
+            "time": "2017-09-07T13:50:21+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2247,16 +2247,16 @@
         },
         {
             "name": "styde/html",
-            "version": "1.4.0",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/StydeNet/html.git",
-                "reference": "a38bbab7f7a7d2ea5f3e91bfd25d639d1d00c08d"
+                "reference": "26145e0ebad4117bf17349e42f885c674e32ebc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/StydeNet/html/zipball/a38bbab7f7a7d2ea5f3e91bfd25d639d1d00c08d",
-                "reference": "a38bbab7f7a7d2ea5f3e91bfd25d639d1d00c08d",
+                "url": "https://api.github.com/repos/StydeNet/html/zipball/26145e0ebad4117bf17349e42f885c674e32ebc2",
+                "reference": "26145e0ebad4117bf17349e42f885c674e32ebc2",
                 "shasum": ""
             },
             "require": {
@@ -2268,6 +2268,23 @@
                 "phpspec/phpspec": "~2.1"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Styde\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Field": "Styde\\Html\\Facades\\Field",
+                        "Alert": "Styde\\Html\\Facades\\Alert",
+                        "Menu": "Styde\\Html\\Facades\\Menu",
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    },
+                    "dont-discover": [
+                        "laravelcollective/html"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Styde\\Html\\": "src/"
@@ -2287,7 +2304,7 @@
                 }
             ],
             "description": "Build form fields, menus, alert messages and other view components quickly",
-            "time": "2017-09-02T15:27:56+00:00"
+            "time": "2017-09-07T09:48:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3410,16 +3427,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v8.0.1",
+            "version": "v8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "06ddfeac9a86a701d860070a2f19b1f6ebe6615d"
+                "reference": "b1fcc9be3403394791541ec839e1d89f3196e337"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/06ddfeac9a86a701d860070a2f19b1f6ebe6615d",
-                "reference": "06ddfeac9a86a701d860070a2f19b1f6ebe6615d",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b1fcc9be3403394791541ec839e1d89f3196e337",
+                "reference": "b1fcc9be3403394791541ec839e1d89f3196e337",
                 "shasum": ""
             },
             "require": {
@@ -3476,7 +3493,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2017-08-31T11:09:32+00:00"
+            "time": "2017-09-06T00:36:58+00:00"
         },
         {
             "name": "zizaco/entrust",
