@@ -27,7 +27,7 @@ class ProgramasTableAudiovisualsSeeder extends Seeder
         ];
 
         foreach ($programas as $programa ) {
-            $aux = new Programas;
+            $aux = new Programas();
             $aux->PRO_Nombre = $programa['PRO_Nombre'];
             $aux->save();
         }

@@ -163,7 +163,7 @@ de la plantilla
                                 <div class="col-md-6">
                                     <p>
                                         {!! Field::select('Seleccione un Tipo de Articulo',
-                                        $programas,
+                                        null,
                                         ['name' => 'FK_ART_Tipo_id'])
                                         !!}
                                     </p>
@@ -176,7 +176,7 @@ de la plantilla
                                 <div class="col-md-6">
                                     <p>
                                         {!! Field::select('Seleccione un Kit al que pertecene',
-                                       $kit,
+                                       null,
                                        ['name' => 'FK_ART_Kit_id'])
                                        !!}
                                     </p>
@@ -277,6 +277,7 @@ de la plantilla
             </br>
             </br>
             </br>
+
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection
@@ -410,10 +411,11 @@ de la plantilla
             ComponentsSelect2.init();
             ComponentsBootstrapMaxlength.init();
             var table, url, columns;
+            var $seleccione_un_kit = $('select[name="FK_ART_Kit_id"]');
+            var $seleccione_un_tipoArticulo = $('select[name="FK_ART_Tipo_id"]');
+
             table = $('#art-table-ajax');
             url = "{{ route('listarArticulo.data') }}";
-
-
             columns = [
 
                 {data: 'DT_Row_Index'},
@@ -436,10 +438,49 @@ de la plantilla
                     responsivePriority:2
                 }
             ];
-            dataTableServer.init(table, url, columns)
+            dataTableServer.init(table, url, columns);
+            table = table.DataTable();
+
             $( ".create" ).on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-art').modal('toggle');
+                $seleccione_un_kit.empty().append('whatever');
+                var route_cargar_kits = '{{route('cargar.kits.select') }}';
+                $.ajax({
+                    url: route_cargar_kits,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+
+                            $(response.data).each(function (key, value) {
+                                $seleccione_un_kit.append(new Option(value.KIT_Nombre, value.id));
+                            });
+                        }
+                    }
+                });
+                $seleccione_un_tipoArticulo.empty().append('whatever');
+                var route_cargar_kitss = '{{route('cargar.tipoArticulos.select') }}';
+                $.ajax({
+                    url: route_cargar_kitss,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+                            $(response.data).each(function (key, value) {
+                                $seleccione_un_tipoArticulo.append(new Option(value.TPART_Nombre, value.id));
+                            });
+                        }
+                    }
+                });
+
+
 
             });
             $( ".createTipo" ).on('click', function (e) {
@@ -546,7 +587,7 @@ de la plantilla
 
                                     $('#modal-create-kit').modal('hide');
                                     $('#from_kit_create')[0].reset(); //Limpia formulario
-                                    location.reload();
+
                                     UIToastr.init(xhr , response.title , response.message  );
                                 }
                             },
@@ -618,8 +659,9 @@ de la plantilla
 
                                     $('#modal-create-art').modal('hide');
                                     $('#from_art_create')[0].reset(); //Limpia formulario
-                                    location.reload();
+                                    table.ajax.reload();
                                     UIToastr.init(xhr , response.title , response.message  );
+
                                 }
                             },
                             error: function (response, xhr, request) {
@@ -654,6 +696,7 @@ de la plantilla
             $("#from_art_create").validate({
                 onkeyup: false //turn off auto validate whilst typing
             });
+
 
 
         })

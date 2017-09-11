@@ -56,7 +56,7 @@ de la plantilla
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
-@section('title', '| Gestion Articulos')
+@section('title', '| Reservar Articulos')
 
 {{--
 |--------------------------------------------------------------------------
@@ -100,9 +100,40 @@ de la plantilla
 | @endsection
 --}}
 @section('content')
+    <div class="col-md-12">
+    {{-- BEGIN HTML MODAL CREATE --}}
+    <!-- static -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
+            <div class="modal-header modal-header-success">
+                <h3 class="modal-title">
+                    <i class="glyphicon glyphicon-user">
+                    </i>
+                    Seleccionar Programa
+                </h3>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            {!! Field::select('Seleccione Programa',$programas,
+                                ['name' => 'FK_FUNCIONARIO_Programa'])
+                            !!}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+            </div>
+            {!! Form::close() !!}
+        </div>
+        {{-- END HTML MODAL CREATE--}}
+    </div>
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Administradores'])
+
             <div class="clearfix">
             </div>
             <br>
@@ -122,18 +153,18 @@ de la plantilla
             <div class="clearfix">
             </div>
             <br>
-            <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'res-table-ajax'])
-                    @slot('columns', [
-                        '#' => ['style' => 'width:20px;'],
-                        'Nombre Articulo',
-                        'Fecha Inicio',
-                        'Fecha Fin',
-                        'Acciones' => ['style' => 'width:90px;']
-                    ])
-                @endcomponent
-            </div>
-            <div class="clearfix">
+
+            <div class="clearfix">   <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'res-table-ajax'])
+                        @slot('columns', [
+                            '#' => ['style' => 'width:20px;'],
+                            'Nombre Articulo',
+                            'Fecha Inicio',
+                            'Fecha Fin',
+                            'Acciones' => ['style' => 'width:90px;']
+                        ])
+                    @endcomponent
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -155,7 +186,7 @@ de la plantilla
                                 <div class="col-md-12">
                                     <p>
                                         {!! Field::select('Seleccione un Tipo de Articulo',
-                                            $tipos,
+                                            null,
                                             ['name' => 'PRT_FK_Articulos_id'])
                                         !!}
                                     </p>
@@ -360,22 +391,27 @@ de la plantilla
                 }
             };
         }();
-
+        var abrirModal = JSON.stringify({{$numero}});
+        //sino se encuentran registros abrir el modal para registrar
+        if( abrirModal == 0 ){
+            //console.log('abrir modal');
+            $('#static').modal('toggle');
+        }
 
         jQuery(document).ready(function() {
             ComponentsDateTimePickers.init();
             ComponentsSelect2.init();
             ComponentsBootstrapMaxlength.init();
-
+            var $seleccione_un_tipoArticulo = $('select[name="PRT_FK_Articulos_id"]');
 
 
             //DATATABLE
             var table, url, columns;
             table = $('#res-table-ajax');
-            url = "{{ route('funcionarioReservas.data') }}";
+            url = "{{ route('funcionarioReservas.dataArticulo') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'PRT_FK_Articulos_id', name: 'NombreArticulo' },
+                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'NombreArticulo' },
                 {data: 'PRT_Fecha_Inicio', name: 'FechaInicio'},
                 {data: 'PRT_Fecha_Fin', name: 'FechaFin'},
 
@@ -455,17 +491,31 @@ de la plantilla
                         });
                 });
             }
-
-
+            /* abre modal con el formulario para registrar la reserva*/
             $( ".create" ).on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-res').modal('toggle');
+                $seleccione_un_tipoArticulo.empty().append('whatever');
+                var routeTipoArticulosDisponibles = '{{route('cargar.tipoArticulosDisponibles.select') }}';
+                $.ajax({
+                    url: routeTipoArticulosDisponibles,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+
+                            $(response.data).each(function (key, value) {
+                                $seleccione_un_tipoArticulo.append(new Option(value.TPART_Nombre, value.id));
+                            });
+                        }
+                    }
+                });
 
             });
-
-
-
-            /*Registrar Reserva*/
+            /*Registrar Reserva articulo*/
             var createRes = function () {
                 return{
                     init: function () {
@@ -474,11 +524,9 @@ de la plantilla
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('FK_ART_Tipo_id', $('select[name="FK_ART_Tipo_id"]').val());
+                        formData.append('PRT_FK_Articulos_id', $('select[name="PRT_FK_Articulos_id"]').val());
                         formData.append('PRT_Fecha_Inicio', $('#PRT_Fecha_Inicio').val());
                         formData.append('PRT_Fecha_Fin', $('#PRT_Fecha_Fin').val());
-
-
                         $.ajax({
                             url: route,
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -493,10 +541,10 @@ de la plantilla
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
+
                                     $('#modal-create-res').modal('hide');
                                     $('#from_res_create')[0].reset(); //Limpia formulario
-
+                                    table.ajax.reload();
                                     UIToastr.init(xhr , response.title , response.message  );
                                 }
                             },
@@ -519,7 +567,59 @@ de la plantilla
 
             };
             FormValidationMd.init(form_create,rules_create,false,createRes());
+            //inicio de registrar funcionario audivisuales con programa
+            var createPrograma = function () {
+                return{
+                    init: function () {
+                        //aqui toca guardar eso con auth id
+                        var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
+                        var type = 'POST';
+                        var async = async || false;
 
+                        var formData = new FormData();
+                        //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+                        formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
+
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    //table.ajax.reload();
+                                    $('#static').modal('hide');
+                                    //location.reload();
+                                    //$('.mt-repeater').empty();
+                                    $('#from_programa')[0].reset(); //Limpia formulario
+                                    //$(":password").pwstrength("forceUpdate");
+                                    UIToastr.init(xhr , response.title , response.message  );
+
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+
+            var form_create = $('#from_programa');
+            var rules_create = {
+
+                FK_FUNCIONARIO_Programa:{required: true}
+            };
+            FormValidationMd.init(form_create,rules_create,false,createPrograma());
 
 
 

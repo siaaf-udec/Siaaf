@@ -26,11 +26,9 @@ class EstadosTableAudiovisualsSeeder extends Seeder
         ];
 
         foreach ($estados as $estado ) {
-            $aux = new Estado;
+            $aux = new Estado();
             $aux->EST_Descripcion = $estado['EST_Descripcion'];
-
-
-            $aux->save();
+			$aux->save();
         }
     }
 }

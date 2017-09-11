@@ -23,8 +23,8 @@
                         <span class="title">Reserva Por Articulo</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['financial.files.request.index'], 'start active open') }}">
-                    <a href="{{ route('financial.files.request.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['audiovisuales.reservas.kits.index'], 'start active open') }}">
+                    <a href="{{ route('audiovisuales.reservas.kits.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-check"></i>
                         <span class="title">Reserva Por Kit</span>
                     </a>
@@ -40,8 +40,6 @@
                 </span>
             </a>
         </li>
-
-
         <li class="nav-item {{ active(['audiovisuales.administrador.index'], 'start active open') }}">
             <a class="nav-link" href="{{ route('audiovisuales.administrador.index') }}">
                 <i class="fa fa-users">
@@ -66,6 +64,15 @@
                 </i>
                 <span class="title">
                     Gestion Articulos
+                </span>
+            </a>
+        </li>
+        <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.index'], 'start active open') }}">
+            <a class="nav-link" href="{{ route('audiovisuales.gestionPrestamos.index') }}">
+                <i class="fa fa-television">
+                </i>
+                <span class="title">
+                    Gestion Prestamos
                 </span>
             </a>
         </li>

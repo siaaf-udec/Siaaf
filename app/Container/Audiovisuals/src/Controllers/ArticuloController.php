@@ -22,7 +22,7 @@ class ArticuloController extends Controller
     public function index()
     {
         $tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
-        $kit    = Kit::all()->pluck('KIT_Nombre', 'id');
+        //$kit    = Kit::all()->pluck('KIT_Nombre', 'id');
         $estado = Estado::all()->pluck('EST_Descripcion', 'id');
         $consultaTipo = Articulo::with(['consultaTipoArticulo' ])->get();
 
@@ -30,7 +30,7 @@ class ArticuloController extends Controller
         return view('audiovisuals.articulo.gestionArticulos',
             [
 			'programas' => $tipo->toArray(),
-                'kit'       => $kit->toArray(),
+                //'kit'       => $kit->toArray(),
                 'estado'       => $estado->toArray(),
                 'tipo' =>$consultaTipo,
             ]
@@ -51,7 +51,7 @@ class ArticuloController extends Controller
 	{
 		if ($request->ajax() && $request->isMethod('GET')) {
 			$articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo','consultaEstadoArticulo' ])->get();
-			return DataTables::of($articulos)
+			return Datatables::of($articulos)
 				->removeColumn('created_at')
 				->removeColumn('updated_at')
 				->addIndexColumn()
@@ -96,6 +96,7 @@ class ArticuloController extends Controller
 
 			Kit::create([
 				'KIT_Nombre' => $request['KIT_Nombre'],
+				'KIT_FK_Estado_id' => 1,
 			]);
 			return AjaxResponse::success(
 				'¡Bien hecho!',
@@ -110,8 +111,9 @@ class ArticuloController extends Controller
 	}
 	public function storeArticulos(Request $request)
 	{
-
+		//
 		if ($request->ajax() && $request->isMethod('POST')) {
+
 			Articulo::create([
 				'FK_ART_Tipo_id' => $request['FK_ART_Tipo_id'],
 				'ART_Descripcion' => $request['ART_Descripcion'],
@@ -122,7 +124,7 @@ class ArticuloController extends Controller
 
 			return AjaxResponse::success(
 				'¡Bien hecho!',
-				'El kit se ha registrado correctamente.'
+				'El Articulo se ha registrado correctamente.'
 			);
 		} else {
 			return AjaxResponse::fail(
@@ -162,7 +164,37 @@ class ArticuloController extends Controller
 			return \Response::json(true);
 		}
 	}
+	public function carcargarKits(Request $request){
 
+		if($request->ajax() && $request->isMethod('GET')){
+			$kit = Kit::all();
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Datos consultados correctamente.',
+				$kit
+			);
+		}else{
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+	public function carcargarTipoArticulos(Request $request){
+		if($request->ajax() && $request->isMethod('GET')){
+			$tiposArticulo = TipoArticulo::all();
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Datos consultados correctamente.',
+				$tiposArticulo
+			);
+		}else{
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
 
 	/**
      * Show the form for editing the specified resource.

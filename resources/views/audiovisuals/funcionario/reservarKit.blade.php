@@ -99,6 +99,36 @@ de la plantilla
 | @endsection
 --}}
 @section('content')
+    <div class="col-md-12">
+    {{-- BEGIN HTML MODAL CREATE --}}
+    <!-- static -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
+            <div class="modal-header modal-header-success">
+                <h3 class="modal-title">
+                    <i class="glyphicon glyphicon-user">
+                    </i>
+                    Seleccionar Programa
+                </h3>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            {!! Field::select('Seleccione Programa',$programas,
+                                ['name' => 'FK_FUNCIONARIO_Programa'])
+                            !!}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+            </div>
+            {!! Form::close() !!}
+        </div>
+        {{-- END HTML MODAL CREATE--}}
+    </div>
     {{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Reservas Realizadas'])
@@ -150,26 +180,32 @@ de la plantilla
                                     </h2>
                                 </div>
                                 <div class="modal-body">
-                                    {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
+                                    {!! Form::open(['id' => 'from_kit_create', 'class' => '', 'url' => '/forms']) !!}
                                     <div class="row">
                                         <div class="col-md-12">
+
                                             <p>
-                                                {!! Field::text('TPART_Nombre',
-                                                ['label' => 'Kit:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
-                                                ['help' => 'Ingrese Tipo articulo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                                                {!! Field::select('PRT_FK_Kits_id',
+                                                    null,
+                                                    ['label' => 'Seleccione un Kit'])
                                                 !!}
                                             </p>
                                             <p>
+                                                {!! Field::textarea('PRT_Informacion_Kit',
+                                                                ['label' => 'Descripción', 'required', 'auto' => 'off', 'max' => '255', "rows" => '6','disabled'],
+                                                                ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right']) !!}
+                                            </p>
+                                            <p>
                                                 {!! Field::text(
-                                                    'Fecha_Recibir_Reserva',
-                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    'PRT_Fecha_Inicio',
+                                                    ['label'=>'Fecha Recibir Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                                     ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                                 !!}
                                             </p>
                                             <p>
                                                 {!! Field::text(
-                                                    'Fecha_Devolver_Reserva',
-                                                    ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                    'PRT_Fecha_Fin',
+                                                    ['label'=>'Fecha Entregar Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                                     ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                                 !!}
                                             </p>
@@ -184,36 +220,7 @@ de la plantilla
                             </div>
                             {{-- END HTML MODAL CREATE--}}
                         </div>
-                        <div class="col-md-12">
-                            {{-- BEGIN HTML MODAL CREATE --}}
-                            <!-- static -->
-                            <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
-                                <div class="modal-header modal-header-success">
-                                    <h3 class="modal-title">
-                                        <i class="glyphicon glyphicon-user">
-                                        </i>
-                                        Seleccionar Programa
-                                    </h3>
-                                </div>
-                                <div class="modal-body">
-                                    {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p>
-                                                {!! Field::select('Seleccione Programa',null,
-                                ['name' => 'FK_FUNCIONARIO_Programa'])
-                                !!}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
-                            {{-- END HTML MODAL CREATE--}}
-                        </div>
+
                     </div>
                     @endcomponent
                 </br>
@@ -306,33 +313,99 @@ de la plantilla
     $( document ).scroll(function(){
         $('#modal-create-reserva .timepicker').datetimepicker('place'); //#modal is the id of the modal
     });
-    jQuery(document).ready(function() {
-        $(function() {
-            $('#Fecha_Recibir_Reserva').datetimepicker({
+    var ComponentsDateTimePickers = function () {
+        var handleDatetimePicker = function () {
+            if (!jQuery().datetimepicker) {
+                return;
             }
+            var tres=3;
+            var fecha = new Date();
+            fecha.setDate(fecha.getDate() + 1);
+            var fecha2 = new Date();
+            fecha2.setDate(fecha2.getDate() + tres);
 
-            );
-        });
-        $(function() {
-            $('#Fecha_Devolver_Reserva').datetimepicker();
-        });
+            $(".date-time-picker").datetimepicker({
+                autoclose: true,
+                isRTL: App.isRTL(),
+                format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO
+                //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
+                fontAwesome: true,
+                //todayBtn: true,//BOTON DE HOY
+                //startDate: new Date(),//EMPIEZE DESDE LA FECHA ACTUAL
+                startDate: fecha,//Fecha Actual pero sin la hora
+                endDate: fecha2,//Fecha Actual + 5 dias
+                showMeridian: true, // HORA EN 24 HORAS
+                pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-right"),
+            });
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+                handleDatetimePicker();
+            }
+        };
+    }();
+
+    var ComponentsSelect2 = function() {
+
+        var handleSelect = function() {
+
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
+            $(".pmd-select2").select2({
+                width: null,
+                placeholder: placeholder,
+                escapeMarkup: function(m) {
+                    return m;
+                }
+            });
+
+        }
+
+        return {
+            init: function() {
+                handleSelect();
+            }
+        };
+
+    }();
+
+    var ComponentsBootstrapMaxlength = function () {
+        var handleBootstrapMaxlength = function() {
+            $("input[maxlength], textarea[maxlength]").maxlength({
+                alwaysShow: true,
+                appendToParent: true
+            });
+
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+                handleBootstrapMaxlength();
+            }
+        };
+    }();
+    var abrirModal = JSON.stringify({{$numero}});
+    //sino se encuentran registros abrir el modal para registrar
+    if( abrirModal == 0 ){
+        //console.log('abrir modal');
+        $('#static').modal('toggle');
+    }
+   // document.getElementById("PRT_Informacion_Kit").rows = "10";
+    jQuery(document).ready(function() {
+
+        var $seleccione_un_tipoArticulo = $('select[name="PRT_FK_Kits_id"]');
+        var $text_area_kits = $('#PRT_Informacion_Kit');
+        ComponentsDateTimePickers.init();
         ComponentsSelect2.init();
-       // $('#static').modal('toggle');
-        //consulta si el programa esta seleccionado o esta vacio    
-        var route_modal = '{{ route('funcionario.modal') }}';
-         $.get( route_modal, function( info ) {
-                 console.log(info);
-                 if(info==0){
-                     $('#static').modal('toggle');
-                 }
-        });
+        ComponentsBootstrapMaxlength.init();
         //DATATABLE
         var table, url, columns;
         table = $('#fun-table-ajax');
-        url = "{{ route('funcionario.reserva') }}";
+        url = "{{ route('funcionarioReservas.dataKit') }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'PRT_FK_Articulos_id', name: 'Nombre' },
+            {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Nombre' },
             {data: 'PRT_Fecha_Inicio', name: 'Fecha Inicio'},
             {data: 'PRT_Fecha_Fin', name: 'Fecha Fin'},
             {data: 'PRT_FK_Estado', name: 'Verificar Kit'},
@@ -350,7 +423,7 @@ de la plantilla
                 responsivePriority:2
             }
         ];
-        //dataTableServer.init(table, url, columns);
+        dataTableServer.init(table, url, columns);
 
         table = table.DataTable();
         table.on('click', '.remove', function (e) {
@@ -439,20 +512,123 @@ de la plantilla
             e.preventDefault();
 
             $('#modal-create-reserva').modal('toggle');
+            $seleccione_un_tipoArticulo.empty().append('whatever');
+            var routeTipoArticulosDisponibles = '{{route('cargar.kitsDisponibles.select') }}';
+            $.ajax({
+                url: routeTipoArticulosDisponibles,
+                type: 'GET',
+                beforeSend: function () {
+                    App.blockUI({target: '.portlet-form', animate: true});
+                },
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        App.unblockUI('.portlet-form');
+
+                        $(response.data).each(function (key, value) {
+                            $seleccione_un_tipoArticulo.append(new Option(value.KIT_Nombre, value.id));
+                        });
+                    }
+                }
+            });
 
         });
+        /*Carga todos los articulos del kit*/
+        var kit;
+        $seleccione_un_tipoArticulo.on('change', function () {
+            kit = $(this).val();
+            var routeArticulos = '{{ route('listarArticulosKit') }}' +'/' + kit ;
+            $text_area_kits.empty();
+            $.ajax({
+                url: routeArticulos,
+                type: 'GET',
+                beforeSend: function () {
+                    App.blockUI({target: '.portlet-form', animate: true});
+                },
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        App.unblockUI('.portlet-form');
+                       console.log(response.data);
+                        $(response.data).each(function (key,value) {
+                            $text_area_kits.append(value.consulta_tipo_articulo.TPART_Nombre);
+                            $text_area_kits.append('\n');
+                            //(value.FK_ART_Tipo_id+'jesin')
+                            //JSON.stringify(info)
+                           // console.log(value.consulta_tipo_articulo.TPART_Nombre);
+                        });
+
+                    }
+                }
+            });
+        });
+        //inicio de registrar funcionario audivisuales con programa
+
+
+
+
+        /*Registrar Reserva kit*/
+        var createKit = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('reservaKit.store') }}';
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                    formData.append('PRT_FK_Kits_id', $('select[name="PRT_FK_Kits_id"]').val());
+                    formData.append('PRT_Fecha_Inicio', $('#PRT_Fecha_Inicio').val());
+                    formData.append('PRT_Fecha_Fin', $('#PRT_Fecha_Fin').val());
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+
+                                $('#modal-create-reserva').modal('hide');
+                                $('#from_kit_create')[0].reset(); //Limpia formulario
+                                //table.ajax.reload();
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_create_kit = $('#from_kit_create');
+        var rules_create_kit = {
+            PRT_FK_Kits_id:{required: true},
+            //validaciones campos fechas
+            PRT_Fecha_Inicio:{required: true},
+            PRT_Fecha_Fin:{ required: true},
+
+        };
+        FormValidationMd.init(form_create_kit,rules_create_kit,false,createKit());
+
         var createPrograma = function () {
             return{
                 init: function () {
                     //aqui toca guardar eso con auth id
-                    var route = '{{ route('funcionario.store') }}';
+                    var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
                     //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
                     formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
-                    
+                    console.log( $('select[name="FK_FUNCIONARIO_Programa"]').val());
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -469,9 +645,12 @@ de la plantilla
                             if (request.status === 200 && xhr === 'success') {
                                 //table.ajax.reload();
                                 $('#static').modal('hide');
+                                //location.reload();
+                                //$('.mt-repeater').empty();
                                 $('#from_programa')[0].reset(); //Limpia formulario
                                 //$(":password").pwstrength("forceUpdate");
                                 UIToastr.init(xhr , response.title , response.message  );
+
                             }
                         },
                         error: function (response, xhr, request) {
@@ -486,36 +665,11 @@ de la plantilla
 
         var form_create = $('#from_programa');
         var rules_create = {
-          
+
             FK_FUNCIONARIO_Programa:{required: true}
         };
         FormValidationMd.init(form_create,rules_create,false,createPrograma());
-
-
     });
-    
-    var ComponentsSelect2 = function() {
 
-        var handleSelect = function() {
-
-            $.fn.select2.defaults.set("theme", "bootstrap");
-            var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
-            $(".pmd-select2").select2({
-                width: null,
-                placeholder: placeholder,
-                escapeMarkup: function(m) { 
-                   return m; 
-                }
-            });
-
-        }
-
-        return {
-            init: function() {
-                handleSelect();
-            }
-        };
-
-    }();
 </script>
 @endpush

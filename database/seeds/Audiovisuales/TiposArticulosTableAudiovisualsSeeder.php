@@ -26,7 +26,7 @@ class TiposArticulosTableAudiovisualsSeeder extends Seeder
         ];
 
         foreach ($tipos as $tipo ) {
-            $aux = new TipoArticulo;
+            $aux = new TipoArticulo();
             $aux->TPART_Nombre = $tipo['TPART_Nombre'];
 
 

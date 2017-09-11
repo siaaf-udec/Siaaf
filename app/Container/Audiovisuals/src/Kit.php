@@ -15,7 +15,8 @@ class Kit extends Model
 
     protected $fillable = [
 
-         'KIT_Nombre',
+         'KIT_Nombre','KIT_FK_Estado_id',
+
     ];
 
     public function Asistents()

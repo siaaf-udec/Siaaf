@@ -5,6 +5,7 @@ namespace App\Container\Audiovisuals\Src\Controllers;
 use App\Container\Audiovisuals\src\Articulo;
 use App\Container\Audiovisuals\Src\Interfaces\CarrerasInterface;
 use App\Container\Audiovisuals\Src\Interfaces\FuncionarioInterface;
+use App\Container\Audiovisuals\src\Kit;
 use App\Container\Audiovisuals\src\Solicitudes;
 use App\Container\Audiovisuals\src\TipoArticulo;
 use App\Container\Audiovisuals\src\UsuarioAudiovisuales;
@@ -25,6 +26,7 @@ class FuncionarioController extends Controller
         $this->funcionarioRepository = $funcionarioRepository;
         $this->carrerasRepository    = $carrerasRepository;
     }
+
     public function index()
 	{
         $carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
@@ -34,18 +36,21 @@ class FuncionarioController extends Controller
 			]
 		);
     }
-
-    public function data(Request $request)
+	//datatable articulos
+    public function dataArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+			$user    = Auth::user();
+			$userid  = $user->id;
             //solicitudes con el usuario autenticado
-            $solicitudes   = Solicitudes::all();
-			//$admins = $this->funcionarioRepository->index([]);
-			return DataTables::of($solicitudes)
-
+			//consulta las reservas realizadas por el funcionario logueado
+			$solicitudes = Solicitudes::with(['consultaTipoArticulo' ])->where([
+					['PRT_FK_Funcionario_id','=',$userid]
+				]
+			)->get();
+			return Datatables::of($solicitudes)
 			->addIndexColumn()
 			->make(true);
-
 			} else {
 				return AjaxResponse::fail(
 				'¡Lo sentimos!',
@@ -53,45 +58,72 @@ class FuncionarioController extends Controller
 				);
 			}
     }
+    //dataTable kits
+	public function dataKit(Request $request)
+	{
+		if ($request->ajax() && $request->isMethod('GET')) {
+			$user    = Auth::user();
+			$userid  = $user->id;
+			//solicitudes con el usuario autenticado
+			//consulta las reservas realizadas por el funcionario logueado
+			$solicitudes = Solicitudes::with(['consultaKitArticulo' ])->where([
+					['PRT_FK_Funcionario_id','=',$userid],
+					['PRT_FK_Tipo_Solicitud','=',1]
+				]
+			)->get();
+
+			//dd($solicitudes);
+			return Datatables::of($solicitudes)
+				->addIndexColumn()
+				->make(true);
+		} else {
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+	//indexarticulo
     public function reserva(Request $request)
     {
-		$user    = Auth::user();
-		$userid  = $user->id;
-		$usuario  = UsuarioAudiovisuales::where('USER_FK_User', $userid)->first();
-		$bandera=1;
-		if ($usuario == null) {
-			$bandera = 0;
-		}
+		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
+    	$usario = $this->consultarUsuario();
+		//array de carreras disponibles para el funcionario
 		$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
-		$tipo   = TipoArticulo::all()->pluck('TPART_Nombre', 'id');
-
 		return view('audiovisuals.funcionario.reservarArticulo',[
-			'tipos' =>$tipo->toArray(),
 			'programas'=>$carreras->toArray(),
-			'numero'=>$bandera
-
+			'numero'=>$usario //bandera para abrir el modal de registro del usuairo que esta logueado
 		]);
-
-    }
-
-    public function store(Request $request)
+	}
+	//indexkit
+	public function reservaKits(){
+		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
+		$usario = $this->consultarUsuario();
+		//array de carreras disponibles para el funcionario
+		$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
+    	return view('audiovisuals.funcionario.reservarKit',
+			[
+				'programas'=>$carreras->toArray(),
+				'numero'=>$usario
+			]);
+	}
+    public function almacenarArticulo(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
-//			$x = json_decode($request->get('info'));
 			$user=Auth::user();
             $id=$user->id;
 //			foreach ($x->group as $reserva){
-				//$valores=$this->consultarArticulo($reserva->PRT_FK_Articulos_id);
+			$valores=$this->consultarArticulo($request['PRT_FK_Articulos_id']);
             Solicitudes::create([
-                    'PRT_FK_Articulos_id'               => $request['PRT_FK_Articulos_id'],
+                    'PRT_FK_Articulos_id'=> $valores['FK_ART_Tipo_id'],
                     'PRT_Fecha_Inicio'  => $request['PRT_Fecha_Inicio'],
                     'PRT_Fecha_Fin'     => $request['PRT_Fecha_Fin'],
 					'PRT_FK_Funcionario_id'=> $id,
-					'PRT_FK_Kits_id'=> 1,
+					'PRT_FK_Kits_id'=> $valores['FK_ART_Kit_id'],
 					'PRT_Observacion_Entrega'=> '',
 					'PRT_Observacion_Recibe'=> '',
 					'PRT_FK_Estado'=> 1,
-					'PRT_FK_Tipo_Solicitud'=> 1,
+					'PRT_FK_Tipo_Solicitud'=> 1,//reserva
 					'PRT_FK_Administrador_Entrega_id'=>0,
 					'PRT_FK_Administrador_Recibe_id'=>0
             ]);
@@ -106,15 +138,44 @@ class FuncionarioController extends Controller
 				'No se pudo completar tu solicitud.'
 			);
 		}
+	}
 
-
-    }
+	public function storeKit(Request $request)
+	{
+		if ($request->ajax() && $request->isMethod('POST')) {
+			$user=Auth::user();
+			$id=$user->id;
+			$valores=$this->consultarKit($request['PRT_FK_Kits_id']);
+			Solicitudes::create([
+				'PRT_FK_Articulos_id'=> 1,
+				'PRT_Fecha_Inicio'  => $request['PRT_Fecha_Inicio'],
+				'PRT_Fecha_Fin'     => $request['PRT_Fecha_Fin'],
+				'PRT_FK_Funcionario_id'=> $id,
+				'PRT_FK_Kits_id'=> $request['PRT_FK_Kits_id'],
+				'PRT_Observacion_Entrega'=> '',
+				'PRT_Observacion_Recibe'=> '',
+				'PRT_FK_Estado'=> 1,
+				'PRT_FK_Tipo_Solicitud'=> 1,//reserva
+				'PRT_FK_Administrador_Entrega_id'=>0,
+				'PRT_FK_Administrador_Recibe_id'=>0
+			]);
+//		}
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Reserva registrada correctamente.'
+			);
+		} else {
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
 	public function storePrograma(Request $request){
 
 		if ($request->ajax() && $request->isMethod('POST')) {
 			$user = Auth::user();
 			$user->audiovisual()->create(['USER_FK_Programa' => $request->get('FK_FUNCIONARIO_Programa')]);
-
 			return AjaxResponse::success(
 				'¡Bien hecho!',
 				'Programa registrado correctamente.'
@@ -125,7 +186,27 @@ class FuncionarioController extends Controller
 				'No se pudo completar tu solicitud.'
 			);
 		}
+	}
+	//funcion la cual lista el textArea con los tipos de articulos que el kit tiene
+	public function consultarArticulosKit(Request $request,$idKit){
 
+		if($request->ajax() && $request->isMethod('GET')){
+
+			$articulos = Articulo::with(['consultaTipoArticulo'])->where([
+				['FK_ART_Kit_id','=',$idKit]
+			])->get();
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Datos consultados correctamente.',
+				json_decode($articulos)
+
+			);
+		}else{
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
 
 	}
     /**
@@ -185,17 +266,88 @@ class FuncionarioController extends Controller
             );
         }
     }
+    public function consultarKitsDisposnibles(Request $request){
+		if($request->ajax() && $request->isMethod('GET')){
+			$kits = Kit::where('KIT_FK_Estado_id','=',1)->get();
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Datos consultados correctamente.',
+				$kits
+			);
+		}else{
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+    public function consultarTiposArticulosDisposnibles(Request $request){
+
+		if($request->ajax() && $request->isMethod('GET')){
+			$tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
+				$query->where('FK_ART_Estado_id', '=', 1);
+			})->get();
+			return AjaxResponse::success(
+				'¡Bien hecho!',
+				'Datos consultados correctamente.',
+				$tipo
+			);
+		}else{
+			return AjaxResponse::fail(
+				'¡Lo sentimos!',
+				'No se pudo completar tu solicitud.'
+			);
+		}
+	}
+    public function consultarUsuario(){
+		$user    = Auth::user();
+		$userid  = $user->id;
+		$usuario  = UsuarioAudiovisuales::where('USER_FK_User', '=',$userid)->first();
+		$bandera=1;
+		if ($usuario == null) {
+			$bandera = 0;
+		}
+		return $bandera;
+	}
     public function consultarArticulo($reserva){
+
 		$query=Articulo::where([
 			['FK_ART_Tipo_id','=',$reserva],
 			['FK_ART_Estado_id','=',1]
 
 		])->first();
-		Articulo::where([
-			['id','=',$query['id']],
+		/////////////
+		/// si el articulo pertenece a un kit , cambia el estado del kit
+		/// el kit ya no estara completo para ser reservado
+		/// // /////////////
+		if( $query['FK_ART_Kit_id'] != 1 ){
 
-		])->update(['FK_ART_Estado_id'=>3]);
-    	return $query;
+			Articulo::where([
+				['id','=',$query['id']],
+
+			])->update(['FK_ART_Estado_id'=>3]);
+
+			Kit::where([
+				['id','=',$query['FK_ART_Kit_id']],
+
+			])->update(['KIT_FK_Estado_id' => 3]);
+
+		}else{
+
+			Articulo::where([
+				['id','=',$query['id']],
+			])->update(['FK_ART_Estado_id'=>3]);
+		}
+		return $query;
+
+	}
+	public function consultarKit($reservaId){
+		$query=Kit::where([
+			['id','=',$reservaId],
+		])->update(['KIT_FK_Estado_id' => 3]);
+		$query=Articulo::where([
+			['FK_ART_Kit_id','=',$reservaId],
+		])->update(['FK_ART_Estado_id' => 3]);
 
 	}
 

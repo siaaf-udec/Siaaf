@@ -110,8 +110,31 @@ class EstudiantesController extends Controller
      */
     public function show()
     {
-        //return "en el show";
-       // return view('humtalent.empleado.consultaEmpleado');
+        $model = Estudiantes::all();
+        $sist = $this->obtCont($model, 1);
+        $amb = $this->obtCont($model, 2);
+        $agron = $this->obtCont($model, 3);
+        $admi = $this->obtCont($model, 4);
+        $cont = $this->obtCont($model, 5);
+        $psic = $this->obtCont($model, 6);
+        //$roles = DB::table('tbl_estudiantes')->select('*')->where('id_carrera','=','1')->get();
+        //$cont = $roles->count;
+        //return view('acadspace.Reportes.reportesEstudiantes', compact('sist', 'amb', 'agron', 'admi', 'cont', 'psic'));
+        dd('Ingenieria de Sistemas: '. $sist,
+            'Ingenieria Ambiental: '. $amb, 'Ingenieria Agronomica: '. $agron, 'Administracion: '. $admi, 'Contaduria: '. $cont,
+            'Psicologia: '. $psic);
+    }
+
+    public function obtCont($model,$id)
+    {
+        $cont=0;
+        foreach($model as $user)
+        {
+            if($user->id_carrera == $id) {
+                $cont = $cont + 1;
+            }
+        }
+        return $cont;
     }
 
     /**
