@@ -129,15 +129,15 @@
                         required: true
 
                     },
-                    PRSN_Direccion: {
-                        required: true
-
-                    },
                     PRSN_Ciudad: {
                         required: true
 
                     },
                     PRSN_Area: {
+                        required: true
+
+                    },
+                    PRSN_Salario: {
                         required: true
 
                     },
@@ -171,15 +171,15 @@
                         required: "Debe ingresar un correo electrónico."
 
                     },
+                    PRSN_Salario: {
+                        required: "Debe ingresar un salario para el empleado."
+
+                    },
                     PK_PRSN_Cedula: {
                         required: "Debe ingresar una cedula."
                     },
                     PRSN_Telefono: {
                         required: "Debe ingresar un telefono o celular."
-
-                    },
-                    PRSN_Direccion: {
-                        required: "Debe ingresar una direccion."
 
                     },
                     PRSN_Ciudad: {

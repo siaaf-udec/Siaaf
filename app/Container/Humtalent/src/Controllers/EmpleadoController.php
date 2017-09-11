@@ -86,32 +86,49 @@ class EmpleadoController extends Controller
     }
     public function importUsers()//se almacena en la base de datos el registro del archivo de excel
     {
-        $path = Input::file('import-file')->getRealPath();
+        $cont=0;
+        $path = Input::file('import_file')->getRealPath();
         $data = Excel::load($path, function($reader) {
         })->get();
-          foreach ($data as $key=>$row) {
-              Persona::create([
-                  'PK_PRSN_Cedula' => $row->cedula,
-                  'PRSN_Rol' => $row->rol,
-                  'PRSN_Nombres' => $row->nombres,
-                  'PRSN_Apellidos' => $row->apellidos,
-                  'PRSN_Telefono' => $row->telefono,
-                  'PRSN_Correo' => $row->correo,
-                  'PRSN_Direccion' => $row->direccion,
-                  'PRSN_Ciudad' => $row->ciudad,
-                  'PRSN_Salario' => $row->salario,
-                  'PRSN_Eps' => $row->eps,
-                  'PRSN_Fpensiones' => $row->fpensiones,
-                  'PRSN_Area' => $row->area,
-                  'PRSN_Caja_Compensacion' => $row->cajacompensacion,
-                  'PRSN_Estado_Persona' => $row->estado,
-              ]);
+          foreach ($data as $datum) {
+              $empleado=Persona::where('PK_PRSN_Cedula', $datum['cedula'])->get();
+              if(count($empleado)>0){
+                  $cont++;
+              }else{
+                  Persona::create([
+                      'PK_PRSN_Cedula' => $datum['cedula'],
+                      'PRSN_Rol' => mb_strtoupper($datum['rol'],'UTF-8'),
+                      'PRSN_Nombres' => mb_strtoupper($datum['nombres'],'UTF-8'),
+                      'PRSN_Apellidos' => mb_strtoupper($datum['apellidos'],'UTF-8'),
+                      'PRSN_Telefono' =>mb_strtoupper($datum['telefono'],'UTF-8'),
+                      'PRSN_Correo' => mb_strtoupper($datum['correo'],'UTF-8'),
+                      'PRSN_Direccion' => mb_strtoupper($datum['direccion'],'UTF-8'),
+                      'PRSN_Ciudad' =>mb_strtoupper( $datum['ciudad'],'UTF-8'),
+                      'PRSN_Salario' =>mb_strtoupper($datum['salario'],'UTF-8'),
+                      'PRSN_Eps' => mb_strtoupper($datum['eps'],'UTF-8'),
+                      'PRSN_Fpensiones' => mb_strtoupper($datum['fpensiones'],'UTF-8'),
+                      'PRSN_Area' =>mb_strtoupper( $datum['area'],'UTF-8'),
+                      'PRSN_Caja_Compensacion' => mb_strtoupper($datum['cajacompensacion'],'UTF-8'),
+                      'PRSN_Estado_Persona' =>mb_strtoupper($datum['estado'],'UTF-8'),
+                  ]);
+              }
+          };
+          if($cont>0){
+              $notification=array(
+                  'message'=>'El archivo contenia '.$cont.' registros que ya estaban almacenados en la base de datos, los nuevos fueron registrados exitosamente.',
+                  'alert-type'=>'info'
+              );
+
+          }else{
+              $notification=array(
+                  'message'=>'La información del archivo fue almacenada correctamente.',
+                  'alert-type'=>'success'
+              );
+
           }
-        $notification=array(
-            'message'=>'La información del archivo fue almacenada correctamente.',
-            'alert-type'=>'success'
-        );
+
         return back()->with($notification);
+
 
 
 

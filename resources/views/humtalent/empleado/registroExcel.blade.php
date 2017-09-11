@@ -30,22 +30,22 @@
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rol</strong>
                         <br><strong>5.)</strong> No es necesario que las columnas sigan el orden mostrado.<br>
-                        <br><strong>6.)</strong> Las columnas Eps, Fpensiones y Cajacompensacion pueden estar vacias las demas deben tener información.</p>
+                        <br><strong>6.)</strong> Las columnas Dirección, Eps, Fpensiones y Cajacompensacion pueden estar vacias las demas deben tener información.</p>
                 </div>
             </div>
             <div class="col-md-5">
-                {!! Form::open (['id'=>'form-file','method'=>'POST', 'route'=> ['talento.humano.empleado.importUsers'], 'files' => true]) !!}
+                {!! Form::open (['id'=>'form_file','method'=>'POST', 'route'=> ['talento.humano.empleado.importUsers'], 'files' => true]) !!}
                 <br><br><br>
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="input-group input-large">
-                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                <div class="fileinput fileinput-new" data-provides="fileinput"  >
+                    <div class="input-group input-large" >
+                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput" >
                             <i class="fa fa-file fileinput-exists"></i>&nbsp;
                             <span class="fileinput-filename"> </span>
                         </div>
                         <span class="input-group-addon btn default btn-file">
-                                                                <span class="fileinput-new"> Seleccionar </span>
+                                                                <span class="fileinput-new">seleccionar </span>
                                                                 <span class="fileinput-exists"> Cambiar </span>
-                                                                <input type="file" name="import-file"> </span>
+                                                                <input type="file"  name="import_file" > </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
                     </div>
                 </div>
@@ -57,13 +57,14 @@
     @endcomponent
 @endsection
 @push('plugins')
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
-
 <script>
-    jQuery(document).ready(function() {
         @if(Session::has('message'))
         var type = "{{Session::get('alert-type','info')}}"
         switch (type) {
@@ -71,8 +72,73 @@
                 toastr.options.closeButton = true;
                 toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
                 break;
+            case 'info':
+                toastr.options.closeButton = true;
+                toastr.info("{{Session::get('message')}}", 'Registro completo:');
+                break;
         }
-    });
     @endif
+    var FormValidationMd = function() {
+            var handleValidation = function() {
+                var form1 = $('#form_file');
+                var error1 = $('.alert-danger', form1);
+                var success1 = $('.alert-success', form1);
+                form1.validate({
+                    errorElement: 'span',
+                    errorClass: 'help-block help-block-error',
+                    focusInvalid: true,
+                    ignore: "",
+                    rules: {
+                        import_file: {
+                            required: true,
+                            extension: "xls|csv|xlsx"
+                        }
+                    },
+                    invalidHandler: function(event, validator) {
+                        success1.hide();
+                        error1.show();
+                        toastr.options.closeButton = true;
+                        toastr.options.showDuration= 1000;
+                        toastr.options.hideDuration= 1000;
+                        toastr.error('Debe seleccionar un archivo con terminación .xls o .csv' ,'Registro fallido:')
+                        App.scrollTo(error1, -200);
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.is(':checkbox')) {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } else if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        } else {
+                        }
+                    },
+                    highlight: function(element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function(element) {
+                        $(element)
+                            .closest('.form-group').removeClass('has-error');
+                    },
+
+                    success: function(label) {
+                        label
+                            .closest('.form-group').removeClass('has-error');
+                    },
+                    submitHandler: function(form1) {
+                        success1.show();
+                        error1.hide();
+                        form1.submit();
+                    }
+                });
+            }
+            return {
+                init: function() {
+                    handleValidation();
+                }
+            };
+        }();
+    jQuery(document).ready(function() {
+        FormValidationMd.init();
+    });
 </script>
 @endpush

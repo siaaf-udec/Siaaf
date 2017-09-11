@@ -39,7 +39,7 @@
                         {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control','id'=>'telefono','required', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-phone'] ) !!}
 
-                        {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control','id'=>'direccion','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control','id'=>'direccion', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                  ['icon'=>'fa fa-building-o'] ) !!}
 
                         {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control','id'=>'ciudad','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -126,7 +126,7 @@
                         required: true
 
                     },
-                    PRSN_Direccion: {
+                    PRSN_Salario: {
                         required: true
 
                     },
@@ -175,7 +175,7 @@
                         required: "Debe ingresar un telefono o celular."
 
                     },
-                    PRSN_Direccion: {
+                    PRSN_Salario: {
                         required: "Debe ingresar una direccion."
 
                     },
