@@ -121,27 +121,12 @@
         @endpermission
 
         @permission('reportes')
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-book"></i>
-                <span class="title">Reportes</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item {{ active(['espacios.academicos.reportesDoc'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.reportesDoc') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.reportes'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.reportes') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Docentes</span>
+                        <span class="title">Reportes</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.reportesEst'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.reportesEst') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Estudiantes</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
         @endpermission
 
     </ul>

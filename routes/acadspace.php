@@ -112,12 +112,22 @@ Route::get('/listarporSec', [
     'uses' => $controller.'solFormAcadController@listarporSec'
 ]);
 
-Route::get('reportesEst', function () {
+Route::get('/listarporSec', [
+    'as' => 'espacios.academicos.listarporSec',
+    'uses' => $controller.'solFormAcadController@listarporSec'
+]);
+
+Route::get('/reportes', [
+    'as' => 'espacios.academicos.reportes',
+    'uses' => $controller.'EstudiantesController@reportes'
+]);
+
+/*Route::get('reportes', function () {
     $data = [];
     $pdf = PDF::loadView('welcome', $data);
     return $pdf->download('invoice.pdf');
-})->name('espacios.academicos.reportesEst');
-
+})->name('espacios.academicos.reportes');
+*/
 Route::get('reportesDoc', function () {
     $data = [];
     $pdf = PDF::loadView('acadspace.Reportes.reportesDocentes', $data);

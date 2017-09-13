@@ -173,4 +173,10 @@ class EstudiantesController extends Controller
 
     }
 
+    public function reportes()
+    {
+
+        return view('acadspace.Reportes.reportesIndex');
+    }
+
 }
