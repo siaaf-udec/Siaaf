@@ -11,6 +11,11 @@
                     {!! Form::open (['id'=>'form_documento','method'=>'POST', 'route'=> ['talento.humano.document.store'], 'role'=>"form"]) !!}
                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                         ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
+
+                        {!! Field::select('DCMTP_Tipo_Documento',
+                                ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                                null,
+                                [ 'label' => 'Seleccionar el tipo de documento']) !!}
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">

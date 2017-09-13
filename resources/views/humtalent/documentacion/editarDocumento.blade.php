@@ -21,6 +21,11 @@
 
                                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                             ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
+
+                                        {!! Field::select('DCMTP_Tipo_Documento',
+                                                    ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                                                    null,
+                                                    [ 'label' => 'Seleccionar el tipo de documento']) !!}
                         <div class="row">
                             <div class="form-actions">
                                 <div class="col-md-6 col-md-offset-4">

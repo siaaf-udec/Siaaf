@@ -5,12 +5,17 @@
 @section('page-title', 'Buscar Empleado')
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de busqueda del personal'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Busqueda del empleado para radicar documentación'])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form-docrad','method'=>'POST', 'route'=> ['talento.humano.listarDocsRad'], 'role'=>"form"]) !!}
                     {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                      ['help'=>'Digite el número de cedula.','icon'=>'fa fa-credit-card'] ) !!}
+
+                    {!! Field::select('tipoRadicacion',
+                                ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                                null,
+                                [ 'label' => 'Seleccionar el tipo de radicación']) !!}
 
                 <div class="form-actions">
                     <div class="row">

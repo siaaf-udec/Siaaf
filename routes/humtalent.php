@@ -172,7 +172,7 @@ Route::group(['prefix' => 'document'], function () {
         'as' => 'talento.humano.afiliarEmpleado', //Este es el alias de la ruta
         'uses' => $controller.'DocumentController@afiliarEmpleado'
     ]);
-    Route::get('reiniciarRadicacion/{id}', [    //ruta para  asociarlos los documentos requeridos a un empleado
+    Route::post('reiniciarRadicacion', [    //ruta para  asociarlos los documentos requeridos a un empleado
         'as' => 'talento.humano.reiniciarRadicacion', //Este es el alias de la ruta
         'uses' => $controller.'DocumentController@reiniciarRadicacion'
     ]);

@@ -9,7 +9,7 @@
 
         {{-- INICIO MENÚ ITEM ES SOLO DE EJEMPLO DE CÓMO SE DEBE CREAR EL MENÚ --}}
         <li class="nav-item {{ active(['talento.humano.index'], 'start active open') }}">
-            <a href="{{ route('talento.humano.index') }}" class="nav-link">
+            <a href="{{ route('talento.humano.notificaciones.notificar') }}" class="nav-link">
                 <i class="icon-frame"></i>
                 <span class="title">Ejemplo</span>
             </a>

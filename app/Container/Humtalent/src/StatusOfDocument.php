@@ -25,7 +25,7 @@ class StatusOfDocument extends Model
         return $this->belongsTo(Notification::class);
     }
     public function DocumentacionPersonas(){
-        return $this->belongsTo(DocumentacionPersona::class,'FK_Personal_Documento', 'PK_DCMTP_Id_Documento');
+        return $this->belongsTo(DocumentacionPersona::class,'FK_Personal_Documento', 'PK_DCMTP_Id_Documento' );
     }
     //
 }

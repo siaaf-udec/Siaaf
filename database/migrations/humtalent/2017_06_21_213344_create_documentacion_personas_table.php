@@ -16,6 +16,7 @@ class CreateDocumentacionPersonasTable extends Migration
         Schema::connection('humtalent')->create('TBL_Documentacion_Personal', function (Blueprint $table) {
             $table->increments('PK_DCMTP_Id_Documento')->unique();
             $table->String('DCMTP_Nombre_Documento', 50);
+            $table->String('DCMTP_Tipo_Documento', 30);
             $table->timestamps();
         });
     }

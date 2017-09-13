@@ -50,7 +50,9 @@
                         @slot('columns', [
                             '#',
                             'Documento',
-                            'Fecha'
+                            'Tipo',
+                            'Fecha',
+                            'Acciones'
                         ])
                     @endcomponent
                 </div>
@@ -81,6 +83,7 @@
         columns = [
             {data: 'DT_Row_Index'},
             {data: "documentacion_personas.DCMTP_Nombre_Documento", name: 'Documento'},
+            {data: "documentacion_personas.DCMTP_Tipo_Documento", name: 'Tipo'},
             {data: 'EDCMT_Fecha', name: 'Fecha'},
 
         ];

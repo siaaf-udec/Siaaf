@@ -11,12 +11,16 @@ namespace App\Container\Humtalent\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Humtalent\src\Event;
-use App\Container\Humtalent\src\Notification;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Container\Humtalent\src\Event;
+use App\Container\Humtalent\src\Notification;
 use App\Notifications\HeaderSiaaf;
 use Carbon\Carbon;
+use App\Container\Users\src\User;
+use App\Container\Permissions\src\Module;
+use App\Container\Permissions\src\Permission;
+
 
 class CalendarioController extends Controller
 {
@@ -179,57 +183,7 @@ class CalendarioController extends Controller
     }
 
     function crearNotificaciones() { //función para generar  notificaciones
-        $fecha=getdate(); //se toma la fecha actual
-        $dia= $fecha['wday']; //se toma el numero del día
-        $user = Auth::user(); //se verifica el usuario logueado
-        if($dia == 5)  //si el día es 5 o viernes se crea la notificación de documentación completa
-        {
-            $data = [
-                'url' => route('humtalent.empleado.notificaciones.empleadosDocumentosCompletos'), //ruta que muestra la tabla d elos empleados que tienen la doc completa
-                'description' => '¡Empleados con documentos completos!',
-                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-            ];
-        }
-       if($dia == 3) { //si el día es 3 o miercoles se crea la notificación de documentación incompleta
-            $data = [
-                'url' => route('humtalent.empleado.notificaciones.empleadosDocumentosIncompletos'), //ruta que muestra la tabla d elos empleados que tienen la doc incompleta
-                'description' => '¡Empleados con documentos incompletos!',
-                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-            ];
-        }
-        $user->notify(new HeaderSiaaf($data)); // se crea la notificación
-        $fechaActual =  Carbon::now();      //se toma la fecha actual
-        $fechaActual = $fechaActual->format('Y-m-d');
-        $recordatorios = Notification::all(); //se consultan los datos de los recordatorios
-        $eventos = Event::all(); //se consultan los datos de los eventos
-
-        foreach ($recordatorios as $recordatorio)
-        {
-            if($recordatorio['NOTIF_Fecha_Notificacion'] == $fechaActual) //cuando la fecha del recordatorio es igual a la actual se crea la notificación
-            {
-                $data = [
-                    'url' => route('talento.humano.calendario.index'), //ruta que muestra el calendario
-                    'description' => '¡Recordatorio pendiente!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-                ];
-                $user->notify(new HeaderSiaaf($data));
-            }
-        }
-
-        foreach ($eventos as $evento) //se recorren  los datos de los eventos
-        {
-            if($evento['EVNT_Fecha_Notificacion'] == $fechaActual) // cuando la fecha actual es igual a la de la fecha de notificar el eventos se crea la notificación
-            {
-                $data = [
-                    'url' => route('talento.humano.calendario.index'), //ruta que muestra el calendario
-                    'description' => '¡Evento pendiente!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-                ];
-                $user->notify(new HeaderSiaaf($data));
-            }
-        }
-
-        return back()->withInput();
+        $permiso = Permission::where('name','FUNC_RRHH')->get(['id']);
+        return $permiso;
     }
-
 }

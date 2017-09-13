@@ -35,6 +35,7 @@
                             '#',
                             'llave',
                             'Documento',
+                            'Tipo',
                             'Acciones'
                         ])
                     @endcomponent
@@ -67,6 +68,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'PK_DCMTP_Id_Documento', "visible": false },
                 {data: 'DCMTP_Nombre_Documento', name: 'documento'},
+                {data: 'DCMTP_Tipo_Documento', name: 'tipo'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                     data:'action',
