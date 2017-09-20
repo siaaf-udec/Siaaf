@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('notify:humTalent')->everyMinute();
+        $schedule->command('notify:humTalent')->daily();
     }
 
     /**

@@ -8,18 +8,18 @@
 
 namespace App\Container\Humtalent\src\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use Illuminate\Support\Facades\Auth;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\Notification;
-use App\Notifications\HeaderSiaaf;
-use Carbon\Carbon;
-use App\Container\Users\src\User;
-use App\Container\Permissions\src\Module;
 use App\Container\Permissions\src\Permission;
+use App\Container\Permissions\Src\Role;
+use App\Container\Users\src\User;
+use Carbon\Carbon;
+use App\Notifications\HeaderSiaaf;
 
 
 class CalendarioController extends Controller
@@ -182,8 +182,5 @@ class CalendarioController extends Controller
 
     }
 
-    function crearNotificaciones() { //función para generar  notificaciones
-        $permiso = Permission::where('name','FUNC_RRHH')->get(['id']);
-        return $permiso;
-    }
+
 }
