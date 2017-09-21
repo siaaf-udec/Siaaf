@@ -52,6 +52,16 @@
 
     jQuery(document).ready(function () {
 
+        @if(Session::has('message'))
+            var type="{{Session::get('alert-type','info')}}"
+            switch(type){
+                case 'info':
+                    toastr.options.closeButton = true;
+                    toastr.info("{{Session::get('message')}}",'Información');
+                    break;
+            }
+        @endif
+
         var table, url,columns;
         table = $('#lista-empleados');
         url = "{{ route('talento.humano.tablaEmpleados')}}";

@@ -189,8 +189,8 @@ Route::group(['prefix' => 'document'], function () {
         'as' => 'talento.humano.historialDocumentos.documentos'
     ]);
     Route::get('historialDocumentos/documentosRadicados/{id?}',[
-        'uses' => $controller.'DocumentController@consultaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
-        'as' => 'talento.humano.historialDocumentos.documentosRadicados'
+        'uses' => $controller.'DocumentController@consultaRadicados', //ruta consulta los documentos registrados
+        'as' => 'talento.humano.document.historialDocumentos.documentosRadicados'
     ]);
 });
 

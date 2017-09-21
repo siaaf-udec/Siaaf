@@ -36,11 +36,18 @@
                         </tbody>
                 </table>
                 <br>
-                @if($estado == 'Afiliado')
-                    <h4>Fecha de afiliación: {{$fecha}}</h4>
+                @if($procesoEPS == 'Afiliado EPS')
+                    <h5>Fecha de afiliación EPS: {{$fechaEPS}}</h5>
+                    <br>
+                    <br>
                 @endif
-                <br>
-                <br>
+
+                @if($procesoCaja == 'Afiliado Caja de compensación')
+                    <h5>Fecha de afiliación Caja de compensación : {{$fechaCaja}}</h5>
+                    <br>
+                    <br>
+                @endif
+
             </div>
         </div>
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => ''])
@@ -52,7 +59,6 @@
                             'Documento',
                             'Tipo',
                             'Fecha',
-                            'Acciones'
                         ])
                     @endcomponent
                 </div>
@@ -79,7 +85,7 @@
         var cedula=$('input[id="cedula"]').val();
         var table, url,columns;
         table = $('#lista-empleados');
-        url = '{{ route('talento.humano.historialDocumentos.documentosRadicados')}}'+'/'+cedula;
+        url = '{{ route('talento.humano.document.historialDocumentos.documentosRadicados')}}'+'/'+cedula;
         columns = [
             {data: 'DT_Row_Index'},
             {data: "documentacion_personas.DCMTP_Nombre_Documento", name: 'Documento'},
@@ -88,6 +94,7 @@
 
         ];
         dataTableServer.init(table, url, columns);
+
 
     });
 </script>

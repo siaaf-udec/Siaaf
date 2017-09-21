@@ -205,8 +205,9 @@ class DocumentController extends Controller
 
     public function consultaRadicados(Request $request, $id){
         $radicados=StatusOfDocument::with('DocumentacionPersonas')->where('FK_TBL_Persona_Cedula',$id)->get(['EDCMT_Fecha','FK_Personal_Documento']);
+
         if ($request->ajax()) {
-            return DataTables::of($radicados )
+            return DataTables::of($radicados)
                 ->addIndexColumn()
                 ->make(true);
         } else {
@@ -219,10 +220,33 @@ class DocumentController extends Controller
     }
     public function tablaRadicados($id){
         $empleado=Persona::where('PK_PRSN_Cedula', $id)->get(['PK_PRSN_Cedula','PRSN_Nombres','PRSN_Apellidos','PRSN_Telefono','PRSN_Correo'])->first();
-        $afiliacion=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)->get(['EDCMT_Proceso_Documentacion','updated_at'])->first();
-        $fecha=$afiliacion->updated_at->format('d-m-Y');
-        $estado=$afiliacion->EDCMT_Proceso_Documentacion;
-        return view('humtalent.documentacion.listaDocumentosRadicados', compact('empleado', 'id', 'estado','fecha'));
+        $estadoEPS=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
+                                    ->where('EDCMT_Proceso_Documentacion', 'Afiliado EPS')
+                                    ->get(['EDCMT_Proceso_Documentacion','updated_at'])->first();
+
+        $estadoCaja=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
+                                        ->where('EDCMT_Proceso_Documentacion', 'Afiliado Caja de compensación')
+                                        ->get(['EDCMT_Proceso_Documentacion','updated_at'])->first();
+
+        if(count($estadoEPS) > 0) {
+            $fechaEPS = $estadoEPS->updated_at->format('d-m-Y');
+            $procesoEPS = $estadoEPS->EDCMT_Proceso_Documentacion;
+        }
+        else{
+            $fechaEPS = null;
+            $procesoEPS = "No afiliado";
+        }
+
+        if(count($estadoCaja) > 0) {
+            $fechaCaja = $estadoCaja->updated_at->format('d-m-Y');
+            $procesoCaja = $estadoCaja->EDCMT_Proceso_Documentacion;
+        }
+        else{
+            $fechaCaja = null;
+            $procesoCaja = "No afiliado";
+        }
+
+        return view('humtalent.documentacion.listaDocumentosRadicados', compact('empleado', 'id', 'procesoEPS', 'fechaEPS','procesoCaja', 'fechaCaja' ));
      }
 
      /**
