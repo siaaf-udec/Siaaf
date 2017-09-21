@@ -9,7 +9,7 @@
 
         {{-- INICIO MENÚ ITEM ES SOLO DE EJEMPLO DE CÓMO SE DEBE CREAR EL MENÚ --}}
         <li class="nav-item {{ active(['talento.humano.index'], 'start active open') }}">
-            <a href="{{ route('talento.humano.notificaciones.notificar') }}" class="nav-link">
+            <a href="{{ route('talento.humano.index') }}" class="nav-link">
                 <i class="icon-frame"></i>
                 <span class="title">Ejemplo</span>
             </a>
@@ -87,6 +87,18 @@
                     <a href="{{ route('talento.humano.document.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Consultar Documentos</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['talento.humano.empleado.empleadosDocumentosCompletos'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.notificaciones.empleadosDocumentosCompletos') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Documentos Completos</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['talento.humano.empleado.empleadosDocumentosIncompletos'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.notificaciones.empleadosDocumentosIncompletos') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Documentos Incompletos</span>
                     </a>
                 </li>
             </ul>

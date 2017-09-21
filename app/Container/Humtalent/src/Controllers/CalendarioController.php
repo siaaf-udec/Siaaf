@@ -182,5 +182,48 @@ class CalendarioController extends Controller
 
     }
 
+    public function documentacionCompleta(){  //Función para mostrar la tabla con los empleados con documentación completa
+
+        $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                                ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+        if(count($estado) ==  0){  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            $estado = "Activada";
+        }
+
+        return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
+    }
+
+    public function documentacionIncompleta(){      //Función para mostrar la tabla con los empleados con documentación incompleta
+        $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                                ->where('NOTIF_Descripcion', 'Documentos incompletos')->get(['NOTIF_Estado_Notificacion']);//verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+        if(count($estado) ==  0){  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            $estado = "Activada";
+        }
+        return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
+    }
+
+    public function desactivarNotificaciones($tipo){  //Funcion que crea el registro de desactivación de las notificaciones para empleados con documentos completos o incompletos, recibe como parametro el tipo de notificación (documentos completos o incompletos )
+        Notification::create([
+            'NOTIF_Descripcion' => $tipo,
+            'NOTIF_Estado_Notificacion' => "Desactivada",
+        ]);
+        $notification=array(//se envia un mensaje de notificación de los cambios
+            'message'=>'Estas notificaciones fueron descativadas correctamente',
+            'alert-type'=>'info'
+        );
+        return back()->with($notification);
+    }
+
+    public function activarNotificaciones($tipo){  //funcion que activa las notificaciones eliminando el registro de desactivación de las mismas
+
+        Notification::where('NOTIF_Descripcion', $tipo)->delete();
+
+        $notification=array(//se envia un mensaje de notificación de los cambios
+            'message'=>'Estas notificaciones fueron ativadas correctamente',
+            'alert-type'=>'info'
+        );
+        return back()->with($notification);
+    }
+
 
 }

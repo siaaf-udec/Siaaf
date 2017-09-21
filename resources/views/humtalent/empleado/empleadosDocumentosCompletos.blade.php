@@ -11,11 +11,19 @@
 
 @section('title', '| Consulta de Documentación')
 
-@section('page-title', 'Consulta de la documentación entregada por los empleados :')
+@section('page-title', 'Empleados con documentación completa.')
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Empleados:'])
+            @if($estado == 'Activada')
+                {!! link_to_route('humtalent.notificaciones.desactivarDocumentosCompletos',
+                                $title = 'Desactivar notificaciones' , $parameters = 'Documentos completos') !!}
+            @else
+                {!! link_to_route('humtalent.notificaciones.activarDocumentosCompletos',
+                                $title = 'Activar notificaciones' , $parameters = 'Documentos completos') !!}
+            @endif
+            <br><br>
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
@@ -51,6 +59,16 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
+
+        @if(Session::has('message'))
+            var type="{{Session::get('alert-type','info')}}"
+            switch(type){
+                case 'info':
+                    toastr.options.closeButton = true;
+                    toastr.info("{{Session::get('message')}}",'Modificación exitosa:');
+                    break;
+            }
+        @endif
 
         var table, url,columns;
         table = $('#lista-empleados');

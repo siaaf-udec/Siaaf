@@ -102,6 +102,8 @@ Route::group(['prefix' => 'empleado'], function () {
                     }
                 }
     ]);
+
+
 });
 
 //Rutas para el manejo de la documentación
@@ -364,11 +366,11 @@ Route::group(['prefix' => 'permisos'], function () {
     ]);
 
 });
-
+//grupo de rutas para generar, activar y/o descativar notificaciones
 Route::group(['prefix' => 'notificaciones'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
-    Route::get('listaEmpleadosDocumentosCompletos',[
+    Route::get('listaEmpleadosDocumentosCompletos',[  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos
         'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
         'uses' => function(Request $request){
             $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación completa')
@@ -385,11 +387,12 @@ Route::group(['prefix' => 'notificaciones'], function () {
             }
         }
     ]);
-    Route::get('listaEmpleadosDocumentosIncompletos',[
+    Route::get('listaEmpleadosDocumentosIncompletos',[   //ruta que realiza la consulta para cargar la tabla de los empleados con documentos incompletos
         'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos',
         'uses' => function(Request $request){
-            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación incompleta')
-                ->distinct()->get(['FK_TBL_Persona_Cedula']);
+            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion',"Documentación incompleta EPS")
+                                        ->orWhere('EDCMT_Proceso_Documentacion',"Documentación incompleta Caja de compensación")
+                                        ->distinct()->get(['FK_TBL_Persona_Cedula']);
             if ($request->ajax()) {
                 return Datatables::of($empleados)
                     ->addIndexColumn()
@@ -402,28 +405,54 @@ Route::group(['prefix' => 'notificaciones'], function () {
             }
         }
     ]);
-    Route::get('consultarDocsRadicados/{id?}',[
-        'uses' => $controller.'DocumentController@consulta', //ruta para consultar los permisos registrados
+    Route::get('consultarDocsRadicados/{id?}',[   //ruta para consultar los documentos registrados
+        'uses' => $controller.'DocumentController@consulta',
         'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
     ]);
 
-    Route::get('notificar', [
-       'uses' => $controller.'CalendarioController@crearNotificaciones',
-        'as' => 'talento.humano.notificaciones.notificar'
-    ]);
 
-    Route::get('empleadosDocumentosCompletos', [
+    Route::get('empleadosDocumentosCompletos', [  //ruta que dirige al blade para mostrar la tabla de los empleados con documentos completos generadas por las notificaciones
         'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosCompletos',
         'uses' => function(){
             return view('humtalent.empleado.empleadosDocumentosCompletos');
         }
     ]);
 
-    Route::get('empleadosDocumentosIncompletos', [
+    Route::get('empleadosDocumentosIncompletos', [   //ruta que dirige al blade para mostrar la tabla de los empleados con documentos incompletos generadas por las notificaciones
         'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosIncompletos',
         'uses' => function(){
             return view('humtalent.empleado.empleadosDocumentosIncompletos');
         }
+    ]);
+    Route::get('desactivarDocumentosIncompletos/{tipo}', [      //ruta que desactiva las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
+        'as' => 'humtalent.notificaciones.desactivarDocumentosIncompletos',
+        'uses' => $controller.'CalendarioController@desactivarNotificaciones'
+    ]);
+
+    Route::get('activarDocumentosIncompletos/{tipo}', [         //ruta que activa las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
+        'as' => 'humtalent.notificaciones.activarDocumentosIncompletos',
+        'uses' => $controller.'CalendarioController@activarNotificaciones'
+    ]);
+
+    Route::get('desactivarDocumentosCompletos/{tipo}', [        //ruta que desactiva las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
+        'as' => 'humtalent.notificaciones.desactivarDocumentosCompletos',
+        'uses' => $controller.'CalendarioController@desactivarNotificaciones'
+    ]);
+
+    Route::get('activarDocumentosCompletos/{tipo}', [       //ruta que activa las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
+        'as' => 'humtalent.notificaciones.activarDocumentosCompletos',
+        'uses' => $controller.'CalendarioController@activarNotificaciones'
+    ]);
+
+    //rutas directas a las tablas mostradas por las notificaciones.
+    Route::get('empleadosDocumentosCompletos', [  //ruta que muestra las tablas de empleados con documentación completa desde el menu
+        'as' => 'talento.humano.notificaciones.empleadosDocumentosCompletos',
+        'uses' => $controller.'CalendarioController@documentacionCompleta'
+    ]);
+
+    Route::get('empleadosDocumentosIncompletos', [          //ruta que muestra las tablas de empleados con documentación incompleta desde el menu
+        'as' => 'talento.humano.notificaciones.empleadosDocumentosIncompletos',
+        'uses' => $controller.'CalendarioController@documentacionIncompleta'
     ]);
 
 
