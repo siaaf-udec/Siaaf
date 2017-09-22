@@ -5,6 +5,9 @@
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
@@ -66,6 +69,18 @@
                                             @endforeach
                                         </table>
                                         <br>
+
+                                        {!! Form::open (['method'=>'POST', 'route'=> ['talento.humano.listarDocsRad'], 'role'=>"form"]) !!}
+                                            {!! Field::hidden('PK_PRSN_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                            {!! Field::select('tipoRadicacion',
+                                                    ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                                                    $tipoRad,
+                                                    [ 'label' => 'Seleccionar el tipo de radicación', 'onchange' => 'this.form.submit()']) !!}
+
+                                        {!! Form::close() !!}
+
+
+
                                     {!! Form::open (['id'=>'form-radicar','method'=>'POST', 'route'=> ['talento.humano.radicarDocumentos']]) !!}
                                         {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
                                         {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
@@ -153,6 +168,7 @@
 <script src="{{asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/pages/scripts/form-wizard.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script>

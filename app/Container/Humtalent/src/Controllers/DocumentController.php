@@ -38,10 +38,11 @@ class DocumentController extends Controller
                 $docs = $docs + [$documento->PK_DCMTP_Id_Documento => $documento->DCMTP_Nombre_Documento];//se realiza la conversion del array con clave a array con indices numéricos
             }
             $selects = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                                        ->where('EDCMT_Proceso_Documentacion',"Documentación incompleta ".$tipoRad)
-                                        ->orWhere('EDCMT_Proceso_Documentacion',"Documentación completa ".$tipoRad)
-                                        ->orWhere('EDCMT_Proceso_Documentacion',"Afiliado ".$tipoRad)
-                                        ->get(['FK_Personal_Documento']); //se realiza la consulta a la tabla estado documentación para saber que documentos ya han sido radicados por el empleado
+                                        ->whereIn('EDCMT_Proceso_Documentacion',["Documentación incompleta ".$tipoRad,
+                                                                                        "Documentación completa ".$tipoRad,
+                                                                                        "Afiliado ".$tipoRad])
+                                        ->get(['FK_Personal_Documento']);
+
             $seleccion = [];//array para almacenar con indices numericos los documentos consultados
             foreach ($selects as $select) {
                 $seleccion = array_merge($seleccion, [$select->FK_Personal_Documento]);//se realiza la conversion del array con clave a array con indices numéricos
@@ -49,9 +50,9 @@ class DocumentController extends Controller
             $cantidadDocumentos = count($documentos);
             $cantidadRadicados = count($seleccion);
             $estado=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                                    ->where('EDCMT_Proceso_Documentacion',"Documentación incompleta ".$tipoRad)
-                                    ->orWhere('EDCMT_Proceso_Documentacion',"Documentación completa ".$tipoRad)
-                                    ->orWhere('EDCMT_Proceso_Documentacion',"Afiliado ".$tipoRad)
+                                    ->whereIn('EDCMT_Proceso_Documentacion',["Documentación incompleta ".$tipoRad,
+                                                                                    "Documentación completa ".$tipoRad,
+                                                                                    "Afiliado ".$tipoRad])
                                     ->get(['EDCMT_Proceso_Documentacion'])->first();
             if(count($estado)> 0) {
                 $estado = $estado->EDCMT_Proceso_Documentacion;
@@ -77,9 +78,9 @@ class DocumentController extends Controller
                 $docs = $docs + [$documento->PK_DCMTP_Id_Documento => $documento->DCMTP_Nombre_Documento];//se realiza la conversion del array con clave a array con indices numéricos
             }
             $selects = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                                        ->where('EDCMT_Proceso_Documentacion',"Documentación incompleta ".$tipoRad)
-                                        ->orWhere('EDCMT_Proceso_Documentacion',"Documentación completa ".$tipoRad)
-                                        ->orWhere('EDCMT_Proceso_Documentacion',"Afiliado ".$tipoRad)
+                                        ->whereIn('EDCMT_Proceso_Documentacion',["Documentación incompleta ".$tipoRad,
+                                                                                        "Documentación completa ".$tipoRad,
+                                                                                        "Afiliado ".$tipoRad])
                                         ->get(['FK_Personal_Documento']); //se realiza la consulta a la tabla estado documentación para saber que documentos ya han sido radicados por el empleado
 
             $seleccion = [];//array para almacenar con indices numericos los documentos consultados
@@ -89,9 +90,9 @@ class DocumentController extends Controller
             $cantidadDocumentos = count($documentos);//DocumentacionPersona::where('DCMTP_Tipo_Documento',$tipoRad)->count();
             $cantidadRadicados = count($seleccion);
             $estado=StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-                                    ->where('EDCMT_Proceso_Documentacion',"Documentación incompleta ".$tipoRad)
-                                    ->orWhere('EDCMT_Proceso_Documentacion',"Documentación completa ".$tipoRad)
-                                    ->orWhere('EDCMT_Proceso_Documentacion',"Afiliado ".$tipoRad)
+                                    ->whereIn('EDCMT_Proceso_Documentacion',["Documentación incompleta ".$tipoRad,
+                                                                                    "Documentación completa ".$tipoRad,
+                                                                                    "Afiliado ".$tipoRad])
                                     ->get(['EDCMT_Proceso_Documentacion'])->first();
 
             if(count($estado)> 0) {

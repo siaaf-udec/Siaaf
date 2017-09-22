@@ -14,7 +14,7 @@
 
                     {!! Field::select('tipoRadicacion',
                                 ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
-                                null,
+                                'EPS',
                                 [ 'label' => 'Seleccionar el tipo de radicación']) !!}
 
                 <div class="form-actions">

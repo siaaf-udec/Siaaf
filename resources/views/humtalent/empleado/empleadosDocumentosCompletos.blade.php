@@ -106,7 +106,7 @@
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('talento.humano.notificaciones.consultarDocsRadicados') }}'+'/'+dataTable.personas.PK_PRSN_Cedula;
+                window.location.href='{{ route('talento.humano.notificaciones.consultarDocsRadicados') }}'+'/'+dataTable.personas.PK_PRSN_Cedula+'/EPS';
             });
         });
     });

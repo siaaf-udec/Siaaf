@@ -373,8 +373,9 @@ Route::group(['prefix' => 'notificaciones'], function () {
     Route::get('listaEmpleadosDocumentosCompletos',[  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos
         'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
         'uses' => function(Request $request){
-            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion','Documentación completa')
-                ->distinct()->get(['FK_TBL_Persona_Cedula']);
+            $empleados=StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion',"Documentación completa EPS")
+                                        ->orWhere('EDCMT_Proceso_Documentacion',"Documentación completa Caja de compensación")
+                                        ->distinct()->get(['FK_TBL_Persona_Cedula']);
             if ($request->ajax()) {
                 return Datatables::of($empleados)
                     ->addIndexColumn()
@@ -405,7 +406,7 @@ Route::group(['prefix' => 'notificaciones'], function () {
             }
         }
     ]);
-    Route::get('consultarDocsRadicados/{id?}',[   //ruta para consultar los documentos registrados
+    Route::get('consultarDocsRadicados/{id?}/{tipoRad?}',[   //ruta para consultar los documentos registrados
         'uses' => $controller.'DocumentController@consulta',
         'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
     ]);
