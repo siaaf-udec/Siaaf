@@ -31,8 +31,13 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
         'edit' => 'espacios.academicos.espacad.edit',
         'show' => 'espacios.academicos.espacad.show',
         'update' => 'espacios.academicos.espacad.update',
-        'destroy' => 'espacios.academicos.espacad.destroy'
+        'destroy' => 'espacios.academicos.espacad.destroy',
     ]
+]);
+
+Route::get('/solPracLibre', [    //ruta para listar los docentes registrados.
+    'as' => 'espacios.academicos.solPracLibre', //Este es el alias de la ruta
+    'uses' => $controller.'SolicitudController@regisPracLibre'
 ]);
 
 Route::get('/editActPrac/{id}', [    //ruta para listar los docentes registrados.

@@ -56,13 +56,13 @@
                 <li class="nav-item {{ active(['espacios.academicos.espacad.create'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.espacad.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Practica</span>
+                        <span class="title">Practica Grupal</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.soft.create'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.soft.create') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.solPracLibre'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.solPracLibre') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Software</span>
+                        <span class="title">Practica Libre</span>
                     </a>
                 </li>
                 @endpermission
@@ -70,15 +70,10 @@
                 <li class="nav-item {{ active(['espacios.academicos.mostrarSolicitudes'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.mostrarSolicitudes') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Practica</span>
+                        <span class="title">Practica Grupal</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.solicitudesSoft'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.solicitudesSoft') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Software</span>
-                    </a>
-                </li>
+                
                 @endpermission
                 @permission('docentes')
 

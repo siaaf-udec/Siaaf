@@ -29,7 +29,7 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        return "Estoy en Index";
+        return view('acadspace.Solicitudes.registroSolicitud');
     }
 
     /**
@@ -39,7 +39,7 @@ class SolicitudController extends Controller
      */
     public function create()
     {
-        return view('acadspace.Solicitudes.registroSolicitud');
+        return view('acadspace.Solicitudes.registroSolicitudPracLibre');
     }
 
     /**
@@ -50,34 +50,58 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
-        $diasSemana='';
-        foreach ($request['SOL_dias'] as $id)
-        {
+        if ($request['ID_Practica'] == 1) {
 
-            $separador = ', ';
-            if($diasSemana == ''){
-                $diasSemana = $id;
-            }else{
-                $diasSemana .= $separador.$id;
+            $id = Auth::id();
+
+            $model = new Solicitud();
+
+            $model->SOL_guia_practica = $request['SOL_ReqGuia'];
+            $model->SOL_software = $request['SOL_NombSoft'];
+            $model->SOL_grupo = $request['SOL_grupo'];
+            $model->SOL_cant_estudiantes = $request['SOL_cant_estudiantes'];
+            $model->SOL_hora_inicio      = $request['SOL_hora_inicio'];
+            $model->SOL_hora_fin         = $request['SOL_hora_fin'];
+            $model->SOL_nucleo_tematico  = $request['SOL_nucleo_tematico'];
+            $model->SOL_fecha_inicio     = $request['SOL_fecha_inicial'];
+            $model->SOL_fecha_fin        = $request['SOL_fecha_inicial'];
+            $model->SOL_id_docente = $id;
+            $model->SOL_estado = 0;
+            $model->id_practica = 2;
+
+            $model->save();
+            return back()->with('success','Solicitud registrada correctamente');
+
+        } else {
+
+            $diasSemana = '';
+            foreach ($request['SOL_dias'] as $id) {
+
+                $separador = ', ';
+                if ($diasSemana == '') {
+                    $diasSemana = $id;
+                } else {
+                    $diasSemana .= $separador . $id;
+                }
+
             }
 
+            Solicitud::create([
+                'SOL_guia_practica' => $request['SOL_ReqGuia'],
+                'SOL_software' => $request['SOL_NombSoft'],
+                'SOL_grupo' => $request['SOL_grupo'],
+                'SOL_cant_estudiantes' => $request['SOL_cant_estudiantes'],
+                'SOL_dias' => $diasSemana,
+                'SOL_hora_inicio' => $request['SOL_hora_inicio'],
+                'SOL_hora_fin' => $request['SOL_hora_fin'],
+                'SOL_estado' => 0,
+                'SOL_nucleo_tematico' => $request['SOL_nucleo_tematico'],
+                'SOL_fecha_inicio' => $request['SOL_fecha_inicial'],
+                'SOL_fecha_fin' => $request['SOL_fecha_final']
+            ]);
+            return back()->with('success', 'Solicitud registrada correctamente');
+
         }
-
-        Solicitud::create([
-            'SOL_guia_practica'    => $request['SOL_ReqGuia'],
-            'SOL_software'         => $request['SOL_NombSoft'],
-            'SOL_grupo'            => $request['SOL_grupo'],
-            'SOL_cant_estudiantes' => $request['SOL_cant_estudiantes'],
-            'SOL_dias'             => $diasSemana,
-            'SOL_hora_inicio'      => $request['SOL_hora_inicio'],
-            'SOL_hora_fin'         => $request['SOL_hora_fin'],
-            'SOL_estado'           => 0,
-            'SOL_nucleo_tematico'  => $request['SOL_nucleo_tematico'],
-            'SOL_fecha_inicio'     => $request['SOL_fecha_inicial'],
-            'SOL_fecha_fin'        => $request['SOL_fecha_final']
-        ]);
-        return back()->with('success','Solicitud registrada correctamente');
-
     }
 
     public function listarSolicitud(){
