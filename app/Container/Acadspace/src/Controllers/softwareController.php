@@ -14,6 +14,8 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\solSoftware;
 use Illuminate\Support\Facades\DB;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+
 class softwareController extends Controller
 {
 
@@ -46,8 +48,11 @@ class softwareController extends Controller
     public function store(Request $request)
     {
         solSoftware::create($request->all());
-        return view('acadspace.Solicitudes.registroSolSoftware');
-
+        $notificacion = array(
+        'message' => 'Software registrado correctamente.',
+        'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notificacion);
     }
 
     /**

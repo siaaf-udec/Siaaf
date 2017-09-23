@@ -150,3 +150,16 @@ Route::resource('horarioacad', $controller.'HorarioController', [   //RUTA HORAR
         'destroy' => 'espacios.academicos.horarioacad.destroy'
     ]
 ]);
+/**CALENDARIO**/
+Route::resource('acadcalendar', $controller.'CalendarioController', [   //RUTA HORARIO
+    'names' => [ // 'método' => 'alias'
+        'create' => 'espacios.academicos.acadcalendar.create',
+        'store' => 'espacios.academicos.acadcalendar.store',
+        'index' => 'espacios.academicos.acadcalendar.index',
+        'edit' => 'espacios.academicos.acadcalendar.edit',
+        'show' => 'espacios.academicos.acadcalendar.show',
+        'update' => 'espacios.academicos.acadcalendar.update',
+        'destroy' => 'espacios.academicos.acadcalendar.destroy'
+    ]
+]);
+Route::post('guardarEventos', array('as'=>'guardaEventos', 'uses' => 'CalendarioController@create'));
