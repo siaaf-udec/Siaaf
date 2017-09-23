@@ -74,7 +74,7 @@
                                                                     {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitudaprob']]) !!}
                                                                         {{ Form::hidden('id_solicitud', $solicitud->PK_SOL_id_solicitud) }}
 
-
+                                                                        {{ Form::label('name', 'Asignar sala', array('class' => 'form-control')) }}
 
                                                                         {{ Form::select('sala_asignada', ['102' => '102', '201' => '201', '202' => '202'], 102, ['class' => 'form-control']) }}
 
@@ -112,6 +112,7 @@
                                                                     </div>
                                                                     <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
                                                                     {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitud']]) !!}
+                                                                        {{ Form::label('name', 'Agregar anotacion', array('class' => 'form-control')) }}
                                                                         {{ Form::textarea('txt_anotacion', null, ['class' => 'form-control']) }}
                                                                         {{ Form::hidden('id_solicitud', $solicitud->PK_SOL_id_solicitud) }}
 
@@ -158,6 +159,7 @@
 </div>
 @endsection
 @push('plugins')
+<!--//mensaje validacion-->
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <!--//validaciones-->
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
@@ -182,7 +184,7 @@
     @endif
 </script>
 
-
+<script>
 
     //jQuery(document).ready(function() {
         /*Crear Solicitud Formato*/
@@ -232,5 +234,5 @@
     });*/
 
 
-
+</script>
 @endpush

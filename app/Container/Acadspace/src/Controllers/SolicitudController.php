@@ -29,7 +29,10 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        return view('acadspace.Solicitudes.registroSolicitud');
+        //Retorno los softwares disponibles a la vista
+        $soft = new solSoftware();
+        $software = $soft->pluck('nombre_soft','id');
+        return view('acadspace.Solicitudes.registroSolicitud', compact('software'));
     }
 
     /**
@@ -70,7 +73,11 @@ class SolicitudController extends Controller
             $model->id_practica = 2;
 
             $model->save();
-            return back()->with('success','Solicitud registrada correctamente');
+            $notificacion = array(
+                'message' => 'Solicitud registrada correctamente.',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notificacion);
 
         } else {
 
@@ -99,7 +106,11 @@ class SolicitudController extends Controller
                 'SOL_fecha_inicio' => $request['SOL_fecha_inicial'],
                 'SOL_fecha_fin' => $request['SOL_fecha_final']
             ]);
-            return back()->with('success', 'Solicitud registrada correctamente');
+            $notificacion = array(
+                'message' => 'Solicitud registrada correctamente.',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notificacion);
 
         }
     }

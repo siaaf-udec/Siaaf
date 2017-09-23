@@ -1,7 +1,10 @@
 @extends('material.layouts.dashboard')
 
 @section('page-title', 'Registro de solicitud:')
-
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de solicitud'])
@@ -19,12 +22,9 @@
                         {!! Field::text('SOL_nucleo_tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Form::select('prueba', $software ) !!}
-
-                        {!! Field::select('SOL_NombSoft',['Ninguno' => 'Ninguno', 'Matlab'=> 'Matlab',
-                        'Argis'=>'Argis', 'Helisa'=>'Helisa', 'SimVenture'=>'SimVenture', 'Kgis'=>'Kgis',
-                        'Autocad'=>'Autocad', 'Anaconda'=>'Anaconda'], 'Ninguno',
-                        ['required','label'=>'Requiere software']) !!}
+                        {!! Form::label('soft', 'Requiere software') !!}
+                        {!! Form::select('SOL_NombSoft', $software, null, ['class' => 'form-control'] ) !!}
+                        {{ Form::hidden('espacio', 'espacio') }}
 
                         {!! Field::text('SOL_grupo',null,['label'=>'Grupo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['icon'=>'fa fa-group'] ) !!}
@@ -80,10 +80,10 @@
     @endcomponent
     </div>
 @endsection
-@push('styles')
-<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
+
 @push('plugins')
+<!--//mensaje validacion-->
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></scripts>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
@@ -218,6 +218,18 @@
         ComponentsBootstrapMaxlength.init();
     });
 
-
+    @if(Session::has('message'))
+    var type = "{{Session::get('alert-type','info')}}"
+    switch (type) {
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}", '!Bien hecho!');
+            break;
+        case 'info':
+            toastr.options.closeButton = true;
+            toastr.info("{{Session::get('message')}}", '!Bien hecho!');
+            break;
+    }
+    @endif
 </script>
 @endpush
