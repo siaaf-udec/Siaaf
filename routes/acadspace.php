@@ -169,5 +169,5 @@ Route::post('x',[
 //Ruta creada para asignar sala
 Route::post('y',[
     'uses' => $controller.'SolicitudController@aprobarSolicitud',
-    'as' => 'espacios.academicos.espacad.solicitud'
+    'as' => 'espacios.academicos.espacad.solicitudaprob'
 ]);

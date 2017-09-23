@@ -50,10 +50,10 @@
 
 
                                                     <!-- Aceptando la solicitud y asignando salon -->
-                                                    <span class="btn blue glyphicon glyphicon-ok" data-toggle="modal" data-target="#{{ $solicitud->PK_SOL_id_solicitud }}"></span>
+                                                    <span class="btn blue glyphicon glyphicon-ok" data-toggle="modal" data-target="#{{ $solicitud->PK_SOL_id_solicitud }}_m"></span>
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="{{ $solicitud->PK_SOL_id_solicitud }}" role="dialog">
+                                                    <div class="modal fade" id="{{ $solicitud->PK_SOL_id_solicitud }}_m" role="dialog">
                                                         <div class="modal-dialog">
 
                                                             <!-- Modal content-->
@@ -71,12 +71,14 @@
                                                                         <div class="col-sm-6"><label class="form-control">Hora fin: {{ $solicitud->SOL_hora_fin }}</label></div>
                                                                     </div>
                                                                     <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
-                                                                    {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitud']]) !!}
+                                                                    {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitudaprob']]) !!}
                                                                         {{ Form::hidden('id_solicitud', $solicitud->PK_SOL_id_solicitud) }}
 
-                                                                        {!! Field::select('sala_asignada',['102' => '102', '201'=> '201',
-                                                                        '202'=>'202'], '102',
-                                                                        ['required','label'=>'Asignar sala', 'class'=> 'form-control']) !!}
+
+
+                                                                        {{ Form::select('sala_asignada', ['102' => '102', '201' => '201', '202' => '202'], 102, ['class' => 'form-control']) }}
+
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                         {{ Form::submit('Asignar', ['class' => 'btn blue']) }}
@@ -170,14 +172,17 @@
     switch (type) {
         case 'success':
             toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
+            toastr.success("{{Session::get('message')}}", '!Bien hecho!');
             break;
         case 'info':
             toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}", 'Registro completo:');
+            toastr.info("{{Session::get('message')}}", '!Bien hecho!');
             break;
     }
     @endif
+</script>
+
+
 
     //jQuery(document).ready(function() {
         /*Crear Solicitud Formato*/

@@ -153,7 +153,7 @@ class SolicitudController extends Controller
         $solicitud->save();
 
         $notificacion = array(
-            'message' => 'Anotacion agregada correctamente.',
+            'message' => 'Solicitud aprobada y asignada correctamente.',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notificacion);
