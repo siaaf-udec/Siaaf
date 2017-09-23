@@ -14,7 +14,7 @@ class solSoftware extends Model
 
     protected $fillable = [
 
-        'nombre_soft','version','licencias','estado'
+        'nombre_soft','version','licencias'
     ];
 
 

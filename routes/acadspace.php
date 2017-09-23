@@ -18,10 +18,7 @@ Route::get('/', [
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
 
-Route::post('x',[
-    'uses' => $controller.'SolicitudController@agregarAnotacion',  //ruta que conduce al controlador para mostrar el formulario para registrar un empleado
-    'as' => 'espacios.academicos.espacad.solicitud'
-]);
+
 
 Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
     'names' => [ // 'método' => 'alias'
@@ -163,3 +160,14 @@ Route::resource('acadcalendar', $controller.'CalendarioController', [   //RUTA H
     ]
 ]);
 Route::post('guardarEventos', array('as'=>'guardaEventos', 'uses' => 'CalendarioController@create'));
+
+//Rutas creadas para guardar la anotacion
+Route::post('x',[
+    'uses' => $controller.'SolicitudController@agregarAnotacion',
+    'as' => 'espacios.academicos.espacad.solicitud'
+]);
+//Ruta creada para asignar sala
+Route::post('y',[
+    'uses' => $controller.'SolicitudController@aprobarSolicitud',
+    'as' => 'espacios.academicos.espacad.solicitud'
+]);

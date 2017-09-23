@@ -135,46 +135,48 @@ class SolicitudController extends Controller
 
 
     public function edit($id){
+
+        //Cambio el estado de la solicitud a 1 - aprobada
         $empleado = Solicitud::find($id);
         $empleado->SOL_estado = 1;
         $empleado->save();
         return back()->with('success','La solicitud fue aprobada correctamente');
 
+
+    }
+    public function aprobarSolicitud(Request $request){
+
+        //Cambio el estado de la solicitud a 1 - aprobada y asigno la sala
+        $solicitud = Solicitud::find($request['id_solicitud']);
+        $solicitud->SOL_estado = 1;
+        $solicitud->id_sala = $request['sala_asignada'];
+        $solicitud->save();
+
+        $notificacion = array(
+            'message' => 'Anotacion agregada correctamente.',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notificacion);
+
     }
 
     public function agregarAnotacion(Request $request){
-       /* echo $request['txt_anotacion'];
-        return ("hola"); */
-        //if($request->ajax() && $request->isMethod('POST')){
 
+        $model = new comentariosSolicitud();
+        //Cambio el estado de la solicitud a 2 - en estudio
+        $solicitud = Solicitud::find($request['id_solicitud']);
+        $solicitud->SOL_estado = 2;
+        $solicitud->save();
+        //Guardo la anotacion en la tabla comentario
+        $model->COM_comentario = $request['txt_anotacion'];
+        $model->FK_COM_id_solicitud = $request['id_solicitud'];
+        $model->save();
 
-                $model = new comentariosSolicitud();
-
-                $model->COM_comentario = $request['txt_anotacion'];
-                $model->FK_COM_id_solicitud = $request['invisible'];
-                $model->save();
-                return back()->with('success','Anotacion agregada correctamente');
-             /*   return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'Solicitud registrada correctamente.'
-                );
-
-            }else{
-
-        return AjaxResponse::fail(
-        '¡Lo sentimos!',
-        'No se pudo completar tu solicitud.'
+        $notificacion = array(
+            'message' => 'Anotacion agregada correctamente.',
+            'alert-type' => 'success'
         );
-
-        }*/
-    }
-
-    public function editActPrac($id){
-        $empleado = Solicitud::find($id);
-        $empleado->SOL_estado = 2;
-        $empleado->save();
-        return back()->with('success','La solicitud fue aprobada correctamente');
-
+        return redirect()->back()->with($notificacion);
     }
 
     /**

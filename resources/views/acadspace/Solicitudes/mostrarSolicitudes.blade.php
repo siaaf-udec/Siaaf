@@ -1,7 +1,9 @@
 @extends('material.layouts.dashboard')
 
 @section('page-title', 'Solicitudes sin revisar:')
-
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
 <div class="col-md-12">
     <div class="row ui-sortable" id="sortable_portlets">
@@ -10,7 +12,7 @@
                 <div class="portlet-title ui-sortable-handle">
                     <div class="caption font-green">
                         <i class=" icon-frame font-green"></i>
-                        <span class="caption-subject bold uppercase"> Solicitudes </span>
+                        <span class="caption-subject bold uppercase"> Solicitudes por revisar </span>
                     </div>
                     <div class="actions">
                         <a class="btn btn-circle btn-icon-only btn-default" id="link_upload" href="javascript:;">
@@ -46,10 +48,46 @@
                                             <td>{{$solicitud->SOL_cant_estudiantes}}</td>
                                             <td class=" text-left">
 
-                                                {!! link_to_route('espacios.academicos.espacad.edit',$title='', $parameters=$solicitud->PK_SOL_id_solicitud,
-                            $atributes=  ['class' => 'btn blue glyphicon glyphicon-ok']) !!}
 
-                                                    <!-- Trigger the modal with a button -->
+                                                    <!-- Aceptando la solicitud y asignando salon -->
+                                                    <span class="btn blue glyphicon glyphicon-ok" data-toggle="modal" data-target="#{{ $solicitud->PK_SOL_id_solicitud }}"></span>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="{{ $solicitud->PK_SOL_id_solicitud }}" role="dialog">
+                                                        <div class="modal-dialog">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">Aprobar solicitud</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <label class="form-control">Nucleo tematico: {{ $solicitud->SOL_nucleo_tematico }}</label>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <label class="form-control">Hora inicio: {{ $solicitud->SOL_hora_inicio }}</label></div>
+                                                                        <div class="col-sm-6"><label class="form-control">Hora fin: {{ $solicitud->SOL_hora_fin }}</label></div>
+                                                                    </div>
+                                                                    <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
+                                                                    {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitud']]) !!}
+                                                                        {{ Form::hidden('id_solicitud', $solicitud->PK_SOL_id_solicitud) }}
+
+                                                                        {!! Field::select('sala_asignada',['102' => '102', '201'=> '201',
+                                                                        '202'=>'202'], '102',
+                                                                        ['required','label'=>'Asignar sala', 'class'=> 'form-control']) !!}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                        {{ Form::submit('Asignar', ['class' => 'btn blue']) }}
+                                                                    {!! Form::close() !!}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <!-- Fin aceptar solicitud -->
+                                                    <!-- Inicio de agregar anotacion -->
                                                     <span class="btn btn-warning glyphicon glyphicon-pencil" data-toggle="modal" data-target="#{{ $solicitud->PK_SOL_id_solicitud }}"></span>
 
                                                     <!-- Modal -->
@@ -73,13 +111,11 @@
                                                                     <label class="form-control">Dias: {{ $solicitud->SOL_dias }}</label>
                                                                     {!! Form::open (['id'=>'form_anotacion','method'=>'POST', 'route'=> ['espacios.academicos.espacad.solicitud']]) !!}
                                                                         {{ Form::textarea('txt_anotacion', null, ['class' => 'form-control']) }}
-                                                                        {{ Form::hidden('invisible', $solicitud->PK_SOL_id_solicitud) }}
+                                                                        {{ Form::hidden('id_solicitud', $solicitud->PK_SOL_id_solicitud) }}
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <!--<button type="button" class="btn blue" data-dismiss="modal">Agregar</button>-->
-
-                                                                       {{ Form::submit('Agregar', ['class' => 'btn blue']) }}
+                                                                        {{ Form::submit('Agregar', ['class' => 'btn blue']) }}
                                                                     {!! Form::close() !!}
 
                                                                 </div>
@@ -119,13 +155,33 @@
 
 </div>
 @endsection
-
+@push('plugins')
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<!--//validaciones-->
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+@endpush
 @push('functions')
 <script type="text/javascript">
+    @if(Session::has('message'))
+    var type = "{{Session::get('alert-type','info')}}"
+    switch (type) {
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
+            break;
+        case 'info':
+            toastr.options.closeButton = true;
+            toastr.info("{{Session::get('message')}}", 'Registro completo:');
+            break;
+    }
+    @endif
 
-    jQuery(document).ready(function() {
+    //jQuery(document).ready(function() {
         /*Crear Solicitud Formato*/
-        var createSolicitud = function () {
+        /*var createSolicitud = function () {
             return{
                 init: function () {
                     var route = '{{ route('espacios.academicos.formacad.store') }}';
@@ -164,9 +220,12 @@
             }
         };
 
-       /* var route = '{{route('espacios.academicos.formacad.store')}}';
+        var route = '{{route('espacios.academicos.formacad.store')}}';
         var formatfile = 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.pdf';
         var numfile = 2;
-        FormDropzone.init(route, formatfile, numfile, createSolicitud());*/
-    });
+        FormDropzone.init(route, formatfile, numfile, createSolicitud());
+    });*/
+
+
+
 @endpush
