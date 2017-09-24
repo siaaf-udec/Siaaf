@@ -104,7 +104,8 @@ class SolicitudController extends Controller
                 'SOL_estado' => 0,
                 'SOL_nucleo_tematico' => $request['SOL_nucleo_tematico'],
                 'SOL_fecha_inicio' => $request['SOL_fecha_inicial'],
-                'SOL_fecha_fin' => $request['SOL_fecha_final']
+                'SOL_fecha_fin' => $request['SOL_fecha_final'],
+                'id_practica' => 1
             ]);
             $notificacion = array(
                 'message' => 'Solicitud registrada correctamente.',
@@ -132,6 +133,19 @@ class SolicitudController extends Controller
 
 
         return view('acadspace.solicitudesAprobadas', compact('solicitudes','SoftwareSol','id'));
+    }
+
+    public function estadoSolicitudesRealizadas(){
+        $id = Auth::id();
+
+        $solicitudes = Solicitud::all();
+        /*$solicitudes = Solicitud::paginate(10);
+
+        $SoftwareSol = solSoftware::all();
+        $SoftwareSol = solSoftware::paginate(10);*/
+
+
+        return view('acadspace.solicitudes.estadosolicitudesdocente', compact('solicitudes','SoftwareSol','id'));
     }
     /**
      * Display the specified resource.

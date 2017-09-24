@@ -104,6 +104,11 @@ Route::get('/solicitudesAprobadas', [    //ruta para listar los docentes registr
     'uses' => $controller.'SolicitudController@listarSolicitudAprobada'
 ]);
 
+Route::get('/misSolicitudes', [    //ruta para listar los docentes registrados.
+    'as' => 'espacios.academicos.misSolicitudes', //Este es el alias de la ruta
+    'uses' => $controller.'SolicitudController@estadoSolicitudesRealizadas'
+]);
+
 Route::get('/descargarArchivo/{id}', [
     'as' => 'espacios.academicos.descargarArchivo',
     'uses' => $controller.'solFormAcadController@descargar_publicacion'
@@ -171,3 +176,7 @@ Route::post('y',[
     'uses' => $controller.'SolicitudController@aprobarSolicitud',
     'as' => 'espacios.academicos.espacad.solicitudaprob'
 ]);
+
+Route::get('/procesamiento', function(){
+    return datatables(User::all())->toJson();
+});

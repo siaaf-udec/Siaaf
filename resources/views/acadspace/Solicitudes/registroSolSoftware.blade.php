@@ -57,11 +57,15 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-    jQuery(document).ready(function() {
-        FormValidationMd.init();
-        ComponentsBootstrapMaxlength.init();
-    });
-    //Validando el formulario
+    @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}",'Registro exitoso');
+            break;
+    }
+    @endif
     var FormValidationMd = function() {
 
         var handleValidation = function() {
@@ -75,50 +79,40 @@
                 errorClass: 'help-block help-block-error',
                 focusInvalid: true,
                 ignore: "",
-                messages: {
-                    'tags[]': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    },
-                    'radios': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    }
-                },
                 rules: {
                     nombre_soft: {
                         minlength: 2,
-                        required: true,
+                        required: true
                     },
                     version: {
-                        required: true,
                         number: true,
+                        required: true
                     },
                     licencias: {
-                        required: true,
                         number: true,
+                        required: true
+                    }
+                },
+                messages:{
+                    nombre_soft: {
+                        required: "Debe digitar el nombre del software."
                     },
-                   /* password_confirmation: {
-                        required: true,
-                        equalTo: "#password"
+                    version: {
+                        required: "Campo numerico."
                     },
-                    url: {
-                        required: true,
-                        url: true
-                    },
-                    'tags[]': {
-                        required: true,
-                        minlength: 3,
-                    },
-                    radios: {
-                        required: true,
-                        minlength: 1,
-                    },*/
+                    licencias: {
+                        required: "Campo numerico."
+                    }
+
                 },
 
-                invalidHandler: function(event, validator) { //display error alert on form submit
+                invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debe corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -128,28 +122,30 @@
                     } else if (element.is(':radio')) {
                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
                     } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
+                        error.insertAfter(element);
                     }
                 },
 
                 highlight: function(element) { // hightlight error inputs
                     $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                        .closest('.form-group').addClass('has-error');
                 },
 
-                unhighlight: function(element) { // revert the change done by hightlight
+                unhighlight: function(element) {
                     $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                        .closest('.form-group').removeClass('has-error');
                 },
 
                 success: function(label) {
                     label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                        .closest('.form-group').removeClass('has-error');
+
                 },
 
-                submitHandler: function(form) {
+                submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    form1.submit();
                 }
             });
         }
@@ -160,9 +156,6 @@
             }
         };
     }();
-    jQuery(document).ready(function() {
-        FormValidationMd.init();
-    });
     var ComponentsBootstrapMaxlength = function () {
 
         var handleBootstrapMaxlength = function() {
@@ -170,7 +163,7 @@
                 limitReachedClass: "label label-danger",
                 alwaysShow: true
             });
-        }
+        };
 
         return {
             //main function to initiate the module
@@ -181,26 +174,8 @@
 
     }();
     jQuery(document).ready(function() {
+        FormValidationMd.init();
         ComponentsBootstrapMaxlength.init();
     });
-
-    //Mensaje de registro exitoso
-    @if(Session::has('message'))
-    var type = "{{Session::get('alert-type','info')}}"
-    switch (type) {
-        case 'success':
-            toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
-            break;
-        case 'info':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}", 'Registro completo:');
-            break;
-    }
-    @endif
-
-
-
-
 </script>
 @endpush
