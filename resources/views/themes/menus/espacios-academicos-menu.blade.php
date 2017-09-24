@@ -53,14 +53,14 @@
             </a>
             <ul class="sub-menu">
                 @permission('docentes')
-                <li class="nav-item {{ active(['espacios.academicos.espacad.create'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.espacad.create') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.espacad.index'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.espacad.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Practica Grupal</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.solPracLibre'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.solPracLibre') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.espacad.create'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.espacad.create') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Practica Libre</span>
                     </a>
@@ -73,7 +73,7 @@
                         <span class="title">Practica Grupal</span>
                     </a>
                 </li>
-                
+
                 @endpermission
                 @permission('docentes')
 

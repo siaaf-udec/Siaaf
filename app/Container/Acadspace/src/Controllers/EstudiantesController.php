@@ -37,7 +37,7 @@ class EstudiantesController extends Controller
      */
     public function create()
     {
-        return view('acadspace.registroSolicitud');
+        return view('acadspace.controlEstudiante');
     }
 
     /**
@@ -61,16 +61,20 @@ class EstudiantesController extends Controller
             $model->codigo = $data['codigo'];
             $model->save();
 
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
+            $notificacion = array(
+                'message' => 'Codigo registrado correctamente.',
+                'alert-type' => 'success'
             );
+            return redirect()->back()->with($notificacion);
+
         }
         else{
-            return AjaxResponse::fail(
-                '¡Codigo invalido!',
-                'No se pudo completar tu solicitud.'
+            $notificacion = array(
+                'message' => 'Algo anda mal.',
+                'alert-type' => 'danger'
             );
+            return redirect()->back()->with($notificacion);
+
         }
 
 

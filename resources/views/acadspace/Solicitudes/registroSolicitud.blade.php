@@ -13,7 +13,7 @@
 
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.espacad.store']]) !!}
+                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.espacad.store'], 'id'=>'form_material']) !!}
 
                     <div class="form-body">
 
@@ -38,12 +38,12 @@
 
                         {!! Field::text(
                         'SOL_hora_inicio',
-                        ['label' => 'Hora de inicio', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
+                        ['label' => 'Hora de inicio', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'auto' => 'off'],
                         ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
                         {!! Field::text(
                         'SOL_hora_fin',
-                        ['label' => 'Hora de fin', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
+                        ['label' => 'Hora de fin', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'auto' => 'off'],
                         ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
 
@@ -85,7 +85,7 @@
 <!--//mensaje validacion-->
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></scripts>
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
@@ -93,32 +93,19 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-
+            @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'success':
+            toastr.options.closeButton = true;
+            toastr.success("{{Session::get('message')}}",'Registro exitoso:');
+            break;
+    }
+    @endif
     //--1
-    var ComponentsDateTimePickers = function () {
-        var handleTimePickers = function () {
-
-            if (jQuery().timepicker) {
-
-                $('.timepicker-no-seconds').timepicker({
-                    autoclose: true,
-                    minuteStep: 5,
-                });
-
-            }
-        }
-
-        return {
-            init: function () {
-                handleTimePickers();
-            }
-        };
-    }();
-    jQuery(document).ready(function() {
-        ComponentsDateTimePickers.init();
-    });
 
     var FormValidationMd = function() {
+
         var handleValidation = function() {
 
             var form1 = $('#form_material');
@@ -134,27 +121,72 @@
                     SOL_ReqGuia: {
                         required: true
                     },
-                    SOL_ReqSoft: {
+                    SOL_nucleo_tematico: {
+                        required: true
+                    },
+
+                    SOL_grupo:{
+                        required: true
+                    },
+                    SOL_cant_estudiantes:{
+                        required: true,
+                        number: true
+                    },
+                    SOL_fecha_inicial:{
+                        required: true
+                    },
+                    SOL_hora_inicio:{
+                        required: true
+                    },
+                    SOL_hora_fin:{
+                        required: true
+                    },
+                    'SOL_dias[]':{
+                        required: true
+                    },
+                    SOL_fecha_final:{
                         required: true
                     }
-
                 },
-                messages:{
+                messages: {
+                    SOL_nucleo_tematico: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_grupo: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_cant_estudiantes: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_fecha_inicial: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_hora_inicio: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_hora_fin: {
+                        required: 'Digita el campo',
+                    },
                     SOL_ReqGuia: {
                         required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
+                        minlength: jQuery.validator.format("Al menos 1 items deben ser seleccionados"),
                     },
-                    SOL_ReqSoft: {
+                    'SOL_dias[]':{
                         required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
+                        minlength: jQuery.validator.format("Al menos 1 items deben ser seleccionados"),
                     },
-
-
+                    SOL_fecha_final:{
+                        required: 'Digita el campo',
+                    }
                 },
 
                 invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debe corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -181,11 +213,13 @@
                 success: function(label) {
                     label
                         .closest('.form-group').removeClass('has-error');
+
                 },
 
                 submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    form1.submit();
                 }
             });
         }
@@ -196,14 +230,35 @@
             }
         };
     }();
-    var ComponentsBootstrapMaxlength = function () {
 
+    var ComponentsDateTimePickers = function () {
+        var handleTimePickers = function () {
+            if (jQuery().timepicker) {
+                $('.timepicker-no-seconds').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                });
+
+            }
+        }
+
+        return {
+            init: function () {
+                handleTimePickers();
+            }
+        };
+    }();
+    jQuery(document).ready(function() {
+        ComponentsDateTimePickers.init();
+    });
+
+    var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
             $("input[maxlength], textarea[maxlength]").maxlength({
                 limitReachedClass: "label label-danger",
                 alwaysShow: true
             });
-        };
+        }
 
         return {
             //main function to initiate the module
@@ -217,19 +272,5 @@
         FormValidationMd.init();
         ComponentsBootstrapMaxlength.init();
     });
-
-    @if(Session::has('message'))
-    var type = "{{Session::get('alert-type','info')}}"
-    switch (type) {
-        case 'success':
-            toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}", '!Bien hecho!');
-            break;
-        case 'info':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}", '!Bien hecho!');
-            break;
-    }
-    @endif
 </script>
 @endpush

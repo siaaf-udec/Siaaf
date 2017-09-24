@@ -1,7 +1,10 @@
 @extends('material.layouts.dashboard')
 
 @section('page-title', 'Registro de solicitud:')
-
+@push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de solicitud'])
@@ -10,7 +13,7 @@
 
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open ([ 'method'=>'POST', 'route'=> ['espacios.academicos.espacad.store']]) !!}
+                    {!! Form::open ([ 'method'=>'POST', 'route'=> ['espacios.academicos.espacad.store'], 'id'=>'form_material']) !!}
 
                     <div class="form-body">
                         {!! Field::hidden('ID_Practica', '1') !!}
@@ -20,10 +23,9 @@
                         {!! Field::text('SOL_nucleo_tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Field::select('SOL_NombSoft',['Ninguno' => 'Ninguno', 'Matlab'=> 'Matlab',
-                        'Argis'=>'Argis', 'Helisa'=>'Helisa', 'SimVenture'=>'SimVenture', 'Kgis'=>'Kgis',
-                        'Autocad'=>'Autocad', 'Anaconda'=>'Anaconda'], 'Ninguno',
-                        ['required','label'=>'Requiere software']) !!}
+                        {!! Form::label('soft', 'Requiere software') !!}
+                        {!! Form::select('SOL_NombSoft', $software, null, ['class' => 'form-control'] ) !!}
+                        {{ Form::hidden('espacio', 'espacio') }}
 
                         {!! Field::text('SOL_grupo',null,['label'=>'Grupo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['icon'=>'fa fa-group'] ) !!}
@@ -70,10 +72,9 @@
     @endcomponent
     </div>
 @endsection
-@push('styles')
-<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
+
 @push('plugins')
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
@@ -83,30 +84,16 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-
+            @if(Session::has('message'))
+                var type="{{Session::get('alert-type','info')}}"
+            switch(type){
+                case 'success':
+                toastr.options.closeButton = true;
+                toastr.success("{{Session::get('message')}}",'Registro exitoso:');
+                break;
+            }
+            @endif
     //--1
-    var ComponentsDateTimePickers = function () {
-        var handleTimePickers = function () {
-
-            if (jQuery().timepicker) {
-
-                $('.timepicker-no-seconds').timepicker({
-                    autoclose: true,
-                    minuteStep: 5,
-                });
-
-            }
-        }
-
-        return {
-            init: function () {
-                handleTimePickers();
-            }
-        };
-    }();
-    jQuery(document).ready(function() {
-        ComponentsDateTimePickers.init();
-    });
 
     var FormValidationMd = function() {
 
@@ -121,16 +108,6 @@
                 errorClass: 'help-block help-block-error',
                 focusInvalid: true,
                 ignore: "",
-                messages: {
-                    'tags[]': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    },
-                    'radios': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    }
-                },
                 rules: {
                     SOL_ReqGuia: {
                         required: true
@@ -143,7 +120,8 @@
                         required: true
                     },
                     SOL_cant_estudiantes:{
-                        required: true
+                        required: true,
+                        number: true
                     },
                     SOL_fecha_inicial:{
                         required: true
@@ -155,10 +133,38 @@
                         required: true
                     }
                 },
+                messages: {
+                    SOL_nucleo_tematico: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_grupo: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_cant_estudiantes: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_fecha_inicial: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_hora_inicio: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_hora_fin: {
+                        required: 'Digita el campo',
+                    },
+                    SOL_ReqGuia: {
+                        required: 'Por favor marca una opción',
+                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
+                    }
+                },
 
-                invalidHandler: function(event, validator) { //display error alert on form submit
+                invalidHandler: function(event, validator) {
                     success1.hide();
                     error1.show();
+                    toastr.options.closeButton = true;
+                    toastr.options.showDuration= 1000;
+                    toastr.options.hideDuration= 1000;
+                    toastr.error('Debe corregir algunos campos','Registro fallido:')
                     App.scrollTo(error1, -200);
                 },
 
@@ -168,28 +174,30 @@
                     } else if (element.is(':radio')) {
                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
                     } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
+                        error.insertAfter(element);
                     }
                 },
 
                 highlight: function(element) { // hightlight error inputs
                     $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                        .closest('.form-group').addClass('has-error');
                 },
 
-                unhighlight: function(element) { // revert the change done by hightlight
+                unhighlight: function(element) {
                     $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                        .closest('.form-group').removeClass('has-error');
                 },
 
                 success: function(label) {
                     label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                        .closest('.form-group').removeClass('has-error');
+
                 },
 
-                submitHandler: function(form) {
+                submitHandler: function(form1) {
                     success1.show();
                     error1.hide();
+                    form1.submit();
                 }
             });
         }
@@ -201,8 +209,28 @@
         };
     }();
 
-    var ComponentsBootstrapMaxlength = function () {
+    var ComponentsDateTimePickers = function () {
+        var handleTimePickers = function () {
+            if (jQuery().timepicker) {
+                $('.timepicker-no-seconds').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                });
 
+            }
+        }
+
+        return {
+            init: function () {
+                handleTimePickers();
+            }
+        };
+    }();
+            jQuery(document).ready(function() {
+                ComponentsDateTimePickers.init();
+            });
+
+    var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
             $("input[maxlength], textarea[maxlength]").maxlength({
                 limitReachedClass: "label label-danger",

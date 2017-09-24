@@ -42,7 +42,9 @@ class SolicitudController extends Controller
      */
     public function create()
     {
-        return view('acadspace.Solicitudes.registroSolicitudPracLibre');
+        $soft = new solSoftware();
+        $software = $soft->pluck('nombre_soft','id');
+        return view('acadspace.Solicitudes.registroSolicitudPracLibre', compact('software'));
     }
 
     /**

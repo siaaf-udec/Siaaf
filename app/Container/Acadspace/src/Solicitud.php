@@ -17,13 +17,15 @@ class Solicitud extends Model
         'SOL_software',
         'SOL_grupo',
         'SOL_cant_estudiantes',
+        'SOL_id_docente',
         'SOL_dias',
         'SOL_hora_inicio',
         'SOL_hora_fin',
         'SOL_estado',
         'SOL_fecha_inicio',
         'SOL_fecha_fin',
-        'SOL_nucleo_tematico'
+        'SOL_nucleo_tematico',
+        'id_practica'
     ];
 
 

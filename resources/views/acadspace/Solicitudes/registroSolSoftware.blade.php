@@ -62,7 +62,7 @@
     switch(type){
         case 'success':
             toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}",'Registro exitoso');
+            toastr.success("{{Session::get('message')}}",'Registro exitoso:');
             break;
     }
     @endif

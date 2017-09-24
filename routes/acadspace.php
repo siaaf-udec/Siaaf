@@ -32,10 +32,7 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
     ]
 ]);
 
-Route::get('/solPracLibre', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.solPracLibre', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@regisPracLibre'
-]);
+
 
 Route::get('/editActPrac/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.editActPrac', //Este es el alias de la ruta
