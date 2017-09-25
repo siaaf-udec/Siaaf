@@ -105,19 +105,13 @@
             </a>
             <ul class="sub-menu">
                 @permission('regisHorario')
-                <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Registrar</span>
+                        <span class="title">Asignar</span>
                     </a>
                 </li>
                 @endpermission
-                <li class="nav-item {{ active(['espacios.academicos.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.index') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Consultar</span>
-                    </a>
-                </li>
             </ul>
         </li>
         @endpermission

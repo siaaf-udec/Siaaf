@@ -155,7 +155,6 @@ class CalendarioController extends Controller
         $id = $_POST['id'];
 
         calendarioSalones::destroy($id);
-        calendarioSalones::destroy($id);
     }
 
 

@@ -143,17 +143,7 @@ Route::get('reportesDoc', function () {
     return $pdf->download('invoice.pdf');
 })->name('espacios.academicos.reportesDoc');
 
-Route::resource('horarioacad', $controller.'HorarioController', [   //RUTA HORARIO
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.horarioacad.create',
-        'store' => 'espacios.academicos.horarioacad.store',
-        'index' => 'espacios.academicos.horarioacad.index',
-        'edit' => 'espacios.academicos.horarioacad.edit',
-        'show' => 'espacios.academicos.horarioacad.show',
-        'update' => 'espacios.academicos.horarioacad.update',
-        'destroy' => 'espacios.academicos.horarioacad.destroy'
-    ]
-]);
+
 /**CALENDARIO**/
 Route::resource('acadcalendar', $controller.'CalendarioController', [   //RUTA HORARIO
     'names' => [ // 'método' => 'alias'
