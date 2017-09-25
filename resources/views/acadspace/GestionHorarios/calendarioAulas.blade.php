@@ -6,12 +6,19 @@
  */-->
 @extends('material.layouts.dashboard')
 
-@section('page-title', 'Horario:')
-@section('content')
+@push('styles')
+<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print' type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/main/acadspace/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
 
+@endpush
+@section('content')
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Calendario'])
 <div class="panel panel-default">
     <!-- Content Header (Page header) -->
-    <div class="panel-heading"><h2> Calendario   </h2>  </div>
     <div class="panel-body">
         <!-- Main content -->
         <section class="content">
@@ -98,16 +105,20 @@
 </div>
 </div>
 @endsection
-@push('styles')
-<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print' type="text/css" />
-@endpush
 @push('plugins')
+
+<script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 @endpush
-@section('scripts')
+@push('functions')
 <script>
     $(function () {
         /* initialize the external events
@@ -144,6 +155,7 @@
             y = date.getFullYear();
         //while(reload==false){
         $('#calendar').fullCalendar({
+            lang: 'es',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -156,7 +168,7 @@
                 day: 'dia'
             },
 
-            //events: { url:"cargaEventos"},
+            events: { url:"cargaEventos"},
 
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -202,6 +214,110 @@
                         console.log("Error al crear evento");
                     }
                 });
+            },
+            eventResize: function(event) {
+                var start = event.start.format("YYYY-MM-DD HH:mm");
+                var back=event.backgroundColor;
+                var allDay=event.allDay;
+                if(event.end){
+                    var end = event.end.format("YYYY-MM-DD HH:mm");
+                }else{var end="NULL";
+                }
+                crsfToken = document.getElementsByName("_token")[0].value;
+                $.ajax({
+                    url: 'actualizaEventos',
+                    data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id+'&background='+back+'&allday='+allDay,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                    success: function(json) {
+                        console.log("Updated Successfully");
+                    },
+                    error: function(json){
+                        console.log("Error al actualizar evento");
+                    }
+                });
+            },
+            eventDrop: function(event, delta) {
+                var start = event.start.format("YYYY-MM-DD HH:mm");
+                if(event.end){
+                    var end = event.end.format("YYYY-MM-DD HH:mm");
+                }else{var end="NULL";
+                }
+                var back=event.backgroundColor;
+                var allDay=event.allDay;
+                crsfToken = document.getElementsByName("_token")[0].value;
+
+                $.ajax({
+                    url: 'actualizaEventos',
+                    data: 'title='+ event.title+'&start='+ start +'&end='+ end+'&id='+ event.id+'&background='+back+'&allday='+allDay,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                    success: function(json) {
+                        console.log("Updated Successfully eventdrop");
+                    },
+                    error: function(json){
+                        console.log("Error al actualizar eventdrop");
+                    }
+                });
+            },
+            eventClick: function (event, jsEvent, view) {
+                crsfToken = document.getElementsByName("_token")[0].value;
+                var con=confirm("Esta seguro que desea eliminar el evento");
+                if(con){
+                    $.ajax({
+                        url: 'eliminaEvento',
+                        data: 'id=' + event.id,
+                        headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                        type: "POST",
+                        success: function () {
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                            console.log("Evento eliminado");
+                        }
+                    });
+                }else{
+                    console.log("Cancelado");
+                }
+            },
+
+            eventMouseover: function( event, jsEvent, view ) {
+                var start = (event.start.format("HH:mm"));
+                var back=event.backgroundColor;
+                if(event.end){
+                    var end = event.end.format("HH:mm");
+                }else{var end="No definido";
+                }
+                if(event.allDay){
+                    var allDay = "Si";
+                }else{var allDay="No";
+                }
+                var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:'+back+';position:absolute;z-index:10001;">'+'<center>'+ event.title +'</center>'+'Todo el dia: '+allDay+'<br>'+ 'Inicio: '+start+'<br>'+ 'Fin: '+ end +'</div>';
+                $("body").append(tooltip);
+                $(this).mouseover(function(e) {
+                    $(this).css('z-index', 10000);
+                    $('.tooltipevent').fadeIn('500');
+                    $('.tooltipevent').fadeTo('10', 1.9);
+                }).mousemove(function(e) {
+                    $('.tooltipevent').css('top', e.pageY + 10);
+                    $('.tooltipevent').css('left', e.pageX + 20);
+                });
+            },
+
+            eventMouseout: function(calEvent, jsEvent) {
+                $(this).css('z-index', 8);
+                $('.tooltipevent').remove();
+            },
+
+            dayClick: function(date, jsEvent, view) {
+                if (view.name === "month") {
+                    $('#calendar').fullCalendar('gotoDate', date);
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                }
             }
         });
 
@@ -237,5 +353,94 @@
             $("#new-event").val("");
         });
     });
+
+
 </script>
-@endsection
+
+<script>
+   // events: { url:"cargaEventos"},
+
+/*
+
+    eventDrop: function(event, delta) {
+        var start = event.start.format("YYYY-MM-DD HH:mm");
+        if(event.end){
+            var end = event.end.format("YYYY-MM-DD HH:mm");
+        }else{var end="NULL";
+        }
+        var back=event.backgroundColor;
+        var allDay=event.allDay;
+        crsfToken = document.getElementsByName("_token")[0].value;
+
+        $.ajax({
+            url: 'actualizaEventos',
+            data: 'title='+ event.title+'&start='+ start +'&end='+ end+'&id='+ event.id+'&background='+back+'&allday='+allDay ,
+            type: "POST",
+            headers: {
+                "X-CSRF-TOKEN": crsfToken
+            },
+            success: function(json) {
+                console.log("Updated Successfully eventdrop");
+            },
+            error: function(json){
+                console.log("Error al actualizar eventdrop");
+            }
+        });
+    },
+    eventClick: function (event, jsEvent, view) {
+        crsfToken = document.getElementsByName("_token")[0].value;
+        var con=confirm("Esta seguro que desea eliminar el evento");
+        if(con){
+            $.ajax({
+                url: 'eliminaEvento',
+                data: 'id=' + event.id,
+                headers: {
+                    "X-CSRF-TOKEN": crsfToken
+                },
+                type: "POST",
+                success: function () {
+                    $('#calendar').fullCalendar('removeEvents', event._id);
+                    console.log("Evento eliminado");
+                }
+            });
+        }else{
+            console.log("Cancelado");
+        }
+    },
+
+    eventMouseover: function( event, jsEvent, view ) {
+        var start = (event.start.format("HH:mm"));
+        var back=event.backgroundColor;
+        if(event.end){
+            var end = event.end.format("HH:mm");
+        }else{var end="No definido";
+        }
+        if(event.allDay){
+            var allDay = "Si";
+        }else{var allDay="No";
+        }
+        var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:'+back+';position:absolute;z-index:10001;">'+'<center>'+ event.title +'</center>'+'Todo el dia: '+allDay+'<br>'+ 'Inicio: '+start+'<br>'+ 'Fin: '+ end +'</div>';
+        $("body").append(tooltip);
+        $(this).mouseover(function(e) {
+            $(this).css('z-index', 10000);
+            $('.tooltipevent').fadeIn('500');
+            $('.tooltipevent').fadeTo('10', 1.9);
+        }).mousemove(function(e) {
+            $('.tooltipevent').css('top', e.pageY + 10);
+            $('.tooltipevent').css('left', e.pageX + 20);
+        });
+    },
+
+    eventMouseout: function(calEvent, jsEvent) {
+        $(this).css('z-index', 8);
+        $('.tooltipevent').remove();
+    },
+
+    dayClick: function(date, jsEvent, view) {
+        if (view.name === "month") {
+            $('#calendar').fullCalendar('gotoDate', date);
+            $('#calendar').fullCalendar('changeView', 'agendaDay');
+        }
+    }*/
+</script>
+@endpush

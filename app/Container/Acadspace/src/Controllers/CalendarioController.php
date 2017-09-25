@@ -28,6 +28,34 @@ class CalendarioController extends Controller
     {
         return view('acadspace.gestionhorarios.calendarioaulas');
     }
+    public function cargaEventos()
+    {
+
+        $data = array();
+        $id = calendarioSalones::all()->pluck('PK_CAL_id');
+        $titulo = calendarioSalones::all()->pluck('CAL_titulo');
+        $color = calendarioSalones::all()->pluck('CAL_color');
+        $todoeldia = calendarioSalones::all()->pluck('allday');
+        $fecha_inicial = calendarioSalones::all()->pluck('CAL_fecha_ini');
+        $fecha_final = calendarioSalones::all()->pluck('CAL_fecha_fin');
+        $count = count($id);
+
+        for($i=0 ; $i<$count ; $i++){
+            $data[$i] = array(
+                "title" => $titulo[$i],
+                "start" => $fecha_inicial[$i],
+                "end"=>$fecha_final[$i],
+                "allday" => $todoeldia[$i],
+                "backgroundColor" => $color[$i],
+                "id" => $id[$i],
+
+            );
+        }
+        json_encode($data);
+        return $data;
+
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +64,19 @@ class CalendarioController extends Controller
      */
     public function create()
     {
-        return view('acadspace.registroSolicitud');
+        $titulo = $_POST['title'];
+        $fecha_inicio = $_POST['start'];
+        $color = $_POST['background'];
+        //$todoeldia = $_POST['allday'];
+
+        $evento = new calendarioSalones();
+
+        $evento->CAL_titulo = $titulo;
+        $evento->CAL_fecha_ini = $fecha_inicio;
+        $evento->CAL_color=$color;
+        $evento->CAL_todoeldia = true;
+
+        $evento->save();
     }
 
     /**
@@ -47,60 +87,10 @@ class CalendarioController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        $code = $data['codigo'];
-        $rest = substr($code, -8, -6);
-        if($rest == '61' || $rest == '63' || $rest == '60' || $rest == '10' || $rest == '14' || $rest == '40') {
-
-            $model = new Estudiantes();
-
-            $model->id_carrera =$this->obtenerCarrera($code);
-            $model->nombre = $data['nombre'];
-            $model->codigo = $data['codigo'];
-            $model->save();
-
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
-            );
-        }
-        else{
-            return AjaxResponse::fail(
-                '¡Codigo invalido!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
-
-
 
     }
 
-    public function obtenerCarrera($codigo){
 
-        $rest = substr($codigo, -8, -6); // devuelve "d"
-
-            if($rest == '61'){
-                $id_carr = 1;//Ing Sistemas
-            }
-            if($rest == '63'){
-                $id_carr = 2;//Ing Ambiental
-            }
-            if($rest == '60'){
-                $id_carr = 3;//Ing Agronomica
-            }
-            if($rest == '10'){
-                $id_carr = 4;//Administracion
-            }
-            if($rest == '14'){
-                $id_carr = 5;//Contaduria
-            }
-            if($rest == '40'){
-                $id_carr = 6;//Piscologia
-            }
-
-        return $id_carr;
-    }
     /**
      * Display the specified resource.
      *
@@ -109,31 +99,7 @@ class CalendarioController extends Controller
      */
     public function show()
     {
-        $model = Estudiantes::all();
-        $sist = $this->obtCont($model, 1);
-        $amb = $this->obtCont($model, 2);
-        $agron = $this->obtCont($model, 3);
-        $admi = $this->obtCont($model, 4);
-        $cont = $this->obtCont($model, 5);
-        $psic = $this->obtCont($model, 6);
-        //$roles = DB::table('tbl_estudiantes')->select('*')->where('id_carrera','=','1')->get();
-        //$cont = $roles->count;
-        //return view('acadspace.Reportes.reportesEstudiantes', compact('sist', 'amb', 'agron', 'admi', 'cont', 'psic'));
-        dd('Ingenieria de Sistemas: '. $sist,
-            'Ingenieria Ambiental: '. $amb, 'Ingenieria Agronomica: '. $agron, 'Administracion: '. $admi, 'Contaduria: '. $cont,
-            'Psicologia: '. $psic);
-    }
 
-    public function obtCont($model,$id)
-    {
-        $cont=0;
-        foreach($model as $user)
-        {
-            if($user->id_carrera == $id) {
-                $cont = $cont + 1;
-            }
-        }
-        return $cont;
     }
 
     /**
@@ -144,9 +110,7 @@ class CalendarioController extends Controller
      */
     public function edit($id)
     {
-        $empleado = Solicitud::find($id);
-        $empleado->SOL_estado = 2;
-        $empleado->save();
+
     }
 
     /**
@@ -156,9 +120,28 @@ class CalendarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(){
 
+        //Valores recibidos via ajax
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $start = $_POST['start'];
+        $end = $_POST['end'];
+        $allDay = $_POST['allday'];
+        $back = $_POST['background'];
+
+        $evento=calendarioSalones::find($id);
+        if($end=='NULL'){
+        }else{
+            $evento->CAL_fecha_fin=$end;
+        }
+        $evento->CAL_fecha_ini=$start;
+       // $evento->CAL_todoeldia=$allDay;
+        $evento->CAL_color=$back;
+        $evento->CAL_titulo=$title;
+        //$evento->fechaFin=$end;
+
+        $evento->save();
     }
 
     /**
@@ -167,15 +150,13 @@ class CalendarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function delete(){
+        //Valor id recibidos via ajax
+        $id = $_POST['id'];
 
+        calendarioSalones::destroy($id);
+        calendarioSalones::destroy($id);
     }
 
-    public function reportes()
-    {
-
-        return view('acadspace.Reportes.reportesIndex');
-    }
 
 }

@@ -178,7 +178,21 @@ Route::post('y',[
     'uses' => $controller.'SolicitudController@aprobarSolicitud',
     'as' => 'espacios.academicos.espacad.solicitudaprob'
 ]);
+//Rutas asignadas para el calendario academico
+Route::post('guardaEventos',[ //Almacenar eventos
+    'uses' => $controller.'CalendarioController@create',
+    'as' => 'espacios.academicos.espacad.guardaeventos'
+]);
+Route::get('cargaEventos',[ //Cargar Eventos
+    'as'=>'espacios.academicos.espacad.cargarEve',     //ruta que llama al controlador para mostrar los enventos y recordatorios guardados
+    'uses'=>$controller.'CalendarioController@cargaEventos'
+]);
+Route::post('actualizaEventos',[ //Modificar eventos
+    'uses' => $controller.'CalendarioController@update',
+    'as' => 'espacios.academicos.espacad.actualizaEventos'
+]);
+Route::post('eliminaEvento',[ //Eliminar eventos
+    'uses' => $controller.'CalendarioController@delete',
+    'as' => 'espacios.academicos.espacad.eliminaEvento'
+]);
 
-Route::get('/procesamiento', function(){
-    return datatables(User::all())->toJson();
-});
