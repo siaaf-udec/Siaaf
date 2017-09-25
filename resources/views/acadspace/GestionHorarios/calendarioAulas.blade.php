@@ -12,16 +12,18 @@
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/main/acadspace/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/main/acadspace/css/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
 
 @endpush
 @section('content')
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Calendario'])
+
 <div class="panel panel-default">
     <!-- Content Header (Page header) -->
     <div class="panel-body">
         <!-- Main content -->
         <section class="content">
+            <br>
             <div class="row">
                 <div class="col-md-3">
                     <div class="box box-solid">
@@ -82,6 +84,7 @@
                             {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
                             {!! Form::close() !!}
                         </div>
+                        <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf" value="" />Generar PDF</span>
                     </div>
                 </div>
                 <!-- /.col -->
@@ -106,14 +109,13 @@
 </div>
 @endsection
 @push('plugins')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/acadspace/js/html2canvas.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
@@ -156,6 +158,7 @@
         //while(reload==false){
         $('#calendar').fullCalendar({
             lang: 'es',
+            axisFormat : "HH:mm",
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -358,89 +361,67 @@
 </script>
 
 <script>
-   // events: { url:"cargaEventos"},
+  /*Exportar a pdf*/
+  $("#AE_btn_pdf").button({
+      icons: {
+          primary: "ui-icon-image"
+      },
+      text: false
+  });
+  $("#AE_btn_pdf").click(function () {
+      //#AEFC is my div for FullCalendar
+      html2canvas($('#calendar'), {
+          logging: true,
+        //  useCORS: true,
+          onrendered: function (canvas) {
+              var imgData = canvas.toDataURL("image/jpeg");
+              var doc = new jsPDF();
+              doc.addImage(imgData, 'JPEG', 15, 40, 180, 160);
+              download(doc.output(), "AEFC.pdf", "text/pdf");
 
-/*
+          }
+      }) ;
+  })
+  function download(strData, strFileName, strMimeType) {
+      var D = document,
+          A = arguments,
+          a = D.createElement("a"),
+          d = A[0],
+          n = A[1],
+          t = A[2] || "text/plain";
 
-    eventDrop: function(event, delta) {
-        var start = event.start.format("YYYY-MM-DD HH:mm");
-        if(event.end){
-            var end = event.end.format("YYYY-MM-DD HH:mm");
-        }else{var end="NULL";
-        }
-        var back=event.backgroundColor;
-        var allDay=event.allDay;
-        crsfToken = document.getElementsByName("_token")[0].value;
+      //build download link:
+      a.href = "data:" + strMimeType + "," + escape(strData);
 
-        $.ajax({
-            url: 'actualizaEventos',
-            data: 'title='+ event.title+'&start='+ start +'&end='+ end+'&id='+ event.id+'&background='+back+'&allday='+allDay ,
-            type: "POST",
-            headers: {
-                "X-CSRF-TOKEN": crsfToken
-            },
-            success: function(json) {
-                console.log("Updated Successfully eventdrop");
-            },
-            error: function(json){
-                console.log("Error al actualizar eventdrop");
-            }
-        });
-    },
-    eventClick: function (event, jsEvent, view) {
-        crsfToken = document.getElementsByName("_token")[0].value;
-        var con=confirm("Esta seguro que desea eliminar el evento");
-        if(con){
-            $.ajax({
-                url: 'eliminaEvento',
-                data: 'id=' + event.id,
-                headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-                type: "POST",
-                success: function () {
-                    $('#calendar').fullCalendar('removeEvents', event._id);
-                    console.log("Evento eliminado");
-                }
-            });
-        }else{
-            console.log("Cancelado");
-        }
-    },
+      if (window.MSBlobBuilder) {
+          var bb = new MSBlobBuilder();
+          bb.append(strData);
+          return navigator.msSaveBlob(bb, strFileName);
+      } /* end if(window.MSBlobBuilder) */
 
-    eventMouseover: function( event, jsEvent, view ) {
-        var start = (event.start.format("HH:mm"));
-        var back=event.backgroundColor;
-        if(event.end){
-            var end = event.end.format("HH:mm");
-        }else{var end="No definido";
-        }
-        if(event.allDay){
-            var allDay = "Si";
-        }else{var allDay="No";
-        }
-        var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:'+back+';position:absolute;z-index:10001;">'+'<center>'+ event.title +'</center>'+'Todo el dia: '+allDay+'<br>'+ 'Inicio: '+start+'<br>'+ 'Fin: '+ end +'</div>';
-        $("body").append(tooltip);
-        $(this).mouseover(function(e) {
-            $(this).css('z-index', 10000);
-            $('.tooltipevent').fadeIn('500');
-            $('.tooltipevent').fadeTo('10', 1.9);
-        }).mousemove(function(e) {
-            $('.tooltipevent').css('top', e.pageY + 10);
-            $('.tooltipevent').css('left', e.pageX + 20);
-        });
-    },
+      if ('download' in a) {
+          a.setAttribute("download", n);
+          a.innerHTML = "downloading...";
+          D.body.appendChild(a);
+          setTimeout(function() {
+              var e = D.createEvent("MouseEvents");
+              e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false,
+                  false, false, 0, null);
+              a.dispatchEvent(e);
+              D.body.removeChild(a);
+          }, 66);
+          return true;
+      } /* end if('download' in a) */
 
-    eventMouseout: function(calEvent, jsEvent) {
-        $(this).css('z-index', 8);
-        $('.tooltipevent').remove();
-    },
-
-    dayClick: function(date, jsEvent, view) {
-        if (view.name === "month") {
-            $('#calendar').fullCalendar('gotoDate', date);
-            $('#calendar').fullCalendar('changeView', 'agendaDay');
-        }
-    }*/
+      //do iframe dataURL download:
+      var f = D.createElement("iframe");
+      D.body.appendChild(f);
+      f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64"
+          : "") + "," + (window.btoa ? window.btoa : escape)(strData);
+      setTimeout(function() {
+          D.body.removeChild(f);
+      }, 333);
+      return true;
+  } /* end download() */
 </script>
 @endpush
