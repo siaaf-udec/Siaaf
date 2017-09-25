@@ -124,17 +124,21 @@ class SolicitudController extends Controller
         return view('acadspace.Solicitudes.mostrarSolicitudes', compact('solicitudes'));
     }
 
+    public function listarSolicitudLibre(){
+
+        $solicitudes = Solicitud::all();
+        $solicitudes = Solicitud::paginate(10);
+        return view('acadspace.Solicitudes.mostrarSolicitudesLibre', compact('solicitudes'));
+    }
+
     public function listarSolicitudAprobada(){
         $id = Auth::id();
 
         $solicitudes = Solicitud::all();
         $solicitudes = Solicitud::paginate(10);
 
-        $SoftwareSol = solSoftware::all();
-        $SoftwareSol = solSoftware::paginate(10);
 
-
-        return view('acadspace.solicitudesAprobadas', compact('solicitudes','SoftwareSol','id'));
+        return view('acadspace.Solicitudes.solicitudesAprobadas', compact('solicitudes','id'));
     }
 
     public function estadoSolicitudesRealizadas(){

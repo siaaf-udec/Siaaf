@@ -73,6 +73,13 @@
                         <span class="title">Practica Grupal</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.mostrarSolicitudesLibre'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.mostrarSolicitudesLibre') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Practica Libre</span>
+                    </a>
+                </li>
+
 
                 @endpermission
                 @permission('docentes')
