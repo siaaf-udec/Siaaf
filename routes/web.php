@@ -301,3 +301,6 @@ Route::get('lang/{lang}', function ($lang) {
  */
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('template', 'GeneratePdfController@index')->name('template');
+Route::get('download-pdf', 'GeneratePdfController@create')->name('download.pdf');

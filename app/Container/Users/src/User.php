@@ -110,4 +110,9 @@ class User extends Authenticatable implements AuditableContract
         return $this->hasOne('App\Container\Audiovisuals\Src\UsuarioAudiovisuales', 'USER_FK_User');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' ' . $this->last_name;
+    }
+
 }
