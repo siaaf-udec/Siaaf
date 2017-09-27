@@ -23,9 +23,7 @@
                         {!! Field::text('SOL_nucleo_tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Form::label('soft', 'Requiere software') !!}
-                        {!! Form::select('SOL_NombSoft', $software, null, ['class' => 'form-control'] ) !!}
-                        {{ Form::hidden('espacio', 'espacio') }}
+
 
                         {!! Field::text('SOL_grupo',null,['label'=>'Grupo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                         ['icon'=>'fa fa-group'] ) !!}
@@ -94,7 +92,7 @@
 @endpush
 @push('functions')
 <script type="text/javascript">
-            @if(Session::has('message'))
+    @if(Session::has('message'))
     var type="{{Session::get('alert-type','info')}}"
     switch(type){
         case 'success':

@@ -30,6 +30,9 @@ use App\Container\Overall\Src\Facades\UploadFile;
 
 use App\Container\Users\Src\Country;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use Yajra\DataTables\DataTables;
+
 class SolicitudController extends Controller
 {
 
@@ -42,9 +45,56 @@ class SolicitudController extends Controller
     public function index()
     {
         //Retorno los softwares disponibles a la vista
-        $soft = new solSoftware();
+      /*  $soft = new solSoftware();
         $software = $soft->pluck('nombre_soft','id');
-        return view('acadspace.Solicitudes.registroSolicitud', compact('software'));
+        return view('acadspace.Solicitudes.registroSolicitud', compact('software'));*/
+        return view('acadspace.Solicitudes.solicitudGrupal');
+    }
+
+    public function data(Request $request)
+    {
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $solicitud = Solicitud::all();
+            return Datatables::of($solicitud)
+            ->addColumn('estado', function ($solicitud){
+                    if($solicitud->SOL_estado==1){
+                        return "<span style='color:blue;font-weight:bold'>Aprobado</span>";
+                    }elseif ($solicitud->SOL_estado==2){
+                        return '<span class="label label-sm label-success">En estudio</span>';
+                    }elseif ($solicitud->SOL_estado=0){
+                        return '<span class="label label-sm label-success">Sin revisar</span>';
+                    }
+            })
+            ->removeColumn('SOL_estado')
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->addIndexColumn()
+            ->make(true);
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    public function create(Request $request){
+        /*  $soft = new solSoftware();
+          $software = $soft->pluck('nombre_soft','id');
+          return view('acadspace.Solicitudes.registroSolicitudPracLibre', compact('software'));*/
+        if($request->ajax() && $request->isMethod('GET')){
+            //   $roles =  $this->roleRepository->index([]);
+            /* return view('users.content-ajax.ajax-create-user', [
+                 'roles' => $roles
+             ]);*/
+            return view('acadspace.Solicitudes.registroSolicitudGrupal');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -52,12 +102,7 @@ class SolicitudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $soft = new solSoftware();
-        $software = $soft->pluck('nombre_soft','id');
-        return view('acadspace.Solicitudes.registroSolicitudPracLibre', compact('software'));
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -65,6 +110,8 @@ class SolicitudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
         if ($request['ID_Practica'] == 1) {
@@ -163,7 +210,7 @@ class SolicitudController extends Controller
         $SoftwareSol = solSoftware::paginate(10);*/
 
 
-        return view('acadspace.solicitudes.estadosolicitudesdocente', compact('solicitudes','SoftwareSol','id'));
+        return view('acadspace.solicitudes.mostrarEstadoSolicitud', compact('solicitudes','SoftwareSol','id'));
     }
     /**
      * Display the specified resource.

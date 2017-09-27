@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\solSoftware;
-use Illuminate\Support\Facades\DB;
-
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
+
 
 class softwareController extends Controller
 {
@@ -27,6 +28,7 @@ class softwareController extends Controller
      */
     public function index()
     {
+        return view('acadspace.Solicitudes.formularioSoftware');
     }
 
     /**
@@ -34,9 +36,7 @@ class softwareController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('acadspace.Solicitudes.registroSolSoftware');
+    public function create() {
     }
 
     /**
@@ -45,14 +45,44 @@ class softwareController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function registroSoftware(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            solSoftware::create([
+                'nombre_soft' => $request['nombre_soft'],
+                'version' => $request['version'],
+                'licencias' => $request['licencias']
+            ]);
+            return AjaxResponse::success(
+                '¡Registro exitoso!',
+                'Software registrado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    //Funcion creada para cargar datatable con software
+    public function data(Request $request)
     {
-        solSoftware::create($request->all());
-        $notificacion = array(
-        'message' => 'Software registrado correctamente.',
-        'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notificacion);
+        if ($request->ajax() && $request->isMethod('GET')) {
+           // $articulos = solSoftware::all(['nombre_soft','version','licencias'])->get();
+            $software = solSoftware::all();
+            return Datatables::of($software)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -118,9 +148,25 @@ class softwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if($request->ajax() && $request->isMethod('DELETE')){
 
+            $solicitud = solSoftware::find($id);
+            $solicitud->delete();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Software eliminado correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
+
+
 
 }
