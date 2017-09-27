@@ -17,12 +17,10 @@ use App\Container\Acadspace\src\solSoftware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Notifications\HeaderSiaaf;
 
 use Validator;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
@@ -51,7 +49,11 @@ class SolicitudController extends Controller
         return view('acadspace.Solicitudes.solicitudGrupal');
     }
 
+<<<<<<< Updated upstream
     public function data(Request $request)
+=======
+   /* public function data(Request $request)
+>>>>>>> Stashed changes
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -77,7 +79,11 @@ class SolicitudController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
+<<<<<<< Updated upstream
     }
+=======
+    } */
+>>>>>>> Stashed changes
 
     public function create(Request $request){
         /*  $soft = new solSoftware();
@@ -311,14 +317,14 @@ class SolicitudController extends Controller
 
             return DataTables::of($users)
 
-                ->addColumn('state', function ($users){
-                    if(!strcmp($users->SOL_estado, '1')){
+                ->addColumn('estado', function ($users){
+                    if($users->SOL_estado==1){
                         return "<span class='label label-sm label-success'>".'Aprobado'. "</span>";
-                    }elseif (!strcmp($users->SOL_estado, '0')){
+                    }elseif ($users->SOL_estado==0){
                         return "<span class='label label-sm label-warning'>".'Pendiente'. "</span>";
                     }
                 })
-                ->rawColumns(['state'])
+                ->rawColumns(['estado'])
                 ->removeColumn('SOL_guia_practica')
                 ->removeColumn('SOL_software')
                 ->removeColumn('SOL_hora_inicio')
