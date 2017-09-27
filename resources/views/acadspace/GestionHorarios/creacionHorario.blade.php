@@ -1,3 +1,4 @@
+@permission('auxapoyo')
 <!--/**
  * Created by PhpStorm.
  * User: AlexPovedaG
@@ -192,4 +193,6 @@
                 ComponentsDateTimePickers.init();
             });
 @endpush
+        @endpermission
+
 

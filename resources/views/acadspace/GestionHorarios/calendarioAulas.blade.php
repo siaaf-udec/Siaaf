@@ -4,6 +4,7 @@
  * Date: 4/09/17
  * Time: 12:51 PM
  */-->
+@permission('auxapoyo')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -425,3 +426,4 @@
   } /* end download() */
 </script>
 @endpush
+@endpermission

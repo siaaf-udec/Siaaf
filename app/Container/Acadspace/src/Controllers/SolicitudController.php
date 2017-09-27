@@ -17,6 +17,18 @@ use App\Container\Acadspace\src\solSoftware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use App\Container\Overall\Src\Facades\AjaxResponse;
+
+use App\Notifications\HeaderSiaaf;
+
+use Validator;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Container\Permissions\Src\Interfaces\ModuleInterface;
+use App\Container\Permissions\Src\Interfaces\RoleInterface;
+use App\Container\Overall\Src\Facades\UploadFile;
+
+use App\Container\Users\Src\Country;
 
 class SolicitudController extends Controller
 {
@@ -229,6 +241,55 @@ class SolicitudController extends Controller
 
     public function destroy($id)
     {
+
+    }
+
+    public function listarSolPrueba(){
+        return view('acadspace.Solicitudes.solicitudesAprobadas');
+    }
+
+    public function data(Request $request)
+    {
+        //$users = Solicitud::all();
+        //dd($users);
+
+        if($request->ajax() && $request->isMethod('GET')){
+            /*
+             * Forma Incorrecta
+             * $users = $this->userRepository->index([]);
+             * $users = $this->userRepository->getModel()::with('roles')->get();
+             * */
+            $users = Solicitud::all();
+
+
+            return DataTables::of($users)
+
+                ->addColumn('state', function ($users){
+                    if(!strcmp($users->SOL_estado, '1')){
+                        return "<span class='label label-sm label-success'>".'Aprobado'. "</span>";
+                    }elseif (!strcmp($users->SOL_estado, '0')){
+                        return "<span class='label label-sm label-warning'>".'Pendiente'. "</span>";
+                    }
+                })
+                ->rawColumns(['state'])
+                ->removeColumn('SOL_guia_practica')
+                ->removeColumn('SOL_software')
+                ->removeColumn('SOL_hora_inicio')
+                ->removeColumn('SOL_hora_fin')
+                ->removeColumn('SOL_fecha_inicio')
+                ->removeColumn('SOL_fecha_fin')
+                ->removeColumn('SOL_dias')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
 
     }
 

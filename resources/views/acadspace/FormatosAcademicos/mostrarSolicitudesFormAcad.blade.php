@@ -1,3 +1,4 @@
+@permission('administ')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -150,3 +151,4 @@
 <script type="text/javascript">
 
 @endpush
+@endpermission

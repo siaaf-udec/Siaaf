@@ -1,3 +1,4 @@
+@permission('dcentes')
 @extends('material.layouts.dashboard')
 
 @section('page-title', 'Registro de solicitud:')
@@ -254,3 +255,4 @@
 
 </script>
 @endpush
+@endpermission

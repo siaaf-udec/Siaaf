@@ -1,4 +1,7 @@
+@permission('auxapoyo')
+
 <!doctype html>
+
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
@@ -68,3 +71,5 @@
 Se hace la prueba de crear el pdf
 </body>
 </html>
+
+@endpermission

@@ -1,3 +1,4 @@
+@permission('auxapoyo')
 @extends('material.layouts.dashboard')
 
 @section('page-title', 'Solicitudes sin revisar:')
@@ -236,3 +237,4 @@
 
 </script>
 @endpush
+@endpermission

@@ -86,6 +86,16 @@ Route::get('/edit2/{id}', [    //ruta para listar los docentes registrados.
     'uses' => $controller.'softwareController@eliminarSoftware'
 ]);
 
+Route::get('/lissolicitudesAprob', [    //ruta para listar los docentes registrados.
+    'as' => 'espacios.academicos.lissolicitudesAprob', //Este es el alias de la ruta
+    'uses' => $controller.'SolicitudController@listarSolPrueba'
+]);
+
+Route::get('/solicitudesAprob', [    //ruta para listar los docentes registrados.
+    'as' => 'espacios.academicos.solicitudesAprob', //Este es el alias de la ruta
+    'uses' => $controller.'SolicitudController@data'
+]);
+
 Route::get('/solicitudesSoft', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.solicitudesSoft', //Este es el alias de la ruta
     'uses' => $controller.'softwareController@show'
@@ -114,11 +124,6 @@ Route::get('/misSolicitudes', [    //ruta para listar los docentes registrados.
 Route::get('/descargarArchivo/{id}', [
     'as' => 'espacios.academicos.descargarArchivo',
     'uses' => $controller.'solFormAcadController@descargar_publicacion'
-]);
-
-Route::get('/listarporSec', [
-    'as' => 'espacios.academicos.listarporSec',
-    'uses' => $controller.'solFormAcadController@listarporSec'
 ]);
 
 Route::get('/listarporSec', [
