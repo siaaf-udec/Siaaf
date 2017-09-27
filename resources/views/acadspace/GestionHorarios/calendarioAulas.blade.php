@@ -13,16 +13,18 @@
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/main/acadspace/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/main/acadspace/css/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
 
 @endpush
 @section('content')
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Calendario'])
+
 <div class="panel panel-default">
     <!-- Content Header (Page header) -->
     <div class="panel-body">
         <!-- Main content -->
         <section class="content">
+            <br>
             <div class="row">
                 <div class="col-md-3">
                     <div class="box box-solid">
@@ -83,6 +85,7 @@
                             {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
                             {!! Form::close() !!}
                         </div>
+                        <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf" value="" />Generar PDF</span>
                     </div>
                 </div>
                 <!-- /.col -->
@@ -107,14 +110,13 @@
 </div>
 @endsection
 @push('plugins')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/acadspace/js/html2canvas.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
