@@ -1,15 +1,21 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-    <link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
+   <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+
+<link href="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+
+<link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 
@@ -26,89 +32,198 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
 
 <div class="row">
-        <div class="col-md-6">
-            <div class="btn-group">
-                <a href="{{ route('min.index') }}">
-                    <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
-                        <i class="fa fa-list"></i>Listar
-                    </button>
-                </a> 
+            <div class="col-md-6" style="z-index: 1;">
+                <div class="btn-group">
+                    <a href="{{ route('min.index') }}">
+                        <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
+                            <i class="fa fa-list"></i>Listar
+                        </button>
+                    </a> 
+                </div>
             </div>
-        </div>
-    
-        {!! Form::open(['route' => 'min.store', 'method' => 'POST', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-                    <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            {{ Form::textarea('title', null, ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control'],[ 'icon' => 'fa fa-user']) }}
-                            <label for="title" class="control-label">Titulo del proyecto</label>
-                            <span class="help-block"> Ingrese el titulo del proyecto </span>
-                            <i class=" fa fa-user "></i>
-                        </div>
+        {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
+            <div class="form-wizard">
+                <div class="form-body">
+                    <ul class="nav nav-pills nav-justified steps">
+                        <li>
+                            <a href="#tab1" data-toggle="tab" class="step">
+                                <span class="number"> 1 </span>
+                                <span class="desc"><i class="fa fa-check"></i> Anteproyecto </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab2" data-toggle="tab" class="step">
+                                <span class="number"> 2 </span>
+                                <span class="desc"><i class="fa fa-check"></i> Estudiantes </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab3" data-toggle="tab" class="step">
+                                <span class="number"> 3 </span>
+                                <span class="desc"><i class="fa fa-check"></i> Tiempos </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab4" data-toggle="tab" class="step">
+                                <span class="number"> 4 </span>
+                                <span class="desc"><i class="fa fa-check"></i> Documentos </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab5" data-toggle="tab" class="step">
+                                <span class="number"> 5 </span>
+                                <span class="desc"><i class="fa fa-check"></i> Confirmar </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="bar" class="progress progress-striped" role="progressbar">
+                        <div class="progress-bar progress-bar-success"></div>
                     </div>
-                </div>
-                <div class="col-xs-12 col-md-8 col-lg-6">
-                    {!! Field::select('estudiante1',$estudiantes,null,[ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
-                </div>
-                <div class="col-xs-12 col-md-8 col-lg-6">
-                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),null,[ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
-                </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    {!! Field::text('Keywords',['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
-                </div>
-                <div class="col-xs-12 col-md-4 col-lg-4">
-                    {!! Field::text('duracion',['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
-                </div>
-                <div class="col-xs-12 col-md-4 col-lg-4">
-                    {!! Field::date('FechaR',['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => '', 'icon' => 'fa fa-calendar']) !!}
-                </div>
-                <div class="col-xs-12 col-md-4 col-lg-4">
-                    {!! Field::date('FechaL',['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => '', 'icon' => 'fa fa-calendar']) !!}
-                </div>
-                <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-                    <div class="form-md-line-input" style="margin: 0 0 35px;">
-                        <div class="fileinput-new input-icon" data-provides="fileinput">    
-                            <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
-                            <div class="input-group input-large">
-                                <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                                    <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                                    <span class="fileinput-filename"> </span>
+                    <div class="tab-content">
+                        <div class="alert alert-danger display-none">
+                            <button class="close" data-dismiss="alert"></button> Errores.Por favor revisar nuevamente  
+                        </div>
+                        <div class="alert alert-success display-none">
+                            <button class="close" data-dismiss="alert"></button> La asignacion ha sido satisfactoria    
+                        </div>
+                        <div class="tab-pane active" id="tab1">
+                            <h3 class="block">Datos del Proyecto</h3>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            {{ Form::textarea('title', null, 
+                                                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control','id'=>'title'],
+                                                [ 'icon' => 'fa fa-user']) }}
+                                            <label for="title" class="control-label">Titulo del proyecto</label>
+                                            <span class="help-block"> Ingrese el titulo del proyecto </span>
+                                            <i class=" fa fa-user "></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="input-group-addon btn default btn-file">
-                                    <span class="fileinput-new"> Select file </span>
-                                    <span class="fileinput-exists"> Change </span>
-                                    <input type="file" name="Requerimientos" class="" required> 
-                                </span>
-                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                <hr>
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    {!! Field::text('Keywords',
+                                        ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
+                                        ['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
+                                </div>
                             </div>
                         </div>
-                    </div> 
-                </div>
-                <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-                    <div class="form-md-line-input" style="margin: 0 0 35px;">
-                        <div class="fileinput-new input-icon" data-provides="fileinput">    
-                            <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Min</label>
-                            <div class="input-group input-large">
-                                <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                                    <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                                    <span class="fileinput-filename"> </span>
+                        <div class="tab-pane" id="tab2">
+                            <h3 class="block">Estudiantes proponentes</h3>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 col-lg-6">
+                                    {!! Field::select('estudiante1',$estudiantes,null,
+                                        [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
                                 </div>
-                                <span class="input-group-addon btn default btn-file">
-                                <span class="fileinput-new"> Select file </span>
-                                <span class="fileinput-exists"> Change </span>
-                                <input type="file" name="Min" class="" required> </span>
-                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                <div class="col-xs-12 col-md-8 col-lg-6">
+                                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),null,
+                                     [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
+                                </div>
                             </div>
                         </div>
-                    </div> 
-                </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
-                    {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
-                </div>
-            </div>
+                        <div class="tab-pane" id="tab3">
+                            <h3 class="block">Tiempos del Proyecto</h3>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4 col-lg-4">
+                                    {!! Field::text('duracion',
+                                        ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
+                                </div>
+                                <div class="col-xs-12 col-md-4 col-lg-4">
+                                    {!! Field::date('FechaR',
+                                        ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                        ['help' => '', 'icon' => 'fa fa-calendar']) !!}
+                                </div>
+                                <div class="col-xs-12 col-md-4 col-lg-4">
+                                    {!! Field::date('FechaL',
+                                        ['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                        ['help' => '', 'icon' => 'fa fa-calendar']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab4">
+                            <h3 class="block">Documentos radicados</h3>
+                            <div class="col-xs-12 col-md-12 col-lg-12" id="file">
+                                <div class="form-md-line-input" style="margin: 0 0 35px;">
+                                    <div class="fileinput-new input-icon" data-provides="fileinput">    
+                                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">MINr008 o E.A</label>
+                                        <div class="input-group input-large">
+                                            <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                                <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                                                <span class="fileinput-filename"> </span>
+                                            </div>
+                                            <span class="input-group-addon btn default btn-file">
+                                            <span class="fileinput-new"> Seleccionar Documento </span>
+                                            <span class="fileinput-exists"> Cambiar </span>
+                                            <input type="file" name="Min" class="" required id="Min"> </span>
+                                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Quitar </a>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <hr>
+                                <div class="form-md-line-input" style="margin: 0 0 35px;">
+                                    <div class="fileinput-new input-icon" data-provides="fileinput">    
+                                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos(Opcional)</label>
+                                        <div class="input-group input-large">
+                                            <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                                <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                                                <span class="fileinput-filename"> </span>
+                                            </div>
+                                            <span class="input-group-addon btn default btn-file">
+                                                <span class="fileinput-new"> Seleccionar Documento </span>
+                                                <span class="fileinput-exists"> Cambiar </span>
+                                                <input type="file" name="Requerimientos" class="" id="Requerimientos"> 
+                                            </span>
+                                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Quitar </a>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                <div class="tab-pane" id="tab5">
+                    <h3 class="block">Datos</h3>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Anteproyecto:</label>
+                            <div class="col-md-4">
+                                            <p class="form-control-static" data-display="title">  </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Director:</label>
+                                        <div class="col-md-4">
+                                            <p class="form-control-static" data-display="Keywords"> </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Jurado 1:</label>
+                                        <div class="col-md-4">
+                                            <p class="form-control-static" data-display="estudiante1"> </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Jurado 2:</label>
+                                        <div class="col-md-4">
+                                            <p class="form-control-static" data-display="estudiante2"> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>  
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <a href="javascript:;" class="btn default button-previous">
+                                        <i class="fa fa-angle-left"></i> Volver 
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-outline green button-next"> 
+                                        Continuar<i class="fa fa-angle-right"></i>
+                                    </a>
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                    </div>
         {!! Form::close() !!}
+    </div>
+                    </div>
+           </div>
     </div>
 
 @endcomponent
@@ -117,80 +232,180 @@
 
 
 @push('plugins')
-    <script src="{{asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<!-- Datatables Scripts -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
-    <script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
-    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
 
 
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
+
 <script type="text/javascript">
-    
-var ComponentsDateTimePickers = function () {
-            var handleDatePickers = function () {
-                if (jQuery().datepicker) {
-                    $('.date-picker').datepicker({
-                        rtl: App.isRTL(),
-                        orientation: "left",
-                        autoclose: true,
-                        regional: 'es',
-                        closeText: 'Cerrar',
-                        prevText: '<Ant',
-                        nextText: 'Sig>',
-                        currentText: 'Hoy',
-                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-                        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-                        weekHeader: 'Sm',
-                        dateFormat: 'yyyy-mm-dd',
-                        firstDay: 1,
-                        showMonthAfterYear: false,
-                        yearSuffix: ''
+    $('.portlet-form').attr("id","form_wizard_1");
+    $('.select2-selection--single').addClass('form-control');    
+    jQuery(document).ready(function() {
+            
+        var form = $('#form-register-min');
+
+        /*Configuracion de input tipo fecha*/
+        $('.date-picker').datepicker({
+            rtl: App.isRTL(),
+            orientation: "left",
+            autoclose: true,
+            regional: 'es',
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'yyyy-mm-dd',
+            firstDay: 1,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        });
+
+        /*Configuracion de Select*/
+        $.fn.select2.defaults.set("theme", "bootstrap");
+        $(".pmd-select2").select2({
+            placeholder: "Selecccionar",
+            allowClear: true,
+            width: 'auto',
+            escapeMarkup: function (m) {
+                return m;
+            }
+        });
+    $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });        
+            
+           
+            
+            var rules = {
+                title:{required: true},
+                estudiante1:{required: true},
+                estudiante2:{required: true},
+                Keywords:{required: true,minlength: 4},
+                duracion:{required: true,minlength: 1,number: true},
+                FechaR:{required: true},
+                FechaL:{required: true},
+                Min:{required: true,extension: "txt|pdf|doc|docx"},
+                Requerimientos:{}
+            };
+            
+            var wizard =  $('#form_wizard_1');
+            
+            
+            
+            var createProject = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('min.store') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('title', $('#title').val());
+                    formData.append('estudiante1', $('select[name="estudiante1"]').val());
+                    formData.append('estudiante2', $('select[name="estudiante2"]').val());
+                    formData.append('Keywords', $('input:text[name="Keywords"]').val());
+                    formData.append('duracion', $('input:text[name="duracion"]').val());
+                    formData.append('FechaR', $('#FechaR').val());
+                    formData.append('FechaL', $('#FechaL').val());
+                    
+                    var FileImage =  document.getElementById("Min");
+                    formData.append('Min', FileImage.files[0]);
+                    
+                    var FileReq =  document.getElementById("Requerimientos");
+                    if ($('#Requerimientos').get(0).files.length === 0) {
+                        formData.append('Requerimientos', "Vacio");  
+                    }else{
+                        formData.append('Requerimientos', FileReq.files[0]);    
+                    };
+                    
+                    
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
+                        },
+                        success: function (response, xhr, request) {
+                            console.log(response);
+                            if (request.status === 200 && xhr === 'success') {
+                                //$('#form-register-min')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                                App.unblockUI('.portlet-form');
+                                var route = '{{ route('min.index') }}';
+                                window.location.href=route;
+                                //$(".content-ajax").load(route);
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
                     });
                 }
             }
-
-            return {
-                init: function () {
-                    handleDatePickers();
-                }
-            };
-        }();
+        };    
     
-var ComponentsSelect2 = function() {
+            var messages = {};
+        
+            FormWizard.init(wizard, form, rules, messages, createProject());
+        });
 
-        var handleSelect = function() {
-
-            $.fn.select2.defaults.set("theme", "bootstrap");
-
-            $(".pmd-select2").select2({
-                width: null,
-                placeholder: "Selecccionar",
-            });
-
-        }
-
-        return {
-            init: function() {
-                handleSelect();
-            }
-        };
-
-    }();
     
-var FormValidationMd = function() {
+
+    
+    
+    
+  /*var FormValidationMd = function() {
     var handleValidation = function() {
         var form1 = $('#form-register-min');
         var error1 = $('.alert-danger', form1);
@@ -206,43 +421,25 @@ var FormValidationMd = function() {
             errorClass: 'help-block help-block-error',  // default input error message class
             focusInvalid: true,                         // do not focus the last invalid input
             ignore: "",                                 // validate all fields including form hidden input
-            rules:{
-                FechaR:{
-                    required: true
-                }  
-                ,title:{
-                    required: true
-                }
-                ,estudiante1:{
-                    required: true
-                }
-                ,estudiante2:{
-                    required: true
-                }
-                ,Keywords:{
-                    required: true
-                }
-                ,duracion:{
-                    required: true
-                }
-                ,FechaR:{
-                    required: true
-                }
-                ,FechaL:{
-                    required: true
-                }
-            },
             invalidHandler: function(event, validator) {//display error alert on form submit
                 success1.hide();
                 error1.show();
-                toastr.options.closeButton = true;
-                toastr.options.showDuration= 1000;
-                toastr.options.hideDuration= 1000;
-                toastr.error('Campos Incorrectos','Error en el Registro:')
                 App.scrollTo(error1, -500);
             },
             
-            
+            rules:{
+                    title:{required: true},
+    estudiante1:{required: true},
+    estudiante2:{required: true},
+    Keywords:{required: true,minlength: 10},
+    duracion:{required: true,minlength: 1},
+    FechaR:{required: true},
+    FechaL:{required: true}
+                }
+                
+                
+                
+            },
             errorPlacement: function(error, element) {
                 if (element.hasClass('select2-hidden-accessible')) {     
                     error.insertAfter(element.next('span'));  // select2
@@ -272,13 +469,9 @@ var FormValidationMd = function() {
                     .closest('.form-group').removeClass('has-error'); // set success class to the control group
             },
 
-            submitHandler: function(form1) {
+            submitHandler: function(form) {
                 success1.show();
                 error1.hide();
-                toastr.options.closeButton = true;
-                toastr.options.showDuration= 1000;
-                toastr.options.hideDuration= 1000;
-                toastr.success('Información guardada correctamente','Registro exitoso:')
             }
         });
     }
@@ -289,15 +482,6 @@ var FormValidationMd = function() {
             handleValidation();
         }
     };
-}();    
-
-        jQuery(document).ready(function() {
-            $('.select2-selection--single').addClass('form-control');
-            FormValidationMd.init();
-            ComponentsSelect2.init();
-            ComponentsDateTimePickers.init();
-        });
-
+}();*/      
 </script>
-
 @endpush

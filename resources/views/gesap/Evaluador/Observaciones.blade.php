@@ -5,7 +5,7 @@
 
     <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Dashboard')
@@ -16,60 +16,59 @@
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
-
-<div class="row">
-        <div class="col-md-12" style="z-index: 1;">
-            <div class="btn-group">
-                <a href="{{ route('anteproyecto.index.juryList') }}">
-                    <button id="sample_editable_1_new" class="btn green" > 
-                        <i class="fa fa-list"></i>Listar
-                    </button>
-                </a> 
-            </div>
-        </div>
-    @foreach ($anteproyectos as $anteproyecto)
-    {!! Form::open(['route' => 'anteproyecto.guardar.observaciones', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-obser']) !!}
-        {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}
-        {!! Field::hidden('user', Auth::user()->id) !!}
-            
-            <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-                <div class="form-group">
-                    <label class="control-label col-md-2" style="font-size: 14px;color: #888;padding:0px">Anteproyecto:</label>
-                    <div class="col-md-10">
-                        <p class="" data-display="username"> {{$anteproyecto->NPRY_Titulo}} </p>
-                    </div>
+        <div class="row">
+            <div class="col-md-12" style="z-index: 1;">
+                <div class="btn-group">
+                    <a href="{{ route('anteproyecto.index.juryList') }}">
+                        <button id="sample_editable_1_new" class="btn green" > 
+                            <i class="fa fa-list"></i>Listar
+                        </button>
+                    </a> 
                 </div>
             </div>
-            <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        {{ Form::textarea('observacion', null, 
-                        ['required', 'auto' => 'off','size' => '40x5','class'=>'form-control'],
-                        [ 'icon' => 'fa fa-user']) }}
-                        <label for="title" class="control-label">Observaciones</label>
-                        <span class="help-block"> Ingrese el titulo del proyecto </span>
-                        <i class=" fa fa-user "></i>
-                    </div>
-                </div>
-            </div>
-        <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
-            <h3 class="center">Documentos Calificados(Opcional)</h3>
-        </div>
-        <div class="col-xs-12 col-md-8 col-lg-6" id="file">
-            <div class="form-md-line-input" style="margin: 0 0 35px;">
-                <div class="fileinput-new input-icon" data-provides="fileinput">    
-                        <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
-                    <div class="input-group input-large">
-                        <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
+            @foreach ($anteproyectos as $anteproyecto)
+                {!! Form::open(['route' => 'anteproyecto.guardar.observaciones', 'method' => 'post', 'novalidate','enctype'=>'multipart/form-data','id'=>'form-register-obser']) !!}
+                    {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}
+                    {!! Field::hidden('user', Auth::user()->id) !!}
+                    <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" style="font-size: 14px;color: #888;padding:0px">Anteproyecto:</label>
+                            <div class="col-md-10">
+                                <p class="" data-display="username"> {{$anteproyecto->NPRY_Titulo}} </p>
+                            </div>
                         </div>
-                        <span class="input-group-addon btn default btn-file">
-                        <span class="fileinput-new"> Select file </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" name="Min" class="" required> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
+                    <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                        <div class="form-group form-md-line-input">
+                            <div class="input-icon">
+                                {{ Form::textarea('observacion', null, 
+                                    ['required', 'auto' => 'off','size' => '40x5','class'=>'form-control'],
+                                    [ 'icon' => 'fa fa-user']) 
+                                }}
+                                <label for="title" class="control-label">Observaciones</label>
+                                <span class="help-block"> Ingrese el titulo del proyecto </span>
+                                <i class=" fa fa-user "></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                        <h3 class="center">Documentos Calificados(Opcional)</h3>
+                    </div>
+                    <div class="col-xs-12 col-md-8 col-lg-6" id="file">
+                        <div class="form-md-line-input" style="margin: 0 0 35px;">
+                            <div class="fileinput-new input-icon" data-provides="fileinput">    
+                                <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">Requerimientos</label>
+                                <div class="input-group input-large">
+                                <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                    <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
+                                    <span class="fileinput-filename"> </span>
+                                </div>
+                                <span class="input-group-addon btn default btn-file">
+                                <span class="fileinput-new"> Select file </span>
+                                <span class="fileinput-exists"> Change </span>
+                                <input type="file" name="Min" class="" required> </span>
+                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                            </div>
                 </div>
             </div> 
         </div>
