@@ -15,7 +15,7 @@ class Anteproyecto extends Model
     protected $fillable = ['NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado'];
     
     public function radicacion() {
-        return $this->hasOne('App\container\gesap\src\Radicacion','FK_TBL_Anteproyecto_id','PK_NPRY_idMinr008');
+        return $this->belongsTo('App\container\gesap\src\Radicacion','FK_TBL_Anteproyecto_id','');
     }
     public function proyecto() {
         return $this->hasOne('App\container\gesap\src\Proyecto','FK_TBL_Anteproyecto_id','PK_NPRY_idMinr008');
