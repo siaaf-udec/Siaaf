@@ -4,7 +4,7 @@ namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use Yajra\Datatables\Datatables;
 
 use App\Http\Controllers\Controller;
 
@@ -16,12 +16,15 @@ use App\Container\gesap\src\Encargados;
 
 class StudentController extends Controller
 {
+    
     private $path='gesap.Estudiante.';
     protected $connection = 'gesap';
     
-    public function getSql($query){
+    public function getSql($query)
+    {
         $sql = $query->toSql();
-        foreach($query->getBindings() as $binding){
+        foreach($query->getBindings() as $binding)
+        {
             $value = is_numeric($binding) ? $binding : "'".$binding."'";
             $sql = preg_replace('/\?/', $value, $sql, 1);
         }
@@ -60,6 +63,24 @@ class StudentController extends Controller
         //
     }
 
+        public function Encargados($select,$cargo){
+        if($select="Nombre")
+        {
+            $Consulta=Encargados::join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
+                ->where('NCRD_Cargo',$cargo)
+                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->select(DB::raw('concat(name," ",lastname)'));
+        }
+        if($select="ID")
+        {
+            $Consulta=Encargados::join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
+                ->where('NCRD_Cargo',$cargo)
+                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->select('FK_developer_user_id');
+        }
+        return $this->getSql($Consulta);
+    }
+    
     public function studentList(Request $request){
         $result="NO ASIGNADO";
         $anteproyectos = 
@@ -75,109 +96,18 @@ class StudentController extends Controller
                 })                       
                 
                 ->select('A.*','R.RDCN_Min','R.RDCN_Requerimientos',
-                    DB::raw('IFNULL(('
-                        .$this->getSql(
-                                DB::table('gesap.tbl_encargados')
-                                    ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                    ->select(DB::raw('concat(name," ",lastname)'))
-                                    ->where('NCRD_Cargo','=','Director')
-                                    ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                                )
-                        .'),"'.$result.'")AS Director'
-                    ),
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                ->select('FK_developer_user_id')
-                                ->where('NCRD_Cargo','=','Director')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS DirectorCedula'
-                    ),     
-                    DB::raw('IFNULL(('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                    ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                    ->select(DB::raw('concat(name," ",lastname)'))
-                                ->where('NCRD_Cargo','=','Jurado 1')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .'),"'.$result.'")AS Jurado1'
-                    ), 
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                ->select('FK_developer_user_id')
-                                ->where('NCRD_Cargo','=','Jurado 1')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS Jurado1Cedula'
-                    ),      
-                    DB::raw('IFNULL(('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                    ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                    ->select(DB::raw('concat(name," ",lastname)'))
-                                ->where('NCRD_Cargo','=','Jurado 2')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .'),"'.$result.'")AS Jurado2'
-                    ), 
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                ->select('FK_developer_user_id')
-                                ->where('NCRD_Cargo','=','Jurado 2')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS Jurado2Cedula'
-                    ),    
-                    DB::raw('IFNULL(('
-                        .$this->getSql(
-                                DB::table('gesap.tbl_encargados')
-                                    ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                    ->select(DB::raw('concat(name," ",lastname)'))
-                                ->where('NCRD_Cargo','=','Estudiante 1')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .'),"'.$result.'")AS estudiante1'
-                    ),  
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                ->select('FK_developer_user_id')
-                                ->where('NCRD_Cargo','=','Estudiante 1')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS estudiante1Cedula'
-                    ), 
-                    DB::raw('IFNULL(('
-                        .$this->getSql(
-                                DB::table('gesap.tbl_encargados')
-                                    ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                    ->select(DB::raw('concat(name," ",lastname)'))
-                                ->where('NCRD_Cargo','=','Estudiante 2')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .'),"'.$result.'")AS estudiante2'
-                    ), 
-                         
-                    DB::raw('('
-                        .$this->getSql(
-                            DB::table('gesap.tbl_encargados')
-                                ->join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                                ->select('FK_developer_user_id')
-                                ->where('NCRD_Cargo','=','Estudiante 2')
-                                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS estudiante2Cedula'
-                    )
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
+                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 1").'),"'.$result.'")AS Jurado1'), 
+                    DB::raw('('.$this->Encargados("ID","Jurado 1").')AS Jurado1Cedula'),      
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 2").'),"'.$result.'")AS Jurado2'), 
+                    DB::raw('('.$this->Encargados("ID","Jurado 2").')AS Jurado2Cedula'), 
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
                 );
-        return DataTables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
     
     
