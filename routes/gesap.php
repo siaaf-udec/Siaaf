@@ -101,7 +101,7 @@ Route::get('evaluar/ver/proyecto', [
 //Descarga de archivos
 Route::get('download/{archivo}', function ($archivo) {
      $public_path = public_path();
-     $url = 'C:\xampp\htdocs\Siaaf\storage\app/'.$archivo;
+     $url = 'C:\xampp\htdocs\gesap\storage\app/'.$archivo;
      if (Storage::exists($archivo))
        return response()->download($url);
      abort(404);
