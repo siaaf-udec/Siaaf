@@ -17,18 +17,19 @@ use App\Container\Acadspace\src\solSoftware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Notifications\HeaderSiaaf;
 
 use Validator;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Permissions\Src\Interfaces\ModuleInterface;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
 use App\Container\Overall\Src\Facades\UploadFile;
 
 use App\Container\Users\Src\Country;
+
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use Yajra\DataTables\DataTables;
 
 class SolicitudController extends Controller
 {
@@ -42,9 +43,28 @@ class SolicitudController extends Controller
     public function index()
     {
         //Retorno los softwares disponibles a la vista
-        $soft = new solSoftware();
+      /*  $soft = new solSoftware();
         $software = $soft->pluck('nombre_soft','id');
-        return view('acadspace.Solicitudes.registroSolicitud', compact('software'));
+        return view('acadspace.Solicitudes.registroSolicitud', compact('software'));*/
+        return view('acadspace.Solicitudes.solicitudGrupal');
+    }
+
+    public function create(Request $request){
+        /*  $soft = new solSoftware();
+          $software = $soft->pluck('nombre_soft','id');
+          return view('acadspace.Solicitudes.registroSolicitudPracLibre', compact('software'));*/
+        if($request->ajax() && $request->isMethod('GET')){
+            //   $roles =  $this->roleRepository->index([]);
+            /* return view('users.content-ajax.ajax-create-user', [
+                 'roles' => $roles
+             ]);*/
+            return view('acadspace.Solicitudes.registroSolicitudGrupal');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -52,12 +72,7 @@ class SolicitudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $soft = new solSoftware();
-        $software = $soft->pluck('nombre_soft','id');
-        return view('acadspace.Solicitudes.registroSolicitudPracLibre', compact('software'));
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -65,6 +80,8 @@ class SolicitudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
         if ($request['ID_Practica'] == 1) {
@@ -163,7 +180,7 @@ class SolicitudController extends Controller
         $SoftwareSol = solSoftware::paginate(10);*/
 
 
-        return view('acadspace.solicitudes.estadosolicitudesdocente', compact('solicitudes','SoftwareSol','id'));
+        return view('acadspace.solicitudes.mostrarEstadoSolicitud', compact('solicitudes','SoftwareSol','id'));
     }
     /**
      * Display the specified resource.
@@ -264,14 +281,14 @@ class SolicitudController extends Controller
 
             return DataTables::of($users)
 
-                ->addColumn('state', function ($users){
-                    if(!strcmp($users->SOL_estado, '1')){
+                ->addColumn('estado', function ($users){
+                    if($users->SOL_estado==1){
                         return "<span class='label label-sm label-success'>".'Aprobado'. "</span>";
-                    }elseif (!strcmp($users->SOL_estado, '0')){
+                    }elseif ($users->SOL_estado==0){
                         return "<span class='label label-sm label-warning'>".'Pendiente'. "</span>";
                     }
                 })
-                ->rawColumns(['state'])
+                ->rawColumns(['estado'])
                 ->removeColumn('SOL_guia_practica')
                 ->removeColumn('SOL_software')
                 ->removeColumn('SOL_hora_inicio')

@@ -19,7 +19,7 @@ $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
 
 
-
+/*
 Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.espacad.create',
@@ -30,7 +30,7 @@ Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el
         'update' => 'espacios.academicos.espacad.update',
         'destroy' => 'espacios.academicos.espacad.destroy',
     ]
-]);
+]);*/
 
 
 
@@ -68,7 +68,7 @@ Route::get('/editAct/{id}', [    //ruta para listar los docentes registrados.
 ]);
 
 
-
+/*
 Route::resource('soft', $controller.'softwareController', [   //ruta para el CRUD de solicitudes de software
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.soft.create',
@@ -79,7 +79,7 @@ Route::resource('soft', $controller.'softwareController', [   //ruta para el CRU
         'update' => 'espacios.academicos.soft.update',
         'destroy' => 'espacios.academicos.soft.destroy',
     ]
-]);
+]);*/
 
 Route::get('/edit2/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.edit2', //Este es el alias de la ruta
@@ -191,3 +191,45 @@ Route::post('eliminaEvento',[ //Eliminar eventos
     'as' => 'espacios.academicos.espacad.eliminaEvento'
 ]);
 
+/*RUTAS PARA MANEJAR EL FORMULARIO DE SOFTWARE*/
+Route::group(['prefix' => 'soft'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+Route::get('index',[ //MOSTRAR FORMULARIO
+        'uses' => $controller.'softwareController@index',
+        'as' => 'espacios.academicos.soft.index'
+]);
+Route::post('crear', [ //CREAR SOFTWARE
+    'uses' => $controller . 'softwareController@registroSoftware',
+    'as'   => 'espacios.academicos.soft.regsoft',
+]);
+Route::get('listar', [ //CARGAR DATATABLE
+    'uses' => $controller . 'softwareController@data',
+    'as'   => 'espacios.academicos.soft.data',
+]);
+
+Route::delete('delete/{id?}',[ //ELIMINAR
+    'uses' => $controller.'softwareController@destroy',
+    'as' => 'espacios.academicos.soft.destroy'
+])->where(['id' => '[0-9]+']);
+});
+
+/*RUTAS PARA EL FORMULARIO DE SOLICITUD GRUPAL*/
+Route::group(['prefix' => 'espacad'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index',[
+        'uses' => $controller.'SolicitudController@index',
+        'as' => 'espacios.academicos.espacad.index'
+    ]);
+    Route::get('data',[ //Cargar datatable
+        'uses' => $controller.'SolicitudController@data',
+        'as' => 'espacios.academicos.espacad.data'
+    ]);
+    Route::post('store',[ //Registro solicitud formulario
+        'uses' => $controller.'SolicitudController@store',
+        'as' => 'espacios.academicos.espacad.store'
+    ]);
+    Route::get('create',[ //Mostrar la vista
+        'uses' => $controller.'SolicitudController@create',
+        'as' => 'espacios.academicos.espacad.create'
+    ]);
+});

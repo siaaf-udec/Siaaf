@@ -13,7 +13,6 @@ class solSoftware extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-
         'nombre_soft','version','licencias'
     ];
 
