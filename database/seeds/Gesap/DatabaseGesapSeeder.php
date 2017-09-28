@@ -11,11 +11,11 @@ class DatabaseGesapSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RoleGesapSeeder::class);
         $this->call(UsersGesapTableSeeder::class);
         $this->call(AnteproyectosSeeder::class);
         $this->call(RadicacionSeeder::class);
         $this->call(EncargadosSeeder::class);
-        $this->call(RoleGesapSeeder::class);
         $this->call(PermissionGesapSeeder::class);
     }
 }

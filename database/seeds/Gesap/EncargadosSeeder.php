@@ -7,7 +7,7 @@ class EncargadosSeeder extends Seeder
 
     public function run()
     {
-        factory(Encargados::class, 100)->create();
+        //factory(Encargados::class, 100)->create();
         
     }
 }
