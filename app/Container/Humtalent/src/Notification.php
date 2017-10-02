@@ -18,8 +18,6 @@ class Notification extends Model
         'NOTIF_Estado_Notificacion','NOTIF_Fecha_Inicio','NOTIF_Fecha_Fin','NOTIF_Descripcion','NOTIF_Fecha_Notificacion',
         'FK_TBL_Estado_Documentacion_Persona',
     ];
-    public function StatusOfDocuments(){
-        return $this->belongsTo(StatusOfDocument::class);
-    }
-    //
+
+
 }

@@ -1,89 +1,72 @@
-@extends('material.layouts.dashboard')
 
-@push('styles')
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<!-- toastr Styles -->
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-
-<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Información personal retirado')
-
-@section('page-title', 'Listado del personal retirado:')
-
-@section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
+            <br>
+            @slot('actions', [
+                'link_upload' => [
+                    'link' => '',
+                    'icon' => 'icon-cloud-upload',
+                ],
+                'link_wrench' => [
+                    'link' => '',
+                    'icon' => 'icon-wrench',
+                ],
+                'link_trash' => [
+                    'link' => '',
+                    'icon' => 'icon-trash',
+                ],
+
+            ])
             <div class="row">
                 <div class="col-md-12">
-
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                    <div class="actions">
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                            <i class="fa fa-plus">
+                            </i>Nuevo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaEmpleados'])
                         @slot('columns', [
                             '#',
                             'Nombres',
                             'Apellidos',
                             'Cédula',
-                            'Estado',
+                            'Teléfono',
                             'Email',
                             'Rol ',
+                            'Área',
+                            'Salario',
                             'Acciones'
                         ])
                     @endcomponent
-
                 </div>
-
             </div>
         @endcomponent
     </div>
-@endsection
 
-@push('plugins')
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-@endpush
-@push('functions')
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
 
         var table, url,columns;
-        table = $('#lista-empleados');
-        url = "{{ route('talento.humano.empleado.empleadosRetirados')}}";
+        table = $('#listaEmpleados');
+        url = "{{ route('talento.humano.tablaEmpleados')}}";
         columns = [
             {data: 'DT_Row_Index'},
             {data: 'PRSN_Nombres', name: 'Nombres'},
             {data: 'PRSN_Apellidos', name: 'Apellidos'},
             {data: 'PK_PRSN_Cedula', name: 'Cedula'},
-            {data: 'PRSN_Estado_Persona', name: 'Estado'},
-            {data: 'PRSN_Correo', name: 'Email'},
+            {data: 'PRSN_Telefono', name: 'Teléfono'},
+            {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
+            {data: 'PRSN_Area', name: 'Área'},
+            {data: 'PRSN_Salario', name: 'Salario'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                 data:'action',
@@ -100,6 +83,7 @@
             }
         ];
         dataTableServer.init(table, url, columns);
+
         table = table.DataTable();
         table.on('click', '.remove', function (e) {
             e.preventDefault();
@@ -151,9 +135,14 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('talento.humano.empleado.editarRetirado') }}'+'/'+dataTable.PK_PRSN_Cedula;
+                route_edit = '{{ route('talento.humano.empleado.edit') }}'+'/'+dataTable.PK_PRSN_Cedula;
             $(".content-ajax").load(route_edit);
+        });
+
+        $( ".create" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.empleado.create') }}';
+            $(".content-ajax").load(route);
         });
     });
 </script>
-@endpush

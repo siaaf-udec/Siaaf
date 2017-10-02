@@ -1,23 +1,17 @@
 
-@extends('material.layouts.dashboard')
-
-@push('styles')
-<!-- Datatables Styles -->
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<!-- toastr Styles -->
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Consulta de Documentación')
-
-@section('page-title', 'Consulta de la documentación entregada por los empleados :')
-
-@section('content')
     <div class="col-md-12">
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación'])
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="btn-group">
+                            <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
+                                <i class="fa fa-arrow-circle-left"></i>Volver
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <br><br>
                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                     <thead>
@@ -35,6 +29,7 @@
                         <td>{{$empleado->PRSN_Correo}}</td>
                         </tbody>
                 </table>
+                 <br>
                 <br>
                 @if($procesoEPS == 'Afiliado EPS')
                     <h5>Fecha de afiliación EPS: {{$fechaEPS}}</h5>
@@ -50,7 +45,6 @@
 
             </div>
         </div>
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => ''])
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
@@ -66,26 +60,16 @@
             {!! Field::hidden('cedula',$id,['id'=>'cedula']) !!}
         @endcomponent
     </div>
-@endsection
 
-@push('plugins')
-<!-- Datatables Scripts -->
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-@endpush
-@push('functions')
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-        var cedula=$('input[id="cedula"]').val();
-        var table, url,columns;
+        var cedula = $('input[id="cedula"]').val();
+        var table, url, columns;
         table = $('#lista-empleados');
-        url = '{{ route('talento.humano.document.historialDocumentos.documentosRadicados')}}'+'/'+cedula;
+        url = '{{ route('talento.humano.document.historialDocumentos.documentosRadicados')}}' + '/' + cedula;
         columns = [
             {data: 'DT_Row_Index'},
             {data: "documentacion_personas.DCMTP_Nombre_Documento", name: 'Documento'},
@@ -95,7 +79,11 @@
         ];
         dataTableServer.init(table, url, columns);
 
+        $( ".back" ).on('click', function (e) {
+            //e.preventDefault();
+            var route = '{{ route('talento.humano.historialDocumentos.empleados.ajax') }}';
+            $(".content-ajax").load(route);
+        });
 
     });
 </script>
-@endpush

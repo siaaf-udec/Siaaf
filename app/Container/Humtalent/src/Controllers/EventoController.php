@@ -93,6 +93,32 @@ class EventoController extends Controller
 
     }
 
+    public function consultarAsistentes(Request $request, $id)
+    {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            return view('humtalent.eventos.consultarAsistentes',compact('id'));
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    public function listaEmpleados(Request $request, $id){
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.eventos.registrarAsistentes',compact('id'));
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
     public function registrarTodosAsistentes(Request $request,$id, $datos){
         $datos=explode(';',$datos);
         if($request->ajax() && $request->isMethod('POST')){
@@ -143,15 +169,35 @@ class EventoController extends Controller
         return view('humtalent.eventos.listaEventos');
     }
 
+    public function indexAjax(Request $request)//muestra todos los eventos que esten registrados
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.eventos.ajaxListaEventos');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()//preseta el formulario para registrar un documento
+    public function create(Request $request)//preseta el formulario para registrar un documento
     {
-        //$empleados=Persona::all();
-        return view('humtalent.eventos.registrarEvento');
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.eventos.registrarEvento');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -162,21 +208,27 @@ class EventoController extends Controller
      */
     public function store(Request $request)//almacena un documento enviado desde el formulario del la funcion create
     {
-        $hora=$request['EVNT_Hora'];
-        $hora=strtotime($hora);
-        $hora=date("H:i",$hora);
-        Event::create([
-            'EVNT_Descripcion'  => $request['EVNT_Descripcion'],
-            'EVNT_Fecha_Inicio' => $request['EVNT_Fecha_Inicio'],
-            'EVNT_Fecha_Fin' => $request['EVNT_Fecha_Fin'],
-            'EVNT_Fecha_Notificacion' => $request['EVNT_Fecha_Notificacion'],
-            'EVNT_Hora'         => $hora,
-        ]);
-        $notification=array(
-            'message'=>'La información del evento fue almacenada',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+        if($request->ajax() && $request->isMethod('POST')){
+            $hora=$request['EVNT_Hora'];
+            $hora=strtotime($hora);
+            $hora=date("H:i",$hora);
+            Event::create([
+                'EVNT_Descripcion'  => $request['EVNT_Descripcion'],
+                'EVNT_Fecha_Inicio' => $request['EVNT_Fecha_Inicio'],
+                'EVNT_Fecha_Fin' => $request['EVNT_Fecha_Fin'],
+                'EVNT_Fecha_Notificacion' => $request['EVNT_Fecha_Notificacion'],
+                'EVNT_Hora'         => $hora,
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
 
     }
 
@@ -197,10 +249,21 @@ class EventoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)//presenta el formulario para editar un evento deseado
+    public function edit(Request $request, $id)//presenta el formulario para editar un evento deseado
     {
-        $evento = Event::find($id);
-        return view('humtalent.eventos.editarEvento', compact('evento'));
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            $evento = Event::find($id);
+            return view('humtalent.eventos.editarEvento', [
+                'evento' => $evento]);
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -210,19 +273,25 @@ class EventoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)//se realiza la actulización de datos de los eventos
+    public function update(Request $request)//se realiza la actulización de datos de los eventos
     {
-        $request['EVNT_Hora']=strtotime($request['EVNT_Hora']);
-        $request['EVNT_Hora']=date("H:i",$request['EVNT_Hora']);
+        if($request->ajax() && $request->isMethod('POST')) {
+            $request['EVNT_Hora']=strtotime($request['EVNT_Hora']);
+            $request['EVNT_Hora']=date("H:i",$request['EVNT_Hora']);
 
-        $documento= Event::find($id);
-        $documento->fill($request->all());
-        $documento->save();
-        $notification=array(
-            'message'=>'La información del Evento fue modificada',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+            $documento= Event::find($request['PK_EVNT_IdEvento']);
+            $documento->fill($request->all());
+            $documento->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
 
     }
 

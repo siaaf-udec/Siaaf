@@ -38,18 +38,79 @@ class EmpleadoController extends Controller
      */
     public function index()//muestra todos los empleados registrados
     {
-        //$empleados = Persona::all();
         return view('humtalent.empleado.tablasEmpleados');
     }
+
+    public function indexAjax(Request $request)//muestra todos los empleados registrados
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.empleado.ajaxTablaEmpleados');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    public function ajaxEmpleadosRetirados(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.empleado.ajaxEmpleadosRetirados');
+        }
+        else{
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+    }
+
+    public function ajaxListaEmpleados(Request $request){
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.empleado.ajaxListaEmpleados');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    public function editarEmpleadoRetirado(Request $request, $id)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            $empleado = Persona::find($id);
+            return view('humtalent.empleado.editarEmpleadoRetirado', [
+                'empleado' => $empleado,
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()//muestra el formulario de registro de un nuevo empleado
+    public function create(Request $request)//muestra el formulario de registro de un nuevo empleado
     {
-        return view('humtalent.empleado.registroEmpleado');
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('humtalent.empleado.registroEmpleado');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -60,28 +121,34 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)//se alamacena en la base de datos un nuevo registro del empleado
     {
-        Persona::create([
-            'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula' ],
-            'PRSN_Rol'                => $request['PRSN_Rol'],
-            'PRSN_Nombres'            => $request['PRSN_Nombres'],
-            'PRSN_Apellidos'          => $request['PRSN_Apellidos'],
-            'PRSN_Telefono'           => $request['PRSN_Telefono'],
-            'PRSN_Correo'             => $request['PRSN_Correo'],
-            'PRSN_Direccion'          => $request['PRSN_Direccion'],
-            'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
-            'PRSN_Salario'             => $request['PRSN_Salario'],
-            'PRSN_Eps'                => $request['PRSN_Eps'],
-            'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
-            'PRSN_Area'               => $request['PRSN_Area'],
-            'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
-            'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
-        ]);
+        if($request->ajax() && $request->isMethod('POST')){
+            Persona::create([
+                'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula'],
+                'PRSN_Rol'                => $request['PRSN_Rol'],
+                'PRSN_Nombres'            => $request['PRSN_Nombres'],
+                'PRSN_Apellidos'          => $request['PRSN_Apellidos'],
+                'PRSN_Telefono'           => $request['PRSN_Telefono'],
+                'PRSN_Correo'             => $request['PRSN_Correo'],
+                'PRSN_Direccion'          => $request['PRSN_Direccion'],
+                'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
+                'PRSN_Salario'             => $request['PRSN_Salario'],
+                'PRSN_Eps'                => $request['PRSN_Eps'],
+                'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
+                'PRSN_Area'               => $request['PRSN_Area'],
+                'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
+                'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
+            ]);
 
-        $notification=array(
-            'message'=>'La información del empleado fue almacenada correctamente.',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
 
     }
     public function importUsers()//se almacena en la base de datos el registro del archivo de excel
@@ -152,10 +219,19 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
+    public function edit(Request $request,$id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
     {
-        $empleado = Persona::find($id);
-        return view('humtalent.empleado.editarEmpleado', compact('empleado'));
+        if($request->ajax() && $request->isMethod('GET')){
+            $empleado = Persona::find($id);
+            return view('humtalent.empleado.editarEmpleado', [
+                'empleado' => $empleado,
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -165,18 +241,23 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)//re realiza la actualización de los datos
+    public function update(Request $request)//re realiza la actualización de los datos
     {
-        $empleado= Persona::find($id);
-        $empleado->fill($request->all());
-        //$empleado-> PRSN_Rol = $request['PRSN_Rol'];
-        //$empleado-> PRSN_Estado_Persona = $request['PRSN_Estado_Persona'];
-        $empleado->save();
-        $notification=array(
-            'message'=>'La información del empleado fue modificada correctamente',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+        if($request->ajax() && $request->isMethod('POST')) {
+            $empleado = Persona::find($request['PK_PRSN_Cedula']);
+            $empleado->fill($request->all());
+            $empleado->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**

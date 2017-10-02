@@ -1,24 +1,9 @@
-@extends('material.layouts.dashboard')
-
-@push('styles')
-<!-- Datatables Styles -->
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Información personal contratado')
-
-@section('page-title', 'Listado del personal contratado:')
-
-@section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
             <div id="response" class="row">
                 <div class="col-md-12"><br>
-                    <button id="button" class="btn blue">Registrar todos</button>&nbsp&nbsp&nbsp<a href="{{ route('talento.humano.evento.index') }}"><button id="volver" class="btn green" >
-                            <i class="fa fa-arrow-circle-left"></i>Volver</button></a> <br><br>
+                    <button id="button" class="btn blue">Registrar todos</button>&nbsp&nbsp&nbsp <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
+                            <i class="fa fa-arrow-circle-left"></i>Volver</a> <br><br>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                         @slot('columns', [
                             '#',
@@ -38,23 +23,13 @@
             {!! Form::close() !!}
         @endcomponent
     </div>
-@endsection
 
-@push('plugins')
-<!-- Datatables Scripts -->
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
 
-@endpush
-@push('functions')
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-
-<script>
 jQuery(document).ready(function () {
+
     $('#button').click( function () {
         var data = Array.from(table.rows({page: 'current', search: 'applied'}).data());
         var datos="";
@@ -150,7 +125,12 @@ jQuery(document).ready(function () {
         })
     });
 
+    $( ".back" ).on('click', function (e) {
+        e.preventDefault();
+        var route = '{{ route('talento.humano.evento.index.ajax') }}';
+        $(".content-ajax").load(route);
+    });
+
 
     });
 </script>
-@endpush

@@ -15,11 +15,7 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\Notification;
-use App\Container\Permissions\src\Permission;
-use App\Container\Permissions\Src\Role;
-use App\Container\Users\src\User;
-use Carbon\Carbon;
-use App\Notifications\HeaderSiaaf;
+
 
 
 class CalendarioController extends Controller
@@ -86,24 +82,39 @@ class CalendarioController extends Controller
             return json_encode($idNotif['PK_NOTIF_Id_Notificacion']); //se envia a la libreria la llave primaria (PK) de la notificación almacenada
         }//un vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
     }
-    public function storeDate(Request $request){ //funcion que actualiza la fecha de notificación para los recordatorios, recibe los datos enviados desde un formulario
-        Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])
-                        ->update(['NOTIF_Fecha_Notificacion'=>$request['NOTIF_Fecha_Notificacion']]); //realiza la respectiva actualización en la base de datos
-        $notification=array( //y envia un mensaje de notificación
-            'message'=>'El recordatorio fue actualizado correctamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+    public function storeDate(Request $request) //funcion que actualiza la fecha de notificación para los recordatorios, recibe los datos enviados desde un formulario
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])
+                ->update(['NOTIF_Fecha_Notificacion' => $request['NOTIF_Fecha_Notificacion']]); //realiza la respectiva actualización en la base de datos
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
 
     }
-    public function storeDateEvent(Request $request){//en caso de que el susuario cambie de fecha desde el calendario un evento, esta funcuión es llamada para actualizar la fecha de notificación
-        Event::where('PK_EVNT_IdEvento', $request['PK_EVNT_IdEvento'])
-             ->update(['EVNT_Fecha_Notificacion'=>$request['EVNT_Fecha_Notificacion']]);//se realiza la actualización en la base de datos de la fecha de notificación para el evento
-        $notification=array( //y se envia un mensaje de notificación
-            'message'=>'El evento fue actualizado correctamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+    public function storeDateEvent(Request $request)//en caso de que el susuario cambie de fecha desde el calendario un evento, esta funcuión es llamada para actualizar la fecha de notificación
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            Event::where('PK_EVNT_IdEvento', $request['PK_EVNT_IdEvento'])
+                ->update(['EVNT_Fecha_Notificacion' => $request['EVNT_Fecha_Notificacion']]);//se realiza la actualización en la base de datos de la fecha de notificación para el evento
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     public function updateDateNotification(Request $request){//en caso de que el usuario cambie de fecha de la notificación/ evento o alargue su tiempo de duración esta función será llamada
         if($request['type']== 'endDateUpdate'){//desde el script de la vista se envia el tipo de petición si es endDateUpdate quiere decir que se desea actualizar la fecha final de la notificación o evento
@@ -137,28 +148,43 @@ class CalendarioController extends Controller
             return json_encode(array('id'=>$request['eventId'],'eventType'=>$request['eventType']));//se retorna el id del evento modificado y el tipo para actualizar el calendario
         }
     }
-    public function updateNotification(Request $request){//en caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
-        Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])// cuando se envie el formulario se actulizan los datos
-                    ->update(['NOTIF_Descripcion'=>$request['NOTIF_Descripcion'],
+    public function updateNotification(Request $request)//en caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])// cuando se envie el formulario se actulizan los datos
+                        ->update(['NOTIF_Descripcion'=>$request['NOTIF_Descripcion'],
                               'NOTIF_Fecha_Notificacion'=>$request['NOTIF_Fecha_Notificacion'] ]);
-        $notification=array(//se envia un mensaje de notificación de los cambios
-            'message'=>'El recordatorio fue editado correctamente',
-            'alert-type'=>'success'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
-    public function updateEvent(Request $request){ //esta función será llamada cuando se desea editar los datos de un evento desde el calendario
-        $request['EVNT_Hora']=strtotime($request['EVNT_Hora']); //se hace el cambio en el formato de la hora del evento
-        $request['EVNT_Hora']=date("H:i",$request['EVNT_Hora']);
+    public function updateEvent(Request $request) //esta función será llamada cuando se desea editar los datos de un evento desde el calendario
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            $request['EVNT_Hora'] = strtotime($request['EVNT_Hora']); //se hace el cambio en el formato de la hora del evento
+            $request['EVNT_Hora'] = date("H:i", $request['EVNT_Hora']);
 
-        $documento= Event::find($request['PK_NOTIF_Id_Notificacion']); //se busca el evento a actulizar
-        $documento->fill($request->all());  //se actulizan los datos correspondientes
-        $documento->save();
-        $notification=array( //se retorna el mensaje de aviso
-            'message'=>'La información del Evento fue modificada',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+            $documento = Event::find($request['PK_NOTIF_Id_Notificacion']); //se busca el evento a actulizar
+            $documento->fill($request->all());  //se actulizan los datos correspondientes
+            $documento->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
     }
     public function deleteNotification(Request $request){//esta función se invoca cuando se desee eliminar tanto un evnto como una notificación
         if($request->ajax()) {//se verifica que se envie desde una petición ajax
@@ -202,28 +228,81 @@ class CalendarioController extends Controller
         return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
     }
 
-    public function desactivarNotificaciones($tipo){  //Funcion que crea el registro de desactivación de las notificaciones para empleados con documentos completos o incompletos, recibe como parametro el tipo de notificación (documentos completos o incompletos )
-        Notification::create([
-            'NOTIF_Descripcion' => $tipo,
-            'NOTIF_Estado_Notificacion' => "Desactivada",
-        ]);
-        $notification=array(//se envia un mensaje de notificación de los cambios
-            'message'=>'Estas notificaciones fueron descativadas correctamente',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+    public function desactivarNotificaciones(Request $request){  //Funcion que crea el registro de desactivación de las notificaciones para empleados con documentos completos o incompletos, recibe como parametro el tipo de notificación (documentos completos o incompletos )
+        if($request->ajax() && $request->isMethod('POST')) {
+            Notification::create([
+                'NOTIF_Descripcion' => $request['tipo'],
+                'NOTIF_Estado_Notificacion' => "Desactivada",
+            ]);
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Notificaciones desactivadas correctamente.'
+            );
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
-    public function activarNotificaciones($tipo){  //funcion que activa las notificaciones eliminando el registro de desactivación de las mismas
+    public function activarNotificaciones(Request $request){  //funcion que activa las notificaciones eliminando el registro de desactivación de las mismas
+        if($request->ajax() && $request->isMethod('POST')) {
+            Notification::where('NOTIF_Descripcion', $request['tipo'])->delete();
 
-        Notification::where('NOTIF_Descripcion', $tipo)->delete();
-
-        $notification=array(//se envia un mensaje de notificación de los cambios
-            'message'=>'Estas notificaciones fueron ativadas correctamente',
-            'alert-type'=>'info'
-        );
-        return back()->with($notification);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Notificaciones activadas correctamente.'
+            );
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
+    public function ajaxEmpleadosDocumentosCompletos(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+
+            if(count($estado) ==  0){  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+                $estado = "Activada";
+            }
+
+            return view('humtalent.empleado.ajaxEmpleadosDocumentosCompletos', compact('estado'));
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
+
+    public function ajaxEmpleadosDocumentosIncompletos(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                ->where('NOTIF_Descripcion', 'Documentos incompletos')->get(['NOTIF_Estado_Notificacion']);//verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+            if(count($estado) ==  0){  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+                $estado = "Activada";
+            }
+            return view('humtalent.empleado.ajaxEmpleadosDocumentosIncompletos', compact('estado'));
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
 
 }

@@ -36,6 +36,10 @@ Route::group(['prefix' => 'empleado'], function () {
         'uses' => $controller.'EmpleadoController@index',
         'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
     ]);
+    Route::get('index/ajax',[
+        'uses' => $controller.'EmpleadoController@indexAjax',
+        'as' => 'talento.humano.empleado.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
+    ]);
     Route::get('create',[
         'uses' => $controller.'EmpleadoController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un empleado
         'as' => 'talento.humano.empleado.create'
@@ -56,7 +60,7 @@ Route::group(['prefix' => 'empleado'], function () {
         'uses' => $controller.'EmpleadoController@edit',     //ruta que conduce al controlador para mostar el formulario para editar datos registrados
         'as' => 'talento.humano.empleado.edit'
     ]);
-    Route::post('empleado/update/{id?}',[
+    Route::post('empleado/update',[
         'uses' => $controller.'EmpleadoController@update',      //ruta que conduce al controlador para actulizar datos del empleado
         'as' => 'talento.humano.empleado.update'
     ]);
@@ -80,6 +84,14 @@ Route::group(['prefix' => 'empleado'], function () {
         'uses' => function(){
             return view('humtalent.empleado.empleadosRetirados');
         }
+    ]);
+    Route::get('tablaEmpleadosRetirados/ajax',[      //ruta que retorna la vista con el datatable para listar los empleados con estado retirado
+        'as'=>'talento.humano.empleado.tablaEmpleadosRetirados.ajax',
+        'uses' => $controller.'EmpleadoController@ajaxEmpleadosRetirados'
+    ]);
+    Route::get('editarRetirado/{id?}',[
+        'uses' => $controller.'EmpleadoController@editarEmpleadoRetirado',     //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+        'as' => 'talento.humano.empleado.editarRetirado'
     ]);
     Route::get('vistaArchivo',[      //ruta que retorna la vista del registro a traves de excel
         'as'=>'talento.humano.empleado.regisArchivo',
@@ -120,6 +132,10 @@ Route::group(['prefix' => 'document'], function () {
         'uses' => $controller.'DocumentController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
         'as' => 'talento.humano.document.index'
     ]);
+    Route::get('index/ajax',[
+        'uses' => $controller.'DocumentController@indexAjax',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
+        'as' => 'talento.humano.document.index.ajax'
+    ]);
     Route::get('create',[
         'uses' => $controller.'DocumentController@create', //ruta que conduce al controlador para mostrar el formulario para registrar un documento
         'as' => 'talento.humano.document.create'
@@ -136,7 +152,7 @@ Route::group(['prefix' => 'document'], function () {
         'uses' => $controller.'DocumentController@edit', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
         'as' => 'talento.humano.document.edit'
     ]);
-    Route::post('document/update/{id?}',[
+    Route::post('update',[
         'uses' => $controller.'DocumentController@update',   //ruta que conduce al controlador para actulizar datos del empleado
         'as' => 'talento.humano.document.update'
     ]);
@@ -161,6 +177,14 @@ Route::group(['prefix' => 'document'], function () {
             return view('humtalent.empleado.buscarEmpleado');
         }
     ]);
+    Route::get('buscarRadicar/ajax', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+        'as' => 'talento.humano.buscarRadicar.ajax', //Este es el alias de la ruta
+        'uses' => $controller.'DocumentController@ajaxBuscarEmpleado'
+    ]);
+    Route::get('consultaDocsRadicados/{id?}/{tipo?}', [    //ruta para buscar los empleados  para hacer la radicación de documentos
+        'as' => 'talento.humano.document.consultaDocsRadicados', //Este es el alias de la ruta
+        'uses' => $controller.'DocumentController@consultaDocsRadicados'
+    ]);
     Route::post('listarDocsRad', [    //ruta listar los documentos requeridos y asociarlos a un empleado
         'as' => 'talento.humano.listarDocsRad', //Este es el alias de la ruta
         'uses' => $controller.'DocumentController@listarDocsRad'
@@ -184,6 +208,10 @@ Route::group(['prefix' => 'document'], function () {
             return view('humtalent.empleado.listaEmpleados');
         }
     ]);
+    Route::get('historialDocumentos/empleados/ajax', [    //ruta para listar  los empleados y realizar la consulta de documentación entregada
+        'as' => 'talento.humano.historialDocumentos.empleados.ajax',
+        'uses' => $controller.'EmpleadoController@ajaxListaEmpleados'
+    ]);
     Route::get('historialDocumentos/documentos/{id?}',[
         'uses' => $controller.'DocumentController@tablaRadicados', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
         'as' => 'talento.humano.historialDocumentos.documentos'
@@ -201,6 +229,10 @@ Route::group(['prefix' => 'evento'], function () {
         'uses' => $controller.'EventoController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
         'as' => 'talento.humano.evento.index'
     ]);
+    Route::get('index/ajax',[
+        'uses' => $controller.'EventoController@indexAjax',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
+        'as' => 'talento.humano.evento.index.ajax'
+    ]);
     Route::get('create',[
         'uses' => $controller.'EventoController@create', //ruta que conduce al controlador para mostrar  el formulario de registro para los eventos
         'as' => 'talento.humano.evento.create'
@@ -213,11 +245,11 @@ Route::group(['prefix' => 'evento'], function () {
         'uses' => $controller.'EventoController@destroy', //ruta que conduce al controlador para eliminar los  eventos
         'as' => 'talento.humano.evento.destroy'
     ]);
-    Route::get('evento/edit/{id?}',[
+    Route::get('edit/{id?}',[
         'uses' => $controller.'EventoController@edit', //ruta que conduce al controlador para mostrar el formulario de edición de  los  eventos
         'as' => 'talento.humano.evento.edit'
     ]);
-    Route::post('document/update/{id?}',[
+    Route::post('update',[
         'uses' => $controller.'EventoController@update', //ruta que conduce al controlador para actualizar los datos de los  eventos
         'as' => 'talento.humano.evento.update'
     ]);
@@ -232,11 +264,9 @@ Route::group(['prefix' => 'evento'], function () {
         'uses' => $controller.'EventoController@tablaEventos'
     ]);
 
-    Route::get('evento/asistentes/{id?}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
+    Route::get('asistentes/{id?}', [    //ruta para listar los empleados  asistentes a un evento seleccionado, recibe el id del evento seleccionado
         'as' => 'talento.humano.evento.asistentes', //Este es el alias de la ruta
-        'uses' => function($id){
-            return view('humtalent.eventos.consultarAsistentes',compact('id'));
-        }
+        'uses' => $controller.'EventoController@consultarAsistentes'
     ]);
     Route::get('tablaAsistentes/{id}',[   //ruta que realiza la consulta de los empleados asistentes a un evento, recibe el id del evento seleccionado
         'as' => 'talento.humano.tablaAsistentes',
@@ -246,11 +276,9 @@ Route::group(['prefix' => 'evento'], function () {
         'as' => 'talento.humano.posAsitentes',
         'uses' => $controller.'EventoController@posiblesAsistentes'
     ]);
-    Route::get('evento/regAsist/{id}', [    //ruta para listar los empleados  para agregar asistentes a un evento seleccionado, recibe el id del evento seleccionado
+    Route::get('regAsist/{id?}', [    //ruta para listar los empleados  para agregar asistentes a un evento seleccionado, recibe el id del evento seleccionado
         'as' => 'talento.humano.evento.regAsist', //Este es el alias de la ruta
-        'uses' => function($id){
-            return view('humtalent.eventos.registrarAsistentes',compact('id'));
-        }
+        'uses' => $controller.'EventoController@listaEmpleados'
     ]);
     Route::get('evento/regAsist/saveAsist/{id?}/{ced?}',[   //ruta que registrar los empleados asistentes a un evento, recibe el id del evento seleccionado y la cedula del empleado a registrar como asistente
         'as' => 'talento.humano.evento.regAsist.saveAsists',
@@ -277,6 +305,10 @@ Route::group(['prefix' => 'induccion'], function () {
             return view('humtalent.inducciones.tablaEmpleadosNuevos');
         }
     ]);
+    Route::get('tablaInduccion/ajax', [    //ruta para mostrar una lista de los empleados nuevos
+        'as' => 'talento.humano.Tinduccion.ajax', //Este es el alias de la ruta
+        'uses' => $controller.'InduccionController@ajaxEmpleadosNuevos'
+    ]);
 
     Route::get('tablaEmpleadosNuevos',[   //ruta para realizar la cosnulta de los empleados nuevos
         'as' => 'talento.humano.tablaEmpleadosNuevos',
@@ -288,7 +320,7 @@ Route::group(['prefix' => 'induccion'], function () {
         'uses' => $controller . 'InduccionController@index'
     ]);
 
-    Route::post('induccion/store', [   //ruta para registrar el proceso de inducción para un empleado
+    Route::post('store', [   //ruta para registrar el proceso de inducción para un empleado
         'as' => 'talento.humano.induccion.store',
         'uses' => $controller . 'InduccionController@store'
     ]);
@@ -343,6 +375,10 @@ Route::group(['prefix' => 'permisos'], function () {
         'uses' => function(){
             return view('humtalent.permisos.listaEmpleados');
         }
+    ]);
+    Route::get('listaEmpleados/ajax', [    //ruta para mostrar una lista de los empleados
+        'as' => 'talento.humano.permisos.listaEmpleados.ajax',
+        'uses' => $controller.'PermisosController@ajaxListaEmpleados'
     ]);
     Route::get('tablaPermisos/{id?}', [    //ruta para mostrar la tabla de los permisos.
         'as' => 'talento.humano.permisos.tablaPermisos',
@@ -407,7 +443,7 @@ Route::group(['prefix' => 'notificaciones'], function () {
         }
     ]);
     Route::get('consultarDocsRadicados/{id?}/{tipoRad?}',[   //ruta para consultar los documentos registrados
-        'uses' => $controller.'DocumentController@consulta',
+        'uses' => $controller.'DocumentController@consultaDocsRadicados',
         'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
     ]);
 
@@ -418,6 +454,10 @@ Route::group(['prefix' => 'notificaciones'], function () {
             return view('humtalent.empleado.empleadosDocumentosCompletos');
         }
     ]);
+    Route::get('empleadosDocumentosCompletos/ajax', [  //ruta que dirige al blade para mostrar la tabla de los empleados con documentos completos generadas por las notificaciones
+        'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosCompletos.ajax',
+        'uses' =>  $controller.'CalendarioController@ajaxEmpleadosDocumentosCompletos'
+    ]);
 
     Route::get('empleadosDocumentosIncompletos', [   //ruta que dirige al blade para mostrar la tabla de los empleados con documentos incompletos generadas por las notificaciones
         'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosIncompletos',
@@ -425,22 +465,26 @@ Route::group(['prefix' => 'notificaciones'], function () {
             return view('humtalent.empleado.empleadosDocumentosIncompletos');
         }
     ]);
-    Route::get('desactivarDocumentosIncompletos/{tipo}', [      //ruta que desactiva las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
+    Route::get('empleadosDocumentosIncompletos/ajax', [   //ruta que dirige al blade para mostrar la tabla de los empleados con documentos incompletos generadas por las notificaciones
+        'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosIncompletos.ajax',
+        'uses' => $controller.'CalendarioController@ajaxEmpleadosDocumentosIncompletos'
+    ]);
+    Route::post('desactivarDocumentosIncompletos', [      //ruta que desactiva las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
         'as' => 'humtalent.notificaciones.desactivarDocumentosIncompletos',
         'uses' => $controller.'CalendarioController@desactivarNotificaciones'
     ]);
 
-    Route::get('activarDocumentosIncompletos/{tipo}', [         //ruta que activa las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
+    Route::post('activarDocumentosIncompletos', [         //ruta que activa las notificaciones de documentos incompletos, recibe como parametro el tipo de notificacion (documentos incompletos)
         'as' => 'humtalent.notificaciones.activarDocumentosIncompletos',
         'uses' => $controller.'CalendarioController@activarNotificaciones'
     ]);
 
-    Route::get('desactivarDocumentosCompletos/{tipo}', [        //ruta que desactiva las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
+    Route::post('desactivarDocumentosCompletos', [        //ruta que desactiva las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
         'as' => 'humtalent.notificaciones.desactivarDocumentosCompletos',
         'uses' => $controller.'CalendarioController@desactivarNotificaciones'
     ]);
 
-    Route::get('activarDocumentosCompletos/{tipo}', [       //ruta que activa las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
+    Route::post('activarDocumentosCompletos', [       //ruta que activa las notificaciones de documentos completos, recibe como parametro el tipo de notificacion (documentos completos)
         'as' => 'humtalent.notificaciones.activarDocumentosCompletos',
         'uses' => $controller.'CalendarioController@activarNotificaciones'
     ]);

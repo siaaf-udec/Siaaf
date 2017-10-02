@@ -1,20 +1,13 @@
-@extends('material.layouts.dashboard')
 
-@push('styles')
-<!-- Datatables Styles -->
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<!-- toastr Styles -->
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Consulta de Permisos')
-
-@section('page-title', 'Consulta  y registro de permisos :')
-
-@section('content')
     <div class="col-md-12">
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Permisos registrado:'])
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
+                        <i class="fa fa-arrow-circle-left"></i>Volver
+                    </a>
+                </div>
+            </div>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <br><br>
@@ -37,7 +30,6 @@
                 <br>
             </div>
         </div>
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Permisos registrado:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -64,7 +56,7 @@
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_permission_create', 'method'=>'POST', 'route'=> ['talento.humano.permisos.store']]) !!}
+                        {!! Form::open(['id' => 'form_permission_create', 'url'=> ['/forms']]) !!}
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> Regitro de permisos o incapacidades</h1>
@@ -97,7 +89,7 @@
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_permission_update', 'method'=>'POST', 'route'=> ['talento.humano.permisos.update']]) !!}
+                        {!! Form::open(['id' => 'form_permission_update', 'url'=> ['/forms']]) !!}
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> Edición de permisos o incapacidades</h1>
@@ -127,36 +119,13 @@
             </div>
         @endcomponent
     </div>
-@endsection
 
-@push('plugins')
-<!-- Datatables Scripts -->
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-@endpush
-@push('functions')
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
-        @if(Session::has('message'))
-            var type="{{Session::get('alert-type','info')}}"
-            switch(type){
-                case 'success':
-                    toastr.options.closeButton = true;
-                    toastr.success("{{Session::get('message')}}",'Registro exitoso:');
-                    break;
-            }
-        @endif
         var cedula=$('input[id="FK_TBL_Persona_Cedula"]').val();
         var table, url,columns;
         table = $('#lista-permisos');
@@ -230,17 +199,6 @@
         });
         table.on('click', '.edit', function (e) {
             e.preventDefault();
-            var form_update = $('#form_permission_update');
-            var rules_update = {
-                PERM_Descripcion: { maxlength: '300', required: true },
-                PERM_Fecha: { required: true },
-
-            };
-            var messages_update={
-                PERM_Descripcion:{required:"Debe ingresar la Descripción del permiso a modificarr"},
-                PERM_Fecha:{required:"Debe ingresar la fecha del permiso a modificar"}
-            };
-            FormValidationMd.init(form_update,rules_update,messages_update,false);
 
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
@@ -248,24 +206,115 @@
             $('#descUpdate').val(dataTable.PERM_Descripcion);
             $('input[name="PERM_Fecha"]').val(dataTable.PERM_Fecha);
             $('#modal-update-permission').modal('toggle');
-
         });
 
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
-            var form_create = $('#form_permission_create');
-            var rules_create = {
-                PERM_Descripcion: { maxlength: 300, required: true },
-                PERM_Fecha: { required: true },
-
-            };
-            var messages_create={
-                PERM_Descripcion:{required:"Debe ingresar la Descripción del permiso a registrar"},
-                PERM_Fecha:{required:"Debe ingresar la fecha del permiso a registrar"}
-            };
-            FormValidationMd.init(form_create,rules_create,messages_create,false);
             $('#modal-create-permission').modal('toggle');
+        });
+
+        var createPermision = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('talento.humano.permisos.store') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('FK_TBL_Persona_Cedula', $('[name="FK_TBL_Persona_Cedula"]').val());
+                    formData.append('PERM_Fecha', $('[name="PERM_Fecha"]').val());
+                    formData.append('PERM_Descripcion', $('[name="PERM_Descripcion"]').val());
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                $('#modal-create-permission').modal('hide');
+                                $('#form_permission_create')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var updatePermision = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('talento.humano.permisos.update') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('FK_TBL_Persona_Cedula', $('[name="FK_TBL_Persona_Cedula"]').val());
+                    formData.append('PERM_Fecha', $('[name="PERM_Fecha"]').val());
+                    formData.append('PERM_Descripcion', $('#descUpdate').val());
+                    formData.append('PK_PERM_IdPermiso', $('[name="PK_PERM_IdPermiso"]').val());
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                $('#modal-update-permission').modal('hide');
+                                $('#form_permission_update')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_create = $('#form_permission_create');
+        var rules_create = {
+            PERM_Descripcion: { maxlength: 300, required: true },
+            PERM_Fecha: { required: true },
+        };
+        FormValidationMd.init(form_create,rules_create,false,createPermision());
+
+        var form_update = $('#form_permission_update');
+        var rules_update = {
+            PERM_Descripcion: { maxlength: '300', required: true },
+            PERM_Fecha: { required: true },
+        };
+
+        FormValidationMd.init(form_update,rules_update,false,updatePermision());
+
+        $( ".back" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.permisos.listaEmpleados.ajax') }}';
+            $(".content-ajax").load(route);
         });
     });
 </script>
-@endpush

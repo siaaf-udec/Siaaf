@@ -1,8 +1,15 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
+        <div class="col-md-6">
+            <div class="btn-group">
+                <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
+                    <i class="fa fa-arrow-circle-left"></i>Volver
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
-                {!! Form::open (['id'=>'form_empleado_create', 'url' => '/forms']) !!}
+                {!! Form::model ($empleado, ['id'=>'form_empleado_update', 'class' => 'form-horizontal', 'url' => '/forms'])  !!}
 
                 <div class="form-body">
 
@@ -46,17 +53,15 @@
                     {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensación:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                      ['help' => 'Caja de compensacion (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
-                    {!! Field::select('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],null,['label'=>'Estado del empleado: Selecciona una opción']) !!}
+                    {!! Field::select('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo', 'Retirado'=>'Retirado'],null,['label'=>'Estado del empleado: Selecciona una opción']) !!}
 
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i
-                                            class="fa fa-angle-left"></i>
+                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>
-
                             </div>
                         </div>
                     </div>
@@ -64,7 +69,6 @@
                 </div>
             </div>
         </div>
-
     @endcomponent
 </div>
 
@@ -72,7 +76,7 @@
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
 
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -90,9 +94,9 @@
         });
 
         var createUsers = function () {
-            return {
+            return{
                 init: function () {
-                    var route = '{{ route('talento.humano.empleado.store') }}';
+                    var route = '{{ route('talento.humano.empleado.update') }}';
                     var type = 'POST';
                     var async = async || false;
 
@@ -113,7 +117,7 @@
                     formData.append('PRSN_Caja_Compensacion', $('input:text[name="PRSN_Caja_Compensacion"]').val());
                     $.ajax({
                         url: route,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         cache: false,
                         type: type,
                         contentType: false,
@@ -126,15 +130,15 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                $('#form_empleado_create')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr, response.title, response.message);
+                                $('#form_empleado_update')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('talento.humano.empleado.index.ajax') }}';
+                                var route = '{{ route('talento.humano.empleado.tablaEmpleadosRetirados.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -142,26 +146,33 @@
                 }
             }
         };
-        var form = $('#form_empleado_create');
+        var form = $('#form_empleado_update');
         var formRules = {
             PRSN_Nombres: {required: true},
             PRSN_Apellidos: {required: true},
-            PRSN_Correo: {required: true, email: true},
+            PRSN_Correo: {required: true,email: true},
             PK_PRSN_Cedula: {required: true,},
             PRSN_Telefono: {required: true},
             PRSN_Ciudad: {required: true},
-            PRSN_Area: {required: true},
-            PRSN_Salario: {required: true},
+            PRSN_Area: { required: true},
+            PRSN_Salario: { required: true},
             PRSN_Rol: {required: true},
             PRSN_Estado_Persona: {required: true},
         };
-        FormValidationMd.init(form, formRules, false, createUsers());
+        FormValidationMd.init(form,formRules,false,createUsers());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('talento.humano.empleado.index.ajax') }}';
+            var route = '{{ route('talento.humano.empleado.tablaEmpleadosRetirados.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+        $( ".back" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.empleado.tablaEmpleadosRetirados.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+
 
     });
 
