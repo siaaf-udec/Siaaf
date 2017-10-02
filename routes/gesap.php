@@ -9,42 +9,45 @@ $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 
 /*COORDINADOR
 */
-//Route::group(['prefix'=>'Coordinador','middleware'=>['role:Coordinator_Gesap']],function()use($controller){
-//Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']],function()use($controller){
+Route::group(['prefix' => 'min', 'middleware' => ['role:Coordinator_Gesap']], function ()use($controller) 
+{
+    Route::get('/',[
+        'uses' => $controller.'CoordinatorController@index',
+        'as' => 'min.index'      
+    ]);
     
-    Route::get('estudiante', [
-    'as' => 'anteproyecto.studentList',
-    'uses' => $controller.'StudentController@studentList'
-]);
-
-Route::get('evaluar/ver/proyecto', [
-    'as' => 'anteproyecto.index.studentList',
-    'uses' => $controller.'StudentController@proyecto'
-]);
-
-//});
-
-
-Route::get('min/ajax', [
-    'as' => 'min.index.ajax',
-    'uses' => $controller.'CoordinatorController@index_ajax'
-]);
-
-
-Route::resource('min', $controller.'CoordinatorController');
-
-Route::post('min/update',[ 
-        'uses' => $controller.'CoordinatorController@updateMin', 
+    Route::get('ajax', [
+        'as' => 'min.index.ajax',
+        'uses' => $controller.'CoordinatorController@index_ajax'
+    ]);
+    
+    Route::get('create',[
+        'uses' => $controller.'CoordinatorController@create',
+        'as' => 'min.create'
+    ]);
+    
+    Route::post('store',[
+        'uses' => $controller.'CoordinatorController@store',
+        'as' => 'min.store'
+    ]);
+    
+    Route::get('{id?}/edit',[
+        'uses' => $controller.'CoordinatorController@edit',  
+        'as' => 'min.edit'
+    ]);
+    
+    Route::post('update',[ 
+        'uses' => $controller.'CoordinatorController@update', 
         'as' => 'min.proyecto.update' 
     ]); 
-
-
-
     
-Route::get('anteproyecto', [
-    'as' => 'anteproyecto.list',
-        'uses' => $controller.'CoordinatorController@projectList'
-]);
+     Route::delete('{id?}',[
+        'uses' => $controller.'CoordinatorController@destroy',
+        'as' => 'min.destroy'
+    ]);
+});
+
+
 
 Route::get('anteproyecto/asignar/{id}', [
     'middleware'=>['permission:Create_Project_Gesap'],
@@ -56,22 +59,80 @@ Route::post('anteproyecto/docente/', [
     'as' => 'anteproyecto.guardardocente',
     'uses' => $controller.'CoordinatorController@saveAssign'
 ]);
-  
-//});
 
+Route::post('anteproyecto/observaciones/', [
+    'as' => 'anteproyecto.guardar.observaciones',
+    'uses' => $controller.'EvaluatorController@storeObservations'
+]);
 
 /*Evaluador*/
 
-Route::resource('evaluar', $controller.'EvaluatorController');
-
-Route::get('evaluar/ver/director', [
+Route::group(['prefix' => 'evaluar'], function ()use($controller) 
+{
+Route::get('/',[
+        'uses' => $controller.'EvaluatorController@index',
+        'as' => 'evaluar.index'      
+    ]);
+    
+    Route::get('index',[
+        'uses' => $controller.'EvaluatorController@index',
+        'as' => 'evaluar.index'      
+    ]);
+    
+    Route::get('{id}', [
+        'as' => 'evaluar.show',
+        'uses' => $controller.'EvaluatorController@show'
+    ]);    
+    
+    Route::get('ver/director', [
     'as' => 'anteproyecto.index.directorList',
     'uses' => $controller.'EvaluatorController@director'
+    ]);
+
+    Route::get('ver/jurado', [
+        'as' => 'anteproyecto.index.juryList',
+        'uses' => $controller.'EvaluatorController@jury'
+    ]);
+
+    Route::get('observaciones/{id}', [
+        'as' => 'anteproyecto.observaciones',
+        'uses' => $controller.'EvaluatorController@createObservations'
+    ]);
+
+    Route::get('concepto/{id}', [
+        'as' => 'anteproyecto.conceptos',
+        'uses' => $controller.'EvaluatorController@createConcepts'
+    ]);
+});
+
+
+
+Route::post('anteproyecto/concepto/', [
+    'as' => 'anteproyecto.guardar.conceptos',
+    'uses' => $controller.'EvaluatorController@storeConcepts'
 ]);
 
-Route::get('evaluar/ver/jurado', [
-    'as' => 'anteproyecto.index.juryList',
-    'uses' => $controller.'EvaluatorController@jury'
+
+
+/*ESTUDIANTE*/
+//Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']],function()use($controller){
+    
+Route::get('evaluar/ver/proyecto', [
+    'as' => 'anteproyecto.index.studentList',
+    'uses' => $controller.'StudentController@proyecto'
+]);
+
+//});
+
+Route::get('estudiante', [
+    'as' => 'anteproyecto.studentList',
+    'uses' => $controller.'StudentController@studentList'
+]);
+
+    
+Route::get('anteproyecto', [
+    'as' => 'anteproyecto.list',
+        'uses' => $controller.'CoordinatorController@projectList'
 ]);
 
 Route::get('director', [
@@ -91,29 +152,6 @@ Route::get('observaciones/{id}', [
 
 
 
-Route::get('evaluar/observaciones/{id}', [
-    'as' => 'anteproyecto.observaciones',
-    'uses' => $controller.'EvaluatorController@createObservations'
-]);
-
-Route::post('anteproyecto/observaciones/', [
-    'as' => 'anteproyecto.guardar.observaciones',
-    'uses' => $controller.'EvaluatorController@storeObservations'
-]);
-
-Route::get('evaluar/concepto/{id}', [
-    'as' => 'anteproyecto.conceptos',
-    'uses' => $controller.'EvaluatorController@createConcepts'
-]);
-
-Route::post('anteproyecto/concepto/', [
-    'as' => 'anteproyecto.guardar.conceptos',
-    'uses' => $controller.'EvaluatorController@storeConcepts'
-]);
-
-
-
-/*ESTUDIANTE*/
 
 
 

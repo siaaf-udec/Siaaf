@@ -297,8 +297,17 @@
                     //formData.append('_method', $('input:hidden[name="_method"]').val());
                     formData.append('PK_radicacion', $('input:hidden[name="PK_radicacion"]').val());
                     formData.append('PK_proyecto',  $('input:hidden[name="PK_proyecto"]').val());
-                    formData.append('PK_estudiante1',  $('input:hidden[name="PK_estudiante1"]').val());
-                    formData.append('PK_estudiante2',  $('input:hidden[name="PK_estudiante2"]').val());
+                    
+                    if($('input:hidden[name="PK_estudiante1"]').length > 0)
+                        formData.append('PK_estudiante1', $('input:hidden[name="PK_estudiante1"]').val());
+                    else 
+                        formData.append('PK_estudiante1',"");
+                    
+                    if($('input:hidden[name="PK_estudiante2"]').length > 0)
+                        formData.append('PK_estudiante2', $('input:hidden[name="PK_estudiante2"]').val());
+                    else 
+                        formData.append('PK_estudiante2',"");
+                    
                     formData.append('title', $('#title').val());
                     formData.append('estudiante1', $('select[name="estudiante1"]').val());
                     formData.append('estudiante2', $('select[name="estudiante2"]').val());
@@ -314,10 +323,7 @@
                     }else{
                         formData.append('Min', FileReq.files[0]);    
                     };
-                    
-                    
-                    
-                    
+                         
                     var FileReq =  document.getElementById("Requerimientos");
                     if ($('#Requerimientos').get(0).files.length === 0) {
                         formData.append('Requerimientos', "Vacio");  

@@ -315,7 +315,7 @@ jQuery(document).ready(function () {
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('concepto', $('input[name="concepto"]').val());
+                    formData.append('concepto', $('select[name="concepto"]').val());
                     formData.append('user', $('input[name="user"]').val());
                     formData.append('proyecto', $('input[name="PK_anteproyecto"]').val());
 

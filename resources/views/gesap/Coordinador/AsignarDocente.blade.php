@@ -181,11 +181,26 @@ jQuery(document).ready(function() {
 
                     var formData = new FormData();
                     formData.append('PK_anteproyecto', $('input:hidden[name="PK_anteproyecto"]').val());
-                    formData.append('PK_director', $('input:hidden[name="PK_director"]').val());
+                    
+                    if($('input:hidden[name="PK_director"]').length > 0)
+                        formData.append('PK_director', $('input:hidden[name="PK_director"]').val());
+                    else 
+                        formData.append('PK_director',"");
+                    
                     formData.append('director', $('select[name="director"]').val());
-                    formData.append('PK_jurado1', $('input:hidden[name="PK_jurado1"]').val());
+                    
+                    if($('input:hidden[name="PK_jurado1"]').length > 0)
+                        formData.append('PK_jurado1', $('input:hidden[name="PK_jurado1"]').val());
+                    else 
+                        formData.append('PK_jurado1',"");
+                    
                     formData.append('jurado1', $('select[name="jurado1"]').val());
-                    formData.append('PK_jurado2', $('input:hidden[name="PK_jurado2"]').val());
+                    
+                    
+                    if($('input:hidden[name="PK_jurado2"]').length > 0)
+                        formData.append('PK_jurado2', $('input:hidden[name="PK_jurado2"]').val());
+                    else 
+                        formData.append('PK_jurado2',"");
                     formData.append('jurado2', $('select[name="jurado2"]').val());
 
                     $.ajax({

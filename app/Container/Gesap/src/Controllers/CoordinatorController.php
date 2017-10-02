@@ -29,16 +29,25 @@ use App\Container\Users\Src\User;
 
 class CoordinatorController extends Controller
 {
+    use traits\traitsGesap;
     
     private $path='gesap.Coordinador.';
     
-    
-    /*TABLA DE ANTEPROYECTOS*/
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view($this->path.'AnteproyectoList');
     } 
     
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index_ajax(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -54,7 +63,11 @@ class CoordinatorController extends Controller
         }
     } 
     
-    /*FORMULARIO DE CREACION DE ANTEPROYECTOS*/
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create(Request $request)
     {    
        if($request->ajax() && $request->isMethod('GET'))
@@ -77,6 +90,12 @@ class CoordinatorController extends Controller
         }
     }
   
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
@@ -137,57 +156,13 @@ class CoordinatorController extends Controller
             );
         }
     }
-  
-    public function indexPDF()
-    {
-        $result="NO ASIGNADO";
-        $anteproyectos = 
-            DB::table('gesap.TBL_Anteproyecto AS A')
-                ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->select('A.*',
-                    'R.RDCN_Min',
-                    'R.RDCN_Requerimientos',
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
-                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 1").'),"'.$result.'")AS Jurado1'), 
-                    DB::raw('('.$this->Encargados("ID","Jurado 1").')AS Jurado1Cedula'),      
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 2").'),"'.$result.'")AS Jurado2'), 
-                    DB::raw('('.$this->Encargados("ID","Jurado 2").')AS Jurado2Cedula'), 
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
-                );
-            $proyectos=DB::select($this->getSql($anteproyectos));
-        
-        return view($this->path.'pdf.AnteproyectosPDF',compact('proyectos'));
-    }
-    
-    public function createPDF()
-    {
-        $result="NO ASIGNADO";
-        $anteproyectos = 
-            DB::table('gesap.TBL_Anteproyecto AS A')
-                ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->select('A.*',
-                    'R.RDCN_Min',
-                    'R.RDCN_Requerimientos',
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
-                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
-                );
-        $proyectos=DB::select($this->getSql($anteproyectos));
-        
-        return SnappyPdf::loadView($this->path.'pdf.AnteproyectosPDF',compact('proyectos'))->download('ReporteAnteproyectosGesap.pdf');
-    }
      
-    public function show($id)
-    {}
-    
-    /*MODIFICAR ANTEPROYECTOS*/
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id,Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -201,20 +176,9 @@ class CoordinatorController extends Controller
                 ->pluck('name','id')
                 ->toArray();
             
-            $anteproyecto=DB::table('gesap.tbl_anteproyecto')
-                ->select('*')
-                ->join('gesap.TBL_Radicacion','FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008')
-                ->where('PK_NPRY_idMinr008','=',$id)
-                ->get();
+            $anteproyecto=Anteproyecto::Project($id)->get();
                      
-            $estudiante12=DB::table('gesap.tbl_encargados')
-                ->join('developer.users','FK_developer_user_id','=','users.id')
-                ->join('gesap.tbl_anteproyecto',function ($join) use ($id)
-                {    
-                    $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');    
-                    $join->where('PK_NPRY_idMinr008','=',$id);            
-                })
-                ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' )
+            $estudiante12=Encargados::Search($id)
                 ->where(function($query)
                 {
                     $query->where('NCRD_Cargo','ESTUDIANTE 1')  ;
@@ -233,7 +197,14 @@ class CoordinatorController extends Controller
         }
     }
     
-    public function updateMin(Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -260,7 +231,7 @@ class CoordinatorController extends Controller
         $radicacion->save();
             
           
-        if(isset($request['PK_estudiante1']))
+        if($request['PK_estudiante1']!="")
         {
             $estudiante1 = Encargados::findOrFail($request['PK_estudiante1']);
             if($request['estudiante1']!=0)
@@ -284,7 +255,7 @@ class CoordinatorController extends Controller
             }
         }
             
-        if(isset($request['PK_estudiante2']))
+        if($request['PK_estudiante2']!="")
         {
             $estudiante2 = Encargados::findOrFail($request['PK_estudiante2']);
             if($request['estudiante2']!=0)
@@ -322,9 +293,12 @@ class CoordinatorController extends Controller
         }
     }
     
-    
-    
-    /*BORRAR ANTEPROYECTO*/
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id,Request $request)
     {
         if($request->ajax() && $request->isMethod('DELETE')){
@@ -345,8 +319,6 @@ class CoordinatorController extends Controller
     }
     
     
-    
-    
     /*ASIGNACION DE DOCENTES*/
     public function assign($id,Request $request)
     {   
@@ -365,13 +337,7 @@ class CoordinatorController extends Controller
                 ->pluck('name','id')
                 ->toArray();
         
-            $encargados=Encargados::join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                ->join('gesap.tbl_anteproyecto',function ($join)use($id) 
-                {
-                    $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');            
-                    $join->where('gesap.tbl_anteproyecto.PK_NPRY_idMinr008','=',$id);            
-                })
-                ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' )
+            $encargados=Encargados::Search($id)
                 ->where(function($query)
                 {
                     $query->where('NCRD_Cargo','DIRECTOR')  ;
@@ -395,7 +361,7 @@ class CoordinatorController extends Controller
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
-            if(isset($request['PK_director']))
+            if($request['PK_director']!="")
             {
                 $director = Encargados::findOrFail($request['PK_director']);
                 $director->FK_developer_user_id=$request['director'];
@@ -413,7 +379,7 @@ class CoordinatorController extends Controller
                 }
             }
             
-            if(isset($request['PK_jurado1']))
+            if($request['PK_jurado1']!="")
             {
                 $jurado1 = Encargados::findOrFail($request['PK_jurado1']);
                 $jurado1->FK_developer_user_id=$request['jurado1'];
@@ -431,7 +397,7 @@ class CoordinatorController extends Controller
                 }
             }
             
-            if(isset($request['PK_jurado2']))
+            if($request['PK_jurado2']!="")
             {
                 $jurado1 = Encargados::findOrFail($request['PK_jurado2']);
                 $jurado1->FK_developer_user_id=$request['jurado2'];
@@ -462,62 +428,24 @@ class CoordinatorController extends Controller
             );
         }
     }
-    
-    public function getSql($query)
+  
+    public function indexPDF()
     {
-        $sql = $query->toSql();
-        foreach($query->getBindings() as $binding)
-        {
-            $value = is_numeric($binding) ? $binding : "'".$binding."'";
-            $sql = preg_replace('/\?/', $value, $sql, 1);
-        }
-        return $sql;
+        $proyectos=DB::select($this->getSql(Anteproyecto::from('TBL_Anteproyecto AS A')->Data()));
+        
+        return view($this->path.'pdf.AnteproyectosPDF',compact('proyectos'));
     }
     
-    public function Encargados($select,$cargo)
+    public function createPDF()
     {
-        if($select=="Nombre")
-        {
-            $Consulta=DB::table('gesap.tbl_encargados')->
-                join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                ->where('NCRD_Cargo',$cargo)
-                ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->select(DB::raw('concat(name," ",lastname)'));
-            return $this->getSql($Consulta);
-        }
-        if($select=="ID")
-        {
-            $Consulta=DB::table('gesap.tbl_encargados')
-                ->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
-                ->where('NCRD_Cargo',$cargo)
-                ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->select('FK_developer_user_id');
-            return $this->getSql($Consulta);
-        }
+        $proyectos=DB::select($this->getSql(Anteproyecto::from('TBL_Anteproyecto AS A')->Data()));
         
+        return SnappyPdf::loadView($this->path.'pdf.AnteproyectosPDF',compact('proyectos'))->download('ReporteAnteproyectosGesap.pdf');
     }
     
     public function projectList()
     {
-        $result="NO ASIGNADO";
-        $anteproyectos = 
-            DB::table('gesap.TBL_Anteproyecto AS A')
-                ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                ->select('A.*',
-                    'R.RDCN_Min',
-                    'R.RDCN_Requerimientos',
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
-                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 1").'),"'.$result.'")AS Jurado1'), 
-                    DB::raw('('.$this->Encargados("ID","Jurado 1").')AS Jurado1Cedula'),      
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 2").'),"'.$result.'")AS Jurado2'), 
-                    DB::raw('('.$this->Encargados("ID","Jurado 2").')AS Jurado2Cedula'), 
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
-                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
-                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
-                );
-
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->Data();
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
     
     }

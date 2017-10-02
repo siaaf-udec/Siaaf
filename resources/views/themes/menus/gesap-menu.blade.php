@@ -17,14 +17,6 @@
                 </a>
             </li>
         @endpermission
-        @permission('Create_Project_Gesap')
-            <li class="nav-item {{ active(['min.create'], 'start active open') }}">
-                <a class="nav-link nav-toggle" href="{{ route('min.create') }}">
-                    <i class="fa fa-user"></i>
-                    <span class="title">Registrar Anteproyecto</span>
-                </a>
-            </li>
-        @endpermission
         @permission('Director_List_Gesap')
             <li class="nav-item">
                 <a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
@@ -58,7 +50,7 @@
                         <i class="fa fa-book">
                         </i>
                         <span class="title">
-                            Actividadess
+                            Actividades
                         </span>
                     </a>
                 </li> -->

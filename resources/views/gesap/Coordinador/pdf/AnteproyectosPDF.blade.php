@@ -24,6 +24,14 @@
     <meta name="msapplication-TileImage" content="{{ asset('assets/favicons') }}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     {{-- ENDS FAVICONS --}}
+    <style>
+
+thead{display: table-header-group;}
+tfoot {display: table-row-group;}
+tr {page-break-inside: avoid;}
+</style>
+    
+    
 </head>
 <body>
 <header class="clearfix">
@@ -97,8 +105,10 @@
         <div class="notice">Se hará un recargo de 1.5% adicional después de 30 días.</div>
     </div>
 </main>
-<footer>
-    Esta factura fue creada desde un computador y no es válida sin una firma y sello.
-</footer>
 </body>
+
+
+     
+
+
 </html>
