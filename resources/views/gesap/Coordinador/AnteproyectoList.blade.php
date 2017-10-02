@@ -7,6 +7,7 @@
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 
         <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -76,7 +77,7 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
         <!-- Select Plugins -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -112,6 +113,7 @@
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function () 
         {
@@ -197,7 +199,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><form action="#" method="POST" style="display:initial;" id="delete-anteproyect"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>',
+                        defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                     }
                 ],
                 buttons: [
@@ -259,23 +261,62 @@
                    $(".content-ajax").load(route);
                 });
             });
-    
-            table.on('submit', '#delete-anteproyect', function (e) 
-            {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-                $.ajax(
-                {
-                    url: '/gesap/min/'+O.PK_NPRY_idMinr008,
-                    type: $(this).attr("method"),
-                    data:$(this).serialize(),
-                    success: function() 
-                    {
-                        table.ajax.reload();              
+            
+            table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var O = table.row($tr).data();
+            var route = 'min/'+O.PK_NPRY_idMinr008;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el Anteproyecto seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                        swal.close();
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun empleado", "error");
                     }
                 });
-            });
+
+        });
+            
+            
+            
+            
+            
+            
+            
         });
     </script>
 @endpush

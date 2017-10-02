@@ -185,10 +185,11 @@
                                     </a>
                                     {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
                     </div>
-        {!! Form::close() !!}
+       
     </div>
                     </div>
            </div>
+        {!! Form::close() !!}
     </div>
 
 @endcomponent

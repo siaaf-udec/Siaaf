@@ -33,7 +33,10 @@ Route::get('min/ajax', [
 
 Route::resource('min', $controller.'CoordinatorController');
 
-
+Route::post('min/update',[ 
+        'uses' => $controller.'CoordinatorController@updateMin', 
+        'as' => 'min.proyecto.update' 
+    ]); 
 
 
 

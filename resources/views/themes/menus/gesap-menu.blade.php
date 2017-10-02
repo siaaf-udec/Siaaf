@@ -41,16 +41,27 @@
                 </a>
             </li>
         @endpermission
-        @permission('Update_Final_Project_Gesap')
+        @permission('See_Observations_Gesap')
                 <li class="nav-item">
-                    <a class="nav-link nav-toggle" href="javascript:;">
+                    <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.studentList') }}">
+                        <i class="fa fa-book">
+                        </i>
+                        <span class="title">
+                            Proyectos
+                        </span>
+                    </a>
+                </li>
+        @endpermission
+        @permission('Update_Final_Project_Gesap')
+                <!--<li class="nav-item">
+                    <a class="nav-link nav-toggle" href="anteproyecto.index.studentList">
                         <i class="fa fa-book">
                         </i>
                         <span class="title">
                             Actividadess
                         </span>
                     </a>
-                </li>
+                </li> -->
         @endpermission
     </ul>
 </li>

@@ -44,10 +44,10 @@ class StudentController extends Controller
     
     public function index()
     {
-        return redirect()->route('anteproyecto.index.juryList');
+        return redirect()->route('anteproyecto.index.studentList');
     }
 
-    public function proyecto()//PONER AJAX
+    public function proyecto()
     {
         return view($this->path.'ProyectList');
     }

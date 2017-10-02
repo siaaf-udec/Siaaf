@@ -1,23 +1,4 @@
-@extends('material.layouts.dashboard')
-
-@push('styles')
-    <!-- Datatables Styles -->
-    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" /><link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
-@endpush
-
-@section('title', '| Dashboard')
-
-@section('page-title', 'Observaciones')
-
-@section('page-description', 'Detalles de Observaciones')
-@section('content')
-
-    
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
         <div class="row">
         {!! Field::hidden('id', $id) !!}
         <div class="col-md-12">
@@ -36,19 +17,9 @@
     </div>
     
     @endcomponent
-@endsection
 
 
 
-@push('plugins')
-    <!-- Datatables Scripts -->
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-@endpush
-
-@push('functions')
 <script>
 jQuery(document).ready(function () {
     var table, url;
@@ -121,4 +92,3 @@ jQuery(document).ready(function () {
     
 });
 </script>
-@endpush

@@ -255,15 +255,23 @@ class EvaluatorController extends Controller
     public function store(Request $request)
     {}
 
-    public function show($id)//PONER AJAX
-    {
-        return view($this->path.'ShowObservation',compact('id'));
+    public function show($id,Request $request)
+    {   
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            return view($this->path.'ShowObservation',compact('id'));
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
-    public function edit($id)//PONER AJAX
-    {
-        return view($this->path.'Observaciones');
-    }
+    public function edit($id)
+    {}
     
     public function update(Request $request, $id)
     {}

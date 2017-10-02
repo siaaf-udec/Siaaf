@@ -181,9 +181,6 @@ class CoordinatorController extends Controller
                 );
         $proyectos=DB::select($this->getSql($anteproyectos));
         
-        
-        
-        
         return SnappyPdf::loadView($this->path.'pdf.AnteproyectosPDF',compact('proyectos'))->download('ReporteAnteproyectosGesap.pdf');
     }
      
@@ -194,7 +191,8 @@ class CoordinatorController extends Controller
     public function edit($id,Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
-        {
+       {
+
             $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
                 ->whereHas('roles', function($e){
                     $e->where('name', 'Student_Gesap');
@@ -203,13 +201,15 @@ class CoordinatorController extends Controller
                 ->pluck('name','id')
                 ->toArray();
             
-            $anteproyecto=Anteproyecto::select('*')
-                ->join('TBL_Radicacion','FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008')
+            $anteproyecto=DB::table('gesap.tbl_anteproyecto')
+                ->select('*')
+                ->join('gesap.TBL_Radicacion','FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008')
                 ->where('PK_NPRY_idMinr008','=',$id)
                 ->get();
                      
-            $estudiante12=Encargados::join('developer.users','FK_developer_user_id','=','users.id')
-                ->join('tbl_anteproyecto',function ($join) use ($id)
+            $estudiante12=DB::table('gesap.tbl_encargados')
+                ->join('developer.users','FK_developer_user_id','=','users.id')
+                ->join('gesap.tbl_anteproyecto',function ($join) use ($id)
                 {    
                     $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');    
                     $join->where('PK_NPRY_idMinr008','=',$id);            
@@ -223,7 +223,7 @@ class CoordinatorController extends Controller
                 ->get();
             
             return view($this->path.'ModificarMin', compact("anteproyecto",'estudiante12',"estudiantes"));
-        }
+           }
         else
         {
             return AjaxResponse::fail(
@@ -233,12 +233,12 @@ class CoordinatorController extends Controller
         }
     }
     
-    public function update(Request $request, $id)//PONER AJAX
+    public function updateMin(Request $request)
     {
-        try
+        if($request->ajax() && $request->isMethod('POST'))
         {
                 
-        $anteproyecto = Anteproyecto::findOrFail($id);
+        $anteproyecto = Anteproyecto::findOrFail($request['PK_proyecto']);
         $anteproyecto->NPRY_Titulo=$request['title'];
         $anteproyecto->NPRY_Keywords=$request['Keywords'];
         $anteproyecto->NPRY_Duracion=$request['duracion'];
@@ -247,13 +247,15 @@ class CoordinatorController extends Controller
         $anteproyecto->save();
             
         $radicacion= Radicacion::findOrFail($request['PK_radicacion']);
-        if(!empty($request['Min']))
+        if($request['Min']!="Vacio")
         {
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
+            \Storage::disk('local')->put($request['Min']->getClientOriginalName(),  \File::get($request->file('Min')));
         }
-        if(!empty($request['Requerimientos']))
+        if($request['Requerimientos']!="Vacio")
         {
             $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();
+            \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(), \File::get($request->file('Requerimientos')));
         }
         $radicacion->save();
             
@@ -275,7 +277,7 @@ class CoordinatorController extends Controller
             if($request['estudiante1']!=0)
             {
                 Encargados::create([
-                    'FK_TBL_Anteproyecto_id'    =>$id ,
+                    'FK_TBL_Anteproyecto_id'    =>$request['PK_proyecto'] ,
                     'FK_developer_user_id'      =>$request['estudiante1'],    
                     'NCRD_Cargo'                =>"Estudiante 1"
                 ]);
@@ -299,36 +301,52 @@ class CoordinatorController extends Controller
             if($request['estudiante2']!=0)
             {
                 Encargados::create([
-                'FK_TBL_Anteproyecto_id'=>$id ,
+                'FK_TBL_Anteproyecto_id'=>$request['PK_proyecto'] ,
                 'FK_developer_user_id'    =>$request['estudiante2'],    
                 'NCRD_Cargo'            =>"Estudiante 2"
                 ]);
             }
         }
 
-        
-        return redirect()->route('min.index');
-    }
-    catch(Exception $e)
-    {
-        return "Fatal Error =".$e->getMessage();
-    }
-    }
-    /*BORRAR ANTEPROYECTO*/
-    public function destroy($id)//PONER AJAX
-    {
-        try
+      return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        else
         {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+    
+    
+    
+    /*BORRAR ANTEPROYECTO*/
+    public function destroy($id,Request $request)
+    {
+        if($request->ajax() && $request->isMethod('DELETE')){
+ 
             $anteproyecto = Anteproyecto::findOrFail($id);
             $anteproyecto->delete();
-            return redirect()->route('min.index');
-        }
-        catch(Exception $e)
-        {
-            return "Fatal Error =".$e->getMessage();;
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
         
     }
+    
+    
+    
+    
     /*ASIGNACION DE DOCENTES*/
     public function assign($id,Request $request)
     {   
@@ -373,9 +391,9 @@ class CoordinatorController extends Controller
         }
     }
     
-    public function saveAssign(Request $request)//PONER AJAX
+    public function saveAssign(Request $request)
     {
-        try
+        if($request->ajax() && $request->isMethod('POST'))
         {
             if(isset($request['PK_director']))
             {
@@ -431,11 +449,17 @@ class CoordinatorController extends Controller
                 }
             }
               
-            return redirect()->route('min.index');
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
         }
-        catch(Exception $e)
+        else
         {
-            return "Fatal Error =".$e->getMessage();;
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
     }
     
@@ -450,7 +474,8 @@ class CoordinatorController extends Controller
         return $sql;
     }
     
-    public function Encargados($select,$cargo){
+    public function Encargados($select,$cargo)
+    {
         if($select=="Nombre")
         {
             $Consulta=DB::table('gesap.tbl_encargados')->
@@ -462,7 +487,8 @@ class CoordinatorController extends Controller
         }
         if($select=="ID")
         {
-            $Consulta=DB::table('gesap.tbl_encargados')->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
+            $Consulta=DB::table('gesap.tbl_encargados')
+                ->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
                 ->where('NCRD_Cargo',$cargo)
                 ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
                 ->select('FK_developer_user_id');
