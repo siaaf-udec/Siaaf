@@ -2,12 +2,23 @@
 
 namespace App\Container\gesap\src\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+
+use Barryvdh\Snappy\Facades\SnappyPdf;
+use Exception;
+use Validator;
+use Yajra\DataTables\DataTables;
+
+use Illuminate\Http\File;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\Src\Facades\UploadFile;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
@@ -31,57 +42,70 @@ class StudentController extends Controller
         return $sql;
     }
     
-    public function index(){
+    public function index()
+    {
         return redirect()->route('anteproyecto.index.juryList');
     }
 
-    public function proyecto(){
+    public function proyecto()//PONER AJAX
+    {
         return view($this->path.'ProyectList');
     }
     
-    public function create(){
+    public function create()
+    {
         //
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         //
     }
 
-    public function show($id){
+    public function show($id)
+    {
         //
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
     //
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         //
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         //
     }
 
-        public function Encargados($select,$cargo){
-        if($select="Nombre")
+    public function Encargados($select,$cargo)
+    {
+        if($select=="Nombre")
         {
-            $Consulta=Encargados::join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
+            $Consulta=DB::table('gesap.tbl_encargados')->
+                join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
                 ->where('NCRD_Cargo',$cargo)
-                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
                 ->select(DB::raw('concat(name," ",lastname)'));
+            return $this->getSql($Consulta);
         }
-        if($select="ID")
+        if($select=="ID")
         {
-            $Consulta=Encargados::join('developer.users','tbl_encargados.FK_developer_user_id','=','developer.users.id')
+            $Consulta=DB::table('gesap.tbl_encargados')->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
                 ->where('NCRD_Cargo',$cargo)
-                ->where('tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
                 ->select('FK_developer_user_id');
+            return $this->getSql($Consulta);
         }
-        return $this->getSql($Consulta);
+        
     }
     
-    public function studentList(Request $request){
+    public function studentList(Request $request)
+    {
         $result="NO ASIGNADO";
         $anteproyectos = 
             DB::table('gesap.TBL_Anteproyecto AS A')
@@ -109,7 +133,5 @@ class StudentController extends Controller
                 );
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
    }
-    
-    
     
 }

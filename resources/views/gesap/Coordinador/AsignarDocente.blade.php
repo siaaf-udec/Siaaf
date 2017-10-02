@@ -1,30 +1,12 @@
-@extends('material.layouts.dashboard')
 
-@push('styles')
-    <!-- Select Styles -->
-    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Anteproyectos')
-
-@section('page-title', 'Asignar Docentes')
-
-@section('page-description', 'Asignacion de directores y jurados')
-
-@section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-users', 'title' => 'Asignar'])
-        <div class="row">
+<div class="row">
             <div class="col-md-6" style="z-index: 1;">
                 <div class="btn-group">
-                    <a href="{{ route('min.index') }}">
-                        <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
-                            <i class="fa fa-list"></i>Listar
-                        </button>
-                    </a> 
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
                 </div>
             </div>
+    <br>
             @foreach ($anteproyectos as $anteproyecto)
                 {!! Form::open(['route' => 'anteproyecto.guardardocente', 'method' => 'post', 'novalidate','class'=>'form-horizontal','id'=>'submit_form']) !!}    
                     {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}    
@@ -152,25 +134,9 @@
             @endforeach
         </div>
     @endcomponent
-@endsection
-
-@push('plugins')
-    <!-- Select Plugins -->
-    <script src="{{asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <!-- Validation Plugins -->
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <!-- Wizard Plugins -->
-    <script src="{{asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/pages/scripts/form-wizard.min.js') }}" type="text/javascript"></script>
-
-
-@endpush
 
 @push('functions')
-
+<script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
 </script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
@@ -411,11 +377,14 @@ jQuery(document).ready(function() {
     $('.portlet-sortable').attr("id","form_wizard_1");
     FormWizard.init();
     ComponentsSelect2.init();
+    
+            $('.button-back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('min.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });    
 });
     
     
 
 </script>
-
-    </script>
-@endpush

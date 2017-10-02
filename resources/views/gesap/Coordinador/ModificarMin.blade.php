@@ -1,30 +1,8 @@
-@extends('material.layouts.dashboard')
-
-@push('styles')
-    <!-- Select Styles -->
-    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Anteproyectos')
-
-
-@section('page-title', 'Modificar')
-
-@section('page-description', 'Modificar anteproyectos')
-
-@section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-edit', 'title' => 'Modificacion'])
         <div class="row">
             <div class="col-md-6">
                 <div class="btn-group">
-                    <a href="{{ route('min.index') }}">
-                        <button id="sample_editable_1_new" class="btn green" style="margin-bottom:-8px;"> 
-                            <i class="fa fa-list"></i>Listar
-                        </button>
-                    </a> 
+               <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
                 </div>
             </div>
             @foreach ($anteproyecto as $anteproyecto)
@@ -138,24 +116,7 @@
                 {!! Form::close() !!}
             @endforeach
     @endcomponent
-@endsection
-
-
-
-@push('plugins')
-    <!-- Date Plugins -->
-    <script src="{{asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <!-- Select Plugins -->
-    <script src="{{asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-    <!-- Validation Plugins -->
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-@endpush
-
-@push('functions')
+            
 <script type="text/javascript">
 var ComponentsDateTimePickers = function () {
             var handleDatePickers = function () {
@@ -293,8 +254,15 @@ var FormValidationMd = function() {
             FormValidationMd.init();
             ComponentsSelect2.init();
             ComponentsDateTimePickers.init();
+            
+            
+            
+                    $('.button-back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('min.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });    
+            
         });
 
 </script>
-
-@endpush

@@ -153,7 +153,9 @@ table = table.DataTable();
             url: '',
             dataType: "html",
         }).done(function (data) {
-            window.location.href = '/gesap/evaluar/'+O.PK_NPRY_idMinr008;
+            route = '/gesap/evaluar/'+O.PK_NPRY_idMinr008;
+            window.location.href = route;
+            $(".content-ajax").load(route);
         });
     });
     

@@ -10,7 +10,33 @@ $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 /*COORDINADOR
 */
 //Route::group(['prefix'=>'Coordinador','middleware'=>['role:Coordinator_Gesap']],function()use($controller){
-    Route::resource('min', $controller.'CoordinatorController');
+//Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']],function()use($controller){
+    
+    Route::get('estudiante', [
+    'as' => 'anteproyecto.studentList',
+    'uses' => $controller.'StudentController@studentList'
+]);
+
+Route::get('evaluar/ver/proyecto', [
+    'as' => 'anteproyecto.index.studentList',
+    'uses' => $controller.'StudentController@proyecto'
+]);
+
+//});
+
+
+Route::get('min/ajax', [
+    'as' => 'min.index.ajax',
+    'uses' => $controller.'CoordinatorController@index_ajax'
+]);
+
+
+Route::resource('min', $controller.'CoordinatorController');
+
+
+
+
+
     
 Route::get('anteproyecto', [
     'as' => 'anteproyecto.list',
@@ -86,15 +112,6 @@ Route::post('anteproyecto/concepto/', [
 
 /*ESTUDIANTE*/
 
-Route::get('estudiante', [
-    'as' => 'anteproyecto.studentList',
-    'uses' => $controller.'StudentController@studentList'
-]);
-
-Route::get('evaluar/ver/proyecto', [
-    'as' => 'anteproyecto.index.studentList',
-    'uses' => $controller.'StudentController@proyecto'
-]);
 
 
 
@@ -106,3 +123,6 @@ Route::get('download/{archivo}', function ($archivo) {
        return response()->download($url);
      abort(404);
 });
+
+Route::get('ReportAnteproyect',  $controller.'CoordinatorController@indexPDF')->name('ReportAnteproyect'); 
+Route::get('downloadPDF',  $controller.'CoordinatorController@createPDF')->name('ReporteAnteproyectosGesap.pdf');

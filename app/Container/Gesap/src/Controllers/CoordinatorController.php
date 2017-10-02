@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
-use Validator;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
-
+use Validator;
 use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\File;
@@ -39,24 +39,48 @@ class CoordinatorController extends Controller
         return view($this->path.'AnteproyectoList');
     } 
     
+    public function index_ajax(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            return view($this->path.'AnteproyectoList-ajax');
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    } 
+    
     /*FORMULARIO DE CREACION DE ANTEPROYECTOS*/
-    public function create()
+    public function create(Request $request)
     {    
-        $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
-            ->whereHas('roles', function($e){
-                $e->where('name', 'Student_Gesap');
-            })
-            ->orderBy('name', 'asc')
-            ->pluck('name','id')
-            ->toArray();
-        
-        return view($this->path.'RegistroMin',compact('estudiantes'));
+       if($request->ajax() && $request->isMethod('GET'))
+       {
+            $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+                ->whereHas('roles', function($e){
+                    $e->where('name', 'Student_Gesap');
+                })
+                ->orderBy('name', 'asc')
+                ->pluck('name','id')
+                ->toArray();
+            return view($this->path.'RegistroMin',compact('estudiantes'));
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
-    
-    
+  
     public function store(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if($request->ajax() && $request->isMethod('POST'))
+        {
             $anteproyecto= new Anteproyecto();
             $anteproyecto->NPRY_Titulo=$request['title'];
             $anteproyecto->NPRY_Keywords=$request['Keywords'];
@@ -70,15 +94,16 @@ class CoordinatorController extends Controller
             $radicacion= new Radicacion();
             $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
             \Storage::disk('local')->put($request['Min']->getClientOriginalName(),  \File::get($request->file('Min')));
-            if($request['Requerimientos']=="Vacio"){
+            if($request['Requerimientos']=="Vacio")
+            {
                 $radicacion->RDCN_Requerimientos="NO FILE";
-            }else{
-                $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();    
-                
-                \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(),  \File::get($request->file('Requerimientos')));
+            }
+            else
+            {
+                $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();        
+                \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(), \File::get($request->file('Requerimientos')));
             }
             $radicacion->FK_TBL_Anteproyecto_id=$idanteproyecto;
-            
             
             $radicacion->save();
             
@@ -91,17 +116,116 @@ class CoordinatorController extends Controller
             ]);
         
             if($request['estudiante2']!=0)
+            {
                 Encargados::create([
                     'FK_TBL_Anteproyecto_id'    =>$idanteproyecto ,
                     'FK_developer_user_id'      =>$request['estudiante2'],    
                     'NCRD_Cargo'                =>"Estudiante 2"
                 ]);
-            
-             return AjaxResponse::success(
+                
+            }
+            return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+  
+    public function indexPDF()
+    {
+        $result="NO ASIGNADO";
+        $anteproyectos = 
+            DB::table('gesap.TBL_Anteproyecto AS A')
+                ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->select('A.*',
+                    'R.RDCN_Min',
+                    'R.RDCN_Requerimientos',
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
+                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 1").'),"'.$result.'")AS Jurado1'), 
+                    DB::raw('('.$this->Encargados("ID","Jurado 1").')AS Jurado1Cedula'),      
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Jurado 2").'),"'.$result.'")AS Jurado2'), 
+                    DB::raw('('.$this->Encargados("ID","Jurado 2").')AS Jurado2Cedula'), 
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
+                );
+            $proyectos=DB::select($this->getSql($anteproyectos));
+        
+        return view($this->path.'pdf.AnteproyectosPDF',compact('proyectos'));
+    }
+    
+    public function createPDF()
+    {
+        $result="NO ASIGNADO";
+        $anteproyectos = 
+            DB::table('gesap.TBL_Anteproyecto AS A')
+                ->join('gesap.TBL_Radicacion AS R',DB::raw('R.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
+                ->select('A.*',
+                    'R.RDCN_Min',
+                    'R.RDCN_Requerimientos',
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Director").'),"'.$result.'")AS Director'),
+                    DB::raw('('.$this->Encargados("ID","Director").')AS DirectorCedula'),     
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 1").'),"'.$result.'")AS estudiante1'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 1").')AS estudiante1Cedula'), 
+                    DB::raw('IFNULL(('.$this->Encargados("Nombre","Estudiante 2").'),"'.$result.'")AS estudiante2'),  
+                    DB::raw('('.$this->Encargados("ID","Estudiante 2").')AS estudiante2Cedula')
+                );
+        $proyectos=DB::select($this->getSql($anteproyectos));
+        
+        
+        
+        
+        return SnappyPdf::loadView($this->path.'pdf.AnteproyectosPDF',compact('proyectos'))->download('ReporteAnteproyectosGesap.pdf');
+    }
+     
+    public function show($id)
+    {}
+    
+    /*MODIFICAR ANTEPROYECTOS*/
+    public function edit($id,Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+                ->whereHas('roles', function($e){
+                    $e->where('name', 'Student_Gesap');
+                })
+                ->orderBy('name', 'asc')
+                ->pluck('name','id')
+                ->toArray();
+            
+            $anteproyecto=Anteproyecto::select('*')
+                ->join('TBL_Radicacion','FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008')
+                ->where('PK_NPRY_idMinr008','=',$id)
+                ->get();
+                     
+            $estudiante12=Encargados::join('developer.users','FK_developer_user_id','=','users.id')
+                ->join('tbl_anteproyecto',function ($join) use ($id)
+                {    
+                    $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');    
+                    $join->where('PK_NPRY_idMinr008','=',$id);            
+                })
+                ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' )
+                ->where(function($query)
+                {
+                    $query->where('NCRD_Cargo','ESTUDIANTE 1')  ;
+                    $query->orwhere('NCRD_Cargo','ESTUDIANTE 2');
+                })
+                ->get();
+            
+            return view($this->path.'ModificarMin', compact("anteproyecto",'estudiante12',"estudiantes"));
+        }
+        else
+        {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -109,44 +233,7 @@ class CoordinatorController extends Controller
         }
     }
     
-    public function show($id)
-    {    
-    }
-    
-    /*MODIFICAR ANTEPROYECTOS*/
-    public function edit($id)
-    {
-        $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
-            ->whereHas('roles', function($e){
-                $e->where('name', 'Student_Gesap');
-            })
-            ->orderBy('name', 'asc')
-            ->pluck('name','id')
-            ->toArray();
-        
-        $anteproyecto=Anteproyecto::select('*')
-                      ->join('TBL_Radicacion','FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008')
-                      ->where('PK_NPRY_idMinr008','=',$id)
-                      ->get();
-                     
-        $estudiante12=Encargados::join('developer.users','FK_developer_user_id','=','users.id')
-                        ->join('tbl_anteproyecto',function ($join) use ($id)
-                        {    
-                            $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');    
-                            $join->where('PK_NPRY_idMinr008','=',$id);            
-                        })
-                        ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' )
-                        ->where(function($query)
-                        {
-                            $query->where('NCRD_Cargo','ESTUDIANTE 1')  ;
-                            $query->orwhere('NCRD_Cargo','ESTUDIANTE 2');
-                        })
-                        ->get();
-
-        return view($this->path.'ModificarMin', compact("anteproyecto",'estudiante12',"estudiantes"));
-    }
-    
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//PONER AJAX
     {
         try
         {
@@ -224,11 +311,11 @@ class CoordinatorController extends Controller
     }
     catch(Exception $e)
     {
-        return "Fatal Error =".$e->getMessage();;
+        return "Fatal Error =".$e->getMessage();
     }
     }
     /*BORRAR ANTEPROYECTO*/
-    public function destroy($id)
+    public function destroy($id)//PONER AJAX
     {
         try
         {
@@ -243,40 +330,50 @@ class CoordinatorController extends Controller
         
     }
     /*ASIGNACION DE DOCENTES*/
-    public function assign($id)
-    { 
-        $anteproyectos = Anteproyecto::select('PK_NPRY_idMinr008','NPRY_Titulo')
-                                        ->where('PK_NPRY_idMinr008','=',$id)
-                                        ->get();
+    public function assign($id,Request $request)
+    {   
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            $anteproyectos = Anteproyecto::select('PK_NPRY_idMinr008','NPRY_Titulo')
+                ->where('PK_NPRY_idMinr008','=',$id)
+                ->get();
         
-        $docentes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
-            ->whereHas('roles', function($e){
-                $e->where('name', 'Coordinator_Gesap');
-                $e->orwhere('name', '=', 'Evaluator_Gesap');
-            })
-            ->orderBy('name', 'asc')
-            ->pluck('name','id')
-            ->toArray();
+            $docentes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+                ->whereHas('roles', function($e){
+                    $e->where('name', 'Coordinator_Gesap');
+                    $e->orwhere('name', '=', 'Evaluator_Gesap');
+                })
+                ->orderBy('name', 'asc')
+                ->pluck('name','id')
+                ->toArray();
         
-        $encargados=Encargados::join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
+            $encargados=Encargados::join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
                 ->join('gesap.tbl_anteproyecto',function ($join)use($id) 
-                       {
+                {
                     $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');            
                     $join->where('gesap.tbl_anteproyecto.PK_NPRY_idMinr008','=',$id);            
                 })
                 ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' )
                 ->where(function($query)
-                        {
-                            $query->where('NCRD_Cargo','DIRECTOR')  ;
-                            $query->orwhere('NCRD_Cargo','JURADO 1');
-                            $query->orwhere('NCRD_Cargo','JURADO 2');
-                        })
+                {
+                    $query->where('NCRD_Cargo','DIRECTOR')  ;
+                    $query->orwhere('NCRD_Cargo','JURADO 1');
+                    $query->orwhere('NCRD_Cargo','JURADO 2');
+                })
                 ->get();
                 
-        return view($this->path.'AsignarDocente',compact('anteproyectos','docentes','encargados') );
+            return view($this->path.'AsignarDocente',compact('anteproyectos','docentes','encargados') );
+         }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     
-    public function saveAssign(Request $request)
+    public function saveAssign(Request $request)//PONER AJAX
     {
         try
         {
@@ -354,7 +451,7 @@ class CoordinatorController extends Controller
     }
     
     public function Encargados($select,$cargo){
-        if($select="Nombre")
+        if($select=="Nombre")
         {
             $Consulta=DB::table('gesap.tbl_encargados')->
                 join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
@@ -363,7 +460,7 @@ class CoordinatorController extends Controller
                 ->select(DB::raw('concat(name," ",lastname)'));
             return $this->getSql($Consulta);
         }
-        if($select="ID")
+        if($select=="ID")
         {
             $Consulta=DB::table('gesap.tbl_encargados')->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
                 ->where('NCRD_Cargo',$cargo)
