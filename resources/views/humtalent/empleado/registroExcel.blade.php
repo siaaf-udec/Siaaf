@@ -16,7 +16,8 @@
                         <br><strong>2.)</strong> La primer fila debe contener los nombres de cada columna.<br>
                         <br><strong>3.)</strong> No afecta si los nombres de las columnas estan en mayuscula o minuscula.<br>
                         <br><strong>4.)</strong> Los nombres de las columnas deben ser nombrados de la siguiente manera:<br>
-                        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombres</strong>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cedula</strong>
+                        <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombres</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apellidos</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Telefono</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Correo</strong>
@@ -34,7 +35,7 @@
                 </div>
             </div>
             <div class="col-md-5">
-                {!! Form::open (['id'=>'form_file','method'=>'POST', 'route'=> ['talento.humano.empleado.importUsers'], 'files' => true]) !!}
+                {!! Form::open (['id'=>'form_file', 'url'=> ['/forms'], 'files' => true]) !!}
                 <br><br><br>
                 <div class="fileinput fileinput-new" data-provides="fileinput"  >
                     <div class="input-group input-large" >
@@ -45,7 +46,7 @@
                         <span class="input-group-addon btn default btn-file">
                                                                 <span class="fileinput-new">seleccionar </span>
                                                                 <span class="fileinput-exists"> Cambiar </span>
-                                                                <input type="file"  name="import_file" > </span>
+                                                                <input type="file"  name="import_file" id="import_file"> </span>
                         <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
                     </div>
                 </div>
@@ -60,85 +61,74 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
+
 <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
-<script>
-        @if(Session::has('message'))
-        var type = "{{Session::get('alert-type','info')}}"
-        switch (type) {
-            case 'success':
-                toastr.options.closeButton = true;
-                toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
-                break;
-            case 'info':
-                toastr.options.closeButton = true;
-                toastr.info("{{Session::get('message')}}", 'Registro completo:');
-                break;
-        }
-    @endif
-    var FormValidationMd = function() {
-            var handleValidation = function() {
-                var form1 = $('#form_file');
-                var error1 = $('.alert-danger', form1);
-                var success1 = $('.alert-success', form1);
-                form1.validate({
-                    errorElement: 'span',
-                    errorClass: 'help-block help-block-error',
-                    focusInvalid: true,
-                    ignore: "",
-                    rules: {
-                        import_file: {
-                            required: true,
-                            extension: "xls|csv|xlsx"
-                        }
-                    },
-                    invalidHandler: function(event, validator) {
-                        success1.hide();
-                        error1.show();
-                        toastr.options.closeButton = true;
-                        toastr.options.showDuration= 1000;
-                        toastr.options.hideDuration= 1000;
-                        toastr.error('Debe seleccionar un archivo con terminación .xls o .csv' ,'Registro fallido:')
-                        App.scrollTo(error1, -200);
-                    },
-                    errorPlacement: function(error, element) {
-                        if (element.is(':checkbox')) {
-                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                        } else if (element.is(':radio')) {
-                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                        } else {
-                        }
-                    },
-                    highlight: function(element) { // hightlight error inputs
-                        $(element)
-                            .closest('.form-group').addClass('has-error');
-                    },
-                    unhighlight: function(element) {
-                        $(element)
-                            .closest('.form-group').removeClass('has-error');
-                    },
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
 
-                    success: function(label) {
-                        label
-                            .closest('.form-group').removeClass('has-error');
-                    },
-                    submitHandler: function(form1) {
-                        success1.show();
-                        error1.hide();
-                        form1.submit();
-                    }
-                });
-            }
-            return {
-                init: function() {
-                    handleValidation();
-                }
-            };
-        }();
     jQuery(document).ready(function() {
-        FormValidationMd.init();
+
+        var createUsers = function () {
+            return {
+                init: function () {
+                    var route = '{{ route('talento.humano.empleado.importUsers') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    var File =  document.getElementById("import_file");
+                    formData.append('import_file', File.files[0]);
+
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
+                        },
+                        success: function (response, xhr, request) {
+                            console.log(response);
+                            if (request.status === 200 && xhr === 'success') {
+                                $('#form_file')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
+
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+        var form = $('#form_file');
+        var formRules = {
+            import_file: {required: true,
+                extension: "xls|csv|xlsx"
+            }
+        };
+        var message = 'Debe seleccionar un archivo con terminación .xls o .csv' ;
+        FormValidationMd.init(form, formRules, message, createUsers());
+
     });
 </script>
 @endpush
