@@ -20,6 +20,7 @@ use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class EmpleadoController extends Controller
 {
@@ -290,6 +291,119 @@ class EmpleadoController extends Controller
             );
         }
     }
+    public function reporteContactoEmpleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteContactoEmpleados',compact('empleados','date','time','total','cont'));
 
+    }
+    public function DownloadContactoReporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteContactoEmpleados',compact('empleados','date','time','total','cont'))->download('ReporteContacto.pdf');
+    }
+    public function reporteDireccionEmpleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteDireccionEmpleados',compact('empleados','date','time','total','cont'));
+
+    }
+    public function DownloadDireccionReporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteDireccionEmpleados',compact('empleados','date','time','total','cont'))->download('ReporteDireccion.pdf');
+    }
+    public function reporteSalario1Empleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Area','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteSalario1Empleados',compact('empleados','date','time','total','cont'));
+
+    }
+    public function DownloadSalario1Reporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Area','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteSalario1Empleados',compact('empleados','date','time','total','cont'))->download('ReporteSalarioArea.pdf');
+    }
+    public function reporteSalario2Empleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Rol','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteSalario2Empleados',compact('empleados','date','time','total','cont'));
+
+    }
+    public function DownloadSalario2Reporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Rol','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteSalario2Empleados',compact('empleados','date','time','total','cont'))->download('ReporteSalarioRol.pdf');
+    }
+    public function reporteAfiliacionesEmpleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteAfiliacionesEmpleados',compact('empleados','date','time','total','cont'));
+
+    }
+    public function DownloadAfiliacionesReporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteAfiliacionesEmpleados',compact('empleados','date','time','total','cont'))->download('ReporteAfiliaciones.pdf');
+    }
+    public function reporteEstadoEmpleados()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Estado_Persona','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return view('humtalent.reportes.ReporteEstadoEmpleados',compact('empleados','date','time','total','cont'));
+
+    }
+    public function DownloadEstadoReporte()
+    {
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Estado_Persona','asc')->get();
+        $total=count($empleados);
+        $cont=1;
+        return SnappyPdf::loadView('humtalent.reportes.ReporteEstadoEmpleados',compact('empleados','date','time','total','cont'))->download('ReporteEstado.pdf');
+    }
 
 }

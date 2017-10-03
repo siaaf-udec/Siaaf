@@ -15,6 +15,7 @@ use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
 use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 
 class PermisosController extends Controller
@@ -103,7 +104,7 @@ class PermisosController extends Controller
             );
         }
     }
-    public function destroy(Request $request, $id){//función que elimina el registro de un permiso seleccionado 
+    public function destroy(Request $request, $id){//función que elimina el registro de un permiso seleccionado
         if($request->ajax() && $request->isMethod('DELETE')){
             Permission::destroy($id);
             return AjaxResponse::success(
@@ -116,5 +117,23 @@ class PermisosController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
+    }
+    public function ReportePermisosEmpleados(Request $request, $id){
+        $cont=1;
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleado=Persona::where('PK_PRSN_Cedula',$id)->get(['PK_PRSN_Cedula','PRSN_Nombres','PRSN_Apellidos','PRSN_Area','PRSN_Correo','PRSN_Rol'])->first();
+        $permisos=Permission::where('FK_TBL_Persona_Cedula',$id)->get(['PERM_Fecha','PERM_Descripcion','PK_PERM_IdPermiso']);
+        $total=count($permisos);
+        return view('humtalent.reportes.ReportePermisosEmpleados', compact('empleado','date','time','permisos','total','cont'));
+    }
+    public function DownloadReportePermisosEmpleados(Request $request, $id){
+        $cont=1;
+        $date=date("d/m/Y");
+        $time=date("h:i A");
+        $empleado=Persona::where('PK_PRSN_Cedula',$id)->get(['PK_PRSN_Cedula','PRSN_Nombres','PRSN_Apellidos','PRSN_Area','PRSN_Correo','PRSN_Rol'])->first();
+        $permisos=Permission::where('FK_TBL_Persona_Cedula',$id)->get(['PERM_Fecha','PERM_Descripcion','PK_PERM_IdPermiso']);
+        $total=count($permisos);
+        return SnappyPdf::loadView('humtalent.reportes.ReportePermisosEmpleados', compact('empleado','date','time','permisos','total','cont'))->download('ReportePermisos.pdf');
     }
 }

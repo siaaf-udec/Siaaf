@@ -72,7 +72,6 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-
         var table, url,columns;
         table = $('#lista-empleados');
         url = "{{ route('talento.humano.tablaEmpleados')}}";
@@ -85,7 +84,7 @@
             {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a><a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -108,6 +107,16 @@
             var dataTable = table.row($tr).data(),
                 route ='{{ route('talento.humano.permisos.tablaPermisos') }}'+'/'+dataTable.PK_PRSN_Cedula;
             $(".content-ajax").load(route);
+        });
+
+        table.on('click', '.reports', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.location.href='{{ route('talento.humano.permisos.reporte') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            });
         });
     });
 </script>

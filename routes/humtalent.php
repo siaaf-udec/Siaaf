@@ -10,6 +10,7 @@ use App\Container\Humtalent\src\StatusOfDocument;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 
+
 //RUTA DE EJEMPLO
 /*/Route::get('/', [
     'as' => 'talento.humano.index',
@@ -32,6 +33,54 @@ $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+    Route::get('pdfContacto',[
+        'uses' => $controller.'EmpleadoController@reporteContactoEmpleados',
+        'as' => 'talento.humano.empleado.pdfContacto'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
+    ]);
+    Route::get('pdfDireccion',[
+        'uses' => $controller.'EmpleadoController@reporteDireccionEmpleados',
+        'as' => 'talento.humano.empleado.pdfDireccion'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de dirección de los empleados
+    ]);
+    Route::get('pdfSalario1',[
+        'uses' => $controller.'EmpleadoController@reporteSalario1Empleados',
+        'as' => 'talento.humano.empleado.pdfSalario1'             //ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por programa
+    ]);
+    Route::get('pdfSalario2',[
+        'uses' => $controller.'EmpleadoController@reporteSalario2Empleados',
+        'as' => 'talento.humano.empleado.pdfSalario2'             ////ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por rol
+    ]);
+    Route::get('pdfAfiliaciones',[
+        'uses' => $controller.'EmpleadoController@reporteAfiliacionesEmpleados',
+        'as' => 'talento.humano.empleado.pdfAfiliaciones'             //ruta que conduce al controlador para mostrar  el reporte referente a las afiliaciones de los empleados
+    ]);
+    Route::get('pdfEstado',[
+        'uses' => $controller.'EmpleadoController@reporteEstadoEmpleados',
+        'as' => 'talento.humano.empleado.pdfEstado'             //ruta que conduce al controlador para mostrar  el reporte referente al estado de los empleados
+    ]);
+    Route::get('DownloadPdfContacto',[
+        'uses' => $controller.'EmpleadoController@DownloadContactoReporte',
+        'as' => 'talento.humano.empleado.DownloadPdfContacto'             //ruta que conduce al controlador para descargar el reporte de contacto
+    ]);
+    Route::get('DownloadPdfDireccion',[
+        'uses' => $controller.'EmpleadoController@DownloadDireccionReporte',
+        'as' => 'talento.humano.empleado.DownloadPdfDireccion'             //ruta que conduce al controlador para descargar el reporte de direccion
+    ]);
+    Route::get('DownloadPdfSalario1',[
+        'uses' => $controller.'EmpleadoController@DownloadSalario1Reporte',
+        'as' => 'talento.humano.empleado.DownloadPdfSalario1'             //ruta que conduce al controlador para descargar el reporte de salario organizado por programa
+    ]);
+    Route::get('DownloadPdfSalario2',[
+        'uses' => $controller.'EmpleadoController@DownloadSalario2Reporte',
+        'as' => 'talento.humano.empleado.DownloadPdfSalario2'             //ruta que conduce al controlador para descargar el reporte de salario organizado por rol
+    ]);
+    Route::get('DownloadPdfAfiliaciones',[
+        'uses' => $controller.'EmpleadoController@DownloadAfiliacionesReporte',
+        'as' => 'talento.humano.empleado.DownloadPdfAfiliaciones'             //ruta que conduce al controlador para descargar el reporte de afiliaciones
+    ]);
+    Route::get('DownloadPdfEstado',[
+        'uses' => $controller.'EmpleadoController@DownloadEstadoReporte',
+        'as' => 'talento.humano.empleado.DownloadPdfEstado'             //ruta que conduce al controlador para descargar el reporte de estado
+    ]);
     Route::get('index',[
         'uses' => $controller.'EmpleadoController@index',
         'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
@@ -93,6 +142,12 @@ Route::group(['prefix' => 'empleado'], function () {
         'uses' => $controller.'EmpleadoController@editarEmpleadoRetirado',     //ruta que conduce al controlador para mostar el formulario para editar datos registrados
         'as' => 'talento.humano.empleado.editarRetirado'
     ]);
+    Route::get('Reportes',[      //ruta que retorna la vista general de todos los reportes disponibles
+        'as'=>'talento.humano.empleado.Reportes',
+        'uses' => function(){
+            return view('humtalent.reportes.ReporteVistaPrincipal');
+        }
+    ]);
     Route::get('vistaArchivo',[      //ruta que retorna la vista del registro a traves de excel
         'as'=>'talento.humano.empleado.regisArchivo',
         'uses' => function(){
@@ -121,13 +176,22 @@ Route::group(['prefix' => 'empleado'], function () {
 //Rutas para el manejo de la documentación
 Route::group(['prefix' => 'document'], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-    Route::get('prueba',[
-        'as'=>'talento.humano.document.prueba' ,
-        'uses'=> function () {
-        $data = [];
-        $pdf = PDF::loadView('humtalent.example', $data);
-        return $pdf->download('invoice.pdf');
-    }]);
+    Route::get('pdfConsolidado',[
+        'uses' => $controller.'DocumentController@reporteConsolidadoEmpleados',
+        'as' => 'talento.humano.document.pdfConsolidado'             //FALTA
+    ]);
+    Route::get('DownloadPdfConsolidado',[
+        'uses' => $controller.'DocumentController@DownloadReporteConsolidadoEmpleados',
+        'as' => 'talento.humano.document.DownloadPdfConsolidado'             //ruta que conduce al controlador para descargar el reporte de radicacion
+    ]);
+    Route::get('pdfRadicacion/{id?}',[
+        'uses' => $controller.'DocumentController@reporteRadicacionEmpleados',
+        'as' => 'talento.humano.document.pdfRadicacion'             //ruta que conduce al controlador para mostrar  el reporte que tiene los documentos que el empleado ha radicado y los que le faltan
+    ]);
+    Route::get('DownloadPdfRadicacion/{id?}',[
+        'uses' => $controller.'DocumentController@DownloadReporteRadicacionEmpleados',
+        'as' => 'talento.humano.document.DownloadPdfRadicacion'             //ruta que conduce al controlador para descargar el reporte de radicacion
+    ]);
     Route::get('index',[
         'uses' => $controller.'DocumentController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
         'as' => 'talento.humano.document.index'
@@ -391,6 +455,14 @@ Route::group(['prefix' => 'permisos'], function () {
     Route::get('consultaPermisos/{id?}',[
         'uses' => $controller.'PermisosController@consultaPermisos', //ruta para consultar los permisos registrados
         'as' => 'talento.humano.permisos.consultaPermisos'
+    ]);
+    Route::get('PdfPermisos/{id?}',[
+        'uses' => $controller.'PermisosController@ReportePermisosEmpleados', //ruta para mostrar el reporte de los permisos de cada empleado
+        'as' => 'talento.humano.permisos.reporte'
+    ]);
+    Route::get('DownloadPdfPermisos/{id?}',[
+        'uses' => $controller.'PermisosController@DownloadReportePermisosEmpleados', //ruta para cdescargar el reporte de permisos
+        'as' => 'talento.humano.permisos.Downloadreporte'
     ]);
     Route::post('update', [   //ruta para actualizar los permisos
         'as' => 'talento.humano.permisos.update',

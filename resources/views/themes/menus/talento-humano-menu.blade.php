@@ -103,20 +103,20 @@
 
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-book"></i>
+                <i class="fa fa-folder-o"></i>
                 <span class="title">Historial</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.historialDocumentos.empleados'], 'start active open') }}">
                     <a href="{{ route('talento.humano.historialDocumentos.empleados') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-file-text-o"></i>
                         <span class="title">Historial de la documentación</span>
                     </a>
                 </li>
                 <li class="nav-item" {{ active(['talento.humano.empleado.tablaEmpleadosRetirados'], 'start active open') }}>
                     <a href="{{ route('talento.humano.empleado.tablaEmpleadosRetirados') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-user"></i>
                         <span class="title">Historial Empleados</span>
                     </a>
                 </li>
@@ -125,22 +125,28 @@
 
         <li class="nav-item">
             <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
-                <i class="fa fa-book"></i>
+                <i class="fa fa-newspaper-o"></i>
                 <span class="title">Inducción</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link nav-toggle">
-                <i class="fa fa-book"></i>
+                <i class="fa fa-file-o"></i>
                 <span class="title">Permisos</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-book"></i>
+                <i class="fa fa-calendar"></i>
                 <span class="title">Calendario</span>
-                <span class="arrow"></span>
+
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route( 'talento.humano.empleado.Reportes') }}" class="nav-link nav-toggle">
+                <i class="fa fa-bar-chart"></i>
+                <span class="title">Reportes</span>
             </a>
         </li>
         @endpermission
