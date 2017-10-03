@@ -37,6 +37,16 @@ Route::group(['middleware' => ['auth']], function () {
         return view('material.sample');
     })->name('root');
 
+    Route::get('markdown', function () {
+        $user = User::findOrFail(1);
+        /*
+        Mail::to($user)
+            ->send(new \App\Mail\UserRegistration('Miguel'));
+        return 'True';
+        */
+        return new \App\Mail\WelcomeMail('N1', 'N2');
+    })->name('forms.fields');
+
     Route::get('/pdf', function () {
         $data = [];
         $pdf = PDF::loadView('welcome', $data);
