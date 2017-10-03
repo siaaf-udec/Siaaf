@@ -7,6 +7,10 @@
     <!-- toastr Styles -->
     <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Reportes PDF')
@@ -53,7 +57,7 @@
                             <div> Consolidado </div>
 
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('talento.humano.empleado.index') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de la documentación radicada por cada empleado.">
+                        <a href="javascript:;" class="icon-btn documentReport" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de la documentación radicada por cada empleado.">
                             <i class="fa fa-check-square"></i>
                             <div> Documentación </div>
 
@@ -62,7 +66,7 @@
                     </div><br>
 
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN GENERAL DE LOS PERMISOS QUE TIENEN LOS EMPLEADOS:</b></p><br>
-                        <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de los permisos de cada empleado como fecha, descripción y número de permisos.">
+                        <a href="javascript:;" class="icon-btn permisoReport" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de los permisos de cada empleado como fecha, descripción y número de permisos.">
                             <i class="fa fa-group"></i>
                             <div> Permisos/persona </div>
 
@@ -76,18 +80,46 @@
 @endsection
 
 @push('plugins')
-    <!-- Datatables Scripts -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip()
+        });
+        $( ".documentReport" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.empleado.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+        $( ".permisoReport" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.permisos.listaEmpleados.ajax') }}';
+            $(".content-ajax").load(route);
         });
     </script>
 @endpush

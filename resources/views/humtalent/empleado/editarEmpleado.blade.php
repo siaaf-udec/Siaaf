@@ -9,7 +9,7 @@
             </div>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                {!! Form::model ($empleado, ['id'=>'form_empleado_update', 'class' => 'form-horizontal', 'url' => '/forms'])  !!}
+                {!! Form::model ($empleado, ['id'=>'form_empleado_update', 'url' => '/forms'])  !!}
 
                     <div class="form-body">
 

@@ -31,6 +31,7 @@
                 </table>
                  <br>
                 <br>
+                <br>
                 @if($procesoEPS == 'Afiliado EPS')
                     <h5>Fecha de afiliación EPS: {{$fechaEPS}}</h5>
                     <br>

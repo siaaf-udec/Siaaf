@@ -43,9 +43,9 @@
     <div id="details" class="clearfix">
         <div id="client">
             <div class="to">REPORTE GENERADO POR:</div>
-            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'John Doe' }}</h2>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Humanos' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
-            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'john@example.com' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'john@example.com' }}</a></div>
+            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
         <div id="invoice">
             <h1>DATOS DE SALARIO POR ROL:</h1>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
+    <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
             <th class="no" >#</th>

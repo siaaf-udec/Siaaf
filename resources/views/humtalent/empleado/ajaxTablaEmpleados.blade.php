@@ -68,7 +68,7 @@
             {data: 'PRSN_Area', name: 'Área'},
             {data: 'PRSN_Salario', name: 'Salario'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -143,6 +143,15 @@
             e.preventDefault();
             var route = '{{ route('talento.humano.empleado.create') }}';
             $(".content-ajax").load(route);
+        });
+        table.on('click', '.reports', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.location.href='{{ route('talento.humano.document.pdfRadicacion') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            });
         });
     });
 </script>

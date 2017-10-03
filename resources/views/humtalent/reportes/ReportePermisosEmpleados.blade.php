@@ -43,9 +43,9 @@
     <div id="details" class="clearfix">
         <div id="client">
             <div class="to">REPORTE GENERADO POR:</div>
-            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Hum    anos' }}</h2>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Humanos' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
-            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'john@example.com' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
+            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
         <div id="invoice">
             <h1>DATOS DE PERMISOS:</h1>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="body1" id="client">
+    <div id="client">
         <div class="to">NOMBRE:<b>&nbsp; {{$empleado->PRSN_Nombres}}</b></div>
         <div class="to">APELLIDOS:<b>&nbsp; {{$empleado->PRSN_Apellidos}}</b></div>
         <div class="to">CÉDULA:<b>&nbsp;{{$empleado->PK_PRSN_Cedula}}</b></div>

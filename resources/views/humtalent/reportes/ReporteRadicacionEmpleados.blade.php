@@ -44,9 +44,9 @@
     <div id="details" class="clearfix">
         <div id="client">
             <div class="to">REPORTE GENERADO POR:</div>
-            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Hum    anos' }}</h2>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Humanos' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
-            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'john@example.com' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
+            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
         <div id="invoice">
             <h1>DATOS DE PERMISOS:</h1>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
+    <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
             <th class="unit"><b>CÉDULA</b></th>
@@ -87,47 +87,37 @@
     </table>
     <h3>Documentos EPS: {{$empleado->PRSN_Eps}}</h3>
     <h4>&nbsp;&nbsp;&nbsp;&nbsp;RADICADOS:</h4>
-    <div class="row1">
-        <div class="col-md-1">
+    <div>
         @foreach($radicadosEPS as $radicado)
-        <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$radicado->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
-        <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$radicado->EDCMT_Fecha}}</b></div><br>
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$radicado->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$radicado->EDCMT_Fecha}}</b></div><br>
         @endforeach
-        </div>
     </div>
     <h4>&nbsp;&nbsp;&nbsp;&nbsp;PENDIENTES:</h4>
-    <section class="row1">
-        <div class="item-1">
-            @foreach($noEPS as $no)
-                <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$no->DCMTP_Nombre_Documento}}</b></div>
-            @endforeach
-        </div>
-    </section>
+    <div>
+        @foreach($noEPS as $no)
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$no->DCMTP_Nombre_Documento}}</b></div>
+        @endforeach
+    </div>
 
     <h3>Documentos caja de compensación: {{$empleado->PRSN_Caja_Compensacion}}</h3>
     <h4>&nbsp;&nbsp;&nbsp;&nbsp;RADICADOS:</h4>
 
-    <div class="row">
-        <div class="item-1">
-            @foreach($radicadosCaja as $caja)
-                <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$caja->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
-                <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$caja->EDCMT_Fecha}}</b></div><br>
-            @endforeach
-        </div>
+    <div>
+        @foreach($radicadosCaja as $caja)
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$caja->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$caja->EDCMT_Fecha}}</b></div><br>
+        @endforeach
     </div>
     <h4>&nbsp;&nbsp;&nbsp;&nbsp;PENDIENTES:</h4>
-    <section class="row">
-        <div class="item-1">
-            @foreach($PendientesCaja as $noCaja)
-                <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$noCaja->DCMTP_Nombre_Documento}}</b></div>
-            @endforeach
-        </div>
-    </section>
+    <div>
+        @foreach($PendientesCaja as $noCaja)
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$noCaja->DCMTP_Nombre_Documento}}</b></div>
+        @endforeach
 
-
+    </div>
     <br><br>
     <div id="thanks" align="center">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
-
 </main>
 
 </body>
