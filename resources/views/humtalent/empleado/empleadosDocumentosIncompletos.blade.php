@@ -181,15 +181,11 @@
                 }
             }
         };
-
         var form1 = $('#form-desactivar');
         var rules1 ={
             tipo: {required: true},
         };
-
         FormValidationMd.init(form1,rules1,false,desactivarNotify());
-
-
         var activarNotify = function () {
             return{
                 init: function () {
@@ -228,14 +224,11 @@
                 }
             }
         };
-
         var form2 = $('#form-activar');
         var rules2 ={
             tipo: {required: true},
         };
-
         FormValidationMd.init(form2,rules2,false,activarNotify());
-
     });
 </script>
 @endpush

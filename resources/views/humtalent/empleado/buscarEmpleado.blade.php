@@ -131,10 +131,7 @@
             var rulesBrowse ={
                 PK_PRSN_Cedula : {minlength: 3,required: true}
             };
-
             FormValidationMd.init(formBrowse,rulesBrowse,false,browseUsers());
-
     });
-
 </script>
 @endpush

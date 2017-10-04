@@ -4,7 +4,7 @@
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_document_create', 'url'=> ['/forms'], 'role'=>"form"]) !!}
                         {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                        ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
+                                    ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
 
                         {!! Field::select('DCMTP_Tipo_Documento',
                                 ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
@@ -101,7 +101,5 @@
             var route = '{{ route('talento.humano.document.index.ajax') }}';
             $(".content-ajax").load(route);
         });
-
     });
-
 </script>

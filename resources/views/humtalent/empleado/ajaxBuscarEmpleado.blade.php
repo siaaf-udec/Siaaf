@@ -23,11 +23,8 @@
             </div>
         @endcomponent
     </div>
-
-
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -82,9 +79,7 @@
         var rulesBrowse ={
             PK_PRSN_Cedula : {minlength: 3,required: true}
         };
-
         FormValidationMd.init(formBrowse,rulesBrowse,false,browseUsers());
-
     });
 
 </script>

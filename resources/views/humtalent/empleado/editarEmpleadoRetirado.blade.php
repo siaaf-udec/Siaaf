@@ -172,8 +172,5 @@
             var route = '{{ route('talento.humano.empleado.tablaEmpleadosRetirados.ajax') }}';
             $(".content-ajax").load(route);
         });
-
-
     });
-
 </script>

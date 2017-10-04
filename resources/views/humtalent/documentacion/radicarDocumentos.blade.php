@@ -510,10 +510,5 @@
             var route = '{{ route('talento.humano.buscarRadicar.ajax') }}';
             $(".content-ajax").load(route);
         });
-
-
     });
-
-
-
 </script>

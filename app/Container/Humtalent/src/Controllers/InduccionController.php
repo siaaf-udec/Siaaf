@@ -26,12 +26,16 @@ class InduccionController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function listarEmpleadosNuevos(Request $request){
-        if ($request->ajax()) {
+    public function listarEmpleadosNuevos(Request $request)
+    {
+        if ($request->ajax())
+        {
             return DataTables::of(Persona::where('PRSN_Estado_Persona', 'Nuevo')->get())
                 ->addIndexColumn()
                 ->make(true);
-        } else {
+        }
+        else
+        {
             return response()->json([
                 'message' => 'Incorrect request',
                 'code' => 412
@@ -46,13 +50,18 @@ class InduccionController extends Controller
      */
     public function index(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET')) {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
             $procesoInduccion = Induction::where('FK_TBL_Persona_Cedula', $id)->get(['INDC_ProcesoInduccion']);
-            if (count($procesoInduccion) > 0) {
-                foreach ($procesoInduccion as $value) {
+            if (count($procesoInduccion) > 0)
+            {
+                foreach ($procesoInduccion as $value)
+                {
                     $proceso = $value->INDC_ProcesoInduccion;
                 }
-            } else {
+            }
+            else
+            {
                 $proceso = 'Inicio';
             }
             return view('humtalent.inducciones.procesoInduccion', compact('id', 'proceso'));
@@ -64,44 +73,49 @@ class InduccionController extends Controller
             );
         }
     }
-
     /**
      *
      */
-    public function ajaxEmpleadosNuevos(Request $request)
+    public function ajaxEmpleadosNuevos (Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')) {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
             return view('humtalent.inducciones.ajaxTablaEmpleadosNuevos');
         }
-        else{
+        else
+        {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
-
     }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store (Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')) {
-            $induccion = Induction::where('FK_TBL_Persona_Cedula', $request['FK_TBL_Persona_Cedula'])->get(['PK_INDC_ID_Induccion']);
-            if (count($induccion) > 0) {
+        if($request->ajax() && $request->isMethod('POST'))
+        {
+            $induccion = Induction::where('FK_TBL_Persona_Cedula', $request['FK_TBL_Persona_Cedula'])
+                       ->get(['PK_INDC_ID_Induccion']);
+            if (count($induccion) > 0)
+            {
                 $induccion = Induction::find($induccion[0]['PK_INDC_ID_Induccion']);
                 $induccion->INDC_ProcesoInduccion = $request[$request['numCheck']];
                 $induccion->save();
-                if (strcasecmp($request[$request['numCheck']], "Resultados de evaluación") == 0) {
+                if (strcasecmp($request[$request['numCheck']], "Resultados de evaluación") == 0)
+                {
                     $empleado = Persona::find($request['FK_TBL_Persona_Cedula']);
                     $empleado->PRSN_Estado_Persona = "Antiguo";
                     $empleado->save();
                 }
-            } else {
+            }
+            else
+            {
                 Induction::create([
                     'INDC_ProcesoInduccion' => $request[$request['numCheck']],
                     'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
@@ -111,57 +125,13 @@ class InduccionController extends Controller
                 '¡Bien hecho!',
                 'Datos almacenados correctamente.'
             );
-        }else{
+        }
+        else
+        {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        //return "en el show";
-        // return view('humtalent.empleado.consultaEmpleado');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)//presenta el formulario con los datos para editar el regitro de un empleado deseado
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)//re realiza la actualización de los datos
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
-    {
-
     }
 }

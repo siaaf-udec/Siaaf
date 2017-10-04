@@ -170,15 +170,10 @@
                 }
             }
         };
-
         var form2 = $('#form-activar');
         var rules2 ={
             tipo: {required: true},
         };
-
         FormValidationMd.init(form2,rules2,false,activarNotify());
-
-
-
     });
 </script>

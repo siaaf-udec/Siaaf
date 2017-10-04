@@ -11,13 +11,6 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 
 
-//RUTA DE EJEMPLO
-/*/Route::get('/', [
-    'as' => 'talento.humano.index',
-    'uses' => function(){
-        return view('humtalent.empleado.empleadosDocumentosCompletos');
-    }
-]);/*/
 Route::get('/', [
     'as' => 'talento.humano.index',
     'uses' => function(){
@@ -28,7 +21,7 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
-//Route::resource('rrhh', $controller.'FuncionarioController'); //Ruta para CRUD de funcionarios.
+
 
 //Rutas para el manejo de los empleados
 Route::group(['prefix' => 'empleado'], function () {
@@ -571,7 +564,5 @@ Route::group(['prefix' => 'notificaciones'], function () {
         'as' => 'talento.humano.notificaciones.empleadosDocumentosIncompletos',
         'uses' => $controller.'CalendarioController@documentacionIncompleta'
     ]);
-
-
 });
 

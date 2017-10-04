@@ -10,12 +10,10 @@
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                         {!! Form::model ($documento, ['id'=>'form-document_update', 'url'=> ['/forms'], 'role'=>"form"]) !!}
-
                                         {!! Field::hidden('PK_DCMTP_Id_Documento',$documento->PK_DCMTP_Id_Documento) !!}
-
-                                        {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                            ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
-
+                                        {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control',
+                                                         'id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                        ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
                                         {!! Field::select('DCMTP_Tipo_Documento',
                                                     ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
                                                     null,
@@ -122,18 +120,3 @@
     });
 
 </script>
-
-
-
-    form-induccion1        talento.humano.induccion.store
-
-
-
-
-
-
-
-
-
-
-
