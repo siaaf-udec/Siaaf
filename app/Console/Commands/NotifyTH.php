@@ -66,7 +66,7 @@ class NotifyTH extends Command
                 $data = [
                     'url' => url('siaaf/public/talento-humano/notificaciones/empleadosDocumentosCompletos'), //ruta que muestra la tabla d elos empleados que tienen la doc completa
                     'description' => '¡Empleados con documentos completos!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                    'image' => 'assets/layouts/layout2/img/search_icon_light.png'
                 ];
                 $user->notify(new HeaderSiaaf($data)); // se crea la notificación
             }
@@ -83,7 +83,7 @@ class NotifyTH extends Command
                 $data = [
                     'url' => url('siaaf/public/talento-humano/notificaciones/empleadosDocumentosIncompletos'), //ruta que muestra la tabla d elos empleados que tienen la doc incompleta
                     'description' => '¡Empleados con documentos incompletos!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                    'image' => 'assets/layouts/layout2/img/search_icon_light.png'
                 ];
                 $user->notify(new HeaderSiaaf($data)); // se crea la notificación
             }
@@ -101,7 +101,7 @@ class NotifyTH extends Command
                 $data = [
                     'url' => url('siaaf/public/talento-humano/calendario/index'), //ruta que muestra el calendario
                     'description' => '¡Recordatorio pendiente!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                    'image' => 'assets/layouts/layout2/img/search_icon_light.png'
                 ];
                 $user->notify(new HeaderSiaaf($data));
             }
@@ -114,7 +114,7 @@ class NotifyTH extends Command
                 $data = [
                     'url' => url('siaaf/public/talento-humano/calendario/index'), //ruta que muestra el calendario
                     'description' => '¡Evento pendiente!',
-                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                    'image' => 'assets/layouts/layout2/img/search_icon_light.png'
                 ];
                 $user->notify(new HeaderSiaaf($data));
             }

@@ -63,7 +63,12 @@
                         },
                         success: function (route) {
 
+                            if(route == "Empleado no registrado"){
+                                UIToastr.init('success' , "Error" , "!El empleado no se encuentra registrado."  );
+                            }
+                            else {
                                 $(".content-ajax").html(route);
+                            }
 
                         },
                         error: function (response, xhr, request) {

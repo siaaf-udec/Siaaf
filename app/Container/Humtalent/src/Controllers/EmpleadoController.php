@@ -10,17 +10,23 @@ namespace App\Container\Humtalent\src\Controllers;
 
 use App\Container\Humtalent\src\Asistent;
 use App\Container\Humtalent\src\Induction;
+use App\Mail\EmailHumTalent;
+use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
 use App\Container\Humtalent\src\StatusOfDocument;
-use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Illuminate\Mail\Message;
+use Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Container\Users\Src\User;
 
 class EmpleadoController extends Controller
 {
@@ -220,6 +226,54 @@ class EmpleadoController extends Controller
             );
         }
     }
+
+    public  function enviarEmail(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('POST'))
+        {
+            $subject = $request['Asunto'];
+            $descripcion = $request['Descripcion'];
+            $correos = explode(';',$request['Destinatarios']);
+            $file = $request->file('import_file');
+            $user = Auth::user()->email;
+
+            if($file != null)
+            {
+                $nombre = $file->getClientOriginalName();
+                Storage::disk('local')->put($nombre, \File::get($file));
+
+                $public_path = storage_path('app');
+                $url = $public_path . '/' . $nombre;
+            }
+            else
+            {
+                $url = null;
+            }
+
+            for($i = 0 ; $i < count($correos)-1; $i++){
+                Mail::to($correos[$i], 'P1')->send(new EmailHumTalent($subject,$descripcion, $url));
+            }
+            Mail::to($user, 'P1')->send(new EmailHumTalent($subject,$descripcion, $url));
+
+            if($file != null)
+            {
+                $nombre = $file->getClientOriginalName();
+                Storage::disk('local')->delete($nombre);
+            }
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.'
+            );
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.

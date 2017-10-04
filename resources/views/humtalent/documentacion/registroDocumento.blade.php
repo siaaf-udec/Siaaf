@@ -71,13 +71,13 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_document_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr , response.title , response.message  );
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('talento.humano.document.index.ajax') }}';
                                 $(".content-ajax").load(route);
+                                console.log(request);
                             }
                         },
                         error: function (response, xhr, request) {

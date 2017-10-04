@@ -61,6 +61,12 @@
                         <span class="title">Radicar Documentos</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['talento.humano.empleado.email'], 'start active open') }}">
+                    <a href="{{ route('talento.humano.empleado.email') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-address-book"></i>
+                        <span class="title">Enviar Correo</span>
+                    </a>
+                </li>
 
             </ul>
         </li>
