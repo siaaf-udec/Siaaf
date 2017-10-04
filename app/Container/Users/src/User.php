@@ -110,6 +110,14 @@ class User extends Authenticatable implements AuditableContract
         return $this->hasOne('App\Container\Audiovisuals\Src\UsuarioAudiovisuales', 'USER_FK_User');
     }
 
+    /**
+     * Get the UsuarioEspaciosAcademicos record associated with the user.
+     */
+    public function acadspace()
+    {
+        return $this->hasOne('App\Container\Acadspace\Src\UserAcadSpace', 'FK_PER_Id_User');
+    }
+
     public function getFullNameAttribute()
     {
         return $this->name . ' ' . $this->last_name;
