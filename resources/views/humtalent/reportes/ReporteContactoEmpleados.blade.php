@@ -37,7 +37,7 @@
         <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
         <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
     </div>
-    </div>
+
 </header>
 <main>
     <div id="details" class="clearfix">

@@ -208,10 +208,11 @@ class DocumentController extends Controller
             }
             if (!empty($docsRad))   //en caso de que ya hayan radicado algunos documentos con anterioridad
             {
+                $cantRad = count($docsRad);
                 for ($j = 0; $j < count($documento)-1; $j++)    //se recorren los documentos a radicar
                 {
                     $contador = 0;
-                    for ($k = 0; $k < count($docsRad); $k++)
+                    for ($k = 0; $k < $cantRad; $k++)
                     {
                         if ($documento[$j] != $docsRad[$k]) //se comparan los documentos a radicar con los ya radicados
                         {
@@ -244,7 +245,7 @@ class DocumentController extends Controller
                     /*  una vez se hayan registrado los documentos nuevos del empelado que no esten radicados
                     *   se recorre los documentos radicados
                     */
-                for ($j = 0; $j < count($docsRad); $j++)
+                for ($j = 0; $j < $cantRad; $j++)
                 {
                     $contador = 0;
                     for ($k = 0; $k < count($documento)-1; $k++) //se recorre los documentos enviados a radicar
@@ -582,7 +583,7 @@ class DocumentController extends Controller
                 ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
                 ->get(['DCMTP_Nombre_Documento']);
         return view('humtalent.reportes.ReporteRadicacionEmpleados',
-            compact('empleado','date', 'time', 'cont', 'noEPS',
+            compact('empleado','date', 'time', 'noEPS',
                     'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
         );
     }
@@ -619,7 +620,7 @@ class DocumentController extends Controller
                 ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
                 ->get(['DCMTP_Nombre_Documento']);
         return SnappyPdf::loadView('humtalent.reportes.ReporteRadicacionEmpleados',
-            compact('empleado', 'date', 'time', 'cont', 'noEPS', 'PendientesCaja',
+            compact('empleado', 'date', 'time', 'noEPS', 'PendientesCaja',
                     'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
     }
 

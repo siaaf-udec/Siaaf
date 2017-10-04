@@ -27,7 +27,7 @@ class CalendarioController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function getEvent (Request $request)     //funcion para obtener tanto lso eventos como las notificaciones que esten registradas
+    public function getEvent ()     //funcion para obtener tanto lso eventos como las notificaciones que esten registradas
     {
         $eventos = Event::all();        //se realiza la consulta para traer todos los eventos registrados
         $events = array();      //arreglo para almacenar los eventos y notificaciones
