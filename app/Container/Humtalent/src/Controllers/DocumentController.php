@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Yeison Gomez
- * Date: 28/06/2017
- * Time: 2:04 PM
- */
+
 
 namespace App\Container\Humtalent\src\Controllers;
 use Illuminate\Http\Request;
@@ -25,10 +20,21 @@ class DocumentController extends Controller
 
     protected $tipo;  //variable para almacenar el tipo de radicación (EPS o caja de compensación)
 
+
     public function __construct(UserInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
+
+    /**
+     *  Función que es consultada por otras funciones de manera recursiva para consultar datos de los documentos
+     *                      que han sido radicados.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  string $tipoRad
+     * @return \Illuminate\Http\Response
+     */
     public function consultaDocsRadicados (Request $request, $id, $tipoRad)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -93,7 +99,14 @@ class DocumentController extends Controller
 
     }
 
-    public function listarDocsRad (Request $request)    //funcion que se encarga de listar los documentos registrados y que debern ser entregados por los empleados
+    /**
+     * Funcion que se encarga de listar los documentos registrados y que debern ser entregados por los empleados
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * @return  string
+     */
+    public function listarDocsRad (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -160,6 +173,12 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * Funcion que retorna una vista ajax
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxBuscarEmpleado (Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -175,7 +194,13 @@ class DocumentController extends Controller
         }
     }
 
-    public function radicarDocumentos (Request $request)    //funcion que almacena las radicación de los documentos
+    /**
+     * Funcion que almacena las radicación de los documentos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function radicarDocumentos (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -289,6 +314,12 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * Funcion que realiza la afiliación de los empleados
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function afiliarEmpleado (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST')) {
@@ -312,6 +343,12 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * Funcion que reinicia el proceso de radicación y afiliación de los empleados
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function reiniciarRadicacion (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
@@ -333,6 +370,13 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * Funcion consultada por el datatable para mostrar los documentos radicados
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function consultaRadicados (Request $request, $id){
         $radicados=StatusOfDocument::with('DocumentacionPersonas')
             ->where('FK_TBL_Persona_Cedula',$id)
@@ -352,6 +396,14 @@ class DocumentController extends Controller
         }
 
     }
+
+    /**
+     * Función que consulta y muestra los documentos radicados
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
     public function tablaRadicados(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET')) {
@@ -396,6 +448,7 @@ class DocumentController extends Controller
             );
         }
      }
+
      /**
       * Display a listing of the resource.
       *
@@ -406,6 +459,12 @@ class DocumentController extends Controller
         return view('humtalent.documentacion.listaDocumentos');
     }
 
+    /**
+     * Función para mostrar una vista ajax
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function indexAjax (Request $request)//muestra todos los documentos que esten registrados
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -423,6 +482,7 @@ class DocumentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create (Request $request)//preseta el formulario para registrar un documento
@@ -439,6 +499,7 @@ class DocumentController extends Controller
             );
         }
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -466,14 +527,7 @@ class DocumentController extends Controller
             );
         }
     }
-    /**
-     * Display the specified resource.
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
 
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -481,7 +535,7 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)     //presenta el formulario para editar un documento deseado
+    public function edit(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
@@ -499,12 +553,13 @@ class DocumentController extends Controller
             );
         }
     }
+
     /**
      * Update the specified resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update (Request $request)//se realiza la actulización de datos de los documentos
+    public function update (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -524,6 +579,7 @@ class DocumentController extends Controller
             );
         }
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -550,65 +606,94 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * Presenta el reporte de la radicación de los documentos
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
     public function reporteRadicacionEmpleados ($id)
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
+
         $empleado = Persona::where('PK_PRSN_Cedula',$id)
                 ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
                    'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])
                 ->first();
+
         $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
                 ->get(['FK_Personal_Documento']);
+
         $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento','EPS')
                 ->get(['PK_DCMTP_Id_Documento']);
+
         $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento','Caja de compensación')
                 ->get(['PK_DCMTP_Id_Documento']);
+
         $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento','EPS')
                 ->whereNotIn('PK_DCMTP_Id_Documento',$radicados)
                 ->get(['DCMTP_Nombre_Documento']);
+
         $radicadosEPS = StatusOfDocument::with(['DocumentacionPersonas' => function($query )
         {
             $query -> where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
         }])
                 ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
                 ->get();
+
         $radicadosCaja = StatusOfDocument::with(['DocumentacionPersonas' => function($query )
         {
             $query -> where('DCMTP_Tipo_Documento', 'Caja de compensación')->get(['DCMTP_Nombre_Documento']);
         }])
                 ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
                 ->get();
+
         $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
                 ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
                 ->get(['DCMTP_Nombre_Documento']);
+
         return view('humtalent.reportes.ReporteRadicacionEmpleados',
             compact('empleado','date', 'time', 'noEPS',
                     'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
         );
     }
-    public function DownloadReporteRadicacionEmpleados ($id)
+
+    /**
+     * Presenta el reporte de la radicación de los documentos para descargar
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadReporteRadicacionEmpleados ($id)
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
+
         $empleado = Persona::where('PK_PRSN_Cedula',$id)
                 ->get([ 'PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
                     'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])->first();
+
         $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
                 ->get(['FK_Personal_Documento']);
+
         $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
                 ->get(['PK_DCMTP_Id_Documento']);
+
         $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
                 ->get(['PK_DCMTP_Id_Documento']);
+
         $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
                 ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
                 ->get(['DCMTP_Nombre_Documento']);
+
         $radicadosEPS = StatusOfDocument::with(['DocumentacionPersonas' => function($query )
         {
             $query -> where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
         }])
                 ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
                 ->get();
+
         $radicadosCaja = StatusOfDocument::with(['DocumentacionPersonas' => function($query )
         {
             $query -> where('DCMTP_Tipo_Documento','Caja de compensación')
@@ -616,14 +701,21 @@ class DocumentController extends Controller
         }])
                 ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
                 ->get();
+
         $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
                 ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
                 ->get(['DCMTP_Nombre_Documento']);
+
         return SnappyPdf::loadView('humtalent.reportes.ReporteRadicacionEmpleados',
             compact('empleado', 'date', 'time', 'noEPS', 'PendientesCaja',
                     'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
     }
 
+    /**
+     * Presenta el reporte de la radicación de los documentos para todos los empleados
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteConsolidadoEmpleados(){
         $cont = 1;
         $date = date("d/m/Y");
@@ -667,7 +759,13 @@ class DocumentController extends Controller
             compact('empleados','date','time','cont'));
 
     }
-    public function DownloadReporteConsolidadoEmpleados(){
+
+    /**
+     *  Presenta el reporte de la radicación de los documentos para todos los empleados para descargar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadReporteConsolidadoEmpleados(){
         $cont = 1;
         $date = date("d/m/Y");
         $time = date("h:i A");

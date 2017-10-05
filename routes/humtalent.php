@@ -186,7 +186,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'talento.humano.document.pdfConsolidado'
         ]);
         Route::get('DownloadPdfConsolidado', [
-            'uses' => $controller . 'DocumentController@DownloadReporteConsolidadoEmpleados',
+            'uses' => $controller . 'DocumentController@downloadReporteConsolidadoEmpleados',
             'as' => 'talento.humano.document.DownloadPdfConsolidado'             //ruta que conduce al controlador para descargar el reporte de radicacion
         ]);
         Route::get('pdfRadicacion/{id?}', [
@@ -194,7 +194,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'talento.humano.document.pdfRadicacion'             //ruta que conduce al controlador para mostrar  el reporte que tiene los documentos que el empleado ha radicado y los que le faltan
         ]);
         Route::get('DownloadPdfRadicacion/{id?}', [
-            'uses' => $controller . 'DocumentController@DownloadReporteRadicacionEmpleados',
+            'uses' => $controller . 'DocumentController@downloadReporteRadicacionEmpleados',
             'as' => 'talento.humano.document.DownloadPdfRadicacion'             //ruta que conduce al controlador para descargar el reporte de radicacion
         ]);
         Route::get('index', [

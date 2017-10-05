@@ -27,7 +27,13 @@ class CalendarioController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function getEvent ()     //funcion para obtener tanto lso eventos como las notificaciones que esten registradas
+    /**
+     * Funcion para obtener tanto lso eventos como las notificaciones que esten registradas
+     *                      que han sido radicados.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEvent ()
     {
         $eventos = Event::all();        //se realiza la consulta para traer todos los eventos registrados
         $events = array();      //arreglo para almacenar los eventos y notificaciones
@@ -71,12 +77,23 @@ class CalendarioController extends Controller
         return json_encode($events); //y se envia a la libreria el vector con los datos tanto de los eventos como de las notificaciones
     }
 
-    public function index() //funcion que llama a la vista de calendario
+    /**
+     * Funcion que llama a la vista de calendario
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         return view('humtalent.calendario.calendario');
     }
 
-    public function store (Request $request){   //función que almacena las notificaciones o recordatorios
+    /**
+     * Función que almacena las notificaciones o recordatorios
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function store (Request $request){
         if($request['type'] == 'new') //verifica que la peticón eviada tenga la variable type == new
         {
             Notification::create([      //para asi poder crear el registro nuevo a la base de datos
@@ -88,10 +105,16 @@ class CalendarioController extends Controller
             $idNotif = Notification::where('NOTIF_Descripcion', $request['title'])// inmediatamente se realiza la consulta a la base de datos
                 ->get(['PK_NOTIF_Id_Notificacion'])->last(); //del ultimo registro almacenado para obtener la llave primaria ya que en esta tabla es auntoincrementable
             return json_encode($idNotif['PK_NOTIF_Id_Notificacion']); //se envia a la libreria la llave primaria (PK) de la notificación almacenada
-        }//un vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
+        }//una vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
     }
 
-    public function storeDate (Request $request) //funcion que actualiza la fecha de notificación para los recordatorios, recibe los datos enviados desde un formulario
+    /**
+     *Funcion que actualiza la fecha de notificación para los recordatorios.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeDate (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -112,7 +135,13 @@ class CalendarioController extends Controller
         }
     }
 
-    public function storeDateEvent (Request $request)//en caso de que el susuario cambie de fecha desde el calendario un evento, esta funcuión es llamada para actualizar la fecha de notificación
+    /**
+     *En caso de que el susuario cambie de fecha desde el calendario un evento, esta funcuión es llamada para actualizar la fecha de notificación.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeDateEvent (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -132,7 +161,13 @@ class CalendarioController extends Controller
         }
     }
 
-    public function updateDateNotification (Request $request)//en caso de que el usuario cambie de fecha de la notificación/ evento o alargue su tiempo de duración esta función será llamada
+    /**
+     *En caso de que el usuario cambie de fecha de la notificación/ evento o alargue su tiempo de duración esta función será llamada
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDateNotification (Request $request)
     {
         if ($request['type'] == 'endDateUpdate')//desde el script de la vista se envia el tipo de petición si es endDateUpdate quiere decir que se desea actualizar la fecha final de la notificación o evento
         {
@@ -181,7 +216,13 @@ class CalendarioController extends Controller
         }
     }
 
-    public function updateNotification (Request $request)//en caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
+    /**
+     *En caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateNotification (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -203,7 +244,13 @@ class CalendarioController extends Controller
         }
     }
 
-    public function updateEvent (Request $request) //esta función será llamada cuando se desea editar los datos de un evento desde el calendario
+    /**
+     *Esta función será llamada cuando se desea editar los datos de un evento desde el calendario
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEvent (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -228,7 +275,13 @@ class CalendarioController extends Controller
 
     }
 
-    public function deleteNotification (Request $request)//esta función se invoca cuando se desee eliminar tanto un evnto como una notificación
+    /**
+     *Esta función se invoca cuando se desee eliminar tanto un evnto como una notificación
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteNotification (Request $request)
     {
         if ($request->ajax())//se verifica que se envie desde una petición ajax
         {
@@ -256,7 +309,12 @@ class CalendarioController extends Controller
         }
     }
 
-    public function documentacionCompleta()//Función para mostrar la tabla con los empleados con documentación completa
+    /**
+     *Función para mostrar la tabla con los empleados con documentación completa
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function documentacionCompleta()
     {
         $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
                 ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
@@ -267,7 +325,12 @@ class CalendarioController extends Controller
         return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
     }
 
-    public function documentacionIncompleta() //Función para mostrar la tabla con los empleados con documentación incompleta
+    /**
+     *Función para mostrar la tabla con los empleados con documentación incompleta
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function documentacionIncompleta()
     {
         $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
                                 ->where('NOTIF_Descripcion', 'Documentos incompletos')
@@ -279,7 +342,15 @@ class CalendarioController extends Controller
         return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
     }
 
-    public function desactivarNotificaciones (Request $request)//Funcion que crea el registro de desactivación de las notificaciones para empleados con documentos completos o incompletos, recibe como parametro el tipo de notificación (documentos completos o incompletos )
+    /**
+     *Funcion que crea el registro de desactivación de las notificaciones para empleados con documentos completos o incompletos,
+     * recibe como parametro el tipo de notificación (documentos completos o incompletos )
+     *
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivarNotificaciones (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -301,7 +372,14 @@ class CalendarioController extends Controller
         }
     }
 
-    public function activarNotificaciones (Request $request)//funcion que activa las notificaciones eliminando el registro de desactivación de las mismas
+    /**
+     *Funcion que activa las notificaciones eliminando el registro de desactivación de las mismas
+     *
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function activarNotificaciones (Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))
         {
@@ -320,6 +398,13 @@ class CalendarioController extends Controller
         }
     }
 
+    /**
+     *Funcion para mostrar la tabla de los empleados con documentos completos por medio de ajax
+     *
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxEmpleadosDocumentosCompletos (Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET'))
@@ -343,6 +428,13 @@ class CalendarioController extends Controller
 
     }
 
+    /**
+     *Funcion para mostrar la tabla de los empleados con documentos incompletos por medio de ajax
+     *
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxEmpleadosDocumentosIncompletos (Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
