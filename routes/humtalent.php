@@ -19,24 +19,12 @@ Route::get('/', [
 ]);
 
 
-Route::get('email', function () {
-    $user = User::findOrFail(1);
-    /*
-    Mail::to($user)
-        ->send(new \App\Mail\UserRegistration('Miguel'));
-    return 'True';
-    */
-    return new \App\Mail\EmailTalentoHumano('N1', 'N2', null);
-})->name('forms.fields');
-
-
-
 Route::group(['middleware' => ['auth']], function () {
     $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
 
 //Rutas para el manejo de los empleados
-    Route::group(['prefix' => 'empleado'], function () {
+    Route::group(['prefix' => 'empleado', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
         Route::get('pdfContacto', [
             'uses' => $controller . 'EmpleadoController@reporteContactoEmpleados',
@@ -63,27 +51,27 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'talento.humano.empleado.pdfEstado'             //ruta que conduce al controlador para mostrar  el reporte referente al estado de los empleados
         ]);
         Route::get('DownloadPdfContacto', [
-            'uses' => $controller . 'EmpleadoController@DownloadContactoReporte',
+            'uses' => $controller . 'EmpleadoController@downloadContactoReporte',
             'as' => 'talento.humano.empleado.DownloadPdfContacto'             //ruta que conduce al controlador para descargar el reporte de contacto
         ]);
         Route::get('DownloadPdfDireccion', [
-            'uses' => $controller . 'EmpleadoController@DownloadDireccionReporte',
+            'uses' => $controller . 'EmpleadoController@downloadDireccionReporte',
             'as' => 'talento.humano.empleado.DownloadPdfDireccion'             //ruta que conduce al controlador para descargar el reporte de direccion
         ]);
         Route::get('DownloadPdfSalario1', [
-            'uses' => $controller . 'EmpleadoController@DownloadSalario1Reporte',
+            'uses' => $controller . 'EmpleadoController@downloadSalario1Reporte',
             'as' => 'talento.humano.empleado.DownloadPdfSalario1'             //ruta que conduce al controlador para descargar el reporte de salario organizado por programa
         ]);
         Route::get('DownloadPdfSalario2', [
-            'uses' => $controller . 'EmpleadoController@DownloadSalario2Reporte',
+            'uses' => $controller . 'EmpleadoController@downloadSalario2Reporte',
             'as' => 'talento.humano.empleado.DownloadPdfSalario2'             //ruta que conduce al controlador para descargar el reporte de salario organizado por rol
         ]);
         Route::get('DownloadPdfAfiliaciones', [
-            'uses' => $controller . 'EmpleadoController@DownloadAfiliacionesReporte',
+            'uses' => $controller . 'EmpleadoController@downloadAfiliacionesReporte',
             'as' => 'talento.humano.empleado.DownloadPdfAfiliaciones'             //ruta que conduce al controlador para descargar el reporte de afiliaciones
         ]);
         Route::get('DownloadPdfEstado', [
-            'uses' => $controller . 'EmpleadoController@DownloadEstadoReporte',
+            'uses' => $controller . 'EmpleadoController@downloadEstadoReporte',
             'as' => 'talento.humano.empleado.DownloadPdfEstado'             //ruta que conduce al controlador para descargar el reporte de estado
         ]);
         Route::get('index', [
@@ -249,7 +237,6 @@ Route::group(['middleware' => ['auth']], function () {
                     ], 412);
                 }
             }
-        }
         ]);
         Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
             'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
@@ -448,7 +435,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 //rutas para el manejo del modulo de permisos e incapacidades para los empleados.
-    Route::group(['prefix' => 'permisos'], function () {
+    Route::group(['prefix' => 'permisos', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
         Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
             'as' => 'talento.humano.permisos.listaEmpleados',
@@ -477,7 +464,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'talento.humano.permisos.reporte'
         ]);
         Route::get('DownloadPdfPermisos/{id?}', [
-            'uses' => $controller . 'PermisosController@DownloadReportePermisosEmpleados', //ruta para cdescargar el reporte de permisos
+            'uses' => $controller . 'PermisosController@downloadReportePermisosEmpleados', //ruta para cdescargar el reporte de permisos
             'as' => 'talento.humano.permisos.Downloadreporte'
         ]);
         Route::post('update', [   //ruta para actualizar los permisos
