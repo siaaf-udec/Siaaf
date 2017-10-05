@@ -228,16 +228,19 @@ Route::group(['prefix' => 'document'], function () {
     Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los documentos registrados
         'as' => 'talento.humano.tablaDocumentos',
         'uses' => function (Request $request) {
-            if ($request->ajax()) {
+            if ($request->ajax())
+            {
                 return Datatables::of(DocumentacionPersona::all())
                     ->addIndexColumn()
                     ->make(true);
-            } else {
+            } else
+            {
                 return response()->json([
                     'message' => 'Incorrect request',
                     'code' => 412
                 ], 412);
             }
+        }
         ]);
         Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
             'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
