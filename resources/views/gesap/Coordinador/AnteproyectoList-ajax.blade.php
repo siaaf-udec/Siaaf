@@ -86,37 +86,35 @@
                     {data: 'NPRY_FechaR', className:'none',searchable: true},
                     {data: 'NPRY_FechaL', className:'none',searchable: true},
                     {data: 'NPRY_Estado',searchable: true},
-                    {data: 'RDCN_Min',className:'none',
+                    {data: 'radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {
                             return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
                         }
                     },
-                    {data: 'RDCN_Requerimientos',className:'none',searchable: true,
+                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
                                 return "NO FILE";    
                             }else{
                                 return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
-                            }
-                            
-                            
-                            
+                            }  
                         }
-                    },   
-                    {data: 'Director',className:'none',searchable: true},
-                    {data: 'estudiante1',className:'none',searchable: true},
-                    {data: 'estudiante2', className:'none',searchable: true},
-                    {data: 'Jurado1', className:'none',searchable: true},
-                    {data: 'Jurado2',className:'none',searchable: true},
+                    },  
+                    {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
+                    {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
+                    {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
+                    {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
+                    {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+                     
                     {data:'action',className:'',searchable: false,
                         name:'action',
                         title:'Acciones',
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><form action="#" method="POST" style="display:initial;" id="delete-anteproyect"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{{csrf_token()}}"><button type="submit" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></button></form>',
+                        defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                     }
                 ],
                 buttons: [
@@ -174,7 +172,7 @@
                     dataType: "html",
                 }).done(function (data) 
                 {
-                    route = '/gesap/anteproyecto/asignar/'+O.PK_NPRY_idMinr008;
+                    route = '/gesap/min/asignar/'+O.PK_NPRY_idMinr008;
                    $(".content-ajax").load(route);
                 });
             });

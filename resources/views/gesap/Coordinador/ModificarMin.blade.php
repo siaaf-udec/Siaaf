@@ -272,15 +272,15 @@
         });        
         
         var rules = {
-                title:{required: true},
+                title:{required: true,minlength: 6,maxlength:250},
                 estudiante1:{required: true},
                 estudiante2:{required: true},
-                Keywords:{required: true,minlength: 4},
-                duracion:{required: true,minlength: 1,number: true},
+                Keywords:{required: true,minlength: 4,maxlength:300},
+                duracion:{required: true,minlength: 1,maxlength:2,number: true},
                 FechaR:{required: true},
                 FechaL:{required: true},
                 Min:{extension: "txt|pdf|doc|docx"},
-                Requerimientos:{}
+                Requerimientos:{extension: "txt|pdf|doc|docx"}
             };
             
         var wizard =  $('#form_wizard_1');
@@ -375,11 +375,7 @@
         });    
     
             
-        $('.button-back').on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('min.index.ajax') }}';
-            $(".content-ajax").load(route);
-        });    
+    
             
     });
 

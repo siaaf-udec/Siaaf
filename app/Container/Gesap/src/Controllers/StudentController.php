@@ -27,8 +27,7 @@ use App\Container\gesap\src\Encargados;
 
 class StudentController extends Controller
 {
-    use traits\traitsGesap;
-    
+       
     private $path='gesap.Estudiante.';
     protected $connection = 'gesap';
         

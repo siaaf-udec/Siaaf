@@ -1,5 +1,11 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
         <div class="row">
+            
+        <div class="col-md-6" style="z-index: 1;">
+            <div class="btn-group">
+                <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
+            </div>
+        </div>
         {!! Field::hidden('id', $id) !!}
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
@@ -67,9 +73,9 @@ jQuery(document).ready(function () {
            {data: 'DT_Row_Index'},
            {data: 'PK_BVCS_idObservacion', "visible": false },
            {data: 'BVCS_Observacion', className:'none', searchable: true},
-           {data: 'Jurado', searchable: true},
-           {data: 'Rmin',searchable: true},
-           {data: 'Rreq',searchable: true},
+           {data: 'encargado',render: "[, ].usuarios.name", searchable: true},
+           {data: 'encargado',render: "[, ].usuarios.name",searchable: true},
+           {data: 'encargado',render: "[, ].usuarios.name",searchable: true},
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -89,6 +95,13 @@ jQuery(document).ready(function () {
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
 
+    $('.button-back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('anteproyecto.index.directorList.ajax') }}';
+            $(".content-ajax").load(route);
+        });    
+    
+    
     
 });
 </script>

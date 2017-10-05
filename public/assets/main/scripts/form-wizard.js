@@ -24,7 +24,7 @@ var FormWizard = function () {
                 doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
+                focusInvalid: true, // do not focus the last invalid input
                 rules: rules,
                 messages: messages,
 
@@ -33,8 +33,8 @@ var FormWizard = function () {
                         error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
                     } else if (element.is(':radio')) {
                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else if (element.hasClass('.select2-hidden-accessible')) {
-                        error.insertAfter(element.parent().find(".help-block"));
+                    } else if (element.is(':select')) {     
+                        error.insertAfter(element.next('span'));  // select2
                     } else {
                         error.insertAfter(element);
                     }

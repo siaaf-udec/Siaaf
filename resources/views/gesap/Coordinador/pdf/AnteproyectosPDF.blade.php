@@ -24,14 +24,37 @@
     <meta name="msapplication-TileImage" content="{{ asset('assets/favicons') }}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     {{-- ENDS FAVICONS --}}
+    
     <style>
-
-thead{display: table-header-group;}
-tfoot {display: table-row-group;}
-tr {page-break-inside: avoid;}
-</style>
-    
-    
+        thead{
+            display: table-header-group;
+            text-align: center;!important
+        }
+        tfoot {display: table-row-group;}
+        tr {page-break-inside: avoid;}
+        table .no{
+                font-size: 1em;
+                padding: 5px;
+                text-align: center;
+            }
+        table .unit{
+            text-align: center;
+            width: 25%;
+        }
+        table .desc{
+            width: 40%;
+        }
+        table td.unit, table td.qty, table td.total{
+            font-size: 1em;
+        }
+        table .qty{
+            text-align: left;
+            vertical-align: baseline;
+        }
+        footer{
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 <header class="clearfix">
@@ -39,12 +62,11 @@ tr {page-break-inside: avoid;}
         <img src="{{ asset('css/logo.png') }}">
     </div>
     <div id="company">
-        <h2 class="name">GESAP</h2>
+        <h2 class="name">{{ env('APP_NAME') }}</h2>
         <div> Calle 14 con Avenida 15 <i class="fa fa-map-signs"></i></div>
         <div>Universidad de Cundinamarca - Ext. Facatativá <i class="fa fa-map-marker" aria-hidden="true"></i></div>
         <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
         <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
-    </div>
     </div>
 </header>
 <main>
@@ -52,48 +74,47 @@ tr {page-break-inside: avoid;}
         <thead>
         <tr>
             <th class="no">#</th>
-            <th class="desc">TITULO</th>
+            <th class="">TITULO</th>
             <th class="unit">AUTORES</th>
-            <th class="qty">PALABRAS CLAVE</th>
+            <th class="">PALABRAS CLAVE</th>
         </tr>
         </thead>
         <tbody>
-         <?php $index=1; ?>
-        @foreach ($proyectos as $anteproyecto)   
+         
+        @foreach ($proyectos as  $index => $anteproyecto)  
             <tr>
-            <td class="no">{{$index}}</td>
-            <td class="desc"><h3>{{ $anteproyecto->NPRY_Titulo }}</h3></td>
-            <td class="desc">
-                Director:
-                <br>
-                @if($anteproyecto->Director=="NO ASIGNADO")
-                    ---
-                @else
-                    {{ $anteproyecto->Director }}
-                @endif
+            <td class="no" rowspan="2">{{$index+1}}</td>
+            <td class="desc" rowspan="2"><h3>{{ $anteproyecto->NPRY_Titulo }}</h3></td>
+            <td class="unit" >
+                @foreach ($anteproyecto->director as  $director)  
+                    Director:
+                    <br>
+                    {{$director->usuarios->full_name}}
+                @endforeach
                 <br>    
-                Estudiantes:
-                @if($anteproyecto->estudiante1=="NO ASIGNADO")
-                    ---
-                @else
-                    {{ $anteproyecto->estudiante1 }}
-                @endif
+                
+                @foreach ($anteproyecto->estudiante1 as  $estudiante1)  
+                    Estudiantes:
+                    <br>
+                    {{$estudiante1->usuarios->full_name}}
+                @endforeach
                 <br> 
-                @if($anteproyecto->estudiante2=="NO ASIGNADO")
-                @else
-                    {{ $anteproyecto->estudiante2 }}
-                @endif
+                @foreach ($anteproyecto->estudiante2 as  $estudiante2)  
+                    {{$estudiante2->usuarios->full_name}}
+                @endforeach
+                  
                 
-                
-                
-                
-                
-                <br>    
-                
-            </td>
-            <td class="qty">{{ $anteproyecto->NPRY_Keywords }}</td>
+            </td> 
+            <td class="qty" rowspan="2">
+                    <?php $Keywords = explode(',', $anteproyecto->NPRY_Keywords);?>
+                    @foreach($Keywords as $element)
+                        {{$element}}<br>
+                    @endforeach
+                </td>
             </tr>
-            <?php $index++; ?>
+            <tr>
+                <td class="unit">Duración: {{ $anteproyecto->NPRY_Duracion }} meses</td>
+            </tr>
         @endforeach
         </tbody>
         <tfoot>
@@ -106,7 +127,10 @@ tr {page-break-inside: avoid;}
     </div>
 </main>
 </body>
-
+<footer>
+    
+Pruebas    
+</footer>
 
      
 

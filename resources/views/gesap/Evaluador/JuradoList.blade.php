@@ -258,14 +258,30 @@ jQuery(document).ready(function () {
            {data: 'NPRY_FechaR', className:'none',searchable: true},
            {data: 'NPRY_FechaL', className:'none',searchable: true},
            {data: 'NPRY_Estado',searchable: true},
-           {data: 'RDCN_Min',searchable: true},
-           {data: 'RDCN_Requerimientos',searchable: true},
-           {data: 'Director',className:'none',searchable: true},
-           {data: 'estudiante1',className:'none',searchable: true},
-           {data: 'estudiante2', className:'none',searchable: true},
-           {data: 'Jurado1', className:'none',searchable: true},
-           {data: 'Jurado2',className:'none',searchable: true},
-           {data: 'Concepto',"visible": false },
+           {data: 'radicacion.RDCN_Min',
+                        render: function (data, type, full, meta) 
+                        {
+                            return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+                        }
+                    },
+                    {data: 'radicacion.RDCN_Requerimientos',searchable: true,
+                        render: function (data, type, full, meta) 
+                        {
+                            if(data=="NO FILE"){
+                                return "NO FILE";    
+                            }else{
+                                return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                            }  
+                        }
+                    }, 
+           
+           
+           {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
+           {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
+           {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
+           {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
+           {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+           {data: 'conceptofinal',render: "[, ].conceptos.CNPT_Concepto","visible": false },
            {data:"PK_NPRY_idMinr008",
             name:'action',
                title:'Acciones',
@@ -303,7 +319,12 @@ jQuery(document).ready(function () {
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $('input[name="PK_anteproyecto"]').val(dataTable.PK_NPRY_idMinr008);
-            $('select[name="concepto"]').val(dataTable.Concepto);
+            console.log(dataTable.conceptofinal[0].conceptos);
+            if(dataTable.conceptofinal[0].conceptos!=null){
+                $('select[name="concepto"]').val(dataTable.conceptofinal[0].conceptos.CNPT_Concepto);
+            }else{
+                $('select[name="concepto"]').val("0");
+            }
             $('#modal-create-concept').modal('toggle');
         });
     
@@ -420,6 +441,9 @@ jQuery(document).ready(function () {
         };
     var form_create = $('#form-register-obser');
     var rules_create = {
+        observacion:{required: true},
+        Min:{extension: "txt|pdf|doc|docx"},
+        requerimientos:{extension: "txt|pdf|doc|docx"}
     };
     FormValidationMd.init(form_create,rules_create,false,createObservation());
     

@@ -41,7 +41,7 @@ class User extends Authenticatable implements AuditableContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','last_name' ,'email', 'password',
     ];
 
     /**
@@ -120,7 +120,7 @@ class User extends Authenticatable implements AuditableContract
 
     public function getFullNameAttribute()
     {
-        return $this->name . ' ' . $this->last_name;
+        return $this->name . ' ' . $this->lastname;
     }
 
 }

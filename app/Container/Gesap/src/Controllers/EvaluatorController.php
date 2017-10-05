@@ -2,7 +2,6 @@
 
 namespace App\Container\gesap\src\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -34,9 +33,7 @@ use App\Container\Users\Src\User;
 
 class EvaluatorController extends Controller
 {
-        
-    use traits\traitsGesap;
-    
+            
     private $path='gesap.Evaluador.';
     protected $connection = 'gesap';
     
@@ -250,6 +247,12 @@ class EvaluatorController extends Controller
     {
         return view($this->path.'DirectorList');
     }
+    
+    public function directorAjax()
+    {
+        return view($this->path.'DirectorList-ajax');
+    }
+    
 
     public function show($id,Request $request)
     {   
@@ -268,53 +271,50 @@ class EvaluatorController extends Controller
     
     public function observationsList($id)
     {
-        $observaciones=Observaciones::from('tbl_observaciones AS O')->List($id);
-        return Datatables::of(DB::select($this->getSql($observaciones)))->addIndexColumn()->make(true);
+        $observaciones=Observaciones::from('tbl_observaciones AS O')
+            ->where('FK_TBL_Anteproyecto_id','=',$id)
+                ->where(function($query)
+                        {
+                            $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
+                            $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
+                        })
+                ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NCRD_idCargo')
+                ->with(['encargado' ,'respuesta'])
+                ->get();
+        return Datatables::of($observaciones)->addIndexColumn()->make(true);
     }
 
     public function directorList(Request $request)
     {
-        $anteproyectos = 
-            Anteproyecto::from('TBL_Anteproyecto AS A')->Data()
-                ->join('tbl_encargados AS E',function($join)use($request)
-                {
-                    $join->on(DB::raw('E.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                    ->where('NCRD_Cargo','=',"Director")
-                    ->where('FK_developer_user_id','=',$request->user()->id);
-                });
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->join('gesap.tbl_encargados AS E',function($join)use($request)
+            {
+                $join->on('E.FK_TBL_Anteproyecto_id','=','A.PK_NPRY_idMinr008')
+                ->where('E.NCRD_Cargo', '=', "Director")  
+                ->where('FK_developer_user_id','=',$request->user()->id);
+            })
+            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
+            ->get();
         
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+        return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
    }
     
     public function juryList(Request $request)
     {       
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()->Data()
-               ->join('gesap.tbl_encargados AS E',function($join)use($request)
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->join('gesap.tbl_encargados AS E',function($join)use($request)
+            {
+                $join->on('E.FK_TBL_Anteproyecto_id','=','A.PK_NPRY_idMinr008')
+                ->where(function($query)
                 {
-                    $join->on(DB::raw('E.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                    ->where(function($query)
-                    {
-                      $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
-                      $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
-                    })
-                    ->where('FK_developer_user_id','=',$request->user()->id);
-                })                      
-                ->addSelect(
-                    DB::raw('('
-                        .$this->getSql(
-                            Encargados::join('gesap.tbl_conceptos',function($join)use($request)
-                                        {
-                                            $join->on('PK_NCRD_idCargo','=','FK_TBL_Encargado_id')
-                                            ->where('CNPT_Tipo','=','Anteproyecto')
-                                            ->where('FK_developer_user_id','=',$request->user()->id);
-                                        })
-                                    ->select('CNPT_Concepto')
-                                    ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-                            )
-                        .')AS Concepto'
-                    )    
-                );
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+                    $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
+                    $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
+                })
+                ->where('FK_developer_user_id','=',$request->user()->id);
+            })
+            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2','conceptofinal'])
+            ->get();
+        return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
    }
 
 }

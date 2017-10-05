@@ -6,6 +6,7 @@
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
                 </div>
             </div>
+    <br>
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
             <div class="form-wizard">
                 <div class="form-body">
@@ -54,7 +55,7 @@
                         <div class="tab-pane active" id="tab1">
                             <h3 class="block">Datos del Proyecto</h3>
                             <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                                <div class="col-xs-12 col-md-12 col-lg-12 ">
                                     <div class="form-group form-md-line-input">
                                         <div class="input-icon">
                                             {{ Form::textarea('title', null, 
@@ -82,7 +83,7 @@
                                         [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
                                 </div>
                                 <div class="col-xs-12 col-md-8 col-lg-6">
-                                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),null,
+                                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),0,
                                      [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
                                 </div>
                             </div>
@@ -145,33 +146,7 @@
                                 </div> 
                             </div>
                         </div>
-                <div class="tab-pane" id="tab5">
-                    <h3 class="block">Datos</h3>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Anteproyecto:</label>
-                            <div class="col-md-4">
-                                            <p class="form-control-static" data-display="title">  </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Director:</label>
-                                        <div class="col-md-4">
-                                            <p class="form-control-static" data-display="Keywords"> </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Jurado 1:</label>
-                                        <div class="col-md-4">
-                                            <p class="form-control-static" data-display="estudiante1"> </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Jurado 2:</label>
-                                        <div class="col-md-4">
-                                            <p class="form-control-static" data-display="estudiante2"> </p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="tab-pane" id="tab5"></div>
                             </div>  
                         </div>  
                         <div class="form-actions">
@@ -199,10 +174,12 @@
 </script>
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
+    
     $('.portlet-form').attr("id","form_wizard_1");
-    $('.select2-selection--single').addClass('form-control');    
+
+    
     jQuery(document).ready(function() {
-            
+        $('.select2-selection--single').addClass('form-control');
         var form = $('#form-register-min');
 
         /*Configuracion de input tipo fecha*/
@@ -244,15 +221,15 @@
            
             
             var rules = {
-                title:{required: true},
+                title:{required: true,minlength: 6,maxlength:250},
                 estudiante1:{required: true},
                 estudiante2:{required: true},
-                Keywords:{required: true,minlength: 4},
-                duracion:{required: true,minlength: 1,number: true},
+                Keywords:{required: true,minlength: 4,maxlength:300},
+                duracion:{required: true,minlength: 1,maxlength:2,number: true},
                 FechaR:{required: true},
                 FechaL:{required: true},
                 Min:{required: true,extension: "txt|pdf|doc|docx"},
-                Requerimientos:{}
+                Requerimientos:{extension: "txt|pdf|doc|docx"}
             };
             
             var wizard =  $('#form_wizard_1');

@@ -32,19 +32,6 @@ class Encargados extends Model
     
     
     
-    public function scopeNombre($query,$cargo) {
-        $query->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
-              ->where('NCRD_Cargo',$cargo)
-              ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-              ->select(DB::raw('concat(name," ",lastname)'));
-    }
-    
-    public function scopeId($query,$cargo) {
-        $query->join('developer.users','gesap.tbl_encargados.FK_developer_user_id','=','developer.users.id')
-              ->where('NCRD_Cargo',$cargo)
-              ->where('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=',DB::raw('A.PK_NPRY_idMinr008'))
-              ->select(DB::raw('concat(name," ",lastname)'));
-    }
     
     public function scopeSearch($query,$id) {
         $query->join('developer.users','FK_developer_user_id','=','users.id')
@@ -53,6 +40,6 @@ class Encargados extends Model
                 $join->on('gesap.tbl_encargados.FK_TBL_Anteproyecto_id','=','PK_NPRY_idMinr008');    
                 $join->where('PK_NPRY_idMinr008','=',$id);            
             })
-            ->select(DB::raw('FK_developer_user_id AS Cedula'),'PK_NCRD_idCargo','NCRD_Cargo' );
+            ->select('FK_developer_user_id AS Cedula','PK_NCRD_idCargo','NCRD_Cargo' );
     }
 }

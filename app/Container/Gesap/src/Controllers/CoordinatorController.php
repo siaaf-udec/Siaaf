@@ -2,7 +2,6 @@
 
 namespace App\Container\gesap\src\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -20,16 +19,18 @@ use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Overall\Src\Facades\UploadFile;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\Users\Src\User;
 
+use Carbon\Carbon;
 
 class CoordinatorController extends Controller
 {
-    use traits\traitsGesap;
     
     private $path='gesap.Coordinador.';
     
@@ -46,6 +47,7 @@ class CoordinatorController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index_ajax(Request $request)
@@ -66,18 +68,19 @@ class CoordinatorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {    
        if($request->ajax() && $request->isMethod('GET'))
        {
-            $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+            $estudiantes=User::orderBy('name', 'asc')
                 ->whereHas('roles', function($e){
                     $e->where('name', 'Student_Gesap');
                 })
-                ->orderBy('name', 'asc')
-                ->pluck('name','id')
+                ->get(['name','lastname','id'])    
+                ->pluck('full_name','id')
                 ->toArray();
             return view($this->path.'RegistroMin',compact('estudiantes'));
         }
@@ -100,6 +103,9 @@ class CoordinatorController extends Controller
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
+            $date = Carbon::now();
+            $date= $date->format('his');
+        
             $anteproyecto= new Anteproyecto();
             $anteproyecto->NPRY_Titulo=$request['title'];
             $anteproyecto->NPRY_Keywords=$request['Keywords'];
@@ -111,16 +117,18 @@ class CoordinatorController extends Controller
             $idanteproyecto=$anteproyecto->PK_NPRY_idMinr008;
             
             $radicacion= new Radicacion();
-            $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
-            \Storage::disk('local')->put($request['Min']->getClientOriginalName(),  \File::get($request->file('Min')));
+            $nombre = $date."_".$request['Min']->getClientOriginalName();
+            $radicacion->RDCN_Min=$nombre;
+            \Storage::disk('local')->put($nombre,  \File::get($request->file('Min')));
             if($request['Requerimientos']=="Vacio")
             {
                 $radicacion->RDCN_Requerimientos="NO FILE";
             }
             else
             {
-                $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();        
-                \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(), \File::get($request->file('Requerimientos')));
+                $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
+                $radicacion->RDCN_Requerimientos=$nombre;
+                \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
             $radicacion->FK_TBL_Anteproyecto_id=$idanteproyecto;
             
@@ -161,6 +169,8 @@ class CoordinatorController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id,Request $request)
@@ -168,12 +178,12 @@ class CoordinatorController extends Controller
         if($request->ajax() && $request->isMethod('GET'))
        {
 
-            $estudiantes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+            $estudiantes=User::orderBy('name', 'asc')
                 ->whereHas('roles', function($e){
                     $e->where('name', 'Student_Gesap');
                 })
-                ->orderBy('name', 'asc')
-                ->pluck('name','id')
+                ->get(['name','lastname','id'])    
+                ->pluck('full_name','id')
                 ->toArray();
             
             $anteproyecto=Anteproyecto::Project($id)->get();
@@ -201,16 +211,16 @@ class CoordinatorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
-                
+        $date = Carbon::now();
+        $date= $date->format('his');
         $anteproyecto = Anteproyecto::findOrFail($request['PK_proyecto']);
-        $anteproyecto->NPRY_Titulo=$request['title'];
+        $anteproyecto->NPRY_Titulo=$request->get('title');
         $anteproyecto->NPRY_Keywords=$request['Keywords'];
         $anteproyecto->NPRY_Duracion=$request['duracion'];
         $anteproyecto->NPRY_FechaR=$request['FechaR'];
@@ -220,13 +230,17 @@ class CoordinatorController extends Controller
         $radicacion= Radicacion::findOrFail($request['PK_radicacion']);
         if($request['Min']!="Vacio")
         {
-            $radicacion->RDCN_Min=$request['Min']->getClientOriginalName();
-            \Storage::disk('local')->put($request['Min']->getClientOriginalName(),  \File::get($request->file('Min')));
+            \Storage::delete($radicacion->RDCN_Min);
+            $nombre = $date."_".$request['Min']->getClientOriginalName();
+            $radicacion->RDCN_Min=$nombre;
+            \Storage::disk('local')->put($nombre,  \File::get($request->file('Min')));
         }
         if($request['Requerimientos']!="Vacio")
         {
-            $radicacion->RDCN_Requerimientos=$request['Requerimientos']->getClientOriginalName();
-            \Storage::disk('local')->put($request['Requerimientos']->getClientOriginalName(), \File::get($request->file('Requerimientos')));
+            \Storage::delete($radicacion->RDCN_Requerimientos);
+            $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
+            $radicacion->RDCN_Requerimientos=$nombre;
+            \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
         }
         $radicacion->save();
             
@@ -297,6 +311,7 @@ class CoordinatorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy($id,Request $request)
@@ -318,8 +333,13 @@ class CoordinatorController extends Controller
         
     }
     
-    
-    /*ASIGNACION DE DOCENTES*/
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function assign($id,Request $request)
     {   
         if($request->ajax() && $request->isMethod('GET'))
@@ -328,13 +348,13 @@ class CoordinatorController extends Controller
                 ->where('PK_NPRY_idMinr008','=',$id)
                 ->get();
         
-            $docentes=User::select(DB::raw('CONCAT(name, " ", lastname) AS name'),'id')
+            $docentes=User::orderBy('name', 'asc')
                 ->whereHas('roles', function($e){
                     $e->where('name', 'Coordinator_Gesap');
                     $e->orwhere('name', '=', 'Evaluator_Gesap');
                 })
-                ->orderBy('name', 'asc')
-                ->pluck('name','id')
+                ->get(['name','lastname','id'])    
+                ->pluck('full_name','id')
                 ->toArray();
         
             $encargados=Encargados::Search($id)
@@ -357,6 +377,13 @@ class CoordinatorController extends Controller
         }
     }
     
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function saveAssign(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
@@ -429,25 +456,32 @@ class CoordinatorController extends Controller
         }
     }
   
-    public function indexPDF()
+    public function reporteAllProject()
     {
-        $proyectos=DB::select($this->getSql(Anteproyecto::from('TBL_Anteproyecto AS A')->Data()));
-        
+        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A') 
+            ->select('PK_NPRY_idMinr008','NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado')
+            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
+            //->whereNotBetween('NPRY_FechaR',["2017-07-05","2017-07-11"])
+//            ->groupBy(['NPRY_FechaR',''])
+            ->get();
+            //return $proyectos->toSql();     
         return view($this->path.'pdf.AnteproyectosPDF',compact('proyectos'));
     }
     
-    public function createPDF()
+    public function reporteAllProjectPrint()
     {
-        $proyectos=DB::select($this->getSql(Anteproyecto::from('TBL_Anteproyecto AS A')->Data()));
+        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
         
         return SnappyPdf::loadView($this->path.'pdf.AnteproyectosPDF',compact('proyectos'))->download('ReporteAnteproyectosGesap.pdf');
     }
     
     public function projectList()
     {
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->Data();
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
-    
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')
+            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
+            ->get();
+        return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
+        
     }
     
     

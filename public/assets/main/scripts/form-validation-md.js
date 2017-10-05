@@ -12,7 +12,7 @@ var FormValidationMd = function() {
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
-            focusInvalid: false,
+            focusInvalid: true,
             ignore: "",
             messages: messages,
             rules: rules,
