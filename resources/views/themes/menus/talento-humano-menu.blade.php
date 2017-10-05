@@ -5,42 +5,13 @@
         <span class="arrow {{ active(['talento.humano.*'], 'open') }}"></span>
     </a>
     <ul class="sub-menu">
-
-
-        {{-- INICIO MENÚ ITEM ES SOLO DE EJEMPLO DE CÓMO SE DEBE CREAR EL MENÚ --}}
-        <li class="nav-item {{ active(['talento.humano.index'], 'start active open') }}">
-            <a href="{{ route('talento.humano.index') }}" class="nav-link">
-                <i class="icon-frame"></i>
-                <span class="title">Ejemplo</span>
-            </a>
-        </li>
-        {{--
-                En el archivo de rutas específicamente para las rutas
-                de tipo resource añadir una alias con el prefijo
-
-                'talento.humano.'
-
-                como se muestra en el siguiente ejemplo con el fin de
-                usar correctamente este menú:
-
-
-                 Route::resource('rrhh', 'GameController', [
-                  'names' => [
-                          'index' => 'talento.humano.rrhh.index',
-                          'create' => 'talento.humano.rrhh.create',
-                   ]
-                 ]);
-
-        --}}
-        {{-- FIN MENÚ ITEM ES SOLO DE EJEMPLO DE CÓMO SE DEBE CREAR EL MENÚ --}}
         @permission('FUNC_RRHH')
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.empleado.*'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-users"></i>
+                <i class="fa fa-group"></i>
                 <span class="title">Personal</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['talento.humano.empleado.*'], 'open') }}"></span>
             </a>
-
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.empleado.index'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.index') }}" class="nav-link nav-toggle">
@@ -48,20 +19,19 @@
                         <span class="title">Empleados</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['talento.humano.empleado.regisArchivo'], 'start active open') }}">
+                <li class="nav-item {{ active(['talento.humano.empleado.regisArchivo'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.regisArchivo') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
                         <span class="title">Registro por archivo</span>
                     </a>
                 </li>
-
-                <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }}">
+                <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.buscarRadicar') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Radicar Documentos</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['talento.humano.empleado.email'], 'start active open') }}">
+                <li class="nav-item {{ active(['talento.humano.empleado.email'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.email') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Enviar Correo</span>
@@ -71,11 +41,11 @@
             </ul>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.document.*'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Documentación</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['talento.humano.document.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.document.index'], 'start active open') }}">
@@ -107,11 +77,11 @@
             </li>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.historialDocumentos.empleados', 'talento.humano.empleado.tablaEmpleadosRetirados'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-folder-o"></i>
                 <span class="title">Historial</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['talento.humano.historialDocumentos.empleados', 'talento.humano.empleado.tablaEmpleadosRetirados'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.historialDocumentos.empleados'], 'start active open') }}">
@@ -129,33 +99,32 @@
             </ul>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.Tinduccion'], 'start active open') }}">
             <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
                 <i class="fa fa-newspaper-o"></i>
                 <span class="title">Inducción</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.permisos.listaEmpleados'], 'start active open') }}">
             <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link nav-toggle">
                 <i class="fa fa-file-o"></i>
                 <span class="title">Permisos</span>
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.calendario.index'], 'start active open') }}">
             <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-calendar"></i>
                 <span class="title">Calendario</span>
 
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ active(['talento.humano.empleado.Reportes'], 'start active open') }}">
             <a href="{{ route( 'talento.humano.empleado.Reportes') }}" class="nav-link nav-toggle">
                 <i class="fa fa-bar-chart"></i>
                 <span class="title">Reportes</span>
             </a>
         </li>
         @endpermission
-
     </ul>
 </li>
