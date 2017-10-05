@@ -26,6 +26,12 @@ class InduccionController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * Función que muestra el listado de empleados nuevos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function listarEmpleadosNuevos(Request $request)
     {
         if ($request->ajax())
@@ -44,8 +50,10 @@ class InduccionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Función que muestra el paso de la induccion en la que se encuentra un empleado.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $id)
@@ -73,8 +81,12 @@ class InduccionController extends Controller
             );
         }
     }
+
     /**
+     * Función que muestra el listado de empleados nuevos por medio de una petición ajax.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function ajaxEmpleadosNuevos (Request $request)
     {
@@ -90,6 +102,7 @@ class InduccionController extends Controller
             );
         }
     }
+
     /**
      * Store a newly created resource in storage.
      *

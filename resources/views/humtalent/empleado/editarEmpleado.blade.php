@@ -25,16 +25,16 @@
                         {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                          ['help' => 'Digite la cedula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
 
-                        {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
                                                          ['help' => 'Digite un correo válido.','icon'=>'fa fa-envelope-open '] ) !!}
 
                         {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
                                                          ['help' => 'Digite un numero de telefono o celular.','icon'=>'fa fa-phone'] ) !!}
 
-                        {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'90','autocomplete'=>'off'],
                                                          ['help' => 'Digite la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'35','autocomplete'=>'off'],
                                                          ['help' => 'Digite la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
 
                         {!! Field:: text('PRSN_Salario',null,['label'=>'Salario del empleado:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -151,7 +151,7 @@ jQuery(document).ready(function() {
         PRSN_Nombres: {required: true},
         PRSN_Apellidos: {required: true},
         PRSN_Correo: {required: true,email: true},
-        PK_PRSN_Cedula: {required: true,},
+        PK_PRSN_Cedula: {required: true,number: true},
         PRSN_Telefono: {required: true},
         PRSN_Ciudad: {required: true},
         PRSN_Area: { required: true},

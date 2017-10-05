@@ -129,7 +129,7 @@
             };
             var formBrowse = $('#from_users_browse');
             var rulesBrowse ={
-                PK_PRSN_Cedula : {minlength: 3,required: true}
+                PK_PRSN_Cedula : {minlength: 3,required: true,number: true}
             };
             FormValidationMd.init(formBrowse,rulesBrowse,false,browseUsers());
     });

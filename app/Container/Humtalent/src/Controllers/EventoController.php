@@ -28,7 +28,13 @@ class EventoController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function tablaEventos(Request $request){ //funcion que consulta los eventos registrados y los envía al datatable correspondiente
+    /**
+     * Función que consulta los eventos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function tablaEventos(Request $request){
         if ($request->ajax()) {
             return DataTables::of(Event::all())
                 ->addIndexColumn()
@@ -40,6 +46,14 @@ class EventoController extends Controller
             ], 412);
         }
     }
+
+    /**
+     * Función que muestra la tabla de los asistentes a un evento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function tablaAsistentes(Request $request, $id){
         $asistentes=Asistent::with('Personas')->where('FK_TBL_Eventos_IdEvento',$id)->get();
         $empleados=[];
@@ -57,6 +71,14 @@ class EventoController extends Controller
             ], 412);
         }
     }
+
+    /**
+     * Función que muestra un listado de los posibles asistentes a un evento .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id_Evento
+     * @return \Illuminate\Http\Response
+     */
     public function posiblesAsistentes(Request $request, $id_Evento){
         $this->id=$id_Evento;
         $asistentes=Persona::whereDoesntHave('Asistents',function ($query) {
@@ -73,6 +95,15 @@ class EventoController extends Controller
             ], 412);
         }
     }
+
+    /**
+     * Función que permite registrar un asistente a un evento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @param  int  $ced
+     * @return \Illuminate\Http\Response
+     */
     public function registrarAsistentes(Request $request,$id, $ced){
         if($request->ajax() && $request->isMethod('GET')) {
             Asistent::create([
@@ -93,6 +124,13 @@ class EventoController extends Controller
 
     }
 
+    /**
+     * Función que muestra los asistentes a un determinado evento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function consultarAsistentes(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -107,6 +145,13 @@ class EventoController extends Controller
         }
     }
 
+    /**
+     * Función que muestra el listado de todos los empleados registrados.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function listaEmpleados(Request $request, $id){
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.registrarAsistentes',compact('id'));
@@ -119,7 +164,15 @@ class EventoController extends Controller
         }
     }
 
-    public function registrarTodosAsistentes(Request $request,$id, $datos){
+    /**
+     * Función que permite seleccionar a muchos asistentes al tiempo a un determinado evento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @param  int  $datos
+     * @return \Illuminate\Http\Response
+     */
+    public function registrarTodosAsistentes(Request $request, $id, $datos){
         $datos=explode(';',$datos);
         if($request->ajax() && $request->isMethod('POST')){
             for ($i=0; $i< count($datos)-1; $i++){
@@ -141,10 +194,19 @@ class EventoController extends Controller
         }
 
     }
-    public function deleteAsistentes(Request $request,$id, $ced){
+
+    /**
+     * Función que permite eliminar asistentes que ya hayan sido registrados en un evento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @param  int  $ced
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAsistentes(Request $request, $id, $ced){
         if($request->ajax() && $request->isMethod('GET')){
-        Asistent::where('FK_TBL_Persona_Cedula',$ced)
-                ->where('FK_TBL_Eventos_IdEvento',$id)->delete();
+        Asistent::where('FK_TBL_Persona_Cedula', $ced)
+                ->where('FK_TBL_Eventos_IdEvento', $id)->delete();
         return AjaxResponse::success(
             '¡Proceso exitoso!',
             'El asistente fue eliminado correctamente.'
@@ -155,21 +217,24 @@ class EventoController extends Controller
             );
         }
     }
-    /**
-     * @return UserInterface
-     */
 
     /**
-     * Display a listing of the resource.
+     * Muestra todos los eventos que esten registrados
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()//muestra todos los eventos que esten registrados
+    public function index()
     {
         return view('humtalent.eventos.listaEventos');
     }
 
-    public function indexAjax(Request $request)//muestra todos los eventos que esten registrados
+    /**
+     * Muestra todos los eventos que esten registrados por medio de petición ajax
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAjax(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.ajaxListaEventos');
@@ -183,11 +248,12 @@ class EventoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Presenta el formulario para registrar un documento.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)//preseta el formulario para registrar un documento
+    public function create(Request $request)
     {
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.registrarEvento');
@@ -201,12 +267,12 @@ class EventoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un documento enviado desde el formulario del la funcion create.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)//almacena un documento enviado desde el formulario del la funcion create
+    public function store(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST')){
             $hora=$request['EVNT_Hora'];
@@ -233,23 +299,13 @@ class EventoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Presenta el formulario para editar un evento deseado.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)//presenta el formulario para editar un evento deseado
+    public function edit(Request $request, $id)//
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
@@ -267,17 +323,17 @@ class EventoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Se realiza la actulización de datos de los eventos.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)//se realiza la actulización de datos de los eventos
+    public function update(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')) {
-            $request['EVNT_Hora']=strtotime($request['EVNT_Hora']);
-            $request['EVNT_Hora']=date("H:i",$request['EVNT_Hora']);
+        if($request->ajax() && $request->isMethod('POST'))
+        {
+            $request['EVNT_Hora'] = strtotime($request['EVNT_Hora']);
+            $request['EVNT_Hora'] = date("H:i",$request['EVNT_Hora']);
 
             $documento= Event::find($request['PK_EVNT_IdEvento']);
             $documento->fill($request->all());
@@ -286,22 +342,24 @@ class EventoController extends Controller
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
+        }
+        else
+        {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
-
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Se elimina el registro de un documento.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)//se elimina el registro de un documento
+    public function destroy(Request $request,$id)//
     {
         if($request->ajax() && $request->isMethod('DELETE')){
         Asistent::where('FK_TBL_Eventos_IdEvento',$id)->delete();

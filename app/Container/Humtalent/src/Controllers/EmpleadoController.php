@@ -39,16 +39,22 @@ class EmpleadoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Muestra todos los empleados registrados.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()//muestra todos los empleados registrados
+    public function index()
     {
         return view('humtalent.empleado.tablasEmpleados');
     }
 
-    public function indexAjax (Request $request)//muestra todos los empleados registrados
+    /**
+     * Muestra todos los empleados registrados por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAjax (Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET'))
         {
@@ -63,6 +69,12 @@ class EmpleadoController extends Controller
         }
     }
 
+    /**
+     * Muestra todos los empleados que tienen estado retirado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxEmpleadosRetirados (Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET'))
@@ -78,6 +90,12 @@ class EmpleadoController extends Controller
         }
     }
 
+    /**
+     * Muestra todos los empleados registrados para acceder a su historial de documentación.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxListaEmpleados (Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET'))
@@ -93,6 +111,13 @@ class EmpleadoController extends Controller
         }
     }
 
+    /**
+     * Función que muestra el formulario para editar un empleado retirado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function editarEmpleadoRetirado (Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET'))
@@ -111,12 +136,14 @@ class EmpleadoController extends Controller
             );
         }
     }
+
     /**
-     * Show the form for creating a new resource.
+     * Función que muestra el formulario de registro de un nuevo empleado.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create (Request $request)//muestra el formulario de registro de un nuevo empleado
+    public function create (Request $request)//
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
@@ -130,13 +157,14 @@ class EmpleadoController extends Controller
             );
         }
     }
+
     /**
-     * Store a newly created resource in storage.
+     * Función que almacena en la base de datos un nuevo registro de un empleado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store (Request $request)//se alamacena en la base de datos un nuevo registro del empleado
+    public function store (Request $request)//
     {
         if ($request->ajax() && $request->isMethod('POST')){
             Persona::create([
@@ -168,7 +196,14 @@ class EmpleadoController extends Controller
             );
         }
     }
-    public function importUsers (Request $request)//se almacena en la base de datos el registro del archivo de excel
+
+    /**
+     * Función que almacena en la base de datos el registro del archivo de excel.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function importUsers (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -201,7 +236,7 @@ class EmpleadoController extends Controller
                         'PRSN_Estado_Persona'    => mb_strtoupper($datum['estado'], 'UTF-8'),
                     ]);
                 }
-            };
+            }
             if ($cont > 0)
             {
                 return AjaxResponse::success(
@@ -276,12 +311,13 @@ class EmpleadoController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Presenta el formulario con los datos para editar el regitro de un empleado deseado.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit (Request $request, $id)    //presenta el formulario con los datos para editar el regitro de un empleado deseado
+    public function edit (Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
@@ -299,14 +335,14 @@ class EmpleadoController extends Controller
             );
         }
     }
+
     /**
-     * Update the specified resource in storage.
+     * Se realiza la actualización de los datos de un empleado.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update (Request $request)//re realiza la actualización de los datos
+    public function update (Request $request)//
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -326,27 +362,28 @@ class EmpleadoController extends Controller
             );
         }
     }
+
     /**
-     * Remove the specified resource from storage.
+     * Se realiza la eliminación de un registro de empleado en caso de que asi se desee.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)//se realiza la eliminación de un registro de empleado en caso de que asi se desee
+    public function destroy(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('DELETE'))
         {
             Induction::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula',$id)
+                    ->where('FK_TBL_Persona_Cedula', $id)
                     ->delete();
             StatusOfDocument::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula',$id)
+                    ->where('FK_TBL_Persona_Cedula', $id)
                     ->delete();
             Asistent::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula',$id)
+                    ->where('FK_TBL_Persona_Cedula', $id)
                     ->delete();
-            Permission::where('FK_TBL_Persona_Cedula',$id)
-                    ->delete();
+            Permission::where('FK_TBL_Persona_Cedula', $id)->delete();
             Persona::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -362,6 +399,11 @@ class EmpleadoController extends Controller
         }
     }
 
+    /**
+     * Muestra la vista del reporte de datos de contacto de los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteContactoEmpleados()
     {
         $date = date("d/m/Y");
@@ -374,7 +416,12 @@ class EmpleadoController extends Controller
         );
     }
 
-    public function DownloadContactoReporte()
+    /**
+     * Permite descargar el reporte de datos de contacto de los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadContactoReporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -388,6 +435,11 @@ class EmpleadoController extends Controller
         )->download('ReporteContacto.pdf');
     }
 
+    /**
+     * Muestra la vista del reporte de datos de dirección de los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteDireccionEmpleados()
     {
         $date = date("d/m/Y");
@@ -402,7 +454,12 @@ class EmpleadoController extends Controller
         );
     }
 
-    public function DownloadDireccionReporte()
+    /**
+     * Permite descargar el reporte de datos de dirección de los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadDireccionReporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -414,6 +471,11 @@ class EmpleadoController extends Controller
         )->download('ReporteDireccion.pdf');
     }
 
+    /**
+     * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por programa.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteSalario1Empleados()
     {
         $date = date("d/m/Y");
@@ -428,7 +490,12 @@ class EmpleadoController extends Controller
         );
     }
 
-    public function DownloadSalario1Reporte()
+    /**
+     * Permite descargar el reporte correspondiente al salario de los empleados ordenado por programa.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadSalario1Reporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -440,6 +507,11 @@ class EmpleadoController extends Controller
         )->download('ReporteSalarioArea.pdf');
     }
 
+    /**
+     * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por rol.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteSalario2Empleados()
     {
         $date = date("d/m/Y");
@@ -452,7 +524,12 @@ class EmpleadoController extends Controller
         );
     }
 
-    public function DownloadSalario2Reporte()
+    /**
+     * Permite descargar el reporte correspondiente al salario de los empleados ordenado por rol.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadSalario2Reporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -466,6 +543,11 @@ class EmpleadoController extends Controller
         )->download('ReporteSalarioRol.pdf');
     }
 
+    /**
+     * Muestra la vista del reporte correspondiente a las afiliaciones que tienen los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteAfiliacionesEmpleados()
     {
         $date = date("d/m/Y");
@@ -481,7 +563,12 @@ class EmpleadoController extends Controller
 
     }
 
-    public function DownloadAfiliacionesReporte()
+    /**
+     * Permite descargar el reporte correspondiente a las afiliaciones que tienen los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadAfiliacionesReporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -495,6 +582,11 @@ class EmpleadoController extends Controller
         )->download('ReporteAfiliaciones.pdf');
     }
 
+    /**
+     * Muestra la vista del reporte correspondiente al estado que tienen los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function reporteEstadoEmpleados()
     {
         $date = date("d/m/Y");
@@ -509,7 +601,12 @@ class EmpleadoController extends Controller
         );
     }
 
-    public function DownloadEstadoReporte()
+    /**
+     * Permite descargar el reporte correspondiente al estado que tienen los empleados.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadEstadoReporte()
     {
         $date = date("d/m/Y");
         $time = date("h:i A");

@@ -27,15 +27,25 @@ class PermisosController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function listaPermisos(Request $request, $id) //función que presenta la  vista con lista de los permisos, en un data table  relacionados con el empleado seleccionado,recibe el id del empleado
+    /**
+     * Función que presenta la  vista con lista de los permisos, en un data table
+     * relacionados con el empleado seleccionado,recibe el id del empleado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listaPermisos(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
+            //se realiza la consulta del empleado seleccionado para presentar los datos
             $empleado = Persona::where('PK_PRSN_Cedula', $id)
                         ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos',
                                'PRSN_Telefono', 'PRSN_Correo']
-                        )->first();     //se realiza la consulta del empleado seleccionado para presentar los datos
-            return view('humtalent.permisos.tablaPermisos', compact('empleado')); //se presenta la vista con los datos del empleado y un dataTable
+                        )->first();
+            //se presenta la vista con los datos del empleado y un dataTable
+            return view('humtalent.permisos.tablaPermisos', compact('empleado'));
         }
         else
         {
@@ -46,6 +56,12 @@ class PermisosController extends Controller
         }
     }
 
+    /**
+     * Función que presenta el listado de empleados registrados por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function ajaxListaEmpleados (Request $request)
     {
         if($request->ajax() && $request->isMethod('GET'))
@@ -61,7 +77,13 @@ class PermisosController extends Controller
         }
     }
 
-    public function store(Request $request) //función que registra un permiso a travez de un formulario
+    /**
+     * Función que registra un permiso a través de un formulario
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -83,13 +105,23 @@ class PermisosController extends Controller
             );
         }
     }
+
+    /**
+     * Función ejecutada por el dataTable que consulta los permisos de un empleado seleccionado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function consultaPermisos(Request $request, $id)
-    {   //función ejecutada por el dataTable que consulta los permisos de un empleado seleccionado
+    {
+        //realiza la consulta de los permisos
         $permisos = Permission::where('FK_TBL_Persona_Cedula', $id)
-                    ->get(['PERM_Fecha','PERM_Descripcion','PK_PERM_IdPermiso']); //realiza la consulta de los permisos
+                    ->get(['PERM_Fecha','PERM_Descripcion','PK_PERM_IdPermiso']);
         if ($request->ajax())
         {
-            return DataTables::of($permisos ) //se retorna al dataTable la información consultada
+            //se retorna al dataTable la información consultada
+            return DataTables::of($permisos )
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -101,7 +133,14 @@ class PermisosController extends Controller
             ], 412);
         }
     }
-    public function update (Request $request) //función que actualiza los datos de un permiso seleccionado
+
+    /**
+     * Función que actualiza los datos de un permiso seleccionado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update (Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -121,8 +160,16 @@ class PermisosController extends Controller
             );
         }
     }
+
+    /**
+     * Función que elimina el registro de un permiso seleccionado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy (Request $request, $id)
-    {   //función que elimina el registro de un permiso seleccionado
+    {   //
         if($request->ajax() && $request->isMethod('DELETE'))
         {
             Permission::destroy($id);
@@ -139,7 +186,14 @@ class PermisosController extends Controller
             );
         }
     }
-    public function ReportePermisosEmpleados ($id)
+
+    /**
+     * Función que genera la vista del reporte de los permisos que cada empleado tiene.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reportePermisosEmpleados ($id)
     {
         $cont = 1;
         $date = date("d/m/Y");
@@ -155,7 +209,14 @@ class PermisosController extends Controller
             compact('empleado', 'date', 'time', 'permisos', 'total', 'cont')
         );
     }
-    public function DownloadReportePermisosEmpleados ($id)
+
+    /**
+     * Función que permite descargar el reporte de los permisos que cada empleado tiene.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadReportePermisosEmpleados ($id)
     {
         $cont = 1;
         $date = date("d/m/Y");

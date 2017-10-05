@@ -9,7 +9,7 @@
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Registro de empleados mediante archivo excel:'])
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-7 col-md-offset-1">
                 <div class="m-heading-1 border-green m-bordered">
                     <p> <strong>Instrucciones para subir un archivo:</strong><br>
                         <br><strong>1.)</strong> El archivo debe contener los mismos campos que el formulario de registro.<br>
@@ -31,10 +31,11 @@
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rol</strong>
                         <br><strong>5.)</strong> No es necesario que las columnas sigan el orden mostrado.<br>
-                        <br><strong>6.)</strong> Las columnas Dirección, Eps, Fpensiones y Cajacompensacion pueden estar vacias las demas deben tener información.</p>
+                        <br><strong>6.)</strong> Las columnas Dirección, Eps, Fpensiones y Cajacompensacion pueden estar vacias las demas deben tener información.<br>
+                        <br><strong>7.)</strong> El archivo debe tener extensión .xlsx .xls o .csv .<br></p>
                 </div>
-            </div>
-            <div class="col-md-5">
+
+
                 {!! Form::open (['id'=>'form_file', 'url'=> ['/forms'], 'files' => true]) !!}
                 <br><br><br>
                 <div class="fileinput fileinput-new" data-provides="fileinput"  >
@@ -122,13 +123,13 @@
         };
         var form = $('#form_file');
         var formRules = {
-            import_file: {required: true,
+            import_file: {
+                required: true,
                 extension: "xls|csv|xlsx"
             }
         };
-        var message = 'Debe seleccionar un archivo con terminación .xls o .csv' ;
+        var message = 'Extension del archivo debe ser .xls o .csv' ;
         FormValidationMd.init(form, formRules, message, createUsers());
-
     });
 </script>
 @endpush
