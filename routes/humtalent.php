@@ -4,11 +4,11 @@
  */
 
 use App\Container\Humtalent\src\Persona;
-use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Humtalent\src\StatusOfDocument;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
+use App\Container\Users\Src\User;
 
 
 Route::get('/', [
@@ -19,6 +19,16 @@ Route::get('/', [
 ]);
 
 
+Route::get('email', function () {
+    $user = User::findOrFail(1);
+    /*
+    Mail::to($user)
+        ->send(new \App\Mail\UserRegistration('Miguel'));
+    return 'True';
+    */
+    return new \App\Mail\EmailTalentoHumano('N1', 'N2', null);
+})->name('forms.fields');
+
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -26,74 +36,74 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 //Rutas para el manejo de los empleados
-Route::group(['prefix' => 'empleado'], function () {
-    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-    Route::get('pdfContacto',[
-        'uses' => $controller.'EmpleadoController@reporteContactoEmpleados',
-        'as' => 'talento.humano.empleado.pdfContacto'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
-    ]);
-    Route::get('pdfDireccion',[
-        'uses' => $controller.'EmpleadoController@reporteDireccionEmpleados',
-        'as' => 'talento.humano.empleado.pdfDireccion'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de dirección de los empleados
-    ]);
-    Route::get('pdfSalario1',[
-        'uses' => $controller.'EmpleadoController@reporteSalario1Empleados',
-        'as' => 'talento.humano.empleado.pdfSalario1'             //ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por programa
-    ]);
-    Route::get('pdfSalario2',[
-        'uses' => $controller.'EmpleadoController@reporteSalario2Empleados',
-        'as' => 'talento.humano.empleado.pdfSalario2'             ////ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por rol
-    ]);
-    Route::get('pdfAfiliaciones',[
-        'uses' => $controller.'EmpleadoController@reporteAfiliacionesEmpleados',
-        'as' => 'talento.humano.empleado.pdfAfiliaciones'             //ruta que conduce al controlador para mostrar  el reporte referente a las afiliaciones de los empleados
-    ]);
-    Route::get('pdfEstado',[
-        'uses' => $controller.'EmpleadoController@reporteEstadoEmpleados',
-        'as' => 'talento.humano.empleado.pdfEstado'             //ruta que conduce al controlador para mostrar  el reporte referente al estado de los empleados
-    ]);
-    Route::get('DownloadPdfContacto',[
-        'uses' => $controller.'EmpleadoController@downloadContactoReporte',
-        'as' => 'talento.humano.empleado.DownloadPdfContacto'             //ruta que conduce al controlador para descargar el reporte de contacto
-    ]);
-    Route::get('DownloadPdfDireccion',[
-        'uses' => $controller.'EmpleadoController@downloadDireccionReporte',
-        'as' => 'talento.humano.empleado.DownloadPdfDireccion'             //ruta que conduce al controlador para descargar el reporte de direccion
-    ]);
-    Route::get('DownloadPdfSalario1',[
-        'uses' => $controller.'EmpleadoController@downloadSalario1Reporte',
-        'as' => 'talento.humano.empleado.DownloadPdfSalario1'             //ruta que conduce al controlador para descargar el reporte de salario organizado por programa
-    ]);
-    Route::get('DownloadPdfSalario2',[
-        'uses' => $controller.'EmpleadoController@downloadSalario2Reporte',
-        'as' => 'talento.humano.empleado.DownloadPdfSalario2'             //ruta que conduce al controlador para descargar el reporte de salario organizado por rol
-    ]);
-    Route::get('DownloadPdfAfiliaciones',[
-        'uses' => $controller.'EmpleadoController@downloadAfiliacionesReporte',
-        'as' => 'talento.humano.empleado.DownloadPdfAfiliaciones'             //ruta que conduce al controlador para descargar el reporte de afiliaciones
-    ]);
-    Route::get('DownloadPdfEstado',[
-        'uses' => $controller.'EmpleadoController@downloadEstadoReporte',
-        'as' => 'talento.humano.empleado.DownloadPdfEstado'             //ruta que conduce al controlador para descargar el reporte de estado
-    ]);
-    Route::get('index',[
-        'uses' => $controller.'EmpleadoController@index',
-        'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
-    ]);
-    Route::get('index/ajax',[
-        'uses' => $controller.'EmpleadoController@indexAjax',
-        'as' => 'talento.humano.empleado.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
-    ]);
-    Route::get('create',[
-        'uses' => $controller.'EmpleadoController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un empleado
-        'as' => 'talento.humano.empleado.create'
-    ]);
-    Route::post('store',[
-        'uses' => $controller.'EmpleadoController@store',   //ruta que conduce al controlador para alamacenar los datos del empleado en la base de datos
-        'as' => 'talento.humano.empleado.store'
-    ]);
-    Route::post('importUsers',[
-        'uses' => $controller.'EmpleadoController@importUsers',   //ruta que conduce al controlador para alamacenar los datos del empleado que tenga el archivo de excel
+    Route::group(['prefix' => 'empleado'], function () {
+        $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+        Route::get('pdfContacto', [
+            'uses' => $controller . 'EmpleadoController@reporteContactoEmpleados',
+            'as' => 'talento.humano.empleado.pdfContacto'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
+        ]);
+        Route::get('pdfDireccion', [
+            'uses' => $controller . 'EmpleadoController@reporteDireccionEmpleados',
+            'as' => 'talento.humano.empleado.pdfDireccion'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de dirección de los empleados
+        ]);
+        Route::get('pdfSalario1', [
+            'uses' => $controller . 'EmpleadoController@reporteSalario1Empleados',
+            'as' => 'talento.humano.empleado.pdfSalario1'             //ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por programa
+        ]);
+        Route::get('pdfSalario2', [
+            'uses' => $controller . 'EmpleadoController@reporteSalario2Empleados',
+            'as' => 'talento.humano.empleado.pdfSalario2'             ////ruta que conduce al controlador para mostrar  el reporte referente al salario de los empleados organizado por rol
+        ]);
+        Route::get('pdfAfiliaciones', [
+            'uses' => $controller . 'EmpleadoController@reporteAfiliacionesEmpleados',
+            'as' => 'talento.humano.empleado.pdfAfiliaciones'             //ruta que conduce al controlador para mostrar  el reporte referente a las afiliaciones de los empleados
+        ]);
+        Route::get('pdfEstado', [
+            'uses' => $controller . 'EmpleadoController@reporteEstadoEmpleados',
+            'as' => 'talento.humano.empleado.pdfEstado'             //ruta que conduce al controlador para mostrar  el reporte referente al estado de los empleados
+        ]);
+        Route::get('DownloadPdfContacto', [
+            'uses' => $controller . 'EmpleadoController@DownloadContactoReporte',
+            'as' => 'talento.humano.empleado.DownloadPdfContacto'             //ruta que conduce al controlador para descargar el reporte de contacto
+        ]);
+        Route::get('DownloadPdfDireccion', [
+            'uses' => $controller . 'EmpleadoController@DownloadDireccionReporte',
+            'as' => 'talento.humano.empleado.DownloadPdfDireccion'             //ruta que conduce al controlador para descargar el reporte de direccion
+        ]);
+        Route::get('DownloadPdfSalario1', [
+            'uses' => $controller . 'EmpleadoController@DownloadSalario1Reporte',
+            'as' => 'talento.humano.empleado.DownloadPdfSalario1'             //ruta que conduce al controlador para descargar el reporte de salario organizado por programa
+        ]);
+        Route::get('DownloadPdfSalario2', [
+            'uses' => $controller . 'EmpleadoController@DownloadSalario2Reporte',
+            'as' => 'talento.humano.empleado.DownloadPdfSalario2'             //ruta que conduce al controlador para descargar el reporte de salario organizado por rol
+        ]);
+        Route::get('DownloadPdfAfiliaciones', [
+            'uses' => $controller . 'EmpleadoController@DownloadAfiliacionesReporte',
+            'as' => 'talento.humano.empleado.DownloadPdfAfiliaciones'             //ruta que conduce al controlador para descargar el reporte de afiliaciones
+        ]);
+        Route::get('DownloadPdfEstado', [
+            'uses' => $controller . 'EmpleadoController@DownloadEstadoReporte',
+            'as' => 'talento.humano.empleado.DownloadPdfEstado'             //ruta que conduce al controlador para descargar el reporte de estado
+        ]);
+        Route::get('index', [
+            'uses' => $controller . 'EmpleadoController@index',
+            'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
+        ]);
+        Route::get('index/ajax', [
+            'uses' => $controller . 'EmpleadoController@indexAjax',
+            'as' => 'talento.humano.empleado.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
+        ]);
+        Route::get('create', [
+            'uses' => $controller . 'EmpleadoController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un empleado
+            'as' => 'talento.humano.empleado.create'
+        ]);
+        Route::post('store', [
+            'uses' => $controller . 'EmpleadoController@store',   //ruta que conduce al controlador para alamacenar los datos del empleado en la base de datos
+            'as' => 'talento.humano.empleado.store'
+        ]);
+        Route::post('importUsers', [
+            'uses' => $controller . 'EmpleadoController@importUsers',   //ruta que conduce al controlador para alamacenar los datos del empleado que tenga el archivo de excel
             'as' => 'talento.humano.empleado.importUsers'
         ]);
         Route::delete('empleado/destroy/{id?}', [
@@ -179,66 +189,65 @@ Route::group(['prefix' => 'empleado'], function () {
     });
 
 //Rutas para el manejo de la documentación
-Route::group(['prefix' => 'document'], function () {
-    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-    Route::get('pdfConsolidado',[
-        'uses' => $controller.'DocumentController@reporteConsolidadoEmpleados',
-        'as' => 'talento.humano.document.pdfConsolidado'             //FALTA
-    ]);
-    Route::get('DownloadPdfConsolidado',[
-        'uses' => $controller.'DocumentController@downloadReporteConsolidadoEmpleados',
-        'as' => 'talento.humano.document.DownloadPdfConsolidado'             //ruta que conduce al controlador para descargar el reporte de radicacion
-    ]);
-    Route::get('pdfRadicacion/{id?}',[
-        'uses' => $controller.'DocumentController@reporteRadicacionEmpleados',
-        'as' => 'talento.humano.document.pdfRadicacion'             //ruta que conduce al controlador para mostrar  el reporte que tiene los documentos que el empleado ha radicado y los que le faltan
-    ]);
-    Route::get('DownloadPdfRadicacion/{id?}',[
-        'uses' => $controller.'DocumentController@downloadReporteRadicacionEmpleados',
-        'as' => 'talento.humano.document.DownloadPdfRadicacion'             //ruta que conduce al controlador para descargar el reporte de radicacion
-    ]);
-    Route::get('index',[
-        'uses' => $controller.'DocumentController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
-        'as' => 'talento.humano.document.index'
-    ]);
-    Route::get('index/ajax',[
-        'uses' => $controller.'DocumentController@indexAjax',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
-        'as' => 'talento.humano.document.index.ajax'
-    ]);
-    Route::get('create',[
-        'uses' => $controller.'DocumentController@create', //ruta que conduce al controlador para mostrar el formulario para registrar un documento
-        'as' => 'talento.humano.document.create'
-    ]);
-    Route::post('store',[
-        'uses' => $controller.'DocumentController@store',  //ruta que conduce al controlador para alamacenar los datos del documento en la base de datos
-        'as' => 'talento.humano.document.store'
-    ]);
-    Route::delete('document/destroy/{id?}',[
-        'uses' => $controller.'DocumentController@destroy',  //ruta que conduce al controlador para eliminar un registro
-        'as' => 'talento.humano.document.destroy'
-    ]);
-    Route::get('document/edit/{id?}',[
-        'uses' => $controller.'DocumentController@edit', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
-        'as' => 'talento.humano.document.edit'
-    ]);
-    Route::post('update',[
-        'uses' => $controller.'DocumentController@update',   //ruta que conduce al controlador para actulizar datos del empleado
-        'as' => 'talento.humano.document.update'
-    ]);
-    Route::get('tablaDocumentos',[   //ruta que realiza la consulta de los documentos registrados
-        'as' => 'talento.humano.tablaDocumentos',
-        'uses' => function (Request $request) {
-            if ($request->ajax())
-            {
-                return Datatables::of(DocumentacionPersona::all())
-                    ->addIndexColumn()
-                    ->make(true);
-            } else
-            {
-                return response()->json([
-                    'message' => 'Incorrect request',
-                    'code' => 412
-                ], 412);
+    Route::group(['prefix' => 'document', 'middleware' => ['permission:FUNC_RRHH']], function () {
+        $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+        Route::get('pdfConsolidado', [
+            'uses' => $controller . 'DocumentController@reporteConsolidadoEmpleados',
+            'as' => 'talento.humano.document.pdfConsolidado'
+        ]);
+        Route::get('DownloadPdfConsolidado', [
+            'uses' => $controller . 'DocumentController@downloadReporteConsolidadoEmpleados',
+            'as' => 'talento.humano.document.DownloadPdfConsolidado'             //ruta que conduce al controlador para descargar el reporte de radicacion
+        ]);
+        Route::get('pdfRadicacion/{id?}', [
+            'uses' => $controller . 'DocumentController@reporteRadicacionEmpleados',
+            'as' => 'talento.humano.document.pdfRadicacion'             //ruta que conduce al controlador para mostrar  el reporte que tiene los documentos que el empleado ha radicado y los que le faltan
+        ]);
+        Route::get('DownloadPdfRadicacion/{id?}', [
+            'uses' => $controller . 'DocumentController@downloadReporteRadicacionEmpleados',
+            'as' => 'talento.humano.document.DownloadPdfRadicacion'             //ruta que conduce al controlador para descargar el reporte de radicacion
+        ]);
+        Route::get('index', [
+            'uses' => $controller . 'DocumentController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
+            'as' => 'talento.humano.document.index'
+        ]);
+        Route::get('index/ajax', [
+            'uses' => $controller . 'DocumentController@indexAjax',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los documentos reegistrados
+            'as' => 'talento.humano.document.index.ajax'
+        ]);
+        Route::get('create', [
+            'uses' => $controller . 'DocumentController@create', //ruta que conduce al controlador para mostrar el formulario para registrar un documento
+            'as' => 'talento.humano.document.create'
+        ]);
+        Route::post('store', [
+            'uses' => $controller . 'DocumentController@store',  //ruta que conduce al controlador para alamacenar los datos del documento en la base de datos
+            'as' => 'talento.humano.document.store'
+        ]);
+        Route::delete('document/destroy/{id?}', [
+            'uses' => $controller . 'DocumentController@destroy',  //ruta que conduce al controlador para eliminar un registro
+            'as' => 'talento.humano.document.destroy'
+        ]);
+        Route::get('document/edit/{id?}', [
+            'uses' => $controller . 'DocumentController@edit', //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+            'as' => 'talento.humano.document.edit'
+        ]);
+        Route::post('update', [
+            'uses' => $controller . 'DocumentController@update',   //ruta que conduce al controlador para actulizar datos del empleado
+            'as' => 'talento.humano.document.update'
+        ]);
+        Route::get('tablaDocumentos', [   //ruta que realiza la consulta de los documentos registrados
+            'as' => 'talento.humano.tablaDocumentos',
+            'uses' => function (Request $request) {
+                if ($request->ajax()) {
+                    return Datatables::of(DocumentacionPersona::all())
+                        ->addIndexColumn()
+                        ->make(true);
+                } else {
+                    return response()->json([
+                        'message' => 'Incorrect request',
+                        'code' => 412
+                    ], 412);
+                }
             }
         }
         ]);
@@ -294,7 +303,7 @@ Route::group(['prefix' => 'document'], function () {
     });
 
 //Rutas para el manejo de los eventos
-    Route::group(['prefix' => 'evento'], function () {
+    Route::group(['prefix' => 'evento', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'EventoController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
@@ -367,7 +376,7 @@ Route::group(['prefix' => 'document'], function () {
     });
 
 //rutas para el manejo de las inducciones
-    Route::group(['prefix' => 'induccion'], function () {
+    Route::group(['prefix' => 'induccion', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
         Route::get('tablaInduccion', [    //ruta para mostrar una lista de los empleados nuevos
@@ -398,7 +407,7 @@ Route::group(['prefix' => 'document'], function () {
     });
 
 //rutas para el Calendario.
-    Route::group(['prefix' => 'calendario'], function () {
+    Route::group(['prefix' => 'calendario', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'CalendarioController@index',   //ruta que conduce al controlador para mostrar  el calendario
@@ -439,50 +448,50 @@ Route::group(['prefix' => 'document'], function () {
 
     });
 //rutas para el manejo del modulo de permisos e incapacidades para los empleados.
-Route::group(['prefix' => 'permisos'], function () {
-    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-    Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
-        'as' => 'talento.humano.permisos.listaEmpleados',
-        'uses' => function(){
-            return view('humtalent.permisos.listaEmpleados');
-        }
-    ]);
-    Route::get('listaEmpleados/ajax', [    //ruta para mostrar una lista de los empleados
-        'as' => 'talento.humano.permisos.listaEmpleados.ajax',
-        'uses' => $controller.'PermisosController@ajaxListaEmpleados'
-    ]);
-    Route::get('tablaPermisos/{id?}', [    //ruta para mostrar la tabla de los permisos.
-        'as' => 'talento.humano.permisos.tablaPermisos',
-        'uses' => $controller.'PermisosController@listaPermisos'
-    ]);
-    Route::post('store', [   //ruta para registrar permisos nuevos a un empleado
-        'as' => 'talento.humano.permisos.store',
-        'uses' => $controller . 'PermisosController@store'
-    ]);
-    Route::get('consultaPermisos/{id?}',[
-        'uses' => $controller.'PermisosController@consultaPermisos', //ruta para consultar los permisos registrados
-        'as' => 'talento.humano.permisos.consultaPermisos'
-    ]);
-    Route::get('PdfPermisos/{id?}',[
-        'uses' => $controller.'PermisosController@reportePermisosEmpleados', //ruta para mostrar el reporte de los permisos de cada empleado
-        'as' => 'talento.humano.permisos.reporte'
-    ]);
-    Route::get('DownloadPdfPermisos/{id?}',[
-        'uses' => $controller.'PermisosController@downloadReportePermisosEmpleados', //ruta para cdescargar el reporte de permisos
-        'as' => 'talento.humano.permisos.Downloadreporte'
-    ]);
-    Route::post('update', [   //ruta para actualizar los permisos
-        'as' => 'talento.humano.permisos.update',
-        'uses' => $controller . 'PermisosController@update'
-    ]);
-    Route::delete('destroy/{id?}',[
-        'uses' => $controller.'PermisosController@destroy', //ruta para eliminar un permiso registrado
-        'as' => 'talento.humano.permisos.destroy'
-    ]);
+    Route::group(['prefix' => 'permisos'], function () {
+        $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
+        Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
+            'as' => 'talento.humano.permisos.listaEmpleados',
+            'uses' => function () {
+                return view('humtalent.permisos.listaEmpleados');
+            }
+        ]);
+        Route::get('listaEmpleados/ajax', [    //ruta para mostrar una lista de los empleados
+            'as' => 'talento.humano.permisos.listaEmpleados.ajax',
+            'uses' => $controller . 'PermisosController@ajaxListaEmpleados'
+        ]);
+        Route::get('tablaPermisos/{id?}', [    //ruta para mostrar la tabla de los permisos.
+            'as' => 'talento.humano.permisos.tablaPermisos',
+            'uses' => $controller . 'PermisosController@listaPermisos'
+        ]);
+        Route::post('store', [   //ruta para registrar permisos nuevos a un empleado
+            'as' => 'talento.humano.permisos.store',
+            'uses' => $controller . 'PermisosController@store'
+        ]);
+        Route::get('consultaPermisos/{id?}', [
+            'uses' => $controller . 'PermisosController@consultaPermisos', //ruta para consultar los permisos registrados
+            'as' => 'talento.humano.permisos.consultaPermisos'
+        ]);
+        Route::get('PdfPermisos/{id?}', [
+            'uses' => $controller . 'PermisosController@ReportePermisosEmpleados', //ruta para mostrar el reporte de los permisos de cada empleado
+            'as' => 'talento.humano.permisos.reporte'
+        ]);
+        Route::get('DownloadPdfPermisos/{id?}', [
+            'uses' => $controller . 'PermisosController@DownloadReportePermisosEmpleados', //ruta para cdescargar el reporte de permisos
+            'as' => 'talento.humano.permisos.Downloadreporte'
+        ]);
+        Route::post('update', [   //ruta para actualizar los permisos
+            'as' => 'talento.humano.permisos.update',
+            'uses' => $controller . 'PermisosController@update'
+        ]);
+        Route::delete('destroy/{id?}', [
+            'uses' => $controller . 'PermisosController@destroy', //ruta para eliminar un permiso registrado
+            'as' => 'talento.humano.permisos.destroy'
+        ]);
 
     });
 //grupo de rutas para generar, activar y/o descativar notificaciones
-    Route::group(['prefix' => 'notificaciones'], function () {
+    Route::group(['prefix' => 'notificaciones', 'middleware' => ['permission:FUNC_RRHH']], function () {
         $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
 
         Route::get('listaEmpleadosDocumentosCompletos', [  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos

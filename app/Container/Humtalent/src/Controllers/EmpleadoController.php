@@ -10,7 +10,7 @@ namespace App\Container\Humtalent\src\Controllers;
 
 use App\Container\Humtalent\src\Asistent;
 use App\Container\Humtalent\src\Induction;
-use App\Mail\EmailHumTalent;
+use App\Mail\HumTalent\EmailTalentoHumano;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -272,7 +272,7 @@ class EmpleadoController extends Controller
             $file = $request->file('import_file');
             $user = Auth::user()->email;
 
-            if($file != null)
+            if($file !== null)
             {
                 $nombre = $file->getClientOriginalName();
                 Storage::disk('local')->put($nombre, \File::get($file));
@@ -286,11 +286,11 @@ class EmpleadoController extends Controller
             }
 
             for($i = 0 ; $i < count($correos)-1; $i++){
-                Mail::to($correos[$i], 'P1')->send(new EmailHumTalent($subject,$descripcion, $url));
+                Mail::to($correos[$i], 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
             }
-            Mail::to($user, 'P1')->send(new EmailHumTalent($subject,$descripcion, $url));
+            //Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
 
-            if($file != null)
+            if($file !== null)
             {
                 $nombre = $file->getClientOriginalName();
                 Storage::disk('local')->delete($nombre);

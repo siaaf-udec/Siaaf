@@ -13,7 +13,7 @@ class CreateAsistentsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('humtalent')->create('TBL_Asistentes', function (Blueprint $table)  {
+        Schema::connection('HumTalent')->create('TBL_Asistentes', function (Blueprint $table)  {
             $table->String('ASIST_Informe',10);
             $table->integer('FK_TBL_Eventos_IdEvento')->unsigned();
             $table->integer('FK_TBL_Persona_Cedula')->unsigned();

@@ -110,7 +110,7 @@
                             if (request.status === 200 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('humtalent.empleado.notificaciones.empleadosDocumentosCompletos.ajax') }}';
+                                var route = '{{ route('HumTalent') }}';
                                 $(".content-ajax").load(route);
                             }
                         },

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\HumTalent;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailHumTalent extends Mailable
+class EmailTalentoHumano extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,21 +22,21 @@ class EmailHumTalent extends Mailable
      */
 
     public $message;
-    public $subject;
+    public $asunto;
     public $file;
 
     /**
      * Create a new message instance.
      *
-     * @param $subject
+     * @param $asunto
      * @param $message
      * @param $file
      *
      * @return void
      */
-    public function __construct($subject, $message, $file)
+    public function __construct($asunto, $message, $file)
     {
-        $this->subject = $subject;
+        $this->asunto = $asunto;
         $this->message = $message;
         $this->file = $file;
     }
@@ -51,18 +51,12 @@ class EmailHumTalent extends Mailable
         if($this->file != null) {
             return $this->from(['address' => 'no-reply@ucundinamarca.edu.co', 'name' => env('APP_NAME')])
                 ->attach($this->file)
-                ->with(['subject', $this->subject,
-                    'message', $this->message,
-                ])
-                ->view('humtalent.empleado.emailEmpleados');
+                ->view('humtalent.empleado.emailEmpleados',['title'=>$this->asunto, 'body' => $this->message]);
         }
         else
         {
             return $this->from(['address' => 'no-reply@ucundinamarca.edu.co', 'name' => env('APP_NAME')])
-                ->with(['subject', $this->subject,
-                    'message', $this->message,
-                ])
-                ->view('humtalent.empleado.emailEmpleados');
+                ->view('humtalent.empleado.emailEmpleados',['title'=>$this->asunto, 'body' => $this->message]);
         }
 
     }
