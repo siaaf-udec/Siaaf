@@ -33,7 +33,7 @@
                 </a>
             </li>
         @endpermission
-        @permission('See_Observations_Gesap')
+        @role('Student_Gesap')
                 <li class="nav-item">
                     <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.studentList') }}">
                         <i class="fa fa-book">
@@ -43,7 +43,7 @@
                         </span>
                     </a>
                 </li>
-        @endpermission
+        @endrole
         @permission('Update_Final_Project_Gesap')
                 <!--<li class="nav-item">
                     <a class="nav-link nav-toggle" href="anteproyecto.index.studentList">
