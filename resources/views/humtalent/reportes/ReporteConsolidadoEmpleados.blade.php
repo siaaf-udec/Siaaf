@@ -48,7 +48,7 @@
             <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
         <div id="invoice">
-            <h1>DATOS DE PERMISOS:</h1>
+            <h1>CONSOLIDADO DE ESTADOS:</h1>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div><a class="noPrint" href="{{ route('talento.humano.document.DownloadPdfConsolidado')}}">
