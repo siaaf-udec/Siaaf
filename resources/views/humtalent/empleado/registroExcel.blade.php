@@ -7,6 +7,7 @@
 @endpush
 
 @section('content')
+    <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Registro de empleados mediante archivo excel:'])
         <div class="row">
             <div class="col-md-7 col-md-offset-1">
@@ -57,6 +58,7 @@
             </div>
         </div>
     @endcomponent
+    </div>
 @endsection
 @push('plugins')
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
@@ -99,17 +101,16 @@
                         contentType: false,
                         data: formData,
                         processData: false,
-                        async: async,
+                        async: true,
                         beforeSend: function () {
-                            App.blockUI({target: '.portlet-form', animate: true});
+                            App.startPageLoading({animate: true});
                         },
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_file')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
-                                App.unblockUI('.portlet-form');
-
+                               App.stopPageLoading();   
                             }
                         },
                         error: function (response, xhr, request) {

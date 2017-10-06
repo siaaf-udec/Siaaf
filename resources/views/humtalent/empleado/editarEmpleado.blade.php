@@ -58,10 +58,10 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                                     <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                         Cancelar
                                     </a>
+                                    {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                                 </div>
                             </div>
                         </div>

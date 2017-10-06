@@ -36,6 +36,7 @@
 @endpush
 
 @section('content')
+    <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Envío de mensajes'])
 
     {!! Form::open(['id' => 'form_email', 'url'=> ['/forms'], 'enctype'=>'multipart/form-data']) !!}
@@ -86,18 +87,22 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-                                    <div class="row">
+                                    <div class="row ">
                                         <div class="col-md-12">
+
                                             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
                                                 @slot('columns', [
                                                     '#',
+                                                    'Cédula',
                                                     'Nombres',
                                                     'Apellidos',
                                                     'Rol ',
-                                                    'Ärea',
+                                                    'Area',
                                                     'Email'
                                                 ])
                                             @endcomponent
+
+
                                         </div>
                                     </div>
                                 @endcomponent
@@ -116,6 +121,7 @@
         </div>
     {!! Form::close() !!}
     @endcomponent
+    </div>
 @endsection
 
 @push('plugins')
@@ -152,15 +158,26 @@
         url = "{{ route('talento.humano.tablaEmpleados')}}";
         columns = [
             {data: 'DT_Row_Index'},
+            {data: 'PK_PRSN_Cedula', name: 'Cedula'},
             {data: 'PRSN_Nombres', name: 'Nombres'},
             {data: 'PRSN_Apellidos', name: 'Apellidos'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {data: 'PRSN_Area', name: 'Area'},
             {data: 'PRSN_Correo', name: 'Email'},
 
+
+
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
+
+        $('#modal-to').on('shown.bs.modal', function() {
+            //Seleccionamos la tabla del modal
+            var dataTable= $('#lista-empleados').DataTable();
+            //Se recalculan las columnas
+            dataTable.columns.adjust();
+
+        });
 
         var destinos;
         $('#lista-empleados tbody').on( 'click', 'tr', function () {

@@ -66,7 +66,7 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -112,7 +112,7 @@
                             },
                             success: function (route) {
                                 if(route == "Empleado no registrado"){
-                                    UIToastr.init('success' , "Error" , "!El empleado no se encuentra registrado."  );
+                                    UIToastr.init('error' , "Error" , "!El empleado no se encuentra registrado!"  );
                                 }
                                 else {
                                     $(".content-ajax").html(route);

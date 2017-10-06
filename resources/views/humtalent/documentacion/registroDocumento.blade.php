@@ -1,5 +1,5 @@
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de documentos'])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_document_create', 'url'=> ['/forms'], 'role'=>"form"]) !!}
@@ -13,10 +13,10 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">
-                                 {!! Form::submit('Registrar',['class'=>'btn blue','btn-icon remove']) !!}
                                 <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>
+                                 {!! Form::submit('Registrar',['class'=>'btn blue','btn-icon remove']) !!}
                             </div>
                         </div>
                     </div>

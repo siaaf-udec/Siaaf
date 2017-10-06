@@ -86,7 +86,7 @@
                                     {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento: ']) !!}
 
                                     {!! Field::date('EDCMT_Fecha',
-                                       ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                       ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                        ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                     {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
                                 </div>
@@ -112,7 +112,7 @@
                                              {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
 
                                              {!! Field::date('EDCMT_Fecha',
-                                               ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                               ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                         </div>
                                     {!! Form::submit('Empleado Afiliado',['class'=>'btn blue','btn-icon remove']) !!}
@@ -275,6 +275,19 @@
 
 
     jQuery(document).ready(function() {
+        if (jQuery().datepicker) {
+            $('.date-picker').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                todayHighlight: true,
+                autoclose: true,
+                language: "es",
+            });
+            $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+        }
+        $( document ).scroll(function(){
+            $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
+        });
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
             placeholder: "Selecccionar",

@@ -115,7 +115,7 @@
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('talento.humano.permisos.reporte') }}'+'/'+dataTable.PK_PRSN_Cedula;
+                window.open('{{ route('talento.humano.permisos.reporte') }}'+'/'+dataTable.PK_PRSN_Cedula, '_blank');
             });
         });
     });

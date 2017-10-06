@@ -24,40 +24,40 @@
                 <div class="col-md-9 col-md-offset-1">
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN GENERAL DE LOS EMPLEADOS REGISTRADOS:</b></p><br>
 
-                        <a href="{{ route('talento.humano.empleado.pdfContacto') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de contacto de los empleados como nombres, apellidos, cédula, teléfono y correo electrónico.">
+                        <a href="{{ route('talento.humano.empleado.pdfContacto') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de contacto de los empleados como nombres, apellidos, cédula, teléfono y correo electrónico.">
                             <i class="fa fa-group"></i>
                             <div> Contacto</div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <a href="{{ route('talento.humano.empleado.pdfDireccion') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de contacto de los empleados como cédula, nombres, apellidos, dirección y ciudad.">
+                        <a href="{{ route('talento.humano.empleado.pdfDireccion') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de contacto de los empleados como cédula, nombres, apellidos, dirección y ciudad.">
                             <i class="fa fa-map-marker"></i>
                             <div> Dirección </div>
                         </a>&nbsp;&nbsp;
-                        <a href="{{ route('talento.humano.empleado.pdfSalario1') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, salario, área y rol, dicho reporte se encuentra organizado por programa.">
+                        <a href="{{ route('talento.humano.empleado.pdfSalario1') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, salario, área y rol, dicho reporte se encuentra organizado por programa.">
                             <i class="fa fa-dollar"></i>
                             <div> Salario / Área  </div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('talento.humano.empleado.pdfSalario2') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, salario, área y rol, dicho reporte se encuentra organizado por rol.">
+                        <a href="{{ route('talento.humano.empleado.pdfSalario2') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, salario, área y rol, dicho reporte se encuentra organizado por rol.">
                             <i class="fa fa-dollar"></i>
                             <div> Salario / rol </div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('talento.humano.empleado.pdfAfiliaciones') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, EPS, Fondo de pensiones y caja de compensación.">
+                        <a href="{{ route('talento.humano.empleado.pdfAfiliaciones') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos, EPS, Fondo de pensiones y caja de compensación.">
                             <i class="fa fa-hospital-o"></i>
                             <div> Afiliaciones </div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('talento.humano.empleado.pdfEstado') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos y el estado que indica si el empleado es nuevo, antiguo o reitrado.">
+                        <a href="{{ route('talento.humano.empleado.pdfEstado') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte que contiene información como cédula, nombres, apellidos y el estado que indica si el empleado es nuevo, antiguo o reitrado.">
                             <i class="fa fa-check-square-o"></i>
                             <div> Estado </div>
                         </a>
                     </div><br>
 
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN DE LA DOCUMENTACIÓN FALTANTE POR CADA EMPLEADO:</b></p><br>
-                        <a href="{{ route('talento.humano.document.pdfConsolidado') }}" class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de todos los empleados del estado de su documentación (Sin documentación, documentación incompleta, documentación completa y afiliado).">
+                        <a href="{{ route('talento.humano.document.pdfConsolidado') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de todos los empleados del estado de su documentación (Sin documentación, documentación incompleta, documentación completa y afiliado).">
                             <i class="fa fa-file-o"></i>
                             <div> Consolidado </div>
 
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" class="icon-btn documentReport" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de la documentación radicada por cada empleado.">
+                        <a href="javascript:;"  class="icon-btn documentReport" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de la documentación radicada por cada empleado.">
                             <i class="fa fa-check-square"></i>
                             <div> Documentación </div>
 

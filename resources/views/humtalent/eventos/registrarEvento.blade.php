@@ -9,11 +9,11 @@
                             ['help' => 'Escribe una descripción.', 'icon' => 'fa fa-quote-right']) !!}
                     {!! Field::date(
                             'EVNT_Fecha_Inicio',
-                            ['label' => 'Fecha de inicio del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['label' => 'Fecha de inicio del evento:','class'=>'date-picker','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                             ['help' => 'Digite la fecha de inicio de la realización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::date(
                             'EVNT_Fecha_Fin',
-                            ['label' => 'Fecha de finalización del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['label' => 'Fecha de finalización del evento:','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                             ['help' => 'Digite la fecha de finalización del evento.', 'icon' => 'fa fa-calendar']) !!}
                     {!! Field::text(
                             'EVNT_Hora',
@@ -21,16 +21,16 @@
                             ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                     {!! Field::date(
                             'EVNT_Fecha_Notificacion',
-                            ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                            ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                             ['help' => 'Digite la fecha de notificación del evento .', 'icon' => 'fa fa-calendar']) !!}
 
                     <div class="form-actions">
                         <div class="row">
                             <div class=" col-md-offset-4">
-                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
                                 <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>
+                                {!! Form::submit('Registrar',['class' => 'btn blue']) !!}
                             </div>
                         </div>
                     </div>
@@ -39,11 +39,9 @@
             </div>
     </div>
     @endcomponent
-
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -90,6 +88,35 @@
                 }
             }
         };
+        if (jQuery().datepicker) {
+            $('.date-picker').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                todayHighlight: true,
+                autoclose: true,
+                language: "es",
+            });
+            $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+        }
+        $( document ).scroll(function(){
+            $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
+        });
+
+        if (jQuery().timepicker)
+         {
+             $('.timepicker-no-seconds').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+             });
+             $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function(e){
+                    e.preventDefault();
+                    $(this).parent('.input-group').find('.timepicker').timepicker('showWidget');
+             });
+             $( document ).scroll(function(){
+                    $('#form_modal4 .timepicker-default, #form_modal4 .timepicker-no-seconds, #form_modal4 .timepicker-24').timepicker('place'); //#modal is the id of the modal
+             });
+         }
+
         var form = $('#form_event_create');
         var formRules = {
             EVNT_Descripcion: {required: true},

@@ -2,6 +2,7 @@
 
 @section('page-title', 'Documentos Requeridos:')
 @push('styles')
+    <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print' type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
@@ -51,7 +52,7 @@
                                     <div class="col-md-12">
                                         {!! Field::date(
                                                 'NOTIF_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -83,7 +84,7 @@
                                     <div class="col-md-12">
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_EVNT_IdEvento')!!}
                                     </div>
@@ -119,7 +120,7 @@
                                             ['help' => 'Digite el nombre del evento', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::date(
                                                 'NOTIF_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -160,7 +161,7 @@
                                                 ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de notificación del evento .', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -200,12 +201,12 @@
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
 @endpush
@@ -215,6 +216,40 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
+        if (jQuery().timepicker)
+        {
+
+            $('.timepicker-no-seconds').timepicker({
+
+                autoclose: true,
+                minuteStep: 5,
+            });
+            $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function(e){
+                e.preventDefault();
+                $(this).parent('.input-group').find('.timepicker').timepicker('showWidget');
+            });
+            $( document ).scroll(function(){
+                $('#form_modal4 .timepicker-default, #form_modal4 .timepicker-no-seconds, #form_modal4 .timepicker-24').timepicker('place'); //#modal is the id of the modal
+            });
+        }
+        if (jQuery().datepicker) {
+            $('.date-picker').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                todayHighlight: true,
+                autoclose: true,
+                language: "es",
+            });
+            $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+        }
+        $( document ).scroll(function(){
+            $('#modal-update-notify .date-picker').datepicker('place'); //#modal is the id of the modal
+            $('#modal-update-Event .date-picker').datepicker('place');
+            $('#modal-update-titleNotify .date-picker').datepicker('place');
+            $('#modal-update-titleEvent .date-picker').datepicker('place');
+
+
+        });
         var currentMousePos =
             {   //variable que guarda la posición del puntero del mause
                 x: -1,
