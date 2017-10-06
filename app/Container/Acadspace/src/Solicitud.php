@@ -25,7 +25,7 @@ class Solicitud extends Model
         'SOL_fecha_inicio',
         'SOL_fecha_fin',
         'SOL_nucleo_tematico',
-        'id_practica'
+        'SOL_id_practica'
     ];
 
 

@@ -2,31 +2,20 @@
 
 namespace App\Container\Acadspace\src;
 
-use DB;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class solFormatAcad extends Model
+class Software extends Model
 {
     protected $connection = 'acadspace';
 
-    protected $table = 'tbl_solFormAcad';
+    protected $table = 'tbl_solSoftware';
 
-    protected $primaryKey = 'id_documento';
+    protected $primaryKey = 'PK_SOF_id';
 
     protected $fillable = [
-        'titulo_doc',
-        'descripcion_doc',
-        'nombre_doc',
-        'id_secretaria',
-        'estado'
+        'SOF_nombre_soft','SOF_version','SOF_licencias'
     ];
 
-    public function setFileAttribute($file){
-        $nombre_doc = Carbon::now()->second.$file->getClientOriginalName();
-        $this->attributes['nombre_doc'] = $nombre_doc;
-        \Storage::disk('local')->put($nombre_doc, \File::get($file));
-    }
 
     public function Asistents(){
         return $this->hasMany(Asistent::class);

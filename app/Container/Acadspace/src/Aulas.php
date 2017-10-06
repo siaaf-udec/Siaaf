@@ -2,20 +2,22 @@
 
 namespace App\Container\Acadspace\src;
 
+use DB;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class solSoftware extends Model
+class Aulas extends Model
 {
     protected $connection = 'acadspace';
 
-    protected $table = 'tbl_solSoftware';
+    protected $table = 'tbl_aulas';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'PK_SAL_id_sala';
 
     protected $fillable = [
-        'nombre_soft','version','licencias'
+        'SAL_nombre_sala',
+        'SAL_nombre_espacio'
     ];
-
 
     public function Asistents(){
         return $this->hasMany(Asistent::class);
@@ -29,5 +31,5 @@ class solSoftware extends Model
     public function Permissions(){
         return $this->hasMany(Permission::class);
     }
-    //
+    // 
 }
