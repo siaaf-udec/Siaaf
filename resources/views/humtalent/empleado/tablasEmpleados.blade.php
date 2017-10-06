@@ -183,7 +183,7 @@ jQuery(document).ready(function () {
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('talento.humano.document.pdfRadicacion') }}'+'/'+dataTable.PK_PRSN_Cedula;
+                window.open('{{ route('talento.humano.document.pdfRadicacion') }}'+'/'+dataTable.PK_PRSN_Cedula, '_blank');
             });
         });
     });

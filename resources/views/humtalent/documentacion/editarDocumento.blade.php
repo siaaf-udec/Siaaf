@@ -21,10 +21,10 @@
                         <div class="row">
                             <div class="form-actions">
                                 <div class="col-md-6 col-md-offset-4">
-                                    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
                                     <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                         Cancelar
                                     </a>
+                                    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
                                 </div>
                             </div>
                         </div>

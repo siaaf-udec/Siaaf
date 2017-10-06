@@ -23,6 +23,7 @@
             </div>
         @endcomponent
     </div>
+    <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -64,7 +65,7 @@
                         success: function (route) {
 
                             if(route == "Empleado no registrado"){
-                                UIToastr.init('success' , "Error" , "!El empleado no se encuentra registrado."  );
+                                UIToastr.init('error' , "Error" , "!El empleado no se encuentra registrado!"  );
                             }
                             else {
                                 $(".content-ajax").html(route);

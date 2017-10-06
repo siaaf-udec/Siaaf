@@ -6,7 +6,7 @@
 
                 <div class="form-body">
 
-                    {!! Field::select('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], null,['label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user']) !!}
+                    {!! Field::select('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], null,['label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user','help' => 'Digite el nombre del empleado.']) !!}
 
 
                     {!! Field:: text('PRSN_Nombres',null,['label'=>'Nombre(s)','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -51,12 +51,11 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
                                 <a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>
-
+                                {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
                             </div>
                         </div>
                     </div>
