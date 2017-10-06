@@ -2,21 +2,6 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
             <br>
-            @slot('actions', [
-                'link_upload' => [
-                    'link' => '',
-                    'icon' => 'icon-cloud-upload',
-                ],
-                'link_wrench' => [
-                    'link' => '',
-                    'icon' => 'icon-wrench',
-                ],
-                'link_trash' => [
-                    'link' => '',
-                    'icon' => 'icon-trash',
-                ],
-
-            ])
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">

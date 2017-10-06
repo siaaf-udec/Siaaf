@@ -1,5 +1,11 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de documentos'])
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_document_create', 'url'=> ['/forms'], 'role'=>"form"]) !!}
@@ -97,6 +103,11 @@
         FormValidationMd.init(form,formRules,false,createDoc());
 
         $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.document.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+        $('#link_cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.document.index.ajax') }}';
             $(".content-ajax").load(route);

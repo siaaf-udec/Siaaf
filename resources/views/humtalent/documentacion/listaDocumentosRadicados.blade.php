@@ -1,17 +1,15 @@
 
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación'])
-        <div class="form-group">
+            @slot('actions', [
+                       'link_cancel' => [
+                       'link' => '',
+                       'icon' => 'fa fa-arrow-left',
+                      ],
+               ])
+            <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                                <i class="fa fa-arrow-circle-left"></i>Volver
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
                 <br><br>
                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                     <thead>
@@ -81,6 +79,11 @@
         dataTableServer.init(table, url, columns);
 
         $( ".back" ).on('click', function (e) {
+            //e.preventDefault();
+            var route = '{{ route('talento.humano.historialDocumentos.empleados.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+        $( "#link_cancel" ).on('click', function (e) {
             //e.preventDefault();
             var route = '{{ route('talento.humano.historialDocumentos.empleados.ajax') }}';
             $(".content-ajax").load(route);

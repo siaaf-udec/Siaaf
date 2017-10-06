@@ -1,12 +1,12 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
-        <div class="col-md-6">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                    <i class="fa fa-arrow-circle-left"></i>Volver
-                </a>
-            </div>
-        </div>
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
+
         <div class="form-wizard">
             <div class="form-body">
                 <ul class="nav nav-pills nav-justified steps">
@@ -518,7 +518,7 @@
 
         FormValidationMd.init(formReinicio,rulesReinicio,false,reiniciar());
 
-        $( ".back" ).on('click', function (e) {
+        $( "#link_cancel" ).on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.buscarRadicar.ajax') }}';
             $(".content-ajax").load(route);
