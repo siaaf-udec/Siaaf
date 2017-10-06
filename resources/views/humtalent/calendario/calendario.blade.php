@@ -277,9 +277,11 @@
                     processData: false,
                     beforeSend: function () {
                     },
-                    success: function (eventos) {//se reciben los eventos enviados desde el controlador
-                        var events = JSON.parse(eventos); //se realiza la conversíon para poder ser implementados por la libreria
-                        callback(events);//se cargan los datos recibidos en el calendario
+                    success: function (response, xhr, request) {//se reciben los eventos enviados desde el controlador //eventos
+                        if (request.status === 200 && xhr === 'success') {
+                            var events = JSON.parse(response.data); //se realiza la conversíon para poder ser implementados por la libreria
+                            callback(events);//se cargan los datos recibidos en el calendario
+                        }
                     }
                 });
             },
@@ -296,10 +298,12 @@
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function (response)
+                    success: function (response, xhr, request)
                     {   //una vez guardados se recibe el id del recordatorio guardado
-                        $('input[name="PK_NOTIF_Id_Notificacion"]').val(response); //se pone en un formulario para actualizar la fecha de notioficación
-                        $('#modal-update-notify').modal('toggle');//se llama una ventana modal que contiene el formulario que recibe la fecha de notificación del recordatorio
+                        if (request.status === 200 && xhr === 'success') {
+                            $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.data); //se pone en un formulario para actualizar la fecha de notioficación
+                            $('#modal-update-notify').modal('toggle');//se llama una ventana modal que contiene el formulario que recibe la fecha de notificación del recordatorio
+                        }
                     },
                     error: function (e) {//en caso de que la petición falle se muestra el error por consola
                         console.log(e.responseText);
@@ -340,15 +344,19 @@
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function(response)
-                    {    //se recibe el id y el tipo ya sea  evento o recordatorio
-                        if(response.eventType == "Evento"){ //se es evento se muetsra el pop up correspondiente
-                            $('input[name="PK_EVNT_IdEvento"]').val(response.id); //se pone en el formulario para actualizar la fecha de notificación
-                            $('#modal-update-Event').modal('toggle');// se muestra el formulario en una ventana modal
-                        }
-                        if(response.eventType == "Recordatorio"){ //si es recordatorio se muestra el formulario correspondiente
-                            $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.id);//y se realiza el mismo proceso en caso de que sea evento
-                            $('#modal-update-notify').modal('toggle');
+                    success: function(response, xhr, request) //se recibe el id y el tipo ya sea  evento o recordatorio
+                    {
+                        if (request.status === 200 && xhr === 'success') {
+                            var tipo = response.data['eventType'];
+
+                            if (tipo == "Evento") { //se es evento se muetsra el pop up correspondiente
+                                $('input[name="PK_EVNT_IdEvento"]').val(response.data['id']); //se pone en el formulario para actualizar la fecha de notificación
+                                $('#modal-update-Event').modal('toggle');// se muestra el formulario en una ventana modal
+                            }
+                            if (tipo == "Recordatorio") { //si es recordatorio se muestra el formulario correspondiente
+                                $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.data['id']);//y se realiza el mismo proceso en caso de que sea evento
+                                $('#modal-update-notify').modal('toggle');
+                            }
                         }
                     },
                     error: function(e)
