@@ -74,7 +74,12 @@ class CalendarioController extends Controller
             $e['notif'] = $recordatorio['NOTIF_Fecha_Notificacion'];
             array_push($events, $e);     // se realiza la mezcla entre vectores
         }
-        return json_encode($events); //y se envia a la libreria el vector con los datos tanto de los eventos como de las notificaciones
+         //y se envia a la libreria el vector con los datos tanto de los eventos como de las notificaciones
+        return AjaxResponse::success(
+            '¡Bien hecho!',
+            'Mensaje enviado correctamente.',
+            json_encode($events)
+        );
     }
 
     /**
@@ -104,7 +109,12 @@ class CalendarioController extends Controller
             ]);
             $idNotif = Notification::where('NOTIF_Descripcion', $request['title'])// inmediatamente se realiza la consulta a la base de datos
                 ->get(['PK_NOTIF_Id_Notificacion'])->last(); //del ultimo registro almacenado para obtener la llave primaria ya que en esta tabla es auntoincrementable
-            return json_encode($idNotif['PK_NOTIF_Id_Notificacion']); //se envia a la libreria la llave primaria (PK) de la notificación almacenada
+             //se envia a la libreria la llave primaria (PK) de la notificación almacenada
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                $idNotif['PK_NOTIF_Id_Notificacion']
+            );
         }//una vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
     }
 
@@ -212,7 +222,12 @@ class CalendarioController extends Controller
                 Event::where('PK_EVNT_IdEvento', $request['eventId']) //si no es un recordatorio es un evento
                     ->update(['EVNT_Fecha_Inicio' => $request['startdate'], 'EVNT_Fecha_Fin' => $fecha]);//se actualizan los datos
             }
-            return json_encode (array('id' => $request['eventId'],'eventType' => $request['eventType']));//se retorna el id del evento modificado y el tipo para actualizar el calendario
+           //se retorna el id del evento modificado y el tipo para actualizar el calendario
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                array('id' => $request['eventId'],'eventType' => $request['eventType'])
+            );
         }
     }
 

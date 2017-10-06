@@ -142,7 +142,7 @@
         var desactivarNotify = function () {
             return{
                 init: function () {
-                    var route = '{{ route('HumTalent') }}';
+                    var route = '{{ route('humtalent.notificaciones.desactivarDocumentosCompletos') }}';
                     var type = 'POST';
                     var async = async || false;
 
