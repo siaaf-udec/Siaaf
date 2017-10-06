@@ -8,22 +8,39 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+
 <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print' type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/main/acadspace/css/componentsacadspace.css') }}" rel="stylesheet" type="text/css" />
+<!-- Styles SWEETALERT  -->
+<link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css"/>
 
 @endpush
 @section('content')
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Calendario'])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gestion espacios academicos'])
 
 <div class="panel panel-default">
     <!-- Content Header (Page header) -->
     <div class="panel-body">
         <!-- Main content -->
         <section class="content">
+            {!! Field::select('Seleccione el espacio academico para asignar eventos:',$sala,['required'],
+                                    ['name' => 'aula', 'id'=>'aula'])
+                                    !!}
+
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
+                @slot('columns', [
+                '#' => ['style' => 'width:20px;'],
+                'Nucleo',
+                'Estudiantes',
+                'Practica'
+                ])
+                @endcomponent
+            </div>
             <br>
             <div class="row">
                 <div class="col-md-3">
@@ -34,10 +51,6 @@
                         <div class="box-body">
                             <!-- the events -->
                             <div id="external-events">
-                                <div class="external-event bg-green">Evento 1</div>
-                                <div class="external-event bg-yellow">Evento 2</div>
-                                <div class="external-event bg-aqua">Evento 3</div>
-                                <div class="external-event bg-light-blue">Evento 4</div>
                                 <div class="checkbox">
                                     <label for="drop-remove">
                                         <input type="checkbox" id="drop-remove">
@@ -106,11 +119,13 @@
         <!-- /.content -->
     </div><!-- /.panel-body -->
 </div><!-- /.panel -->
+@endcomponent
 </div>
 </div>
 @endsection
 @push('plugins')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="{{ asset('assets/main/acadspace/js/addimage.js') }}" type="text/javascript"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
@@ -120,241 +135,339 @@
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">   </script>
+<!-- SCRIPT DATATABLE -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<!-- Mensaje TOAST -->
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+<!-- SCRIPT Confirmacion Sweetalert -->
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+</script>
 @endpush
 @push('functions')
+<!-- Estandar Mensajes -->
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">    </script>
 <script>
-$(function () {
-    /* initialize the external events
-     -----------------------------------------------------------------*/
-    function ini_events(ele) {
-        ele.each(function () {
-            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-            // it doesn't need to have a start or end
-            var eventObject = {
-                title: $.trim($(this).text()) // use the element's text as the event title
-            };
+/*PINTAR TABLA*/
+$(document).ready(function() {
+    var table, url, columns;
+    table = $('#art-table-ajax');
 
-            // store the Event Object in the DOM element so we can get to it later
-            $(this).data('eventObject', eventObject);
+    url = "{{ route('espacios.academicos.acadcalendar.data' ) }}"+'/'+0;
+        columns = [
+            {data: 'DT_Row_Index'},
+            {data: 'SOL_nucleo_tematico', name: 'Nucleo'},
+            {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+            {data: 'tipo_prac', name: 'Practica'}
+        ];
 
-            // make the event draggable using jQuery UI
-            $(this).draggable({
-                zIndex: 1070,
-                revert: true, // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            });
+    dataTableServer.init(table, url, columns);
 
-        });
-    }
 
-    ini_events($('#external-events div.external-event'));
 
-    /* initialize the calendar
-     -----------------------------------------------------------------*/
-    //Date for the calendar events (dummy data)
-    var date = new Date();
-    var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear();
-    //while(reload==false){
-    $('#calendar').fullCalendar({
-        lang: 'es',
-        axisFormat : "HH:mm",
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        buttonText: {
-            today: 'hoy',
-            month: 'mes',
-            week: 'semana',
-            day: 'dia'
-        },
-
-        events: { url:"cargaEventos"},
-
-        editable: true,
-        droppable: true, // this allows things to be dropped onto the calendar !!!
-
-        drop: function (date, allDay) { // this function is called when something is dropped
-            // retrieve the dropped element's stored Event Object
-            var originalEventObject = $(this).data('eventObject');
-            // we need to copy it, so that multiple events don't have a reference to the same object
-            var copiedEventObject = $.extend({}, originalEventObject);
-            allDay=true;
-            // assign it the date that was reported
-            copiedEventObject.start = date;
-            copiedEventObject.allDay = allDay;
-            copiedEventObject.backgroundColor = $(this).css("background-color");
-            copiedEventObject.borderColor = $(this).css("border-color");
-
-            // render the event on the calendar
-            //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-            // is the "remove after drop" checkbox checked?
-            if ($('#drop-remove').is(':checked')) {
-                // if so, remove the element from the "Draggable Events" list
-                $(this).remove();
-            }
-            //Guardamos el evento creado en base de datos
-            var title=copiedEventObject.title;
-            var start=copiedEventObject.start.format("YYYY-MM-DD HH:mm");
-            var back=copiedEventObject.backgroundColor;
-
-            crsfToken = document.getElementsByName("_token")[0].value;
-            $.ajax({
-                url: 'guardaEventos',
-                data: 'title='+ title+'&start='+ start+'&allday='+allDay+'&background='+back,
-                type: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-                success: function(events) {
-                    console.log('Evento creado');
-                    $('#calendar').fullCalendar('refetchEvents' );
-                },
-                error: function(json){
-                    console.log("Error al crear evento");
+    /*ENVIANDO EL VALOR DEL SELECT AULA PARA TRAER LOS DATOS*/
+    $("#aula").change(function (event) {
+        //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
+        var select = $('#aula option:selected').val();
+        $("#art-table-ajax").dataTable().fnDestroy();
+        url = "{{ route('espacios.academicos.acadcalendar.data' ) }}"+'/'+select;
+        dataTableServer.init(table, url, columns);
+        //FIN RECARGAR DATATABLE
+            /*Inicio recargar calendario con base al select*/
+            var events = {
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: 'cargaEventos',
+                type: 'POST',
+                data: {
+                    sala: $('#aula option:selected').val()
                 }
-            });
-        },
-        eventResize: function(event) {
-            var start = event.start.format("YYYY-MM-DD HH:mm");
-            var back=event.backgroundColor;
-            var allDay=event.allDay;
-            if(event.end){
-                var end = event.end.format("YYYY-MM-DD HH:mm");
-            }else{var end="NULL";
             }
-            crsfToken = document.getElementsByName("_token")[0].value;
-            $.ajax({
-                url: 'actualizaEventos',
-                data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id+'&background='+back+'&allday='+allDay,
-                type: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-                success: function(json) {
-                    console.log("Updated Successfully");
-                },
-                error: function(json){
-                    console.log("Error al actualizar evento");
-                }
-            });
-        },
-        eventDrop: function(event, delta) {
-            var start = event.start.format("YYYY-MM-DD HH:mm");
-            if(event.end){
-                var end = event.end.format("YYYY-MM-DD HH:mm");
-            }else{var end="NULL";
-            }
-            var back=event.backgroundColor;
-            var allDay=event.allDay;
-            crsfToken = document.getElementsByName("_token")[0].value;
 
-            $.ajax({
-                url: 'actualizaEventos',
-                data: 'title='+ event.title+'&start='+ start +'&end='+ end+'&id='+ event.id+'&background='+back+'&allday='+allDay,
-                type: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": crsfToken
-                },
-                success: function(json) {
-                    console.log("Updated Successfully eventdrop");
-                },
-                error: function(json){
-                    console.log("Error al actualizar eventdrop");
-                }
+
+            console.log("RESPUESTA");
+            $('#calendar').fullCalendar( 'removeEventSource', events);
+            $('#calendar').fullCalendar( 'addEventSource', events);
+            $('#calendar').fullCalendar('refetchEvents');
+            /*Fin recargar calendario*/
+
+    });
+    $(function () {
+        /* initialize the external events
+         -----------------------------------------------------------------*/
+        function ini_events(ele) {
+            ele.each(function () {
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 1070,
+                    revert: true, // will cause the event to go back to its
+                    revertDuration: 0  //  original position after the drag
+                });
+
             });
-        },
-        eventClick: function (event, jsEvent, view) {
-            crsfToken = document.getElementsByName("_token")[0].value;
-            var con=confirm("Esta seguro que desea eliminar el evento");
-            if(con){
+        }
+
+        ini_events($('#external-events div.external-event'));
+
+        /* initialize the calendar
+         -----------------------------------------------------------------*/
+        //Date for the calendar events (dummy data)
+        var date = new Date();
+        var d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear();
+
+        //while(reload==false){
+        $('#calendar').fullCalendar({
+            lang: 'es',
+            axisFormat: "HH:mm",
+            allDaySlot: false,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'hoy',
+                month: 'mes',
+                week: 'semana',
+                day: 'dia'
+            },
+
+            events: {
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: 'cargaEventos',
+                type: 'POST',
+                data: {
+                    sala: $('#aula option:selected').val()
+                }
+            },
+
+            editable: true,
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+
+            drop: function (date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+                allDay = true;
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+                copiedEventObject.backgroundColor = $(this).css("background-color");
+                copiedEventObject.borderColor = $(this).css("border-color");
+
+                // render the event on the calendar
+                //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+                //Guardamos el evento creado en base de datos
+                var title = copiedEventObject.title;
+                var start = copiedEventObject.start.format("YYYY-MM-DD HH:mm");
+                var back = copiedEventObject.backgroundColor;
+                var sala = document.getElementById("aula").value;
+
+                crsfToken = document.getElementsByName("_token")[0].value;
                 $.ajax({
-                    url: 'eliminaEvento',
-                    data: 'id=' + event.id,
+                    url: 'guardaEventos',
+                    data: 'title=' + title + '&start=' + start + '&allday=' + allDay + '&background=' + back + '&salaSeleccionada=' + sala,
+                    type: "POST",
                     headers: {
                         "X-CSRF-TOKEN": crsfToken
                     },
-                    type: "POST",
-                    success: function () {
-                        $('#calendar').fullCalendar('removeEvents', event._id);
-                        console.log("Evento eliminado");
+                    success: function (events) {
+                        UIToastr.init('success' ,'¡Bien hecho!', 'Evento creado correctamente' );
+                        console.log('Evento creado');
+                        // UIToastr.init(xhr , "¡Bien hecho!" , "Evento creado"  );
+                        $('#calendar').fullCalendar('refetchEvents');
+                    },
+                    error: function (json) {
+                        console.log("Error al crear evento");
                     }
                 });
-            }else{
-                console.log("Cancelado");
+            },
+            eventResize: function (event) {
+                var start = event.start.format("YYYY-MM-DD HH:mm");
+                var back = event.backgroundColor;
+                var allDay = event.allDay;
+                if (event.end) {
+                    var end = event.end.format("YYYY-MM-DD HH:mm");
+                } else {
+                    var end = "NULL";
+                }
+                crsfToken = document.getElementsByName("_token")[0].value;
+                $.ajax({
+                    url: 'actualizaEventos',
+                    data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id + '&background=' + back + '&allday=' + allDay,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                    success: function (json) {
+                        UIToastr.init('success' ,'¡Bien hecho!', 'Evento modificado correctamente' );
+                        console.log("Updated Successfully");
+                    },
+                    error: function (json) {
+                        console.log("Error al actualizar evento");
+                    }
+                });
+            },
+            eventDrop: function (event, delta) {
+                var start = event.start.format("YYYY-MM-DD HH:mm");
+                if (event.end) {
+                    var end = event.end.format("YYYY-MM-DD HH:mm");
+                } else {
+                    var end = "NULL";
+                }
+                var back = event.backgroundColor;
+                var allDay = event.allDay;
+                crsfToken = document.getElementsByName("_token")[0].value;
+
+                $.ajax({
+                    url: 'actualizaEventos',
+                    data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id + '&background=' + back + '&allday=' + allDay,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": crsfToken
+                    },
+                    success: function (json) {
+                        UIToastr.init('success' ,'¡Bien hecho!', 'Evento modificado correctamente' );
+                        console.log("Updated Successfully eventdrop");
+                    },
+                    error: function (json) {
+                        console.log("Error al actualizar eventdrop");
+                    }
+                });
+            },
+            eventClick: function (event, jsEvent, view) {
+                crsfToken = document.getElementsByName("_token")[0].value;
+               // var con = confirm("Esta seguro que desea eliminar el evento");
+               // if (con) {
+                    swal({
+                        title: "¿Esta seguro?",
+                        text: "¿Esta seguro que desea eliminar el evento?",
+                        type: "warning",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        confirmButtonText: "Si, eliminar",
+                        confirmButtonColor: "#ec6c62",
+                        confirmButtonClass: "btn blue",
+                        cancelButtonText: "Cancelar",
+                        cancelButtonClass: "btn red",
+                    },function() {
+                    $.ajax({
+                        url: 'eliminaEvento',
+                        data: 'id=' + event.id,
+                        headers: {
+                            "X-CSRF-TOKEN": crsfToken
+                        },
+                        type: "POST",
+                        success: function () {
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                            console.log("Evento eliminado");
+                        }
+                    })
+                    .done(function(data) {
+                            swal("Eliminado", "El evento se ha eliminado correctamente", "success");
+                        })
+                            .error(function(data) {
+                                swal("Oops", "Ha ocurrido un error", "error");
+                            });
+                }); /*else {
+                    console.log("Cancelado");
+                }*/
+            },
+
+            eventMouseover: function (event, jsEvent, view) {
+                var start = (event.start.format("HH:mm"));
+                var back = event.backgroundColor;
+                if (event.end) {
+                    var end = event.end.format("HH:mm");
+                } else {
+                    var end = "No definido";
+                }
+                if (event.allDay) {
+                    var allDay = "Si";
+                } else {
+                    var allDay = "No";
+                }
+                var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:' + back + ';position:absolute;z-index:10001;">' + '<center>' + event.title + '</center>' + '<br>' + 'Inicio: ' + start + '<br>' + 'Fin: ' + end + '</div>';
+                $("body").append(tooltip);
+                $(this).mouseover(function (e) {
+                    $(this).css('z-index', 10000);
+                    $('.tooltipevent').fadeIn('500');
+                    $('.tooltipevent').fadeTo('10', 1.9);
+                }).mousemove(function (e) {
+                    $('.tooltipevent').css('top', e.pageY + 10);
+                    $('.tooltipevent').css('left', e.pageX + 20);
+                });
+            },
+
+            eventMouseout: function (calEvent, jsEvent) {
+                $(this).css('z-index', 8);
+                $('.tooltipevent').remove();
+            },
+
+            dayClick: function (date, jsEvent, view) {
+                if (view.name === "month") {
+                    $('#calendar').fullCalendar('gotoDate', date);
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                }
             }
-        },
+        });
 
-        eventMouseover: function( event, jsEvent, view ) {
-            var start = (event.start.format("HH:mm"));
-            var back=event.backgroundColor;
-            if(event.end){
-                var end = event.end.format("HH:mm");
-            }else{var end="No definido";
+        /* AGREGANDO EVENTOS AL PANEL */
+        var currColor = "#3c8dbc"; //Red by default
+        //Color chooser button
+        var colorChooser = $("#color-chooser-btn");
+        $("#color-chooser > li > a").click(function (e) {
+            e.preventDefault();
+            //Save color
+            currColor = $(this).css("color");
+            //Add color effect to button
+            $('#add-new-event').css({"background-color": currColor, "border-color": currColor});
+        });
+        $("#add-new-event").click(function (e) {
+            e.preventDefault();
+            //Get value and make sure it is not null
+            var val = $("#new-event").val();
+            if (val.length == 0) {
+                return;
             }
-            if(event.allDay){
-                var allDay = "Si";
-            }else{var allDay="No";
-            }
-            var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:'+back+';position:absolute;z-index:10001;">'+'<center>'+ event.title +'</center>'+'Todo el dia: '+allDay+'<br>'+ 'Inicio: '+start+'<br>'+ 'Fin: '+ end +'</div>';
-            $("body").append(tooltip);
-            $(this).mouseover(function(e) {
-                $(this).css('z-index', 10000);
-                $('.tooltipevent').fadeIn('500');
-                $('.tooltipevent').fadeTo('10', 1.9);
-            }).mousemove(function(e) {
-                $('.tooltipevent').css('top', e.pageY + 10);
-                $('.tooltipevent').css('left', e.pageX + 20);
-            });
-        },
 
-        eventMouseout: function(calEvent, jsEvent) {
-            $(this).css('z-index', 8);
-            $('.tooltipevent').remove();
-        },
+            //Create events
+            var event = $("<div />");
+            event.css({
+                "background-color": currColor,
+                "border-color": currColor,
+                "color": "#fff"
+            }).addClass("external-event");
+            event.html(val);
+            $('#external-events').prepend(event);
 
-        dayClick: function(date, jsEvent, view) {
-            if (view.name === "month") {
-                $('#calendar').fullCalendar('gotoDate', date);
-                $('#calendar').fullCalendar('changeView', 'agendaDay');
-            }
-        }
-    });
+            //Add draggable funtionality
+            ini_events(event);
 
-    /* AGREGANDO EVENTOS AL PANEL */
-    var currColor = "#3c8dbc"; //Red by default
-    //Color chooser button
-    var colorChooser = $("#color-chooser-btn");
-    $("#color-chooser > li > a").click(function (e) {
-        e.preventDefault();
-        //Save color
-        currColor = $(this).css("color");
-        //Add color effect to button
-        $('#add-new-event').css({"background-color": currColor, "border-color": currColor});
-    });
-    $("#add-new-event").click(function (e) {
-        e.preventDefault();
-        //Get value and make sure it is not null
-        var val = $("#new-event").val();
-        if (val.length == 0) {
-            return;
-        }
-
-        //Create events
-        var event = $("<div />");
-        event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
-        event.html(val);
-        $('#external-events').prepend(event);
-
-        //Add draggable funtionality
-        ini_events(event);
-
-        //Remove event from text input
-        $("#new-event").val("");
+            //Remove event from text input
+            $("#new-event").val("");
+        });
     });
 });
 
@@ -381,8 +494,9 @@ $(function () {
                 download(doc.output(), "AEFC.pdf", "text/pdf");
 
             }
-        }) ;
+        });
     })
+
     function download(strData, strFileName, strMimeType) {
         var D = document,
             A = arguments,
@@ -398,13 +512,14 @@ $(function () {
             var bb = new MSBlobBuilder();
             bb.append(strData);
             return navigator.msSaveBlob(bb, strFileName);
-        } /* end if(window.MSBlobBuilder) */
+        }
+        /* end if(window.MSBlobBuilder) */
 
         if ('download' in a) {
             a.setAttribute("download", n);
             a.innerHTML = "downloading...";
             D.body.appendChild(a);
-            setTimeout(function() {
+            setTimeout(function () {
                 var e = D.createEvent("MouseEvents");
                 e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false,
                     false, false, 0, null);
@@ -412,18 +527,21 @@ $(function () {
                 D.body.removeChild(a);
             }, 66);
             return true;
-        } /* end if('download' in a) */
+        }
+        /* end if('download' in a) */
 
         //do iframe dataURL download:
         var f = D.createElement("iframe");
         D.body.appendChild(f);
         f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64"
             : "") + "," + (window.btoa ? window.btoa : escape)(strData);
-        setTimeout(function() {
+        setTimeout(function () {
             D.body.removeChild(f);
         }, 333);
         return true;
-    } /* end download() */
+    }
+
+    /* end download() */
 </script>
 @endpush
 @endpermission
