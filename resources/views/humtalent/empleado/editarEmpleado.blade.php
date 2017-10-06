@@ -1,12 +1,11 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                        <i class="fa fa-arrow-circle-left"></i>Volver
-                    </a>
-                </div>
-            </div>
+            @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+           ],
+       ])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::model ($empleado, ['id'=>'form_empleado_update', 'url' => '/forms'])  !!}
@@ -167,7 +166,7 @@ jQuery(document).ready(function() {
         $(".content-ajax").load(route);
     });
 
-   $( ".back" ).on('click', function (e) {
+   $( "#link_cancel" ).on('click', function (e) {
        //e.preventDefault();
        var route = '{{ route('talento.humano.empleado.index.ajax') }}';
        $(".content-ajax").load(route);

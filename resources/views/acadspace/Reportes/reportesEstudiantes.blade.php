@@ -1,75 +1,102 @@
-@permission('auxapoyo')
-@extends('material.layouts.dashboard')
-
-@section('page-title', 'Solicitudes sin revisar:')
-
-@section('content')
-<div class="col-md-12">
-    <div class="row ui-sortable" id="sortable_portlets">
-        <div class="col-md-12">
-            <div class="portlet portlet-sortable light bordered portlet-form" style="display: block;">
-                <div class="portlet-title ui-sortable-handle">
-                    <div class="caption font-green">
-                        <i class=" icon-frame font-green"></i>
-                        <span class="caption-subject bold uppercase"> Solicitudes </span>
-                    </div>
-                    <div class="actions">
-                        <a class="btn btn-circle btn-icon-only btn-default" id="link_upload" href="javascript:;">
-                            <i class="icon-cloud-upload"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" id="link_wrench" href="javascript:;">
-                            <i class="icon-wrench"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" id="link_trash" href="javascript:;">
-                            <i class="icon-trash"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="clearfix"> </div><br><br><br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="example-table-ajax_wrapper" class="dataTables_wrapper"><div class="row"><div class="col-md-12"><div class="dt-buttons"><a class="dt-button buttons-print btn btn-circle btn-icon-only btn-default tooltips t-print" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-print"></i></span></a><a class="dt-button buttons-copy buttons-html5 btn btn-circle btn-icon-only btn-default tooltips t-copy" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-files-o"></i></span></a><a class="dt-button buttons-pdf buttons-html5 btn btn-circle btn-icon-only btn-default tooltips t-pdf" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-file-pdf-o"></i></span></a><a class="dt-button buttons-excel buttons-html5 btn btn-circle btn-icon-only btn-default tooltips t-excel" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-file-excel-o"></i></span></a><a class="dt-button buttons-csv buttons-html5 btn btn-circle btn-icon-only btn-default tooltips t-csv" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-file-text-o"></i></span></a><a class="dt-button buttons-collection buttons-colvis btn btn-circle btn-icon-only btn-default tooltips t-colvis" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-bars"></i></span></a><a class="dt-button btn btn-circle btn-icon-only btn-default tooltips t-refresh" tabindex="0" aria-controls="example-table-ajax" href="#"><span><i class="fa fa-refresh"></i></span></a></div></div></div><div class="row"><div class="col-md-6 col-sm-12"><div class="dataTables_length" id="example-table-ajax_length"><label>Mostrar <select name="example-table-ajax_length" aria-controls="example-table-ajax" class="form-control input-sm input-xsmall input-inline"><option value="5">5</option><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="-1">Todo</option></select> registros</label></div></div><div class="col-md-6 col-sm-12"><div id="example-table-ajax_filter" class="dataTables_filter"><label>Buscar:<input type="search" class="form-control input-sm input-small input-inline" placeholder="" aria-controls="example-table-ajax"></label></div></div><div id="example-table-ajax_processing" class="dataTables_processing" style="display: none;"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span></div></div><div class="table-scrollable"><table class="table table-striped table-bordered table-hover dt-responsive dataTable dtr-inline" width="100%" id="example-table-ajax" role="grid" aria-describedby="example-table-ajax_info" style="width: 100%;">
-                                        <thead>
-                                        <tr role="row"><th width="200" class="sorting_asc" tabindex="0" aria-controls="example-table-ajax" rowspan="1" colspan="1" data-column-index="2" style="width: 182px;" aria-label="Nombre: Activar para ordenar la columna de manera descendente" aria-sort="ascending">Carrera</th><th class="sorting" tabindex="0" aria-controls="example-table-ajax" rowspan="1" colspan="1" data-column-index="3" style="width: 193px;" aria-label="Email: Activar para ordenar la columna de manera ascendente"># Estudiantes</th></tr>
-                                        </thead>
-
-                                        <tfoot>
-                                        </tfoot>
-                                        @foreach($sist as $sistemas)
-                                        <tbody>
-
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">Ingenieria de Sistemas</td>
-                                            <td class="sorting_1">{{$sistemas}}</td>
-                                        </tr>
-
-                                        </tbody>
-                                        @endforeach
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7 col-sm-12">
-                                        <div class="dataTables_paginate paging_bootstrap_number" id="example-table-ajax_paginate">
-                                            <ul class="pagination" style="visibility: visible;">
-                                                <li class="prev disabled"><a href="#" title="Anterior"><i class="fa fa-angle-left"></i></a></li>
-                                                <li class="active"><a href="#">1</a></li>
-                                                <li class="next disabled"><a href="#" title="Siguiente"><i class="fa fa-angle-right"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- empty sortable porlet required for each columns! -->
-            <div class="portlet portlet-sortable-empty"> </div>        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ env('APP_NAME') }}</title>
+    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all" />
+    <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- BEGIN FAVICONS --}}
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicons/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicons/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicons/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicons/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicons') }}/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/favicons') }}/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicons') }}/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicons') }}/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicons') }}/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/favicons') }}/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicons') }}/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicons') }}/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicons') }}/favicon-16x16.png">
+    <link rel="manifest" href="{{ asset('assets/favicons') }}/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ asset('assets/favicons') }}/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    {{-- ENDS FAVICONS --}}
+</head>
+<body>
+<header class="clearfix">
+    <div id="logo">
+        <img src="{{ asset('css/logoUDEC.png') }}">
+    </div>
+    <div id="company">
+        <h2 class="name">{{ env('APP_NAME') }}</h2>
+        <div> Calle 14 con Avenida 15 <i class="fa fa-map-signs"></i></div>
+        <div>Universidad de Cundinamarca - Ext. Facatativá <i class="fa fa-map-marker" aria-hidden="true"></i></div>
+        <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
+        <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
     </div>
 
-</div>
-@endsection
-@endpermission
+</header>
+<main>
+    <div id="details" class="clearfix">
+        <div id="client">
+            <div class="to">REPORTE GENERADO POR:</div>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Auxliar de Apoyo Academico' }}</h2>
+            <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
+            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
+        </div>
+        <div id="invoice">
+            <h1>DATOS DE CONTACTO:</h1>
+            <div class="date">Total: {{$totalTot}} Estudiantes</div>
+            <div class="date">Fecha del reporte: {{$date}}</div>
+            <div class="date">Hora del reporte: {{$time}}</div>
+            <div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportEst') }}">
+                    <i class="fa fa-download">
+                    </i>Descargar reporte
+                </a>
+            </div>
+        </div>
+    </div>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="no" >#</th>
+            <th class="unit"><b>CARRERA</b></th>
+            <th class="unit"><b>PRACTICA GRUPAL</b></th>
+            <th class="unit"><b>PRACTICA LIBRE</b></th>
+            <th class="unit"><b>TOTAL</b></th>
+        </tr>
+        </thead>
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'INGENIERIA DE SISTEMAS'}}</td>
+            <td class="desc">{{$totSistGrup}}</td>
+            <td class="unit">{{$totSistLib}}</td>
+            <td class="unit">{{$totSistGrup+$totSistLib}}</td>
+        </tr>
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'INGENIERIA AMBIENTAL'}}</td>
+            <td class="desc">{{$totAmbGrup}}</td>
+            <td class="unit">{{$totAmbLib}}</td>
+            <td class="unit">{{$totAmbGrup+$totAmbLib}}</td>
+        </tr>
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'INGENIERIA AGRONOMICA'}}</td>
+            <td class="desc">{{$totAgroGrup}}</td>
+            <td class="unit">{{$totAgroLib}}</td>
+            <td class="unit">{{$totAgroGrup+$totAgroLib}}</td>
+        </tr>
+
+    </table>
+    <br><br>
+    <div id="thanks" align="center">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
+
+</main>
+
+</body>
+
+</html>

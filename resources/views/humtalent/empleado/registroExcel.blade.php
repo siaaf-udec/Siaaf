@@ -103,14 +103,24 @@
                         processData: false,
                         async: true,
                         beforeSend: function () {
-                            App.startPageLoading({animate: true});
+                            $.blockUI(
+                                { message:'Registrando empleados...',
+                                    css: {
+                                border: 'none',
+                                padding: '15px',
+                                backgroundColor: '#000',
+                                '-webkit-border-radius': '10px',
+                                '-moz-border-radius': '10px',
+                                opacity: .5,
+                                color: '#fff'
+                            } });
                         },
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_file')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
-                               App.stopPageLoading();   
+                               App.unblockUI();
                             }
                         },
                         error: function (response, xhr, request) {

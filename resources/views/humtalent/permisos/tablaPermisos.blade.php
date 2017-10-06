@@ -1,13 +1,13 @@
-
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Permisos registrado:'])
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                        <i class="fa fa-arrow-circle-left"></i>Volver
-                    </a>
-                </div>
-            </div>
+            @slot('actions', [
+                       'link_cancel' => [
+                       'link' => '',
+                       'icon' => 'fa fa-arrow-left',
+                      ],
+               ])
+
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <br><br>
@@ -31,12 +31,14 @@
             </div>
         </div>
             <br>
+            @permission('FUNC_RRHH')
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Nuevo</a>                    </div>
                 </div>
             </div>
+            @endpermission
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -71,7 +73,7 @@
                                         ['label' => 'Descripción del permiso o incapacidad', 'maxlength' => '300','auto' => 'off'],
                                         ['help' => 'Ingrese la Descripción del permiso a registrar']) !!}
                                     {!! Field::date('PERM_Fecha',
-                                                   ['label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                   ['label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                    ['help' => 'Seleccione la fecha del permiso o incapacidad.', 'icon' => 'fa fa-calendar']) !!}
                             </div>
                             </div>
@@ -104,7 +106,7 @@
                                         ['id'=>'descUpdate','label' => 'Descripción del permiso o incapacidad', 'maxlength' => '300','required', 'auto' => 'off'],
                                         ['help' => 'Ingrese la Descripción del permiso a registrar']) !!}
                                     {!! Field::date('PERM_Fecha',
-                                                   ['label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                   ['id'=>'fechaUpdate','label'=>'Fecha del permiso o incapacidad','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                    ['help' => 'Seleccione la fecha del permiso o incapacidad.', 'icon' => 'fa fa-calendar']) !!}
                                 </div>
                             </div>
@@ -119,12 +121,23 @@
             </div>
         @endcomponent
     </div>
-
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
+        if (jQuery().datepicker) {
+            $('.date-picker').datepicker({
+                rtl: App.isRTL(),
+                orientation: "left",
+                todayHighlight: true,
+                autoclose: true,
+                language: "es",
+            });
+            $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+        }
 
         var cedula=$('input[id="FK_TBL_Persona_Cedula"]').val();
         var table, url,columns;
@@ -135,7 +148,7 @@
             {data: 'PERM_Descripcion', name: 'Descripción'},
             {data: 'PERM_Fecha', name: 'Fecha'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -204,7 +217,7 @@
             var dataTable = table.row($tr).data();
             $('input[name="PK_PERM_IdPermiso"]').val(dataTable.PK_PERM_IdPermiso);
             $('#descUpdate').val(dataTable.PERM_Descripcion);
-            $('input[name="PERM_Fecha"]').val(dataTable.PERM_Fecha);
+            $('#fechaUpdate').val(dataTable.PERM_Fecha);
             $('#modal-update-permission').modal('toggle');
         });
 
@@ -263,7 +276,7 @@
 
                     var formData = new FormData();
                     formData.append('FK_TBL_Persona_Cedula', $('[name="FK_TBL_Persona_Cedula"]').val());
-                    formData.append('PERM_Fecha', $('[name="PERM_Fecha"]').val());
+                    formData.append('PERM_Fecha', $('#fechaUpdate').val());
                     formData.append('PERM_Descripcion', $('#descUpdate').val());
                     formData.append('PK_PERM_IdPermiso', $('[name="PK_PERM_IdPermiso"]').val());
                     $.ajax({
@@ -311,7 +324,7 @@
 
         FormValidationMd.init(form_update,rules_update,false,updatePermision());
 
-        $( ".back" ).on('click', function (e) {
+        $( "#link_cancel" ).on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.permisos.listaEmpleados.ajax') }}';
             $(".content-ajax").load(route);

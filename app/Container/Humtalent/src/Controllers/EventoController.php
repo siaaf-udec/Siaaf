@@ -11,8 +11,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Event;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Asistent;
@@ -21,8 +19,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EventoController extends Controller
 {
-    protected $userRepository;
-    protected $id;
+    private $userRepository;
+    private $id;
     public function __construct(UserInterface $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -64,12 +62,12 @@ class EventoController extends Controller
             return DataTables::of($empleados)
                 ->addIndexColumn()
                 ->make(true);
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
         }
+
+        return response()->json([
+            'message' => 'Incorrect request',
+            'code' => 412
+        ], 412);
     }
 
     /**
@@ -88,12 +86,12 @@ class EventoController extends Controller
             return DataTables::of($asistentes)
                 ->addIndexColumn()
                 ->make(true);
-        } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
         }
+
+        return response()->json([
+            'message' => 'Incorrect request',
+            'code' => 412
+        ], 412);
     }
 
     /**
@@ -102,7 +100,7 @@ class EventoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @param  int  $ced
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function registrarAsistentes(Request $request,$id, $ced){
         if($request->ajax() && $request->isMethod('GET')) {
@@ -115,12 +113,12 @@ class EventoController extends Controller
                 '¡Registro exitoso!',
                 'El asistente fue registrado correctamente.'
             );
-        }else{
-                return AjaxResponse::fail(
-                    '¡Lo sentimos!',
-                    'No se pudo completar tu solicitud.'
-                );
-            }
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -137,12 +135,11 @@ class EventoController extends Controller
         {
             return view('humtalent.eventos.consultarAsistentes',compact('id'));
         }
-        else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -156,12 +153,11 @@ class EventoController extends Controller
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.registrarAsistentes',compact('id'));
         }
-        else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -170,7 +166,7 @@ class EventoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @param  int  $datos
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function registrarTodosAsistentes(Request $request, $id, $datos){
         $datos=explode(';',$datos);
@@ -186,12 +182,12 @@ class EventoController extends Controller
                 '¡Registro exitoso!',
                 'Todos los asistentes fueron registrados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -201,7 +197,7 @@ class EventoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @param  int  $ced
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function deleteAsistentes(Request $request, $id, $ced){
         if($request->ajax() && $request->isMethod('GET')){
@@ -210,12 +206,12 @@ class EventoController extends Controller
         return AjaxResponse::success(
             '¡Proceso exitoso!',
             'El asistente fue eliminado correctamente.'
-        );}else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+        );}
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -239,12 +235,11 @@ class EventoController extends Controller
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.ajaxListaEventos');
         }
-        else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -258,19 +253,18 @@ class EventoController extends Controller
         if($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.eventos.registrarEvento');
         }
-        else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Almacena un documento enviado desde el formulario del la funcion create.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -289,12 +283,12 @@ class EventoController extends Controller
                 '¡Bien hecho!',
                 'Datos almacenados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -313,20 +307,18 @@ class EventoController extends Controller
             return view('humtalent.eventos.editarEvento', [
                 'evento' => $evento]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Se realiza la actulización de datos de los eventos.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
     {
@@ -343,13 +335,11 @@ class EventoController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -357,7 +347,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request,$id)//
     {
@@ -368,11 +358,11 @@ class EventoController extends Controller
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }

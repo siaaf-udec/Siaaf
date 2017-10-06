@@ -67,18 +67,18 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                                {!! Field:: text('nombre_soft',null,
-                                ['label'=>'Nombre Software:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
+                            {!! Field:: text('nombre_soft',null,
+                            ['label'=>'Nombre Software:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                            ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
 
 
-                                {!! Field:: text('version',null,
-                                ['label'=>'Version','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                ['help' => 'Digita la version.','icon'=>'fa fa-desktop']) !!}
+                            {!! Field:: text('version',null,
+                            ['label'=>'Version','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                            ['help' => 'Digita la version.','icon'=>'fa fa-desktop']) !!}
 
-                                {!! Field:: text('licencias',null,
-                                ['label'=>'Cantidad de licencias','class'=> 'form-control', 'autofocus', 'maxlength'=>'2','autocomplete'=>'off'],
-                                ['help' => 'Digita cantidad de licencias disponibles.','icon'=>'fa fa-user']) !!}
+                            {!! Field:: text('licencias',null,
+                            ['label'=>'Cantidad de licencias','class'=> 'form-control', 'autofocus', 'maxlength'=>'2','autocomplete'=>'off'],
+                            ['help' => 'Digita cantidad de licencias disponibles.','icon'=>'fa fa-user']) !!}
 
                         </div>
 
@@ -94,14 +94,14 @@
         </div>
 
 
-            {{-- END HTML MODAL CREATE--}}
-        </div>
+        {{-- END HTML MODAL CREATE--}}
     </div>
-    @endcomponent
-    </br>
-    </br>
-    </br>
-    </br>
+</div>
+@endcomponent
+</br>
+</br>
+</br>
+</br>
 
 </div>
 {{-- END HTML SAMPLE --}}
@@ -166,11 +166,11 @@
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
 </script>
 
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">    </script>
-    <!-- Estandar Mensajes -->
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">    </script>
-    <!-- Estandar Datatable -->
-    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">   </script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">    </script>
+<!-- Estandar Mensajes -->
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">    </script>
+<!-- Estandar Datatable -->
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">   </script>
 <script>
 
     /*PINTAR TABLA*/
@@ -184,9 +184,9 @@
         columns = [
 
             {data: 'DT_Row_Index'},
-            {data: 'nombre_soft', name: 'Nombre'},
-            {data: 'version', name: 'Version'},
-            {data: 'licencias', name: 'Licencias'},
+            {data: 'SOF_nombre_soft', name: 'Nombre'},
+            {data: 'SOF_version', name: 'Version'},
+            {data: 'SOF_licencias', name: 'Licencias'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                 data:'action',
@@ -208,8 +208,8 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-
-            var route = '{{ route('espacios.academicos.soft.destroy') }}'+'/'+dataTable.id;
+            console.log( dataTable.id );
+            var route = '{{ route('espacios.academicos.soft.destroy') }}'+'/'+dataTable.PK_SOF_id;
             var type = 'DELETE';
             var async = async || false;
 
@@ -241,62 +241,64 @@
         });
 
 
-    /*ABRIR MODAL*/
-    $( ".create" ).on('click', function (e) {
-        e.preventDefault();
-        $('#modal-create-soft').modal('toggle');
-    });
-    /*CREAR SOFTWARE CON VALIDACIONES*/
-    var createPermissions = function () {
-        return{
-            init: function () {
-                var route = '{{ route('espacios.academicos.soft.regsoft') }}';
-                var type = 'POST';
-                var async = async || false;
+        /*ABRIR MODAL*/
+        $( ".create" ).on('click', function (e) {
+            e.preventDefault();
+            $('#modal-create-soft').modal('toggle');
+        });
+        /*CREAR SOFTWARE CON VALIDACIONES*/
+        var createPermissions = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('espacios.academicos.soft.regsoft') }}';
+                    var type = 'POST';
+                    var async = async || false;
 
-                var formData = new FormData();
-                formData.append('nombre_soft', $('input:text[name="nombre_soft"]').val());
-                formData.append('version', $('input:text[name="version"]').val());
-                formData.append('licencias', $('input:text[name="licencias"]').val());
+                    var formData = new FormData();
+                    formData.append('SOF_nombre_soft', $('input:text[name="nombre_soft"]').val());
+                    formData.append('SOF_version', $('input:text[name="version"]').val());
+                    formData.append('SOF_licencias', $('input:text[name="licencias"]').val());
 
-                $.ajax({
-                    url: route,
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                    cache: false,
-                    type: type,
-                    contentType: false,
-                    data: formData,
-                    processData: false,
-                    async: async,
-                    beforeSend: function () {
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
 
-                    },
-                    success: function (response, xhr, request) {
-                        if (request.status === 200 && xhr === 'success') {
-                            table.ajax.reload();
-                            $('#modal-create-module').modal('hide');
-                            $('#form_soft')[0].reset(); //Limpia formulario
-                            UIToastr.init(xhr , response.title , response.message  );
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                $('#modal-create-soft').modal('hide');
+                                $('#form_soft')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
                         }
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 &&  xhr === 'success') {
-                            UIToastr.init(xhr, response.title, response.message);
-                        }
-                    }
-                });
+                    });
+                }
             }
-        }
-    };
+        };
 
 
-    var form_edit = $('#form_soft');
-    var rules_edit = {
-        nombre_soft: { minlength: 3, required: true },
-        version: {minlength: 1, required: true},
-        licencias: {number:true, required: true}
-    };
-    FormValidationMd.init(form_edit,rules_edit,false,createPermissions());
+        var form_edit = $('#form_soft');
+        var rules_edit = {
+            nombre_soft: { minlength: 3, required: true },
+            version: {minlength: 1, required: true},
+            licencias: {number:true, required: true}
+        };
+        FormValidationMd.init(form_edit,rules_edit,false,createPermissions());
+
+
     });
 
 </script>

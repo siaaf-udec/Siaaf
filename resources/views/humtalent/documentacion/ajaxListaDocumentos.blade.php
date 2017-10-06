@@ -2,6 +2,7 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación registrada:'])
         <br>
         <div class="row">
+            @permission('FUNC_RRHH')
             <div class="col-md-12">
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
@@ -10,6 +11,7 @@
                     </a>
                 </div>
             </div>
+            @endpermission
         </div>
         <br>
         <div class="row">
@@ -43,7 +45,7 @@
             {data: 'DCMTP_Nombre_Documento', name: 'documento'},
             {data: 'DCMTP_Tipo_Documento', name: 'tipo'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

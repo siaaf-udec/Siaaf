@@ -2,6 +2,7 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Eventos registrados:'])
         <br>
         <div class="row">
+            @permission('FUNC_RRHH')
             <div class="col-md-12">
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
@@ -10,6 +11,7 @@
                     </a>
                 </div>
             </div>
+            @endpermission
         </div>
         <br>
 
@@ -50,7 +52,7 @@
             {data: 'EVNT_Fecha_Fin', name: 'Fecha Fin'},
             {data: 'EVNT_Hora', name: 'Hora'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

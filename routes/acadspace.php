@@ -6,40 +6,21 @@
 //RUTA DE EJEMPLO
 Route::get('/', [
     'as' => 'espacios.academicos.index',
-    'uses' => function(){
+    'uses' => function () {
         return view('acadspace.controlEstudiante');
     }
 ]);
-
-/***RUTA ASIGNADA A POPUP (AGREGAR ANOTACION SOLICITUD ESPACIO ACADEMICO **/
-
 
 
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
 
-
-/*
-Route::resource('espacad', $controller.'SolicitudController', [   //ruta para el CRUD de solicitudes
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.espacad.create',
-        'store' => 'espacios.academicos.espacad.store',
-        'index' => 'espacios.academicos.espacad.index',
-        'edit' => 'espacios.academicos.espacad.edit',
-        'show' => 'espacios.academicos.espacad.show',
-        'update' => 'espacios.academicos.espacad.update',
-        'destroy' => 'espacios.academicos.espacad.destroy',
-    ]
-]);*/
-
-
-
 Route::get('/editActPrac/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.editActPrac', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@editActPrac'
+    'uses' => $controller . 'SolicitudController@editActPrac'
 ]);
 
-Route::resource('est', $controller.'EstudiantesController', [   //ruta para el CRUD de estudiantes
+Route::resource('est', $controller . 'EstudiantesController', [   //ruta para el CRUD de estudiantes
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.est.create',
         'store' => 'espacios.academicos.est.store',
@@ -50,90 +31,66 @@ Route::resource('est', $controller.'EstudiantesController', [   //ruta para el C
     ]
 ]);
 
-Route::resource('formacad', $controller.'solFormAcadController', [   //ruta para el CRUD de formatos academicos
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.formacad.create',
-        'store' => 'espacios.academicos.formacad.store',
-        'index' => 'espacios.academicos.formacad.index',
-        'show' => 'espacios.academicos.formacad.show',
-        'edit' => 'espacios.academicos.formacad.edit',
-        'update' => 'espacios.academicos.formacad.update',
-        'destroy' => 'espacios.academicos.formacad.destroy',
-    ]
-]);
 
 Route::get('/editAct/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.editAct', //Este es el alias de la ruta
-    'uses' => $controller.'solFormAcadController@editAct'
+    'uses' => $controller . 'formatosController@editAct'
 ]);
 
 
-/*
-Route::resource('soft', $controller.'softwareController', [   //ruta para el CRUD de solicitudes de software
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.soft.create',
-        'store' => 'espacios.academicos.soft.store',
-        'index' => 'espacios.academicos.soft.index',
-        'edit' => 'espacios.academicos.soft.edit',
-        'edit2' => 'espacios.academicos.soft.edit2',
-        'update' => 'espacios.academicos.soft.update',
-        'destroy' => 'espacios.academicos.soft.destroy',
-    ]
-]);*/
-
 Route::get('/edit2/{id}', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.edit2', //Este es el alias de la ruta
-    'uses' => $controller.'softwareController@eliminarSoftware'
+    'uses' => $controller . 'softwareController@eliminarSoftware'
 ]);
 
 Route::get('/lissolicitudesAprob', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.lissolicitudesAprob', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@listarSolPrueba'
+    'uses' => $controller . 'SolicitudController@listarSolPrueba'
 ]);
 
 Route::get('/solicitudesAprob', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.solicitudesAprob', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@data'
+    'uses' => $controller . 'SolicitudController@data'
 ]);
 
 Route::get('/solicitudesSoft', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.solicitudesSoft', //Este es el alias de la ruta
-    'uses' => $controller.'softwareController@show'
+    'uses' => $controller . 'softwareController@show'
 ]);
 
 Route::get('/solicitudesLista', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.mostrarSolicitudes', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@listarSolicitud'
+    'uses' => $controller . 'SolicitudController@listarSolicitud'
 ]);
 
 Route::get('/solicitudesListaLibre', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.mostrarSolicitudesLibre', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@listarSolicitud'
+    'uses' => $controller . 'SolicitudController@listarSolicitud'
 ]);
 
 Route::get('/solicitudesAprobadas', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.solicitudesAprobadas', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@listarSolicitudAprobada'
+    'uses' => $controller . 'SolicitudController@listarSolicitudAprobada'
 ]);
 
 Route::get('/misSolicitudes', [    //ruta para listar los docentes registrados.
     'as' => 'espacios.academicos.misSolicitudes', //Este es el alias de la ruta
-    'uses' => $controller.'SolicitudController@estadoSolicitudesRealizadas'
+    'uses' => $controller . 'SolicitudController@estadoSolicitudesRealizadas'
 ]);
 
 Route::get('/descargarArchivo/{id}', [
     'as' => 'espacios.academicos.descargarArchivo',
-    'uses' => $controller.'solFormAcadController@descargar_publicacion'
+    'uses' => $controller . 'formatosController@descargar_publicacion'
 ]);
 
 Route::get('/listarporSec', [
     'as' => 'espacios.academicos.listarporSec',
-    'uses' => $controller.'solFormAcadController@listarporSec'
+    'uses' => $controller . 'formatosController@listarporSec'
 ]);
 
 Route::get('/reportes', [
     'as' => 'espacios.academicos.reportes',
-    'uses' => $controller.'EstudiantesController@reportes'
+    'uses' => $controller . 'EstudiantesController@reportes'
 ]);
 
 /*Route::get('reportes', function () {
@@ -150,7 +107,7 @@ Route::get('reportesDoc', function () {
 
 
 /**CALENDARIO**/
-Route::resource('acadcalendar', $controller.'CalendarioController', [   //RUTA HORARIO
+Route::resource('acadcalendar', $controller . 'CalendarioController', [   //RUTA HORARIO
     'names' => [ // 'método' => 'alias'
         'create' => 'espacios.academicos.acadcalendar.create',
         'store' => 'espacios.academicos.acadcalendar.store',
@@ -161,75 +118,200 @@ Route::resource('acadcalendar', $controller.'CalendarioController', [   //RUTA H
         'destroy' => 'espacios.academicos.acadcalendar.destroy'
     ]
 ]);
-Route::post('guardarEventos', array('as'=>'guardaEventos', 'uses' => 'CalendarioController@create'));
+//Ruta para guardar eventos en el calendario
+Route::post('guardarEventos',
+    array('as' => 'guardaEventos',
+        'uses' => 'CalendarioController@create'));
 
-//Rutas creadas para guardar la anotacion
-Route::post('x',[
-    'uses' => $controller.'SolicitudController@agregarAnotacion',
-    'as' => 'espacios.academicos.espacad.solicitud'
-]);
-//Ruta creada para asignar sala
-Route::post('y',[
-    'uses' => $controller.'SolicitudController@aprobarSolicitud',
-    'as' => 'espacios.academicos.espacad.solicitudaprob'
+Route::get('data/{sala?}', [ //Cargar datatable en la vista de calendario
+    'uses' => $controller . 'CalendarioController@data',
+    'as' => 'espacios.academicos.acadcalendar.data'
 ]);
 //Rutas asignadas para el calendario academico
-Route::post('guardaEventos',[ //Almacenar eventos
-    'uses' => $controller.'CalendarioController@create',
+Route::post('guardaEventos', [ //Almacenar eventos
+    'uses' => $controller . 'CalendarioController@create',
     'as' => 'espacios.academicos.espacad.guardaeventos'
 ]);
-Route::get('cargaEventos',[ //Cargar Eventos
-    'as'=>'espacios.academicos.espacad.cargarEve',     //ruta que llama al controlador para mostrar los enventos y recordatorios guardados
-    'uses'=>$controller.'CalendarioController@cargaEventos'
+Route::post('cargaEventos', [ //Cargar Eventos
+    'as' => 'espacios.academicos.espacad.cargarEve',     //ruta que llama al controlador para mostrar los enventos y recordatorios guardados
+    'uses' => $controller . 'CalendarioController@cargaEventos'
 ]);
-Route::post('actualizaEventos',[ //Modificar eventos
-    'uses' => $controller.'CalendarioController@update',
+Route::post('actualizaEventos', [ //Modificar eventos
+    'uses' => $controller . 'CalendarioController@update',
     'as' => 'espacios.academicos.espacad.actualizaEventos'
 ]);
-Route::post('eliminaEvento',[ //Eliminar eventos
-    'uses' => $controller.'CalendarioController@delete',
+Route::post('eliminaEvento', [ //Eliminar eventos
+    'uses' => $controller . 'CalendarioController@delete',
     'as' => 'espacios.academicos.espacad.eliminaEvento'
 ]);
 
 /*RUTAS PARA MANEJAR EL FORMULARIO DE SOFTWARE*/
 Route::group(['prefix' => 'soft'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-Route::get('index',[ //MOSTRAR FORMULARIO
-        'uses' => $controller.'softwareController@index',
+    Route::get('index', [ //MOSTRAR FORMULARIO
+        'uses' => $controller . 'softwareController@index',
         'as' => 'espacios.academicos.soft.index'
-]);
-Route::post('crear', [ //CREAR SOFTWARE
-    'uses' => $controller . 'softwareController@registroSoftware',
-    'as'   => 'espacios.academicos.soft.regsoft',
-]);
-Route::get('listar', [ //CARGAR DATATABLE
-    'uses' => $controller . 'softwareController@data',
-    'as'   => 'espacios.academicos.soft.data',
-]);
+    ]);
+    Route::post('crear', [ //CREAR SOFTWARE
+        'uses' => $controller . 'softwareController@registroSoftware',
+        'as' => 'espacios.academicos.soft.regsoft',
+    ]);
+    Route::get('listar', [ //CARGAR DATATABLE
+        'uses' => $controller . 'softwareController@data',
+        'as' => 'espacios.academicos.soft.data',
+    ]);
 
-Route::delete('delete/{id?}',[ //ELIMINAR
-    'uses' => $controller.'softwareController@destroy',
-    'as' => 'espacios.academicos.soft.destroy'
-])->where(['id' => '[0-9]+']);
+    Route::delete('delete/{id?}', [ //ELIMINAR
+        'uses' => $controller . 'softwareController@destroy',
+        'as' => 'espacios.academicos.soft.destroy'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::get('json', [ //Mostrar la vista
+        'uses' => $controller . 'softwareController@cargarjson',
+        'as' => 'espacios.academicos.soft.json'
+    ]);
 });
+
 
 /*RUTAS PARA EL FORMULARIO DE SOLICITUD GRUPAL*/
 Route::group(['prefix' => 'espacad'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('index',[
-        'uses' => $controller.'SolicitudController@index',
+    Route::get('index', [
+        'uses' => $controller . 'SolicitudController@index',
         'as' => 'espacios.academicos.espacad.index'
     ]);
-    Route::get('data',[ //Cargar datatable
-        'uses' => $controller.'SolicitudController@data',
+    Route::get('index-ajax', [
+        'uses' => $controller . 'SolicitudController@indexajax',
+        'as' => 'espacios.academicos.espacad.indexajax'
+    ]);
+    Route::get('data', [ //Cargar datatable
+        'uses' => $controller . 'SolicitudController@data',
         'as' => 'espacios.academicos.espacad.data'
     ]);
-    Route::post('store',[ //Registro solicitud formulario
-        'uses' => $controller.'SolicitudController@store',
+    Route::post('store', [ //Registro solicitud formulario
+        'uses' => $controller . 'SolicitudController@store',
         'as' => 'espacios.academicos.espacad.store'
     ]);
-    Route::get('create',[ //Mostrar la vista
-        'uses' => $controller.'SolicitudController@create',
+    Route::get('create', [ //Mostrar la vista
+        'uses' => $controller . 'SolicitudController@create',
         'as' => 'espacios.academicos.espacad.create'
     ]);
+    Route::get('createlib', [ //Mostrar la vista
+        'uses' => $controller . 'SolicitudController@createlib',
+        'as' => 'espacios.academicos.espacad.createlib'
+    ]);
+
+    Route::post('registrosol', [ //Registro solicitud formulario
+        'uses' => $controller . 'SolicitudController@registroSolicitudGrupal',
+        'as' => 'espacios.academicos.espacad.registrosol'
+    ]);
+    /*APRENDIENDO*/
+    Route::get('pruebat/{id?}', [
+        'as' => 'espacios.academicos.espacad.pruebat',
+        'uses' => $controller . 'SolicitudController@controladorX'
+    ]);
+    Route::get('alex', [ //Mostrar la vista
+        'uses' => $controller . 'SolicitudController@alexis',
+        'as' => 'espacios.academicos.espacad.alex'
+    ]);
+
 });
+
+
+/*RUTAS PARA EL FORMULARIO DE EVALUACION DE SOLICITUDES AUXILIAR ACADEMICO*/
+Route::group(['prefix' => 'evalsol'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index', [
+        'uses' => $controller . 'AuxiliarController@index',
+        'as' => 'espacios.academicos.evalsol.index'
+    ]);
+    Route::get('cargarSalas/{espacio?}', [
+        'uses' => $controller . 'AuxiliarController@cargarSalas',
+        'as' => 'espacios.academicos.evalsol.cargarSalas'
+    ]);
+    Route::get('data/{espacio?}', [ //Cargar datatable
+        'uses' => $controller . 'AuxiliarController@data',
+        'as' => 'espacios.academicos.evalsol.data'
+    ]);
+    Route::post('store', [ //Registro solicitud formulario
+        'uses' => $controller . 'AuxiliarController@store',
+        'as' => 'espacios.academicos.evalsol.store'
+    ]);
+    Route::get('create', [ //Mostrar la vista
+        'uses' => $controller . 'AuxiliarController@create',
+        'as' => 'espacios.academicos.evalsol.create'
+    ]);
+    Route::post('aprobar', [ //Aprobar solicitud
+        'uses' => $controller . 'AuxiliarController@aprobarSolicitud',
+        'as' => 'espacios.academicos.evalsol.aprobarSol',
+    ]);
+    Route::post('reprobar', [ //Aprobar solicitud
+        'uses' => $controller . 'AuxiliarController@agregarAnotacion',
+        'as' => 'espacios.academicos.evalsol.reprobarSol',
+    ]);
+
+});
+
+/*RUTAS PARA EL FORMULARIO DE FORMATOS ACADEMICOS*/
+Route::group(['prefix' => 'formacad'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index',[
+        'uses' => $controller.'formatosController@index',
+        'as' => 'espacios.academicos.formacad.index'
+    ]);
+    Route::get('indexajax',[
+        'uses' => $controller.'formatosController@indexajax',
+        'as' => 'espacios.academicos.formacad.indexajax'
+    ]);
+    Route::get('data',[ //Cargar datatable
+        'uses' => $controller.'formatosController@data',
+        'as' => 'espacios.academicos.formacad.data'
+    ]);
+    Route::post('store',[ //Registro solicitud formulario
+        'uses' => $controller.'formatosController@store',
+        'as' => 'espacios.academicos.formacad.store'
+    ]);
+    Route::get('create',[ //Mostrar la vista
+        'uses' => $controller.'formatosController@create',
+        'as' => 'espacios.academicos.formacad.create'
+    ]);
+    Route::get('listSol',[
+        'uses' => $controller.'formatosController@listSol',
+        'as' => 'espacios.academicos.formacad.listSol'
+    ]);
+    Route::get('datalistSol',[ //Cargar datatable
+        'uses' => $controller.'formatosController@dataListSol',
+        'as' => 'espacios.academicos.formacad.datalistSol'
+    ]);
+    Route::get('edit/{id?}',[ //EDITAR
+        'uses' => $controller.'formatosController@edit',
+        'as' => 'espacios.academicos.formacad.edit'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::get('descargarArchivo/{id?}',[
+        'uses' => $controller.'formatosController@descargar_publicacion',
+        'as' => 'espacios.academicos.descargarArchivo'
+    ])->where(['id' => '[0-9]+']);
+
+});
+
+/*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
+Route::group(['prefix' => 'report'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index',[ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller.'ReporteController@index',
+        'as' => 'espacios.academicos.report.index'
+    ]);
+    Route::post('repEst', [ //CREAR REPORTE
+        'uses' => $controller . 'ReporteController@store',
+        'as'   => 'espacios.academicos.report.repEst',
+    ]);
+    Route::get('DownloadRepEstudiante',[ //DESCARGAR REPORTE
+        'uses' => $controller.'ReporteController@DownloadEstReporte',
+        'as' => 'espacios.academicos.report.downReportEst'
+    ]);
+
+});
+
+
+

@@ -1,12 +1,12 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de documentos solicitados'])
-        <div class="col-md-6">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                    <i class="fa fa-arrow-circle-left"></i>Volver
-                </a>
-            </div>
-        </div>
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
+
         <div class="form-wizard">
             <div class="form-body">
                 <ul class="nav nav-pills nav-justified steps">
@@ -67,16 +67,17 @@
                             <br>
                             <div class="form-group">
                                     <div class="col-md-offset-1 col-md-9">
-                                    {!! Form::open (['id'=>'form-listar', 'url'=> ['/forms'], 'role'=>"form"]) !!}
+                                    {!! Form::open (['id'=>'form-listar', 'url'=> ['/forms']]) !!}
                                         {!! Field::hidden('PK_PRSN_Cedula',$empleado->PK_PRSN_Cedula) !!}
                                         {!! Field::select('tipoRadicacion',
                                                 ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
                                                 $tipoRad,
-                                                ['label' => 'Seleccionar el tipo de radicación']) !!}
+                                                ['id' => 'cambiar', 'label' => 'Seleccionar el tipo de radicación']) !!}
                                         {!! Form::submit('Cambiar',['class'=>'btn blue','btn-icon remove']) !!}
                                     </div>
                                 {!! Form::close() !!}
                             </div>
+                            @permission('FUNC_RRHH')
                             <div class="form-group">
                                 {!! Form::open (['id'=>'form-radicar', 'url'=> ['/forms']]) !!}
                                 <div class="col-md-offset-1 col-md-9">
@@ -92,6 +93,7 @@
                                 </div>
                                 {!! Form::close() !!}
                             </div>
+                            @endpermission
                         </div>
                     </div>
                     <div class="tab-pane active" id="tab1">
@@ -103,6 +105,7 @@
                             <div class="col-md-offset-1 col-md-10">
                             <hr>
                             </div>
+                             @permission('FUNC_RRHH')
                             <div class="row">
                                 <div class="form-group">
                                     {!! Form::open (['id'=>'form-afiliar', 'url'=> ['/forms']]) !!}
@@ -119,6 +122,7 @@
                                     {!! Form::close() !!}
                                 </div>
                             </div>
+                            @endpermission
                             <hr class="visible-xs" />
                         @endif
                      </div>
@@ -128,6 +132,7 @@
                                 <hr>
                                 <hr class="visible-xs" />
                             </div>
+                            @permission('FUNC_RRHH')
                             <div class="row">
                                 <div class="form-group">
                                     {!! Form::open (['id'=>'form-reiniciar', 'url'=> ['/forms']]) !!}
@@ -140,6 +145,7 @@
                                     {!! Form::close() !!}
                                 </div>
                             </div>
+                            @endpermission
                         @endif
                     </div>
             </div>
@@ -518,10 +524,12 @@
 
         FormValidationMd.init(formReinicio,rulesReinicio,false,reiniciar());
 
-        $( ".back" ).on('click', function (e) {
+        $( "#link_cancel" ).on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.buscarRadicar.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+
     });
 </script>

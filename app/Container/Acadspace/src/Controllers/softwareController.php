@@ -11,7 +11,7 @@ namespace App\Container\Acadspace\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Acadspace\src\solSoftware;
+use App\Container\Acadspace\src\Software;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -28,7 +28,7 @@ class softwareController extends Controller
      */
     public function index()
     {
-        return view('acadspace.Solicitudes.formularioSoftware');
+        return view('acadspace.Software.formularioSoftware');
     }
 
     /**
@@ -36,22 +36,24 @@ class softwareController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function registroSoftware(Request $request){
+    public function registroSoftware(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            solSoftware::create([
-                'nombre_soft' => $request['nombre_soft'],
-                'version' => $request['version'],
-                'licencias' => $request['licencias']
+            Software::create([
+                'SOF_nombre_soft' => $request['SOF_nombre_soft'],
+                'SOF_version' => $request['SOF_version'],
+                'SOF_licencias' => $request['SOF_licencias']
             ]);
             return AjaxResponse::success(
                 '¡Registro exitoso!',
@@ -69,8 +71,8 @@ class softwareController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-           // $articulos = solSoftware::all(['nombre_soft','version','licencias'])->get();
-            $software = solSoftware::all();
+            // $articulos = software::all(['nombre_soft','version','licencias'])->get();
+            $software = Software::all();
             return Datatables::of($software)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
@@ -88,53 +90,38 @@ class softwareController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+
+/*
+    public function cargarjson()
     {
-        $solicitudes = solSoftware::all();
-        $solicitudes = solSoftware::paginate(10);
-        return view('acadspace.Solicitudes.listaSolSoftware', compact('solicitudes'));
-    }
+        $users = software::select('SOF_nombre_soft', 'SOF_version', 'SOF_licencias')->get();
+
+        return Datatables::of($users)->make(true);
+    }*/
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+
+    public function mostrarSelect()
     {
-        $solicitud = solSoftware::find($id);
-        $solicitud->estado = 1;
-        $solicitud->save();
-
-        $solicitudes = solSoftware::all();
-        $solicitudes = solSoftware::paginate(10);
-        return view('acadspace.Solicitudes.listaSolSoftware', compact('solicitudes'));
-    }
-
-    public function mostrarSelect(){
-        $software = solSoftware::all();
-        echo $software;
+        $software = software::all();
+        //  echo $software;
         return view('espacios.academicos.espacad.create', compact('$software'));
     }
 
-    public function eliminarSoftware($id)
-    {
-        $solicitud = solSoftware::find($id);
-        $solicitud->delete();
-
-        $solicitudes = solSoftware::all();
-        $solicitudes = solSoftware::paginate(10);
-        return view('acadspace.Solicitudes.listaSolSoftware', compact('solicitudes'));
-    }
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -145,28 +132,27 @@ class softwareController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('DELETE')){
+        if ($request->ajax() && $request->isMethod('DELETE')) {
 
-            $solicitud = solSoftware::find($id);
+            $solicitud = software::find($id);
             $solicitud->delete();
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Software eliminado correctamente.'
             );
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
     }
-
 
 
 }

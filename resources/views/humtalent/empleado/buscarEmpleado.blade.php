@@ -111,8 +111,8 @@
 
                             },
                             success: function (route) {
-                                if(route == "Empleado no registrado"){
-                                    UIToastr.init('error' , "Error" , "!El empleado no se encuentra registrado!"  );
+                                if(route === "Empleado no registrado"){
+                                    UIToastr.init('error' , "Error" , "!El empleado no se encuentra registrado."  );
                                 }
                                 else {
                                     $(".content-ajax").html(route);

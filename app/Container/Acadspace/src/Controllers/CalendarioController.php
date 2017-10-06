@@ -10,10 +10,11 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\calendarioSalones;
-use Illuminate\Support\Facades\DB;
+use App\Container\Acadspace\src\Solicitud;
+use App\Container\Acadspace\src\Aulas;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use Yajra\DataTables\DataTables;
 
 class CalendarioController extends Controller
 {
@@ -26,34 +27,33 @@ class CalendarioController extends Controller
      */
     public function index()
     {
-        return view('acadspace.gestionhorarios.calendarioaulas');
+        $sala = new Aulas();
+        $sala = $sala->pluck('SAL_nombre_sala','SAL_nombre_sala');
+        return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);
     }
-    public function cargaEventos()
+    public function cargaEventos(Request $request)
     {
+            $sala = $request['sala'];
+            $data = array();
+            $id = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('PK_CAL_id');
+            $titulo = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_titulo');
+            $color = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_color');
+            $fecha_inicial = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_ini');
+            $fecha_final = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_fin');
+            $count = count($id);
 
-        $data = array();
-        $id = calendarioSalones::all()->pluck('PK_CAL_id');
-        $titulo = calendarioSalones::all()->pluck('CAL_titulo');
-        $color = calendarioSalones::all()->pluck('CAL_color');
-        $todoeldia = calendarioSalones::all()->pluck('allday');
-        $fecha_inicial = calendarioSalones::all()->pluck('CAL_fecha_ini');
-        $fecha_final = calendarioSalones::all()->pluck('CAL_fecha_fin');
-        $count = count($id);
+            for ($i = 0; $i < $count; $i++) {
+                $data[$i] = array(
+                    "title" => $titulo[$i],
+                    "start" => $fecha_inicial[$i],
+                    "end" => $fecha_final[$i],
+                    "backgroundColor" => $color[$i],
+                    "id" => $id[$i],
 
-        for($i=0 ; $i<$count ; $i++){
-            $data[$i] = array(
-                "title" => $titulo[$i],
-                "start" => $fecha_inicial[$i],
-                "end"=>$fecha_final[$i],
-                "allday" => $todoeldia[$i],
-                "backgroundColor" => $color[$i],
-                "id" => $id[$i],
-
-            );
-        }
-        json_encode($data);
-        return $data;
-
+                );
+            }
+            json_encode($data);
+            return $data;
 
     }
 
@@ -67,14 +67,13 @@ class CalendarioController extends Controller
         $titulo = $_POST['title'];
         $fecha_inicio = $_POST['start'];
         $color = $_POST['background'];
-        //$todoeldia = $_POST['allday'];
-
+        $sala = $_POST['salaSeleccionada'];
         $evento = new calendarioSalones();
 
         $evento->CAL_titulo = $titulo;
         $evento->CAL_fecha_ini = $fecha_inicio;
         $evento->CAL_color=$color;
-        $evento->CAL_todoeldia = true;
+        $evento->CAL_sala=$sala;
 
         $evento->save();
     }
@@ -136,7 +135,6 @@ class CalendarioController extends Controller
             $evento->CAL_fecha_fin=$end;
         }
         $evento->CAL_fecha_ini=$start;
-       // $evento->CAL_todoeldia=$allDay;
         $evento->CAL_color=$back;
         $evento->CAL_titulo=$title;
         //$evento->fechaFin=$end;
@@ -155,6 +153,46 @@ class CalendarioController extends Controller
         $id = $_POST['id'];
 
         calendarioSalones::destroy($id);
+    }
+
+    public function data(Request $request, $sala)
+    {
+
+        if($request->ajax() && $request->isMethod('GET')){
+
+            //Traigo unicamente las solicitudes aprobadas y muestro en el datatable
+            $users = Solicitud::where('FK_SOL_id_sala', '=', $sala)
+                ->where('SOL_estado', '=', 1);
+            return DataTables::of($users)
+                ->addColumn('tipo_prac', function ($users){
+                    if($users->SOL_id_practica==1){
+                        return "Libre";
+                    }elseif ($users->SOL_id_practica==2){
+                        return "Grupal";
+                    }
+                })
+                ->rawColumns(['tipo_prac'])
+                ->rawColumns(['estado'])
+                ->removeColumn('SOL_guia_practica')
+                ->removeColumn('SOL_software')
+                ->removeColumn('SOL_hora_inicio')
+                ->removeColumn('SOL_hora_fin')
+                ->removeColumn('SOL_fecha_inicio')
+                ->removeColumn('SOL_fecha_fin')
+                ->removeColumn('SOL_dias')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+
     }
 
 

@@ -1,5 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form_empleado_create', 'url' => '/forms']) !!}
@@ -157,6 +163,11 @@
         FormValidationMd.init(form, formRules, false, createUsers());
 
         $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('talento.humano.empleado.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+        $('#link_cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.empleado.index.ajax') }}';
             $(".content-ajax").load(route);

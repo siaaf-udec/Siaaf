@@ -2,29 +2,16 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
             <br>
-            @slot('actions', [
-                'link_upload' => [
-                    'link' => '',
-                    'icon' => 'icon-cloud-upload',
-                ],
-                'link_wrench' => [
-                    'link' => '',
-                    'icon' => 'icon-wrench',
-                ],
-                'link_trash' => [
-                    'link' => '',
-                    'icon' => 'icon-trash',
-                ],
-
-            ])
             <div class="row">
                 <div class="col-md-12">
+                    @permission('FUNC_RRHH')
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
                             <i class="fa fa-plus">
                             </i>Nuevo
                         </a>
                     </div>
+                    @endpermission
                 </div>
             </div>
             <br>
@@ -68,7 +55,7 @@
             {data: 'PRSN_Area', name: 'Área'},
             {data: 'PRSN_Salario', name: 'Salario'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH') <a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

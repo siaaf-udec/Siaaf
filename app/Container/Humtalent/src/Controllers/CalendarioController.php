@@ -31,54 +31,58 @@ class CalendarioController extends Controller
      * Funcion para obtener tanto lso eventos como las notificaciones que esten registradas
      *                      que han sido radicados.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function getEvent ()
+    public function getEvent (Request $request)
     {
-        $eventos = Event::all();        //se realiza la consulta para traer todos los eventos registrados
-        $events = array();      //arreglo para almacenar los eventos y notificaciones
-        foreach ($eventos as $evento)       //se recorre la consulta realizada a los eventos
-        {
-            $e = array();       //arreglo para almacenar cada registro de la consulta
-            $e['title'] = $evento['EVNT_Descripcion'];      //se gurda cada variable de la consulta en el vector con llaves
-            $e['start'] = $evento['EVNT_Fecha_Inicio'];     //que sean entendidas por la libreria de jquery full calendar y permitir que se muetren de manera correcta
-            if ($evento['EVNT_Fecha_Inicio'] != $evento['EVNT_Fecha_Fin'] )     //si las fechas de inicio y de fin del evento son diferentes se le agregga un dia de mas
+        if($request->ajax() && $request->isMethod('GET')) {
+            $eventos = Event::all();        //se realiza la consulta para traer todos los eventos registrados
+            $events = array();      //arreglo para almacenar los eventos y notificaciones
+            foreach ($eventos as $evento)       //se recorre la consulta realizada a los eventos
             {
-                $fecha = strtotime('+1 day', strtotime($evento['EVNT_Fecha_Fin']));     //para que se muestre correctamente en el calendario
-                $fecha = date('Y-m-d', $fecha);     //debido a que la libreria maneja un manejo diferente en los dias
-                $e['end'] = $fecha;
-            }
-            else
+                $e = array();       //arreglo para almacenar cada registro de la consulta
+                $e['title'] = $evento['EVNT_Descripcion'];      //se gurda cada variable de la consulta en el vector con llaves
+                $e['start'] = $evento['EVNT_Fecha_Inicio'];     //que sean entendidas por la libreria de jquery full calendar y permitir que se muetren de manera correcta
+                if ($evento['EVNT_Fecha_Inicio'] != $evento['EVNT_Fecha_Fin'])     //si las fechas de inicio y de fin del evento son diferentes se le agregga un dia de mas
+                {
+                    $fecha = strtotime('+1 day', strtotime($evento['EVNT_Fecha_Fin']));     //para que se muestre correctamente en el calendario
+                    $fecha = date('Y-m-d', $fecha);     //debido a que la libreria maneja un manejo diferente en los dias
+                    $e['end'] = $fecha;
+                } else {
+                    $e['end'] = $evento['EVNT_Fecha_Fin'];
+                }
+                $e['id'] = $evento['PK_EVNT_IdEvento'];
+                $e['allDay'] = "true";      //permite que el evento se establezca de manera correcta en el calendario
+                $e['color'] = '#1988E3';        //se establece un color azul especifico para mostrar los eventos
+                $e['type'] = "Evento";
+                $e['hora'] = $evento['EVNT_Hora'];
+                $e['notif'] = $evento['EVNT_Fecha_Notificacion'];
+                array_push($events, $e);        //se mezclan los arreglos por cada registro de la BD
+            }                               //una vez se guarden todos los eventos consultados
+            $recordatorios = Notification::all();   //se realiza la consulta ahora a la tabla de notificaciones que almacena los recordatorios
+            foreach ($recordatorios as $recordatorio)//se recorre la consulta
             {
-                $e['end'] = $evento['EVNT_Fecha_Fin'];
+                $e = array();
+                $e['title'] = $recordatorio['NOTIF_Descripcion']; //y de la misma forma que en el caso de los eventos
+                $e['start'] = $recordatorio['NOTIF_Fecha_Inicio']; //se almacenan las variables de forma entendible para la libreria
+                $e['end'] = $recordatorio['NOTIF_Fecha_Fin'];
+                $e['id'] = $recordatorio['PK_NOTIF_Id_Notificacion'];
+                $e['allDay'] = "true";
+                $e['color'] = '#25C279';                  //se asigna un color verde para las notificaciones
+                $e['type'] = "Recordatorio";
+                $e['notif'] = $recordatorio['NOTIF_Fecha_Notificacion'];
+                array_push($events, $e);     // se realiza la mezcla entre vectores
             }
-            $e['id'] = $evento['PK_EVNT_IdEvento'];
-            $e['allDay'] = "true";      //permite que el evento se establezca de manera correcta en el calendario
-            $e['color'] = '#1988E3';        //se establece un color azul especifico para mostrar los eventos
-            $e['type'] = "Evento";
-            $e['hora'] = $evento['EVNT_Hora'];
-            $e['notif'] = $evento['EVNT_Fecha_Notificacion'];
-            array_push($events, $e);        //se mezclan los arreglos por cada registro de la BD
-        }                               //una vez se guarden todos los eventos consultados
-        $recordatorios = Notification::all();   //se realiza la consulta ahora a la tabla de notificaciones que almacena los recordatorios
-        foreach ($recordatorios as $recordatorio)//se recorre la consulta
-        {
-            $e = array();
-            $e['title'] = $recordatorio['NOTIF_Descripcion']; //y de la misma forma que en el caso de los eventos
-            $e['start'] = $recordatorio['NOTIF_Fecha_Inicio']; //se almacenan las variables de forma entendible para la libreria
-            $e['end'] = $recordatorio['NOTIF_Fecha_Fin'];
-            $e['id'] = $recordatorio['PK_NOTIF_Id_Notificacion'];
-            $e['allDay'] = "true";
-            $e['color'] = '#25C279';                  //se asigna un color verde para las notificaciones
-            $e['type'] = "Recordatorio";
-            $e['notif'] = $recordatorio['NOTIF_Fecha_Notificacion'];
-            array_push($events, $e);     // se realiza la mezcla entre vectores
+            //y se envia a la libreria el vector con los datos tanto de los eventos como de las notificaciones
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                json_encode($events)
+            );
         }
-         //y se envia a la libreria el vector con los datos tanto de los eventos como de las notificaciones
-        return AjaxResponse::success(
-            '¡Bien hecho!',
-            'Mensaje enviado correctamente.',
-            json_encode($events)
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
         );
     }
 
@@ -96,33 +100,40 @@ class CalendarioController extends Controller
      * Función que almacena las notificaciones o recordatorios
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function store (Request $request){
-        if($request['type'] == 'new') //verifica que la peticón eviada tenga la variable type == new
-        {
-            Notification::create([      //para asi poder crear el registro nuevo a la base de datos
-                'NOTIF_Descripcion' => $request['title'],
-                'NOTIF_Fecha_Inicio' => $request['startdate'], //se alamcenan las variables correspondientes
-                'NOTIF_Fecha_Fin' => $request['endDate'],
-                'NOTIF_Estado_Notificacion' => "Activa",
-            ]);
-            $idNotif = Notification::where('NOTIF_Descripcion', $request['title'])// inmediatamente se realiza la consulta a la base de datos
+        if($request->ajax() && $request->isMethod('POST')) {
+            if ($request['type'] == 'new') //verifica que la peticón eviada tenga la variable type == new
+            {
+                Notification::create([      //para asi poder crear el registro nuevo a la base de datos
+                    'NOTIF_Descripcion' => $request['title'],
+                    'NOTIF_Fecha_Inicio' => $request['startdate'], //se alamcenan las variables correspondientes
+                    'NOTIF_Fecha_Fin' => $request['endDate'],
+                    'NOTIF_Estado_Notificacion' => "Activa",
+                ]);
+                $idNotif = Notification::where('NOTIF_Descripcion', $request['title'])// inmediatamente se realiza la consulta a la base de datos
                 ->get(['PK_NOTIF_Id_Notificacion'])->last(); //del ultimo registro almacenado para obtener la llave primaria ya que en esta tabla es auntoincrementable
-             //se envia a la libreria la llave primaria (PK) de la notificación almacenada
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Mensaje enviado correctamente.',
-                $idNotif['PK_NOTIF_Id_Notificacion']
-            );
-        }//una vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
+                //se envia a la libreria la llave primaria (PK) de la notificación almacenada
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Mensaje enviado correctamente.',
+                    $idNotif['PK_NOTIF_Id_Notificacion']
+                );
+            }//una vez la libreria reciba la PK llamara un formulario para solicitar la fecha de notofocación que asu vez llama a la funcion storeDate
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *Funcion que actualiza la fecha de notificación para los recordatorios.
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function storeDate (Request $request)
     {
@@ -136,20 +147,18 @@ class CalendarioController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *En caso de que el susuario cambie de fecha desde el calendario un evento, esta funcuión es llamada para actualizar la fecha de notificación.
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function storeDateEvent (Request $request)
     {
@@ -162,80 +171,75 @@ class CalendarioController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *En caso de que el usuario cambie de fecha de la notificación/ evento o alargue su tiempo de duración esta función será llamada
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function updateDateNotification (Request $request)
     {
-        if ($request['type'] == 'endDateUpdate')//desde el script de la vista se envia el tipo de petición si es endDateUpdate quiere decir que se desea actualizar la fecha final de la notificación o evento
-        {
-            if ($request['eventType'] == 'Recordatorio') //se verifica si es un recordatorio
+        if($request->ajax() && $request->isMethod('POST')) {
+            if ($request['type'] == 'endDateUpdate')//desde el script de la vista se envia el tipo de petición si es endDateUpdate quiere decir que se desea actualizar la fecha final de la notificación o evento
             {
-                Notification::where('PK_NOTIF_Id_Notificacion', $request['eventId']) //para así mismo realizar la respectiva actualización de los datos en la tabla notificación
+                if ($request['eventType'] == 'Recordatorio') //se verifica si es un recordatorio
+                {
+                    Notification::where('PK_NOTIF_Id_Notificacion', $request['eventId'])//para así mismo realizar la respectiva actualización de los datos en la tabla notificación
                     ->update(['NOTIF_Fecha_Fin' => $request['endDate']]);
-            }
-            else//si no es un recordatoriio se deduce que es un  evento
-            {
-                if ($request['startdate'] != $request['endDate'] )//al actualizar las fechas la libreria envia con un dia de mas a como se muestra en el formulario
+                } else//si no es un recordatoriio se deduce que es un  evento
                 {
-                    $fecha = strtotime('-1 day', strtotime($request['endDate'])); //y para almacenar de manera correcta la fecha se le resta un dia
-                    $fecha = date('Y-m-d', $fecha);                                //de la misma manera se actua en el caso de que se resete al fecha
-                }
-                else
-                {
-                    $fecha=$request['endDate'];        //para permitir que se muetren de manera correcta
-                }
-                Event::where('PK_EVNT_IdEvento',$request['eventId']) // y se realiza la respectiva actulización en la tabla
+                    if ($request['startdate'] != $request['endDate'])//al actualizar las fechas la libreria envia con un dia de mas a como se muestra en el formulario
+                    {
+                        $fecha = strtotime('-1 day', strtotime($request['endDate'])); //y para almacenar de manera correcta la fecha se le resta un dia
+                        $fecha = date('Y-m-d', $fecha);                                //de la misma manera se actua en el caso de que se resete al fecha
+                    } else {
+                        $fecha = $request['endDate'];        //para permitir que se muetren de manera correcta
+                    }
+                    Event::where('PK_EVNT_IdEvento', $request['eventId'])// y se realiza la respectiva actulización en la tabla
                     ->update(['EVNT_Fecha_Fin' => $fecha]);
-            }
-        }
-        elseif ($request['type'] == 'resetDate')//en caso de que el tipo de petición sea resetdate quiere decir que se cambio completamente la fecha de inicio y fin del evento o recordatorio
-        {
-            if ($request['eventType'] == 'Recordatorio')  //se verifica si es un recordatorio
+                }
+            } elseif ($request['type'] == 'resetDate')//en caso de que el tipo de petición sea resetdate quiere decir que se cambio completamente la fecha de inicio y fin del evento o recordatorio
             {
-                Notification::where('PK_NOTIF_Id_Notificacion', $request['eventId']) //y se realiza la actualización de ambas fechas
+                if ($request['eventType'] == 'Recordatorio')  //se verifica si es un recordatorio
+                {
+                    Notification::where('PK_NOTIF_Id_Notificacion', $request['eventId'])//y se realiza la actualización de ambas fechas
                     ->update(['NOTIF_Fecha_Inicio' => $request['startdate'], 'NOTIF_Fecha_Fin' => $request['endDate']]);
-            }
-            else
-            {
-                if ($request['startdate'] != $request['endDate'] )
-                {
-                    $fecha = strtotime('-1 day', strtotime($request['endDate']));
-                    $fecha = date('Y-m-d', $fecha);
-                }
-                else
-                {
-                    $fecha = $request['endDate'];        //para permitir que se muetren de manera correcta
-                }
-                Event::where('PK_EVNT_IdEvento', $request['eventId']) //si no es un recordatorio es un evento
+                } else {
+                    if ($request['startdate'] != $request['endDate']) {
+                        $fecha = strtotime('-1 day', strtotime($request['endDate']));
+                        $fecha = date('Y-m-d', $fecha);
+                    } else {
+                        $fecha = $request['endDate'];        //para permitir que se muetren de manera correcta
+                    }
+                    Event::where('PK_EVNT_IdEvento', $request['eventId'])//si no es un recordatorio es un evento
                     ->update(['EVNT_Fecha_Inicio' => $request['startdate'], 'EVNT_Fecha_Fin' => $fecha]);//se actualizan los datos
+                }
+                //se retorna el id del evento modificado y el tipo para actualizar el calendario
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Mensaje enviado correctamente.',
+                    array('id' => $request['eventId'], 'eventType' => $request['eventType'])
+                );
             }
-           //se retorna el id del evento modificado y el tipo para actualizar el calendario
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Mensaje enviado correctamente.',
-                array('id' => $request['eventId'],'eventType' => $request['eventType'])
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *En caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function updateNotification (Request $request)
     {
@@ -250,20 +254,18 @@ class CalendarioController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *Esta función será llamada cuando se desea editar los datos de un evento desde el calendario
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function updateEvent (Request $request)
     {
@@ -280,13 +282,11 @@ class CalendarioController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -294,11 +294,11 @@ class CalendarioController extends Controller
      *Esta función se invoca cuando se desee eliminar tanto un evnto como una notificación
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function deleteNotification (Request $request)
     {
-        if ($request->ajax())//se verifica que se envie desde una petición ajax
+        if ($request->ajax() && $request->isMethod('POST'))//se verifica que se envie desde una petición ajax
         {
             if ($request['eventType'] == 'Recordatorio') //se verifica si es un recordatorio el que se desea eliminar
             {
@@ -363,7 +363,7 @@ class CalendarioController extends Controller
      *
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function desactivarNotificaciones (Request $request)
     {
@@ -378,13 +378,11 @@ class CalendarioController extends Controller
                 'Notificaciones desactivadas correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -392,7 +390,7 @@ class CalendarioController extends Controller
      *
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function activarNotificaciones (Request $request)
     {
@@ -404,13 +402,11 @@ class CalendarioController extends Controller
                 'Notificaciones activadas correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -418,7 +414,7 @@ class CalendarioController extends Controller
      *
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
     public function ajaxEmpleadosDocumentosCompletos (Request $request)
     {
@@ -433,13 +429,11 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.ajaxEmpleadosDocumentosCompletos', compact('estado'));
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -463,12 +457,11 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.ajaxEmpleadosDocumentosIncompletos', compact('estado'));
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 }
