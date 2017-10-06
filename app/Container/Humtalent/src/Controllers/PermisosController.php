@@ -47,13 +47,11 @@ class PermisosController extends Controller
             //se presenta la vista con los datos del empleado y un dataTable
             return view('humtalent.permisos.tablaPermisos', compact('empleado'));
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -68,20 +66,18 @@ class PermisosController extends Controller
         {
             return view('humtalent.permisos.ajaxListaEmpleados');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Función que registra un permiso a través de un formulario
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -97,13 +93,11 @@ class PermisosController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -125,20 +119,18 @@ class PermisosController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        else
-        {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
-        }
+
+        return response()->json([
+            'message' => 'Incorrect request',
+            'code' => 412
+        ], 412);
     }
 
     /**
      * Función que actualiza los datos de un permiso seleccionado.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)
     {
@@ -152,13 +144,11 @@ class PermisosController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -166,7 +156,7 @@ class PermisosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy (Request $request, $id)
     {   //
@@ -178,13 +168,11 @@ class PermisosController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -214,7 +202,7 @@ class PermisosController extends Controller
      * Función que permite descargar el reporte de los permisos que cada empleado tiene.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadReportePermisosEmpleados ($id)
     {

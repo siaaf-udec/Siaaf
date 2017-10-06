@@ -41,7 +41,7 @@
             {data: 'PRSN_Rol', name: 'Rol'},
             {data: 'PRSN_Telefono', name: 'Teléfono'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

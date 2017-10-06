@@ -209,6 +209,14 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
@@ -422,9 +430,6 @@
             {   //esta función es llamada en el momento que se arrastre un evento o recordatorio  para ser eliminado
                 if (isElemOverDiv())
                 {   //se llama la función que determina la posición del puntero y si esta en el espacio de eliminación
-                    var id = event.id; //se toma el id del evento a eliminar
-                    var eventType = event.type;//y el tipo
-                    var route = "{{ route('talento.humano.calendario.deleteNotification')}}";//ruta que conduce al controlador para realizar la respectiva eliminación
                     swal({
                             title: "¿Esta seguro?",
                             text: "Esta apunto de eliminar información del calendario!",
@@ -439,6 +444,9 @@
                         function (isConfirm) {
                             if (isConfirm)
                             {
+                                var id = event.id; //se toma el id del evento a eliminar
+                                var eventType = event.type;//y el tipo
+                                var route = "{{ route('talento.humano.calendario.deleteNotification')}}";//ruta que conduce al controlador para realizar la respectiva eliminación
                                 $.ajax({
                                     url: route,
                                     data: 'eventId=' + id + '&eventType=' + eventType,//se envian los datos a elimianr

@@ -31,12 +31,14 @@
             </div>
         </div>
             <br>
+            @permission('FUNC_RRHH')
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Nuevo</a>                    </div>
                 </div>
             </div>
+            @endpermission
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -146,7 +148,7 @@
             {data: 'PERM_Descripcion', name: 'Descripción'},
             {data: 'PERM_Fecha', name: 'Fecha'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

@@ -60,13 +60,11 @@ class EmpleadoController extends Controller
         {
             return view('humtalent.empleado.ajaxTablaEmpleados');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -81,13 +79,11 @@ class EmpleadoController extends Controller
         {
             return view('humtalent.empleado.ajaxEmpleadosRetirados');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -102,13 +98,11 @@ class EmpleadoController extends Controller
         {
             return view('humtalent.empleado.ajaxListaEmpleados');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -128,13 +122,11 @@ class EmpleadoController extends Controller
                     'empleado' => $empleado,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -149,59 +141,40 @@ class EmpleadoController extends Controller
         {
             return view('humtalent.empleado.registroEmpleado');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Función que almacena en la base de datos un nuevo registro de un empleado.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store (Request $request)//
     {
         if ($request->ajax() && $request->isMethod('POST')){
-            Persona::create([
-                'PK_PRSN_Cedula'          => $request['PK_PRSN_Cedula'],
-                'PRSN_Rol'                => $request['PRSN_Rol'],
-                'PRSN_Nombres'            => $request['PRSN_Nombres'],
-                'PRSN_Apellidos'          => $request['PRSN_Apellidos'],
-                'PRSN_Telefono'           => $request['PRSN_Telefono'],
-                'PRSN_Correo'             => $request['PRSN_Correo'],
-                'PRSN_Direccion'          => $request['PRSN_Direccion'],
-                'PRSN_Ciudad'             => $request['PRSN_Ciudad'],
-                'PRSN_Salario'            => $request['PRSN_Salario'],
-                'PRSN_Eps'                => $request['PRSN_Eps'],
-                'PRSN_Fpensiones'         => $request['PRSN_Fpensiones'],
-                'PRSN_Area'               => $request['PRSN_Area'],
-                'PRSN_Caja_Compensacion'  => $request['PRSN_Caja_Compensacion'],
-                'PRSN_Estado_Persona'     => $request['PRSN_Estado_Persona'],
-            ]);
+            Persona::create($request->all());
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Función que almacena en la base de datos el registro del archivo de excel.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function importUsers (Request $request)
     {
@@ -244,24 +217,25 @@ class EmpleadoController extends Controller
                     'El archivo contenia ' . $cont . ' registros que ya estaban almacenados en la base de datos, los nuevos fueron registrados exitosamente.'
                 );
             }
-            else
-            {
-                return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'La información del archivo fue almacenada correctamente.'
-                );
 
-            }
-        }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'La información del archivo fue almacenada correctamente.'
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
+    /**
+     * Función que envia los emails a los empleados .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public  function enviarEmail(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
@@ -288,7 +262,7 @@ class EmpleadoController extends Controller
             for($i = 0 ; $i < count($correos)-1; $i++){
                 Mail::to($correos[$i], 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
             }
-            //Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
+            Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
 
             if($file !== null)
             {
@@ -301,12 +275,11 @@ class EmpleadoController extends Controller
                 'Mensaje enviado correctamente.'
             );
         }
-        else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
@@ -327,20 +300,18 @@ class EmpleadoController extends Controller
                     'empleado' => $empleado,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Se realiza la actualización de los datos de un empleado.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)//
     {
@@ -354,13 +325,11 @@ class EmpleadoController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -368,7 +337,7 @@ class EmpleadoController extends Controller
      *
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
@@ -390,13 +359,11 @@ class EmpleadoController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -419,7 +386,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte de datos de contacto de los empleados.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadContactoReporte()
     {
@@ -457,7 +424,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte de datos de dirección de los empleados.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadDireccionReporte()
     {
@@ -493,7 +460,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por programa.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadSalario1Reporte()
     {
@@ -527,7 +494,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por rol.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadSalario2Reporte()
     {
@@ -566,7 +533,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las afiliaciones que tienen los empleados.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadAfiliacionesReporte()
     {
@@ -604,7 +571,7 @@ class EmpleadoController extends Controller
     /**
      * Permite descargar el reporte correspondiente al estado que tienen los empleados.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadEstadoReporte()
     {

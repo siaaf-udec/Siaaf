@@ -185,20 +185,18 @@ class DocumentController extends Controller
         {
             return view('humtalent.empleado.ajaxBuscarEmpleado');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Funcion que almacena las radicación de los documentos
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function radicarDocumentos (Request $request)
     {
@@ -305,20 +303,18 @@ class DocumentController extends Controller
                 'Documentos radicados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Funcion que realiza la afiliación de los empleados
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function afiliarEmpleado (Request $request)
     {
@@ -334,20 +330,18 @@ class DocumentController extends Controller
                 'Empleado afiliado correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Funcion que reinicia el proceso de radicación y afiliación de los empleados
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reiniciarRadicacion (Request $request)
     {
@@ -361,13 +355,11 @@ class DocumentController extends Controller
                 'Se reinicio correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -440,14 +432,12 @@ class DocumentController extends Controller
                 compact('empleado', 'id', 'procesoEPS', 'fechaEPS', 'procesoCaja', 'fechaCaja')
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
-     }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 
      /**
       * Display a listing of the resource.
@@ -471,13 +461,11 @@ class DocumentController extends Controller
         {
             return view('humtalent.documentacion.ajaxListaDocumentos');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /**
      * Show the form for creating a new resource.
@@ -491,20 +479,18 @@ class DocumentController extends Controller
         {
             return view('humtalent.documentacion.registroDocumento');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request) //almacena un documento enviado desde el formulario del la funcion create
     {
@@ -519,13 +505,11 @@ class DocumentController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
@@ -545,19 +529,17 @@ class DocumentController extends Controller
                     'documento' => $documento,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Update the specified resource in storage.
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)
     {
@@ -571,20 +553,18 @@ class DocumentController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy (Request $request,$id)  //se elimina el registro de un documento
     {
@@ -597,13 +577,11 @@ class DocumentController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -663,7 +641,7 @@ class DocumentController extends Controller
      * Presenta el reporte de la radicación de los documentos para descargar
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadReporteRadicacionEmpleados ($id)
     {
@@ -763,7 +741,7 @@ class DocumentController extends Controller
     /**
      *  Presenta el reporte de la radicación de los documentos para todos los empleados para descargar
      *
-     * @return \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
     public function downloadReporteConsolidadoEmpleados(){
         $cont = 1;
