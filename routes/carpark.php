@@ -60,6 +60,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.usuariosCarpark.listDependencias'
         ]);        
 
+        Route::get('EstadosUser',[
+            'uses' => $controller.'UsuariosController@listarEstados',
+            'as' => 'parqueadero.usuariosCarpark.listEstados'
+        ]);
+
         Route::get('create', [
             'uses' => $controller . 'UsuariosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
             'as' => 'parqueadero.usuariosCarpark.create'
@@ -149,6 +154,31 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('editar/{id?}', [
             'uses' => $controller . 'MotosController@editar',     //ruta que conduce al controlador para ver el perfil de un usuario.
             'as' => 'parqueadero.motosCarpark.editar'
+        ]);
+
+        Route::post('update', [
+            'uses' => $controller . 'MotosController@update',      //ruta que conduce al controlador para actulizar datos del usuario
+            'as' => 'parqueadero.motosCarpark.update'
+        ]);
+
+        Route::post('updateFotoMoto/{id?}', [
+            'uses' => $controller . 'MotosController@updateFotoMoto',      //ruta que conduce al controlador para actulizar la foto de perfil del vehículo
+            'as' => 'parqueadero.motosCarpark.updateFotoMoto'
+        ]);
+
+        Route::post('updateFotoPropiedad/{id?}', [
+            'uses' => $controller . 'MotosController@updateFotoPropiedad',      //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad del vehículo
+            'as' => 'parqueadero.motosCarpark.updateFotoPropiedad'
+        ]);
+
+        Route::post('UpdateFotoSOAT/{id?}', [
+            'uses' => $controller . 'MotosController@UpdateFotoSOAT',      //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad del vehículo
+            'as' => 'parqueadero.motosCarpark.UpdateFotoSOAT'
+        ]);    
+
+        Route::delete('destroy/{id?}', [
+            'uses' => $controller . 'MotosController@destroy', //ruta que conduce al controlador para eliminar un registro vehículo
+            'as' => 'parqueadero.motosCarpark.destroy'
         ]);
         
 

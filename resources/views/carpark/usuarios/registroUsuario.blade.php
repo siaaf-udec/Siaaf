@@ -45,7 +45,8 @@
                             {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
 
                             {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
-                        
+                        </div>
+                    </div>
                         
 
                     <div class="form-actions">

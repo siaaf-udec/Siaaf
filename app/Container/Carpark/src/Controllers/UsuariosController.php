@@ -97,6 +97,29 @@ class UsuariosController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listarEstados(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+            $estados = Estados::all();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                $estados
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
+
+    /**
      * Función que almacena en la base de datos un nuevo usuario.
      *
      * @param  \Illuminate\Http\Request  $request

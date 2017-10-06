@@ -139,7 +139,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}'+'/'+dataTable.PK_CU_Codigo;
+            var route = '{{ route('parqueadero.motosCarpark.destroy') }}'+'/'+dataTable.PK_CM_IdMoto;
             var type = 'DELETE';
             var async = async || false;
             swal({

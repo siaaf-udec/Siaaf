@@ -1,5 +1,5 @@
 <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Dependencias Registradas:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Vehículos Registrados:'])
             <br>            
             <br>
             <br>
@@ -69,7 +69,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}'+'/'+dataTable.PK_CU_Codigo;
+            var route = '{{ route('parqueadero.motosCarpark.destroy') }}'+'/'+dataTable.PK_CM_IdMoto;
             var type = 'DELETE';
             var async = async || false;
             swal({

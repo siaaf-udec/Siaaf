@@ -19,7 +19,7 @@ class CreateMotosTable extends Migration
             $table->String('CM_Marca', 50);
             $table->String('CM_NuPropiedad', 20);
             $table->String('CM_NuSoat', 20);
-            $table->datetime('CM_fechaSoat');
+            $table->date('CM_fechaSoat');
             $table->String('CM_UrlFoto', 100);
             $table->String('CM_UrlPropiedad', 100);
             $table->String('CM_UrlSoat', 100);

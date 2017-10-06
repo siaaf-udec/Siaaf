@@ -50,7 +50,7 @@
                                     
                                     {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
 
-                                    {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del Usuario: ']) !!}
+                                    {!! Field::select('FK_CU_IdEstado',null,['name' => 'SelectEstado','label'=>'Estado del Usuario: ']) !!}
                             </div>
 
                         </div>  
@@ -59,7 +59,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-4">                                    
                                     <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
-                                        Cancelar
+                                        Volver
                                     </a>
                                 </div>
                             </div>
@@ -81,24 +81,32 @@ jQuery(document).ready(function() {
 
         var $widget_select_SelectDependencia = $('select[name="SelectDependencia"]');
 
+        var valorSelected = <?php echo $infoUsuario['FK_CU_IdDependencia']; ?>
+
         var route_Dependencia = '{{ route('parqueadero.usuariosCarpark.listDependencias') }}';
         $.get(route_Dependencia, function(response, status){
             $( response.data ).each(function( key,value ) {
                 $widget_select_SelectDependencia.append(new Option(value.CD_Dependencia, value.PK_CD_IdDependencia));
             });
             $widget_select_SelectDependencia.val([]);
+            $('#FK_CU_IdDependencia').val(valorSelected);            
+        });
+
+        var $widget_select_SelectEstado = $('select[name="SelectEstado"]');
+
+        var valorSelectedEstado = <?php echo $infoUsuario['FK_CU_IdEstado']; ?>
+
+        var route_Estado = '{{ route('parqueadero.usuariosCarpark.listEstados') }}';
+        $.get(route_Estado, function(response, status){
+            $( response.data ).each(function( key,value ) {
+                $widget_select_SelectEstado.append(new Option(value.CE_Estados, value.PK_CE_IdEstados));
+            });
+            $widget_select_SelectEstado.val([]);
+            $('#FK_CU_IdEstado').val(valorSelectedEstado);            
         });
 
     /*Configuracion de Select*/
 
-    //$('#FK_CU_IdDependencia').val("$infoDependencia['PK_CD_IdDependencia']").trigger("$infoDependencia['CD_Dependencia']");
-    // $("#FK_CU_IdDependencia option").each(function(){
-    // if ($(this).text() == $infoDependencia['CD_Dependencia']){
-    //     $(this).attr("selected","selected");
-    // }
-    // });
-
-    ///////////////////////
     $.fn.select2.defaults.set("theme", "bootstrap");
     $(".pmd-select2").select2({
         placeholder: "Seleccionar",
@@ -108,6 +116,8 @@ jQuery(document).ready(function() {
             return m;
         }
     });  
+
+    $('#FK_CU_IdDependencia').prop("readonly", true);
 
     $('.button-cancel').on('click', function (e) {
         e.preventDefault();

@@ -28,7 +28,7 @@
                             {!! Field:: text('CM_NuSoat',null,['label'=>'Número del SOAT:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite el número del SOAT vigente.','icon'=>'fa fa-id-card-o'] ) !!}
 
-                            {!! Field::date('CM_fechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite su fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CM_fechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!}
 
                         </div>             
                     </div>
@@ -193,7 +193,7 @@
         var form = $('#form_moto_create');
         var formRules = {
             CM_UrlFoto:{required: true}, 
-            CM_Placa: {minlength: 6, maxlength: 6,required: true},
+            CM_Placa: {minlength: 5, maxlength: 6,required: true},
             CM_Marca:{required: true, minlength: 5, maxlength: 50},
             CM_NuPropiedad:{required: true, minlength: 5, maxlength: 20},
             CM_NuSoat:{required: true, minlength: 5, maxlength: 20},
@@ -205,7 +205,7 @@
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
+            var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
 

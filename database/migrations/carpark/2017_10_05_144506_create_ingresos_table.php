@@ -16,8 +16,7 @@ class CreateIngresosTable extends Migration
         Schema::connection('carpark')->create('TBL_Carpark_ingresos', function (Blueprint $table) {
             $table->integer('PK_CI_IdIngreso')->unsigned()->unique()->primary();
             $table->integer('CI_Ingreso')->unsigned();
-            $table->integer('FK_CI_IdMoto');
-            $table->foreign('FK_CI_IdMoto')->references('PK_CM_IdMoto')->on('TBL_Carpark_motos');
+            $table->integer('CI_IdMoto');
 
             $table->timestamps();
         });

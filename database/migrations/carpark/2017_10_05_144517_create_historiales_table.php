@@ -16,10 +16,9 @@ class CreateHistorialesTable extends Migration
         Schema::connection('carpark')->create('TBL_Carpark_historiales', function (Blueprint $table) {
             $table->integer('PK_CH_IdHistoia')->unsigned()->unique()->primary();
             $table->integer('FK_CH_Ingreso')->unsigned();
-            $table->integer('FK_CH_IdMoto');
+            $table->integer('CH_IdMoto');
             $table->string('CH_Placa', 6);
             $table->foreign('FK_CH_Ingreso')->references('PK_CU_Codigo')->on('TBL_Carpark_usuarios');
-            $table->foreign('FK_CH_IdMoto')->references('PK_CM_IdMoto')->on('TBL_Carpark_motos');
             $table->datetime('CH_FHentrada');
             $table->timestamp('CH_FHsalida')->default(DB::raw('CURRENT_TIMESTAMP'));
 
