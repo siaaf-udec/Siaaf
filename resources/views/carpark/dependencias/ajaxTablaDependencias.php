@@ -6,7 +6,7 @@
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
                         <i class="fa fa-plus">
-                        </i>Nuevo
+                        </i>Nueva
                     </a>
                 </div>
             </div>
@@ -30,8 +30,6 @@
     @endcomponent
 </div>
 
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
@@ -63,8 +61,8 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                routeEdit='{{ route('parqueadero.dependenciasCarpark.edit') }}'+'/'+dataTable.PK_CD_IdDependencia;
-            $(".content-ajax").load(routeEdit);
+                routeEditAjax='{{ route('parqueadero.dependenciasCarpark.edit') }}'+'/'+dataTable.PK_CD_IdDependencia;
+            $(".content-ajax").load(routeEditAjax);
         });        
 
         $( ".create" ).on('click', function (e) {

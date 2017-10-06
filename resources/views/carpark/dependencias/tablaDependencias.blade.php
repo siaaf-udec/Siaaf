@@ -109,8 +109,8 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.dependenciasCarpark.edit') }}'+'/'+dataTable.PK_CD_IdDependencia;
-            $(".content-ajax").load(route_edit);
+                route_editar = '{{ route('parqueadero.dependenciasCarpark.edit') }}'+'/'+dataTable.PK_CD_IdDependencia;
+            $(".content-ajax").load(route_editar);
         });
 
         $( ".create" ).on('click', function (e) {
