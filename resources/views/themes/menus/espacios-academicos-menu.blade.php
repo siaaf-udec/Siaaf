@@ -11,39 +11,32 @@
     <ul class="sub-menu">
 
         @permission('formAcad')
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
+        @permission('secret')
+        <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
-                <span class="title">Formato Academico</span>
-                <span class="arrow"></span>
+                <span class="title">Formatos Academicos</span>
             </a>
-            <ul class="sub-menu">
-                @permission('secret')
-                <li class="nav-item {{ active(['espacios.academicos.formacad.create'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.formacad.create') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Solicitar</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ active(['espacios.academicos.listarporSec'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.listarporSec') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Consultar</span>
-                    </a>
-                </li>
-                @endpermission
-                @permission('administ')
-                <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Consultar</span>
-                    </a>
-                </li>
-                @endpermission
-            </ul>
         </li>
         @endpermission
+        @permission('administ')
+        <li class="nav-item {{ active(['espacios.academicos.formacad.listAdmin'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.formacad.listAdmin') }}" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Formatos Academicos</span>
+            </a>
+        </li>
+        @endpermission
+        @endpermission
 
+        @permission('auxapoyo')
+        <li class="nav-item {{ active(['espacios.academicos.soft.index'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.soft.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Software</span>
+            </a>
+        </li>
+        @endpermission
         @permission('solicitudes')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
@@ -56,40 +49,19 @@
                 <li class="nav-item {{ active(['espacios.academicos.espacad.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.espacad.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Practica Grupal</span>
+                        <span class="title">Mis solicitudes</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.espacad.create'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.espacad.create') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Practica Libre</span>
-                    </a>
-                </li>
-                @endpermission
+               @endpermission
                 @permission('auxapoyo')
-                <li class="nav-item {{ active(['espacios.academicos.mostrarSolicitudes'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.mostrarSolicitudes') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.evalsol.index'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.evalsol.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Practica Grupal</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ active(['espacios.academicos.mostrarSolicitudesLibre'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.mostrarSolicitudesLibre') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Practica Libre</span>
+                        <span class="title">Gestionar solicitudes</span>
                     </a>
                 </li>
 
 
-                @endpermission
-                @permission('docentes')
-
-                <li class="nav-item {{ active(['espacios.academicos.solicitudesAprobadas'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.solicitudesAprobadas') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Consultar</span>
-                    </a>
-                </li>
                 @endpermission
 
             </ul>
@@ -108,7 +80,7 @@
                 <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
-                        <span class="title">Asignar</span>
+                        <span class="title">Gestionar eventos</span>
                     </a>
                 </li>
                 @endpermission
