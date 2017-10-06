@@ -33,6 +33,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'parqueadero.usuariosCarpark.index',
         ]);
 
+        Route::get('index/ajax', [
+            'uses' => $controller . 'UsuariosController@indexAjax',
+            'as' => 'parqueadero.usuariosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+        ]);
+
         Route::get('tablaUsuarios', [   //ruta que realiza la consulta de los usuarios registrados
             'as' => 'parqueadero.usuariosCarpark.tablaUsuarios',
             'uses' => function (Request $request) {
@@ -102,6 +107,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('index', [
             'uses' => $controller . 'MotosController@index',
             'as'   => 'parqueadero.motosCarpark.index',
+        ]);
+
+        Route::get('index/ajax', [
+            'uses' => $controller . 'MotosController@indexAjax',
+            'as' => 'parqueadero.motosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
         ]);
 
         Route::get('tablaMotos', [   //ruta que realiza la consulta de los vehículos registrados
@@ -176,7 +186,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create', [
             'uses' => $controller . 'DependenciasController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una dependencia
             'as' => 'parqueadero.dependenciasCarpark.create'
-        ]);
+        ]);    
         
         Route::post('store', [
             'uses' => $controller . 'DependenciasController@store',   //ruta que conduce al controlador para alamacenar los datos de la dependencia
@@ -202,4 +212,22 @@ Route::group(['middleware' => ['auth']], function () {
 
 //////////////////// FIN Rutas Para Las Dependencias////////////////////////////
 
+///////////////////////INICIO Rutas Para Los Reportes///////////////////////////
+
+    Route::group(['prefix' => 'reportesCarpark'], function () {
+
+        $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
+
+        Route::get('reporteDependencia', [
+            'uses' => $controller . 'ReportesController@reporteDependencia',  //ruta que conduce al controlador para mostrar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.reporteDependencia'
+        ]);
+        
+        Route::get('DescargarReporteDependencia', [
+            'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarReporteDependencia'
+        ]); 
+    });
+
+///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
 });

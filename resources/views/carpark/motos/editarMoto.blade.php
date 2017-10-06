@@ -36,15 +36,15 @@
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="img-responsive img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class=" img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class="img-responsive img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class=" UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="img-responsive img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="  UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
                             </div>
                         </div>        
                     </div>                               
@@ -177,7 +177,7 @@
                                 $('#form_moto_update')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+                                var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
@@ -205,7 +205,7 @@
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+            var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
 

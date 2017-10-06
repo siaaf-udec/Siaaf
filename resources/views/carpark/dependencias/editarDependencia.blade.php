@@ -56,7 +56,7 @@ jQuery(document).ready(function() {
         form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
     });
 
-    var createUsers = function () {
+    var createDependencia = function () {
         return{
             init: function () {
                 var route = '{{ route('parqueadero.dependenciasCarpark.update') }}';
@@ -104,7 +104,7 @@ jQuery(document).ready(function() {
         CD_Dependencia: {required: true, maxlength: 50, minlength: 5},        
     };
 
-    FormValidationMd.init(form,formRules,false,createUsers());
+    FormValidationMd.init(form,formRules,false,createDependencia());
 
     $('.button-cancel').on('click', function (e) {
         e.preventDefault();
@@ -113,7 +113,7 @@ jQuery(document).ready(function() {
     });
 
    $( ".back" ).on('click', function (e) {
-       //e.preventDefault();
+       e.preventDefault();
        var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
        $(".content-ajax").load(route);
    });

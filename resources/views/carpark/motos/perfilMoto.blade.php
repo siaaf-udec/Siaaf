@@ -16,15 +16,15 @@
                         <div class="row">
 
                             <div class="col-md-4">
-                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="img-responsive img-circle" height="250" width="250">
+                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="img-circle" height="250" width="250">
                             </div>
 
                             <div class="col-md-4">
-                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class="img-responsive img-circle" height="250" width="250">
+                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class="" height="250" width="250">
                             </div>
 
                             <div class="col-md-4">
-                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="img-responsive img-circle" height="250" width="250">
+                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="" height="250" width="250">
                             </div>
 
                         </div>
@@ -81,13 +81,13 @@ jQuery(document).ready(function() {
 
     $('.button-cancel').on('click', function (e) {
         e.preventDefault();
-        var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+        var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
         $(".content-ajax").load(route);
     });
 
    $( ".back" ).on('click', function (e) {
        //e.preventDefault();
-       var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+       var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
        $(".content-ajax").load(route);
    });   
 

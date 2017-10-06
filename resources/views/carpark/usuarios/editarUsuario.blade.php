@@ -42,7 +42,7 @@
                         {!! Field:: text('CU_Direccion',$infoUsuario['CU_Direccion'],['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
                                                          ['help' => 'Digite la dirección del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                        {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
+                        {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia:']) !!}
 
                         {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del Usuario: ']) !!}
 
@@ -112,12 +112,15 @@ jQuery(document).ready(function() {
 
         var $widget_select_SelectDependencia = $('select[name="SelectDependencia"]');
 
+        var valorSelected = <?php echo $infoUsuario['FK_CU_IdDependencia']; ?>
+
         var route_Dependencia = '{{ route('parqueadero.usuariosCarpark.listDependencias') }}';
         $.get(route_Dependencia, function(response, status){
             $( response.data ).each(function( key,value ) {
                 $widget_select_SelectDependencia.append(new Option(value.CD_Dependencia, value.PK_CD_IdDependencia));
             });
-            $widget_select_SelectDependencia.val([]);
+            $widget_select_SelectDependencia.val();
+            $('#FK_CU_IdDependencia').val(valorSelected);
         });
 
     /*Configuracion de Select*/
@@ -139,6 +142,7 @@ jQuery(document).ready(function() {
             return m;
         }
     });  
+
 
     //////////////////////FUNCION DE EDITAR//////////////////////////////////////
 
@@ -181,7 +185,7 @@ jQuery(document).ready(function() {
                             $('#form_update_usuario')[0].reset(); //Limpia formulario
                             UIToastr.init(xhr , response.title , response.message  );
                             App.unblockUI('.portlet-form');
-                            var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+                            var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
                             $(".content-ajax").load(route);
                         }
                     },
@@ -248,7 +252,7 @@ jQuery(document).ready(function() {
                             $('#form_update_FotoUsuario')[0].reset(); //Limpia formulario
                             UIToastr.init(xhr , response.title , response.message  );
                             App.unblockUI('.portlet-form');
-                            var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+                            var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
                             $(".content-ajax").load(route);
                         }
                     },
@@ -273,13 +277,13 @@ jQuery(document).ready(function() {
 
     $('.button-cancel').on('click', function (e) {
         e.preventDefault();
-        var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+        var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
         $(".content-ajax").load(route);
     });
 
    $( ".back" ).on('click', function (e) {
        //e.preventDefault();
-       var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+       var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
        $(".content-ajax").load(route);
    });   
 

@@ -88,20 +88,20 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
             {data: 'CD_Dependencia', name: 'Dependencia'},            
             {
-            defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
-            data:'action',
-            name:'action',
-            title:'Acciones',
-            orderable: false,
-            searchable: false,
-            exportable: false,
-            printable: false,
-            className: 'text-center',
-            render: null,
-            serverSide: false,
-            responsivePriority:2
-        }
-    ];
+                defaultContent: '<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
+                data:'action',
+                name:'action',
+                title:'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority:2
+            }
+        ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
         
@@ -117,6 +117,16 @@ jQuery(document).ready(function () {
             e.preventDefault();
             var route = '{{ route('parqueadero.dependenciasCarpark.create') }}';
             $(".content-ajax").load(route);
+        });
+
+        table.on('click', '.reports', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.open('{{ route('parqueadero.reportesCarpark.reporteDependencia') }}', '_blank');
+            });
         });
         
     });

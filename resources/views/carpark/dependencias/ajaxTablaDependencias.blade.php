@@ -1,35 +1,33 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Dependencias Registradas:'])
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="actions">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
-                        <i class="fa fa-plus">
-                        </i>Nueva
-                    </a>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Dependencias Registradas:'])
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="actions">
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                            <i class="fa fa-plus">
+                            </i>Nueva
+                        </a><br>
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-
-        <div class="row">
-            <div class="col-md-12">
-
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaDependencias'])
-                    @slot('columns', [
-                        '#',
-                        'Dependencia',                         
-                        'Acciones'
-                    ])
-                @endcomponent
-
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaDependencias'])
+                        @slot('columns', [
+                            '#',
+                            'Dependencia',                            
+                            'Acciones'
+                        ])
+                    @endcomponent
+                </div>
             </div>
+        @endcomponent
+    </div>
 
-        </div>
-    @endcomponent
-</div>
-
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
@@ -55,6 +53,7 @@
             }
         ];
         dataTableServer.init(table, url, columns);
+        
         table = table.DataTable();
         
         table.on('click', '.edit', function (e) {

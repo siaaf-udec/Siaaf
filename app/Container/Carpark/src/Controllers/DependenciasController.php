@@ -11,6 +11,7 @@ use App\Container\Carpark\src\Motos;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -169,6 +170,6 @@ class DependenciasController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
-    }    
+    }       
 
 }

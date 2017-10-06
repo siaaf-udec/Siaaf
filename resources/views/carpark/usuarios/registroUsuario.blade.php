@@ -1,45 +1,52 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
         <div class="row">
-            <div class="col-md-7 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($listaDependencias,['id'=>'form_usuario_create', 'url' => '/forms']) !!}
 
                 <div class="form-body">
-                    
-                    {!! Field::file('CU_UrlFoto') !!}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <span class="label label-primary">Seleccione la foto del usuario</span>
+                                {!! Field::file('CU_UrlFoto') !!}
+                                <br><br>
+                            </div>
 
-                    {!! Field:: text('PK_CU_Codigo',null,['label'=>'Código interno:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                     ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+                            {!! Field:: text('PK_CU_Codigo',null,['label'=>'Código interno:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                    {!! Field:: text('CU_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+                            {!! Field:: text('CU_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                    {!! Field:: text('CU_Nombre1',null,['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el primer nombre del usuario.','icon'=>'fa fa-user']) !!}
+                            {!! Field:: text('CU_Nombre1',null,['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el primer nombre del usuario.','icon'=>'fa fa-user']) !!}
 
-                    {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!}
+                        </div>
+                        <div class="col-md-6">
 
-                    {!! Field:: text('CU_Apellido1',null,['label'=>'Primer Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {!! Field:: text('CU_Apellido1',null,['label'=>'Primer Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                    {!! Field:: text('CU_Apellido2',null,['label'=>'Segundo Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {!! Field:: text('CU_Apellido2',null,['label'=>'Segundo Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                    {!! Field:: text('CU_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                     ['help' => 'Digite el número de teléfono del usuario.','icon'=>'fa fa-phone'] ) !!}
+                            {!! Field:: text('CU_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el número de teléfono del usuario.','icon'=>'fa fa-phone'] ) !!}
 
-                    {!! Field:: email('CU_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
-                                                     ['help' => 'Digite un correo electronico válido.','icon'=>'fa fa-envelope-open '] ) !!}
+                            {!! Field:: email('CU_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
+                                                             ['help' => 'Digite un correo electronico válido.','icon'=>'fa fa-envelope-open '] ) !!}
 
-                    {!! Field:: text('CU_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
-                                                     ['help' => 'Digite la dirección del usuario.','icon'=>'fa fa-building-o'] ) !!}
+                            {!! Field:: text('CU_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la dirección del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                    {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
+                            {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
 
-                    {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
-
-                    
+                            {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
+                        
+                        
 
                     <div class="form-actions">
                         <div class="row">
@@ -140,7 +147,7 @@
                                 $('#form_usuario_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+                                var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
@@ -169,7 +176,7 @@
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+            var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
 

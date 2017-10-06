@@ -28,6 +28,27 @@ class UsuariosController extends Controller
     }
 
     /**
+     * Muestra todos los usuarios registradas por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAjax (Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET'))
+        {
+            return view('carpark.usuarios.ajaxTablaUsuarios');
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }    
+
+    /**
      * Función que muestra el formulario de registro de un nuevo empleado.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -300,6 +321,6 @@ class UsuariosController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
-    }
+    }    
 
 }
