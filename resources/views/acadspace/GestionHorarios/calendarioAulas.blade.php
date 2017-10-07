@@ -32,21 +32,21 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="col-md-12">
-                    {!! Field::select('SOL_laboratorios',
-                                                                ['Aulas de computo' => 'Aulas de computo',
-                                                                'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                                                null,
-                                                                [ 'label' => 'Seleccione el espacio academico que requiere:']) !!}
-                    <div id="mostrar_sala">
-                        {!! Form::label('label', 'Seleccione el aula:')  !!}
+                        {!! Field::select('SOL_laboratorios',
+                                                                    ['Aulas de computo' => 'Aulas de computo',
+                                                                    'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                                                    null,
+                                                                    [ 'label' => 'Seleccione el espacio academico que requiere:']) !!}
+                        <div id="mostrar_sala">
+                            {!! Form::label('label', 'Seleccione el aula:')  !!}
 
-                        {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
-                        array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
-                    </div>
+                            {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
+                            array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
+                        </div>
 
-                    <br>
-                    <br>
-                    <br>
+                        <br>
+                        <br>
+                        <br>
 
 
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
@@ -196,15 +196,21 @@
 
             /*ENVIANDO EL VALOR DEL SELECT AULA PARA TRAER LOS DATOS*/
             $("#SOL_laboratorios").change(function (event) {
+                /*Limpiar los eventos drag and drop creados dinamicamente*/
+                $("#external-events").empty();
                 /*Cargar select de aulas*/
                 $.get("cargarSalasCalendario/" + event.target.value + "", function (response) {
                     $("#aula").empty();
+                    $("#aula").append("<option value='seleccione'>Seleccione</option>")
                     for (i = 0; i < response.length; i++) {
                         $("#aula").append("<option value='" + response[i].SAL_nombre_sala + "'>" + response[i].SAL_nombre_sala + "</option>")
                     }
                 });
                 //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
                 $("#aula").change(function (event) {
+                    /*Limpiar los eventos drag and drop creados dinamicamente*/
+                    $("#external-events").empty();
+                    //Recargar datatable
                     var select = $('#aula option:selected').val();
                     $("#art-table-ajax").dataTable().fnDestroy();
                     url = "{{ route('espacios.academicos.acadcalendar.data' ) }}" + '/' + select;
@@ -268,7 +274,7 @@
                     lang: 'es',
                     axisFormat: "HH:mm",
                     allDaySlot: false,
-                    loading: function(bool) {
+                    loading: function (bool) {
                         if (bool)
                             $('#loading').show();
                         else
