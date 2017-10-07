@@ -27,10 +27,20 @@ class CalendarioController extends Controller
      */
     public function index()
     {
-        $sala = new Aulas();
+      /*  $sala = new Aulas();
         $sala = $sala->pluck('SAL_nombre_sala','SAL_nombre_sala');
-        return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);
+        return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);*/
+        return view('acadspace.gestionhorarios.calendarioaulas');
     }
+
+    public function cargarSalasCalendario(Request $request,$espacio){
+        if($request->ajax()){
+            $aula = Aulas::where('SAL_nombre_espacio','=',$espacio)
+                ->get();
+            return response()->json($aula);
+        }
+    }
+
     public function cargaEventos(Request $request)
     {
             $sala = $request['sala'];

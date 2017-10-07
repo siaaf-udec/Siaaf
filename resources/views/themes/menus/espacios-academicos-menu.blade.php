@@ -52,7 +52,7 @@
                         <span class="title">Mis solicitudes</span>
                     </a>
                 </li>
-               @endpermission
+                @endpermission
                 @permission('auxapoyo')
                 <li class="nav-item {{ active(['espacios.academicos.evalsol.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.evalsol.index') }}" class="nav-link nav-toggle">
@@ -89,12 +89,12 @@
         @endpermission
 
         @permission('reportes')
-                <li class="nav-item {{ active(['espacios.academicos.reportes'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.reportes') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">Reportes</span>
-                    </a>
-                </li>
+        <li class="nav-item {{ active(['espacios.academicos.reportes'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.reportes') }}" class="nav-link nav-toggle">
+                <i class="fa fa-book"></i>
+                <span class="title">Reportes</span>
+            </a>
+        </li>
         @endpermission
 
     </ul>
