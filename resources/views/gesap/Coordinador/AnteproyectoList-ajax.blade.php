@@ -1,14 +1,16 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
-        <div class="row">
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="btn-group">
+                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="clearfix"> </div><br><br>
-            <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
-                    @slot('columns', [
+        </div>
+        <div class="clearfix"> </div>
+        <br>
+        <br>
+        <div class="col-md-12">
+            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
+                @slot('columns', [
                         '#' => ['style' => 'width:20px;'],
                         'id',
                         'Titulo',

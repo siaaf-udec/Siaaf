@@ -1,5 +1,5 @@
 <?php
-/* Gesap*/
+
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use App\Container\Gesap\Src\Anteproyecto;
@@ -9,51 +9,47 @@ $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 
 /*COORDINADOR
 */
-Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function ()use($controller) 
-{
-    Route::get('min/',[
+Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function () use ($controller) {
+    Route::get('min/', [
         'uses' => $controller.'CoordinatorController@index',
-        'as' => 'min.index'      
+        'as' => 'min.index'
     ]);
     
     Route::get('min/ajax', [
         'as' => 'min.index.ajax',
-        'uses' => $controller.'CoordinatorController@index_ajax'
+        'uses' => $controller.'CoordinatorController@indexAjax'
     ]);
     
-    Route::delete('min/{id?}',[
+    Route::delete('min/{id?}', [
         'uses' => $controller.'CoordinatorController@destroy',
         'as' => 'min.destroy'
     ]);
 });
     
-Route::group(['middleware' => ['permission:Create_Project_Gesap']], function ()use($controller) 
-{
-    Route::get('min/create',[
+Route::group(['middleware' => ['permission:Create_Project_Gesap']], function () use ($controller) {
+    Route::get('min/create', [
         'uses' => $controller.'CoordinatorController@create',
         'as' => 'min.create'
     ]);
     
-    Route::post('min/store',[
+    Route::post('min/store', [
         'uses' => $controller.'CoordinatorController@store',
         'as' => 'min.store'
     ]);
 
 });
-Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function ()use($controller) 
-{
-    Route::get('min/{id?}/edit',[
-        'uses' => $controller.'CoordinatorController@edit',  
+Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function () use ($controller) {
+    Route::get('min/{id?}/edit', [
+        'uses' => $controller.'CoordinatorController@edit',
         'as' => 'min.edit'
     ]);
     
-    Route::post('min/update',[ 
-        'uses' => $controller.'CoordinatorController@update', 
-        'as' => 'min.proyecto.update' 
-    ]); 
+    Route::post('min/update', [
+        'uses' => $controller.'CoordinatorController@update',
+        'as' => 'min.proyecto.update'
+    ]);
 });
-Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function ()use($controller) 
-{     
+Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function () use ($controller) {
     Route::get('min/asignar/{id}', [
         'as' => 'anteproyecto.asignar',
         'uses' => $controller.'CoordinatorController@assign'
@@ -62,29 +58,27 @@ Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function ()u
     Route::post('min/store/docente/', [
     'as' => 'anteproyecto.guardardocente',
     'uses' => $controller.'CoordinatorController@saveAssign'
-]);   
-}); 
+    ]);
+});
 
 
 /*Evaluador*/
 
-Route::group(['middleware' => ['permission:Jury_List_Gesap']], function ()use($controller) 
-{     
-    Route::get('evaluar/',[
+Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use ($controller) {
+    Route::get('evaluar/', [
         'uses' => $controller.'EvaluatorController@index',
-        'as' => 'evaluar.index'      
+        'as' => 'evaluar.index'
     ]);
     
-    Route::get('evaluar/index',[
+    Route::get('evaluar/index', [
         'uses' => $controller.'EvaluatorController@index',
-        'as' => 'evaluar.index'      
+        'as' => 'evaluar.index'
     ]);
     
-     Route::get('evaluar/ver/jurado', [
+    Route::get('evaluar/ver/jurado', [
         'as' => 'anteproyecto.index.juryList',
         'uses' => $controller.'EvaluatorController@jury'
-    ]);
-    
+     ]);
     Route::get('evaluar/observaciones/{id}', [
         'as' => 'anteproyecto.observaciones',
         'uses' => $controller.'EvaluatorController@createObservations'
@@ -104,14 +98,13 @@ Route::group(['middleware' => ['permission:Jury_List_Gesap']], function ()use($c
         'as' => 'anteproyecto.guardar.conceptos',
         'uses' => $controller.'EvaluatorController@storeConcepts'
     ]);
-}); 
+});
 
-Route::group(['middleware' => ['permission:Director_List_Gesap']], function ()use($controller) 
-{     
+Route::group(['middleware' => ['permission:Director_List_Gesap']], function () use ($controller) {
     Route::get('evaluar/ver/director', [
     'as' => 'anteproyecto.index.directorList',
     'uses' => $controller.'EvaluatorController@director'
-    ]); 
+    ]);
     
     Route::get('evaluar/ver/director/ajax', [
     'as' => 'anteproyecto.index.directorList.ajax',
@@ -121,15 +114,14 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function ()us
 
 });
 
-Route::group(['middleware' => ['permission:See_Observations_Gesap']], function ()use($controller) 
-{   
+Route::group(['middleware' => ['permission:See_Observations_Gesap']], function () use ($controller) {
     Route::get('show/{id}', [
         'as' => 'evaluar.show',
         'uses' => $controller.'EvaluatorController@show'
-    ]);    
+    ]);
 });
 /*ESTUDIANTE*/
-Route::group(['middleware' => ['role:Student_Gesap']],function()use($controller){
+Route::group(['middleware' => ['role:Student_Gesap']], function () use ($controller) {
     
     Route::get('evaluar/ver/proyecto', [
         'as' => 'anteproyecto.index.studentList',
@@ -174,5 +166,6 @@ Route::get('download/{archivo}', function ($archivo) {
      abort(404);
 });
 
-Route::get('ReportAnteproyect',  $controller.'CoordinatorController@reporteAllProject')->name('ReportAnteproyect'); 
-Route::get('downloadPDF',  $controller.'CoordinatorController@reporteAllProjectPrint')->name('ReporteAnteproyectosGesap.pdf');
+Route::get('ReportAnteproyect', $controller.'ReportController@allProject')->name('ReportAnteproyect');
+Route::get('downloadPDF', $controller.'ReportController@allProjectPrint')
+    ->name('ReporteAnteproyectosGesap.pdf');

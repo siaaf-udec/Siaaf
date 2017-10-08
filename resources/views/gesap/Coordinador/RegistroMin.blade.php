@@ -1,3 +1,4 @@
+<div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
 
 <div class="row">
@@ -59,7 +60,7 @@
                                     <div class="form-group form-md-line-input">
                                         <div class="input-icon">
                                             {{ Form::textarea('title', null, 
-                                                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control','id'=>'title'],
+                                                ['required', 'auto' => 'off','rows' => '3','class'=>'form-control','id'=>'title'],
                                                 [ 'icon' => 'fa fa-user']) }}
                                             <label for="title" class="control-label">Titulo del proyecto</label>
                                             <span class="help-block"> Ingrese el titulo del proyecto </span>
@@ -109,7 +110,9 @@
                         </div>
                         <div class="tab-pane" id="tab4">
                             <h3 class="block">Documentos radicados</h3>
+                            <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12" id="file">
+                                
                                 <div class="form-md-line-input" style="margin: 0 0 35px;">
                                     <div class="fileinput-new input-icon" data-provides="fileinput">    
                                         <label for="estudiante1" class="control-label" style="    top: 0;font-size: 14px;color: #888;bottom: 0;pointer-events: none;">MINr008 o E.A</label>
@@ -144,6 +147,7 @@
                                         </div>
                                     </div>
                                 </div> 
+                                </div>
                             </div>
                         </div>
                 <div class="tab-pane" id="tab5"></div>
@@ -168,8 +172,7 @@
     </div>
 
 @endcomponent
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
-</script>
+</div>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
 </script>
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
