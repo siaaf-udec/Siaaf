@@ -49,7 +49,7 @@ class DependenciasController extends Controller
     }
 
     /**
-     * Función que almacena en la base de datos un nuevo registro de dependencia.
+     * Función que almacena en la base de datos un nuevo registro de acción.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

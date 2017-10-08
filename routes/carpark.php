@@ -260,4 +260,59 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 ///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
+
+////////////////////Inicio Rutas para Motos //////////////////////////////////////
+    Route::group(['prefix' => 'ingresosCarpark'], function () {
+
+        $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
+
+        Route::get('index', [
+            'uses' => $controller . 'IngresosController@index',
+            'as'   => 'parqueadero.ingresosCarpark.index',
+        ]);
+
+        Route::get('index/ajax', [
+            'uses' => $controller . 'IngresosController@indexAjax',
+            'as' => 'parqueadero.ingresosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+        ]);
+
+        Route::get('tablaMotosDentro', [   //ruta que realiza la consulta de las dependencias registradas
+            'as' => 'parqueadero.ingresosCarpark.tablaMotosDentro',
+            'uses' => function (Request $request) {
+                if ($request->ajax()) {
+                    return Datatables::of(Ingresos::all())
+                        ->addIndexColumn()
+                        ->make(true);
+                } else {
+                    return response()->json([
+                        'message' => 'Incorrect request',
+                        'code' => 412
+                    ], 412);
+                }
+            }
+
+        ]);
+        
+        Route::get('create', [
+            'uses' => $controller . 'IngresosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'as' => 'parqueadero.ingresosCarpark.create'
+        ]); 
+        
+        Route::post('verificar', [
+            'uses' => $controller . 'IngresosController@verificar',  //ruta que conduce al controlador para mostrar el formulario de verificación de información
+            'as' => 'parqueadero.ingresosCarpark.verificar'
+        ]);
+
+        Route::post('store', [
+            'uses' => $controller . 'IngresosController@store',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
+            'as' => 'parqueadero.ingresosCarpark.store'
+        ]);
+        
+        Route::get('confirmar/{id?}', [
+            'uses' => $controller . 'IngresosController@confirmar',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'as' => 'parqueadero.ingresosCarpark.confirmar'
+        ]); 
+
+    });
+///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
 });

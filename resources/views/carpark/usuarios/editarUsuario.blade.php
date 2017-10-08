@@ -24,7 +24,7 @@
                                 {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                                  ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                                {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                                                  ['help' => 'Digite el primer nombre del usuario.','icon'=>'fa fa-user']) !!}
 
                                 {!! Field:: text('CU_Nombre2',$infoUsuario['CU_Nombre2'],['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -42,10 +42,10 @@
                                 {!! Field:: text('CU_Telefono',$infoUsuario['CU_Telefono'],['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                                  ['help' => 'Digite el número de teléfono del usuario.','icon'=>'fa fa-phone'] ) !!}
 
-                                {!! Field:: email('CU_Correo',$infoUsuario['CU_Correo'],['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
+                                {!! Field:: email('CU_Correo',$infoUsuario['CU_Correo'],['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'90','autocomplete'=>'off'],
                                                                  ['help' => 'Digite un correo electronico válido.','icon'=>'fa fa-envelope-open '] ) !!}
 
-                                {!! Field:: text('CU_Direccion',$infoUsuario['CU_Direccion'],['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
+                                {!! Field:: text('CU_Direccion',$infoUsuario['CU_Direccion'],['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'70','autocomplete'=>'off'],
                                                                  ['help' => 'Digite la dirección del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
                                 {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia:']) !!}

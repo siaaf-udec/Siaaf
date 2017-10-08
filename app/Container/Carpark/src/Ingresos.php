@@ -4,7 +4,7 @@ namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Entrada extends Model
+class Ingresos extends Model
 {
     protected $connection = 'carpark';
 
@@ -13,7 +13,9 @@ class Entrada extends Model
     protected $primaryKey = 'PK_CI_IdIngreso';
 
     protected $fillable = [
-        'PK_CI_IdIngreso',
-        'CI_Ingreso',
-        'FK_CI_IdMoto'];
+    	'PK_CI_IdIngreso',
+        'CI_NombresUser',
+        'CI_CodigoUser',
+        'CI_Placa',
+        'CI_CodigoMoto'];
 }

@@ -123,17 +123,6 @@ class MotosController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Presenta el formulario con los datos para editar el regitro de un vehículo deseado.
      *
      * @param  \Illuminate\Http\Request  $request

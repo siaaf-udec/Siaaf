@@ -14,9 +14,10 @@ class Historiales extends Model
 
     protected $fillable = [
         'PK_CH_IdHistoia',
-        'FK_CH_Ingreso',
-        'FK_CH_IdMoto',
+        'CH_NombresUser',
+        'CH_CodigoUser',
         'CH_Placa',
+        'CH_CodigoMoto',
         'CH_FHentrada',
         'CH_FHsalida',
     ];
