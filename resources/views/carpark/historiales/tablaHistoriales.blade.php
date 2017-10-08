@@ -12,6 +12,8 @@
 <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 
+<link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+
 @endpush
 
 @section('title', '| Información del parqueadero')
@@ -25,7 +27,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">                        
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Historico</a><br>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Historico</a>                        
+                        
+                        <br>
                     </div>
                 </div>
             </div>
@@ -100,7 +104,7 @@ jQuery(document).ready(function () {
             }).done(function(){
                 window.open('{{ route('parqueadero.reportesCarpark.ReporteHistorico') }}', '_blank');
             });
-        });
+        });                
         
         
     });

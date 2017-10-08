@@ -219,7 +219,7 @@ jQuery(document).ready(function () {
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
-                window.location.href='{{ route('parqueadero.reportesCarpark.reporteDependencia') }}';
+                window.open('{{ route('parqueadero.reportesCarpark.reporteMoto') }}'+'/'+dataTable.PK_CM_IdMoto, '_blank');
             });
         });
 

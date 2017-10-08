@@ -213,5 +213,133 @@ class ReportesController extends Controller
             compact('infoHistoriales', 'date', 'time', 'total', 'cont')
         )->download('ReporteHistorico.pdf');               
     }
+    
+    /**
+     * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filtradoCodigo(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')){
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");            
+            $infoHistoriales = Historiales::where('CH_CodigoUser',$request['CodigoUsuario']);
+            $total = count($infoHistoriales);
+            
+            return view('carpark.reportes.reporteFiltradoCodigo',
+                compact('infoHistoriales','date','time','cont','total'));
+        }
+    }
+    
+    /**
+     * Permite descargar el reporte correspondiente a las historiales filtrados por codigo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function DescargarfiltradoCodigo()
+    {
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");            
+        $infoHistoriales = Historiales::where('CH_CodigoUser',$request['CodigoUsuario']);
+        $total = count($infoHistoriales);
+            
+        return SnappyPdf::loadView('carpark.reportes.reporteFiltradoCodigo',
+                compact('infoHistoriales','date','time','cont','total'))->download('ReportePorCódigo.pdf');
+                    
+    }
+    
+    /**
+     * Permite generar el reporte correspondiente a la información de un usuario concretro.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reporteUsuario($id)
+    {        
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $infoUsuarios = Usuarios::find($id);        
+        $infoDependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuarios->FK_CU_IdDependencia)->get();    
+            
+        $infoUsuarios->offsetSet('Dependencia',$infoDependencia[0]['CD_Dependencia']);
+            
+        $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
+        $total=count($infoHistoriales);
+        return view('carpark.reportes.ReporteUsuario',
+            compact('infoUsuarios','infoHistoriales', 'date', 'time', 'total', 'cont')
+        );  
+    }
+    
+    /**
+     * Permite descargar el reporte correspondiente a la información de un usuario concretro.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function descargarreporteUsuario($id)
+    {
+         $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $infoUsuarios = Usuarios::find($id);        
+        $infoDependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuarios->FK_CU_IdDependencia)->get();    
+            
+        $infoUsuarios->offsetSet('Dependencia',$infoDependencia[0]['CD_Dependencia']);
+            
+        $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
+        $total=count($infoHistoriales);
+        return SnappyPdf::loadView('carpark.reportes.ReporteUsuario',
+            compact('infoUsuarios','infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');         
+                    
+    }
+
+    /**
+     * Permite generar el reporte correspondiente a la información de un usuario concretro.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reporteMoto($id)
+    {        
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $infoMoto = Motos::find($id);        
+            
+        $infoHistoriales = Historiales::where('CH_Placa',$infoMoto->CM_Placa)->get();
+
+        $total=count($infoHistoriales);
+        return view('carpark.reportes.ReporteMoto',
+            compact('infoMoto','infoHistoriales', 'date', 'time', 'total', 'cont')
+        );  
+    }
+    
+    /**
+     * Permite descargar el reporte correspondiente a la información de un usuario concretro.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function descargarreporteMoto($id)
+    {
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $infoMoto = Motos::find($id);
+        $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);    
+            
+        $infoMoto->offsetSet('Nombre1',$infoUsuario->CU_Nombre1);
+        $infoMoto->offsetSet('Nombre2',$infoUsuario->CU_Nombre2);
+        $infoMoto->offsetSet('Apellido1',$infoUsuario->CU_Apellido1);
+        $infoMoto->offsetSet('Apellido2',$infoUsuario->CU_Apellido2);        
+            
+        $infoHistoriales = Historiales::where('CH_Placa',$infoMoto->CM_Placa)->get();
+        
+        $total=count($infoHistoriales);
+        return SnappyPdf::loadView('carpark.reportes.ReporteMoto',
+            compact('infoMoto','infoHistoriales', 'date', 'time', 'total', 'cont')
+        )->download('ReporteMoto.pdf');          
+                    
+    }
 
 }

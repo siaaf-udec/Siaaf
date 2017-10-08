@@ -48,4 +48,47 @@ class HistorialController extends Controller
             );
         }
     }
+    
+    /**
+     * Función que muestra el formulario de filtrado de un reporte de historiales.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function filtrarFecha (Request $request)//
+    {
+        if($request->ajax() && $request->isMethod('POST'))
+        {
+            return view('carpark.historiales.filtrarFecha');
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+    
+    /**
+     * Función que muestra el formulario de filtrado de un reporte de historiales.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function filtrarCodigo (Request $request)//
+    {
+        if($request->ajax() && $request->isMethod('GET'))
+        {
+            return view('carpark.historiales.filtrarCodigo');
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
 }

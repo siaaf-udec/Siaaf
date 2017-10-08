@@ -296,7 +296,39 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('DescargarReporteHistorico', [
             'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
-        ]); 
+        ]);         
+
+        Route::post('filtradoCodigo', [
+            'uses' => $controller . 'ReportesController@filtradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.filtradoCodigo'
+        ]);
+
+        Route::get('DescargarfiltradoCodigo', [
+            'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarfiltradoCodigo'
+        ]);  
+
+        
+        Route::get('reporteUsuario/{id?}', [
+            'uses' => $controller . 'ReportesController@reporteUsuario',  //ruta que conduce al controlador para ver el reporte de un usuario registrado
+            'as' => 'parqueadero.reportesCarpark.reporteUsuario'
+        ]);  
+
+        Route::get('descargarreporteUsuario/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarreporteUsuario',  //ruta que conduce al controlador para descargar el reporte de un usuario registrado
+            'as' => 'parqueadero.reportesCarpark.descargarreporteUsuario'
+        ]);  
+
+        Route::get('reporteMoto/{id?}', [
+            'uses' => $controller . 'ReportesController@reporteMoto',  //ruta que conduce al controlador para ver el reporte de una moto registrada
+            'as' => 'parqueadero.reportesCarpark.reporteMoto'
+        ]);  
+
+        Route::get('descargarreporteMoto/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarreporteMoto',  //ruta que conduce al controlador para descargar el reporte una moto registrada
+            'as' => 'parqueadero.reportesCarpark.descargarreporteMoto'
+        ]);  
+
     });
 
 ///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
@@ -388,6 +420,16 @@ Route::group(['middleware' => ['auth']], function () {
             }
 
         ]);
+        
+        Route::get('filtrarFecha', [
+            'uses' => $controller . 'HistorialController@filtrarFecha',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'as' => 'parqueadero.historialesCarpark.filtrarFecha'
+        ]); 
+        
+        Route::get('filtrarCodigo', [
+            'uses' => $controller . 'HistorialController@filtrarCodigo',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'as' => 'parqueadero.historialesCarpark.filtrarCodigo'
+        ]); 
 
     });
 ///////////////////////FIN Rutas Para Los Historiales//////////////////////////////

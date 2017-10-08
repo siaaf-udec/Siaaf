@@ -4,7 +4,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">                    
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Historico</a><br>
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Historico</a>                    
+                    <br>
                 </div>
             </div>
         </div>
@@ -52,5 +53,6 @@ jQuery(document).ready(function () {
             });
         });
         
+
     });
 </script>
