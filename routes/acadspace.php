@@ -127,6 +127,10 @@ Route::get('data/{sala?}', [ //Cargar datatable en la vista de calendario
     'uses' => $controller . 'CalendarioController@data',
     'as' => 'espacios.academicos.acadcalendar.data'
 ]);
+Route::get('cargarSalasCalendario/{sala?}', [ //Cargar datatable en la vista de calendario
+    'uses' => $controller . 'CalendarioController@cargarSalasCalendario',
+    'as' => 'espacios.academicos.acadcalendar.cargarSalasCalendario'
+]);
 //Rutas asignadas para el calendario academico
 Route::post('guardaEventos', [ //Almacenar eventos
     'uses' => $controller . 'CalendarioController@create',
