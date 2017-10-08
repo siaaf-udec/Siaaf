@@ -18,5 +18,34 @@ use Yajra\Datatables\Datatables;
 
 class HistorialController extends Controller
 {
-    //
+    /**
+     * Muestra la vista de inicio de la información de historial de personas y motos que han hecho uso del parqueadero.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {        
+    	return view('carpark.historiales.tablaHistoriales');
+    }
+
+    /**
+     * Muestra la vista de inicio de la información de historial de personas y motos que han hecho uso del parqueadero por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAjax (Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET'))
+        {
+            return view('carpark.historiales.ajaxTablaHistoriales');
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
 }

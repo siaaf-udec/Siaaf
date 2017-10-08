@@ -32,7 +32,14 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Vehículos registrados:'])
-            <br>            
+            <br>
+            <div class="row">
+                <div class="col-md-12">                    
+                    <div class="actions">                       
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Motos</a><br>
+                    </div>
+                </div>
+            </div>
             <br>
             <br>
             <div class="row">
@@ -118,7 +125,7 @@ jQuery(document).ready(function () {
                 responsivePriority:2
             },            
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -206,13 +213,23 @@ jQuery(document).ready(function () {
             $(".content-ajax").load(route_edit);
         });
         
-        table.on('click', '.reports', function (e) {
+        table.on('click', '.reporte', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
                 window.location.href='{{ route('parqueadero.reportesCarpark.reporteDependencia') }}';
+            });
+        });
+
+         $( ".reports" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.open('{{ route('parqueadero.reportesCarpark.reporteMotosRegistradas') }}', '_blank');
             });
         });
     });

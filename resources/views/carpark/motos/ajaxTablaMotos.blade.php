@@ -1,6 +1,13 @@
 <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Vehículos Registrados:'])
-            <br>            
+            <br>
+            <div class="row">
+                <div class="col-md-12">                    
+                    <div class="actions">                       
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Motos</a><br>
+                    </div>
+                </div>
+            </div>
             <br>
             <br>
             <div class="row">
@@ -143,6 +150,16 @@
             $.ajax({
             }).done(function(){
                 window.location.href='{{ route('talento.humano.document.pdfRadicacion') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            });
+        });
+
+        $( ".reports" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.open('{{ route('parqueadero.reportesCarpark.reporteMotosRegistradas') }}', '_blank');
             });
         });
     });

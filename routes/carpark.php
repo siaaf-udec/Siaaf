@@ -257,11 +257,51 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarReporteDependencia'
         ]); 
+
+        Route::get('reporteUsuariosRegistrados', [
+            'uses' => $controller . 'ReportesController@reporteUsuariosRegistrados',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'as' => 'parqueadero.reportesCarpark.reporteUsuariosRegistrados'
+        ]);
+
+        Route::get('DescargarreporteUsuariosRegistrados', [
+            'uses' => $controller . 'ReportesController@DescargarreporteUsuariosRegistrados',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarreporteUsuariosRegistrados'
+        ]); 
+
+        Route::get('reporteMotosRegistradas', [
+            'uses' => $controller . 'ReportesController@reporteMotosRegistradas',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'as' => 'parqueadero.reportesCarpark.reporteMotosRegistradas'
+        ]);
+
+        Route::get('DescargarreporteMotosRegistradas', [
+            'uses' => $controller . 'ReportesController@DescargarreporteMotosRegistradas',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarreporteMotosRegistradas'
+        ]); 
+        
+        Route::get('ReporteMotosDentro', [
+            'uses' => $controller . 'ReportesController@ReporteMotosDentro',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'as' => 'parqueadero.reportesCarpark.ReporteMotosDentro'
+        ]);
+
+        Route::get('DescargarReporteMotosDentro', [
+            'uses' => $controller . 'ReportesController@DescargarReporteMotosDentro',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarReporteMotosDentro'
+        ]); 
+        
+        Route::get('ReporteHistorico', [
+            'uses' => $controller . 'ReportesController@ReporteHistorico',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'as' => 'parqueadero.reportesCarpark.ReporteHistorico'
+        ]);
+
+        Route::get('DescargarReporteHistorico', [
+            'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
+        ]); 
     });
 
 ///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
 
-////////////////////Inicio Rutas para Motos //////////////////////////////////////
+////////////////////Inicio Rutas para Ingresos //////////////////////////////////////
     Route::group(['prefix' => 'ingresosCarpark'], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
@@ -314,5 +354,42 @@ Route::group(['middleware' => ['auth']], function () {
         ]); 
 
     });
-///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
+///////////////////////FIN Rutas Para Los Ingresos//////////////////////////////
+
+///////////////////////Rutas Para Los Historiales//////////////////////////////
+
+     Route::group(['prefix' => 'historialesCarpark'], function () {
+
+        $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
+
+        Route::get('index', [
+            'uses' => $controller . 'HistorialController@index',
+            'as'   => 'parqueadero.historialesCarpark.index',
+        ]);
+
+        Route::get('index/ajax', [
+            'uses' => $controller . 'HistorialController@indexAjax',
+            'as' => 'parqueadero.historialesCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+        ]);
+
+        Route::get('tablaHistoriales', [   //ruta que realiza la consulta de las dependencias registradas
+            'as' => 'parqueadero.dependenciasCarpark.tablaHistoriales',
+            'uses' => function (Request $request) {
+                if ($request->ajax()) {
+                    return Datatables::of(Historiales::all())
+                        ->addIndexColumn()
+                        ->make(true);
+                } else {
+                    return response()->json([
+                        'message' => 'Incorrect request',
+                        'code' => 412
+                    ], 412);
+                }
+            }
+
+        ]);
+
+    });
+///////////////////////FIN Rutas Para Los Historiales//////////////////////////////
 });
+

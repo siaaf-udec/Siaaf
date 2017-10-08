@@ -41,4 +41,8 @@ class Usuarios extends Model
         return $this->hasMany(Motos::class, 'FK_CM_CodigoUser', 'PK_CU_Codigo');
     }
 
+    public function FuncionDependencias(){
+        return $this->hasOne(Dependencias::class, 'PK_CD_IdDependencia', 'FK_CU_IdDependencia');
+    }
+
 }

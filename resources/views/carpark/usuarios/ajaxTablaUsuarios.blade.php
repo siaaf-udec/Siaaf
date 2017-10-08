@@ -4,10 +4,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nuevo usuario">
                             <i class="fa fa-plus">
                             </i>Nuevo
-                        </a><br>
+                        </a>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Usuarios</a><br>
                     </div>
                 </div>
             </div>
@@ -74,7 +75,7 @@
                 responsivePriority:2
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a><a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -167,13 +168,24 @@
             var route = '{{ route('parqueadero.usuariosCarpark.create') }}';
             $(".content-ajax").load(route);
         });
-        table.on('click', '.reports', function (e) {
+        
+        table.on('click', '.reporte', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({
             }).done(function(){
                 window.location.href='{{ route('talento.humano.document.pdfRadicacion') }}'+'/'+dataTable.PK_PRSN_Cedula;
+            });
+        });
+
+        $( ".reports" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuariosRegistrados') }}', '_blank');
             });
         });
     });

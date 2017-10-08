@@ -4,10 +4,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nueva dependencia">
                             <i class="fa fa-plus">
                             </i>Nueva
-                        </a><br>
+                        </a>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Dependencias</a><br>
                     </div>
                 </div>
             </div>
