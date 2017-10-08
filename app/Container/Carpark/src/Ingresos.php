@@ -18,4 +18,9 @@ class Ingresos extends Model
         'CI_CodigoUser',
         'CI_Placa',
         'CI_CodigoMoto'];
+
+    public function FuncionIngresos()
+    {
+        return $this->belongsTo(Usuarios::class, 'CI_CodigoUser', 'PK_CU_Codigo');
+    }
 }

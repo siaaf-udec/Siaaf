@@ -433,5 +433,25 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 ///////////////////////FIN Rutas Para Los Historiales//////////////////////////////
+
+///////////////////////INICIO Rutas Para Los Correos//////////////////////////////
+     
+    Route::group(['prefix' => 'correosCarpark'], function () {
+
+        $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
+
+        Route::get('cerrarParqueadero', [
+            'uses' => $controller . 'CorreosController@cerrarParqueadero',
+            'as'   => 'parqueaderos.correosCarpark.cerrarParqueadero',
+        ]);
+
+        Route::post('enviarMail', [
+            'uses' => $controller . 'CorreosController@enviarMail',
+            'as'   => 'parqueaderos.correosCarpark.enviarMail',
+        ]);
+
+    });
+///////////////////////FIN Rutas Para Los Correos//////////////////////////////
+
 });
 

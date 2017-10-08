@@ -15,82 +15,50 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
+use Mail;
+use Session;
 
 class CorreosController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra el boton para cerrar el parqueadero y enviar los correos de advertencia a los usuarios que aún tienen su vehículo en la universidad.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function cerrarParqueadero()
     {
-        //
+
+        return view('carpark.correos.cerrarPark');
+    }
+    
+    public function enviarMail(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('POST'))
+        {
+            $infoEntradas = Ingresos::with('FuncionIngresos')->get();
+            for ($i = 0; $i < sizeof($infoEntradas); $i++) {
+                $infoCorreo = $infoEntradas[$i]['FuncionIngresos'];
+
+                Mail::send('carpark.correos.plantilla', ['user' => $infoCorreo], function ($msj) use ($infoCorreo) {
+                    $msj->subject('Advertencia De Cierre Del Parqueadero');
+                    $msj->to($infoCorreo['CU_Correo']);
+                    Session::flash('message', 'mensaje enviado correctamente');
+                });
+            }
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Correos Enviados Correctamente.'
+            );
+        }
+        else
+        {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

@@ -70,5 +70,15 @@
             var route = '{{ route('parqueadero.dependenciasCarpark.create') }}';
             $(".content-ajax").load(route);
         });
+
+        $( ".reports" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+            }).done(function(){
+                window.open('{{ route('parqueadero.reportesCarpark.reporteDependencia') }}', '_blank');
+            });
+        });
     });
 </script>
