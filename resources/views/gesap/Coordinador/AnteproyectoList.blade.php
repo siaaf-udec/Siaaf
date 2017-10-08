@@ -36,6 +36,7 @@
 
 
 @section('content')
+<div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
         <div class="row">
             <div class="col-md-6">
@@ -68,6 +69,7 @@
             </div>
         </div>
     @endcomponent
+</div>
 @endsection
 
 @push('plugins')
@@ -187,7 +189,7 @@
                     {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
                     {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
                     {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
-                    {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
+                    {data: 'jurado1',render: "[, ].usuarios.full_name", className:'none',searchable: true},
                     {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
                      
                     {data:'action',className:'',searchable: false,

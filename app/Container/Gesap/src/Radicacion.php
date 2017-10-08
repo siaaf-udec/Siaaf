@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Radicacion extends Model
 {
-        protected $connection = 'gesap';
+    protected $connection = 'gesap';
 
     protected $table = 'TBL_Radicacion';
 
@@ -15,7 +15,8 @@ class Radicacion extends Model
 
     protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_id'];
     
-    public function anteproyectos() {
-        return $this->hasOne('App\container\gesap\src\Radicacion','FK_TBL_Anteproyecto_id','PK_NPRY_idMinr008');
+    public function anteproyectos()
+    {
+        return $this->hasOne(Radicacion::class, 'FK_TBL_Anteproyecto_id', 'PK_NPRY_idMinr008');
     }
 }

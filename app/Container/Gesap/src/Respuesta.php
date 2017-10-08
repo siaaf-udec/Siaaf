@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Respuesta extends Model
 {
-        protected $connection = 'gesap';
+    protected $connection = 'gesap';
 
     protected $table = 'tbl_respuesta';
 
@@ -15,9 +15,8 @@ class Respuesta extends Model
 
     protected $fillable = ['RPST_RMin','RPST_Requerimientos','FK_TBL_Radicacion_id'];
     
-    public function observaciones() {
-        return $this->belongsto('App\container\Users\src\Observaciones','FK_TBL_Observaciones_id','PK_BVCS_idObservacion');
+    public function observaciones()
+    {
+        return $this->belongsto(Observaciones::class, 'FK_TBL_Observaciones_id', 'PK_BVCS_idObservacion');
     }
-
-    
 }

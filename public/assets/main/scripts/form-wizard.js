@@ -33,11 +33,12 @@ var FormWizard = function () {
                         error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
                     } else if (element.is(':radio')) {
                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else if (element.is(':select')) {     
-                        error.insertAfter(element.next('span'));  // select2
+                    } else if (element.hasClass('select2-hidden-accessible')) {
+                        error.insertAfter(element.parent().find(".help-block"));
                     } else {
-                        error.insertAfter(element);
-                    }
+                    
+                            error.insertAfter(element);    
+                        }
                 },
 
                 invalidHandler: function (event, validator) { //display error alert on form submit
@@ -47,8 +48,17 @@ var FormWizard = function () {
                 },
 
                 highlight: function (element) { // hightlight error inputs
+                    if ($(element).hasClass('select2-hidden-accessible')) {
+                        $(element).next('span span .selection').closest('select2-selection--single').css('border-bottom','1px solid #e73d4a;');
+                        console.log($(element).next('span').find('selecction').find('select2-selection--single'));
+                        console.log($(element).next('span').closest('select2-selection--single'));
+                    } 
+                
                     $(element)
                         .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    
+                    
+                    
                 },
 
                 unhighlight: function (element) { // revert the change done by hightlight

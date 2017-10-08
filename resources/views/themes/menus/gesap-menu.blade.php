@@ -1,14 +1,4 @@
-<li class="nav-item {{ active(['gesap.*'], 'start active open') }}">
-    <a class="nav-link nav-toggle" href="javascript:;">
-        <i class="fa fa-cube">
-        </i>
-        <span class="title">
-            Gesap
-        </span>
-        <span class="arrow {{ active(['gesap.*'], 'open') }}">
-        </span>
-    </a>
-    <ul class="sub-menu">
+
         @permission('See_All_Project_Gesap')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
                 <a href="{{ route('min.index') }}" class="nav-link nav-toggle">
@@ -55,5 +45,3 @@
                     </a>
                 </li> -->
         @endpermission
-    </ul>
-</li>

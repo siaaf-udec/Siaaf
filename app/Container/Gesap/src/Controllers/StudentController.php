@@ -41,50 +41,18 @@ class StudentController extends Controller
         return view($this->path.'ProyectList');
     }
     
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-    //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
-
     public function studentList(Request $request)
     {
-        $result="NO ASIGNADO";
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->Data()
-                ->join('gesap.tbl_encargados AS E',function($join)use($request){
-                    $join->on(DB::raw('E.FK_TBL_Anteproyecto_id'),'=',DB::raw('A.PK_NPRY_idMinr008'))
-                    ->where(function($query){
-                      $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
-                      $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
+                ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
+                    $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
+                    ->where(function ($query) {
+                        $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
+                        $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
                     })
-                    ->where('FK_developer_user_id','=',$request->user()->id);
+                        ->where('FK_developer_user_id', '=', $request->user()->id);
                 });
                 
         return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
-   }
-    
+    }
 }

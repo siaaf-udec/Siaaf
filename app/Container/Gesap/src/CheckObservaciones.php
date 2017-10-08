@@ -4,7 +4,7 @@ namespace App\container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Check_Observaciones extends Model
+class CheckObservaciones extends Model
 {
     protected $connection = 'gesap';
 
@@ -14,8 +14,8 @@ class Check_Observaciones extends Model
 
     protected $fillable = ['CBSV_Estudiante1','CBSV_Estudiante2','CBSV_Director','FK_TBL_Observaciones_id'];
 
-    public function observaciones() {
-        return $this->belongsto('App\container\Users\src\Observaciones','FK_TBL_Observaciones_id','PK_BVCS_idObservacion');
+    public function observaciones()
+    {
+        return $this->belongsto(Observaciones::class, 'FK_TBL_Observaciones_id', 'PK_BVCS_idObservacion');
     }
-    
 }

@@ -29,8 +29,6 @@ use App\Container\gesap\src\Respuesta;
 use App\Container\gesap\src\Conceptos;
 use App\Container\Users\Src\User;
 
-
-
 class EvaluatorController extends Controller
 {
             
@@ -49,45 +47,35 @@ class EvaluatorController extends Controller
     
     public function storeObservations(Request $request)
     {
-      if($request->ajax() && $request->isMethod('POST'))
-      {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $jurado = Encargados::select('PK_NCRD_idCargo')
-                        ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
-                        ->where('FK_developer_user_id','=',$request['user'])
-                        ->where(function($query){
+                        ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
+                        ->where('FK_developer_user_id', '=', $request->get('user'))
+                        ->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
                         })
                         ->firstOrFail();
             
             $observacion= new Observaciones();
-            $observacion->BVCS_Observacion=$request['observacion'];
+            $observacion->BVCS_Observacion=$request->get('observacion');
             $observacion->FK_TBL_Encargado_id=$jurado->PK_NCRD_idCargo;
             $observacion->save();
             
             $checkobservacion= new Check_Observaciones();
             $checkobservacion->FK_TBL_Observaciones_id=$observacion->PK_BVCS_idObservacion;
             $checkobservacion->save();
-            
           
-          
-            if($request['Min']=="Vacio" || $request['Requerimientos']=="Vacio")
-            {
+            if ($request->get('Min')=="Vacio" || $request->get('Requerimientos')=="Vacio") {
                 $respuesta=new Respuesta();
-                if($request['Min']=="Vacio" )
-                {
+                if ($request->get('Min')=="Vacio") {
                     $respuesta->RPST_RMin="NO FILE";
+                } else {
+                    $respuesta->RPST_RMin=$request->get('Min')->getClientOriginalName();
                 }
-                else
-                {
-                    $respuesta->RPST_RMin=$request['Min']->getClientOriginalName();
-                    
-                }
-                if($request['Requerimientos']!="Vacio"){
-                    $respuesta->RPST_Requerimientos=$request['Requerimientos']->getClientOriginalName();
-                }
-                else
-                {
+                if ($request->get('Requerimientos')!="Vacio") {
+                    $respuesta->RPST_Requerimientos=$request->get('Requerimientos')->getClientOriginalName();
+                } else {
                     $respuesta->RPST_Requerimientos="NO FILE";
                 }
                 $respuesta->FK_TBL_Observaciones_id=$observacion->PK_BVCS_idObservacion;
@@ -97,134 +85,107 @@ class EvaluatorController extends Controller
                 '¡Bien hecho!',
                 'Observacion Guardada correctamente.'
             );
-    }
-      else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     public function storeConcepts(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
-            //Busco el ID del Encargado(Usuario respecto al proyecto)
-            $jurado = Encargados::select('PK_NCRD_idCargo','NCRD_Cargo')
-                ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
-                ->where('FK_developer_user_id','=',$request->user()->id)
-                ->where(function($query){
+        if ($request->ajax() && $request->isMethod('POST')) {//Busco el ID del Encargado(Usuario respecto al proyecto)
+            $jurado = Encargados::select('PK_NCRD_idCargo', 'NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
+                ->where('FK_developer_user_id', '=', $request->user()->id)
+                ->where(function ($query) {
                     $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                     $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
                 })
                 ->firstOrFail();
             
-            if($jurado->NCRD_Cargo=="Jurado 1") 
-            {
+            if ($jurado->NCRD_Cargo=="Jurado 1") {
                 $other="Jurado 2";
-            }
-            else 
-            {
+            } else {
                 $other="Jurado 1";
             }
-             
-            $jurado2=Encargados::select('PK_NCRD_idCargo','NCRD_Cargo')
-                ->where('FK_TBL_Anteproyecto_id','=',$request['proyecto'])
-                ->where('NCRD_Cargo','=',$other)
+            $jurado2=Encargados::select('PK_NCRD_idCargo', 'NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
+                ->where('NCRD_Cargo', '=', $other)
                 ->firstOrFail();
              
-             
             //Consulto si los jurados ya ha realizado un concepto anteriormente
-            $encargado=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
-                ->where('FK_TBL_Encargado_id','=',$jurado->PK_NCRD_idCargo)
-                ->where('CNPT_Tipo','=','Anteproyecto')
+            $encargado=Conceptos::select('PK_CNPT_Conceptos', 'CNPT_Concepto')
+                ->where('FK_TBL_Encargado_id', '=', $jurado->PK_NCRD_idCargo)
+                ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
             
-             $encargado2=Conceptos::select('PK_CNPT_Conceptos','CNPT_Concepto')
-                ->where('FK_TBL_Encargado_id','=',$jurado2->PK_NCRD_idCargo)
-                ->where('CNPT_Tipo','=','Anteproyecto')
+            $encargado2=Conceptos::select('PK_CNPT_Conceptos', 'CNPT_Concepto')
+                ->where('FK_TBL_Encargado_id', '=', $jurado2->PK_NCRD_idCargo)
+                ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
              
-             $anteproyecto = Anteproyecto::findOrFail($request['proyecto']);
+            $anteproyecto = Anteproyecto::findOrFail($request->get('proyecto'));
             
-             if($encargado==null)//Averiguo si se encontro un concepto previo
-             {
+            if ($encargado==null) {//Averiguo si se encontro un concepto previo
                 //si no lo hay se crea el concepto nuevo de este jurado respecto al proyecto
                 Conceptos::create([
-                    'CNPT_Concepto'=>$request['concepto'] ,
-                    'CNPT_Tipo'    =>"Anteproyecto",    
+                    'CNPT_Concepto'=>$request->get('concepto') ,
+                    'CNPT_Tipo'    =>"Anteproyecto",
                     'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo
                 ]);
-                if($encargado2!=null)
-                {
-                    if($request['concepto']!=$encargado2->CNPT_Concepto)
-                    {
+                if ($encargado2!=null) {
+                    if ($request->get('concepto')!=$encargado2->CNPT_Concepto) {
                         $anteproyecto->NPRY_Estado="PENDIENTE";
                         $anteproyecto->save();
                         return AjaxResponse::success(
                             '¡Registro exitoso!',
                             'Los conceptos no estan deacuerdo.'
-                        ); 
-                     }
-                 }
-                 $anteproyecto->NPRY_Estado="EN REVISION";
-                 $anteproyecto->save();
-                 return AjaxResponse::success(
+                        );
+                    }
+                }
+                $anteproyecto->NPRY_Estado="EN REVISION";
+                $anteproyecto->save();
+                return AjaxResponse::success(
                     '¡Registro exitoso!',
                     'El concepto fue registrado correctamente.'
-                 );
-             }
-             else//Si existe ya un concepto se actualiza el mismo
-             {
-                Conceptos::updateOrCreate(
-                    ['PK_CNPT_Conceptos'=>$encargado->PK_CNPT_Conceptos],
-                    ['CNPT_Concepto'=>$request['concepto'] ,
-                    'CNPT_Tipo'    =>"Anteproyecto",    
-                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo]
                 );
-                if($encargado2!=null)
-                {
-                    if($request['concepto']!=$encargado2->CNPT_Concepto)
-                    {
+            } else {//Si existe ya un concepto se actualiza el mismo
+                Conceptos::updateOrCreate([
+                    'PK_CNPT_Conceptos'=>$encargado->PK_CNPT_Conceptos,
+                    'CNPT_Concepto'=>$request->get('concepto'),
+                    'CNPT_Tipo'    =>"Anteproyecto",
+                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo
+                ]);
+                if ($encargado2 != null) {
+                    if ($request->get('concepto')!=$encargado2->CNPT_Concepto) {
                         $anteproyecto->NPRY_Estado="PENDIENTE";
                         $anteproyecto->save();
                         return AjaxResponse::success(
                             '¡Registro exitoso!',
                             'Los conceptos no estan deacuerdo.'
-                        ); 
-                     }
-                    else
-                    {
-                        if($request['concepto']==1)
-                        {
-                            $anteproyecto->NPRY_Estado="APROBADO";    
-                        }
-                        else
-                        {
-                            if($request['concepto']==2)
-                            {
+                        );
+                    } else {
+                        if ($request->get('concepto')==1) {
+                            $anteproyecto->NPRY_Estado="APROBADO";
+                        } else {
+                            if ($request->get('concepto')==2) {
                                 $anteproyecto->NPRY_Estado="APLAZADO";
-                            }
-                            else
-                            {
-                                if($request['concepto']==3)
-                                {
+                            } else {
+                                if ($request->get('concepto')==3) {
                                     $anteproyecto->NPRY_Estado="RECHAZADO";
-                                }
-                                else
-                                {
+                                } else {
                                     $anteproyecto->NPRY_Estado="COMPLETADO";
                                 }
                             }
                         }
-                     }
+                    }
                     $anteproyecto->save();
                     return AjaxResponse::success(
                         '¡Actualizacion exitosa!',
                         'El concepto se ha actualizado correctamente.'
                     );
-                 }
+                }
             }
             $anteproyecto->NPRY_Estado="EN REVISION";
             $anteproyecto->save();
@@ -233,9 +194,7 @@ class EvaluatorController extends Controller
                 'El concepto se ha actualizado correctamente.'
             );
         
-        }
-        else
-        {
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -254,32 +213,29 @@ class EvaluatorController extends Controller
     }
     
 
-    public function show($id,Request $request)
-    {   
-        if($request->ajax() && $request->isMethod('GET'))
-        {
-            return view($this->path.'ShowObservation',compact('id'));
+    public function show($id, Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'ShowObservation', [
+                'id' => $id
+            ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     public function observationsList($id)
     {
         $observaciones=Observaciones::from('tbl_observaciones AS O')
-            ->where('FK_TBL_Anteproyecto_id','=',$id)
-                ->where(function($query)
-                        {
+            ->where('FK_TBL_Anteproyecto_id', '=', $id)
+                ->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
-                        })
-                ->join('gesap.tbl_encargados','FK_TBL_Encargado_id','=','PK_NCRD_idCargo')
-                ->with(['encargado' ,'respuesta'])
+                })
+                ->join('gesap.tbl_encargados', 'FK_TBL_Encargado_id', '=', 'PK_NCRD_idCargo')
+                ->with(['encargado' , 'respuesta'])
                 ->get();
         return Datatables::of($observaciones)->addIndexColumn()->make(true);
     }
@@ -287,34 +243,30 @@ class EvaluatorController extends Controller
     public function directorList(Request $request)
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->join('gesap.tbl_encargados AS E',function($join)use($request)
-            {
-                $join->on('E.FK_TBL_Anteproyecto_id','=','A.PK_NPRY_idMinr008')
-                ->where('E.NCRD_Cargo', '=', "Director")  
-                ->where('FK_developer_user_id','=',$request->user()->id);
+            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
+                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
+                ->where('E.NCRD_Cargo', '=', "Director")
+                ->where('FK_developer_user_id', '=', $request->user()->id);
             })
-            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
             ->get();
         
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
-   }
+    }
     
     public function juryList(Request $request)
-    {       
+    {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->join('gesap.tbl_encargados AS E',function($join)use($request)
-            {
-                $join->on('E.FK_TBL_Anteproyecto_id','=','A.PK_NPRY_idMinr008')
-                ->where(function($query)
-                {
+            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
+                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
+                ->where(function ($query) {
                     $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
                     $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
                 })
-                ->where('FK_developer_user_id','=',$request->user()->id);
+                ->where('FK_developer_user_id', '=', $request->user()->id);
             })
-            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2','conceptofinal'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal'])
             ->get();
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
-   }
-
+    }
 }
