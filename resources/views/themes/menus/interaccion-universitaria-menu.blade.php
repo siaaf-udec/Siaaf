@@ -15,6 +15,7 @@
                     </a>
                 </li>
 
+
 @endrole
 @role(['Admin_uni','Funcionario_uni'])
             <li class="nav-item {{ active(['Empresas.Empresas'], 'start active open') }}">
@@ -72,4 +73,79 @@
                         <span class="title">PREGUNTAS</span>
                     </a>
                 </li>
+
+<li class="nav-item {{ active(['interacion.universitaria.*'], 'start active open') }}">
+    <a href="{{ route('interaccion.universitaria.index') }}" class="nav-link">
+        <i class="icon-feed"></i>
+        <span class="title">Interacción Universitaria</span>
+    </a>
+</li>
+@endrole
+@role(['Funcionario_uni','Admin_uni','Administrador Master'])
+<li class="nav-item">
+    <a href="{javascript:" class="nav-link nav-toggle">
+        <i class="fa fa-object-ungroup"></i>
+        <span class="title">Convenio</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+                <li class="nav-item {{ active(['Agregar_Convenios.index'], 'start active open') }}">
+                    <a href="{{ route('Agregar_Convenios.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-clone"></i>
+                            <span class="title">Registar convenios</span>
+                    </a>
+                </li> 
+                <li class="nav-item {{ active(['Listar_Convenios.index'], 'start active open') }}">
+                    <a href="{{ route('Listar_Convenios.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-check-square"></i>
+                            <span class="title">Listar convenios</span>
+                    </a>
+                </li>                         
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="{javascript:" class="nav-link nav-toggle">
+        <i class="fa fa-industry"></i>
+        <span class="title">Empresas</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+                <li class="nav-item {{ active(['Agregar_Empresas.Agregar_Empresas'], 'start active open') }}">
+                    <a href="{{ route('Agregar_Empresas.Agregar_Empresas') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-clone"></i>
+                            <span class="title">Registar empresas</span>
+                    </a>
+                </li> 
+                <li class="nav-item {{ active(['Empresas.Empresas'], 'start active open') }}">
+                    <a href="{{ route('Empresas.Empresas') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-check-square"></i>
+                            <span class="title">Listar empresas</span>
+                    </a>
+                </li>                           
+    </ul>
+</li>
+@endrole
+@role(['Admin_uni','Administrador Master'])
+<li class="nav-item">
+    <a href="{javascript:" class="nav-link nav-toggle">
+        <i class="fa fa-object-ungroup"></i>
+        <span class="title">Base de Datos</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+                <li class="nav-item {{ active(['Agregar_Convenios.index'], 'start active open') }}">
+                    <a href="{{ route('Agregar_Convenios.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-clone"></i>
+                            <span class="title">Registar Carreras</span>
+                    </a>
+                </li> 
+                <li class="nav-item {{ active(['Listar_Convenios.index'], 'start active open') }}">
+                    <a href="{{ route('Listar_Convenios.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-check-square"></i>
+                            <span class="title">Listar Carreras</span>
+                    </a>
+                </li>                         
+    </ul>
+</li>
+
 @endrole
