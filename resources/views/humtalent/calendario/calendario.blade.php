@@ -84,7 +84,7 @@
                                     <div class="col-md-12">
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id' => 'eventDate','label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_EVNT_IdEvento')!!}
                                     </div>
@@ -120,7 +120,7 @@
                                             ['help' => 'Digite el nombre del evento', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::date(
                                                 'NOTIF_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id'=>'dateNotify','label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -161,7 +161,7 @@
                                                 ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id'=>'eventDateNotify','label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de notificación del evento .', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -414,7 +414,7 @@
                 {   //si es recordatorio
                     $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id); //se cargan los datos correspondientes
                     $('#eventDesc').val(calEvent.title);
-                    $('input[name="NOTIF_Fecha_Notificacion"]').val(calEvent.notif);
+                    $('#dateNotify').val(calEvent.notif);
                     $('#modal-update-titleNotify').modal('toggle'); //y se muestran en un formulario en una ventana modal y se realiza la respectiva actualización
                 }
                 if (calEvent.type == "Evento")
@@ -574,7 +574,7 @@
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('EVNT_Fecha_Notificacion', $('[name="EVNT_Fecha_Notificacion"]').val());
+                    formData.append('EVNT_Fecha_Notificacion', $('#eventDate').val());
                     formData.append('PK_EVNT_IdEvento', $('[name="PK_EVNT_IdEvento"]').val());
                     $.ajax({
                         url: route,
@@ -623,7 +623,7 @@
 
                     var formData = new FormData();
                     formData.append('NOTIF_Descripcion', $('#eventDesc').val());
-                    formData.append('NOTIF_Fecha_Notificacion', $('[name="NOTIF_Fecha_Notificacion"]').val());
+                    formData.append('NOTIF_Fecha_Notificacion', $('#dateNotify').val());
                     formData.append('PK_NOTIF_Id_Notificacion', $('[name="PK_NOTIF_Id_Notificacion"]').val());
                     $.ajax({
                         url: route,
@@ -675,7 +675,7 @@
                     var formData = new FormData();
                     formData.append('EVNT_Descripcion',  $('[name="EVNT_Descripcion"]').val());
                     formData.append('EVNT_Hora', $('[name="EVNT_Hora"]').val());
-                    formData.append('EVNT_Fecha_Notificacion', $('[name="EVNT_Fecha_Notificacion"]').val());
+                    formData.append('EVNT_Fecha_Notificacion', $('#eventDateNotify').val());
                     formData.append('PK_NOTIF_Id_Notificacion', $('[name="PK_NOTIF_Id_Notificacion"]').val());
                     $.ajax({
                         url: route,
