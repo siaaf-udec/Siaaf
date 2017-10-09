@@ -163,14 +163,14 @@ Route::group(['middleware' => ['auth']], function () {
                 }
             }
         ]);
-        Route::get('email', [      //ruta que retorna la vista del registro a traves de excel
+        Route::get('email', [
             'as' => 'talento.humano.empleado.email',
             'uses' => function () {
                 return view('humtalent.empleado.enviarCorreoEmpleados');
             }
         ]);
         Route::post('enviarEmail', [
-            'uses' => $controller . 'EmpleadoController@enviarEmail',  //ruta que conduce al controlador para alamacenar los datos del documento en la base de datos
+            'uses' => $controller . 'EmpleadoController@enviarEmail',
             'as' => 'talento.humano.empleado.enviarEmail'
         ]);
 

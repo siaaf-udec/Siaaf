@@ -70,19 +70,6 @@
                             <tr>
                                 <td height="40"></td>
                             </tr>
-                            <!-- button -->
-                            <tr>
-                                <td align="center">
-                                    <table class="textbutton" align="center" bgcolor="#d5ca3d" border="0" cellspacing="0" cellpadding="0" style=" border-radius:30px; box-shadow: 0px 1px 0px #D4D2D2;">
-                                        <tr>
-                                            <td class="btn-link" height="55" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:18px; color:#FFFFFF; font-weight: bold;padding-left: 25px;padding-right: 25px;">
-                                                <a href="{{ ( isset($link) ) ? $link : env('APP_URL')  }}"> {{ ( isset($buttom) ) ? $buttom : 'Ir al Siaaf' }} </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- end button -->
                             <tr>
                                 <td height="45"></td>
                             </tr>
@@ -114,49 +101,7 @@
                 <tr>
                     <td height="30"></td>
                 </tr>
-                <!-- profile-img -->
-                <tr>
-                    <td height="100" align="center" style="line-height:0px;">
-                        <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ ( isset($picture) ) ? $picture : asset('assets/pages/mail/images/profile.png') }}" alt="img" />
-                    </td>
-                </tr>
-                <!-- end profile-img -->
-                <tr>
-                    <td height="30"></td>
-                </tr>
-                <!-- social -->
-                <tr>
-                    <td align="center">
-                        <table align="center" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/fb.png') }}" alt="Facebook" /> </a>
-                                </td>
-                                <td width="20"></td>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/tw.png') }}" alt="Twitter" /> </a>
-                                </td>
-                                <td width="20"></td>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/gg.png') }}" alt="Google Plus" /> </a>
-                                </td>
-                                <td width="20"></td>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/in.png') }}" alt="LinkedIn" /> </a>
-                                </td>
-                                <td width="20"></td>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/bh.png') }}" alt="Bëhance" /> </a>
-                                </td>
-                                <td width="20"></td>
-                                <td align="center" style="line-height:0px;">
-                                    <a href="javascript:;"> <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="{{ asset('assets/pages/mail/images/db.png') }}" alt="Dribbble" /> </a>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <!-- end social -->
+
                 <tr>
                     <td height="15"></td>
                 </tr>
