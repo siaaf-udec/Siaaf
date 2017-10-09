@@ -11,5 +11,5 @@ class TBL_Documentacion extends Model
     protected $table = 'TBL_Documentacion';
     protected $primaryKey = 'PK_Documentacion';
     protected $fillable = [
-        'Entidad','Ubicacion','FK_TBL_Convenios'];
+        'Entidad','Ubicacion','FK_TBL_Convenios','FK_TBL_Tipo_Documentos'];
 }
