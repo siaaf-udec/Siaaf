@@ -14,10 +14,11 @@ class Induction extends Model
     protected $primaryKey = 'PK_INDC_ID_Induccion';
 
     protected $fillable = [
-        'INDC_ProcesoInduccion','INDC_Aprobacion','FK_TBL_Persona_Cedula',
+        'INDC_ProcesoInduccion', 'INDC_Aprobacion', 'FK_TBL_Persona_Cedula',
     ];
 
-    public function Personas(){
+    public function Personas()
+    {
         return $this->belongsTo(Persona::class, 'FK_TBL_Persona_Cedula', 'PK_PRSN_Cedula');
     }
     //

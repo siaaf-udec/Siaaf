@@ -14,10 +14,11 @@ class Permission extends Model
     protected $primaryKey = 'PK_PERM_IdPermiso';
 
     protected $fillable = [
-        'PERM_Fecha','PERM_Descripcion','FK_TBL_Persona_Cedula',
+        'PERM_Fecha', 'PERM_Descripcion', 'FK_TBL_Persona_Cedula',
     ];
 
-    public function Personas(){
+    public function Personas()
+    {
         return $this->belongsTo(Persona::class);
     }
     //

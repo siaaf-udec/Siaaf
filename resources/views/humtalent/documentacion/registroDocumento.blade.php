@@ -1,43 +1,44 @@
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de documentos'])
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de documentos'])
         @slot('actions', [
             'link_cancel' => [
                 'link' => '',
                 'icon' => 'fa fa-arrow-left',
             ],
         ])
-            <div class="row">
-                <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form_document_create', 'url'=> ['/forms'], 'role'=>"form"]) !!}
-                        {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                    ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                {!! Form::open (['id'=>'form_document_create', 'url'=> ['/forms'], 'role'=>"form"]) !!}
+                {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control','id'=>'name', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                            ['help'=>'Digite el nombre del Documento.','icon'=>' fa fa-credit-card']) !!}
 
-                        {!! Field::select('DCMTP_Tipo_Documento',
-                                ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
-                                null,
-                                [ 'label' => 'Seleccionar el tipo de documento']) !!}
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class=" col-md-offset-4">
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
-                                    Cancelar
-                                </a>
-                                 {!! Form::submit('Registrar',['class'=>'btn blue','btn-icon remove']) !!}
-                            </div>
+                {!! Field::select('DCMTP_Tipo_Documento',
+                        ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                        null,
+                        [ 'label' => 'Seleccionar el tipo de documento']) !!}
+                <div class="form-actions">
+                    <div class="row">
+                        <div class=" col-md-offset-4">
+                            <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                        class="fa fa-angle-left"></i>
+                                Cancelar
+                            </a>
+                            {!! Form::submit('Registrar',['class'=>'btn blue','btn-icon remove']) !!}
                         </div>
                     </div>
-                    {!! Form::close() !!}
-             </div>
+                </div>
+                {!! Form::close() !!}
+            </div>
         </div>
-    </div>
-    @endcomponent
+</div>
+@endcomponent
 
 
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
 
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -55,7 +56,7 @@
         });
 
         var createDoc = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.document.store') }}';
                     var type = 'POST';
@@ -66,7 +67,7 @@
                     formData.append('DCMTP_Tipo_Documento', $('select[name="DCMTP_Tipo_Documento"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -79,7 +80,7 @@
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_document_create')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('talento.humano.document.index.ajax') }}';
                                 $(".content-ajax").load(route);
@@ -87,7 +88,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -100,7 +101,7 @@
             DCMTP_Nombre_Documento: {required: true},
             DCMTP_Tipo_Documento: {required: true},
         };
-        FormValidationMd.init(form,formRules,false,createDoc());
+        FormValidationMd.init(form, formRules, false, createDoc());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

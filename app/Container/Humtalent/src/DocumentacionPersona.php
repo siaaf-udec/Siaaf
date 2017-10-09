@@ -13,12 +13,13 @@ class DocumentacionPersona extends Model
     protected $primaryKey = 'PK_DCMTP_Id_Documento';
 
     protected $fillable = [
-        'DCMTP_Nombre_Documento','DCMTP_Tipo_Documento',
+        'DCMTP_Nombre_Documento', 'DCMTP_Tipo_Documento',
     ];
 
 
-    public function StatusOfDocuments(){
-        return $this->hasMany(StatusOfDocument::class,'PK_DCMTP_Id_Documento');
+    public function StatusOfDocuments()
+    {
+        return $this->hasMany(StatusOfDocument::class, 'PK_DCMTP_Id_Documento');
     }
 
     //

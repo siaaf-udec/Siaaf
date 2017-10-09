@@ -2,12 +2,15 @@
 
 @section('page-title', 'Documentos Requeridos:')
 @push('styles')
-    <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print' type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet"
+      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print'
+      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"
+      rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
 
 @endpush
 
@@ -31,40 +34,41 @@
                         <br>
                         <i style="color: lightslategray;font-size: 600%" class="fa fa-remove" id="trash"></i>
                     </p>
-                    <hr class="visible-xs" /> </div>
+                    <hr class="visible-xs"/>
+                </div>
                 <!-- Fin selección de eventos-->
             </div>
             <div class="col-md-9 col-sm-12">
-                <div id="calendar" class="has-toolbar"> </div>
+                <div id="calendar" class="has-toolbar"></div>
             </div>
-                <!-- Modal -->
-                <div class="modal fade" id="modal-update-notify" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            {!! Form::open(['id' => 'form_calendar_notify', 'url'=> ['/forms']]) !!}
-                            <div class="modal-header modal-header-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h1><i class="glyphicon glyphicon-thumbs-up"></i> Fecha de Notificación</h1>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {!! Field::date(
-                                                'NOTIF_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
-                                                ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
-                                        {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
-                                    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modal-update-notify" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_calendar_notify', 'url'=> ['/forms']]) !!}
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Fecha de Notificación</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!! Field::date(
+                                            'NOTIF_Fecha_Notificacion',
+                                            ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                            ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
+                                    {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                            </div>
-                            {!! Form::close() !!}
                         </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
+            </div>
 
             <div class="col-md-12">
                 <!-- Modal -->
@@ -84,7 +88,7 @@
                                     <div class="col-md-12">
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id' => 'eventDate','label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_EVNT_IdEvento')!!}
                                     </div>
@@ -120,7 +124,7 @@
                                             ['help' => 'Digite el nombre del evento', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::date(
                                                 'NOTIF_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id'=>'dateNotify','label' => 'Fecha de notificación :', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de recordatorio.', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -161,7 +165,7 @@
                                                 ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
                                         {!! Field::date(
                                                 'EVNT_Fecha_Notificacion',
-                                                ['label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                                ['id'=>'eventDateNotify','label' => 'Fecha de notificación :','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
                                                 ['help' => 'Digite la fecha de notificación del evento .', 'icon' => 'fa fa-calendar']) !!}
                                         {!! Field::hidden ('PK_NOTIF_Id_Notificacion')!!}
                                     </div>
@@ -185,28 +189,40 @@
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
+        type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
+        type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"
+        type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
+        type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"
+        type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"
+        type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
 
@@ -214,29 +230,29 @@
 <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
+        type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
+        type="text/javascript"></script>
 @endpush
 @push('functions')
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function()
-    {
-        if (jQuery().timepicker)
-        {
+    $(document).ready(function () {
+        if (jQuery().timepicker) {
 
             $('.timepicker-no-seconds').timepicker({
 
                 autoclose: true,
                 minuteStep: 5,
             });
-            $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function(e){
+            $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function (e) {
                 e.preventDefault();
                 $(this).parent('.input-group').find('.timepicker').timepicker('showWidget');
             });
-            $( document ).scroll(function(){
+            $(document).scroll(function () {
                 $('#form_modal4 .timepicker-default, #form_modal4 .timepicker-no-seconds, #form_modal4 .timepicker-24').timepicker('place'); //#modal is the id of the modal
             });
         }
@@ -250,7 +266,7 @@
             });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
-        $( document ).scroll(function(){
+        $(document).scroll(function () {
             $('#modal-update-notify .date-picker').datepicker('place'); //#modal is the id of the modal
             $('#modal-update-Event .date-picker').datepicker('place');
             $('#modal-update-titleNotify .date-picker').datepicker('place');
@@ -263,20 +279,18 @@
                 x: -1,
                 y: -1
             };
-        jQuery(document).on("mousemove", function (event)
-        {   //funcion que es llamada cuando el puntero del mause se mueve dentro del aplicativo
+        jQuery(document).on("mousemove", function (event) {   //funcion que es llamada cuando el puntero del mause se mueve dentro del aplicativo
             currentMousePos.x = event.pageX; //se almacenan las cordenadas X Y
             currentMousePos.y = event.pageY;
         });
 
-        var initDrag = function (el)
-        {
+        var initDrag = function (el) {
             var eventObject =
-            {
-                title: $.trim(el.text()),
-                stick: true,
-                color: '#25C279',
-            };
+                {
+                    title: $.trim(el.text()),
+                    stick: true,
+                    color: '#25C279',
+                };
             // store the Event Object in the DOM element so we can get to it later
             el.data('event', eventObject);
             // make the event draggable using jQuery UI
@@ -287,29 +301,25 @@
             });
         };
 
-        var addEvent = function (title)
-        {   //cuando se añade una nueva notificación es llamada esta función para agregar el codigo html correspondiente
+        var addEvent = function (title) {   //cuando se añade una nueva notificación es llamada esta función para agregar el codigo html correspondiente
             title = title.length === 0 ? "Evento sin titulo" : title; //con el respectivo titulo creado o sin titulo en caso de que no se digite nada
             var html = $('<div class="external-event label label-default ui-draggable ui-draggable-handle"  >' + title + '</div>');
             jQuery('#event_box').append(html);
             initDrag(html);
         };
 
-        $('#external-events div.external-event').each(function ()
-        {    //se inicializa  el recordatorio arrastrable
+        $('#external-events div.external-event').each(function () {    //se inicializa  el recordatorio arrastrable
             initDrag($(this));
         });
 
-        $('#event_add').unbind('click').click(function ()
-        {   // y se agrega el recordatorio a guardar
+        $('#event_add').unbind('click').click(function () {   // y se agrega el recordatorio a guardar
             var title = $('#NOTIF_Descripcion').val();
             addEvent(title);
         });
 
         $('#calendar').fullCalendar({ //se inicializa el calendario de la libreria full calendar
 
-            events: function (start, end, timezone, callback)
-            {   //se realiza una llamada al controlador para traer tanto los eneventos como los redordatorios de la BD
+            events: function (start, end, timezone, callback) {   //se realiza una llamada al controlador para traer tanto los eneventos como los redordatorios de la BD
                 var route = "{{ route('talento.humano.calendario.getEvent')}}"; //ruta que dirige al controlador para realizar la consulta a ala BD
                 $.ajax({ //se envian los datos correspondientes mediante ajax
                     url: route,
@@ -329,8 +339,7 @@
                 });
             },
 
-            eventReceive: function (event)
-            {   //esta función es llamada cuando se crea un recordatorio y es arrastardo al calendario
+            eventReceive: function (event) {   //esta función es llamada cuando se crea un recordatorio y es arrastardo al calendario
                 var title = event.title; //se gurada el titulo del recordatorio
                 var start = event.start.format("YYYY-MM-DD"); //y la fecha donde fue ubicado
                 var end = event.start.format("YYYY-MM-DD");
@@ -341,8 +350,7 @@
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function (response, xhr, request)
-                    {   //una vez guardados se recibe el id del recordatorio guardado
+                    success: function (response, xhr, request) {   //una vez guardados se recibe el id del recordatorio guardado
                         if (request.status === 200 && xhr === 'success') {
                             $('input[name="PK_NOTIF_Id_Notificacion"]').val(response.data); //se pone en un formulario para actualizar la fecha de notioficación
                             $('#modal-update-notify').modal('toggle');//se llama una ventana modal que contiene el formulario que recibe la fecha de notificación del recordatorio
@@ -354,40 +362,39 @@
                 });
                 $('#calendar').fullCalendar('updateEvent', event);//se realiza la actulización del calendario
             },
-            eventResize: function(event)
-            {   //esta función es llamada cuando el usuario cambiia la fecha final del evento o recordatorio
-                var end   = event.end.format("YYYY-MM-DD"); //se toma la nueva fecha de finalización
-                var id    = event.id;//se guarda el id del evento o recordatorio
-                var eventType= event.type;
+            eventResize: function (event) {   //esta función es llamada cuando el usuario cambiia la fecha final del evento o recordatorio
+                var end = event.end.format("YYYY-MM-DD"); //se toma la nueva fecha de finalización
+                var id = event.id;//se guarda el id del evento o recordatorio
+                var eventType = event.type;
                 var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";//ruta que conduce al controlador para actulizar el dato mencionado
                 $.ajax({
                     url: route,
-                    data: 'type=endDateUpdate&endDate='+end+'&eventId='+id+'&eventType='+eventType,//se ennvian los datos nuevos
+                    data: 'type=endDateUpdate&endDate=' + end + '&eventId=' + id + '&eventType=' + eventType,//se ennvian los datos nuevos
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                     },
-                    error: function(e){
+                    error: function (e) {
                         console.log(e.responseText); //en caso de error en la petición se carga el error en consola
                     }
                 });
-                $('#calendar').fullCalendar('updateEvent',event);//se actuliza el calendario
+                $('#calendar').fullCalendar('updateEvent', event);//se actuliza el calendario
             },
-            eventDrop: function(event, delta, revertFunc) { //esta función es llamada cuando es cambiado de fecha un evento o recordatorio
+            eventDrop: function (event, delta, revertFunc) { //esta función es llamada cuando es cambiado de fecha un evento o recordatorio
                 var title = event.title;
                 var start = event.start.format();//se guarda la nueva fecha
                 var end = (event.end == null) ? start : event.end.format();//si no tiene una fecha de fin diferente a la de inicio se tomarára la misma del inicio
-                var id    = event.id;//se alamacena el id del evento o recordatorio a actualizar
-                var eventType  =  event.type; //se guarda el tipo ya sea evento o recordatorio
+                var id = event.id;//se alamacena el id del evento o recordatorio a actualizar
+                var eventType = event.type; //se guarda el tipo ya sea evento o recordatorio
                 var route = "{{ route('talento.humano.calendario.updateDateNotification')}}";//ruta para actualizar los datos
                 $.ajax({
                     url: route,
-                    data: 'type=resetDate&startdate='+start+'&endDate='+end+'&eventId='+id+'&eventType='+eventType,//se envian los datos
+                    data: 'type=resetDate&startdate=' + start + '&endDate=' + end + '&eventId=' + id + '&eventType=' + eventType,//se envian los datos
                     type: 'POST',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     dataType: 'json',
-                    success: function(response, xhr, request) //se recibe el id y el tipo ya sea  evento o recordatorio
+                    success: function (response, xhr, request) //se recibe el id y el tipo ya sea  evento o recordatorio
                     {
                         if (request.status === 200 && xhr === 'success') {
                             var tipo = response.data['eventType'];
@@ -402,23 +409,19 @@
                             }
                         }
                     },
-                    error: function(e)
-                    {
+                    error: function (e) {
                         console.log(e.responseText);
                     }
                 });
             },
-            eventClick: function (calEvent, jsEvent, view)
-            {   //esta funció es llamada cuando se hace clic ya sea sobre la notificación o el evento  paera actualizar datos
-                if (calEvent.type == "Recordatorio")
-                {   //si es recordatorio
+            eventClick: function (calEvent, jsEvent, view) {   //esta funció es llamada cuando se hace clic ya sea sobre la notificación o el evento  paera actualizar datos
+                if (calEvent.type == "Recordatorio") {   //si es recordatorio
                     $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id); //se cargan los datos correspondientes
                     $('#eventDesc').val(calEvent.title);
-                    $('input[name="NOTIF_Fecha_Notificacion"]').val(calEvent.notif);
+                    $('#dateNotify').val(calEvent.notif);
                     $('#modal-update-titleNotify').modal('toggle'); //y se muestran en un formulario en una ventana modal y se realiza la respectiva actualización
                 }
-                if (calEvent.type == "Evento")
-                {   //si es evento se realiza de igual forma que en el recordatorio  solo que con un formulario diferente
+                if (calEvent.type == "Evento") {   //si es evento se realiza de igual forma que en el recordatorio  solo que con un formulario diferente
                     $('input[name="PK_NOTIF_Id_Notificacion"]').val(calEvent.id);
                     $('#EVNT_Descripcion').val(calEvent.title);
                     $('input[name="EVNT_Hora"]').val(calEvent.hora);
@@ -426,10 +429,8 @@
                     $('#modal-update-titleEvent').modal('toggle');
                 }
             },
-            eventDragStop: function (event, jsEvent, ui, view)
-            {   //esta función es llamada en el momento que se arrastre un evento o recordatorio  para ser eliminado
-                if (isElemOverDiv())
-                {   //se llama la función que determina la posición del puntero y si esta en el espacio de eliminación
+            eventDragStop: function (event, jsEvent, ui, view) {   //esta función es llamada en el momento que se arrastre un evento o recordatorio  para ser eliminado
+                if (isElemOverDiv()) {   //se llama la función que determina la posición del puntero y si esta en el espacio de eliminación
                     swal({
                             title: "¿Esta seguro?",
                             text: "Esta apunto de eliminar información del calendario!",
@@ -442,8 +443,7 @@
                             closeOnCancel: false
                         },
                         function (isConfirm) {
-                            if (isConfirm)
-                            {
+                            if (isConfirm) {
                                 var id = event.id; //se toma el id del evento a eliminar
                                 var eventType = event.type;//y el tipo
                                 var route = "{{ route('talento.humano.calendario.deleteNotification')}}";//ruta que conduce al controlador para realizar la respectiva eliminación
@@ -453,25 +453,20 @@
                                     type: 'POST',
                                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                                     dataType: 'json',
-                                    success: function (response, xhr, request)
-                                    {   //se muestra el mensaje de notificación
-                                        if (request.status === 200 && xhr === 'success')
-                                        {
+                                    success: function (response, xhr, request) {   //se muestra el mensaje de notificación
+                                        if (request.status === 200 && xhr === 'success') {
                                             $('#calendar').fullCalendar('removeEvents', event.id);
                                             UIToastr.init(xhr, response.title, response.message);
                                         }
                                     },
-                                    error: function (response, xhr, request)
-                                    {
-                                        if (request.status === 422 && xhr === 'success')
-                                        {
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'success') {
                                             UIToastr.init(xhr, response.title, response.message);
                                         }
                                     }
                                 });
                             }
-                            else
-                            {
+                            else {
                                 swal("Cancelado", "No se eliminó ninguna información", "error");
                             }
                         });
@@ -486,8 +481,7 @@
             editable: true,
             droppable: true,
             eventLimit: false,
-            eventRender: function (event, element)
-            {
+            eventRender: function (event, element) {
                 element.find('.fc-title').prepend("&nbsp;");
                 element.find('.fc-title').append("<br>" + "<br>");
                 element.tooltip({
@@ -499,8 +493,7 @@
 
         });
 
-        function isElemOverDiv()
-        {   //función que determina la posición del puntero del mause
+        function isElemOverDiv() {   //función que determina la posición del puntero del mause
             var trashEl = jQuery('#trash');//ubica el elimento que se señalizao para realizar la eliminación
 
             var ofs = trashEl.offset();
@@ -516,9 +509,8 @@
             }
         }
 
-        var updateNotify = function ()
-        {
-            return{
+        var updateNotify = function () {
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.calendario.storeDateNotification') }}';
                     var type = 'POST';
@@ -529,7 +521,7 @@
                     formData.append('PK_NOTIF_Id_Notificacion', $('[name="PK_NOTIF_Id_Notificacion"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -539,18 +531,15 @@
                         beforeSend: function () {
 
                         },
-                        success: function (response, xhr, request)
-                        {
-                            if (request.status === 200 && xhr === 'success')
-                            {
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-notify').modal('hide');
                                 $('#form_calendar_notify')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success')
-                            {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -560,25 +549,24 @@
         };
         var form = $('#form_calendar_notify');
         var formRules = {
-            NOTIF_Fecha_Notificacion: { required: true}
+            NOTIF_Fecha_Notificacion: {required: true}
         };
 
-        FormValidationMd.init(form,formRules,false,updateNotify());
+        FormValidationMd.init(form, formRules, false, updateNotify());
 
         var updateEvent = function () {
-            return{
-                init: function ()
-                {
+            return {
+                init: function () {
                     var route = '{{ route('talento.humano.calendario.storeDateEvent') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('EVNT_Fecha_Notificacion', $('[name="EVNT_Fecha_Notificacion"]').val());
+                    formData.append('EVNT_Fecha_Notificacion', $('#eventDate').val());
                     formData.append('PK_EVNT_IdEvento', $('[name="PK_EVNT_IdEvento"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -587,19 +575,15 @@
                         async: async,
                         beforeSend: function () {
                         },
-                        success: function (response, xhr, request)
-                        {
-                            if (request.status === 200 && xhr === 'success')
-                            {
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-Event ').modal('hide');
                                 $('#form_calendar_event')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                             }
                         },
-                        error: function (response, xhr, request)
-                        {
-                            if (request.status === 422 &&  xhr === 'success')
-                            {
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -609,13 +593,13 @@
         };
         var formEvent = $('#form_calendar_event');
         var formRulesEvent = {
-            EVNT_Fecha_Notificacion: { required: true}
+            EVNT_Fecha_Notificacion: {required: true}
         };
 
-        FormValidationMd.init(formEvent,formRulesEvent,false,updateEvent());
+        FormValidationMd.init(formEvent, formRulesEvent, false, updateEvent());
 
         var updateTitleNotify = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.calendario.updateNotification') }}';
                     var type = 'POST';
@@ -623,11 +607,11 @@
 
                     var formData = new FormData();
                     formData.append('NOTIF_Descripcion', $('#eventDesc').val());
-                    formData.append('NOTIF_Fecha_Notificacion', $('[name="NOTIF_Fecha_Notificacion"]').val());
+                    formData.append('NOTIF_Fecha_Notificacion', $('#dateNotify').val());
                     formData.append('PK_NOTIF_Id_Notificacion', $('[name="PK_NOTIF_Id_Notificacion"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -638,18 +622,15 @@
 
                         },
                         success: function (response, xhr, request) {
-                            if (request.status === 200 && xhr === 'success')
-                            {
+                            if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-titleNotify').modal('hide');
                                 $('#form_calendar_Updatenotify')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
-                                $('#calendar').fullCalendar ('refetchEvents');
+                                UIToastr.init(xhr, response.title, response.message);
+                                $('#calendar').fullCalendar('refetchEvents');
                             }
                         },
-                        error: function (response, xhr, request)
-                        {
-                            if (request.status === 422 &&  xhr === 'success')
-                            {
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -659,27 +640,27 @@
         };
         var formTitle = $('#form_calendar_Updatenotify');
         var formRulesTitle = {
-            NOTIF_Descripcion: { required: true},
-            NOTIF_Fecha_Notificacion: { required: true}
+            NOTIF_Descripcion: {required: true},
+            NOTIF_Fecha_Notificacion: {required: true}
         };
 
-        FormValidationMd.init(formTitle,formRulesTitle,false,updateTitleNotify());
+        FormValidationMd.init(formTitle, formRulesTitle, false, updateTitleNotify());
 
         var updateTitleEvent = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.calendario.updateEvent') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('EVNT_Descripcion',  $('[name="EVNT_Descripcion"]').val());
+                    formData.append('EVNT_Descripcion', $('[name="EVNT_Descripcion"]').val());
                     formData.append('EVNT_Hora', $('[name="EVNT_Hora"]').val());
-                    formData.append('EVNT_Fecha_Notificacion', $('[name="EVNT_Fecha_Notificacion"]').val());
+                    formData.append('EVNT_Fecha_Notificacion', $('#eventDateNotify').val());
                     formData.append('PK_NOTIF_Id_Notificacion', $('[name="PK_NOTIF_Id_Notificacion"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -690,17 +671,15 @@
 
                         },
                         success: function (response, xhr, request) {
-                            if (request.status === 200 && xhr === 'success')
-                            {
+                            if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-titleEvent').modal('hide');
                                 $('#form_calendar_UpdateEvent')[0].reset(); //Limpia formulario
-                                $('#calendar').fullCalendar ('refetchEvents');
-                                UIToastr.init(xhr , response.title , response.message  );
+                                $('#calendar').fullCalendar('refetchEvents');
+                                UIToastr.init(xhr, response.title, response.message);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success')
-                            {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -710,12 +689,12 @@
         };
         var formTitleEvent = $('#form_calendar_UpdateEvent');
         var rulesEvent = {
-            EVNT_Descripcion: { required: true},
-            EVNT_Hora: { required: true},
-            EVNT_Fecha_Notificacion: { required: true}
+            EVNT_Descripcion: {required: true},
+            EVNT_Hora: {required: true},
+            EVNT_Fecha_Notificacion: {required: true}
         };
 
-        FormValidationMd.init(formTitleEvent,rulesEvent,false,updateTitleEvent());
+        FormValidationMd.init(formTitleEvent, rulesEvent, false, updateTitleEvent());
 
     });
 

@@ -19,57 +19,44 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class InduccionController extends Controller
 {
-    protected $userRepository;
-
-    public function __construct(UserInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
 
     /**
      * Función que muestra el listado de empleados nuevos.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function listarEmpleadosNuevos(Request $request)
     {
-        if ($request->ajax())
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return DataTables::of(Persona::where('PRSN_Estado_Persona', 'Nuevo')->get())
                 ->addIndexColumn()
                 ->make(true);
         }
-        else
-        {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
     }
 
     /**
      * Función que muestra el paso de la induccion en la que se encuentra un empleado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $procesoInduccion = Induction::where('FK_TBL_Persona_Cedula', $id)->get(['INDC_ProcesoInduccion']);
-            if (count($procesoInduccion) > 0)
-            {
-                foreach ($procesoInduccion as $value)
-                {
+            if (count($procesoInduccion) > 0) {
+                foreach ($procesoInduccion as $value) {
                     $proceso = $value->INDC_ProcesoInduccion;
                 }
-            }
-            else
-            {
+            } else {
                 $proceso = 'Inicio';
             }
             return view('humtalent.inducciones.procesoInduccion', compact('id', 'proceso'));
@@ -84,13 +71,12 @@ class InduccionController extends Controller
     /**
      * Función que muestra el listado de empleados nuevos por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ajaxEmpleadosNuevos (Request $request)
+    public function ajaxEmpleadosNuevos(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.inducciones.ajaxTablaEmpleadosNuevos');
         }
 
@@ -103,29 +89,24 @@ class InduccionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $induccion = Induction::where('FK_TBL_Persona_Cedula', $request['FK_TBL_Persona_Cedula'])
-                       ->get(['PK_INDC_ID_Induccion']);
-            if (count($induccion) > 0)
-            {
+                ->get(['PK_INDC_ID_Induccion']);
+            if (count($induccion) > 0) {
                 $induccion = Induction::find($induccion[0]['PK_INDC_ID_Induccion']);
                 $induccion->INDC_ProcesoInduccion = $request[$request['numCheck']];
                 $induccion->save();
-                if (strcasecmp($request[$request['numCheck']], "Resultados de evaluación") == 0)
-                {
+                if (strcasecmp($request[$request['numCheck']], "Resultados de evaluación") == 0) {
                     $empleado = Persona::find($request['FK_TBL_Persona_Cedula']);
                     $empleado->PRSN_Estado_Persona = "Antiguo";
                     $empleado->save();
                 }
-            }
-            else
-            {
+            } else {
                 Induction::create([
                     'INDC_ProcesoInduccion' => $request[$request['numCheck']],
                     'FK_TBL_Persona_Cedula' => $request['FK_TBL_Persona_Cedula'],
@@ -136,12 +117,11 @@ class InduccionController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 }

@@ -1,46 +1,45 @@
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Empleados:'])
 
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Empleados:'])
-
-            @if($estado == 'Activada')
-                <div class="row">
-                    <div class="form-group">
-                        {!! Form::open (['id'=>'form-desactivar', 'url'=> ['/forms']]) !!}
-                        {!! Field::hidden('tipo', "Documentos incompletos") !!}
-                        {!! Form::submit('Desactivar Notificaciones',['class'=>'btn blue','btn-icon remove']) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            @else
-                <div class="row">
-                    <div class="form-group">
-                        {!! Form::open (['id'=>'form-activar', 'url'=> ['/forms']]) !!}
-                        {!! Field::hidden('tipo', "Documentos incompletos") !!}
-                        {!! Form::submit('Activar Notificaciones',['class'=>'btn blue','btn-icon remove']) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            @endif
-            <br><br>
+        @if($estado == 'Activada')
             <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Teléfono',
-                            'Email',
-                            'Rol ',
-                            'Área',
-                            'Acciones'
-                        ])
-                    @endcomponent
+                <div class="form-group">
+                    {!! Form::open (['id'=>'form-desactivar', 'url'=> ['/forms']]) !!}
+                    {!! Field::hidden('tipo', "Documentos incompletos") !!}
+                    {!! Form::submit('Desactivar Notificaciones',['class'=>'btn blue','btn-icon remove']) !!}
                 </div>
+                {!! Form::close() !!}
             </div>
-        @endcomponent
-    </div>
+        @else
+            <div class="row">
+                <div class="form-group">
+                    {!! Form::open (['id'=>'form-activar', 'url'=> ['/forms']]) !!}
+                    {!! Field::hidden('tipo', "Documentos incompletos") !!}
+                    {!! Form::submit('Activar Notificaciones',['class'=>'btn blue','btn-icon remove']) !!}
+                </div>
+                {!! Form::close() !!}
+            </div>
+        @endif
+        <br><br>
+        <div class="row">
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                    @slot('columns', [
+                        '#',
+                        'Nombres',
+                        'Apellidos',
+                        'Cédula',
+                        'Teléfono',
+                        'Email',
+                        'Rol ',
+                        'Área',
+                        'Acciones'
+                    ])
+                @endcomponent
+            </div>
+        </div>
+    @endcomponent
+</div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
@@ -50,7 +49,7 @@
 
     jQuery(document).ready(function () {
 
-        var table, url,columns;
+        var table, url, columns;
         table = $('#lista-empleados');
         url = "{{ route('talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos')}}";
         columns = [
@@ -64,9 +63,9 @@
             {data: 'personas.PRSN_Area', name: 'Área'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
-                data:'action',
-                name:'action',
-                title:'Acciones',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -74,7 +73,7 @@
                 className: 'text-center',
                 render: null,
                 serverSide: false,
-                responsivePriority:2
+                responsivePriority: 2
             }
         ];
         dataTableServer.init(table, url, columns);
@@ -84,12 +83,12 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route ='{{ route('talento.humano.notificaciones.consultarDocsRadicados') }}'+'/'+dataTable.personas.PK_PRSN_Cedula+'/EPS';
+                route = '{{ route('talento.humano.notificaciones.consultarDocsRadicados') }}' + '/' + dataTable.personas.PK_PRSN_Cedula + '/EPS';
             $(".content-ajax").load(route);
         });
 
         var desactivarNotify = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('humtalent.notificaciones.desactivarDocumentosIncompletos') }}';
                     var type = 'POST';
@@ -100,7 +99,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -118,7 +117,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -128,15 +127,15 @@
         };
 
         var form1 = $('#form-desactivar');
-        var rules1 ={
+        var rules1 = {
             tipo: {required: true},
         };
 
-        FormValidationMd.init(form1,rules1,false,desactivarNotify());
+        FormValidationMd.init(form1, rules1, false, desactivarNotify());
 
 
         var activarNotify = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('humtalent.notificaciones.activarDocumentosIncompletos') }}';
                     var type = 'POST';
@@ -147,7 +146,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -165,7 +164,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -175,9 +174,9 @@
         };
 
         var form2 = $('#form-activar');
-        var rules2 ={
+        var rules2 = {
             tipo: {required: true},
         };
-        FormValidationMd.init(form2,rules2,false,activarNotify());
+        FormValidationMd.init(form2, rules2, false, activarNotify());
     });
 </script>

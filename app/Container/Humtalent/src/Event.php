@@ -15,12 +15,13 @@ class Event extends Model
 
     protected $fillable = [
 
-        'EVNT_Descripcion', 'EVNT_Fecha_Inicio','EVNT_Fecha_Fin','EVNT_Fecha_Notificacion','EVNT_Hora',
+        'EVNT_Descripcion', 'EVNT_Fecha_Inicio', 'EVNT_Fecha_Fin', 'EVNT_Fecha_Notificacion', 'EVNT_Hora',
     ];
 
 
-    public function Asistents(){
-        return $this->hasMany(Asistent::class,'PK_EVNT_IdEvento');
+    public function Asistents()
+    {
+        return $this->hasMany(Asistent::class, 'PK_EVNT_IdEvento');
     }
     //
 }

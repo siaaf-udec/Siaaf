@@ -10,11 +10,10 @@ namespace App\Container\Humtalent\src\Controllers;
 
 use App\Container\Humtalent\src\Asistent;
 use App\Container\Humtalent\src\Induction;
-use App\Mail\HumTalent\EmailTalentoHumano;
+use App\Container\Humtalent\src\Mail\EmailTalentoHumano;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
 use App\Container\Humtalent\src\StatusOfDocument;
@@ -31,13 +30,6 @@ use App\Container\Users\Src\User;
 class EmpleadoController extends Controller
 {
 
-    protected $userRepository;
-
-    public function __construct(UserInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Muestra todos los empleados registrados.
      *
@@ -51,13 +43,12 @@ class EmpleadoController extends Controller
     /**
      * Muestra todos los empleados registrados por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function indexAjax (Request $request)
+    public function indexAjax(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.empleado.ajaxTablaEmpleados');
         }
 
@@ -70,13 +61,12 @@ class EmpleadoController extends Controller
     /**
      * Muestra todos los empleados que tienen estado retirado.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ajaxEmpleadosRetirados (Request $request)
+    public function ajaxEmpleadosRetirados(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.empleado.ajaxEmpleadosRetirados');
         }
 
@@ -89,13 +79,12 @@ class EmpleadoController extends Controller
     /**
      * Muestra todos los empleados registrados para acceder a su historial de documentación.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ajaxListaEmpleados (Request $request)
+    public function ajaxListaEmpleados(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.empleado.ajaxListaEmpleados');
         }
 
@@ -108,14 +97,13 @@ class EmpleadoController extends Controller
     /**
      * Función que muestra el formulario para editar un empleado retirado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function editarEmpleadoRetirado (Request $request, $id)
+    public function editarEmpleadoRetirado(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $empleado = Persona::find($id);
             return view('humtalent.empleado.editarEmpleadoRetirado',
                 [
@@ -132,13 +120,12 @@ class EmpleadoController extends Controller
     /**
      * Función que muestra el formulario de registro de un nuevo empleado.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create (Request $request)//
+    public function create(Request $request)//
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.empleado.registroEmpleado');
         }
 
@@ -151,12 +138,12 @@ class EmpleadoController extends Controller
     /**
      * Función que almacena en la base de datos un nuevo registro de un empleado.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function store (Request $request)//
+    public function store(Request $request)//
     {
-        if ($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
             Persona::create($request->all());
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -173,45 +160,40 @@ class EmpleadoController extends Controller
     /**
      * Función que almacena en la base de datos el registro del archivo de excel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function importUsers (Request $request)
+    public function importUsers(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $cont = 0;
             $path = Input::file('import_file')->getRealPath();
-            $data = Excel::load($path, function ($reader) {})->get();
-            foreach ($data as $datum)
-            {
+            $data = Excel::load($path, function ($reader) {
+            })->get();
+            foreach ($data as $datum) {
                 $empleado = Persona::where('PK_PRSN_Cedula', $datum['cedula'])->get();
-                if (count($empleado) > 0)
-                {
+                if (count($empleado) > 0) {
                     $cont++;
-                }
-                else
-                {
+                } else {
                     Persona::create([
-                        'PK_PRSN_Cedula'         => $datum['cedula'],
-                        'PRSN_Rol'               => mb_strtoupper($datum['rol'], 'UTF-8'),
-                        'PRSN_Nombres'           => mb_strtoupper($datum['nombres'], 'UTF-8'),
-                        'PRSN_Apellidos'         => mb_strtoupper($datum['apellidos'], 'UTF-8'),
-                        'PRSN_Telefono'          => mb_strtoupper($datum['telefono'], 'UTF-8'),
-                        'PRSN_Correo'            => mb_strtoupper($datum['correo'], 'UTF-8'),
-                        'PRSN_Direccion'         => mb_strtoupper($datum['direccion'], 'UTF-8'),
-                        'PRSN_Ciudad'            => mb_strtoupper($datum['ciudad'], 'UTF-8'),
-                        'PRSN_Salario'           => mb_strtoupper($datum['salario'], 'UTF-8'),
-                        'PRSN_Eps'               => mb_strtoupper($datum['eps'], 'UTF-8'),
-                        'PRSN_Fpensiones'        => mb_strtoupper($datum['fpensiones'], 'UTF-8'),
-                        'PRSN_Area'              => mb_strtoupper($datum['area'], 'UTF-8'),
+                        'PK_PRSN_Cedula' => $datum['cedula'],
+                        'PRSN_Rol' => mb_strtoupper($datum['rol'], 'UTF-8'),
+                        'PRSN_Nombres' => mb_strtoupper($datum['nombres'], 'UTF-8'),
+                        'PRSN_Apellidos' => mb_strtoupper($datum['apellidos'], 'UTF-8'),
+                        'PRSN_Telefono' => mb_strtoupper($datum['telefono'], 'UTF-8'),
+                        'PRSN_Correo' => mb_strtoupper($datum['correo'], 'UTF-8'),
+                        'PRSN_Direccion' => mb_strtoupper($datum['direccion'], 'UTF-8'),
+                        'PRSN_Ciudad' => mb_strtoupper($datum['ciudad'], 'UTF-8'),
+                        'PRSN_Salario' => mb_strtoupper($datum['salario'], 'UTF-8'),
+                        'PRSN_Eps' => mb_strtoupper($datum['eps'], 'UTF-8'),
+                        'PRSN_Fpensiones' => mb_strtoupper($datum['fpensiones'], 'UTF-8'),
+                        'PRSN_Area' => mb_strtoupper($datum['area'], 'UTF-8'),
                         'PRSN_Caja_Compensacion' => mb_strtoupper($datum['cajacompensacion'], 'UTF-8'),
-                        'PRSN_Estado_Persona'    => mb_strtoupper($datum['estado'], 'UTF-8'),
+                        'PRSN_Estado_Persona' => mb_strtoupper($datum['estado'], 'UTF-8'),
                     ]);
                 }
             }
-            if ($cont > 0)
-            {
+            if ($cont > 0) {
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'El archivo contenia ' . $cont . ' registros que ya estaban almacenados en la base de datos, los nuevos fueron registrados exitosamente.'
@@ -233,39 +215,34 @@ class EmpleadoController extends Controller
     /**
      * Función que envia los emails a los empleados .
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public  function enviarEmail(Request $request)
+    public function enviarEmail(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $subject = $request['Asunto'];
             $descripcion = $request['Descripcion'];
-            $correos = explode(';',$request['Destinatarios']);
+            $correos = explode(';', $request['Destinatarios']);
             $file = $request->file('import_file');
             $user = Auth::user()->email;
 
-            if($file !== null)
-            {
+            if ($file !== null) {
                 $nombre = $file->getClientOriginalName();
                 Storage::disk('local')->put($nombre, \File::get($file));
 
                 $public_path = storage_path('app');
                 $url = $public_path . '/' . $nombre;
-            }
-            else
-            {
+            } else {
                 $url = null;
             }
 
-            for($i = 0 ; $i < count($correos)-1; $i++){
-                Mail::to($correos[$i], 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
+            for ($i = 0; $i < count($correos) - 1; $i++) {
+                Mail::to($correos[$i], 'P1')->send(new EmailTalentoHumano($subject, $descripcion, $url));
             }
-            Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject,$descripcion, $url));
+            Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject, $descripcion, $url));
 
-            if($file !== null)
-            {
+            if ($file !== null) {
                 $nombre = $file->getClientOriginalName();
                 Storage::disk('local')->delete($nombre);
             }
@@ -286,14 +263,13 @@ class EmpleadoController extends Controller
     /**
      * Presenta el formulario con los datos para editar el regitro de un empleado deseado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit (Request $request, $id)
+    public function edit(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $empleado = Persona::find($id);
             return view('humtalent.empleado.editarEmpleado',
                 [
@@ -310,13 +286,12 @@ class EmpleadoController extends Controller
     /**
      * Se realiza la actualización de los datos de un empleado.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function update (Request $request)//
+    public function update(Request $request)//
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $empleado = Persona::find($request['PK_PRSN_Cedula']);
             $empleado->fill($request->all());
             $empleado->save();
@@ -335,23 +310,22 @@ class EmpleadoController extends Controller
     /**
      * Se realiza la eliminación de un registro de empleado en caso de que asi se desee.
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('DELETE'))
-        {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
             Induction::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula', $id)
-                    ->delete();
+                ->where('FK_TBL_Persona_Cedula', $id)
+                ->delete();
             StatusOfDocument::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula', $id)
-                    ->delete();
+                ->where('FK_TBL_Persona_Cedula', $id)
+                ->delete();
             Asistent::with('Persona')
-                    ->where('FK_TBL_Persona_Cedula', $id)
-                    ->delete();
+                ->where('FK_TBL_Persona_Cedula', $id)
+                ->delete();
             Permission::where('FK_TBL_Persona_Cedula', $id)->delete();
             Persona::destroy($id);
             return AjaxResponse::success(
@@ -375,7 +349,7 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteContactoEmpleados',
@@ -392,13 +366,13 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                    ->orderBy('PRSN_Nombres', 'asc')
-                    ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Nombres', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteContactoEmpleados',
-               compact('empleados', 'date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteContacto.pdf');
     }
 
@@ -411,9 +385,9 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                    ->orderBy('PRSN_Nombres', 'asc')
-                    ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Nombres', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteDireccionEmpleados',
@@ -430,11 +404,11 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Nombres','asc')->get();
+        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteDireccionEmpleados',
-               compact('empleados', 'date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteDireccion.pdf');
     }
 
@@ -447,9 +421,9 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                    ->orderBy('PRSN_Area', 'asc')
-                    ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Area', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteSalario1Empleados',
@@ -466,11 +440,11 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Area','asc')->get();
+        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Area', 'asc')->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteSalario1Empleados',
-               compact('empleados','date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteSalarioArea.pdf');
     }
 
@@ -483,11 +457,11 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)->orderBy('PRSN_Rol','asc')->get();
+        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Rol', 'asc')->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteSalario2Empleados',
-            compact('empleados','date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         );
     }
 
@@ -501,12 +475,12 @@ class EmpleadoController extends Controller
         $date = date("d/m/Y");
         $time = date("h:i A");
         $empleados = Persona::whereNotNull('created_at', null)
-                     ->orderBy('PRSN_Rol', 'asc')
-                     ->get();
+            ->orderBy('PRSN_Rol', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteSalario2Empleados',
-               compact('empleados', 'date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteSalarioRol.pdf');
     }
 
@@ -519,9 +493,9 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                    ->orderBy('PRSN_Nombres','asc')
-                    ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Nombres', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteAfiliacionesEmpleados',
@@ -539,13 +513,13 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                   ->orderBy('PRSN_Nombres', 'asc')
-                   ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Nombres', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteAfiliacionesEmpleados',
-               compact('empleados', 'date', 'time', 'total', 'cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteAfiliaciones.pdf');
     }
 
@@ -559,8 +533,8 @@ class EmpleadoController extends Controller
         $date = date("d/m/Y");
         $time = date("h:i A");
         $empleados = Persona::whereNotNull('created_at', null)
-                   ->orderBy('PRSN_Estado_Persona', 'asc')
-                   ->get();
+            ->orderBy('PRSN_Estado_Persona', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return view('humtalent.reportes.ReporteEstadoEmpleados',
@@ -577,13 +551,13 @@ class EmpleadoController extends Controller
     {
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at',null)
-                   ->orderBy('PRSN_Estado_Persona','asc')
-                   ->get();
+        $empleados = Persona::whereNotNull('created_at', null)
+            ->orderBy('PRSN_Estado_Persona', 'asc')
+            ->get();
         $total = count($empleados);
         $cont = 1;
         return SnappyPdf::loadView('humtalent.reportes.ReporteEstadoEmpleados',
-               compact('empleados','date','time','total','cont')
+            compact('empleados', 'date', 'time', 'total', 'cont')
         )->download('ReporteEstado.pdf');
     }
 

@@ -1,5 +1,5 @@
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del documento'])
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del documento'])
         @slot('actions', [
                 'link_cancel' => [
                     'link' => '',
@@ -7,39 +7,40 @@
                 ],
         ])
 
-            <div class="row">
-                <div class="col-md-7 col-md-offset-2">
-                        {!! Form::model ($documento, ['id'=>'form-document_update', 'url'=> ['/forms'], 'role'=>"form"]) !!}
-                                        {!! Field::hidden('PK_DCMTP_Id_Documento',$documento->PK_DCMTP_Id_Documento) !!}
-                                        {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control',
-                                                         'id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                        ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
-                                        {!! Field::select('DCMTP_Tipo_Documento',
-                                                    ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
-                                                    null,
-                                                    [ 'label' => 'Seleccionar el tipo de documento']) !!}
-                        <div class="row">
-                            <div class="form-actions">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
-                                        Cancelar
-                                    </a>
-                                    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                {!! Form::model ($documento, ['id'=>'form-document_update', 'url'=> ['/forms'], 'role'=>"form"]) !!}
+                {!! Field::hidden('PK_DCMTP_Id_Documento',$documento->PK_DCMTP_Id_Documento) !!}
+                {!! Field:: text('DCMTP_Nombre_Documento',null,['label'=>'Nombre Del Documento:','class'=> 'form-control',
+                                 'id'=>'name','required', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                ['help'=>'Digite el nombre del documento.','icon'=>' fa fa-credit-card']) !!}
+                {!! Field::select('DCMTP_Tipo_Documento',
+                            ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                            null,
+                            [ 'label' => 'Seleccionar el tipo de documento']) !!}
+                <div class="row">
+                    <div class="form-actions">
+                        <div class="col-md-6 col-md-offset-4">
+                            <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                        class="fa fa-angle-left"></i>
+                                Cancelar
+                            </a>
+                            {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
                         </div>
-                    {!! Form::close() !!}
+                    </div>
                 </div>
-             </div>
-            @endcomponent
-    </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    @endcomponent
+</div>
 
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
 
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -57,7 +58,7 @@
         });
 
         var createDoc = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.document.update') }}';
                     var type = 'POST';
@@ -69,7 +70,7 @@
                     formData.append('PK_DCMTP_Id_Documento', $('[name="PK_DCMTP_Id_Documento"]').val());
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -83,14 +84,14 @@
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form-document_update')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('talento.humano.document.index.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -103,7 +104,7 @@
             DCMTP_Nombre_Documento: {required: true},
             DCMTP_Tipo_Documento: {required: true},
         };
-        FormValidationMd.init(form,formRules,false,createDoc());
+        FormValidationMd.init(form, formRules, false, createDoc());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
@@ -112,7 +113,7 @@
         });
 
 
-        $( "#link_cancel" ).on('click', function (e) {
+        $("#link_cancel").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.document.index.ajax') }}';
             $(".content-ajax").load(route);

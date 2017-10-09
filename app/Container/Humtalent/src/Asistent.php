@@ -12,16 +12,18 @@ class Asistent extends Model
 
 
     protected $fillable = [
-        'ASIST_Informe','FK_TBL_Eventos_IdEvento', 'FK_TBL_Persona_Cedula',
+        'ASIST_Informe', 'FK_TBL_Eventos_IdEvento', 'FK_TBL_Persona_Cedula',
     ];
 
 
-
-    public function Personas(){
+    public function Personas()
+    {
         return $this->belongsTo(Persona::class, 'FK_TBL_Persona_Cedula', 'PK_PRSN_Cedula');
     }
-    public function Events(){
-        return $this->belongsTo(Event::class,'FK_TBL_Eventos_IdEvento');
+
+    public function Events()
+    {
+        return $this->belongsTo(Event::class, 'FK_TBL_Eventos_IdEvento');
     }
     //
 }

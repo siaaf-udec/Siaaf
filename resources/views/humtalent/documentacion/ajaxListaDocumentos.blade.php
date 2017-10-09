@@ -36,19 +36,19 @@
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        var table, url,columns;
+        var table, url, columns;
         table = $('#lista-documentos');
         url = "{{ route('talento.humano.tablaDocumentos')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'PK_DCMTP_Id_Documento', "visible": false },
+            {data: 'PK_DCMTP_Id_Documento', "visible": false},
             {data: 'DCMTP_Nombre_Documento', name: 'documento'},
             {data: 'DCMTP_Tipo_Documento', name: 'tipo'},
             {
                 defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
-                data:'action',
-                name:'action',
-                title:'Acciones',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -56,7 +56,7 @@
                 className: 'text-center',
                 render: null,
                 serverSide: false,
-                responsivePriority:2
+                responsivePriority: 2
             }
         ];
         dataTableServer.init(table, url, columns);
@@ -65,7 +65,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('talento.humano.document.destroy') }}'+'/'+dataTable.PK_DCMTP_Id_Documento;
+            var route = '{{ route('talento.humano.document.destroy') }}' + '/' + dataTable.PK_DCMTP_Id_Documento;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -79,11 +79,11 @@
                     closeOnConfirm: true,
                     closeOnCancel: false
                 },
-                function(isConfirm){
+                function (isConfirm) {
                     if (isConfirm) {
                         $.ajax({
                             url: route,
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             cache: false,
                             type: type,
                             contentType: false,
@@ -96,7 +96,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
+                                if (request.status === 422 && xhr === 'success') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
@@ -111,11 +111,11 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                routeEdit='{{ route('talento.humano.document.edit') }}'+'/'+dataTable.PK_DCMTP_Id_Documento;
+                routeEdit = '{{ route('talento.humano.document.edit') }}' + '/' + dataTable.PK_DCMTP_Id_Documento;
             $(".content-ajax").load(routeEdit);
         });
 
-        $( ".create" ).on('click', function (e) {
+        $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.document.create') }}';
             $(".content-ajax").load(route);

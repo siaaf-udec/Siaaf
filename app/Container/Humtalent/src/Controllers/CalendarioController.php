@@ -17,15 +17,8 @@ use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\Notification;
 
 
-
 class CalendarioController extends Controller
 {
-    protected $userRepository;
-
-    public function __construct (UserInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
 
     /**
      * Funcion para obtener tanto lso eventos como las notificaciones que esten registradas
@@ -33,9 +26,9 @@ class CalendarioController extends Controller
      *
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function getEvent (Request $request)
+    public function getEvent(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')) {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $eventos = Event::all();        //se realiza la consulta para traer todos los eventos registrados
             $events = array();      //arreglo para almacenar los eventos y notificaciones
             foreach ($eventos as $evento)       //se recorre la consulta realizada a los eventos
@@ -102,8 +95,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function store (Request $request){
-        if($request->ajax() && $request->isMethod('POST')) {
+    public function store(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
             if ($request['type'] == 'new') //verifica que la peticón eviada tenga la variable type == new
             {
                 Notification::create([      //para asi poder crear el registro nuevo a la base de datos
@@ -135,10 +129,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function storeDate (Request $request)
+    public function storeDate(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])
                 ->update(['NOTIF_Fecha_Notificacion' => $request['NOTIF_Fecha_Notificacion']]); //realiza la respectiva actualización en la base de datos
             return AjaxResponse::success
@@ -160,10 +153,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function storeDateEvent (Request $request)
+    public function storeDateEvent(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             Event::where('PK_EVNT_IdEvento', $request['PK_EVNT_IdEvento'])
                 ->update(['EVNT_Fecha_Notificacion' => $request['EVNT_Fecha_Notificacion']]);//se realiza la actualización en la base de datos de la fecha de notificación para el evento
             return AjaxResponse::success(
@@ -184,9 +176,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function updateDateNotification (Request $request)
+    public function updateDateNotification(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')) {
+        if ($request->ajax() && $request->isMethod('POST')) {
             if ($request['type'] == 'endDateUpdate')//desde el script de la vista se envia el tipo de petición si es endDateUpdate quiere decir que se desea actualizar la fecha final de la notificación o evento
             {
                 if ($request['eventType'] == 'Recordatorio') //se verifica si es un recordatorio
@@ -241,14 +233,13 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function updateNotification (Request $request)
+    public function updateNotification(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             Notification::where('PK_NOTIF_Id_Notificacion', $request['PK_NOTIF_Id_Notificacion'])// cuando se envie el formulario se actulizan los datos
-                        ->update(['NOTIF_Descripcion' => $request['NOTIF_Descripcion'],
-                                  'NOTIF_Fecha_Notificacion' => $request['NOTIF_Fecha_Notificacion']
-                                ]);
+            ->update(['NOTIF_Descripcion' => $request['NOTIF_Descripcion'],
+                'NOTIF_Fecha_Notificacion' => $request['NOTIF_Fecha_Notificacion']
+            ]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -267,15 +258,14 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function updateEvent (Request $request)
+    public function updateEvent(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $request['EVNT_Hora'] = strtotime($request['EVNT_Hora']); //se hace el cambio en el formato de la hora del evento
             $request['EVNT_Hora'] = date("H:i", $request['EVNT_Hora']);
 
             $documento = Event::find($request['PK_NOTIF_Id_Notificacion']); //se busca el evento a actulizar
-            $documento->fill($request -> all());  //se actulizan los datos correspondientes
+            $documento->fill($request->all());  //se actulizan los datos correspondientes
             $documento->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -296,26 +286,24 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function deleteNotification (Request $request)
+    public function deleteNotification(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST'))//se verifica que se envie desde una petición ajax
         {
             if ($request['eventType'] == 'Recordatorio') //se verifica si es un recordatorio el que se desea eliminar
             {
                 Notification::where('PK_NOTIF_Id_Notificacion', $request['eventId'])//se busca el registro
-                    ->delete();     //y se realiza la respectiva eliminación
-            }
-            else//si no es un recordatorio se deduce que es un evento
+                ->delete();     //y se realiza la respectiva eliminación
+            } else//si no es un recordatorio se deduce que es un evento
             {
-                Event::where('PK_EVNT_IdEvento', $request['eventId'])   //se busca el registro a eliminar
-                    ->delete();//se realiza la eliminación
+                Event::where('PK_EVNT_IdEvento', $request['eventId'])//se busca el registro a eliminar
+                ->delete();//se realiza la eliminación
             }
             return AjaxResponse::success( //se retorna un mensaje de notificación
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
             );
-        }
-        else//en caso de que la petición no sea ajax se muestra el mensaje de error
+        } else//en caso de que la petición no sea ajax se muestra el mensaje de error
         {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -332,9 +320,8 @@ class CalendarioController extends Controller
     public function documentacionCompleta()
     {
         $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
-                ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
-        if (count($estado) ==  0)
-        {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+        if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
             $estado = "Activada";
         }
         return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
@@ -348,10 +335,9 @@ class CalendarioController extends Controller
     public function documentacionIncompleta()
     {
         $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
-                                ->where('NOTIF_Descripcion', 'Documentos incompletos')
-                                ->get(['NOTIF_Estado_Notificacion']);   //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
-        if (count($estado) ==  0)
-        {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            ->where('NOTIF_Descripcion', 'Documentos incompletos')
+            ->get(['NOTIF_Estado_Notificacion']);   //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+        if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
             $estado = "Activada";
         }
         return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
@@ -365,10 +351,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function desactivarNotificaciones (Request $request)
+    public function desactivarNotificaciones(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             Notification::create([
                 'NOTIF_Descripcion' => $request['tipo'],
                 'NOTIF_Estado_Notificacion' => "Desactivada",
@@ -392,10 +377,9 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function activarNotificaciones (Request $request)
+    public function activarNotificaciones(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             Notification::where('NOTIF_Descripcion', $request['tipo'])->delete();
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -416,14 +400,13 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;
      */
-    public function ajaxEmpleadosDocumentosCompletos (Request $request)
+    public function ajaxEmpleadosDocumentosCompletos(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
                 ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
 
-            if(count($estado) ==  0)    //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            if (count($estado) == 0)    //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
             {
                 $estado = "Activada";
             }
@@ -444,14 +427,13 @@ class CalendarioController extends Controller
      * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function ajaxEmpleadosDocumentosIncompletos (Request $request)
+    public function ajaxEmpleadosDocumentosIncompletos(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
-            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')    //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
-                ->where('NOTIF_Descripcion', 'Documentos incompletos')
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')//verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+            ->where('NOTIF_Descripcion', 'Documentos incompletos')
                 ->get(['NOTIF_Estado_Notificacion']);
-            if(count($estado) ==  0)    //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+            if (count($estado) == 0)    //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
             {
                 $estado = "Activada";
             }
