@@ -9,6 +9,7 @@
 namespace App\Container\Acadspace\src\Controllers;
 
 use App\Container\Acadspace\src\comentariosSolicitud;
+use App\Mail\HumTalent\EmailTalentoHumano;
 use App\Container\Acadspace\src\Formatos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,6 +34,11 @@ use App\Container\Users\Src\Country;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+
+use App\Mail\Acadspace\EmailAcadspace;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
+
 
 class formatosController extends Controller
 {
@@ -108,6 +114,10 @@ class formatosController extends Controller
                 $model->FAC_correo = $request['correo'];
                 $model->FAC_estado = 0;
                 $model->save(); //Registra los campos
+
+                Mail::to($request['correo'])->send(new WelcomeMail("Prueba","prueba1"));
+                Mail::to($request['correo'], 'P1')->send(new EmailTalentoHumano("alex","alex", "0"));
+
 
                 return AjaxResponse::success(
                 //Envia notificacion de registro satisfactorio

@@ -91,7 +91,7 @@ class SolicitudController extends Controller
     { //registro en BD practica libre
         if ($request->ajax() && $request->isMethod('GET')) {
             $soft = new software();
-            $software = $soft->pluck('SOF_nombre_soft', 'PK_SOF_id');
+            $software = $soft->pluck('SOF_nombre_soft', 'SOf_nombre_soft');
             return view('acadspace.Solicitudes.registroSolicitudPracLibre', ['software' => $software->toArray()]);
         } else {
             return AjaxResponse::fail(
@@ -105,6 +105,7 @@ class SolicitudController extends Controller
     public function registroSolicitudGrupal(Request $request)
     { //registro en BD practica grupal
         if ($request->ajax() && $request->isMethod('POST')) {
+
             $id = Auth::id();
 
             //Comparo que el software no venga vacio y en ese caso guardo como "ninguno"
@@ -114,10 +115,9 @@ class SolicitudController extends Controller
                 $nombreSoftware = $request['SOL_NombSoft'];
             }
 
-            if ($request['ID_Practica'] === 1) {
+            if ($request['ID_Practica'] == 1) {
 
                 $model = new Solicitud();
-
 
                 $model->SOL_guia_practica = $request['SOL_ReqGuia'];
                 $model->SOL_software = $nombreSoftware;
@@ -126,13 +126,12 @@ class SolicitudController extends Controller
                 $model->SOL_hora_inicio = $request['SOL_hora_inicio'];
                 $model->SOL_hora_fin = $request['SOL_hora_fin'];
                 $model->SOL_nucleo_tematico = $request['SOL_nucleo_tematico'];
-                $model->SOL_fecha_inicio = $request['SOL_fecha_inicial'];
-                $model->SOL_fecha_fin = $request['SOL_fecha_inicial'];
-                $model->SOL_programa = $request['SOL_programa'];
+                $model->SOL_rango_fechas = $request['SOL_fecha_inicial'];
+                $model->SOL_carrera = $request['SOL_programa'];
                 $model->SOL_id_docente = $id;
                 $model->SOL_estado = 0;
                 $model->SOL_id_practica = 1;
-
+                $model->SOL_espacio = $request['SOL_espacio'];
 
                 $model->save();
 
@@ -151,14 +150,13 @@ class SolicitudController extends Controller
                 $model->SOL_hora_inicio = $request['SOL_hora_inicio'];
                 $model->SOL_hora_fin = $request['SOL_hora_fin'];
                 $model->SOL_nucleo_tematico = $request['SOL_nucleo_tematico'];
-                $model->SOL_fecha_inicio = $request['SOL_fecha_inicial'];
-                $model->SOL_fecha_fin = $request['SOL_fecha_inicial'];
                 $model->SOL_dias = $request['SOL_dias'];
                 $model->SOL_carrera = $request['SOL_programa'];
                 $model->SOL_id_docente = $id;
                 $model->SOL_estado = 0;
                 $model->SOL_id_practica = 2;
                 $model->SOL_espacio = $request['SOL_espacio'];
+                $model->SOL_rango_fechas = $request['SOL_rango_fechas'];
 
                 $model->save();
                 return AjaxResponse::success(
@@ -166,6 +164,8 @@ class SolicitudController extends Controller
                     'Solicitud registrada correctamente.'
                 );
             }
+
+
         } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -173,7 +173,6 @@ class SolicitudController extends Controller
             );
         }
     }
-
 
 
     public function data(Request $request)

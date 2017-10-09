@@ -237,6 +237,10 @@ Route::group(['prefix' => 'evalsol'], function () {
         'uses' => $controller . 'AuxiliarController@data',
         'as' => 'espacios.academicos.evalsol.data'
     ]);
+    Route::get('cargarDataLibre/{espacio?}', [ //Cargar datatable
+        'uses' => $controller . 'AuxiliarController@cargarDataLibre',
+        'as' => 'espacios.academicos.evalsol.cargarDataLibre'
+    ]);
     Route::post('store', [ //Registro solicitud formulario
         'uses' => $controller . 'AuxiliarController@store',
         'as' => 'espacios.academicos.evalsol.store'
@@ -252,6 +256,10 @@ Route::group(['prefix' => 'evalsol'], function () {
     Route::post('reprobar', [ //Aprobar solicitud
         'uses' => $controller . 'AuxiliarController@agregarAnotacion',
         'as' => 'espacios.academicos.evalsol.reprobarSol',
+    ]);
+    Route::post('finalizar', [ //Aprobar solicitud
+        'uses' => $controller . 'AuxiliarController@finalizarProceso',
+        'as' => 'espacios.academicos.evalsol.finalizarProceso',
     ]);
 
 });

@@ -43,6 +43,39 @@ class AuxiliarController extends Controller
     }
     //Metodo para cargar la informacion del datatable (las solicitudes)
     public function data(Request $request, $espacio)
+{
+
+    if($request->ajax() && $request->isMethod('GET')){
+
+        //Consulta usando 2 tablas
+        $users = Solicitud::where('SOL_estado', '=', 0)
+            ->where('SOL_espacio','=', $espacio)
+            ->where('SOL_id_practica', '=', 2)
+            /*->select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
+            'SOL_cant_estudiantes', 'SOL_id_practica',  'tbl_solicitud.created_at', 'SOL_dias', 'users.name as name',
+            'users.lastname as lastname', 'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software'])*/
+            ->join('developer.users', 'tbl_solicitud.SOL_id_docente', '=', 'developer.users.id')
+            ->get();
+        return DataTables::of($users)
+            ->addColumn('tipo_prac', function ($users){
+                if($users->SOL_id_practica==1){
+                    return "Libre";
+                }elseif ($users->SOL_id_practica==2){
+                    return "Grupal";
+                }
+            })
+            ->addIndexColumn()
+            ->make(true);
+
+    }else{
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+}
+    public function cargarDataLibre(Request $request, $espacio)
     {
 
         if($request->ajax() && $request->isMethod('GET')){
@@ -50,9 +83,10 @@ class AuxiliarController extends Controller
             //Consulta usando 2 tablas
             $users = Solicitud::where('SOL_estado', '=', 0)
                 ->where('SOL_espacio','=', $espacio)
-                ->select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
-                'SOL_cant_estudiantes', 'SOL_id_practica', 'tbl_solicitud.created_at', 'SOL_dias', 'users.name as name',
-                'users.lastname as lastname', 'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software'])
+                ->where('SOL_id_practica', '=', 1)
+                /*->select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
+                'SOL_cant_estudiantes', 'SOL_id_practica',  'tbl_solicitud.created_at', 'SOL_dias', 'users.name as name',
+                'users.lastname as lastname', 'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software'])*/
                 ->join('developer.users', 'tbl_solicitud.SOL_id_docente', '=', 'developer.users.id')
                 ->get();
             return DataTables::of($users)
@@ -72,37 +106,6 @@ class AuxiliarController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
 
     }
 
@@ -156,23 +159,26 @@ class AuxiliarController extends Controller
 
         }
     }
+    public function finalizarProceso(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Cambio el estado de la solicitud a 3 - proceso finalizado
+            $solicitud = Solicitud::find($request['id_solicitud']);
+            $solicitud->SOL_estado = 3;
+            $solicitud->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update()
-    {
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Proceso finalizado correctamente.'
+            );
+
+        } else {
+
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+
+        }
     }
-
-    public function destroy($id)
-    {
-
-    }
-
-
 
 }

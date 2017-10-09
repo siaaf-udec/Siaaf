@@ -529,6 +529,7 @@
                                 var route = '{{ route('users.index.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
+
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'success') {
