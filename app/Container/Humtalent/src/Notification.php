@@ -15,7 +15,7 @@ class Notification extends Model
 
     protected $fillable = [
 
-        'NOTIF_Estado_Notificacion','NOTIF_Fecha_Inicio','NOTIF_Fecha_Fin','NOTIF_Descripcion','NOTIF_Fecha_Notificacion',
+        'NOTIF_Estado_Notificacion', 'NOTIF_Fecha_Inicio', 'NOTIF_Fecha_Fin', 'NOTIF_Descripcion', 'NOTIF_Fecha_Notificacion',
 
     ];
 

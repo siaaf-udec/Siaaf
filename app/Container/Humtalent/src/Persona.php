@@ -14,21 +14,28 @@ class Persona extends Model
 
     protected $fillable = [
 
-        'PK_PRSN_Cedula','PRSN_Rol','PRSN_Nombres','PRSN_Apellidos','PRSN_Telefono','PRSN_Correo','PRSN_Direccion',
-        'PRSN_Ciudad','PRSN_Salario','PRSN_Eps','PRSN_Fpensiones','PRSN_Area','PRSN_Caja_Compensacion','PRSN_Estado_Persona',
+        'PK_PRSN_Cedula', 'PRSN_Rol', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Telefono', 'PRSN_Correo', 'PRSN_Direccion',
+        'PRSN_Ciudad', 'PRSN_Salario', 'PRSN_Eps', 'PRSN_Fpensiones', 'PRSN_Area', 'PRSN_Caja_Compensacion', 'PRSN_Estado_Persona',
     ];
 
 
-    public function Asistents(){
-        return $this->hasMany(Asistent::class,   'FK_TBL_Persona_Cedula');
+    public function Asistents()
+    {
+        return $this->hasMany(Asistent::class, 'FK_TBL_Persona_Cedula');
     }
-    public function StatusOfDocuments(){
+
+    public function StatusOfDocuments()
+    {
         return $this->hasMany(StatusOfDocument::class, 'FK_TBL_Persona_Cedula');
     }
-    public function Inductions(){
+
+    public function Inductions()
+    {
         return $this->hasMany(Induction::class);
     }
-    public function Permissions(){
+
+    public function Permissions()
+    {
         return $this->hasMany(Permission::class);
     }
     //

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\HumTalent;
+namespace App\Container\Humtalent\src\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -32,7 +32,6 @@ class EmailTalentoHumano extends Mailable
      * @param $message
      * @param $file
      *
-     * @return void
      */
     public function __construct($asunto, $message, $file)
     {
@@ -48,15 +47,13 @@ class EmailTalentoHumano extends Mailable
      */
     public function build()
     {
-        if($this->file != null) {
+        if ($this->file !== null) {
             return $this->from(['address' => 'no-reply@ucundinamarca.edu.co', 'name' => env('APP_NAME')])
                 ->attach($this->file)
-                ->view('humtalent.empleado.emailEmpleados',['title'=>$this->asunto, 'body' => $this->message]);
-        }
-        else
-        {
+                ->view('humtalent.empleado.emailEmpleados', ['title' => $this->asunto, 'body' => $this->message]);
+        } else {
             return $this->from(['address' => 'no-reply@ucundinamarca.edu.co', 'name' => env('APP_NAME')])
-                ->view('humtalent.empleado.emailEmpleados',['title'=>$this->asunto, 'body' => $this->message]);
+                ->view('humtalent.empleado.emailEmpleados', ['title' => $this->asunto, 'body' => $this->message]);
         }
 
     }

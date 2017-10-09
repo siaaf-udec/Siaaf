@@ -41,119 +41,120 @@
 
                 </ul>
                 <div id="bar" class="progress progress-striped" role="progressbar">
-                    <div class="progress-bar progress-bar-success"> </div>
+                    <div class="progress-bar progress-bar-success"></div>
                 </div>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-10">
-                            <br><br>
-                            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="example-table-ajax">
-                                <thead>
-                                <th>Número de Cedula</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Rol</th>
-                                <th>Área o Programa</th>
-                                </thead>
-                                @foreach($empleados as $empleado)
-                                    <tbody>
-                                    <td>{{$empleado->PK_PRSN_Cedula}}</td>
-                                    <td>{{$empleado->PRSN_Nombres}}</td>
-                                    <td>{{$empleado->PRSN_Apellidos}}</td>
-                                    <td>{{$empleado->PRSN_Rol}}</td>
-                                    <td>{{$empleado->PRSN_Area}}</td>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                            <br>
-                            <div class="form-group">
-                                    <div class="col-md-offset-1 col-md-9">
-                                    {!! Form::open (['id'=>'form-listar', 'url'=> ['/forms']]) !!}
-                                        {!! Field::hidden('PK_PRSN_Cedula',$empleado->PK_PRSN_Cedula) !!}
-                                        {!! Field::select('tipoRadicacion',
-                                                ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
-                                                $tipoRad,
-                                                ['id' => 'cambiar', 'label' => 'Seleccionar el tipo de radicación']) !!}
-                                        {!! Form::submit('Cambiar',['class'=>'btn blue','btn-icon remove']) !!}
-                                    </div>
-                                {!! Form::close() !!}
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                        <br><br>
+                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%"
+                               id="example-table-ajax">
+                            <thead>
+                            <th>Número de Cedula</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Rol</th>
+                            <th>Área o Programa</th>
+                            </thead>
+                            @foreach($empleados as $empleado)
+                                <tbody>
+                                <td>{{$empleado->PK_PRSN_Cedula}}</td>
+                                <td>{{$empleado->PRSN_Nombres}}</td>
+                                <td>{{$empleado->PRSN_Apellidos}}</td>
+                                <td>{{$empleado->PRSN_Rol}}</td>
+                                <td>{{$empleado->PRSN_Area}}</td>
+                                </tbody>
+                            @endforeach
+                        </table>
+                        <br>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Form::open (['id'=>'form-listar', 'url'=> ['/forms']]) !!}
+                                {!! Field::hidden('PK_PRSN_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                {!! Field::select('tipoRadicacion',
+                                        ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
+                                        $tipoRad,
+                                        ['id' => 'cambiar', 'label' => 'Seleccionar el tipo de radicación']) !!}
+                                {!! Form::submit('Cambiar',['class'=>'btn blue','btn-icon remove']) !!}
                             </div>
-                            @permission('FUNC_RRHH')
+                            {!! Form::close() !!}
+                        </div>
+                        @permission('FUNC_RRHH')
+                        <div class="form-group">
+                            {!! Form::open (['id'=>'form-radicar', 'url'=> ['/forms']]) !!}
+                            <div class="col-md-offset-1 col-md-9">
+                                {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
+
+                                {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento: ']) !!}
+
+                                {!! Field::date('EDCMT_Fecha',
+                                   ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                   ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
+                                {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                        @endpermission
+                    </div>
+                </div>
+                <div class="tab-pane active" id="tab1">
+                </div>
+                <div class="tab-pane active" id="tab2">
+                </div>
+                <div class="tab-pane active" id="tab3">
+                    @if($cantidadDocumentos == $cantidadRadicados && $estado != 'Afiliado '.$tipoRad)
+                        <div class="col-md-offset-1 col-md-10">
+                            <hr>
+                        </div>
+                        @permission('FUNC_RRHH')
+                        <div class="row">
                             <div class="form-group">
-                                {!! Form::open (['id'=>'form-radicar', 'url'=> ['/forms']]) !!}
+                                {!! Form::open (['id'=>'form-afiliar', 'url'=> ['/forms']]) !!}
                                 <div class="col-md-offset-1 col-md-9">
                                     {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                    {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado '.$tipoRad, ['id'=>'proceso']) !!}
                                     {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
 
-                                    {!!  Field::checkboxes('FK_Personal_Documento',$docs,$seleccion,['list', 'label'=>'Seleccione si fue entregado el Documento: ']) !!}
-
                                     {!! Field::date('EDCMT_Fecha',
-                                       ['label'=>'Fecha en la que se recibió la documentación','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
-                                       ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
-                                    {!! Form::submit('Guardar',['class'=>'btn blue','btn-icon remove']) !!}
+                                      ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
+                                      ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
                                 </div>
+                                {!! Form::submit('Empleado Afiliado',['class'=>'btn blue','btn-icon remove']) !!}
                                 {!! Form::close() !!}
                             </div>
-                            @endpermission
                         </div>
-                    </div>
-                    <div class="tab-pane active" id="tab1">
-                    </div>
-                    <div class="tab-pane active" id="tab2">
-                    </div>
-                     <div class="tab-pane active" id="tab3">
-                        @if($cantidadDocumentos == $cantidadRadicados && $estado != 'Afiliado '.$tipoRad)
-                            <div class="col-md-offset-1 col-md-10">
+                        @endpermission
+                        <hr class="visible-xs"/>
+                    @endif
+                </div>
+                <div class="tab-pane active" id="tab4">
+                    @if($estado == 'Afiliado '.$tipoRad)
+                        <div class="col-md-offset-1 col-md-10">
                             <hr>
-                            </div>
-                             @permission('FUNC_RRHH')
-                            <div class="row">
-                                <div class="form-group">
-                                    {!! Form::open (['id'=>'form-afiliar', 'url'=> ['/forms']]) !!}
-                                        <div class="col-md-offset-1 col-md-9">
-                                             {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
-                                             {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado '.$tipoRad, ['id'=>'proceso']) !!}
-                                             {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
-
-                                             {!! Field::date('EDCMT_Fecha',
-                                               ['label'=>'Fecha de afiliación del empleado','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd"],
-                                               ['help' => 'Seleccione la fecha de radicación.', 'icon' => 'fa fa-calendar']) !!}
-                                        </div>
-                                    {!! Form::submit('Empleado Afiliado',['class'=>'btn blue','btn-icon remove']) !!}
-                                    {!! Form::close() !!}
+                            <hr class="visible-xs"/>
+                        </div>
+                        @permission('FUNC_RRHH')
+                        <div class="row">
+                            <div class="form-group">
+                                {!! Form::open (['id'=>'form-reiniciar', 'url'=> ['/forms']]) !!}
+                                <div class="col-md-offset-1 col-md-9">
+                                    {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
+                                    {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado '.$tipoRad, ['id'=>'proceso']) !!}
+                                    {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
                                 </div>
+                                {!! Form::submit('Reiniciar Proceso',['class'=>'btn blue','btn-icon remove']) !!}
+                                {!! Form::close() !!}
                             </div>
-                            @endpermission
-                            <hr class="visible-xs" />
-                        @endif
-                     </div>
-                    <div class="tab-pane active" id="tab4">
-                        @if($estado == 'Afiliado '.$tipoRad)
-                            <div class="col-md-offset-1 col-md-10">
-                                <hr>
-                                <hr class="visible-xs" />
-                            </div>
-                            @permission('FUNC_RRHH')
-                            <div class="row">
-                                <div class="form-group">
-                                    {!! Form::open (['id'=>'form-reiniciar', 'url'=> ['/forms']]) !!}
-                                        <div class="col-md-offset-1 col-md-9">
-                                            {!! Field::hidden('FK_TBL_Persona_Cedula',$empleado->PK_PRSN_Cedula) !!}
-                                            {!! Field::hidden('EDCMT_Proceso_Documentacion','Afiliado '.$tipoRad, ['id'=>'proceso']) !!}
-                                            {!! Field::hidden('tipoRadicacion',$tipoRad) !!}
-                                        </div>
-                                        {!! Form::submit('Reiniciar Proceso',['class'=>'btn blue','btn-icon remove']) !!}
-                                    {!! Form::close() !!}
-                                </div>
-                            </div>
-                            @endpermission
-                        @endif
-                    </div>
+                        </div>
+                        @endpermission
+                    @endif
+                </div>
             </div>
         </div>
-            {!! Field::hidden('cantDocumentos',$cantidadDocumentos,['id'=>'cantDocs']) !!}
-            {!! Field::hidden('cantRadicados',$cantidadRadicados,['id'=>'cantRad']) !!}
-            {!! Field::hidden('estado',$estado,['id'=>'estado']) !!}
-            {!! Field::hidden('tipoRadicacion',$tipoRad,['id'=>'tipoRadicacion']) !!}
+        {!! Field::hidden('cantDocumentos',$cantidadDocumentos,['id'=>'cantDocs']) !!}
+        {!! Field::hidden('cantRadicados',$cantidadRadicados,['id'=>'cantRad']) !!}
+        {!! Field::hidden('estado',$estado,['id'=>'estado']) !!}
+        {!! Field::hidden('tipoRadicacion',$tipoRad,['id'=>'tipoRadicacion']) !!}
     @endcomponent
 </div>
 
@@ -173,11 +174,11 @@
                     return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
                 }
 
-                var displayConfirm = function() {
-                    $('#tab3 .form-control-static', form).each(function(){
-                        var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+                var displayConfirm = function () {
+                    $('#tab3 .form-control-static', form).each(function () {
+                        var input = $('[name="' + $(this).attr("data-display") + '"]', form);
                         if (input.is(":radio")) {
-                            input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
+                            input = $('[name="' + $(this).attr("data-display") + '"]:checked', form);
                         }
                         if (input.is(":text") || input.is("textarea")) {
                             $(this).html(input.val());
@@ -187,7 +188,7 @@
                             $(this).html(input.attr("data-title"));
                         } else if ($(this).attr("data-display") == 'payment[]') {
                             var payment = [];
-                            $('[name="payment[]"]:checked', form).each(function(){
+                            $('[name="payment[]"]:checked', form).each(function () {
                                 payment.push($(this).attr('data-title'));
                             });
                             $(this).html(payment.join("<br>"));
@@ -195,7 +196,7 @@
                     });
                 };
 
-                var handleTitle = function(tab, navigation, index) {
+                var handleTitle = function (tab, navigation, index) {
                     var total = navigation.find('li').length;
                     var current = index + 1;
                     // set wizard title
@@ -241,17 +242,17 @@
 
                     },
                     onTabShow: function (tab, navigation, index) {
-                        var radicados=$('input[id="cantRad"]').val();
-                        var documentos= $('input[id="cantDocs"]').val();
+                        var radicados = $('input[id="cantRad"]').val();
+                        var documentos = $('input[id="cantDocs"]').val();
                         var estado = $('input[id="estado"]').val();
                         var tipo = $('input[id="tipoRadicacion"]').val();
-                        if(radicados > 0){
-                            index=1;
+                        if (radicados > 0) {
+                            index = 1;
                         }
-                        if(radicados == documentos){
+                        if (radicados == documentos) {
                             index = 2;
                         }
-                        if(estado == 'Afiliado '+tipo){
+                        if (estado == 'Afiliado ' + tipo) {
                             index = 3;
                         }
 
@@ -280,7 +281,7 @@
     }();
 
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         if (jQuery().datepicker) {
             $('.date-picker').datepicker({
                 rtl: App.isRTL(),
@@ -291,7 +292,7 @@
             });
             $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
         }
-        $( document ).scroll(function(){
+        $(document).scroll(function () {
             $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
         });
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -304,12 +305,12 @@
             }
         });
 
-        $('.caption-subject').append( "<span class='step-title'>  </span>" );
-        $('.portlet-sortable').attr("id","form_wizard_1");
+        $('.caption-subject').append("<span class='step-title'>  </span>");
+        $('.portlet-sortable').attr("id", "form_wizard_1");
         FormWizard.init();
 
         var listRad = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.listarDocsRad') }}';
                     var type = 'POST';
@@ -321,7 +322,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -334,7 +335,7 @@
                             $(".content-ajax").html(route);
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -344,24 +345,24 @@
         };
 
         var formList = $('#form-listar');
-        var rulesList ={
+        var rulesList = {
             PK_PRSN_Cedula: {required: true},
         };
 
-        FormValidationMd.init(formList,rulesList,false,listRad());
+        FormValidationMd.init(formList, rulesList, false, listRad());
 
 
         var createRad = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.radicarDocumentos') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var selected = "";
-                    $('#form-radicar input[type=checkbox]').each(function(){
+                    $('#form-radicar input[type=checkbox]').each(function () {
                         if (this.checked) {
-                            selected += $(this).val()+';';
+                            selected += $(this).val() + ';';
                         }
                     });
 
@@ -373,7 +374,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -385,20 +386,20 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación"){
+                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación") {
                                     var tipo = "Caja";
                                 }
-                                else{
+                                else {
                                     var tipo = $('[name="tipoRadicacion"]').val();
                                 }
-                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}'+'/'+ $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
+                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}' + '/' + $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -407,14 +408,14 @@
             }
         };
         var formRadicar = $('#form-radicar');
-        var rulesRad ={
-            EDCMT_Fecha : {required: true}
+        var rulesRad = {
+            EDCMT_Fecha: {required: true}
         };
 
-        FormValidationMd.init(formRadicar,rulesRad,false,createRad());
+        FormValidationMd.init(formRadicar, rulesRad, false, createRad());
 
         var afiliar = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.afiliarEmpleado') }}';
                     var type = 'POST';
@@ -428,7 +429,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -440,20 +441,20 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación"){
+                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación") {
                                     var tipo = "Caja";
                                 }
-                                else{
+                                else {
                                     var tipo = $('[name="tipoRadicacion"]').val();
                                 }
-                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}'+'/'+ $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
+                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}' + '/' + $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -462,14 +463,14 @@
             }
         };
         var formAfiliar = $('#form-afiliar');
-        var rulesAfiliar ={
-            EDCMT_Fecha : {required: true}
+        var rulesAfiliar = {
+            EDCMT_Fecha: {required: true}
         };
 
-        FormValidationMd.init(formAfiliar,rulesAfiliar,false,afiliar());
+        FormValidationMd.init(formAfiliar, rulesAfiliar, false, afiliar());
 
         var reiniciar = function () {
-            return{
+            return {
                 init: function () {
                     var route = '{{ route('talento.humano.reiniciarRadicacion') }}';
                     var type = 'POST';
@@ -482,7 +483,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -495,21 +496,21 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación"){
+                                if ($('[name="tipoRadicacion"]').val() == "Caja de compensación") {
                                     var tipo = "Caja";
                                 }
-                                else{
+                                else {
                                     var tipo = $('[name="tipoRadicacion"]').val();
                                 }
-                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}'+'/'+ $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
+                                var route = '{{ route('talento.humano.document.consultaDocsRadicados') }}' + '/' + $('[name="FK_TBL_Persona_Cedula"]').val() + '/' + tipo;
                                 $(".content-ajax").load(route);
 
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -518,13 +519,13 @@
             }
         };
         var formReinicio = $('#form-reiniciar');
-        var rulesReinicio ={
-            FK_TBL_Persona_Cedula : {required: true}
+        var rulesReinicio = {
+            FK_TBL_Persona_Cedula: {required: true}
         };
 
-        FormValidationMd.init(formReinicio,rulesReinicio,false,reiniciar());
+        FormValidationMd.init(formReinicio, rulesReinicio, false, reiniciar());
 
-        $( "#link_cancel" ).on('click', function (e) {
+        $("#link_cancel").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('talento.humano.buscarRadicar.ajax') }}';
             $(".content-ajax").load(route);
