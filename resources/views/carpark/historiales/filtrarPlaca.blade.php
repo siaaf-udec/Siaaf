@@ -2,11 +2,11 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de filtrado de un reporte por código.'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
-                {!! Form::open (['id'=>'form_filtrar_codigo','method'=>'POST','target'=>'_blank','route'=> ['parqueadero.reportesCarpark.filtradoCodigo']]) !!}
+                {!! Form::open (['id'=>'form_filtrar_placa','method'=>'POST','target'=>'_blank','route'=> ['parqueadero.reportesCarpark.filtradoPlaca']]) !!}
 
                 <div class="form-body">                    
 
-                    {!! Field:: text('CodigoUsuario',null,['label'=>'Código del usuario:','required','minlength'=>'9','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],['help' => 'Digite el código del usuario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: text('PlacaVehiculo',null,['label'=>'Placa del vehículo:','required','minlength'=>'5','class'=> 'form-control', 'autofocus', 'maxlength'=>'6','autocomplete'=>'off'],['help' => 'Digite la placa del vehículo.','icon'=>'fa fa-user']) !!}
                                     
                     <div class="form-actions">
                         <div class="row">

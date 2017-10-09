@@ -219,38 +219,129 @@ class ReportesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function filtradoCodigo(Request $request)
+    public function filtradoFecha(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')){
+        if ($request->isMethod('POST')){
+            $fechas = $request['FechasLimite'];
+            $limites = explode(" ", $fechas);   
+            $limMin = date('Y-m-d 00:00:00', strtotime($limites[0]));
+            $limMax = date('Y-m-d 23:59:59', strtotime($limites[2]));
+            $FechaMinDescarga = date('Y-m-d',strtotime($limites[0]));
+            $FechaMaxDescarga = date('Y-m-d',strtotime($limites[2]));
+            $infoHistoriales = Historiales::whereBetween('CH_FHsalida', [$limMin, $limMax])->get();
+            $total=count($infoHistoriales);
+            
             $cont = 1;
             $date = date("d/m/Y");
-            $time = date("h:i A");            
-            $infoHistoriales = Historiales::where('CH_CodigoUser',$request['CodigoUsuario']);
-            $total = count($infoHistoriales);
+            $time = date("h:i A");                        
             
-            return view('carpark.reportes.reporteFiltradoCodigo',
-                compact('infoHistoriales','date','time','cont','total'));
+            return view('carpark.reportes.ReportePorFecha',compact('infoHistoriales','date','time','cont','total','FechaMinDescarga','FechaMaxDescarga'));
         }
+    }    
+    
+    /**
+     * Permite descargar el reporte correspondiente a las historiales filtrados por fecha.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function DescargarfiltradoFecha($limMinGET,$limMaxGET)
+    {   
+        $limMin = date('Y-m-d 00:00:00', strtotime($limMinGET));
+        $limMax = date('Y-m-d 23:59:59', strtotime($limMaxGET));
+        $FechaMinDescarga = $limMin;
+        $FechaMaxDescarga = $limMax;     
+        $infoHistoriales = Historiales::whereBetween('CH_FHsalida', [$limMin, $limMax])->get();
+        $total=count($infoHistoriales);
+        
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");                        
+            
+        return SnappyPdf::loadView('carpark.reportes.ReportePorFecha',compact('infoHistoriales','date','time','cont','total','FechaMinDescarga','FechaMaxDescarga'))->download('ReportePorFechas.pdf');           
     }
     
+    /**
+     * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filtradoCodigo(Request $request)
+    {
+        if ($request->isMethod('POST')){
+            $codigo = $request['CodigoUsuario'];
+            
+            $infoHistoriales = Historiales::where('CH_CodigoUser', $codigo)->get();
+            $total=count($infoHistoriales);
+            
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");                        
+            
+            return view('carpark.reportes.reporteFiltradoCodigo',compact('infoHistoriales','date','time','cont','total','codigo'));
+        }
+    }
+
     /**
      * Permite descargar el reporte correspondiente a las historiales filtrados por codigo.
      *
      * @return \Illuminate\Http\Response
      */
-    public function DescargarfiltradoCodigo()
+    public function DescargarfiltradoCodigo($id)
     {
+        $codigo = $id;
+            
+        $infoHistoriales = Historiales::where('CH_CodigoUser', $codigo)->get();
+        $total=count($infoHistoriales);
+            
         $cont = 1;
         $date = date("d/m/Y");
-        $time = date("h:i A");            
-        $infoHistoriales = Historiales::where('CH_CodigoUser',$request['CodigoUsuario']);
-        $total = count($infoHistoriales);
+        $time = date("h:i A");                        
             
-        return SnappyPdf::loadView('carpark.reportes.reporteFiltradoCodigo',
-                compact('infoHistoriales','date','time','cont','total'))->download('ReportePorCódigo.pdf');
+        return SnappyPdf::loadView('carpark.reportes.reporteFiltradoCodigo',compact('infoHistoriales','date','time','cont','total','codigo'))->download('ReportePorCódigo.pdf');            
                     
     }
     
+    /**
+     * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filtradoPlaca(Request $request)
+    {
+        if ($request->isMethod('POST')){
+            $placa = strtoupper($request['PlacaVehiculo']);
+            
+            $infoHistoriales = Historiales::where('CH_Placa', $placa)->get();
+            $total=count($infoHistoriales);
+            
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");                        
+            
+            return view('carpark.reportes.reporteFiltradoPlaca',compact('infoHistoriales','date','time','cont','total','placa'));
+        }
+    }
+
+    /**
+     * Permite descargar el reporte correspondiente a las historiales filtrados por codigo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function DescargarfiltradoPlaca($id)
+    {
+        $placa = strtoupper($id);
+            
+        $infoHistoriales = Historiales::where('CH_Placa', $placa)->get();
+        $total=count($infoHistoriales);
+            
+        $cont = 1;
+        $date = date("d/m/Y");
+        $time = date("h:i A");                        
+        
+        return SnappyPdf::loadView('carpark.reportes.reporteFiltradoPlaca',compact('infoHistoriales','date','time','cont','total','placa'))->download('ReportePorPlaca.pdf');               
+                    
+    }
+
     /**
      * Permite generar el reporte correspondiente a la información de un usuario concretro.
      *
@@ -343,3 +434,4 @@ class ReportesController extends Controller
     }
 
 }
+

@@ -52,7 +52,7 @@
             <div class="date">Total de historias: {{$total}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
-            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoCodigo') }}/{{$codigo}}">
+            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoPlaca') }}/{{$placa}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             </a>

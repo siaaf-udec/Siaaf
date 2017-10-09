@@ -49,10 +49,10 @@
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
-            <div class="date">Total de historias: {{$total}}</div>
+            <div class="date">Total Historico: {{$total}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
-            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoCodigo') }}/{{$codigo}}">
+            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoFecha') }}/{{$FechaMinDescarga}}/{{$FechaMaxDescarga}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             </a>
@@ -63,11 +63,12 @@
         <thead>
         <tr>
             <th class="no" >#</th>
-            <th class="unit"><b>Código</b></th>
+            <th class="unit"><b>Código Usuario</b></th>
             <th class="unit"><b>Nombre</b></th>            
             <th class="unit"><b>Placa</b></th>
-            <th class="unit"><b>Fecha/Hora Ingreso</b></th>
-            <th class="unit"><b>Fecha/Hora Salida</b></th>
+            <th class="unit"><b>Código Vehículo</b></th>
+            <th class="unit"><b>Fecha y Hora Entrada</b></th>
+            <th class="unit"><b>Fecha y Hora Salida</b></th>
 
         </tr>
         </thead>
@@ -78,8 +79,9 @@
             <td class="unit">{{$infoHistorial->CH_CodigoUser}}</td>
             <td class="desc">{{$infoHistorial->CH_NombresUser}}</td>
             <td class="unit">{{$infoHistorial->CH_Placa}}</td>
-            <td class="desc">{{$infoHistorial->CH_FHentrada}}</td>
-            <td class="unit">{{$infoHistorial->CH_FHsalida}}</td>
+            <td class="desc">{{$infoHistorial->CH_CodigoMoto}}</td>
+            <td class="unit">{{$infoHistorial->CH_FHentrada}}</td> 
+            <td class="desc">{{$infoHistorial->CH_FHsalida}}</td>           
 
         </tr>
         @endforeach
