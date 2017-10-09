@@ -484,7 +484,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('listaEmpleadosDocumentosCompletos', [  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos
             'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
             'uses' => function (Request $request) {
-                $empleados = StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion', "Documentación completa EPS")
+                $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación completa EPS")
                     ->orWhere('EDCMT_Proceso_Documentacion', "Documentación completa Caja de compensación")
                     ->distinct()->get(['FK_TBL_Persona_Cedula']);
                 if ($request->ajax()) {
@@ -502,7 +502,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('listaEmpleadosDocumentosIncompletos', [   //ruta que realiza la consulta para cargar la tabla de los empleados con documentos incompletos
             'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos',
             'uses' => function (Request $request) {
-                $empleados = StatusOfDocument::with('Personas')->where('EDCMT_Proceso_Documentacion', "Documentación incompleta EPS")
+                $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación incompleta EPS")
                     ->orWhere('EDCMT_Proceso_Documentacion', "Documentación incompleta Caja de compensación")
                     ->distinct()->get(['FK_TBL_Persona_Cedula']);
                 if ($request->ajax()) {

@@ -19,7 +19,7 @@ class Event extends Model
     ];
 
 
-    public function Asistents()
+    public function asistents()
     {
         return $this->hasMany(Asistent::class, 'PK_EVNT_IdEvento');
     }

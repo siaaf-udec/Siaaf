@@ -43,18 +43,17 @@
                             {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
                             array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
                         </div>
-
                         <br>
                         <br>
                         <br>
-
-
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                             @slot('columns', [
                             '#' => ['style' => 'width:20px;'],
                             'Nucleo',
                             'Estudiantes',
-                            'Practica'
+                            'Practica',
+                            '',
+                            'Acciones'
                             ])
                         @endcomponent
                     </div>
@@ -175,11 +174,37 @@
     </script>
 @endpush
 @push('functions')
+    <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script id="details-template" type="text/x-handlebars-template">
+        <table class="table">
+            <tr>
+                <td>Docente solicitante:</td>
+                <td>@{{name}} @{{lastname}}</td>
+            </tr>
+            <tr>
+                <td>Dias seleccionados:</td>
+                <td>@{{SOL_dias}}</td>
+            </tr>
+            <tr>
+                <td>Hora inicio: @{{SOL_hora_inicio}}</td>
+                <td>Hora fin: @{{SOL_hora_fin}}</td>
+            </tr>
+            <tr>
+                <td>Guia de practica:</td>
+                <td>@{{SOL_guia_practica}}</td>
+            </tr>
+            <tr>
+                <td>Software:</td>
+                <td>@{{SOL_software}}</td>
+            </tr>
+        </table>
+    </script>
     <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
+            var template = Handlebars.compile($("#details-template").html());
             var table, url, columns;
             table = $('#art-table-ajax');
 
@@ -188,7 +213,27 @@
                 {data: 'DT_Row_Index'},
                 {data: 'SOL_nucleo_tematico', name: 'Nucleo'},
                 {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
-                {data: 'tipo_prac', name: 'Practica'}
+                {data: 'tipo_prac', name: 'Practica'},
+                {
+                    "className": 'details-control',
+                    "orderable": false,
+                    "searchable": false,
+                    "data": null,
+                    "defaultContent": '<a href="javascript:;" class="btn btn-simple btn-info" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
+                },
+                {
+                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>',
+                    data: 'action',
+                    name: 'action',
+                    title: 'Acciones',
+                    orderable: false,
+                    searchable: false,
+                    exportable: false,
+                    printable: false,
+                    className: 'text-right',
+                    render: null,
+                    responsivePriority: 2
+                }
             ];
 
             dataTableServer.init(table, url, columns);
@@ -208,13 +253,13 @@
                 });
                 //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
                 $("#aula").change(function (event) {
-                    /*Limpiar los eventos drag and drop creados dinamicamente*/
-                    $("#external-events").empty();
-                    //Recargar datatable
+
                     var select = $('#aula option:selected').val();
                     $("#art-table-ajax").dataTable().fnDestroy();
                     url = "{{ route('espacios.academicos.acadcalendar.data' ) }}" + '/' + select;
                     dataTableServer.init(table, url, columns);
+                    table = $('#art-table-ajax');
+                    table = table.DataTable();
                     //FIN RECARGAR DATATABLE
                     /*Inicio recargar calendario con base al select*/
                     var events = {
@@ -224,9 +269,7 @@
                         data: {
                             sala: $('#aula option:selected').val()
                         }
-                    }
-
-
+                    };
                     console.log("RESPUESTA");
                     $('#calendar').fullCalendar('removeEventSource', events);
                     $('#calendar').fullCalendar('addEventSource', events);
@@ -235,6 +278,63 @@
                 /*Fin recargar calendario*/
 
             });
+
+            /*Inicio detalles desplegables grupal*/
+            $('#art-table-ajax tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(template(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+            /*Fin detalles de solicitud*/
+            /*Terminar proceso datatable-*/
+            table.on('click', '.edit', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+
+                var route = '{{ route('espacios.academicos.evalsol.finalizarProceso') }}';
+                var type = 'POST';
+                var async = async || false;
+                var formData = new FormData();
+                formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    data: formData,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+
+            });
+            /*fin terminar proceso datatable*/
+
+
             $(function () {
                 /* initialize the external events
                  -----------------------------------------------------------------*/

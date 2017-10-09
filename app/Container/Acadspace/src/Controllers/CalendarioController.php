@@ -27,15 +27,16 @@ class CalendarioController extends Controller
      */
     public function index()
     {
-      /*  $sala = new Aulas();
-        $sala = $sala->pluck('SAL_nombre_sala','SAL_nombre_sala');
-        return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);*/
+        /*  $sala = new Aulas();
+          $sala = $sala->pluck('SAL_nombre_sala','SAL_nombre_sala');
+          return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);*/
         return view('acadspace.gestionhorarios.calendarioaulas');
     }
 
-    public function cargarSalasCalendario(Request $request,$espacio){
-        if($request->ajax()){
-            $aula = Aulas::where('SAL_nombre_espacio','=',$espacio)
+    public function cargarSalasCalendario(Request $request, $espacio)
+    {
+        if ($request->ajax()) {
+            $aula = Aulas::where('SAL_nombre_espacio', '=', $espacio)
                 ->get();
             return response()->json($aula);
         }
@@ -43,27 +44,27 @@ class CalendarioController extends Controller
 
     public function cargaEventos(Request $request)
     {
-            $sala = $request['sala'];
-            $data = array();
-            $id = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('PK_CAL_id');
-            $titulo = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_titulo');
-            $color = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_color');
-            $fecha_inicial = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_ini');
-            $fecha_final = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_fin');
-            $count = count($id);
+        $sala = $request['sala'];
+        $data = array();
+        $id = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('PK_CAL_id');
+        $titulo = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_titulo');
+        $color = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_color');
+        $fecha_inicial = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_ini');
+        $fecha_final = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_fin');
+        $count = count($id);
 
-            for ($i = 0; $i < $count; $i++) {
-                $data[$i] = array(
-                    "title" => $titulo[$i],
-                    "start" => $fecha_inicial[$i],
-                    "end" => $fecha_final[$i],
-                    "backgroundColor" => $color[$i],
-                    "id" => $id[$i],
+        for ($i = 0; $i < $count; $i++) {
+            $data[$i] = array(
+                "title" => $titulo[$i],
+                "start" => $fecha_inicial[$i],
+                "end" => $fecha_final[$i],
+                "backgroundColor" => $color[$i],
+                "id" => $id[$i],
 
-                );
-            }
-            json_encode($data);
-            return $data;
+            );
+        }
+        json_encode($data);
+        return $data;
 
     }
 
@@ -82,8 +83,8 @@ class CalendarioController extends Controller
 
         $evento->CAL_titulo = $titulo;
         $evento->CAL_fecha_ini = $fecha_inicio;
-        $evento->CAL_color=$color;
-        $evento->CAL_sala=$sala;
+        $evento->CAL_color = $color;
+        $evento->CAL_sala = $sala;
 
         $evento->save();
     }
@@ -91,7 +92,7 @@ class CalendarioController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -103,7 +104,7 @@ class CalendarioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show()
@@ -114,7 +115,7 @@ class CalendarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -125,11 +126,12 @@ class CalendarioController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(){
+    public function update()
+    {
 
         //Valores recibidos via ajax
         $id = $_POST['id'];
@@ -139,14 +141,14 @@ class CalendarioController extends Controller
         $allDay = $_POST['allday'];
         $back = $_POST['background'];
 
-        $evento=calendarioSalones::find($id);
-        if($end=='NULL'){
-        }else{
-            $evento->CAL_fecha_fin=$end;
+        $evento = calendarioSalones::find($id);
+        if ($end == 'NULL') {
+        } else {
+            $evento->CAL_fecha_fin = $end;
         }
-        $evento->CAL_fecha_ini=$start;
-        $evento->CAL_color=$back;
-        $evento->CAL_titulo=$title;
+        $evento->CAL_fecha_ini = $start;
+        $evento->CAL_color = $back;
+        $evento->CAL_titulo = $title;
         //$evento->fechaFin=$end;
 
         $evento->save();
@@ -155,10 +157,11 @@ class CalendarioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(){
+    public function delete()
+    {
         //Valor id recibidos via ajax
         $id = $_POST['id'];
 
@@ -168,34 +171,32 @@ class CalendarioController extends Controller
     public function data(Request $request, $sala)
     {
 
-        if($request->ajax() && $request->isMethod('GET')){
+        if ($request->ajax() && $request->isMethod('GET')) {
 
             //Traigo unicamente las solicitudes aprobadas y muestro en el datatable
-            $users = Solicitud::where('FK_SOL_id_sala', '=', $sala)
-                ->where('SOL_estado', '=', 1);
+           /* $users = Solicitud::where('FK_SOL_id_sala', '=', $sala)
+                ->where('SOL_estado', '=', 1)
+                ->get();*/
+            $users = Solicitud::where('SOL_estado', '=', 1)
+                ->where('FK_SOL_id_sala','=', $sala)
+                /*->select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
+                'SOL_cant_estudiantes', 'SOL_id_practica',  'tbl_solicitud.created_at', 'SOL_dias', 'users.name as name',
+                'users.lastname as lastname', 'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software'])*/
+                ->leftjoin('developer.users', 'tbl_solicitud.SOL_id_docente', '=', 'developer.users.id')
+                ->get();
             return DataTables::of($users)
-                ->addColumn('tipo_prac', function ($users){
-                    if($users->SOL_id_practica==1){
+                ->addColumn('tipo_prac', function ($users) {
+                    if ($users->SOL_id_practica == 1) {
                         return "Libre";
-                    }elseif ($users->SOL_id_practica==2){
+                    } elseif ($users->SOL_id_practica == 2) {
                         return "Grupal";
                     }
                 })
                 ->rawColumns(['tipo_prac'])
-                ->rawColumns(['estado'])
-                ->removeColumn('SOL_guia_practica')
-                ->removeColumn('SOL_software')
-                ->removeColumn('SOL_hora_inicio')
-                ->removeColumn('SOL_hora_fin')
-                ->removeColumn('SOL_fecha_inicio')
-                ->removeColumn('SOL_fecha_fin')
-                ->removeColumn('SOL_dias')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
 
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'

@@ -28,6 +28,9 @@
                 <div class="col-md-12">
                     <div class="actions">                        
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Historico</a>                        
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reporteFecha"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Por Fechas</a>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reporteCodigo"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Por Código</a>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reportePlaca"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte Por Placa</a>
                         
                         <br>
                     </div>
@@ -104,9 +107,38 @@ jQuery(document).ready(function () {
             }).done(function(){
                 window.open('{{ route('parqueadero.reportesCarpark.ReporteHistorico') }}', '_blank');
             });
-        });                
+        });      
+         
+        $( ".reporteFecha" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            $.ajax({
+            }).done(function(){
+                var route = '{{ route('parqueadero.historialesCarpark.filtrarFecha') }}';
+                $(".content-ajax").load(route);
+            });
+        });
         
+        $( ".reporteCodigo" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            $.ajax({
+            }).done(function(){
+                var route = '{{ route('parqueadero.historialesCarpark.filtrarCodigo') }}';
+                $(".content-ajax").load(route);
+            });
+        });
         
+        $( ".reportePlaca" ).on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            $.ajax({
+            }).done(function(){
+                var route = '{{ route('parqueadero.historialesCarpark.filtrarPlaca') }}';
+                $(".content-ajax").load(route);
+            });
+        });
+
     });
 </script>
 @endpush

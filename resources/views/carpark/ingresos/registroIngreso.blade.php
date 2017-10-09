@@ -63,21 +63,28 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                $('#form_ingreso_create')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr, response.title, response.message);
-                                App.unblockUI('.portlet-form');
-                                console.info(response['data']);
-                                //var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
-                                var route = '{{ route('parqueadero.ingresosCarpark.confirmar') }}'+'/'+response.data;
-                                $(".content-ajax").load(route);
+                                if(response.data == 422)
+                                {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
+                                    $(".content-ajax").load(route);                                    
+                                }else{
+                                    $('#form_ingreso_create')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    console.info(response['data']);
+                                    var route = '{{ route('parqueadero.ingresosCarpark.confirmar') }}'+'/'+response.data;
+                                    $(".content-ajax").load(route);
+                                }
+
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                //var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
-                                var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+                                var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
                                 $(".content-ajax").load(route);
                             }
                         }

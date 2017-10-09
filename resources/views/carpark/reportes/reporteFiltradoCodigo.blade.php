@@ -52,7 +52,7 @@
             <div class="date">Total de historias: {{$total}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
-            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoCodigo') }}">
+            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarfiltradoCodigo') }}/{{$codigo}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             </a>
@@ -75,11 +75,11 @@
         <tbody>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{$infoHistorial[0]['CH_CodigoUser']}}</td>
-            <td class="desc">{{$infoHistorial[0]['CH_NombresUser']}}</td>
-            <td class="unit">{{$infoHistorial[0]['CH_Placa']}}</td>
-            <td class="desc">{{$infoHistorial[0]['CH_FHentrada']}}</td>
-            <td class="unit">{{$infoHistorial[0]['FHsalida']}}</td>
+            <td class="unit">{{$infoHistorial->CH_CodigoUser}}</td>
+            <td class="desc">{{$infoHistorial->CH_NombresUser}}</td>
+            <td class="unit">{{$infoHistorial->CH_Placa}}</td>
+            <td class="desc">{{$infoHistorial->CH_FHentrada}}</td>
+            <td class="unit">{{$infoHistorial->CH_FHsalida}}</td>
 
         </tr>
         @endforeach

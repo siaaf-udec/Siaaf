@@ -17,7 +17,7 @@ class DocumentacionPersona extends Model
     ];
 
 
-    public function StatusOfDocuments()
+    public function statusOfDocuments()
     {
         return $this->hasMany(StatusOfDocument::class, 'PK_DCMTP_Id_Documento');
     }

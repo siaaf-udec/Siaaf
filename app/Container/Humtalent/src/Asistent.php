@@ -16,12 +16,12 @@ class Asistent extends Model
     ];
 
 
-    public function Personas()
+    public function personas()
     {
         return $this->belongsTo(Persona::class, 'FK_TBL_Persona_Cedula', 'PK_PRSN_Cedula');
     }
 
-    public function Events()
+    public function events()
     {
         return $this->belongsTo(Event::class, 'FK_TBL_Eventos_IdEvento');
     }

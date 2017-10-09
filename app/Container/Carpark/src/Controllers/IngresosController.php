@@ -80,18 +80,17 @@ class IngresosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')){
             $infoMoto = Motos::where([['CM_Placa','=',$request['PlacaMoto']],['FK_CM_CodigoUser','=',$request['CodigoUsuario']]])->get();            
-
+            
             if($infoMoto == '[]')
             {
             	$IdError=422;
-            	return AjaxResponse::fail(            		
+            	return AjaxResponse::success(            		
                 	'¡Lo sentimos!',
                 	'No se pudo completar tu solicitud-valores inexistentes.',
                 	$IdError
             	);
             }else{
             	$idMoto = $infoMoto[0]['PK_CM_IdMoto'];
-            	//$idMoto = 461214111;
             	return AjaxResponse::success(
                 	'¡Bien hecho!',
                 	'Datos encontrados.',

@@ -19,12 +19,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class EventoController extends Controller
 {
-    private $userRepository;
     private $id;
-    public function __construct(UserInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+
 
     /**
      * Función que consulta los eventos registrados y los envía al datatable correspondiente.
@@ -53,7 +49,7 @@ class EventoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function tablaAsistentes(Request $request, $id){
-        $asistentes=Asistent::with('Personas')->where('FK_TBL_Eventos_IdEvento',$id)->get();
+        $asistentes=Asistent::with('personas')->where('FK_TBL_Eventos_IdEvento',$id)->get();
         $empleados=[];
         foreach ($asistentes as $asistente){
             $empleados=array_merge($empleados,[$asistente->personas]);
@@ -79,7 +75,7 @@ class EventoController extends Controller
      */
     public function posiblesAsistentes(Request $request, $id_Evento){
         $this->id=$id_Evento;
-        $asistentes=Persona::whereDoesntHave('Asistents',function ($query) {
+        $asistentes=Persona::whereDoesntHave('asistents',function ($query) {
             $query->where('FK_TBL_Eventos_IdEvento',$this->id);
         })->get();
         if ($request->ajax()) {

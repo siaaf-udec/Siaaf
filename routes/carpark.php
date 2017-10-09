@@ -298,15 +298,35 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
         ]);         
 
+        Route::post('filtradoFecha', [
+            'uses' => $controller . 'ReportesController@filtradoFecha',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.filtradoFecha'
+        ]);
+
+        Route::get('DescargarfiltradoFecha/{limMinGET?}/{limMaxGET?}', [
+            'uses' => $controller . 'ReportesController@DescargarfiltradoFecha',  //ruta que conduce al controlador para descargar el reporte de las historias por fecha
+            'as' => 'parqueadero.reportesCarpark.DescargarfiltradoFecha'
+        ]);
+
         Route::post('filtradoCodigo', [
             'uses' => $controller . 'ReportesController@filtradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.filtradoCodigo'
-        ]);
+        ]);  
 
-        Route::get('DescargarfiltradoCodigo', [
+        Route::get('DescargarfiltradoCodigo/{id?}', [
             'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoCodigo'
+        ]);
+        
+        Route::post('filtradoPlaca', [
+            'uses' => $controller . 'ReportesController@filtradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.filtradoPlaca'
         ]);  
+        
+        Route::get('DescargarfiltradoPlaca/{id?}', [
+            'uses' => $controller . 'ReportesController@DescargarfiltradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'as' => 'parqueadero.reportesCarpark.DescargarfiltradoPlaca'
+        ]);
 
         
         Route::get('reporteUsuario/{id?}', [
@@ -429,6 +449,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('filtrarCodigo', [
             'uses' => $controller . 'HistorialController@filtrarCodigo',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
             'as' => 'parqueadero.historialesCarpark.filtrarCodigo'
+        ]); 
+        
+        Route::get('filtrarPlaca', [
+            'uses' => $controller . 'HistorialController@filtrarPlaca',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'as' => 'parqueadero.historialesCarpark.filtrarPlaca'
         ]); 
 
     });
