@@ -105,7 +105,7 @@
             {data: 'DCMTP_Nombre_Documento', name: 'documento'},
             {data: 'DCMTP_Tipo_Documento', name: 'tipo'},
             {
-                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -156,7 +156,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }

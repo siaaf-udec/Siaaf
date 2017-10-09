@@ -94,7 +94,7 @@
             {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
+                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

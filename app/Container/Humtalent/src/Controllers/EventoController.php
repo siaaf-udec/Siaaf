@@ -9,7 +9,6 @@
 namespace App\Container\Humtalent\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Event;
 use Yajra\DataTables\DataTables;
 use App\Container\Humtalent\src\Persona;
@@ -25,19 +24,19 @@ class EventoController extends Controller
     /**
      * Función que consulta los eventos registrados y los envía al datatable correspondiente.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function tablaEventos(Request $request){
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return DataTables::of(Event::all())
                 ->addIndexColumn()
                 ->make(true);
         } else {
-            return response()->json([
-                'message' => 'Incorrect request',
-                'code' => 412
-            ], 412);
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
     }
 
@@ -54,16 +53,16 @@ class EventoController extends Controller
         foreach ($asistentes as $asistente){
             $empleados=array_merge($empleados,[$asistente->personas]);
         }
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return DataTables::of($empleados)
                 ->addIndexColumn()
                 ->make(true);
         }
 
-        return response()->json([
-            'message' => 'Incorrect request',
-            'code' => 412
-        ], 412);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -78,16 +77,15 @@ class EventoController extends Controller
         $asistentes=Persona::whereDoesntHave('asistents',function ($query) {
             $query->where('FK_TBL_Eventos_IdEvento',$this->id);
         })->get();
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->isMethod('GET') ) {
             return DataTables::of($asistentes)
                 ->addIndexColumn()
                 ->make(true);
         }
-
-        return response()->json([
-            'message' => 'Incorrect request',
-            'code' => 412
-        ], 412);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

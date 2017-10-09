@@ -22,10 +22,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\Snappy\Facades\SnappyPdf;
-use Illuminate\Mail\Message;
 use Storage;
 use Illuminate\Support\Facades\Auth;
-use App\Container\Users\Src\User;
+
 
 class EmpleadoController extends Controller
 {
@@ -141,7 +140,7 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function store(Request $request)//
+    public function store(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             Persona::create($request->all());
@@ -263,7 +262,7 @@ class EmpleadoController extends Controller
     /**
      * Presenta el formulario con los datos para editar el regitro de un empleado deseado.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -289,7 +288,7 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function update(Request $request)//
+    public function update(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $empleado = Persona::find($request['PK_PRSN_Cedula']);

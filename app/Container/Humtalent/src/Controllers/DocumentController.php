@@ -505,6 +505,7 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param \Illuminate\Http\Request
      * @param  int $id
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */

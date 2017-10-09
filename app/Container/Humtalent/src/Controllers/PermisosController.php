@@ -109,10 +109,10 @@ class PermisosController extends Controller
                 ->make(true);
         }
 
-        return response()->json([
-            'message' => 'Incorrect request',
-            'code' => 412
-        ], 412);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

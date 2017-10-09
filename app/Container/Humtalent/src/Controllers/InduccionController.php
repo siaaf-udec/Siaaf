@@ -10,11 +10,9 @@ namespace App\Container\Humtalent\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Induction;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\DB;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class InduccionController extends Controller

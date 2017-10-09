@@ -11,7 +11,6 @@ namespace App\Container\Humtalent\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\Notification;
@@ -24,7 +23,8 @@ class CalendarioController extends Controller
      * Funcion para obtener tanto lso eventos como las notificaciones que esten registradas
      *                      que han sido radicados.
      *
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     *@param \Illuminate\Http\Request
+     *@return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getEvent(Request $request)
     {
@@ -228,7 +228,7 @@ class CalendarioController extends Controller
     }
 
     /**
-     *En caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actulización de datos y esta funcion será llamada
+     *En caso de que el usuario desee cambiar el titulo de la notificación aparecerá un formulario de actualización de datos y esta funcion será llamada
      *
      * @param \Illuminate\Http\Request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse;

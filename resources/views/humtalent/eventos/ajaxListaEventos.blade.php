@@ -52,7 +52,7 @@
             {data: 'EVNT_Fecha_Fin', name: 'Fecha Fin'},
             {data: 'EVNT_Hora', name: 'Hora'},
             {
-                defaultContent: '@permission('FUNC_RRHH')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>@endpermission',
+                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',
@@ -103,7 +103,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
+                                if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
