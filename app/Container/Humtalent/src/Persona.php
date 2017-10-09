@@ -19,22 +19,22 @@ class Persona extends Model
     ];
 
 
-    public function Asistents()
+    public function asistents()
     {
         return $this->hasMany(Asistent::class, 'FK_TBL_Persona_Cedula');
     }
 
-    public function StatusOfDocuments()
+    public function statusOfDocuments()
     {
         return $this->hasMany(StatusOfDocument::class, 'FK_TBL_Persona_Cedula');
     }
 
-    public function Inductions()
+    public function inductions()
     {
         return $this->hasMany(Induction::class);
     }
 
-    public function Permissions()
+    public function permissions()
     {
         return $this->hasMany(Permission::class);
     }

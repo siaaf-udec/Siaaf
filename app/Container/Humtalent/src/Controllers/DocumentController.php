@@ -176,14 +176,14 @@ class DocumentController extends Controller
             $this->tipo = $request['tipoRadicacion'];
             $tipoRad = $this->tipo;
             $radicados = StatusOfDocument::with([
-                'DocumentacionPersonas' => function ($query) {
+                'documentacionPersonas' => function ($query) {
                     $query->where('DCMTP_Tipo_Documento', $this->tipo);
                 }
             ])->where('FK_TBL_Persona_Cedula', $request['FK_TBL_Persona_Cedula'])->get();    //se realiza una consulta de los documentos ya radicados para el empleado
             $docsRad = [];
             foreach ($radicados as $radicado) {
-                if ($radicado['DocumentacionPersonas'] != null) {
-                    $docsRad = array_merge($docsRad, [$radicado['DocumentacionPersonas']['PK_DCMTP_Id_Documento']]); //se realiza la conversion  a array de una sola dimensión.
+                if ($radicado['documentacionPersonas'] != null) {
+                    $docsRad = array_merge($docsRad, [$radicado['documentacionPersonas']['PK_DCMTP_Id_Documento']]); //se realiza la conversion  a array de una sola dimensión.
                 }
             }
             $cantidadDocumentos = DocumentacionPersona::where('DCMTP_Tipo_Documento', $tipoRad)->count();
@@ -328,7 +328,7 @@ class DocumentController extends Controller
     public function consultaRadicados(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $radicados = StatusOfDocument::with('DocumentacionPersonas')
+            $radicados = StatusOfDocument::with('documentacionPersonas')
                 ->where('FK_TBL_Persona_Cedula', $id)
                 ->get(['EDCMT_Fecha', 'FK_Personal_Documento']);
 
@@ -554,13 +554,13 @@ class DocumentController extends Controller
             ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
             ->get(['DCMTP_Nombre_Documento']);
 
-        $radicadosEPS = StatusOfDocument::with(['DocumentacionPersonas' => function ($query) {
+        $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
             $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
         }])
             ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
             ->get();
 
-        $radicadosCaja = StatusOfDocument::with(['DocumentacionPersonas' => function ($query) {
+        $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
             $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')->get(['DCMTP_Nombre_Documento']);
         }])
             ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
@@ -604,13 +604,13 @@ class DocumentController extends Controller
             ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
             ->get(['DCMTP_Nombre_Documento']);
 
-        $radicadosEPS = StatusOfDocument::with(['DocumentacionPersonas' => function ($query) {
+        $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
             $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
         }])
             ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
             ->get();
 
-        $radicadosCaja = StatusOfDocument::with(['DocumentacionPersonas' => function ($query) {
+        $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
             $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')
                 ->get(['DCMTP_Nombre_Documento']);
         }])

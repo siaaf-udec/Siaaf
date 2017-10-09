@@ -17,7 +17,7 @@ class Induction extends Model
         'INDC_ProcesoInduccion', 'INDC_Aprobacion', 'FK_TBL_Persona_Cedula',
     ];
 
-    public function Personas()
+    public function personas()
     {
         return $this->belongsTo(Persona::class, 'FK_TBL_Persona_Cedula', 'PK_PRSN_Cedula');
     }

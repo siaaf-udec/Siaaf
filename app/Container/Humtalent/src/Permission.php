@@ -17,7 +17,7 @@ class Permission extends Model
         'PERM_Fecha', 'PERM_Descripcion', 'FK_TBL_Persona_Cedula',
     ];
 
-    public function Personas()
+    public function personas()
     {
         return $this->belongsTo(Persona::class);
     }

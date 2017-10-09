@@ -89,7 +89,7 @@
     <h4>&nbsp;&nbsp;&nbsp;&nbsp;RADICADOS:</h4>
     <div>
         @foreach($radicadosEPS as $radicado)
-            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$radicado->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$radicado->documentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
             <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$radicado->EDCMT_Fecha}}</b></div><br>
         @endforeach
     </div>
@@ -105,7 +105,7 @@
 
     <div>
         @foreach($radicadosCaja as $caja)
-            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$caja->DocumentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
+            <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Documento:&nbsp;&nbsp;<b>{{$caja->documentacionPersonas['DCMTP_Nombre_Documento']}}</b></div>
             <div class="to">&nbsp;&nbsp;&nbsp;&nbsp;Fecha radicación:&nbsp;&nbsp;<b>{{$caja->EDCMT_Fecha}}</b></div><br>
         @endforeach
     </div>
