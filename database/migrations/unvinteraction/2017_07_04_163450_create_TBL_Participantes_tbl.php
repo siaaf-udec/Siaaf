@@ -22,7 +22,11 @@ class CreateTBLParticipantesTbl extends Migration
             $table->foreign('FK_TBL_Convenios')->references('PK_Convenios')->on('TBL_Convenios');
             
             $table->integer('FK_TBL_Usuarios')->unsigned();
+<<<<<<< Updated upstream
             
+=======
+            $table->foreign('FK_TBL_Usuarios')->references('PK_Usuario')->on('TBL_Usuarios');
+>>>>>>> Stashed changes
             
            
         });

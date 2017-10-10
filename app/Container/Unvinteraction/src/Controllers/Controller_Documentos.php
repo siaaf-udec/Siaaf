@@ -33,7 +33,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 class Controller_Documentos extends Controller
 {
   
-    
+     private $path='unvinteraction'; 
      public function Subir_Documento_Convenio(Request $request,$id)
     {
        $Ubicacion="unvinteraction/convenios/".$id;
@@ -87,19 +87,19 @@ class Controller_Documentos extends Controller
     }
     public function Subir_Documento_Usuario(Request $request)
     {
-        $Ubicacion="unvinteraction/usuario";
+        $Ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
         $files = $request->file('file');
        
         foreach($files as $file){
-            $url = Storage::disk('developer')->putFileAs($Ubicacion.$request->user()->identity_no, $file,$request->user()->identity_no.$request->Entidad.$request->Descripcion.".pdf",'public' );
+            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $file->getClientOriginalName());
         }
        
      try{
             $Estado = new TBL_Documentacion_Extra();
-            $Estado->Entidad =$request->Entidad;  
+            $Estado->Entidad =$file->getClientOriginalName();  
             $Estado->Ubicacion = $Ubicacion ;
             $Estado->FK_TBL_Usuarios=$request->user()->identity_no ;
-            $Estado->Descripcion = $request->Descripcion ;
+            $Estado->Descripcion = 'NINGUNA';
             $Estado->save();
             return  "listo";
             

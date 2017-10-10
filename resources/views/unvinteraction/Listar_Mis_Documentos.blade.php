@@ -60,13 +60,9 @@
                                     <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
                                 </div>
                                 <div class="modal-body">
-                                     
-                                    
-                                   
+                                
                                     {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url' => '/forms']) !!}
-                                     {!! Field::text('Entidad',['label' => 'Entidad', 'auto' => 'off'],['help' => 'Digite la entidad de la cual proviene el documento']) !!}
-                                   
-                                    {!! Field::text('Descripcion',['label' => 'Descripcion', 'auto' => 'off'],['help' => 'Digite una berve descripcion']) !!}
+                                     
                                     
                                     <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
                                     {!! Form::close() !!}

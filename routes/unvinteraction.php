@@ -47,7 +47,7 @@ Route::get('Listar_Convenios', [
 Route::post('Registro_Convenios', [
    'as' => 'Registro_Convenios.Registro_Convenios',
    'uses' => $controller.'Controller_Convenios@Registro_Convenios'
-])  ;
+]);
 Route::get('Editar_Convenios/{id}', [    
     'as' => 'Editar_Convenios.Editar_Convenios', 
     'uses' => $controller.'Controller_Convenios@Editar_Convenios'

@@ -50,9 +50,11 @@
               <!-- TABLAS  PARTICIPANTES -->                          
             <div class="tab-pane fade" id="tab_1_2">
                                         <div class="col-md-12">
+                                             @permission(['Add_Convenio'])
                                             <div class="actions">
                                                 <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                                             </div>
+                                            @endpermission
                                         </div>
                         
                                         <div class="row">
@@ -76,9 +78,11 @@
                                         <div class="tab-pane fade" id="tab_1_3">
                                            
                                         <div class="col-md-12">
+                                            @permission(['Add_Convenio'])
                                                             <div class="actions">
                                                                 <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                                                             </div>
+                                             @endpermission
                                                         </div>
 
                                               <div class="row">
@@ -491,11 +495,7 @@ echo $id;
         
     FormValidationMd.init( form, rules, messages , agregarParticipante());
    
-});
-    </script>  
-<script type="text/javascript">
 
-    jQuery(document).ready(function() {
     var table, url,id;
    
     table = $('#Listar_Empresas_Paticipantes');
@@ -568,7 +568,8 @@ echo $id;
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
-    table = table.DataTable();
+        
+     table = table.DataTable();
      table.on('click', '.evaluar2', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -599,7 +600,7 @@ echo $id;
         
             };  
     var form=$('#form-Empresas');
-     var wizard =  $('#form_wizard_2');
+     var wizard =  $('#form_wizard_1');
     var agregarEmpresa = function () {
             return{
                 init: function () {
