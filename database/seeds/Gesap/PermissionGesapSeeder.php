@@ -16,6 +16,7 @@ class PermissionGesapSeeder extends Seeder
             ['name'=>'Assign_teacher_Gesap','display_name'=>'Asignar Docentes','description'=>'Asignacion de directores y jurados a los anteproyectos existentes','module_id'=>'7'],
             ['name'=>'Modify_Project_Gesap','display_name'=>'Modificar Anteproyectos','description'=>'Modificar o actualizar los datos de un anteproyecto previo','module_id'=>'7'],
             ['name'=>'See_All_Project_Gesap','display_name'=>'Ver todos los Anteproyectos','description'=>'Listar todos los proyectos creados en la plataforma','module_id'=>'7'],
+            ['name'=>'Report_Gesap','display_name'=>'Ver Reportes','description'=>'Ver los reportes','module_id'=>'7'],
             
             ['name'=>'Jury_List_Gesap','display_name'=>'Proyectos de Jurado','description'=>'Listar los proyectos asignados al usuario como jurado','module_id'=>'7'],
             ['name'=>'Director_List_Gesap','display_name'=>'Proyectos de Director','description'=>'Listar los proyectos asignados al usuario como director','module_id'=>'7'],

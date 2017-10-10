@@ -1,29 +1,30 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
         <div class="row">
-            
-        <div class="col-md-6" style="z-index: 1;">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
+            <div class="col-md-6">
+                <div class="btn-group">
+                    {!! Field::hidden('id', $id) !!}
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
+                </div>
             </div>
-        </div>
-        {!! Field::hidden('id', $id) !!}
-        <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
+            <div class="clearfix"> </div><br><br>
+            <div class="col-md-12">
+                
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
             
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id',
-                    'Texto',
+                    'Observacion',
                     'Jurado',
                     'Respuesta Min',
                     'Respuesta Requerimientos'
                 ])
             @endcomponent
+            </div>
         </div>
-    </div>
-    
     @endcomponent
-
+       </div>
 
 
 <script>
@@ -73,9 +74,29 @@ jQuery(document).ready(function () {
            {data: 'DT_Row_Index'},
            {data: 'PK_BVCS_idObservacion', "visible": false },
            {data: 'BVCS_Observacion', className:'none', searchable: true},
-           {data: 'encargado',render: "[, ].usuarios.name", searchable: true},
-           {data: 'encargado',render: "[, ].usuarios.name",searchable: true},
-           {data: 'encargado',render: "[, ].usuarios.name",searchable: true},
+           {data: 'encargado.usuarios.name', searchable: true},
+           {data: 'respuesta.RPST_RMin',
+                render: function (data, type, full, meta) {
+                    if(data!=null){
+                        if(data=="NO FILE"){
+                            return "NO FILE";    
+                        }
+                        return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+                    }
+                    return "NO FILE";
+                }
+            },
+            {data: 'respuesta.RPST_Requerimientos',
+                render: function (data, type, full, meta) {
+                    if(data!=null){
+                        if(data=="NO FILE"){
+                            return "NO FILE";    
+                        }
+                            return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                    }
+                    return "NO FILE";
+            }
+            }
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },

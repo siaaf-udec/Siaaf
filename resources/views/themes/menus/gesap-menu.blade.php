@@ -1,4 +1,15 @@
-
+{{-- MENÚ DE EJEMPLO --}}
+<li class="nav-item {{ active(['audiovisuales.*'], 'start active open') }}">
+    <a class="nav-link nav-toggle" href="javascript:;">
+        <i class="fa fa-cube">
+        </i>
+        <span class="title">
+            Gesap
+        </span>
+        <span class="arrow {{ active(['audiovisuales.*'], 'open') }}">
+        </span>
+    </a>
+    <ul class="sub-menu">
         @permission('See_All_Project_Gesap')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
                 <a href="{{ route('min.index') }}" class="nav-link nav-toggle">
@@ -20,6 +31,16 @@
                 <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }}">
                     <i class="fa fa-book"></i>
                     <span class="title">Jurado de Proyecto</span>
+                </a>
+            </li>
+        @endpermission
+
+
+        @permission('Report_Gesap')
+            <li class="nav-item">
+                <a class="nav-link nav-toggle" href="{{ route('report.index') }}">
+                    <i class="fa fa-book"></i>
+                    <span class="title">Reportes</span>
                 </a>
             </li>
         @endpermission
@@ -45,3 +66,5 @@
                     </a>
                 </li> -->
         @endpermission
+    </ul>
+</li>

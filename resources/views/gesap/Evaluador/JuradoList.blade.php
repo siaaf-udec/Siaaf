@@ -23,6 +23,7 @@
 @section('page-description', 'Lista de proyectos como jurado')
 
 @section('content')
+<div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Anteproyecto Jurado'])
         <div class="row">
         <div class="col-md-12">
@@ -48,6 +49,7 @@
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
+            </div>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -276,11 +278,22 @@ jQuery(document).ready(function () {
                     }, 
            
            
-           {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
-           {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
-           {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
-           {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
-           {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+           {data:  function (data, type, dataToSet) {
+                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                    },className:'none',searchable: true},
            {data: 'conceptofinal',render: "[, ].conceptos.CNPT_Concepto","visible": false },
            {data:"PK_NPRY_idMinr008",
             name:'action',
@@ -313,7 +326,7 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
-   table = table.DataTable();
+    table = table.DataTable();
     table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -361,7 +374,7 @@ jQuery(document).ready(function () {
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -431,7 +444,7 @@ jQuery(document).ready(function () {
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }

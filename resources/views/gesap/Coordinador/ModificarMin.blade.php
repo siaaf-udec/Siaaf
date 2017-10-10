@@ -9,6 +9,7 @@
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-modificar-min']) !!} 
             {!! Field::hidden('_method', 'PUT') !!}
             {!! Field::hidden('PK_radicacion', $anteproyecto->PK_RDCN_idRadicacion) !!}
+        
             {!! Field::hidden('PK_proyecto', $anteproyecto->PK_NPRY_idMinr008) !!}
         
         
@@ -60,11 +61,11 @@
                         <div class="tab-pane active" id="tab1">
                             <h3 class="block">Datos del Proyecto</h3>
                             <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-8 col-md-offset-2">
+                                <div class="col-xs-12 col-md-12 col-lg-12 ">
                                     <div class="form-group form-md-line-input">
                                         <div class="input-icon">
                                             {{ Form::textarea('title', $anteproyecto->NPRY_Titulo, 
-                                                ['required', 'auto' => 'off','size' => '30x1','class'=>'form-control','id'=>'title'],
+                                                ['required', 'auto' => 'off','rows' => '4','class'=>'form-control','id'=>'title'],
                                                 [ 'icon' => 'fa fa-user']) 
                                             }}
                                             <label for="title" class="control-label">Titulo del proyecto</label>
@@ -142,7 +143,6 @@
                                         <div class="input-group input-large">
                                             <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                                                 <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                                            <?=$anteproyecto->RDCN_Min?>
                                                 <span class="fileinput-filename"> </span>
                                             </div>
                                             <span class="input-group-addon btn default btn-file">
@@ -160,7 +160,6 @@
                                         <div class="input-group input-large">
                                             <div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
                                                 <i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-                                                <?=$anteproyecto->RDCN_Requerimientos?>
                                                 <span class="fileinput-filename"> </span>
                                             </div>
                                             <span class="input-group-addon btn default btn-file">
@@ -272,7 +271,7 @@
         });        
         
         var rules = {
-                title:{required: true,minlength: 6,maxlength:250},
+                title:{required: true,minlength: 6,maxlength:500},
                 estudiante1:{required: true},
                 estudiante2:{required: true},
                 Keywords:{required: true,minlength: 4,maxlength:300},
@@ -356,7 +355,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }

@@ -15,7 +15,7 @@ class CreateAnteproyectoTable extends Migration
     {
         Schema::connection('gesap')->create('tbl_Anteproyecto', function (Blueprint $table) {
             $table->increments('PK_NPRY_idMinr008');
-            $table->string('NPRY_Titulo',250);
+            $table->string('NPRY_Titulo',500);
             $table->String('NPRY_Keywords',300);
             $table->integer('NPRY_Duracion');
             $table->date('NPRY_FechaR');

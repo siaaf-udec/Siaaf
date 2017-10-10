@@ -24,7 +24,7 @@ use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\gesap\src;
 use App\Container\gesap\src\Observaciones;
-use App\Container\gesap\src\Check_Observaciones;
+use App\Container\gesap\src\CheckObservaciones;
 use App\Container\gesap\src\Respuesta;
 use App\Container\gesap\src\Conceptos;
 use App\Container\Users\Src\User;
@@ -33,8 +33,13 @@ class EvaluatorController extends Controller
 {
             
     private $path='gesap.Evaluador.';
-    protected $connection = 'gesap';
     
+    
+    /*
+     * Listado de todos los proyectos que se han registrado
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return redirect()->route('anteproyecto.index.juryList');
@@ -62,7 +67,7 @@ class EvaluatorController extends Controller
             $observacion->FK_TBL_Encargado_id=$jurado->PK_NCRD_idCargo;
             $observacion->save();
             
-            $checkobservacion= new Check_Observaciones();
+            $checkobservacion= new CheckObservaciones();
             $checkobservacion->FK_TBL_Observaciones_id=$observacion->PK_BVCS_idObservacion;
             $checkobservacion->save();
           
@@ -71,10 +76,10 @@ class EvaluatorController extends Controller
                 if ($request->get('Min')=="Vacio") {
                     $respuesta->RPST_RMin="NO FILE";
                 } else {
-                    $respuesta->RPST_RMin=$request->get('Min')->getClientOriginalName();
+                    $respuesta->RPST_RMin=$request['Min']->getClientOriginalName();
                 }
                 if ($request->get('Requerimientos')!="Vacio") {
-                    $respuesta->RPST_Requerimientos=$request->get('Requerimientos')->getClientOriginalName();
+                    $respuesta->RPST_Requerimientos=$request['Requerimientos']->getClientOriginalName();
                 } else {
                     $respuesta->RPST_Requerimientos="NO FILE";
                 }

@@ -17,6 +17,7 @@
             @include('themes.menus.talento-humano-menu') 
             {{-- CALISOFT --}} 
             @include('themes.menus.calisoft-menu') 
+             
             {{-- GESAP --}} 
             @include('themes.menus.gesap-menu') 
             {{-- ESCUELAS DEPORTIVAS --}} 

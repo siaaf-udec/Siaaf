@@ -1,16 +1,15 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
-    <div class="row">
-        <div class="col-md-6">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
+        <div class="row">
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="clearfix"> </div>
-        <br>
-        <br>
-        <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
-                @slot('columns', [
+            <div class="clearfix"> </div><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
+                    @slot('columns', [
                         '#' => ['style' => 'width:20px;'],
                         'id',
                         'Titulo',
@@ -32,7 +31,8 @@
             </div>
         </div>
     @endcomponent
-
+</div>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function () 
         {
@@ -104,11 +104,22 @@
                             }  
                         }
                     },  
-                    {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
-                    {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
-                    {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
-                    {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
-                    {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+                    {data:  function (data, type, dataToSet) {
+                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                    },className:'none',searchable: true},
                      
                     {data:'action',className:'',searchable: false,
                         name:'action',
@@ -178,22 +189,61 @@
                    $(".content-ajax").load(route);
                 });
             });
-    
-            table.on('submit', '#delete-anteproyect', function (e) 
-            {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-                $.ajax(
-                {
-                    url: '/gesap/min/'+O.PK_NPRY_idMinr008,
-                    type: $(this).attr("method"),
-                    data:$(this).serialize(),
-                    success: function() 
-                    {
-                        table.ajax.reload();              
+            
+            table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var O = table.row($tr).data();
+            var route = 'min/'+O.PK_NPRY_idMinr008;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el Anteproyecto seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                        swal.close();
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun Proyecto", "error");
                     }
                 });
-            });
+
+        });
+            
+            
+            
+            
+            
+            
+            
         });
     </script>

@@ -43,16 +43,17 @@ class StudentController extends Controller
     
     public function studentList(Request $request)
     {
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->Data()
-                ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
-                    $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                    ->where(function ($query) {
-                        $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
-                        $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
-                    })
-                        ->where('FK_developer_user_id', '=', $request->user()->id);
-                });
-                
-        return Datatables::of(DB::select($this->getSql($anteproyectos)))->addIndexColumn()->make(true);
+                $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
+                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
+                ->where(function ($query) {
+                    $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
+                    $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
+                })
+                ->where('FK_developer_user_id', '=', $request->user()->id);
+            })
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal'])
+            ->get();
+        return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }
 }

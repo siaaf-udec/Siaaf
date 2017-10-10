@@ -224,7 +224,7 @@
            
             
             var rules = {
-                title:{required: true,minlength: 6,maxlength:250},
+                title:{required: true,minlength: 6,maxlength:500},
                 estudiante1:{required: true},
                 estudiante2:{required: true},
                 Keywords:{required: true,minlength: 4,maxlength:300},
@@ -290,7 +290,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }

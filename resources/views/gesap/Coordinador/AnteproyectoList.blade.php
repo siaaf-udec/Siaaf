@@ -186,11 +186,22 @@
                             }  
                         }
                     },  
-                    {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
-                    {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
-                    {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
-                    {data: 'jurado1',render: "[, ].usuarios.full_name", className:'none',searchable: true},
-                    {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+                    {data:  function (data, type, dataToSet) {
+                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                    },className:'none',searchable: true},
                      
                     {data:'action',className:'',searchable: false,
                         name:'action',
@@ -297,14 +308,14 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
+                                if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
                         });
                         swal.close();
                     } else {
-                        swal("Cancelado", "No se eliminó ningun empleado", "error");
+                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
                     }
                 });
 

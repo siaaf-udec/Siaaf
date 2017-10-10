@@ -1,4 +1,5 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Director'])
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Director'])
         <div class="row">
         
         <div class="col-md-12">
@@ -25,6 +26,7 @@
             @endcomponent
         </div>
     </div>
+</div>
     
     @endcomponent
 
@@ -94,11 +96,22 @@ jQuery(document).ready(function () {
                             }  
                         }
                     }, 
-           {data: 'director',render: "[, ].usuarios.name",className:'none',searchable: true},
-           {data: 'estudiante1',render: "[, ].usuarios.name",className:'none',searchable: true},
-           {data: 'estudiante2',render: "[, ].usuarios.name", className:'none',searchable: true},
-           {data: 'jurado1',render: "[, ].usuarios.name", className:'none',searchable: true},
-           {data: 'jurado2',render: "[, ].usuarios.name",className:'none',searchable: true},
+           {data:  function (data, type, dataToSet) {
+                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                    },className:'none',searchable: true},
             {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',

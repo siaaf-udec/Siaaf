@@ -33,8 +33,8 @@ class CoordinatorController extends Controller
     
     private $path='gesap.Coordinador.';
     
-    /**
-     * Display a listing of the resource.
+    /*
+     * Listado de todos los proyectos que se han registrado
      *
      * @return \Illuminate\Http\Response
      */
@@ -44,9 +44,10 @@ class CoordinatorController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
+     * Listado de todos los proyectos que se han registrado con vista AJAX
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request 
+     *
      * @return \Illuminate\Http\Response
      */
     public function indexAjax(Request $request)
@@ -59,12 +60,13 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     
     
-    /**
-     * Show the form for creating a new resource.
+    /*
+     * Formulario de registro de nuevo proyecto de grado
+     * Envia lista de usuarios estudiantes registrados
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request 
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -88,11 +90,12 @@ class CoordinatorController extends Controller
         );
     }
   
-    /**
-     * Store a newly created resource in storage.
+    /*
+     * Función de almacenamiento en la base de datos de proyectos
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -111,13 +114,13 @@ class CoordinatorController extends Controller
             $idanteproyecto=$anteproyecto->PK_NPRY_idMinr008;
             
             $radicacion= new Radicacion();
-            $nombre = $date."_".$request->get('Min')->getClientOriginalName();
+            $nombre = $date."_".$request['Min']->getClientOriginalName();
             $radicacion->RDCN_Min=$nombre;
             \Storage::disk('local')->put($nombre, \File::get($request->file('Min')));
-            if ($request->get('Requerimientos') == "Vacio") {
+            if ($request['Requerimientos'] == "Vacio") {
                 $radicacion->RDCN_Requerimientos="NO FILE";
             } else {
-                $nombre = $date."_".$request->get('Requerimientos')->getClientOriginalName();
+                $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
                 $radicacion->RDCN_Requerimientos=$nombre;
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
@@ -151,10 +154,11 @@ class CoordinatorController extends Controller
     }
      
      /**
-     * Show the form for editing the specified resource.
+     * Formulario de editar un proyecto de grado ya registrado
+     * Envia lista de usuarios estudiantes registrados
+     * Envia datos correspondientes al proyecto a editar
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request 
      *
      * @return \Illuminate\Http\Response
      */
@@ -191,10 +195,11 @@ class CoordinatorController extends Controller
     }
     
     /**
-     * Update the specified resource in storage.
+     * Función de actualizacion en la base de datos de proyectos
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
     {
@@ -212,13 +217,13 @@ class CoordinatorController extends Controller
             $radicacion= Radicacion::findOrFail($request->get('PK_radicacion'));
             if ($request->get('Min')!="Vacio") {
                 \Storage::delete($radicacion->RDCN_Min);
-                $nombre = $date."_".$request->get('Min')->getClientOriginalName();
+                $nombre = $date."_".$request['Min']->getClientOriginalName();
                 $radicacion->RDCN_Min=$nombre;
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Min')));
             }
             if ($request->get('Requerimientos')!="Vacio") {
                 \Storage::delete($radicacion->RDCN_Requerimientos);
-                $nombre = $date."_".$request->get('Requerimientos')->getClientOriginalName();
+                $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
                 $radicacion->RDCN_Requerimientos=$nombre;
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
@@ -271,11 +276,12 @@ class CoordinatorController extends Controller
     }
     
     /**
-     * Remove the specified resource from storage.
+     * Funcion de eliminacion de proyectos de la base de datos
      *
      * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy($id, Request $request)
     {
@@ -297,10 +303,12 @@ class CoordinatorController extends Controller
     }
     
     /**
-     * Show the form for creating a new resource.
+     * Formulario de asignacion de docentes a un proyecto de grado registrados previamente
+     * Envia lista de usuarios docentes registrados
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id 
+     * @param  \Illuminate\Http\Request 
+     *
      * @return \Illuminate\Http\Response
      */
     public function assign($id, Request $request)
@@ -338,12 +346,12 @@ class CoordinatorController extends Controller
         );
     }
     
-     /**
-     * Store a newly created resource in storage.
+    /*
+     * Función de almacenamiento en la base de datos de los docentes asignados a un proyecto de grado
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function saveAssign(Request $request)
     {
@@ -401,6 +409,11 @@ class CoordinatorController extends Controller
         );
     }
     
+    /*
+    * Consulta de todos proyectos con sus datos correspondientes
+    *
+    * @return Yajra\DataTables\DataTables
+    */ 
     public function projectList()
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')

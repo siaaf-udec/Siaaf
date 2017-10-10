@@ -98,7 +98,7 @@ jQuery(document).ready(function () {
                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
            }
        },
-       columns:[
+      columns:[
            {data: 'DT_Row_Index'},
            {data: 'PK_NPRY_idMinr008', "visible": false },
            {data: 'NPRY_Titulo', searchable: true},
@@ -107,13 +107,38 @@ jQuery(document).ready(function () {
            {data: 'NPRY_FechaR', className:'none',searchable: true},
            {data: 'NPRY_FechaL', className:'none',searchable: true},
            {data: 'NPRY_Estado',searchable: true},
-           {data: 'RDCN_Min',className:'none',searchable: true},
-           {data: 'RDCN_Requerimientos',className:'none',searchable: true},
-           {data: 'Director',className:'none',searchable: true},
-           {data: 'estudiante1',className:'none',searchable: true},
-           {data: 'estudiante2', className:'none',searchable: true},
-           {data: 'Jurado1', className:'none',searchable: true},
-           {data: 'Jurado2',className:'none',searchable: true},
+           {data: 'radicacion.RDCN_Min',className:'none',
+                        render: function (data, type, full, meta) 
+                        {
+                            return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+                        }
+                    },
+                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
+                        render: function (data, type, full, meta) 
+                        {
+                            if(data=="NO FILE"){
+                                return "NO FILE";    
+                            }else{
+                                return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                            }  
+                        }
+                    }, 
+            {data:  function (data, type, dataToSet) {
+                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                    },className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                    }, className:'none',searchable: true},
+                    {data: function (data, type, dataToSet) {
+                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                    },className:'none',searchable: true},
             {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -144,7 +169,7 @@ jQuery(document).ready(function () {
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
 table = table.DataTable();
-    table.on('click', '.edit', function (e) {
+       table.on('click', '.edit', function (e) {
         e.preventDefault();
         $tr = $(this).closest('tr');
         var O = table.row($tr).data();
@@ -153,7 +178,7 @@ table = table.DataTable();
             url: '',
             dataType: "html",
         }).done(function (data) {
-            route = '/gesap/evaluar/'+O.PK_NPRY_idMinr008;
+            route = '/gesap/show/'+O.PK_NPRY_idMinr008;
             $(".content-ajax").load(route);
         });
     });
