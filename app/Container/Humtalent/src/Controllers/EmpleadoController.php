@@ -43,7 +43,7 @@ class EmpleadoController extends Controller
      * Muestra todos los empleados registrados por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {
@@ -61,7 +61,7 @@ class EmpleadoController extends Controller
      * Muestra todos los empleados que tienen estado retirado.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxEmpleadosRetirados(Request $request)
     {
@@ -79,7 +79,7 @@ class EmpleadoController extends Controller
      * Muestra todos los empleados registrados para acceder a su historial de documentación.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxListaEmpleados(Request $request)
     {
@@ -98,7 +98,7 @@ class EmpleadoController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function editarEmpleadoRetirado(Request $request, $id)
     {
@@ -120,7 +120,7 @@ class EmpleadoController extends Controller
      * Función que muestra el formulario de registro de un nuevo empleado.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)//
     {
@@ -264,7 +264,7 @@ class EmpleadoController extends Controller
      *
      * @param  \Illuminate\Http\Request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)
     {

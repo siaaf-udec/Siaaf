@@ -81,7 +81,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form-document_update')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);

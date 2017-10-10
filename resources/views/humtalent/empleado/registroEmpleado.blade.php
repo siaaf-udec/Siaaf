@@ -129,7 +129,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_empleado_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
@@ -168,9 +167,9 @@
             $(".content-ajax").load(route);
         });
         $('#link_cancel').on('click', function (e) {
-            e.preventDefault();
+
+            $(".content-ajax").load(route);e.preventDefault();
             var route = '{{ route('talento.humano.empleado.index.ajax') }}';
-            $(".content-ajax").load(route);
         });
 
     });

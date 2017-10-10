@@ -110,9 +110,9 @@
                             beforeSend: function () {
 
                             },
-                            success: function (route) {
-                                if(route === "Empleado no registrado"){
-                                    UIToastr.init('error' , "Error" , "!El empleado no se encuentra registrado."  );
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init('error', response.title, response.message);
                                 }
                                 else {
                                     $(".content-ajax").html(route);

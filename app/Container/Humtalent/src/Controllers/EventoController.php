@@ -25,7 +25,7 @@ class EventoController extends Controller
      * Función que consulta los eventos registrados y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaEventos(Request $request){
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -45,7 +45,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaAsistentes(Request $request, $id){
         $asistentes=Asistent::with('personas')->where('FK_TBL_Eventos_IdEvento',$id)->get();
@@ -70,7 +70,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id_Evento
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function posiblesAsistentes(Request $request, $id_Evento){
         $this->id=$id_Evento;
@@ -121,7 +121,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function consultarAsistentes(Request $request, $id)
     {
@@ -141,7 +141,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listaEmpleados(Request $request, $id){
         if($request->ajax() && $request->isMethod('GET')) {
@@ -222,7 +222,7 @@ class EventoController extends Controller
      * Muestra todos los eventos que esten registrados por medio de petición ajax
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {
@@ -240,7 +240,7 @@ class EventoController extends Controller
      * Presenta el formulario para registrar un documento.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -291,7 +291,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)//
     {

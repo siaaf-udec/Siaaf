@@ -84,7 +84,6 @@
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('talento.humano.document.index.ajax') }}';
                                 $(".content-ajax").load(route);
-                                console.log(request);
                             }
                         },
                         error: function (response, xhr, request) {

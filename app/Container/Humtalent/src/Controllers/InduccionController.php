@@ -22,7 +22,7 @@ class InduccionController extends Controller
      * Función que muestra el listado de empleados nuevos.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarEmpleadosNuevos(Request $request)
     {
@@ -44,7 +44,7 @@ class InduccionController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request, $id)
     {
@@ -70,7 +70,7 @@ class InduccionController extends Controller
      * Función que muestra el listado de empleados nuevos por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxEmpleadosNuevos(Request $request)
     {

@@ -398,7 +398,7 @@ class CalendarioController extends Controller
      *
      *
      * @param \Illuminate\Http\Request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse;
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function ajaxEmpleadosDocumentosCompletos(Request $request)
     {
@@ -425,7 +425,7 @@ class CalendarioController extends Controller
      *
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxEmpleadosDocumentosIncompletos(Request $request)
     {

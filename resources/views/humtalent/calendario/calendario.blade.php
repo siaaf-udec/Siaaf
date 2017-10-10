@@ -356,8 +356,10 @@
                             $('#modal-update-notify').modal('toggle');//se llama una ventana modal que contiene el formulario que recibe la fecha de notificación del recordatorio
                         }
                     },
-                    error: function (e) {//en caso de que la petición falle se muestra el error por consola
-                        console.log(e.responseText);
+                    error: function (response, xhr, request) {//en caso de que la petición falle se muestra el error por consola
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
                     }
                 });
                 $('#calendar').fullCalendar('updateEvent', event);//se realiza la actulización del calendario
@@ -375,8 +377,10 @@
                     dataType: 'json',
                     success: function (response) {
                     },
-                    error: function (e) {
-                        console.log(e.responseText); //en caso de error en la petición se carga el error en consola
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        } //en caso de error en la petición se carga el error en consola
                     }
                 });
                 $('#calendar').fullCalendar('updateEvent', event);//se actuliza el calendario
@@ -409,8 +413,10 @@
                             }
                         }
                     },
-                    error: function (e) {
-                        console.log(e.responseText);
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
                     }
                 });
             },

@@ -116,7 +116,6 @@
                             } });
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_file')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);

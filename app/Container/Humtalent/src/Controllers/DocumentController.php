@@ -25,7 +25,7 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @param  string $tipoRad
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function consultaDocsRadicados(Request $request, $id, $tipoRad)
     {
@@ -86,8 +86,8 @@ class DocumentController extends Controller
      * Funcion que se encarga de listar los documentos registrados y que debern ser entregados por los empleados
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @return  string
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
+     *
      */
     public function listarDocsRad(Request $request)
     {
@@ -135,7 +135,10 @@ class DocumentController extends Controller
                         'estado' => $estado, 'tipoRad' => $tipoRad,
                     ]);
             } else {
-                return "Empleado no registrado";
+                return AjaxResponse::success(
+                    '¡Error!',
+                    'El empleado no se encuentra registrado.'
+                );
             }
         } else {
             return AjaxResponse::fail(
@@ -149,7 +152,7 @@ class DocumentController extends Controller
      * Funcion que retorna una vista ajax
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxBuscarEmpleado(Request $request)
     {
@@ -349,7 +352,7 @@ class DocumentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaRadicados(Request $request, $id)
     {
@@ -402,7 +405,7 @@ class DocumentController extends Controller
      * Función para mostrar una vista ajax
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)//muestra todos los documentos que esten registrados
     {
@@ -420,7 +423,7 @@ class DocumentController extends Controller
      * Show the form for creating a new resource.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)//preseta el formulario para registrar un documento
     {
@@ -460,6 +463,7 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param \Illuminate\Http\Request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */

@@ -494,7 +494,6 @@
 
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');

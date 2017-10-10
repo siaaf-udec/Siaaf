@@ -26,7 +26,7 @@ class PermisosController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listaPermisos(Request $request, $id)
     {
@@ -50,7 +50,7 @@ class PermisosController extends Controller
      * Función que presenta el listado de empleados registrados por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function ajaxListaEmpleados(Request $request)
     {
@@ -95,7 +95,7 @@ class PermisosController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function consultaPermisos(Request $request, $id)
     {
