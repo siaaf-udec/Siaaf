@@ -33,8 +33,8 @@ class ReportController extends Controller
     
     private $path='gesap.Reportes';
 
-    /**
-     * Display a listing of the resource.
+    /*
+     * Vista principal de generacion de reportes
      *
      * @return \Illuminate\Http\Response
      */
@@ -53,20 +53,26 @@ class ReportController extends Controller
         ]);
     }
     
-    
+    /*
+     * Reporte con todos los proyectos
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function allProject()
     {
         $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
             ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
-            //->whereNotBetween('NPRY_FechaR',["2017-07-05","2017-07-11"])
-//            ->groupBy(['NPRY_FechaR',''])
             ->get();
-            //return $proyectos->toSql();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos
         ]);
     }
     
+    /*
+     * Descarga de reporte de todos los proyectos
+     *
+     * @return Barryvdh\Snappy\Facades\SnappyPdf
+     */
     public function allProjectPrint()
     {
         $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
@@ -76,34 +82,45 @@ class ReportController extends Controller
         ])->download('ReporteAnteproyectosGesap.pdf');
     }
     
-    public function juryProject(Request $request, $jury)
+    /*
+     * Reporte con los proyectos de un jurado seleccionado
+     *
+     * @param int $jury
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function juryProject( $jury)
     {
-        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->join('gesap.tbl_encargados AS E', function ($join) use ($request, $jury) {
-                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                ->where(function ($query) {
-                    $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
-                    $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
-                })
-                ->where('FK_developer_user_id', '=', $jury);
-            })
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal',
+                   'encargados' => function ($encargados) use ($jury) {
+                        $encargados->where(function ($query) {
+                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+                        });
+                        $encargados->where('FK_developer_user_id', '=', $jury);
+            }])
             ->get();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos
         ]);
     }
     
-    
-    public function directorProject(Request $request, $director)
+    /*
+     * Reporte con los proyectos de un director seleccionado
+     *
+     * @param int $director
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function directorProject($director)
     {
         $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->join('gesap.tbl_encargados AS E', function ($join) use ($director) {
-                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                ->where('E.NCRD_Cargo', '=', "Director")
-                ->where('FK_developer_user_id', '=', $director);
-            })
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2',
+                   'encargados' => function ($encargados) use ($request) {
+                        $encargados->where('E.NCRD_Cargo', '=', "Director");
+                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
+            }])])
             ->get();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos

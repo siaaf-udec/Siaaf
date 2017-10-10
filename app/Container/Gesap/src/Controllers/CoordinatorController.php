@@ -48,7 +48,7 @@ class CoordinatorController extends Controller
      *
      * @param  \Illuminate\Http\Request 
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {
@@ -67,7 +67,7 @@ class CoordinatorController extends Controller
      *
      * @param  \Illuminate\Http\Request 
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -160,7 +160,7 @@ class CoordinatorController extends Controller
      *
      * @param  \Illuminate\Http\Request 
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit($id, Request $request)
     {
@@ -302,14 +302,14 @@ class CoordinatorController extends Controller
         
     }
     
-    /**
+    /*
      * Formulario de asignacion de docentes a un proyecto de grado registrados previamente
      * Envia lista de usuarios docentes registrados
      *
      * @param  int $id 
      * @param  \Illuminate\Http\Request 
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function assign($id, Request $request)
     {

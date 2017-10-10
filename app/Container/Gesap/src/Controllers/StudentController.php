@@ -31,28 +31,34 @@ class StudentController extends Controller
     private $path='gesap.Estudiante.';
     protected $connection = 'gesap';
         
-    public function index()
-    {
-        return redirect()->route('anteproyecto.index.studentList');
-    }
-
+    /*
+     * Listado de proyectos asignados como estudiantes
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function proyecto()
     {
         return view($this->path.'ProyectList');
     }
     
+    /*
+    * Consulta de proyectos con sus datos correspondientes asignados al usuario actual como estudiante
+    *
+    * @param  \Illuminate\Http\Request 
+    *
+    * @return Yajra\DataTables\DataTables
+    */
     public function studentList(Request $request)
     {
-                $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
-                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                ->where(function ($query) {
-                    $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
-                    $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
-                })
-                ->where('FK_developer_user_id', '=', $request->user()->id);
-            })
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal'])
+        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal',
+                   'encargados' => function ($encargados) use ($request) {
+                        $encargados->where(function ($query) {
+                            $query->where('E.NCRD_Cargo', '=', "Estudiante 1")  ;
+                            $query->orwhere('E.NCRD_Cargo', '=', "Estudiante 2");
+                        });
+                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
+            }])
             ->get();
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }

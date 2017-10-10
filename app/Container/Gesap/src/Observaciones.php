@@ -15,6 +15,8 @@ class Observaciones extends Model
 
     protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_id'];
     
+    
+    
     public function encargado()
     {
         return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_id', 'PK_NCRD_idCargo')

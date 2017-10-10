@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 
-/*COORDINADOR
-*/
+/*COORDINADOR*/
 Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function () use ($controller) {
     Route::get('min/', [
         'uses' => $controller.'CoordinatorController@index',
@@ -66,12 +65,12 @@ Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function () 
 
 Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use ($controller) {
     Route::get('evaluar/', [
-        'uses' => $controller.'EvaluatorController@index',
+        'uses' => $controller.'EvaluatorController@jury',
         'as' => 'evaluar.index'
     ]);
     
     Route::get('evaluar/index', [
-        'uses' => $controller.'EvaluatorController@index',
+        'uses' => $controller.'EvaluatorController@jury',
         'as' => 'evaluar.index'
     ]);
     

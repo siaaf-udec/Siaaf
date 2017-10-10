@@ -36,20 +36,22 @@ class EvaluatorController extends Controller
     
     
     /*
-     * Listado de todos los proyectos que se han registrado
+     * Listado de proyectos asignados como jurado
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return redirect()->route('anteproyecto.index.juryList');
-    }
-
     public function jury()
     {
         return view($this->path.'JuradoList');
     }
     
+    /*
+     * Función de almacenamiento en la base de datos de observaciones de proyectos
+     *
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function storeObservations(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -97,6 +99,13 @@ class EvaluatorController extends Controller
         );
     }
     
+    /*
+     * Función de almacenamiento o actualizacion en la base de datos de conceptos
+     *
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function storeConcepts(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {//Busco el ID del Encargado(Usuario respecto al proyecto)
@@ -199,25 +208,51 @@ class EvaluatorController extends Controller
                 'El concepto se ha actualizado correctamente.'
             );
         
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
     }
     
+    /*
+     * Listado de proyectos asignados como director
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function director()
     {
         return view($this->path.'DirectorList');
     }
     
-    public function directorAjax()
+    /*
+     * Listado de proyectos asignados como director con vista AJAX
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function directorAjax(Request $request)
     {
-        return view($this->path.'DirectorList-ajax');
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'DirectorList-ajax');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );   
     }
     
-
+    /*
+     * Listado de observaciones de proyecto seleccionado
+     * Envia el id del proyecto para realizar la consulta
+     *
+     * @param  int $id 
+     * @param  \Illuminate\Http\Request 
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function show($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -231,46 +266,66 @@ class EvaluatorController extends Controller
         );
     }
     
+    /*
+    * Consulta de observaciones de proyecto especifico
+    *
+    * @param int $id
+    *
+    * @return Yajra\DataTables\DataTables
+    */ 
     public function observationsList($id)
     {
         $observaciones=Observaciones::from('tbl_observaciones AS O')
-            ->where('FK_TBL_Anteproyecto_id', '=', $id)
-                ->where(function ($query) {
+                ->with(['encargado' => function ($encargados) use ($id) {
+                    $encargados->where('FK_TBL_Anteproyecto_id', '=', $id);
+                    $encargados->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
-                })
-                ->join('gesap.tbl_encargados', 'FK_TBL_Encargado_id', '=', 'PK_NCRD_idCargo')
-                ->with(['encargado' , 'respuesta'])
+                });
+                },
+                    'respuesta'])
                 ->get();
         return Datatables::of($observaciones)->addIndexColumn()->make(true);
     }
 
+    /*
+    * Consulta de proyectos con sus datos correspondientes asignados al usuario actual como director
+    *
+    * @param  \Illuminate\Http\Request 
+    *
+    * @return Yajra\DataTables\DataTables
+    */ 
     public function directorList(Request $request)
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
-                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                ->where('E.NCRD_Cargo', '=', "Director")
-                ->where('FK_developer_user_id', '=', $request->user()->id);
-            })
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2',
+                    'encargados' => function ($encargados) use ($request) {
+                        $encargados->where('E.NCRD_Cargo', '=', "Director");
+                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
+            }])
             ->get();
         
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }
     
+    /*
+    * Consulta de proyectos con sus datos correspondientes asignados al usuario actual como jurado
+    *
+    * @param  \Illuminate\Http\Request 
+    *
+    * @return Yajra\DataTables\DataTables
+    */
     public function juryList(Request $request)
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->join('gesap.tbl_encargados AS E', function ($join) use ($request) {
-                $join->on('E.FK_TBL_Anteproyecto_id', '=', 'A.PK_NPRY_idMinr008')
-                ->where(function ($query) {
-                    $query->where('E.NCRD_Cargo', '=', "Jurado 1")  ;
-                    $query->orwhere('E.NCRD_Cargo', '=', "Jurado 2");
-                })
-                ->where('FK_developer_user_id', '=', $request->user()->id);
-            })
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal',
+                   'encargados' => function ($encargados) use ($request) {
+                        $encargados->where(function ($query) {
+                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+                        });
+                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
+            }])
             ->get();
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }
