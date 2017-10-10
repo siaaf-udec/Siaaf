@@ -118,6 +118,14 @@ class User extends Authenticatable implements AuditableContract
         return $this->hasOne('App\Container\Acadspace\Src\UserAcadSpace', 'FK_PER_Id_User');
     }
 
+    /**
+     * Get the UsuarioGesap record associated with the user.
+     */
+    public function gesap()
+    {
+        return $this->hasOne('App\Container\Gesap\Src\Encargados', 'FK_developer_user_id');
+    }
+
     public function getFullNameAttribute()
     {
         return $this->name . ' ' . $this->lastname;
