@@ -9,29 +9,29 @@ class Observaciones extends Model
 {
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_observaciones';
+    protected $table = 'TBL_Observaciones';
 
-    protected $primaryKey = 'PK_BVCS_idObservacion';
+    protected $primaryKey = 'PK_BVCS_IdObservacion';
 
-    protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_id'];
+    protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_Id'];
     
     
     
     public function encargado()
     {
-        return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_id', 'PK_NCRD_idCargo')
-            ->select("PK_NCRD_idCargo", "FK_TBL_Anteproyecto_id", "FK_developer_user_id", "NCRD_Cargo")
+        return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo')
+            ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
             ->with(['usuarios'=>function ($usuarios) {
                             $usuarios->select('name', 'id');
             }]);
     }
     public function respuesta()
     {
-        return $this->hasOne(Respuesta::class, 'FK_TBL_Observaciones_id', 'PK_BVCS_idObservacion')
-            ->select("PK_RPST_idMinr008", "RPST_RMin", "RPST_Requerimientos", "FK_TBL_Observaciones_id");
+        return $this->hasOne(Respuesta::class, 'FK_TBL_Observaciones_Id', 'PK_BVCS_IdObservacion')
+            ->select("PK_RPST_IdMinr008", "RPST_RMin", "RPST_Requerimientos", "FK_TBL_Observaciones_Id");
     }
     public function check()
     {
-        return $this->hasOne(checkObservaciones::class, 'FK_TBL_Observaciones_id', 'PK_BVCS_idObservacion');
+        return $this->hasOne(checkObservaciones::class, 'FK_TBL_Observaciones_Id', 'PK_BVCS_IdObservacion');
     }
 }

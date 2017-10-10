@@ -13,13 +13,13 @@ class CreateCkeckObservacionesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('tbl_check_observaciones', function (Blueprint $table) {
-            $table->increments('PK_CBSV_id');
+        Schema::connection('gesap')->create('TBL_Check_Observaciones', function (Blueprint $table) {
+            $table->increments('PK_CBSV_Id');
             $table->boolean('CBSV_Estudiante1')->default(0);
             $table->boolean('CBSV_Estudiante2')->default(0);
             $table->boolean('CBSV_Director')->default(0);
-            $table->integer('FK_TBL_Observaciones_id')->unsigned();
-            $table->foreign('FK_TBL_Observaciones_id')->references('PK_BVCS_idObservacion')->on('tbl_observaciones')->onDelete('cascade');
+            $table->integer('FK_TBL_Observaciones_Id')->unsigned();
+            $table->foreign('FK_TBL_Observaciones_Id')->references('PK_BVCS_IdObservacion')->on('TBL_Observaciones')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateCkeckObservacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_check_observaciones');
+        Schema::dropIfExists('TBL_Check_Observaciones');
     }
 }

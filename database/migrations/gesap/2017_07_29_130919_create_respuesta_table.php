@@ -13,12 +13,12 @@ class CreateRespuestaTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('tbl_respuesta', function (Blueprint $table) {
-            $table->increments('PK_RPST_idMinr008');
+        Schema::connection('gesap')->create('TBL_Respuesta', function (Blueprint $table) {
+            $table->increments('PK_RPST_IdMinr008');
             $table->string('RPST_RMin');
             $table->string('RPST_Requerimientos');
-            $table->integer('FK_TBL_Observaciones_id')->unsigned();
-            $table->foreign('FK_TBL_Observaciones_id')->references('PK_BVCS_idObservacion')->on('tbl_observaciones')->onDelete('cascade');
+            $table->integer('FK_TBL_Observaciones_Id')->unsigned();
+            $table->foreign('FK_TBL_Observaciones_Id')->references('PK_BVCS_IdObservacion')->on('TBL_Observaciones')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateRespuestaTable extends Migration
      */
     public function down()
     {
-     Schema::dropIfExists('tbl_respuesta');
+     Schema::dropIfExists('TBL_Respuesta');
     }
 }

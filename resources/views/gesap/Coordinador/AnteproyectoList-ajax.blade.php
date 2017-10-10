@@ -1,5 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
         <div class="row">
             <div class="col-md-6">
                 <div class="btn-group">

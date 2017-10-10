@@ -13,16 +13,15 @@ class CreateConceptosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('tbl_conceptos', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_Conceptos', function (Blueprint $table) {
             $table->increments('PK_CNPT_Conceptos');
             $table->string('CNPT_Concepto');
             $table->string('CNPT_Tipo');
-            $table->integer('FK_TBL_Encargado_id')->unsigned();
-            $table->foreign('FK_TBL_Encargado_id')->references('PK_NCRD_idCargo')->on('TBL_Encargados')->onDelete('cascade');
+            $table->integer('FK_TBL_Encargado_Id')->unsigned();
+            $table->foreign('FK_TBL_Encargado_Id')->references('PK_NCRD_IdCargo')->on('TBL_Encargados')->onDelete('cascade');
             $table->timestamps();
         });
 
- 
     }
 
     /**

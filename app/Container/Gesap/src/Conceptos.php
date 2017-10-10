@@ -8,14 +8,14 @@ class Conceptos extends Model
 {
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_conceptos';
+    protected $table = 'TBL_Conceptos';
 
     protected $primaryKey = 'PK_CNPT_Conceptos';
 
-    protected $fillable = ['CNPT_Concepto','CNPT_Tipo','FK_TBL_Encargado_id'];
+    protected $fillable = ['CNPT_Concepto','CNPT_Tipo','FK_TBL_Encargado_Id'];
     
     public function conceptos()
     {
-        return $this->belongsTo(Conceptos::class, 'FK_TBL_Encargado_id', 'PK_NCRD_idCargo');
+        return $this->belongsTo(Conceptos::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo');
     }
 }

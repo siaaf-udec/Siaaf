@@ -46,7 +46,7 @@ class CoordinatorController extends Controller
     /**
      * Listado de todos los proyectos que se han registrado con vista AJAX
      *
-     * @param  \Illuminate\Http\Request 
+     * @param  \Illuminate\Http\Request
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -158,7 +158,7 @@ class CoordinatorController extends Controller
      * Envia lista de usuarios estudiantes registrados
      * Envia datos correspondientes al proyecto a editar
      *
-     * @param  \Illuminate\Http\Request 
+     * @param  \Illuminate\Http\Request
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -197,8 +197,8 @@ class CoordinatorController extends Controller
     /**
      * Función de actualizacion en la base de datos de proyectos
      *
-     * @param  \Illuminate\Http\Request 
-     * 
+     * @param  \Illuminate\Http\Request
+     *
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
@@ -413,7 +413,7 @@ class CoordinatorController extends Controller
     * Consulta de todos proyectos con sus datos correspondientes
     *
     * @return Yajra\DataTables\DataTables
-    */ 
+    */
     public function projectList()
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')
@@ -422,5 +422,4 @@ class CoordinatorController extends Controller
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
         
     }
-    
 }

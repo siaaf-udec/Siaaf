@@ -8,14 +8,14 @@ class CheckObservaciones extends Model
 {
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_check_observaciones';
+    protected $table = 'TBL_Check_Observaciones';
 
-    protected $primaryKey = 'PK_CBSV_id';
+    protected $primaryKey = 'PK_CBSV_Id';
 
-    protected $fillable = ['CBSV_Estudiante1','CBSV_Estudiante2','CBSV_Director','FK_TBL_Observaciones_id'];
+    protected $fillable = ['CBSV_Estudiante1','CBSV_Estudiante2','CBSV_Director','FK_TBL_Observaciones_Id'];
 
     public function observaciones()
     {
-        return $this->belongsto(Observaciones::class, 'FK_TBL_Observaciones_id', 'PK_BVCS_idObservacion');
+        return $this->belongsto(Observaciones::class, 'FK_TBL_Observaciones_Id', 'PK_BVCS_IdObservacion');
     }
 }

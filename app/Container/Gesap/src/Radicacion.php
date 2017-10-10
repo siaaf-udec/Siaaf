@@ -11,12 +11,12 @@ class Radicacion extends Model
 
     protected $table = 'TBL_Radicacion';
 
-    protected $primaryKey = 'PK_RDCN_idRadicacion';
+    protected $primaryKey = 'PK_RDCN_IdRadicacion';
 
-    protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_id'];
+    protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_Id'];
     
     public function anteproyectos()
     {
-        return $this->hasOne(Radicacion::class, 'FK_TBL_Anteproyecto_id', 'PK_NPRY_idMinr008');
+        return $this->hasOne(Radicacion::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
 }
