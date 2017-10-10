@@ -31,7 +31,7 @@ class DependenciasController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -52,7 +52,7 @@ class DependenciasController extends Controller
      * Función que almacena en la base de datos un nuevo registro de acción.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -76,23 +76,14 @@ class DependenciasController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+ 
 
     /**
      * Presenta el formulario con los datos para editar el regitro de una dependencia.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit (Request $request, $id)
     {
@@ -117,7 +108,7 @@ class DependenciasController extends Controller
      * Se realiza la actualización de los datos de una dependencia.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)//
     {
@@ -140,22 +131,12 @@ class DependenciasController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
+    
     /**
      * Muestra todos las dependencias registradas por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response  | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax (Request $request)
     {

@@ -24,14 +24,15 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view('carpark.usuarios.tablaUsuarios');
+        return view('carpark.usuarios.TablaUsuarios');
+     
     }
 
     /**
      * Muestra todos los usuarios registradas por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax (Request $request)
     {
@@ -52,7 +53,7 @@ class UsuariosController extends Controller
      * Función que muestra el formulario de registro de un nuevo empleado.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create (Request $request)//
     {
@@ -76,7 +77,7 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarDependencias(Request $request)
     {
@@ -99,7 +100,7 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarEstados(Request $request)
     {
@@ -123,7 +124,7 @@ class UsuariosController extends Controller
      * Función que almacena en la base de datos un nuevo usuario.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store (Request $request)//
     {
@@ -179,20 +180,16 @@ class UsuariosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit (Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
-            $infoUsuario = Usuarios::find($id);
-            $infoDependencia = Usuarios::find($id)->FunDependencias;
-            $infoEstado = Usuarios::find($id)->FunEstados;
+            $infoUsuario = Usuarios::find($id);            
             return view('carpark.usuarios.editarUsuario',
                 [
-                    'infoUsuario'     => $infoUsuario,
-                    'infoDependencia' => $infoDependencia,
-                    'infoEstado'      => $infoEstado,
+                    'infoUsuario'     => $infoUsuario,                    
                 ]);
         }
         else
@@ -208,7 +205,7 @@ class UsuariosController extends Controller
      * Se realiza la actualización de los datos de un usuario.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)
     {
@@ -235,7 +232,7 @@ class UsuariosController extends Controller
      * Se realiza la actualización de la foto de perfil de un usuario.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoUsuario(Request $request, $id)
     {
@@ -267,16 +264,16 @@ class UsuariosController extends Controller
      *
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('DELETE'))
         {
             
-            $Infomoto = Usuarios::with('FunBuscarMotos')->where('PK_CU_Codigo',$id)->get();
+            $Infomoto = Usuarios::with('relacionUsuariosMotos')->where('PK_CU_Codigo',$id)->get();
 
-            if(is_null($Infomoto[0]['FunBuscarMotos']))
+            if(is_null($Infomoto[0]['relacionUsuariosMotos']))
             {
                 Usuarios::destroy($id);
                 return AjaxResponse::success(
@@ -285,9 +282,9 @@ class UsuariosController extends Controller
                 );
             }else{                
          
-                for ($i=0; $i < sizeof($Infomoto[0]['FunBuscarMotos']); $i++) 
+                for ($i=0; $i < sizeof($Infomoto[0]['relacionUsuariosMotos']); $i++) 
                 { 
-                    Motos::destroy($Infomoto[0]['FunBuscarMotos'][$i]['PK_CM_IdMoto']);                  
+                    Motos::destroy($Infomoto[0]['relacionUsuariosMotos'][$i]['PK_CM_IdMoto']);                  
                 }
                 Usuarios::destroy($id);            
 
@@ -310,20 +307,16 @@ class UsuariosController extends Controller
      * Muestra el perfil de un usuario especifico.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verPerfil(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
-            $infoUsuario = Usuarios::find($id);
-            $infoDependencia = Usuarios::find($id)->FunDependencias;
-            $infoEstado = Usuarios::find($id)->FunEstados;
+            $infoUsuario = Usuarios::with('relacionUsuariosDependencia','relacionUsuariosEstado')->where('PK_CU_Codigo',$id)->get();
             return view('carpark.usuarios.perfilUsuario',
                 [
-                    'infoUsuario'     => $infoUsuario,
-                    'infoDependencia' => $infoDependencia,
-                    'infoEstado'      => $infoEstado,
+                    'infoUsuario'     => $infoUsuario,                    
                 ]);
         }
         else

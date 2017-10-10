@@ -4,11 +4,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nueva dependencia">
+                        @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nueva dependencia">
                             <i class="fa fa-plus">
                             </i>Nueva
-                        </a>
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Dependencias</a><br>
+                        </a>@endpermission
+                        @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Dependencias</a><br>@endpermission
                     </div>
                 </div>
             </div>
@@ -26,7 +26,6 @@
             </div>
         @endcomponent
     </div>
-
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -39,7 +38,7 @@
             {data: 'DT_Row_Index'},
             {data: 'CD_Dependencia', name: 'Dependencia'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
+                defaultContent: ' @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

@@ -1,5 +1,12 @@
+@permission('ADMIN_CARPARK')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de filtrado de un reporte por código.'])
+     @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+    ])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form_filtrar_codigo','method'=>'POST','target'=>'_blank','route'=> ['parqueadero.reportesCarpark.filtradoCodigo']]) !!}
@@ -11,11 +18,11 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">                                
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
-                                </a>
-                                {{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}
+                                </a>@endpermission
+                                @permission('ADMIN_CARPARK'){{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -26,7 +33,7 @@
 
     @endcomponent
 </div>
-
+@endpermission
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"><scripts>
 
@@ -43,6 +50,11 @@
             var route = '{{ route('parqueadero.historialesCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+       $( "#link_cancel" ).on('click', function (e) {
+            var route = '{{ route('parqueadero.historialesCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+       });   
 
     });
 

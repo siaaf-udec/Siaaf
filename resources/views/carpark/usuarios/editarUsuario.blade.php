@@ -1,12 +1,12 @@
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                        <i class="fa fa-arrow-circle-left"></i>Volver
-                    </a>
-                </div>
-            </div>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos de los usuarios'])
+   
+            @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+            ])
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([$infoUsuario], ['id'=>'form_update_usuario', 'url' => '/forms'])  !!}
@@ -15,7 +15,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div>
-                                    <a  href="javascript:;"><img src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}" class="img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a> <br>
+                                    @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}" class="img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a> @endpermission
+                                    <br>
                                 </div>                                           
 
                                 {!! Field:: text('PK_CU_Codigo',$infoUsuario['PK_CU_Codigo'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -57,10 +58,10 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-4">                                    
-                                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                                    @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                         Cancelar
-                                    </a>
-                                    {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                                    </a>@endpermission
+                                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                                 </div>
                             </div>
                         </div>
@@ -146,13 +147,6 @@ jQuery(document).ready(function() {
 
 
     /*Configuracion de Select*/
-
-    //$('#FK_CU_IdDependencia').val("$infoDependencia['PK_CD_IdDependencia']").trigger("$infoDependencia['CD_Dependencia']");
-    // $("#FK_CU_IdDependencia option").each(function(){
-    // if ($(this).text() == $infoDependencia['CD_Dependencia']){
-    //     $(this).attr("selected","selected");
-    // }
-    // });
 
     ///////////////////////
     $.fn.select2.defaults.set("theme", "bootstrap");
@@ -303,12 +297,7 @@ jQuery(document).ready(function() {
         $(".content-ajax").load(route);
     });
 
-   $( ".back" ).on('click', function (e) {
-       //e.preventDefault();
-       var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-       $(".content-ajax").load(route);
-   });   
-
+  
    //////////// Editar la foto de perfil //////////////////////
 
    $( ".UpdateFotoPerfil" ).on('click', function (e) {
@@ -318,6 +307,12 @@ jQuery(document).ready(function() {
         });
 
    ////////////Fin Editar Foto Perfil ////////////////////////
+
+   $( "#link_cancel" ).on('click', function (e) {
+       var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+   });
+
 
 
 });

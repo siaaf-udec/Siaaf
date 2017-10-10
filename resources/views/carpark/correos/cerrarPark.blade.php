@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-12 col-md-offset-5">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-danger btn-icon enviarCorreos" title="Registar nueva dependencia"><i class="fa fa-paper-plane"></i>Enviar Correos</a>                        
+                        @permission('FUNC_CARPARK')<a href="javascript:;" class="btn btn-danger btn-icon enviarCorreos" title="Registar nueva dependencia"><i class="fa fa-paper-plane"></i>Enviar Correos</a>@endpermission                        
                     </div>                    
                 </div>                
             </div>
@@ -95,10 +95,10 @@ jQuery(document).ready(function () {
                             type:'POST',
                             contentType: false,
                             processData: false,
-                            async: async,
+                            async: async,                            
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-
+                                    
                                 }
                             },
                             error: function (response, xhr, request) {

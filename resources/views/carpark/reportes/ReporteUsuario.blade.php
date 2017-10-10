@@ -52,7 +52,7 @@
             <div class="date">Total Historial: {{$total}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
-            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.descargarreporteUsuario') }}/{{$infoUsuarios->PK_CU_Codigo}}">
+            <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.descargarreporteUsuario') }}/{{$infoUsuarios[0]['PK_CU_Codigo']}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             </a>
@@ -61,17 +61,17 @@
     </div>
     <div><!-- infoUsuario -->
         <div id="infoUser" style="float: left;">
-            <h4>Código: {{$infoUsuarios->PK_CU_Codigo}}</h4>
-            <h4>Nombre: {{$infoUsuarios->CU_Nombre1.' '.$infoUsuarios->CU_Nombre2}}</h4>
-            <h4>Apellido: {{$infoUsuarios->CU_Apellido1.' '.$infoUsuarios->CU_Apellido2}}</h4>
-            <h4>Teléfono: {{$infoUsuarios->CU_Telefono}}</h4>
-            <h4>Dirección: {{$infoUsuarios->CU_Direccion}}</h4>
-            <h4>Correo: {{$infoUsuarios->CU_Correo}}</h4>
-            <h4>Dependencia: {{$infoUsuarios->Dependencia}}</h4>
+            <h4>Código: {{$infoUsuarios[0]['PK_CU_Codigo']}}</h4>
+            <h4>Nombre: {{$infoUsuarios[0]['CU_Nombre1'].' '.$infoUsuarios[0]['CU_Nombre2']}}</h4>
+            <h4>Apellido: {{$infoUsuarios[0]['CU_Apellido1'].' '.$infoUsuarios[0]['CU_Apellido2']}}</h4>
+            <h4>Teléfono: {{$infoUsuarios[0]['CU_Telefono']}}</h4>
+            <h4>Dirección: {{$infoUsuarios[0]['CU_Direccion']}}</h4>
+            <h4>Correo: {{$infoUsuarios[0]['CU_Correo']}}</h4>
+            <h4>Dependencia: {{$infoUsuarios[0]['FunDependencias']['CD_Dependencia']}}</h4>
 
         </div> 
         <div id="imagenUser" style="float: right;">
-            <img src="{{asset(Storage::url($infoUsuarios->CU_UrlFoto))}}" align="right" style="border-radius: 50%" height="250" width="250">
+            <img src="{{asset(Storage::url($infoUsuarios[0]['CU_UrlFoto']))}}" align="right" style="border-radius: 50%" height="250" width="250">
         </div>               
         
     </div>

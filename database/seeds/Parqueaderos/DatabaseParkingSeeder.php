@@ -21,6 +21,7 @@ class DatabaseParkingSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UsersFinancialTableSeeder::class);
+        $this->call(RoleParqueaderoSeeder::class);
+        $this->call(PermissionParqueaderosSeeder::class);        
     }
 }

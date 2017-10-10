@@ -22,7 +22,7 @@ class MotosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         return view('carpark.motos.tablaMotos');
     }
 
@@ -30,7 +30,7 @@ class MotosController extends Controller
      * Muestra todos los usuarios registradas por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax (Request $request)
     {
@@ -52,7 +52,7 @@ class MotosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create (Request $request,$id)//
     {
@@ -77,7 +77,7 @@ class MotosController extends Controller
      * Función que almacena en la base de datos un nuevo vehículo.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store (Request $request)
     {
@@ -127,7 +127,7 @@ class MotosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function editar(Request $request, $id)
     {
@@ -153,7 +153,7 @@ class MotosController extends Controller
      * Se realiza la actualización de los datos de un usuario.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update (Request $request)
     {
@@ -182,7 +182,7 @@ class MotosController extends Controller
      *
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
@@ -208,19 +208,17 @@ class MotosController extends Controller
      *
      * @param  int  $id
      * @param  int  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verMoto(Request $request, $id)
     {
         if($request->ajax() && $request->isMethod('GET'))
         {
-            $infoMoto = Motos::find($id);
-            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);                        
+            $infoMoto = Motos::with('relacionMotosUsuarios')->where('PK_CM_IdMoto',$id)->get();            
 
             return view('carpark.motos.perfilMoto',
                 [
                     'infoMoto'    => $infoMoto,
-                    'infoUsuario' => $infoUsuario,
                 ]);
         }
         else
@@ -236,7 +234,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de perfil de un vehículo.
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoMoto(Request $request, $id)
     {
@@ -267,7 +265,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoPropiedad(Request $request, $id)
     {
@@ -298,7 +296,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
      * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function UpdateFotoSOAT(Request $request, $id)
     {

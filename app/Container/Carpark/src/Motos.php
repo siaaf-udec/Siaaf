@@ -23,10 +23,10 @@ class Motos extends Model
         'CM_UrlPropiedad',
         'CM_UrlSoat',
         'FK_CM_CodigoUser',
-    ];
+    ];    
 
-    public function FunMotos()
+    public function relacionMotosUsuarios()
     {
-        return $this->belongsTo(Usuarios::class, 'FK_CM_CodigoUser', 'PK_CU_Codigo');
+        return $this->hasMany(Usuarios::class, 'PK_CU_Codigo', 'FK_CM_CodigoUser');
     }
 }

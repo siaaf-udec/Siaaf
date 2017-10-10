@@ -27,22 +27,20 @@ class Usuarios extends Model
         , 'FK_CU_IdDependencia',
     ];
 
-    public function FunDependencias()
+    public function relacionUsuariosDependencia()
     {
         return $this->hasOne(Dependencias::class, 'PK_CD_IdDependencia', 'FK_CU_IdDependencia');
     }
 
-    public function FunEstados()
+    public function relacionUsuariosEstado()
     {
         return $this->hasOne(Estados::class, 'PK_CE_IdEstados', 'FK_CU_IdEstado');
     }
-    public function FunBuscarMotos()
+    public function relacionUsuariosMotos()
     {
         return $this->hasMany(Motos::class, 'FK_CM_CodigoUser', 'PK_CU_Codigo');
     }
 
-    public function FuncionDependencias(){
-        return $this->hasOne(Dependencias::class, 'PK_CD_IdDependencia', 'FK_CU_IdDependencia');
-    }
+    
 
 }

@@ -60,31 +60,27 @@
         </div>
     </div>
     <div><!-- infoUsuario -->
-        <div id="FotoMoto" style="float: left;">
-            <img src="{{asset(Storage::url($infoMoto->CM_UrlFoto))}}" align="center" style="border-radius: 50%" height="250" width="250">        
+        <div id="InfoMoto" style="float: left;">
+            <div id="infoIzq">
+                <h3>Código Vehiculo: {{$infoMoto->PK_CM_IdMoto}}</h3>
+                <h3>Placa Del Vehiculo: {{$infoMoto->CM_Placa}}</h3>
+                <h3>Marca Del Vehiculo: {{$infoMoto->CM_Marca}}</h3>
+            
+                <h3>Número De Tarjeta De Propiedad Del Vehiculo: {{$infoMoto->CM_NuPropiedad}}</h3>
+                <h3>Número De SOAT Del Vehiculo: {{$infoMoto->CM_NuSoat}}</h3>
+                <h3>Fecha De Vencimiento Del SOAT: {{$infoMoto->CM_fechaSoat}}</h3>
+            </div>            
         </div> 
         <span></span>        
-        <div id="FotoSOAT" style="float: right;">
-            <img src="{{asset(Storage::url($infoMoto->CM_UrlSoat))}}" align="center" hspace="10" style="" height="250" width="250">
-        </div>       
-        <div id="FotoProp" style="float: right;">
-            <img src="{{asset(Storage::url($infoMoto->CM_UrlPropiedad))}}" align="center" style="" height="250" width="250">
-        </div> 
+        <div id="FotoMoto" style="float: right;">
+            <img src="{{asset(Storage::url($infoMoto->CM_UrlFoto))}}" align="center" style="border-radius: 50%" height="250" width="250">        
+            <br>
+            <br>
+        </div>               
         <br>
         <br>                
     </div>
-    <div>
-        <div id="infoIzq" style="float: left;">
-            <h3>Código Vehiculo: {{$infoMoto->PK_CM_IdMoto}}</h3>
-            <h3>Placa Del Vehiculo: {{$infoMoto->CM_Placa}}</h3>
-            <h3>Marca Del Vehiculo: {{$infoMoto->CM_Marca}}</h3>
-        </div>
-        <div id="infoDer" style="float: right;">
-            <h3>Número De Tarjeta De Propiedad Del Vehiculo: {{$infoMoto->CM_NuPropiedad}}</h3>
-            <h3>Número De SOAT Del Vehiculo: {{$infoMoto->CM_NuSoat}}</h3>
-            <h3>Fecha De Vencimiento Del SOAT: {{$infoMoto->CM_fechaSoat}}</h3>
-        </div>
-    </div>
+    
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>

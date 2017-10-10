@@ -1,14 +1,15 @@
+@permission('FUNC_CARPARK')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Motocicletas dentro de la Universidad:'])
         <br>            
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                    @permission('FUNC_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
                         <i class="fa fa-plus">
                         </i>Acción
-                    </a>
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Ingresos</a><br>
+                    </a>@endpermission
+                    @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Ingresos</a><br>@endpermission
                 </div>
             </div>
         </div>
@@ -28,7 +29,7 @@
         </div>
     @endcomponent
 </div>
-
+@endpermission
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">

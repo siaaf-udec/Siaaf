@@ -1,5 +1,11 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario edición de vehículos'])
+    @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+            ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($infoMoto,['id'=>'form_moto_update', 'url' => '/forms']) !!}
@@ -37,15 +43,15 @@
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
-                                <a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>
+                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
                             </div>
                         </div>        
                     </div>                               
@@ -56,12 +62,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">                                
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
-                                </a>
+                                </a>@endpermission
 
-                                {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                                @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -90,7 +96,7 @@
                         {!! Field::file('CM_UrlFotoM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>                
             </div>
         </div>
@@ -121,7 +127,7 @@
                         {!! Field::file('CM_UrlPropiedadM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>                
             </div>
         </div>
@@ -152,7 +158,7 @@
                         {!! Field::file('CM_UrlSoatM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>                
             </div>
         </div>
@@ -466,6 +472,11 @@
         });   
 
        ////////////Fin Editar Foto Perfil ////////////////////////
+        $( "#link_cancel" ).on('click', function (e) {
+       var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+       });
+
     });       
 
 </script>

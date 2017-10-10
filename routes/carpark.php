@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 //Rutas Usuarios Parqueadero//////////////////////////////////////////
 
-    Route::group(['prefix' => 'usuariosCarpark'], function () {
+    Route::group(['prefix' => 'usuariosCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
 ///////////////FIN Rutas Usuarios Parqueadero//////////////////////////////////////
 
 ////////////////////Inicio Rutas para Motos //////////////////////////////////////
-    Route::group(['prefix' => 'motosCarpark'], function () {
+    Route::group(['prefix' => 'motosCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -187,7 +187,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 //////////////////// Inicio Rutas Para Las Dependencias/////////////////////////
 
-    Route::group(['prefix' => 'dependenciasCarpark'], function () {
+    Route::group(['prefix' => 'dependenciasCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -244,7 +244,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 ///////////////////////INICIO Rutas Para Los Reportes///////////////////////////
 
-    Route::group(['prefix' => 'reportesCarpark'], function () {
+    Route::group(['prefix' => 'reportesCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -354,7 +354,7 @@ Route::group(['middleware' => ['auth']], function () {
 ///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
 
 ////////////////////Inicio Rutas para Ingresos //////////////////////////////////////
-    Route::group(['prefix' => 'ingresosCarpark'], function () {
+    Route::group(['prefix' => 'ingresosCarpark','middleware' => ['permission:FUNC_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -404,13 +404,23 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'IngresosController@confirmar',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
             'as' => 'parqueadero.ingresosCarpark.confirmar'
         ]); 
+        
+        Route::get('1e6548467c256f201b82f9f20dac907b/{id?}', [
+            'uses' => $controller . 'IngresosController@confirmarTarjeta',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'as' => 'parqueadero.ingresosCarpark.1e6548467c256f201b82f9f20dac907b'
+        ]); 
+        
+        Route::post('storeTarjeta', [
+            'uses' => $controller . 'IngresosController@storeTarjeta',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
+            'as' => 'parqueadero.ingresosCarpark.registroTarjeta'
+        ]);
 
     });
 ///////////////////////FIN Rutas Para Los Ingresos//////////////////////////////
 
 ///////////////////////Rutas Para Los Historiales//////////////////////////////
 
-     Route::group(['prefix' => 'historialesCarpark'], function () {
+     Route::group(['prefix' => 'historialesCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -461,7 +471,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 ///////////////////////INICIO Rutas Para Los Correos//////////////////////////////
      
-    Route::group(['prefix' => 'correosCarpark'], function () {
+    Route::group(['prefix' => 'correosCarpark','middleware' => ['permission:FUNC_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 

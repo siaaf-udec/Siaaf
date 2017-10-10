@@ -23,7 +23,7 @@ class CorreosController extends Controller
     /**
      * Muestra el boton para cerrar el parqueadero y enviar los correos de advertencia a los usuarios que aún tienen su vehículo en la universidad.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cerrarParqueadero()
     {
@@ -35,9 +35,9 @@ class CorreosController extends Controller
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
-            $infoEntradas = Ingresos::with('FuncionIngresos')->get();
+            $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
             for ($i = 0; $i < sizeof($infoEntradas); $i++) {
-                $infoCorreo = $infoEntradas[$i]['FuncionIngresos'];
+                $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
 
                 Mail::send('carpark.correos.plantilla', ['user' => $infoCorreo], function ($msj) use ($infoCorreo) {
                     $msj->subject('Advertencia De Cierre Del Parqueadero');

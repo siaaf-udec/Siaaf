@@ -33,7 +33,7 @@ class IngresosController extends Controller
      * Muestra la vista de inicio de la información de motocicletas dentro del parqueadero medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax (Request $request)
     {
@@ -53,7 +53,7 @@ class IngresosController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -74,7 +74,7 @@ class IngresosController extends Controller
      * Función que que devuelve el formulario para registro de ingresos.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verificar(Request $request)
     {
@@ -114,7 +114,7 @@ class IngresosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function confirmar (Request $request, $id)
     {
@@ -137,12 +137,31 @@ class IngresosController extends Controller
             );
         }
     }
+    
+    /**
+     * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function confirmarTarjeta ($id)
+    {
+        $infoMoto = Motos::find($id);
+        $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);                        
+
+        return view('carpark.ingresos.confirmacionTarjeta',
+            [
+                'infoMoto'    => $infoMoto,
+                'infoUsuario' => $infoUsuario,
+            ]);
+    }
 
     /**
      * Función que almacena en la base de datos un las acciones del parqueadero.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -193,5 +212,46 @@ class IngresosController extends Controller
             );
         }
     }
+    
+    /**
+     * Función que almacena en la base de datos un las acciones del parqueadero.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeTarjeta(Request $request)
+    {        
+        ////////////////Validación entrada o salida//////////////////
+        $infoIngresos = Ingresos::where([['CI_CodigoUser','=',$request['CI_CodigoUser']],['CI_CodigoMoto','=',$request['CI_CodigoMoto']]])->get();
+        if($infoIngresos == '[]')               
+        {
+            $generadorID = date_create();
+            Ingresos::create([
+                'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
+                'CI_NombresUser'  => $request['CI_NombresUser'],
+                'CI_CodigoUser'   => $request['CI_CodigoUser'],
+                'CI_Placa'        => $request['CI_Placa'],
+                'CI_CodigoMoto'   => $request['CI_CodigoMoto']
+            ]);
+              
+            return view('carpark.ingresos.tablaIngresos');
+        }else{
+            $generadorID = date_create();
+            Historiales::create([
+                'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
+                'CH_NombresUser'  => $request['CI_NombresUser'],
+                'CH_CodigoUser'   => $request['CI_CodigoUser'],
+                'CH_Placa'        => $request['CI_Placa'],
+                'CH_CodigoMoto'   => $request['CI_CodigoMoto'],
+                'CH_FHentrada'    => $infoIngresos[0]['created_at'],                    
+            ]);
+
+            Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+
+            return view('carpark.ingresos.tablaIngresos');
+        }
+            
+        //////////////// FIN Validación entrada o salida//////////////////        
+    }    
 
 }

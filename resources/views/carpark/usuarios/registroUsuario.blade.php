@@ -1,5 +1,11 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro del personal'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de usuarios'])
+       @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+        ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($listaDependencias,['id'=>'form_usuario_create', 'url' => '/forms']) !!}
@@ -52,12 +58,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">                                
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
-                                </a>
+                                </a>@endpermission
 
-                                {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
+                                @permission('ADMIN_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -180,6 +186,14 @@
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+        $( "#link_cancel" ).on('click', function (e) {
+       var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+        });
+
+
+
 
     });
 

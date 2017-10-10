@@ -32,7 +32,7 @@ class HistorialController extends Controller
      * Muestra la vista de inicio de la información de historial de personas y motos que han hecho uso del parqueadero por medio de una petición ajax.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax (Request $request)
     {
@@ -53,7 +53,7 @@ class HistorialController extends Controller
      * Función que muestra el formulario de filtrado de un reporte de historiales.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function filtrarFecha (Request $request)//
     {
@@ -74,7 +74,7 @@ class HistorialController extends Controller
      * Función que muestra el formulario de filtrado de un reporte de historiales.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function filtrarCodigo (Request $request)//
     {
@@ -95,7 +95,7 @@ class HistorialController extends Controller
      * Función que muestra el formulario de filtrado de un reporte de historiales.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function filtrarPlaca (Request $request)//
     {

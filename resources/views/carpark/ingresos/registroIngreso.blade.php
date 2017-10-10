@@ -1,5 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro manual de entradas y salidas del parqueadero'])
+    @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+            ])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form_ingreso_create', 'url' => '/forms']) !!}
@@ -15,11 +21,11 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">                                
-                                <a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                                @permission('FUNC_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
-                                </a>
-                                {{ Form::submit('Registrar Acción', ['class' => 'btn blue']) }}
+                                </a>@endpermission
+                                @permission('FUNC_CARPARK'){{ Form::submit('Registrar Acción', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -61,7 +67,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 if(response.data == 422)
                                 {
@@ -73,7 +78,6 @@
                                     $('#form_ingreso_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    console.info(response['data']);
                                     var route = '{{ route('parqueadero.ingresosCarpark.confirmar') }}'+'/'+response.data;
                                     $(".content-ajax").load(route);
                                 }
@@ -107,6 +111,11 @@
             var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+       $( "#link_cancel" ).on('click', function (e) {
+       var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+       });
 
     });
 

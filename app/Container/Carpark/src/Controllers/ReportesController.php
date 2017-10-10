@@ -352,10 +352,7 @@ class ReportesController extends Controller
         $cont = 1;
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $infoUsuarios = Usuarios::find($id);        
-        $infoDependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuarios->FK_CU_IdDependencia)->get();    
-            
-        $infoUsuarios->offsetSet('Dependencia',$infoDependencia[0]['CD_Dependencia']);
+        $infoUsuarios = Usuarios::with('relacionUsuariosDepenencia','relacionUsuariosEstados')->where('PK_CU_Codigo',$id)->get();        
             
         $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
         $total=count($infoHistoriales);
@@ -371,16 +368,14 @@ class ReportesController extends Controller
      */
     public function descargarreporteUsuario($id)
     {
-         $cont = 1;
+        $cont = 1;
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $infoUsuarios = Usuarios::find($id);        
-        $infoDependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuarios->FK_CU_IdDependencia)->get();    
-            
-        $infoUsuarios->offsetSet('Dependencia',$infoDependencia[0]['CD_Dependencia']);
+        $infoUsuarios = Usuarios::with('relacionUsuariosDepenencia','relacionUsuariosEstados')->where('PK_CU_Codigo',$id)->get();        
             
         $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
         $total=count($infoHistoriales);
+        
         return SnappyPdf::loadView('carpark.reportes.ReporteUsuario',
             compact('infoUsuarios','infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');         
                     

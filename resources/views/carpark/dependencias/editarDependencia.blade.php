@@ -1,12 +1,12 @@
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del personal'])
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                        <i class="fa fa-arrow-circle-left"></i>Volver
-                    </a>
-                </div>
-            </div>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos de las dependencias'])
+        @slot('actions', [
+           'link_cancel' => [
+               'link' => '',
+               'icon' => 'fa fa-arrow-left',
+                            ],
+        ])
+           
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                 {!! Form::model ($dependenciaRegistrada, ['id'=>'form_dependencia_update', 'url' => '/forms'])  !!}
@@ -21,10 +21,10 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">                                    
-                                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                                    @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                         Cancelar
-                                    </a>
-                                    {{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}
+                                    </a>@endpermission
+                                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                                 </div>
                             </div>
                         </div>
@@ -114,6 +114,11 @@ jQuery(document).ready(function() {
 
    $( ".back" ).on('click', function (e) {
        e.preventDefault();
+       var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+       $(".content-ajax").load(route);
+   });
+   
+   $( "#link_cancel" ).on('click', function (e) {
        var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
        $(".content-ajax").load(route);
    });

@@ -16,7 +16,7 @@ class Dependencias extends Model
         'PK_CD_IdDependencia', 'CD_Dependencia',
     ];
 
-    public function FuncionUsuarios(){
+    public function relacionDependenciaUsuario(){
         return $this->belongsTo(Usuarios::class,'PK_CD_IdDependencia','FK_CU_IdDependencia');
     }
 }

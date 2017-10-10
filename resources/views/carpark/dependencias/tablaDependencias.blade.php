@@ -20,17 +20,19 @@
 @section('page-title', 'Listado de dependencias:')
 
 @section('content')
+@permission('ADMIN_CARPARK')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Dependencias Registradas:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nueva dependencia">
-                            <i class="fa fa-plus">
+                        @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Registar nueva dependencia">
+                            <i class="fa fa-plus">@endpermission
                             </i>Nueva
                         </a>
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Dependencias</a><br>
+                        @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Dependencias</a>@endpermission
+                        <br>
                     </div>
                 </div>
             </div>
@@ -48,6 +50,7 @@
             </div>
         @endcomponent
     </div>
+@endpermission
 @endsection
 
 @push('plugins')
