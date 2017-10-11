@@ -55,9 +55,9 @@ class EvaluatorController extends Controller
     public function storeObservations(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $jurado = Encargados::select('PK_NCRD_idCargo')
-                        ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
-                        ->where('FK_developer_user_id', '=', $request->get('user'))
+            $jurado = Encargados::select('PK_NCRD_IdCargo')
+                        ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('proyecto'))
+                        ->where('FK_Developer_User_Id', '=', $request->get('user'))
                         ->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
@@ -66,11 +66,11 @@ class EvaluatorController extends Controller
             
             $observacion= new Observaciones();
             $observacion->BVCS_Observacion=$request->get('observacion');
-            $observacion->FK_TBL_Encargado_id=$jurado->PK_NCRD_idCargo;
+            $observacion->FK_TBL_Encargado_Id=$jurado->PK_NCRD_IdCargo;
             $observacion->save();
             
             $checkobservacion= new CheckObservaciones();
-            $checkobservacion->FK_TBL_Observaciones_id=$observacion->PK_BVCS_idObservacion;
+            $checkobservacion->FK_TBL_Observaciones_Id=$observacion->PK_BVCS_IdObservacion;
             $checkobservacion->save();
           
             if ($request->get('Min')=="Vacio" || $request->get('Requerimientos')=="Vacio") {
@@ -85,7 +85,7 @@ class EvaluatorController extends Controller
                 } else {
                     $respuesta->RPST_Requerimientos="NO FILE";
                 }
-                $respuesta->FK_TBL_Observaciones_id=$observacion->PK_BVCS_idObservacion;
+                $respuesta->FK_TBL_Observaciones_Id=$observacion->PK_BVCS_IdObservacion;
                 $respuesta->save();
             }
             return AjaxResponse::success(
@@ -109,9 +109,9 @@ class EvaluatorController extends Controller
     public function storeConcepts(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {//Busco el ID del Encargado(Usuario respecto al proyecto)
-            $jurado = Encargados::select('PK_NCRD_idCargo', 'NCRD_Cargo')
-                ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
-                ->where('FK_developer_user_id', '=', $request->user()->id)
+            $jurado = Encargados::select('PK_NCRD_IdCargo', 'NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('proyecto'))
+                ->where('FK_Developer_user_Id', '=', $request->user()->id)
                 ->where(function ($query) {
                     $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                     $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
@@ -123,19 +123,19 @@ class EvaluatorController extends Controller
             } else {
                 $other="Jurado 1";
             }
-            $jurado2=Encargados::select('PK_NCRD_idCargo', 'NCRD_Cargo')
-                ->where('FK_TBL_Anteproyecto_id', '=', $request->get('proyecto'))
+            $jurado2=Encargados::select('PK_NCRD_IdCargo', 'NCRD_Cargo')
+                ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('proyecto'))
                 ->where('NCRD_Cargo', '=', $other)
                 ->firstOrFail();
              
             //Consulto si los jurados ya ha realizado un concepto anteriormente
             $encargado=Conceptos::select('PK_CNPT_Conceptos', 'CNPT_Concepto')
-                ->where('FK_TBL_Encargado_id', '=', $jurado->PK_NCRD_idCargo)
+                ->where('FK_TBL_Encargado_Id', '=', $jurado->PK_NCRD_IdCargo)
                 ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
             
             $encargado2=Conceptos::select('PK_CNPT_Conceptos', 'CNPT_Concepto')
-                ->where('FK_TBL_Encargado_id', '=', $jurado2->PK_NCRD_idCargo)
+                ->where('FK_TBL_Encargado_Id', '=', $jurado2->PK_NCRD_IdCargo)
                 ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
              
@@ -146,7 +146,7 @@ class EvaluatorController extends Controller
                 Conceptos::create([
                     'CNPT_Concepto'=>$request->get('concepto') ,
                     'CNPT_Tipo'    =>"Anteproyecto",
-                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo
+                    'FK_TBL_Encargado_Id'=>$jurado->PK_NCRD_IdCargo
                 ]);
                 if ($encargado2!=null) {
                     if ($request->get('concepto')!=$encargado2->CNPT_Concepto) {
@@ -169,7 +169,7 @@ class EvaluatorController extends Controller
                     'PK_CNPT_Conceptos'=>$encargado->PK_CNPT_Conceptos,
                     'CNPT_Concepto'=>$request->get('concepto'),
                     'CNPT_Tipo'    =>"Anteproyecto",
-                    'FK_TBL_Encargado_id'=>$jurado->PK_NCRD_idCargo
+                    'FK_TBL_Encargado_Id'=>$jurado->PK_NCRD_IdCargo
                 ]);
                 if ($encargado2 != null) {
                     if ($request->get('concepto')!=$encargado2->CNPT_Concepto) {
@@ -275,15 +275,15 @@ class EvaluatorController extends Controller
     */ 
     public function observationsList($id)
     {
-        $observaciones=Observaciones::from('tbl_observaciones AS O')
-                ->with(['encargado' => function ($encargados) use ($id) {
-                    $encargados->where('FK_TBL_Anteproyecto_id', '=', $id);
+        $observaciones=Observaciones::
+                with(['encargado' => function ($encargados) use ($id) {
+                    $encargados->where('FK_TBL_Anteproyecto_Id', '=', $id);
                     $encargados->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
                             $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
-                });
+                    });
                 },
-                    'respuesta'])
+                'respuesta'])
                 ->get();
         return Datatables::of($observaciones)->addIndexColumn()->make(true);
     }
@@ -297,14 +297,13 @@ class EvaluatorController extends Controller
     */ 
     public function directorList(Request $request)
     {
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2',
-                    'encargados' => function ($encargados) use ($request) {
-                        $encargados->where('E.NCRD_Cargo', '=', "Director");
-                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
-            }])
-            ->get();
-        
+        $anteproyectos = Encargados::select('FK_Developer_User_Id','FK_TBL_Anteproyecto_Id','PK_NCRD_IdCargo')
+                        ->where('NCRD_Cargo', '=', "Director")
+                        ->where('FK_Developer_user_Id', '=', $request->user()->id)
+                        ->with(['anteproyecto' => function ($proyecto) {
+                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2']);
+                        }])
+                        ->get();
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }
     
@@ -317,16 +316,18 @@ class EvaluatorController extends Controller
     */
     public function juryList(Request $request)
     {
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal',
-                   'encargados' => function ($encargados) use ($request) {
-                        $encargados->where(function ($query) {
+        
+        
+        $anteproyectos = Encargados::where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-                        });
-                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
-            }])
-            ->get();
+                        })
+                        ->where('FK_Developer_User_Id', '=', $request->user()->id)
+                        ->with(['anteproyecto' => function ($proyecto) {
+                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2','conceptoFinal']);
+                        }])
+                        ->get();
+        
         return Datatables::of($anteproyectos)->addIndexColumn()->make(true);
     }
 }

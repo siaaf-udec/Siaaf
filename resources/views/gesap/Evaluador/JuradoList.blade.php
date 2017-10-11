@@ -253,20 +253,20 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_NPRY_idMinr008', "visible": false },
-           {data: 'NPRY_Titulo', searchable: true},
-           {data: 'NPRY_Keywords', className:'none',searchable: true},
-           {data: 'NPRY_Duracion',className:'none',searchable: true},
-           {data: 'NPRY_FechaR', className:'none',searchable: true},
-           {data: 'NPRY_FechaL', className:'none',searchable: true},
-           {data: 'NPRY_Estado',searchable: true},
-           {data: 'radicacion.RDCN_Min',
+           {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+           {data: 'anteproyecto.NPRY_Titulo', searchable: true},
+           {data: 'anteproyecto.NPRY_Keywords', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_Duracion',className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_Estado',searchable: true},
+           {data: 'anteproyecto.radicacion.RDCN_Min',
                         render: function (data, type, full, meta) 
                         {
                             return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
                         }
                     },
-                    {data: 'radicacion.RDCN_Requerimientos',searchable: true,
+                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
@@ -279,22 +279,37 @@ jQuery(document).ready(function () {
            
            
            {data:  function (data, type, dataToSet) {
-                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                        if(data.anteproyecto.director[0]!=null)
+                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante1[0]!=null)
+                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante2[0]!=null)
+                        return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado1[0]!=null)
+                        return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado2[0]!=null)
+                        return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
-           {data: 'conceptofinal',render: "[, ].conceptos.CNPT_Concepto","visible": false },
+           {data: 'anteproyecto.concepto_final',render: "[, ].conceptos.CNPT_Concepto","visible": false },
            {data:"PK_NPRY_idMinr008",
             name:'action',
                title:'Acciones',
@@ -331,10 +346,10 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            $('input[name="PK_anteproyecto"]').val(dataTable.PK_NPRY_idMinr008);
-            console.log(dataTable.conceptofinal[0].conceptos);
-            if(dataTable.conceptofinal[0].conceptos!=null){
-                $('select[name="concepto"]').val(dataTable.conceptofinal[0].conceptos.CNPT_Concepto);
+            $('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
+            
+            if(dataTable.anteproyecto.concepto_final[0].conceptos!=null){
+                $('select[name="concepto"]').val(dataTable.anteproyecto.concepto_final[0].conceptos.CNPT_Concepto);
             }else{
                 $('select[name="concepto"]').val("0");
             }
@@ -393,8 +408,8 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            $('input[name="PK_anteproyecto"]').val(dataTable.PK_NPRY_idMinr008);
-            $('#title').html(dataTable.NPRY_Titulo);
+            $('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
+            $('#title').html(dataTable.anteproyecto.NPRY_Titulo);
             $('#modal-create-observation').modal('toggle');
         });
 

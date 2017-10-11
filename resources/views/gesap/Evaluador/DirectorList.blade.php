@@ -101,20 +101,20 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_NPRY_idMinr008', "visible": false },
-           {data: 'NPRY_Titulo', searchable: true},
-           {data: 'NPRY_Keywords', searchable: true},
-           {data: 'NPRY_Duracion',searchable: true},
-           {data: 'NPRY_FechaR', className:'none',searchable: true},
-           {data: 'NPRY_FechaL', className:'none',searchable: true},
-           {data: 'NPRY_Estado',searchable: true},
-           {data: 'radicacion.RDCN_Min',className:'none',
+           {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+           {data: 'anteproyecto.NPRY_Titulo', searchable: true},
+           {data: 'anteproyecto.NPRY_Keywords', searchable: true},
+           {data: 'anteproyecto.NPRY_Duracion',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_Estado',searchable: true},
+           {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {
                             return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
                         }
                     },
-                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
+                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
@@ -125,20 +125,35 @@ jQuery(document).ready(function () {
                         }
                     }, 
            {data:  function (data, type, dataToSet) {
-                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                        if(data.anteproyecto.director[0]!=null)
+                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante1[0]!=null)
+                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante2[0]!=null)
+                        return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado1[0]!=null)
+                        return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado2[0]!=null)
+                        return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
             {data:'action',className:'',searchable: false,
             name:'action',
@@ -179,7 +194,7 @@ table = table.DataTable();
             url: '',
             dataType: "html",
         }).done(function (data) {
-            route = '/gesap/show/'+O.PK_NPRY_idMinr008;
+            route = '/gesap/show/'+O.anteproyecto.PK_NPRY_IdMinr008;
             $(".content-ajax").load(route);
         });
     });

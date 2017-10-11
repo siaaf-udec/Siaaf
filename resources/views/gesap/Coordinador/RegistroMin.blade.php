@@ -1,13 +1,12 @@
 <div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
-
+@slot('actions', [
+            'link_back' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
 <div class="row">
-            <div class="col-md-6" style="z-index: 1;">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
-                </div>
-            </div>
-    <br>
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
             <div class="form-wizard">
                 <div class="form-body">
@@ -302,7 +301,7 @@
             var messages = {};
         
             FormWizard.init(wizard, form, rules, messages, createProject());
-        $('.button-back').on('click', function (e) {
+        $('#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('min.index.ajax') }}';
             $(".content-ajax").load(route);
@@ -313,85 +312,4 @@
 
     
 
-    
-    
-    
-  /*var FormValidationMd = function() {
-    var handleValidation = function() {
-        var form1 = $('#form-register-min');
-        var error1 = $('.alert-danger', form1);
-        var success1 = $('.alert-success', form1);
-
-        $.validator.addMethod("xxxValidation", function(value, element) {
-            return value !== '0000-00-00'
-        }, "Falta la fecha");
-        
-        
-        form1.validate({
-            errorElement: 'span',                       //default input error message container
-            errorClass: 'help-block help-block-error',  // default input error message class
-            focusInvalid: true,                         // do not focus the last invalid input
-            ignore: "",                                 // validate all fields including form hidden input
-            invalidHandler: function(event, validator) {//display error alert on form submit
-                success1.hide();
-                error1.show();
-                App.scrollTo(error1, -500);
-            },
-            
-            rules:{
-                    title:{required: true},
-    estudiante1:{required: true},
-    estudiante2:{required: true},
-    Keywords:{required: true,minlength: 10},
-    duracion:{required: true,minlength: 1},
-    FechaR:{required: true},
-    FechaL:{required: true}
-                }
-                
-                
-                
-            },
-            errorPlacement: function(error, element) {
-                if (element.hasClass('select2-hidden-accessible')) {     
-                    error.insertAfter(element.next('span'));  // select2
-                }else if (element.is(':file')) {     
-                    error.insertAfter(element.closest('.fileinput-new '));  // select2
-                }else{
-                    error.insertAfter(element); // for other inputs, just perform default behavior
-                }
-            },
-            highlight: function(element) { // hightlight error inputs
-                var elem=$(element)
-                if(elem.is(':file')){
-                    elem.closest('.form-md-line-input').addClass('has-error');
-                }else
-                    elem.closest('.form-group').addClass('has-error');                           
-            },
-
-            unhighlight: function(element) { // revert the change done by hightlight
-                if(element.is(':file')){
-                    element.closest('.form-md-line-input').removeClass('has-error');
-                }else
-                    element.closest('.form-group').removeClass('has-error');
-                },
-
-            success: function(label) {
-                label
-                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-
-            submitHandler: function(form) {
-                success1.show();
-                error1.hide();
-            }
-        });
-    }
-
-    return {
-        //main function to initiate the module
-        init: function() {
-            handleValidation();
-        }
-    };
-}();*/      
 </script>

@@ -163,7 +163,7 @@
                 },
                 columns:[
                     {data: 'DT_Row_Index'},
-                    {data: 'PK_NPRY_idMinr008', "visible": false },
+                    {data: 'PK_NPRY_IdMinr008', "visible": false },
                     {data: 'NPRY_Titulo', searchable: true},
                     {data: 'NPRY_Keywords', searchable: true},
                     {data: 'NPRY_Duracion',searchable: true},
@@ -187,20 +187,35 @@
                         }
                     },  
                     {data:  function (data, type, dataToSet) {
-                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                        if(data.director[0]!=null)
+                            return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        if(data.estudiante1[0]!=null)
+                            return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
+                        if(data.estudiante2[0]!=null)
                         return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
+                        if(data.jurado1[0]!=null)
                         return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
+                        if(data.jurado2[0]!=null)
                         return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
                      
                     {data:'action',className:'',searchable: false,
@@ -250,7 +265,7 @@
                     dataType: "html",
                 }).done(function (data) 
                 {
-                    route = '/gesap/min/'+O.PK_NPRY_idMinr008+'/edit';
+                    route = '/gesap/min/'+O.PK_NPRY_IdMinr008+'/edit';
                    $(".content-ajax").load(route);
                 });
             });
@@ -267,7 +282,7 @@
                     dataType: "html",
                 }).done(function (data) 
                 {
-                    route = '/gesap/min/asignar/'+O.PK_NPRY_idMinr008;
+                    route = '/gesap/min/asignar/'+O.PK_NPRY_IdMinr008;
                    $(".content-ajax").load(route);
                 });
             });
@@ -276,7 +291,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var O = table.row($tr).data();
-            var route = 'min/'+O.PK_NPRY_idMinr008;
+            var route = 'min/'+O.PK_NPRY_IdMinr008;
             var type = 'DELETE';
             var async = async || false;
             swal({

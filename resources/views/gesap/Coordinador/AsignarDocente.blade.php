@@ -1,14 +1,14 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-users', 'title' => 'Asignar'])
+    @slot('actions', [
+            'link_back' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
     <div class="row">
-        <div class="col-md-6" style="z-index: 1;">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
-            </div>
-        </div>
-        <br>
         @foreach ($anteproyectos as $anteproyecto)
             {!! Form::open(['route' => 'anteproyecto.guardardocente', 'method' => 'post', 'novalidate','class'=>'form-horizontal','id'=>'submit_form']) !!}    
-                {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_idMinr008) !!}    
+                {!! Field::hidden('PK_anteproyecto', $anteproyecto->PK_NPRY_IdMinr008) !!}    
                 <div class="form-wizard">
                         <div class="form-body">
                             <ul class="nav nav-pills nav-justified steps">
@@ -48,7 +48,7 @@
                                             @if(isset($encargados[0]))
                                                 @foreach ($encargados as $direc)
                                                     @if( strnatcasecmp($direc->NCRD_Cargo,"Director")==0) 
-                                                        {!! Field::hidden('PK_director', $direc->PK_NCRD_idCargo) !!}    
+                                                        {!! Field::hidden('PK_director', $direc->PK_NCRD_IdCargo) !!}    
                                                         {!! Field::select('director',$docentes,$direc->Cedula)!!}
                                                     @endif
                                                 @endforeach
@@ -65,7 +65,7 @@
                                             @if(isset($encargados[1]))
                                                 @foreach ($encargados as $jur1)
                                                     @if( strnatcasecmp($jur1->NCRD_Cargo,"Jurado 1")==0) 
-                                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NCRD_idCargo) !!}    
+                                                        {!! Field::hidden('PK_jurado1', $jur1->PK_NCRD_IdCargo) !!}    
                                                         {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
                                                     @endif
                                                 @endforeach
@@ -76,7 +76,7 @@
                                             @if(isset($encargados[2]))
                                                 @foreach ($encargados as $jur2)
                                                     @if( strnatcasecmp($jur2->NCRD_Cargo,"Jurado 2")==0) 
-                                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NCRD_idCargo) !!}    
+                                                        {!! Field::hidden('PK_jurado2', $jur2->PK_NCRD_IdCargo) !!}    
                                                         {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}
                                                     @endif
                                                 @endforeach
@@ -238,7 +238,7 @@ jQuery(document).ready(function() {
             var messages = {};
         
             FormWizard.init(wizard, form, rules, messages, assing());
-        $('.button-back').on('click', function (e) {
+        $('#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('min.index.ajax') }}';
             $(".content-ajax").load(route);

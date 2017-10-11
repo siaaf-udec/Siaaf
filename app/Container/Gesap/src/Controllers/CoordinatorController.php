@@ -111,7 +111,7 @@ class CoordinatorController extends Controller
             $anteproyecto->NPRY_FechaL=$request->get('FechaL');
             $anteproyecto->save();
             
-            $idanteproyecto=$anteproyecto->PK_NPRY_idMinr008;
+            $idanteproyecto=$anteproyecto->PK_NPRY_IdMinr008;
             
             $radicacion= new Radicacion();
             $nombre = $date."_".$request['Min']->getClientOriginalName();
@@ -124,19 +124,19 @@ class CoordinatorController extends Controller
                 $radicacion->RDCN_Requerimientos=$nombre;
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
-            $radicacion->FK_TBL_Anteproyecto_id=$idanteproyecto;
+            $radicacion->FK_TBL_Anteproyecto_Id=$idanteproyecto;
             $radicacion->save();
             
             Encargados::create([
-                'FK_TBL_Anteproyecto_id'    =>$idanteproyecto,
-                'FK_developer_user_id'      =>$request->get('estudiante1'),
+                'FK_TBL_Anteproyecto_Id'    =>$idanteproyecto,
+                'FK_Developer_User_Id'      =>$request->get('estudiante1'),
                 'NCRD_Cargo'                =>"Estudiante 1"
             ]);
         
             if ($request->get('estudiante2')!=0) {
                 Encargados::create([
-                    'FK_TBL_Anteproyecto_id'    =>$idanteproyecto ,
-                    'FK_developer_user_id'      =>$request->get('estudiante2'),
+                    'FK_TBL_Anteproyecto_Id'    =>$idanteproyecto ,
+                    'FK_Developer_User_Id'      =>$request->get('estudiante2'),
                     'NCRD_Cargo'                =>"Estudiante 2"
                 ]);
                 
@@ -232,7 +232,7 @@ class CoordinatorController extends Controller
             if ($request->get('PK_estudiante1')!="") {
                 $estudiante1 = Encargados::findOrFail($request->get('PK_estudiante1'));
                 if ($request->get('estudiante1')!=0) {
-                    $estudiante1->FK_developer_user_id=$request->get('estudiante1');
+                    $estudiante1->FK_Developer_User_Id=$request->get('estudiante1');
                     $estudiante1->save();
                 } else {
                     $estudiante1->delete();
@@ -240,8 +240,8 @@ class CoordinatorController extends Controller
             } else {
                 if ($request->get('estudiante1')!=0) {
                     Encargados::create([
-                        'FK_TBL_Anteproyecto_id'    =>$request->get('PK_proyecto') ,
-                        'FK_developer_user_id'      =>$request->get('estudiante1'),
+                        'FK_TBL_Anteproyecto_Id'    =>$request->get('PK_proyecto') ,
+                        'FK_Developer_User_Id'      =>$request->get('estudiante1'),
                         'NCRD_Cargo'                =>"Estudiante 1"
                     ]);
                 }
@@ -250,7 +250,7 @@ class CoordinatorController extends Controller
             if ($request->get('PK_estudiante2')!="") {
                 $estudiante2 = Encargados::findOrFail($request->get('PK_estudiante2'));
                 if ($request->get('estudiante2')!=0) {
-                    $estudiante2->FK_developer_user_id=$request->get('estudiante2');
+                    $estudiante2->FK_Developer_User_Id=$request->get('estudiante2');
                     $estudiante2->save();
                 } else {
                     $estudiante2->delete();
@@ -258,8 +258,8 @@ class CoordinatorController extends Controller
             } else {
                 if ($request->get('estudiante2')!=0) {
                     Encargados::create([
-                        'FK_TBL_Anteproyecto_id'=>$request->get('PK_proyecto') ,
-                        'FK_developer_user_id'    =>$request->get('estudiante2'),
+                        'FK_TBL_Anteproyecto_Id'=>$request->get('PK_proyecto') ,
+                        'FK_Developer_User_Id'    =>$request->get('estudiante2'),
                         'NCRD_Cargo'            =>"Estudiante 2"
                     ]);
                 }
@@ -314,8 +314,8 @@ class CoordinatorController extends Controller
     public function assign($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $anteproyectos = Anteproyecto::select('PK_NPRY_idMinr008', 'NPRY_Titulo')
-                ->where('PK_NPRY_idMinr008', '=', $id)
+            $anteproyectos = Anteproyecto::select('PK_NPRY_IdMinr008', 'NPRY_Titulo')
+                ->where('PK_NPRY_IdMinr008', '=', $id)
                 ->get();
         
             $docentes=User::orderBy('name', 'asc')
@@ -358,13 +358,13 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             if ($request->get('PK_director')!="") {
                 $director = Encargados::findOrFail($request->get('PK_director'));
-                $director->FK_developer_user_id=$request->get('director');
+                $director->FK_Developer_User_Id=$request->get('director');
                 $director->save();
             } else {
                 if ($request->get('director')!=0) {
                     Encargados::create([
-                        'FK_TBL_Anteproyecto_id'=>$request->get('PK_anteproyecto') ,
-                        'FK_developer_user_id'    =>$request->get('director'),
+                        'FK_TBL_Anteproyecto_Id'=>$request->get('PK_anteproyecto') ,
+                        'FK_Developer_User_Id'    =>$request->get('director'),
                         'NCRD_Cargo'            =>"Director"
                     ]);
                 }
@@ -372,13 +372,13 @@ class CoordinatorController extends Controller
             
             if ($request->get('PK_jurado1')!="") {
                 $jurado1 = Encargados::findOrFail($request->get('PK_jurado1'));
-                $jurado1->FK_developer_user_id=$request->get('jurado1');
+                $jurado1->FK_Developer_User_Id=$request->get('jurado1');
                 $jurado1->save();
             } else {
                 if ($request->get('jurado1')!=0) {
                     Encargados::create([
-                        'FK_TBL_Anteproyecto_id'=>$request->get('PK_anteproyecto') ,
-                        'FK_developer_user_id'    =>$request->get('jurado1'),
+                        'FK_TBL_Anteproyecto_Id'=>$request->get('PK_anteproyecto') ,
+                        'FK_Developer_User_Id'    =>$request->get('jurado1'),
                         'NCRD_Cargo'            =>"Jurado 1"
                     ]);
                 }
@@ -386,13 +386,13 @@ class CoordinatorController extends Controller
             
             if ($request->get('PK_jurado2')!="") {
                 $jurado1 = Encargados::findOrFail($request->get('PK_jurado2'));
-                $jurado1->FK_developer_user_id=$request->get('jurado2');
+                $jurado1->FK_Developer_User_Id=$request->get('jurado2');
                 $jurado1->save();
             } else {
                 if ($request->get('jurado2')!=0) {
                     Encargados::create([
-                        'FK_TBL_Anteproyecto_id'=>$request->get('PK_anteproyecto') ,
-                        'FK_developer_user_id'    =>$request->get('jurado2'),
+                        'FK_TBL_Anteproyecto_Id'=>$request->get('PK_anteproyecto') ,
+                        'FK_Developer_User_Id'    =>$request->get('jurado2'),
                         'NCRD_Cargo'            =>"Jurado 2"
                     ]);
                 }

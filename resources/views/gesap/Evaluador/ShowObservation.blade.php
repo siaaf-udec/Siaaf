@@ -1,17 +1,22 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Observaciones'])
+    @slot('actions', [
+            'link_back' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
         <div class="row">
             <div class="col-md-6">
-                <div class="btn-group">
                     {!! Field::hidden('id', $id) !!}
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
-                </div>
             </div>
-            <div class="clearfix"> </div><br><br>
+            <div class="clearfix"> </div><br>
+            <br>
+            <br>
+            <br>
             <div class="col-md-12">
                 
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-observaciones'])
-            
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id',
@@ -19,7 +24,7 @@
                     'Jurado',
                     'Respuesta Min',
                     'Respuesta Requerimientos'
-                ])
+                    ])
             @endcomponent
             </div>
         </div>
@@ -31,7 +36,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-observaciones');
-    var id = $('input[name="id"]').val();
+    var id =    $('input[name="id"]').val();
     url = '{{ route("anteproyecto.observationsList",":id") }}';
     url = url.replace(':id',id);
     table.DataTable({
@@ -72,9 +77,15 @@ jQuery(document).ready(function () {
         
     columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_BVCS_idObservacion', "visible": false },
+           {data: 'PK_BVCS_IdObservacion', "visible": false },
            {data: 'BVCS_Observacion', className:'none', searchable: true},
-           {data: 'encargado.usuarios.name', searchable: true},
+           {data:  function (data, type, dataToSet) {
+             console.log(data);
+               if(data.encargado!=null)
+                    return data.encargado.usuarios.name + " " + data.encargado.usuarios.lastname;
+                else
+                    return "No hay asignado"
+            },searchable: true}, 
            {data: 'respuesta.RPST_RMin',
                 render: function (data, type, full, meta) {
                     if(data!=null){
@@ -116,7 +127,7 @@ jQuery(document).ready(function () {
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
 
-    $('.button-back').on('click', function (e) {
+    $('#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('anteproyecto.index.directorList.ajax') }}';
             $(".content-ajax").load(route);

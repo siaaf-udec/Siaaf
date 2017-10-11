@@ -1,10 +1,11 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
-    <div class="row">
-        <div class="col-md-6" style="z-index: 1;">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon button-back"><i class="fa fa-list"></i></a>
-            </div>
-        </div>
+    @slot('actions', [
+            'link_back' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
+<div class="row">
         @foreach ($anteproyecto as $anteproyecto)
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-modificar-min']) !!} 
             {!! Field::hidden('_method', 'PUT') !!}
@@ -367,7 +368,7 @@
         var messages = {};
         
         FormWizard.init(wizard, form, rules, messages, createProject());
-        $('.button-back').on('click', function (e) {
+        $('.#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('min.index.ajax') }}';
             $(".content-ajax").load(route);

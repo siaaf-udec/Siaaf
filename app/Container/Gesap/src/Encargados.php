@@ -19,7 +19,7 @@ class Encargados extends Model
     
     public function anteproyecto()
     {
-        return $this->belongsTo(Radicacion::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
+        return $this->belongsTo(Anteproyecto::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
     public function observaciones()
     {
@@ -37,8 +37,8 @@ class Encargados extends Model
     public function scopeSearch($query, $id)
     {
         $query->join('developer.users', 'FK_Developer_User_Id', '=', 'users.id')
-            ->join('gesap.tbl_anteproyecto', function ($join) use ($id) {
-                $join->on('TBL_encargados.FK_TBL_Anteproyecto_Id', '=', 'PK_NPRY_IdMinr008');
+            ->join('TBL_Anteproyecto', function ($join) use ($id) {
+                $join->on('FK_TBL_Anteproyecto_Id', '=', 'PK_NPRY_IdMinr008');
                 $join->where('PK_NPRY_IdMinr008', '=', $id);
             })
             ->select('FK_Developer_User_Id AS Cedula', 'PK_NCRD_IdCargo', 'NCRD_Cargo');

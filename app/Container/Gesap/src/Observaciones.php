@@ -22,7 +22,7 @@ class Observaciones extends Model
         return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo')
             ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
             ->with(['usuarios'=>function ($usuarios) {
-                            $usuarios->select('name', 'id');
+                            $usuarios->select('name', 'lastname', 'id');
             }]);
     }
     public function respuesta()

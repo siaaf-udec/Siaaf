@@ -30,7 +30,7 @@ class Anteproyecto extends Model
         return $this->hasMany(Encargados::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
     
-    public function conceptofinal()
+    public function conceptoFinal()
     {
         return $this->hasMany(Encargados::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008')
                 ->where(function ($query) {
@@ -63,11 +63,10 @@ class Anteproyecto extends Model
     public function jurado2()
     {
         return $this->hasMany(Encargados::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008')
-                ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_developer_User_Id", "NCRD_Cargo")
+                ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
                 ->where('NCRD_Cargo', '=', 'Jurado 2')
                 ->with(['usuarios'=>function ($usuarios) {
                             $usuarios->select('name', 'lastname', 'id');
-                            $usuarios->pluck('full_name','id');
                 }]);
     }
     public function estudiante1()
