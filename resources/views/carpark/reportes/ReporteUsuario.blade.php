@@ -67,7 +67,7 @@
             <h4>Teléfono: {{$infoUsuarios[0]['CU_Telefono']}}</h4>
             <h4>Dirección: {{$infoUsuarios[0]['CU_Direccion']}}</h4>
             <h4>Correo: {{$infoUsuarios[0]['CU_Correo']}}</h4>
-            <h4>Dependencia: {{$infoUsuarios[0]['FunDependencias']['CD_Dependencia']}}</h4>
+            <h4>Dependencia: {{$infoUsuarios[0]['relacionUsuariosDependencia']['CD_Dependencia']}}</h4>
 
         </div> 
         <div id="imagenUser" style="float: right;">

@@ -352,7 +352,7 @@ class ReportesController extends Controller
         $cont = 1;
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $infoUsuarios = Usuarios::with('relacionUsuariosDepenencia','relacionUsuariosEstados')->where('PK_CU_Codigo',$id)->get();        
+        $infoUsuarios = Usuarios::with('relacionUsuariosDependencia','relacionUsuariosEstado')->where('PK_CU_Codigo',$id)->get();        
             
         $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
         $total=count($infoHistoriales);
@@ -371,7 +371,7 @@ class ReportesController extends Controller
         $cont = 1;
         $date = date("d/m/Y");
         $time = date("h:i A");
-        $infoUsuarios = Usuarios::with('relacionUsuariosDepenencia','relacionUsuariosEstados')->where('PK_CU_Codigo',$id)->get();        
+        $infoUsuarios = Usuarios::with('relacionUsuariosDependencia','relacionUsuariosEstado')->where('PK_CU_Codigo',$id)->get();        
             
         $infoHistoriales = Historiales::where('CH_CodigoUser',$id)->get();
         $total=count($infoHistoriales);
