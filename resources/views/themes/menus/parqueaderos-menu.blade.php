@@ -8,7 +8,8 @@
     </a>
 
     <ul class="sub-menu">
-    	<!-- inicio Permiso -->
+    	@permission('ADMIN_CARPARK')
+
     	 <li class="nav-item {{ active(['parqueadero.usuariosCarpark.*'], 'start active open') }}">
     	   <a href="{{ route('parqueadero.usuariosCarpark.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-user"></i>
@@ -22,14 +23,16 @@
                 <span class="title">Ver Motocicletas</span>
             </a>
         </li>
-
+        @endpermission
+        @permission('FUNC_CARPARK')
         <li class="nav-item {{ active(['parqueadero.ingresosCarpark.*'], 'start active open') }}">
             <a href="{{ route('parqueadero.ingresosCarpark.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-pencil-square-o"></i>
                 <span class="title">Control De Ingresos</span>
             </a>        
         </li>
-
+        @endpermission
+        @permission('ADMIN_CARPARK')
         <li class="nav-item {{ active(['parqueadero.historialesCarpark.*'], 'start active open') }}">        
             <a href="{{ route('parqueadero.historialesCarpark.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-history"></i>
@@ -43,14 +46,14 @@
                 <span class="title">Ver Dependencias</span>
             </a>    	
         </li>
-
+        @endpermission
+        @permission('FUNC_CARPARK')
         <li class="nav-item {{ active(['parqueaderos.correosCarpark.*'], 'start active open') }}">        
             <a href="{{ route('parqueaderos.correosCarpark.cerrarParqueadero') }}" class="nav-link nav-toggle">
                 <i class="fa fa-window-close-o"></i>
                 <span class="title">Cerrar Parqueadero</span>
             </a>        
         </li>
-
-    	<!-- fin Permiso -->
+        @endpermission
     </ul>
 </li>
