@@ -11,8 +11,10 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 
     <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print'
+    {
+    <link href="{{ asset('assets/main/acadspace/css/fullcalendar.print.css') }}" rel="stylesheet" media='print'
           type="text/css"/>
+
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"
           rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet"
@@ -33,19 +35,24 @@
                 <section class="content">
                     <div class="col-md-12">
                         {!! Field::select('SOL_laboratorios',
-                                                                    ['Aulas de computo' => 'Aulas de computo',
-                                                                    'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                                                    null,
-                                                                    [ 'label' => 'Seleccione el espacio academico que requiere:']) !!}
-                        <div id="mostrar_sala">
-                            {!! Form::label('label', 'Seleccione el aula:')  !!}
+                                                        ['Aulas de computo' => 'Aulas de computo',
+                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        null,
+                                                        [ 'label' => 'Espacio academico:']) !!}
 
-                            {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
-                            array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
-                        </div>
+                        {!! Form::label('label', 'Aula que desea gestionar:')  !!}
+
+                        {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
+                        array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
+
                         <br>
                         <br>
                         <br>
+                        <br>
+                        <br>
+                        <br>
+
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                             @slot('columns', [
                             '#' => ['style' => 'width:20px;'],
@@ -68,12 +75,13 @@
                                     <!-- the events -->
                                     <div id="external-events">
                                         <div class="checkbox">
-                                            <label for="drop-remove">
-                                                <input type="checkbox" id="drop-remove">
-                                                Eliminar al asignar
-                                            </label>
+
                                         </div>
                                     </div>
+                                    <label for="drop-remove">
+                                        <input type="checkbox" id="drop-remove">
+                                        Eliminar al asignar
+                                    </label>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -119,7 +127,8 @@
                                     {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
                                     {!! Form::close() !!}
                                 </div>
-                                <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf" value=""/>Generar PDF</span>
+                                <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf"
+                                                                              value=""/>Generar PDF</span>
                             </div>
                         </div>
                         <!-- /.col -->
@@ -145,8 +154,6 @@
         </div>
 @endsection
 @push('plugins')
-    <script src="{{ asset('assets/main/acadspace/js/addimage.js') }}" type="text/javascript"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
@@ -172,6 +179,8 @@
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
     </script>
+
+
 @endpush
 @push('functions')
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
@@ -181,7 +190,7 @@
         <table class="table">
             <tr>
                 <td>Docente solicitante:</td>
-                <td>@{{name}} @{{lastname}}</td>
+                <td>@{{user.name}} @{{user.lastname}}</td>
             </tr>
             <tr>
                 <td>Dias seleccionados:</td>
@@ -204,6 +213,8 @@
     <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
+            $("#SOL_laboratorios").append("<option  style='display:none' value='' selected>Seleccione..</option>");
+
             var template = Handlebars.compile($("#details-template").html());
             var table, url, columns;
             table = $('#art-table-ajax');
@@ -253,12 +264,11 @@
                 });
                 //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
                 $("#aula").change(function (event) {
-
+                    table = $('#art-table-ajax');
                     var select = $('#aula option:selected').val();
-                    $("#art-table-ajax").dataTable().fnDestroy();
+                    table.dataTable().fnDestroy();
                     url = "{{ route('espacios.academicos.acadcalendar.data' ) }}" + '/' + select;
                     dataTableServer.init(table, url, columns);
-                    table = $('#art-table-ajax');
                     table = table.DataTable();
                     //FIN RECARGAR DATATABLE
                     /*Inicio recargar calendario con base al select*/
@@ -270,7 +280,6 @@
                             sala: $('#aula option:selected').val()
                         }
                     };
-                    console.log("RESPUESTA");
                     $('#calendar').fullCalendar('removeEventSource', events);
                     $('#calendar').fullCalendar('addEventSource', events);
                     $('#calendar').fullCalendar('refetchEvents');
@@ -429,6 +438,7 @@
                         var title = copiedEventObject.title;
                         var start = copiedEventObject.start.format("YYYY-MM-DD HH:mm");
                         var back = copiedEventObject.backgroundColor;
+
                         var sala = document.getElementById("aula").value;
 
                         crsfToken = document.getElementsByName("_token")[0].value;
@@ -439,8 +449,12 @@
                             headers: {
                                 "X-CSRF-TOKEN": crsfToken
                             },
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
                             success: function (events) {
                                 UIToastr.init('success', '¡Bien hecho!', 'Evento creado correctamente');
+                                App.unblockUI('.portlet-form');
                                 $('#calendar').fullCalendar('refetchEvents');
                             },
                             error: function (json) {
@@ -616,78 +630,13 @@
                 });
             });
         });
-
-
     </script>
 
     <script>
         /*Exportar a pdf*/
-        $("#AE_btn_pdf").button({
-            icons: {
-                primary: "ui-icon-image"
-            },
-            text: false
-        });
         $("#AE_btn_pdf").click(function () {
-            //#AEFC is my div for FullCalendar
-            html2canvas($('#calendar'), {
-                logging: true,
-                //  useCORS: true,
-                onrendered: function (canvas) {
-                    var imgData = canvas.toDataURL("image/jpeg");
-                    var doc = new jsPDF();
-                    doc.addImage(imgData, 'JPEG', 15, 40, 180, 160);
-                    download(doc.output(), "AEFC.pdf", "text/pdf");
-
-                }
-            });
-        })
-
-        function download(strData, strFileName, strMimeType) {
-            var D = document,
-                A = arguments,
-                a = D.createElement("a"),
-                d = A[0],
-                n = A[1],
-                t = A[2] || "text/plain";
-
-            //build download link:
-            a.href = "data:" + strMimeType + "," + escape(strData);
-
-            if (window.MSBlobBuilder) {
-                var bb = new MSBlobBuilder();
-                bb.append(strData);
-                return navigator.msSaveBlob(bb, strFileName);
-            }
-            /* end if(window.MSBlobBuilder) */
-
-            if ('download' in a) {
-                a.setAttribute("download", n);
-                a.innerHTML = "downloading...";
-                D.body.appendChild(a);
-                setTimeout(function () {
-                    var e = D.createEvent("MouseEvents");
-                    e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false,
-                        false, false, 0, null);
-                    a.dispatchEvent(e);
-                    D.body.removeChild(a);
-                }, 66);
-                return true;
-            }
-            /* end if('download' in a) */
-
-            //do iframe dataURL download:
-            var f = D.createElement("iframe");
-            D.body.appendChild(f);
-            f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64"
-                : "") + "," + (window.btoa ? window.btoa : escape)(strData);
-            setTimeout(function () {
-                D.body.removeChild(f);
-            }, 333);
-            return true;
-        }
-
-        /* end download() */
+            window.print();
+        });
     </script>
 @endpush
 @endpermission
