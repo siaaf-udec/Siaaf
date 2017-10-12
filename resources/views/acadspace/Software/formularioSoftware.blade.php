@@ -208,7 +208,6 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            console.log( dataTable.id );
             var route = '{{ route('espacios.academicos.soft.destroy') }}'+'/'+dataTable.PK_SOF_id;
             var type = 'DELETE';
             var async = async || false;
