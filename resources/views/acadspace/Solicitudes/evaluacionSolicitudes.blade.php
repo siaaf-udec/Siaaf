@@ -20,10 +20,11 @@
             <div class="clearfix">
                 <br>
                 {!! Field::select('laboratorioSeleccionado',
-                                        ['Aulas de computo' => 'Aulas de computo',
-                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                        null,
-                                        [ 'label' => 'Seleccionar espacio academico:']) !!}
+                                                        ['Aulas de computo' => 'Aulas de computo',
+                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        null,
+                                                        [ 'label' => 'Espacio academico a gestionar:']) !!}
                 {{--DIVISION NAV--}}
                 <div class="portlet-body" id="vista-tabla">
                     <ul class="nav nav-pills">
@@ -162,32 +163,11 @@
     </div>
 
     @endcomponent
-    </br>
-    </br>
-    </br>
-    </br>
 
-    </div>
     {{-- END HTML SAMPLE --}}
 @endsection
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
+
 
 @push('plugins')
 
@@ -223,7 +203,6 @@
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
 
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
@@ -241,7 +220,7 @@
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
-                <td>@{{name}} @{{lastname}}</td>
+                <td>@{{user.name}} @{{user.lastname}}</td>
             </tr>
             <tr>
                 <td>Dias seleccionados:</td>
@@ -259,6 +238,10 @@
                 <td>Software:</td>
                 <td>@{{SOL_software}}</td>
             </tr>
+            <tr>
+                <td>Fechas:</td>
+                <td>@{{SOL_rango_fechas}}</td>
+            </tr>
         </table>
     </script>
 
@@ -275,7 +258,7 @@
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
-                <td>@{{name}} @{{lastname}}</td>
+                <td>@{{user.name}} @{{user.lastname}}</td>
             </tr>
             <tr>
                 <td>Fecha seleccionada:</td>
@@ -297,7 +280,8 @@
     </script>
 
     <script>
-        $("#vista-tabla").css("display", "none");
+        $("#laboratorioSeleccionado").append("<option  style='display:none' value='' selected>Seleccione..</option>");
+       $("#vista-tabla").css("display", "none");
 
         /*PINTAR TABLA SOLICITUDES GRUPALES*/
         $(document).ready(function () {
@@ -377,12 +361,14 @@
 
                 var select = $('#laboratorioSeleccionado option:selected').val();
                 //tabla sol grupal
+                table = $('#art-table-ajax');
                 table.dataTable().fnDestroy();
                 url = "{{ route('espacios.academicos.evalsol.data' ) }}" + '/' + select;
                 dataTableServer.init(table, url, columns);
                 table = table.DataTable();
 
                 //Tabla sol libre
+                tableLibre = $('#art-table-ajax-libre');
                 tableLibre.dataTable().fnDestroy();
                 urlLibre = "{{ route('espacios.academicos.evalsol.cargarDataLibre' ) }}" + '/' + select;
                 dataTableServer.init(tableLibre, urlLibre, columnsLibre);

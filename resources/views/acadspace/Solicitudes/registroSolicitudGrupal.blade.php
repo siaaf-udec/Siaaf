@@ -19,7 +19,6 @@
         ])
         <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}"
               rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}"
               rel="stylesheet" type="text/css"/>
 
@@ -32,7 +31,8 @@
                             <div class="col-md-10 col-md-offset-1">
                                 {!! Field::select('SOL_laboratorios',
                                                         ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
                                                         null,
                                                         [ 'label' => 'Espacio academico que requiere:']) !!}
 
@@ -42,7 +42,8 @@
                                                      'Ingenieria agronomica' => 'Ingenieria agronomica',
                                                      'Psicologia' => 'Psicologia',
                                                       'Administracion de empresas' => 'Administracion de empresas',
-                                                      'Contaduria' => 'Contaduria'],
+                                                      'Contaduria' => 'Contaduria',
+                                                      'Otro' => 'Otro'],
                                                     null,
                                                     [ 'label' => 'Programa al que pertenece:']) !!}
 
@@ -114,19 +115,9 @@
 
 
 <!--//mensaje validacion-->
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"
         type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
-        type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
-        type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
-        type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
-        type="text/javascript"></script>
-
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
         type="text/javascript"></script>
@@ -164,38 +155,39 @@
 
         });
         /*Fin mostrar campos ocultos*/
-
-
         var wizard = $('#form_wizard_1');
         /*Crear Solicitud*/
         var createUsers = function () {
             return {
                 init: function () {
-                    if ($('input:text[name="SOL_hora_inicio"]').val() > $('input:text[name="SOL_hora_fin"]').val()) {
-                        UIToastr.init('error', '¡Error!', 'La hora inicial no puede ser mayor a la final.');
+                    //CAPTURO LOS VALORES DEL CHECKBOX
+                    var selected = null;
+                    $("input:checkbox:checked").each(function () {
+                        if ($(this).val() != 'on') {
+                            if (selected == null) {
+                                selected = $(this).val();
+                            } else {
+                                selected = selected + ", " + $(this).val();
+                            }
+                        }
+                    });
+                    var horaInicio = Date.parse('01/01/2001 ' + $('input:text[name="SOL_hora_inicio"]').val());
+                    var horaFin = Date.parse('01/01/2001 ' + $('input:text[name="SOL_hora_fin"]').val());
+                    if (horaInicio >= horaFin) {
+                        UIToastr.init('error', '¡Error!', 'Verifique los campos de hora.');
+                    } else if (selected == null) {
+                        UIToastr.init('error', '¡Error!', 'Verifique los dias seleccionados.');
                     } else {
                         var route = '{{ route('espacios.academicos.espacad.registrosol') }}';
                         var type = 'POST';
                         var async = async || false;
-//CAPTURO LOS VALORES DEL CHECKBOX
-                        var selected = null;
-                        $("input:checkbox:checked").each(function () {
-                            if ($(this).val() != 'on') {
-                                if (selected == null) {
-                                    selected = $(this).val();
-                                } else {
-                                    selected = selected + ", " + $(this).val();
-                                }
-                            }
-                        });
-//Comprobando que guia no venga vacia
+
+                        //Comprobando que guia no venga vacia
                         if ($("#SOL_nombreGuia").val() == "") {
                             guia = "No";
                         } else {
                             guia = $("#SOL_nombreGuia").val();
                         }
-
-                        console.log(selected);
                         var formData = new FormData();
                         formData.append('SOL_espacio', $('select[name="SOL_laboratorios"]').val());
                         formData.append('SOL_programa', $('select[name="SOL_programa"]').val());
@@ -222,7 +214,6 @@
                                 App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
-                                console.log(response);
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#form_sol_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
@@ -254,7 +245,8 @@
             SOL_cant_estudiantes: {required: true, number: true, maxlength: 2},
             SOL_dias: {required: true},
             SOL_laboratorios: {required: true},
-            SOL_hora_fin: {required: true}
+            SOL_hora_fin: {required: true},
+            SOL_rango_fechas: {required:true}
 
         };
         FormValidationMd.init(form_edit, rules_edit, false, createUsers());

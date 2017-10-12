@@ -31,9 +31,10 @@
                             <div class="col-md-10 col-md-offset-1">
                                 {!! Field::select('SOL_laboratorios',
                                                         ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
                                                         null,
-                                                        ['label' => 'Seleccione el espacio academico que requiere:', 'placeholder' => 'Pick a size...']) !!}
+                                                        ['label' => 'Seleccione el espacio academico que requiere:']) !!}
 
                                 {!! Field::select('SOL_programa',
                                                     ['Ingenieria de sistemas' => 'Ingenieria de sistemas',
@@ -168,10 +169,17 @@
         var createUsers = function () {
             return {
                 init: function () {
-                    if ($('input:text[name="SOL_hora_inicio"]').val() >= $('input:text[name="SOL_hora_fin"]').val()) {
+                    //Validacion de campos fecha y hora
+                    var f = new Date();
+                    var fechaActual = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
+                    var fechaRecibida = $('#SOL_fecha_inicial').val();
+                    var horaInicio = Date.parse('01/01/2001 ' + $('input:text[name="SOL_hora_inicio"]').val());
+                    var horaFin = Date.parse('01/01/2001 ' + $('input:text[name="SOL_hora_fin"]').val());
+
+                    if ( horaInicio >= horaFin ) {
                         UIToastr.init('error', '¡Error!', 'Verifique los campos de hora.');
-                    } else if (Date.parse(today) > Date.parse($('#SOL_fecha_inicial').val())) {
-                        UIToastr.init('error', '¡Error!', 'Verifique la fecha donde requiere el espacio.');
+                    } else if ( fechaRecibida < fechaActual ) {
+                        UIToastr.init('error', '¡Error!', 'Verifique la fecha en que requiere el espacio.');
                     } else {
                         var route = '{{ route('espacios.academicos.espacad.registrosol') }}';
                         var type = 'POST';
@@ -210,7 +218,6 @@
                                 App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
-                                console.log(response);
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#form_sol_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);

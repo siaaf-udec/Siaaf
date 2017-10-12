@@ -55,34 +55,10 @@
     <div class="clearfix">
     </div>
 
-    </div>
     @endcomponent
-    </br>
-    </br>
-    </br>
-    </br>
 
-    </div>
-    {{-- END HTML SAMPLE --}}
 @endsection
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 
 @push('plugins')
 
@@ -111,23 +87,6 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!--HANDLEBAR-->
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
@@ -152,12 +111,12 @@
                 <td>@{{SOL_software}}</td>
             </tr>
             <tr>
-                <td>Comentario:</td>
-                <td>@{{comentario}}</td>
+                <td>Sala asignada:</td>
+                <td>@{{FK_SOL_id_sala}}</td>
             </tr>
             <tr>
-                <td>Sala asignada:</td>
-                <td>@{{id_sala}}</td>
+                <td>Observacion:</td>
+                <td>@{{coment.COM_comentario}}</td>
             </tr>
         </table>
     </script>
@@ -205,22 +164,16 @@
                     tr.addClass('shown');
                 }
             });
-
             $(".create").on('click', function (e) {
                 e.preventDefault();
                 var route = '{{ route('espacios.academicos.espacad.create') }}';
                 $(".content-ajax").load(route);
             });
-
             $(".createLib").on('click', function (e) {
                 e.preventDefault();
                 var route = '{{ route('espacios.academicos.espacad.createlib') }}';
                 $(".content-ajax").load(route);
             });
-
-
         });
-
-
     </script>
 @endpush

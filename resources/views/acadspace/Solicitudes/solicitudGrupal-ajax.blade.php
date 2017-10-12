@@ -33,64 +33,11 @@
 </div>
 <div class="clearfix">
 </div>
-
-</div>
 @endcomponent
-</br>
-</br>
-</br>
-</br>
-
-</div>
-{{-- END HTML SAMPLE --}}
 
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
-
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
-</script>
-
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<!-- Estandar Mensajes -->
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<!-- Estandar Datatable -->
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <!-- Informacion que muestra al desplegar -->
 <script id="details-template" type="text/x-handlebars-template">
     <table class="table">
@@ -103,12 +50,12 @@
             <td>@{{SOL_software}}</td>
         </tr>
         <tr>
-            <td>Comentario:</td>
-            <td>@{{comentario}}</td>
+            <td>Sala asignada:</td>
+            <td>@{{FK_SOL_id_sala}}</td>
         </tr>
         <tr>
-            <td>Sala asignada:</td>
-            <td>@{{id_sala}}</td>
+            <td>Observacion:</td>
+            <td>@{{coment.COM_comentario}}</td>
         </tr>
     </table>
 </script>
