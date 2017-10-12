@@ -2,6 +2,7 @@
 
 namespace App\Container\Acadspace\src;
 
+use App\Container\Users\Src\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Solicitud extends Model
@@ -28,18 +29,14 @@ class Solicitud extends Model
         'SOL_id_practica'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'SOL_id_docente');
+    }
 
-    public function Asistents(){
-        return $this->hasMany(Asistent::class);
-    }
-    public function StatusOfDocuments(){
-        return $this->hasMany(StatusOfDocument::class);
-    }
-    public function Inductions(){
-        return $this->hasMany(Induction::class);
-    }
-    public function Permissions(){
-        return $this->hasMany(Permission::class);
+
+    public function coment(){
+        return $this->hasOne(comentariosSolicitud::class,'FK_COM_id_solicitud');
     }
     //
 }

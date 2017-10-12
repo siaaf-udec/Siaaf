@@ -18,18 +18,8 @@ class Aulas extends Model
         'SAL_nombre_sala',
         'SAL_nombre_espacio'
     ];
-
-    public function Asistents(){
-        return $this->hasMany(Asistent::class);
+    //
+    public function docente(){
+        return $this->hasOne(Docentes::class);
     }
-    public function StatusOfDocuments(){
-        return $this->hasMany(StatusOfDocument::class);
-    }
-    public function Inductions(){
-        return $this->hasMany(Induction::class);
-    }
-    public function Permissions(){
-        return $this->hasMany(Permission::class);
-    }
-    // 
 }

@@ -5,6 +5,7 @@ namespace App\Container\Acadspace\src;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Container\Users\Src\User;
 
 class formatos extends Model
 {
@@ -30,24 +31,9 @@ class formatos extends Model
         \Storage::disk('local')->put($nombre_doc, \File::get($file));
     }
 
-    public function Asistents()
+    public function user()
     {
-        return $this->hasMany(Asistent::class);
-    }
-
-    public function StatusOfDocuments()
-    {
-        return $this->hasMany(StatusOfDocument::class);
-    }
-
-    public function Inductions()
-    {
-        return $this->hasMany(Induction::class);
-    }
-
-    public function Permissions()
-    {
-        return $this->hasMany(Permission::class);
+        return $this->belongsTo(User::class, 'FK_FAC_id_secretaria');
     }
     //
 }

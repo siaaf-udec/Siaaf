@@ -115,7 +115,12 @@ class User extends Authenticatable implements AuditableContract
      */
     public function acadspace()
     {
-        return $this->hasOne('App\Container\Acadspace\Src\UserAcadSpace', 'FK_PER_Id_User');
+        return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
+    }
+
+    public function formatosAcadspace()
+    {
+        return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');
     }
 
     /**
