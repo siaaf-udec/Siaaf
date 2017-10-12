@@ -8,35 +8,16 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
-use App\Container\Acadspace\src\comentariosSolicitud;
 use App\Container\Acadspace\src\Formatos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Acadspace\src\Solicitud;
-use App\Container\Users\src\User;
-use App\Container\Acadspace\src\solSoftware;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-
-use App\Notifications\HeaderSiaaf;
-
-use PhpParser\Node\Stmt\Return_;
 use Validator;
 use Illuminate\Support\Facades\Storage;
-use App\Container\Permissions\Src\Interfaces\ModuleInterface;
-use App\Container\Permissions\Src\Interfaces\RoleInterface;
-use App\Container\Overall\Src\Facades\UploadFile;
-
-use App\Container\Users\Src\Country;
-
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
-
 use App\Mail\Acadspace\EmailAcadspace;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\WelcomeMail;
 
 
 class formatosController extends Controller
@@ -152,12 +133,12 @@ class formatosController extends Controller
                 '¡Bien hecho!',
                 'Datos cargados correctamente.'
             );
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
 

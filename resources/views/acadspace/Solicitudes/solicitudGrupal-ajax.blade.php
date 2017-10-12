@@ -1,4 +1,5 @@
 {{-- BEGIN HTML SAMPLE --}}
+@permission('docentes')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Solicitudes'])
         <div class="clearfix">
@@ -121,3 +122,4 @@
 
 
 </script>
+@endpermission

@@ -17,6 +17,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
+use App\Container\Acadspace\src\Formatos;
+
 
 class SolicitudController extends Controller
 {
@@ -215,6 +217,14 @@ class SolicitudController extends Controller
 
     public function controladorX(UserAcadSpace $model)
     {
+        $solic = formatos::select(['PK_FAC_id_solicitud',
+            'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
+            ->with(['user' => function ($query) {
+                return $query->select('id', 'name', 'lastname');
+            }])
+            ->where('FAC_estado', '=', 0)
+            ->get();
+        dd($solic);
         $solic = formatos::select(['PK_FAC_id_solicitud',
             'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
             ->with(['user' => function ($query) {

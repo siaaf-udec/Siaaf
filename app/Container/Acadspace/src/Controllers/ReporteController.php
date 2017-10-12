@@ -166,7 +166,7 @@ class ReporteController extends Controller
     {
         $data = $request->all();
 
-        $fecha = $data['date_range_doc'];
+        $fecha = $data['date_range'];
         $lab = $request['SOL_laboratorios_doc'];
         $aula = $request['aulas'];
 

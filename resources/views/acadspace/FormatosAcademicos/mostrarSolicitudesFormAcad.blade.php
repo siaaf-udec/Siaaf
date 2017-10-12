@@ -1,3 +1,4 @@
+@permission('administ')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -84,48 +85,11 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"
             type="text/javascript"></script>
-    <!-- SCRIPT MODAL -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}"
-            type="text/javascript"></script>
-    <!-- SCRIPT Validacion Maxlength -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
-            type="text/javascript">
-    </script>
-    <!-- SCRIPT Validacion Personalizadas -->
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
-            type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
-    </script>
-
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
@@ -151,7 +115,7 @@
                 },
                 {
                     //Botones de acciones(editar estado, descargar)
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>',
+                    defaultContent: '<a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a><a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -217,3 +181,4 @@
 
     </script>
 @endpush
+@endpermission

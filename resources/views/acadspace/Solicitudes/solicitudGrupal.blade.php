@@ -1,3 +1,4 @@
+@permission('docentes')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -177,3 +178,4 @@
         });
     </script>
 @endpush
+@endpermission

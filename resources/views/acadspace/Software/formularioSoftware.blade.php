@@ -1,3 +1,4 @@
+@permission('auxapoyo')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -302,3 +303,4 @@
 
 </script>
 @endpush
+@endpermission

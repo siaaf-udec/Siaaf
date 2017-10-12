@@ -170,6 +170,39 @@ class AuxiliarController extends Controller
 
     }
 
+    //Metodo para aprobar solicitud y asignar sala
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function aprobarSolicitudLibre(Request $request)
+    {
+
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Aprobar solicitud
+            $solicitud = Solicitud::findOrFail($request['id_solicitud_libre']);
+            $solicitud->SOL_estado = 1;
+            $solicitud->FK_SOL_id_sala = $request['FK_SOL_id_sala_libre'];
+            $solicitud->save();
+
+            $coment = new comentariosSolicitud();
+            $coment->COM_comentario = "Ninguna";
+            $coment->FK_COM_id_solicitud = $request['id_solicitud_libre'];
+            $coment->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Solicitud aprobada y asignada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+
+    }
+
     //Metodo para rechazar solicitud y agregar anotacion
 
     /**
@@ -177,6 +210,43 @@ class AuxiliarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function agregarAnotacion(Request $request)
+    {
+
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Agregar comentario a tbl_comentarios y reprobar solicitud
+
+            //Cambio el estado de la solicitud a 2 - en estudio
+            $solicitud = Solicitud::find($request['id_solicitud']);
+            $solicitud->SOL_estado = 2;
+            $solicitud->save();
+            //Guardo la anotacion en la tabla comentario
+            $coment = new comentariosSolicitud();
+            $coment->COM_comentario = $request['anotacion'];
+            $coment->FK_COM_id_solicitud = $request['id_solicitud'];
+            $coment->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Anotacion agregada correctamente.'
+            );
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+
+    }
+
+    //Metodo para rechazar solicitud y agregar anotacion
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function agregarAnotacionLibre(Request $request)
     {
 
         if ($request->ajax() && $request->isMethod('POST')) {

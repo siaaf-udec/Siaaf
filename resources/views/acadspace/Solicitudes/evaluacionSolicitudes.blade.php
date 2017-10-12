@@ -1,3 +1,4 @@
+@permission('auxapoyo')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -455,6 +456,7 @@
                                         $('#modal-aprobar-sol').modal('hide');
                                         $('#form-aceptar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
+                                        formData = null;
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -488,12 +490,13 @@
 
                     return {
                         init: function () {
-                            var route = '{{ route('espacios.academicos.evalsol.aprobarSol') }}';
+                            var route = '{{ route('espacios.academicos.evalsol.aprobarSolLibre') }}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
-                            formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
-                            formData.append('FK_SOL_id_sala', $('select[name="aulas"]').val());
+                            formData.append('id_solicitud_libre', dataTable.PK_SOL_id_solicitud);
+                            formData.append('FK_SOL_id_sala_libre', $('select[name="aulas"]').val());
+                            console.log(formData);
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -512,6 +515,7 @@
                                         $('#modal-aprobar-sol').modal('hide');
                                         $('#form-aceptar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
+                                        formData = null;
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -569,6 +573,7 @@
                                         $('#modal-reprobar-sol').modal('hide');
                                         $('#form-reprobar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
+                                        formData = null;
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -603,7 +608,7 @@
 
                     return {
                         init: function () {
-                            var route = '{{ route('espacios.academicos.evalsol.reprobarSol') }}';
+                            var route = '{{ route('espacios.academicos.evalsol.reprobarSolLibre') }}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
@@ -627,11 +632,13 @@
                                         $('#modal-reprobar-sol').modal('hide');
                                         $('#form-reprobar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
+                                        formData = null;
                                     }
                                 },
                                 error: function (response, xhr, request) {
                                     if (request.status === 422 && xhr === 'success') {
                                         UIToastr.init(xhr, response.title, response.message);
+
                                     }
                                 }
                             });
@@ -656,3 +663,4 @@
 
     </script>
 @endpush
+@endpermission

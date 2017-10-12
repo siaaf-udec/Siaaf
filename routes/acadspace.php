@@ -253,10 +253,20 @@ Route::group(['prefix' => 'evalsol'], function () {
         'uses' => $controller . 'AuxiliarController@aprobarSolicitud',
         'as' => 'espacios.academicos.evalsol.aprobarSol',
     ]);
+    Route::post('aprobarLibre', [ //Aprobar solicitud libre
+        'uses' => $controller . 'AuxiliarController@aprobarSolicitudLibre',
+        'as' => 'espacios.academicos.evalsol.aprobarSolLibre',
+    ]);
+
     Route::post('reprobar', [ //Aprobar solicitud
         'uses' => $controller . 'AuxiliarController@agregarAnotacion',
         'as' => 'espacios.academicos.evalsol.reprobarSol',
     ]);
+    Route::post('reprobarLibre', [ //Aprobar solicitud
+        'uses' => $controller . 'AuxiliarController@agregarAnotacionLibre',
+        'as' => 'espacios.academicos.evalsol.reprobarSolLibre',
+    ]);
+
     Route::post('finalizar', [ //Aprobar solicitud
         'uses' => $controller . 'AuxiliarController@finalizarProceso',
         'as' => 'espacios.academicos.evalsol.finalizarProceso',
@@ -388,6 +398,20 @@ Route::group(['prefix' => 'incidente'], function () {
         'uses' => $controller . 'IncidentesController@regisIncidente',
         'as' => 'espacios.academicos.incidente.regisIncidente',
     ]);
+});
+
+/*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
+Route::group(['prefix' => 'docente'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index',[ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller.'DocentesController@index',
+        'as' => 'espacios.academicos.docente.index'
+    ]);
+    Route::post('regisAsistenciaDoc', [ //CREAR REGISTRO ASISTNECIA
+        'uses' => $controller . 'DocentesController@regisAsistenciaDoc',
+        'as'   => 'espacios.academicos.docente.regisAsistenciaDoc',
+    ]);
+
 });
 
 

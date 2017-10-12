@@ -15,7 +15,7 @@
 @endpush
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Reportes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Reportes Docentes'])
 
             <div class="row">
                     {{--DIVISION NAV--}}
@@ -35,8 +35,9 @@
                             {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
                             array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
                             <br>
+                            <br>
 
-                            {!! Field::text('date_range_doc',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
+                            {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
                             ['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
 
 
@@ -89,7 +90,6 @@
     {
         moment.locale('es');
         $('input[name="date_range"]').daterangepicker();
-        $('input[name="date_range_doc"]').daterangepicker();
         $("#SOL_laboratorios_doc").change(function (event) {
             /*Cargar select de aulas*/
             $.get("cargarSalasReportes/" + event.target.value + "", function (response) {
