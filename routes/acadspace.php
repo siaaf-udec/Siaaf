@@ -261,47 +261,58 @@ Route::group(['prefix' => 'evalsol'], function () {
         'uses' => $controller . 'AuxiliarController@finalizarProceso',
         'as' => 'espacios.academicos.evalsol.finalizarProceso',
     ]);
-
+    Route::get('indexFinal', [
+        'uses' => $controller . 'AuxiliarController@indexFinal',
+        'as' => 'espacios.academicos.evalsol.indexFinal'
+    ]);
+    Route::get('mostrarFinalizados/{espacio?}', [
+        'uses' => $controller . 'AuxiliarController@mostrarFinalizados',
+        'as' => 'espacios.academicos.evalsol.mostrarFinalizados',
+    ]);
+    Route::delete('delete/{id?}', [ //ELIMINAR
+        'uses' => $controller . 'AuxiliarController@destroy',
+        'as' => 'espacios.academicos.evalsol.destroy'
+    ])->where(['id' => '[0-9]+']);
 });
 
 /*RUTAS PARA EL FORMULARIO DE FORMATOS ACADEMICOS*/
 Route::group(['prefix' => 'formacad'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('index',[
-        'uses' => $controller.'formatosController@index',
+    Route::get('index', [
+        'uses' => $controller . 'formatosController@index',
         'as' => 'espacios.academicos.formacad.index'
     ]);
-    Route::get('indexajax',[
-        'uses' => $controller.'formatosController@indexajax',
+    Route::get('indexajax', [
+        'uses' => $controller . 'formatosController@indexajax',
         'as' => 'espacios.academicos.formacad.indexajax'
     ]);
-    Route::get('data',[ //Cargar datatable
-        'uses' => $controller.'formatosController@data',
+    Route::get('data', [ //Cargar datatable
+        'uses' => $controller . 'formatosController@data',
         'as' => 'espacios.academicos.formacad.data'
     ]);
-    Route::post('store',[ //Registro solicitud formulario
-        'uses' => $controller.'formatosController@store',
+    Route::post('store', [ //Registro solicitud formulario
+        'uses' => $controller . 'formatosController@store',
         'as' => 'espacios.academicos.formacad.store'
     ]);
-    Route::get('create',[ //Mostrar la vista
-        'uses' => $controller.'formatosController@create',
+    Route::get('create', [ //Mostrar la vista
+        'uses' => $controller . 'formatosController@create',
         'as' => 'espacios.academicos.formacad.create'
     ]);
-    Route::get('listSol',[
-        'uses' => $controller.'formatosController@listSol',
+    Route::get('listSol', [
+        'uses' => $controller . 'formatosController@listSol',
         'as' => 'espacios.academicos.formacad.listSol'
     ]);
-    Route::get('datalistSol',[ //Cargar datatable
-        'uses' => $controller.'formatosController@dataListSol',
+    Route::get('datalistSol', [ //Cargar datatable
+        'uses' => $controller . 'formatosController@dataListSol',
         'as' => 'espacios.academicos.formacad.datalistSol'
     ]);
-    Route::get('edit/{id?}',[ //EDITAR
-        'uses' => $controller.'formatosController@edit',
+    Route::get('edit/{id?}', [ //EDITAR
+        'uses' => $controller . 'formatosController@edit',
         'as' => 'espacios.academicos.formacad.edit'
     ])->where(['id' => '[0-9]+']);
 
-    Route::get('descargarArchivo/{id?}',[
-        'uses' => $controller.'formatosController@descargar_publicacion',
+    Route::get('descargarArchivo/{id?}', [
+        'uses' => $controller . 'formatosController@descargar_publicacion',
         'as' => 'espacios.academicos.descargarArchivo'
     ])->where(['id' => '[0-9]+']);
 
@@ -314,15 +325,69 @@ Route::group(['prefix' => 'report'], function () {
         'uses' => $controller.'ReporteController@index',
         'as' => 'espacios.academicos.report.index'
     ]);
-    Route::post('repEst', [ //CREAR REPORTE
-        'uses' => $controller . 'ReporteController@store',
-        'as'   => 'espacios.academicos.report.repEst',
+    Route::get('cargarSalasReportes/{sala?}',[ //CARGAR SALAS
+        'uses' => $controller.'ReporteController@cargarSalasReportes',
+        'as' => 'espacios.academicos.report.cargarSalasReportes'
     ]);
-    Route::get('DownloadRepEstudiante',[ //DESCARGAR REPORTE
-        'uses' => $controller.'ReporteController@DownloadEstReporte',
-        'as' => 'espacios.academicos.report.downReportEst'
+    Route::post('repDoc', [ //CREAR REPORTE DOCENTE
+        'uses' => $controller . 'ReporteController@reporDocente',
+        'as'   => 'espacios.academicos.report.repDoc',
+    ]);
+    Route::get('repEst',[ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller.'ReporteController@repEst',
+        'as' => 'espacios.academicos.report.indexPrueba'
+    ]);
+    Route::post('cargarRepEst',[ //CREAR REPORTE
+        'uses' => $controller . 'ReporteController@cargarRepEst',
+        'as'   => 'espacios.academicos.report.cargarRepEst',
     ]);
 
+});
+
+/*RUTAS PARA FUNCIONALIDAD AULAS*/
+Route::group(['prefix' => 'aulas'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index', [
+        'uses' => $controller . 'AulasController@index',
+        'as' => 'espacios.academicos.aulas.index'
+    ]);
+    Route::get('data', [ //Cargar datatable
+        'uses' => $controller . 'AulasController@data',
+        'as' => 'espacios.academicos.aulas.data'
+    ]);
+
+    Route::delete('delete/{id?}', [ //ELIMINAR
+        'uses' => $controller . 'AulasController@destroy',
+        'as' => 'espacios.academicos.aulas.destroy'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::post('regisAula', [ //CREAR AULA
+        'uses' => $controller . 'AulasController@regisAula',
+        'as' => 'espacios.academicos.aulas.regisAula',
+    ]);
+});
+
+/*RUTAS PARA FUNCIONALIDAD INCIDENTES*/
+Route::group(['prefix' => 'incidente'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index', [
+        'uses' => $controller . 'IncidentesController@index',
+        'as' => 'espacios.academicos.incidente.index'
+    ]);
+    Route::get('data', [ //Cargar datatable
+        'uses' => $controller . 'IncidentesController@data',
+        'as' => 'espacios.academicos.incidente.data'
+    ]);
+
+    Route::delete('delete/{id?}', [ //ELIMINAR
+        'uses' => $controller . 'IncidentesController@destroy',
+        'as' => 'espacios.academicos.incidente.destroy'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::post('regisIncidente', [ //CREAR INCIDENTE
+        'uses' => $controller . 'IncidentesController@regisIncidente',
+        'as' => 'espacios.academicos.incidente.regisIncidente',
+    ]);
 });
 
 
