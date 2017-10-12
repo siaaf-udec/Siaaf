@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
             $value = preg_replace('/(?<=\s)@breakswitch(?=\s)/', '<?php break;', $value);
             return $value;
         });
+
+        // Custom If Statements
+        Blade::if('env', function ($environment) {
+            return app()->environment($environment);
+        });
     }
 
     /**
