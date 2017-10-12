@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: App\Container\Calisoft
-        psr4_prefix: App\Container\Calisoft
-        src_path: src
