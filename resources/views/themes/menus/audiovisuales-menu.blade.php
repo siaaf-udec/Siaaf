@@ -1,4 +1,4 @@
-{{-- MENÚ DE EJEMPLO --}}
+{{-- MENÚ DE EJEMPLO Correcion--}}
 <li class="nav-item {{ active(['audiovisuales.*'], 'start active open') }}">
     <a class="nav-link nav-toggle" href="javascript:;">
         <i class="fa fa-desktop">
