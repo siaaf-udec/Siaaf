@@ -201,7 +201,7 @@
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
                 $.ajax({}).done(function () {
-                    window.location.href = '{{ route('espacios.academicos.descargarArchivo') }}' + '/' + dataTable.PK_FAC_id_solicitudF;
+                    window.location.href = '{{ route('espacios.academicos.descargarArchivo') }}' + '/' + dataTable.PK_FAC_id_solicitud;
                 });
             });
 
