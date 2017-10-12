@@ -33,6 +33,11 @@ class CalendarioController extends Controller
         return view('acadspace.gestionhorarios.calendarioaulas');
     }
 
+    /**
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cargarSalasCalendario(Request $request, $espacio)
     {
         if ($request->ajax()) {
@@ -42,6 +47,10 @@ class CalendarioController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function cargaEventos(Request $request)
     {
         $sala = $request['sala'];
@@ -77,58 +86,26 @@ class CalendarioController extends Controller
     {
         $titulo = $_POST['title'];
         $fecha_inicio = $_POST['start'];
+        // $fecha_fin = date($fecha_inicio, (strtotime ("+2 Hours")));
+        $fecha_fin = strtotime('+2 hours', strtotime($fecha_inicio));
+        $fecha_final = date('Y-m-d H:i:s', $fecha_fin);
         $color = $_POST['background'];
         $sala = $_POST['salaSeleccionada'];
         $evento = new calendarioSalones();
 
         $evento->CAL_titulo = $titulo;
         $evento->CAL_fecha_ini = $fecha_inicio;
+        $evento->CAL_fecha_fin = $fecha_final;
         $evento->CAL_color = $color;
         $evento->CAL_sala = $sala;
+
 
         $evento->save();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
 
     /**
-     * Display the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
      */
     public function update()
     {
@@ -154,41 +131,42 @@ class CalendarioController extends Controller
         $evento->save();
     }
 
+
     /**
-     * Remove the specified resource from storage.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
      */
     public function delete()
     {
-        //Valor id recibidos via ajax
         $id = $_POST['id'];
 
         calendarioSalones::destroy($id);
     }
 
+    /**
+     * @param Request $request
+     * @param $sala
+     * @return \Illuminate\Http\Response
+     */
     public function data(Request $request, $sala)
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
-
-            //Traigo unicamente las solicitudes aprobadas y muestro en el datatable
-           /* $users = Solicitud::where('FK_SOL_id_sala', '=', $sala)
+            //unicamente las solicitudes aprobadas y muestra en el datatable
+            $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_id_docente',
+                'SOL_nucleo_tematico', 'SOL_cant_estudiantes', 'SOL_id_practica',
+                'created_at', 'SOL_carrera', 'SOL_dias', 'SOL_hora_inicio',
+                'SOL_hora_fin', 'SOL_guia_practica', 'SOL_software', 'SOL_rango_fechas')
+                ->with(['user' => function ($query) {
+                    return $query->select('id', 'name', 'lastname');
+                }])
+                ->where('FK_SOL_id_sala', '=', $sala)
                 ->where('SOL_estado', '=', 1)
-                ->get();*/
-            $users = Solicitud::where('SOL_estado', '=', 1)
-                ->where('FK_SOL_id_sala','=', $sala)
-                /*->select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
-                'SOL_cant_estudiantes', 'SOL_id_practica',  'tbl_solicitud.created_at', 'SOL_dias', 'users.name as name',
-                'users.lastname as lastname', 'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software'])*/
-                ->leftjoin('developer.users', 'tbl_solicitud.SOL_id_docente', '=', 'developer.users.id')
                 ->get();
-            return DataTables::of($users)
-                ->addColumn('tipo_prac', function ($users) {
-                    if ($users->SOL_id_practica == 1) {
+            return DataTables::of($solicitud)
+                ->addColumn('tipo_prac', function ($solicitud) {
+                    if ($solicitud->SOL_id_practica == 1) {
                         return "Libre";
-                    } elseif ($users->SOL_id_practica == 2) {
+                    } elseif ($solicitud->SOL_id_practica == 2) {
                         return "Grupal";
                     }
                 })
@@ -196,12 +174,11 @@ class CalendarioController extends Controller
                 ->addIndexColumn()
                 ->make(true);
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
 
     }

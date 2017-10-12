@@ -9,7 +9,6 @@
 namespace App\Container\Acadspace\src\Controllers;
 
 use App\Container\Acadspace\src\comentariosSolicitud;
-use App\Mail\HumTalent\EmailTalentoHumano;
 use App\Container\Acadspace\src\Formatos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,11 +42,8 @@ use App\Mail\WelcomeMail;
 class formatosController extends Controller
 {
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -55,12 +51,18 @@ class formatosController extends Controller
         return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexajax()
     {
         //Muestra vista de solicitudes por id_secretaria
         return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad-ajax');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listSol()
     {
         //Muestra vista de solicitudes realizadas por secretarias
@@ -69,9 +71,8 @@ class formatosController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create(Request $request)
     {
@@ -81,19 +82,18 @@ class formatosController extends Controller
             //Carga formulario para crear solicitud
             return view('acadspace.FormatosAcademicos.registroSolicitudFormAcad');
 
-        } else {
-            //Envia notificacion de no recibir peticion ajax
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        //Envia notificacion de no recibir peticion ajax
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -115,9 +115,8 @@ class formatosController extends Controller
                 $model->FAC_estado = 0;
                 $model->save(); //Registra los campos
 
-                Mail::to($request['correo'])->send(new WelcomeMail("Prueba","prueba1"));
-                Mail::to($request['correo'], 'P1')->send(new EmailTalentoHumano("alex","alex", "0"));
-
+                //Envio de correo
+                Mail::to($request['correo'])->send(new EmailAcadspace("Nuevo formato academico", "Ha recibido un nuevo formato academico"));
 
                 return AjaxResponse::success(
                 //Envia notificacion de registro satisfactorio
@@ -127,35 +126,22 @@ class formatosController extends Controller
             }
 
 
-        } else {
-            //Envia notificacion de no recibir peticion ajax
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        //Envia notificacion de no recibir peticion ajax
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-
-    }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
+     * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-
     public function edit(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -174,29 +160,12 @@ class formatosController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function destroy($id)
-    {
-
-    }
-
     public function descargar_publicacion(Request $request, $id)
     {
         //Recibe id de solicitud
@@ -208,6 +177,10 @@ class formatosController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function data(Request $request)
     {
         //Recibe peticion Ajax
@@ -233,35 +206,43 @@ class formatosController extends Controller
                 ->addIndexColumn()
                 ->make(true);//Retorna tabla creada
 
-        } else {
-            //Envia notificacion de no recibir peticion ajax
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        //Envia notificacion de no recibir peticion ajax
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function dataListSol(Request $request)
     {
         $id = Auth::id();//Trae ID usuario
         //Recibe peticion Ajax
         if ($request->ajax() && $request->isMethod('GET')) {
-            $solic = formatos::where('FAC_estado', '=', 0)->select(['tbl_solformacad.PK_FAC_id_solicitud', 'tbl_solformacad.FAC_titulo_doc', 'tbl_solformacad.created_at', 'users.name as name', 'users.lastname as lastname'])
-                ->join('developer.users', 'tbl_solformacad.FK_FAC_id_secretaria', '=', 'developer.users.id')
+            $solic = formatos::select(['PK_FAC_id_solicitud',
+                'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
+                ->with(['user' => function ($query) {
+                    return $query->select('id', 'name', 'lastname');
+                }])
+                ->where('FAC_estado', '=', 0)
                 ->get();
             return DataTables::of($solic)
                 ->addIndexColumn()
                 ->make(true);//Retorna tabla creada
 
-        } else {
-            //Envia notificacion de no recibir peticion ajax
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        //Envia notificacion de no recibir peticion ajax
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 }

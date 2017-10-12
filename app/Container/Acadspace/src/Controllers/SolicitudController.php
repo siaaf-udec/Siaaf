@@ -8,106 +8,86 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
-use App\Container\Acadspace\src\comentariosSolicitud;
 use App\Container\Acadspace\src\UserAcadSpace;
-use App\Container\Users\Src\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Solicitud;
 use App\Container\Acadspace\src\Software;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Auth;
-
-use App\Notifications\HeaderSiaaf;
-
-use Validator;
-use Illuminate\Support\Facades\Storage;
-use App\Container\Permissions\Src\Interfaces\ModuleInterface;
-use App\Container\Permissions\Src\Interfaces\RoleInterface;
-use App\Container\Overall\Src\Facades\UploadFile;
-
-use App\Container\Users\Src\Country;
-
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+
 
 class SolicitudController extends Controller
 {
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     { //Mostrar el datatable con las solicitudes realizadas por el docente
         return view('acadspace.Solicitudes.solicitudGrupal');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexajax()
     { //Mostrar el datatable con las solicitudes realizadas por el docente
         return view('acadspace.Solicitudes.solicitudGrupal-ajax');
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
     public function create(Request $request)
     { //vista para registrar una practica grupal
         if ($request->ajax() && $request->isMethod('GET')) {
             $soft = new software();
             $software = $soft->pluck('SOf_nombre_soft', 'SOf_nombre_soft');
             return view('acadspace.Solicitudes.registroSolicitudGrupal', ['software' => $software->toArray()]);
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-
-
-    public function store(Request $request)
-    {
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
     public function createlib(Request $request)
     { //registro en BD practica libre
         if ($request->ajax() && $request->isMethod('GET')) {
             $soft = new software();
             $software = $soft->pluck('SOF_nombre_soft', 'SOf_nombre_soft');
-            return view('acadspace.Solicitudes.registroSolicitudPracLibre', ['software' => $software->toArray()]);
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
+            return view('acadspace.Solicitudes.registroSolicitudPracLibre',
+                [
+                    'software' => $software->toArray()
+                ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function registroSolicitudGrupal(Request $request)
-    { //registro en BD practica grupal
+    { //registro en BD practicas
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $id = Auth::id();
-
             //Comparo que el software no venga vacio y en ese caso guardo como "ninguno"
             if (empty($request['SOL_NombSoft'])) {
                 $nombreSoftware = "Ninguno";
@@ -166,28 +146,33 @@ class SolicitudController extends Controller
             }
 
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function data(Request $request)
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
-            //  $users = Solicitud::all();
-            //Consulta usando 2 tablas
-            $users = Solicitud::select(['PK_SOL_id_solicitud', 'SOL_nucleo_tematico', 'SOL_cant_estudiantes',
-                'SOL_id_practica', 'FK_SOL_id_sala', 'tbl_solicitud.created_at', 'tbl_comentariosolicitud.COM_comentario as comentario',
-                'SOL_estado', 'SOL_software'])
-                ->leftjoin('tbl_comentariosolicitud', 'tbl_solicitud.PK_SOL_id_solicitud', '=', 'tbl_comentariosolicitud.FK_COM_id_solicitud')
+            $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
+                'SOL_cant_estudiantes', 'SOL_id_practica', 'SOL_estado', 'created_at',
+                'SOL_software', 'FK_SOL_id_sala')
+                ->where('SOL_id_docente', '=', Auth::id())
+                ->with(['coment' => function ($query) {
+                    return $query->select('PK_COM_id_comentario', 'COM_comentario',
+                        'FK_COM_id_solicitud');
+                }])
                 ->get();
-
-            return DataTables::of($users)
+            return DataTables::of($solicitud)
                 ->addColumn('estado', function ($users) {
                     if ($users->SOL_estado == 1) {
                         return "<span class='label label-sm label-success'>" . 'Aprobado' . "</span>";
@@ -195,6 +180,8 @@ class SolicitudController extends Controller
                         return "<span class='label label-sm label-warning'>" . 'Pendiente' . "</span>";
                     } elseif ($users->SOL_estado == 2) {
                         return "<span class='label label-sm label-danger'>" . 'Reprobado' . "</span>";
+                    } elseif ($users->SOL_estado == 3) {
+                        return "<span class='label label-sm label-default'>" . 'Finalizado' . "</span>";
                     }
                 })
                 ->addColumn('tipo_prac', function ($users) {
@@ -209,12 +196,12 @@ class SolicitudController extends Controller
                 ->addIndexColumn()
                 ->make(true);
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 
@@ -226,25 +213,50 @@ class SolicitudController extends Controller
 
     }
 
-    public function controladorX()
+    public function controladorX(UserAcadSpace $model)
     {
-        $soft = software::all();
-        dd($soft);
-        /* $user = UserAcadSpace::find(1)->user()->create([
-             'name' => 'miguel',
-         ]);
-         dd($user);*/
-        $users = Solicitud::select(['PK_SOL_id_solicitud', 'SOL_guia_practica', 'SOL_software', 'tbl_solicitud.created_at', 'tbl_solicitud.updated_at', 'tbl_comentariosolicitud.COM_comentario as comentario'])
-            ->leftjoin('tbl_comentariosolicitud', 'tbl_solicitud.PK_SOL_id_solicitud', '=', 'tbl_comentariosolicitud.FK_COM_id_solicitud')
+        $solic = formatos::select(['PK_FAC_id_solicitud',
+            'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
+            ->with(['user' => function ($query) {
+                return $query->select('id', 'name', 'lastname');
+            }])
+            ->where('FAC_estado', '=', 0)
             ->get();
+        //dd($solic);
+
+
+        $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
+            'SOL_cant_estudiantes', 'SOL_id_practica', 'SOL_estado',
+            'FK_SOL_id_sala')
+            ->where('SOL_id_docente', '=', 1)
+            ->with(['coment' => function ($query) {
+                return $query->select('PK_COM_id_comentario', 'COM_comentario', 'FK_COM_id_solicitud');
+            }])
+            ->get();
+        dd($solicitud);
+
+
+        $alex = Solicitud::select('PK_SOL_id_solicitud', 'SOL_id_docente', 'SOL_nucleo_tematico',
+            'SOL_cant_estudiantes', 'SOL_id_practica', 'created_at', 'SOL_carrera', 'SOL_dias',
+            'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software')
+            ->with(['user' => function ($query) {
+                return $query->select('id', 'name', 'lastname');
+            }])
+            ->where('FK_SOL_id_sala', '=', 202)
+            ->where('SOL_estado', '=', 1)
+            ->get();
+        dd($alex);
+
+
+        $prueba = Solicitud::with('user')
+            ->where('FK_SOL_id_sala', '=', 201)
+            ->where('SOL_estado', '=', 1)
+            ->get();
+        dd($prueba);
 
 
         return Datatables::of($users)->make(true);
-        /*   $comentarios = comentariosSolicitud::all()
-           ->join('tbl_solicitud', 'tbl_solicitud.PK_SOL_id_solicitud', '=', 'tbl_comentariosolicitud.FK_COM_id_solicitud')
-           ->select('tbl_solicitud.SOL_nucleo_tematico', 'tbl_comentariosolicitud.COM_comentario')
-                ->get();
-           dd($comentarios);*/
+
     }
 
 }

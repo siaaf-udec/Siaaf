@@ -21,9 +21,7 @@ class EstudiantesController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -31,9 +29,7 @@ class EstudiantesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -41,10 +37,8 @@ class EstudiantesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -52,11 +46,11 @@ class EstudiantesController extends Controller
 
         $code = $data['codigo'];
         $rest = substr($code, -8, -6);
-        if($rest == '61' || $rest == '63' || $rest == '60' || $rest == '10' || $rest == '14' || $rest == '40') {
+        if ($rest == '61' || $rest == '63' || $rest == '60' || $rest == '10' || $rest == '14' || $rest == '40') {
 
             $model = new Estudiantes();
 
-            $model->id_carrera =$this->obtenerCarrera($code);
+            $model->id_carrera = $this->obtenerCarrera($code);
             $model->nombre = $data['nombre'];
             $model->codigo = $data['codigo'];
             $model->save();
@@ -67,8 +61,7 @@ class EstudiantesController extends Controller
             );
             return redirect()->back()->with($notificacion);
 
-        }
-        else{
+        } else {
             $notificacion = array(
                 'message' => 'Algo anda mal.',
                 'alert-type' => 'danger'
@@ -78,39 +71,42 @@ class EstudiantesController extends Controller
         }
 
 
-
     }
 
-    public function obtenerCarrera($codigo){
+    /**
+     * @param $codigo
+     * @return int
+     */
+    public function obtenerCarrera($codigo)
+    {
 
         $rest = substr($codigo, -8, -6); // devuelve "d"
 
-            if($rest == '61'){
-                $id_carr = 1;//Ing Sistemas
-            }
-            if($rest == '63'){
-                $id_carr = 2;//Ing Ambiental
-            }
-            if($rest == '60'){
-                $id_carr = 3;//Ing Agronomica
-            }
-            if($rest == '10'){
-                $id_carr = 4;//Administracion
-            }
-            if($rest == '14'){
-                $id_carr = 5;//Contaduria
-            }
-            if($rest == '40'){
-                $id_carr = 6;//Piscologia
-            }
+        if ($rest == '61') {
+            $id_carr = 1;//Ing Sistemas
+        }
+        if ($rest == '63') {
+            $id_carr = 2;//Ing Ambiental
+        }
+        if ($rest == '60') {
+            $id_carr = 3;//Ing Agronomica
+        }
+        if ($rest == '10') {
+            $id_carr = 4;//Administracion
+        }
+        if ($rest == '14') {
+            $id_carr = 5;//Contaduria
+        }
+        if ($rest == '40') {
+            $id_carr = 6;//Piscologia
+        }
 
         return $id_carr;
     }
+
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     Get estudiantes
      */
     public function show()
     {
@@ -124,17 +120,21 @@ class EstudiantesController extends Controller
         //$roles = DB::table('tbl_estudiantes')->select('*')->where('id_carrera','=','1')->get();
         //$cont = $roles->count;
         //return view('acadspace.Reportes.reportesEstudiantes', compact('sist', 'amb', 'agron', 'admi', 'cont', 'psic'));
-        dd('Ingenieria de Sistemas: '. $sist,
-            'Ingenieria Ambiental: '. $amb, 'Ingenieria Agronomica: '. $agron, 'Administracion: '. $admi, 'Contaduria: '. $cont,
-            'Psicologia: '. $psic);
+        dd('Ingenieria de Sistemas: ' . $sist,
+            'Ingenieria Ambiental: ' . $amb, 'Ingenieria Agronomica: ' . $agron, 'Administracion: ' . $admi, 'Contaduria: ' . $cont,
+            'Psicologia: ' . $psic);
     }
 
-    public function obtCont($model,$id)
+    /**
+     * @param $model
+     * @param $id
+     * @return int
+     */
+    public function obtCont($model, $id)
     {
-        $cont=0;
-        foreach($model as $user)
-        {
-            if($user->id_carrera == $id) {
+        $cont = 0;
+        foreach ($model as $user) {
+            if ($user->id_carrera == $id) {
                 $cont = $cont + 1;
             }
         }
@@ -142,10 +142,7 @@ class EstudiantesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
     public function edit($id)
     {
@@ -154,32 +151,12 @@ class EstudiantesController extends Controller
         $empleado->save();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function destroy($id)
-    {
-
-    }
-
     public function reportes()
     {
-
         return view('acadspace.Reportes.reportesIndex');
     }
 
