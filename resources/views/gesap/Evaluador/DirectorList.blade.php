@@ -29,7 +29,6 @@
                     'Duracion',
                     'Fecha Radicacion',
                     'Fecha Limite',
-                    'Estado',
                     'Min',
                     'Requerimientos',
                     'Director',
@@ -37,6 +36,7 @@
                     'Estudiante 2',
                     'Jurado 1',
                     'Jurado 2',
+                    'Estado',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
@@ -107,7 +107,6 @@ jQuery(document).ready(function () {
            {data: 'anteproyecto.NPRY_Duracion',searchable: true},
            {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
            {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
-           {data: 'anteproyecto.NPRY_Estado',searchable: true},
            {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {
@@ -155,6 +154,7 @@ jQuery(document).ready(function () {
                         else
                             return "No hay asignado"
                     },className:'none',searchable: true},
+           {data: 'NPRY_Estado',searchable: true},
             {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',

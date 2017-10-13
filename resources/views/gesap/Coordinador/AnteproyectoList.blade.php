@@ -115,6 +115,7 @@
 
 @push('functions')
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function () 
         {
@@ -169,7 +170,7 @@
                     {data: 'NPRY_Duracion',searchable: true},
                     {data: 'NPRY_FechaR', className:'none',searchable: true},
                     {data: 'NPRY_FechaL', className:'none',searchable: true},
-                    {data: 'NPRY_Estado',searchable: true},
+                    {data: 'NPRY_Estado',searchable: true, name: 'Estado'},
                     {data: 'radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {

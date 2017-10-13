@@ -126,9 +126,13 @@ Route::group(['middleware' => ['role:Student_Gesap']], function () use ($control
         'as' => 'anteproyecto.index.studentList',
         'uses' => $controller.'StudentController@proyecto'
     ]);
-
 });
-
+Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
+    Route::get('actividades/{id}', [
+        'as' => 'proyecto.actividades',
+        'uses' => $controller.'StudentController@actividad'
+    ]);
+});
 /*DATATABLES RUTAS*/
 Route::get('estudiante', [
     'as' => 'anteproyecto.studentList',

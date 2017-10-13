@@ -37,7 +37,6 @@
                     'Duracion',
                     'Fecha Radicacion',
                     'Fecha Limite',
-                    'Estado',
                     'Min',
                     'Requerimientos',
                     'Director',
@@ -46,6 +45,7 @@
                     'Jurado 1',
                     'Jurado 2',
                     'Concepto',
+                    'Estado',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
@@ -259,7 +259,6 @@ jQuery(document).ready(function () {
            {data: 'anteproyecto.NPRY_Duracion',className:'none',searchable: true},
            {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
            {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
-           {data: 'anteproyecto.NPRY_Estado',searchable: true},
            {data: 'anteproyecto.radicacion.RDCN_Min',
                         render: function (data, type, full, meta) 
                         {
@@ -310,6 +309,7 @@ jQuery(document).ready(function () {
                             return "No hay asignado"
                     },className:'none',searchable: true},
            {data: 'anteproyecto.concepto_final',render: "[, ].conceptos.CNPT_Concepto","visible": false },
+           {data: 'NPRY_Estado',searchable: true,name:'Estado'},
            {data:"PK_NPRY_idMinr008",
             name:'action',
                title:'Acciones',
@@ -366,7 +366,7 @@ jQuery(document).ready(function () {
                     var formData = new FormData();
                     formData.append('concepto', $('select[name="concepto"]').val());
                     formData.append('user', $('input[name="user"]').val());
-                    formData.append('proyecto', $('input[name="PK_anteproyecto"]').val());
+                    formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
 
                     $.ajax({
                         url: route,

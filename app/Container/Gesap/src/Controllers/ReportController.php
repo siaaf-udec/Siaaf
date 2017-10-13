@@ -120,7 +120,7 @@ class ReportController extends Controller
                    'encargados' => function ($encargados) use ($request) {
                         $encargados->where('E.NCRD_Cargo', '=', "Director");
                         $encargados->where('FK_developer_user_id', '=', $request->user()->id);
-            }])])
+            }])
             ->get();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos

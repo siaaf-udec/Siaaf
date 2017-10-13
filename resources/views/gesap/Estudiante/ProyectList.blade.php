@@ -15,7 +15,7 @@
 @section('page-description', 'Listado de anteproyectos y proyectos registrados')
 
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Proyectos'])
         <div class="row">
         
         <div class="col-md-12">
@@ -29,7 +29,6 @@
                     'Duracion',
                     'Fecha Radicacion',
                     'Fecha Limite',
-                    'Estado',
                     'Min',
                     'Requerimientos',
                     'Director',
@@ -37,6 +36,7 @@
                     'Estudiante 2',
                     'Jurado 1',
                     'Jurado 2',
+                    'Estado',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
@@ -99,21 +99,20 @@ jQuery(document).ready(function () {
            }
        },
       columns:[
-           {data: 'DT_Row_Index'},
-           {data: 'PK_NPRY_idMinr008', "visible": false },
-           {data: 'NPRY_Titulo', searchable: true},
-           {data: 'NPRY_Keywords', searchable: true},
-           {data: 'NPRY_Duracion',searchable: true},
-           {data: 'NPRY_FechaR', className:'none',searchable: true},
-           {data: 'NPRY_FechaL', className:'none',searchable: true},
-           {data: 'NPRY_Estado',searchable: true},
-           {data: 'radicacion.RDCN_Min',className:'none',
+          {data: 'DT_Row_Index'},
+           {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+           {data: 'anteproyecto.NPRY_Titulo', searchable: true},
+           {data: 'anteproyecto.NPRY_Keywords', searchable: true},
+           {data: 'anteproyecto.NPRY_Duracion',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
+           {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
+           {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {
                             return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
                         }
                     },
-                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
+                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
@@ -123,31 +122,56 @@ jQuery(document).ready(function () {
                             }  
                         }
                     }, 
-            {data:  function (data, type, dataToSet) {
-                        return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+           {data:  function (data, type, dataToSet) {
+                        if(data.anteproyecto.director[0]!=null)
+                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante1[0]!=null)
+                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante2[0]!=null)
+                        return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado1[0]!=null)
+                        return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado2[0]!=null)
+                        return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
+                        else
+                            return "No hay asignado"
                     },className:'none',searchable: true},
-            {data:'action',className:'',searchable: false,
+           {data: 'NPRY_Estado',searchable: true},
+            {data:'NPRY_Estado',
+             className:'',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
             exportable: false,
             printable: false,
-            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>',
-
-            
+            render: function ( data, type, full, meta ) {
+                var str = new String;
+                str=full.NPRY_Estado;
+                var str = new String;
+                str2="APROBADO";
+                if(full.anteproyecto.NPRY_Estado=="APROBADO"){
+                    return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon create"><i class="icon-eye"></i>Actividades</a>';
+                }else{
+                    return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';
+                }
+                 },
             }
       
        ],
@@ -169,7 +193,7 @@ jQuery(document).ready(function () {
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
 table = table.DataTable();
-       table.on('click', '.edit', function (e) {
+    table.on('click', '.edit', function (e) {
         e.preventDefault();
         $tr = $(this).closest('tr');
         var O = table.row($tr).data();
@@ -178,10 +202,25 @@ table = table.DataTable();
             url: '',
             dataType: "html",
         }).done(function (data) {
-            route = '/gesap/show/'+O.PK_NPRY_idMinr008;
+            route = '/gesap/show/'+O.anteproyecto.PK_NPRY_IdMinr008;
             $(".content-ajax").load(route);
         });
     });
+    
+    table.on('click', '.create', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+	    $.ajax({
+            type: "GET",
+            url: '',
+            dataType: "html",
+        }).done(function (data) {
+            route = '/gesap/actividades/'+O.anteproyecto.PK_NPRY_IdMinr008;
+            $(".content-ajax").load(route);
+        });
+    });
+    
     
 });
 </script>
