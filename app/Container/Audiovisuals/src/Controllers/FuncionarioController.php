@@ -6,6 +6,7 @@ use App\Container\Audiovisuals\src\Articulo;
 use App\Container\Audiovisuals\Src\Interfaces\CarrerasInterface;
 use App\Container\Audiovisuals\Src\Interfaces\FuncionarioInterface;
 use App\Container\Audiovisuals\src\Kit;
+use App\Container\Audiovisuals\src\Programas;
 use App\Container\Audiovisuals\src\Solicitudes;
 use App\Container\Audiovisuals\src\TipoArticulo;
 use App\Container\Audiovisuals\src\UsuarioAudiovisuales;

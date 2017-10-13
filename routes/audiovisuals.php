@@ -11,9 +11,18 @@ Route::group(['prefix' => 'administradorGestionPrestamos'], function () {
 		'uses' => $controller . 'AdministradorGestionController@index',
 		'as'   => 'audiovisuales.gestionPrestamos.index',
 	]);
+	//audiovisuales.gestionPrestamos.indexAjax
+    Route::get('indexAjax', [
+        'uses' => $controller . 'AdministradorGestionController@indexjax',
+        'as'   => 'audiovisuales.gestionPrestamos.indexAjax',
+    ]);
     Route::get('formRepeatAjax',[
         'uses' => $controller.'AdministradorGestionController@formRepeatAjaxindex',
         'as' => 'opcionPrestamoAjax'
+    ]);
+    Route::post('CrearFuncionario', [
+        'uses' => $controller . 'AdministradorGestionController@storeProgramaAdmin',
+        'as'   => 'crearFuncionarioAdmin.storePrograma',
     ]);
     Route::get('validarInfo/{idFuncionarioA?}',[
         'uses' => $controller . 'AdministradorGestionController@validarFuncionario',

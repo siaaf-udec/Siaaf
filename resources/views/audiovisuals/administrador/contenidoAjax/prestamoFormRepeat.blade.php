@@ -159,8 +159,7 @@
                     UIToastr.init(xhr , response.title , response.message  );
                     //////////regresa menu principal
                     App.unblockUI('.portlet-form');
-                    var route = '{{ route('reserva.index') }}';
-                    //var route = '{{ route('audiovisuales.gestionPrestamos.index') }}';
+                    var route = '{{ route('audiovisuales.gestionPrestamos.indexAjax') }}';
                     $(".content-ajax").load(route);
                 },
                 error: function (response, xhr, request) {

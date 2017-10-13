@@ -42,6 +42,19 @@ class AdministradorGestionController extends Controller
         );
 
     }
+    public function indexjax(){
+        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+        //cargar los articulos disponibles en la vista ajax
+        $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
+            $query->where('FK_ART_Estado_id', '=', 1);
+        })->pluck('TPART_Nombre', 'id');
+        return view('audiovisuals.administrador.contenidoAjax.prestamoArticuloAjax',
+            [
+                'tipoArticulos' => $tipo->toArray(),
+                'carrerasUdec' => $carreras->toArray(),
+            ]
+        );
+    }
     public function indexTablaPrestamos()
     {
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
@@ -451,7 +464,27 @@ class AdministradorGestionController extends Controller
             );
         }
     }
+///eliminar
+/// storeProgramaAdmin
 
+    public function storeProgramaAdmin(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+            UsuarioAudiovisuales::create([
+                'USER_FK_Programa' => $request->get('FK_FUNCIONARIO_Programa'),
+                'USER_FK_User' => $request->get('idFuncionario'),
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Programa registrado correctamente.'
+            );
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
     public function crearProgramaFuncio(Request $request, $idFuncionario)
     {
 
