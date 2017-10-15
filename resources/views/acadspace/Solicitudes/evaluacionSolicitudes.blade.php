@@ -221,8 +221,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {{ Form::label('Agregar observacion:') }}
-                                {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
-
+                                {!! Form::textarea('anotacion_libre',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
                             </div>
                         </div>
                     </div>
@@ -540,6 +539,7 @@
                                     if (request.status === 200 && xhr === 'success') {
                                         table.ajax.reload();
                                         $('#modal-aprobar-sol').modal('hide');
+                                        $("#aula").val('').trigger('change');
                                         $('#form-aceptar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
                                         formData = null;
@@ -596,6 +596,7 @@
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         tableLibre.ajax.reload();
+                                        $("#aulas").val('').trigger('change');
                                         $('#modal-aprobar-sol-libre').modal('hide');
                                         $('#form-aceptar-sol-libre')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
@@ -640,7 +641,7 @@
                             var async = async || false;
                             var formData = new FormData();
                             formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
-                            formData.append('anotacion', $("textarea").val());
+                            formData.append('anotacion', $('textarea[name="anotacion"]').val());
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -700,7 +701,7 @@
                             var async = async || false;
                             var formData = new FormData();
                             formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
-                            formData.append('anotacion', $("textarea").val());
+                            formData.append('anotacion', $('textarea[name="anotacion_libre"]').val());
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

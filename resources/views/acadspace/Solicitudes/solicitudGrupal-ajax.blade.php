@@ -37,9 +37,6 @@
 </div>
 @endcomponent
 
-
-
-
 <!-- Informacion que muestra al desplegar -->
 <script id="details-template" type="text/x-handlebars-template">
     <table class="table">
@@ -117,10 +114,6 @@
             var route = '{{ route('espacios.academicos.solacad.crearLibre') }}';
             $(".content-ajax").load(route);
         });
-
-
     });
-
-
 </script>
 @endpermission

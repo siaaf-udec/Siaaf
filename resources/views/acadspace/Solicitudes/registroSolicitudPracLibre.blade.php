@@ -98,15 +98,10 @@
     @endcomponent
 </div>
 {{-- END HTML SAMPLE --}}
-
-
-
 <!--//mensaje validacion-->
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"
         type="text/javascript"></script>
-
-
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -164,9 +159,9 @@
                     var horaInicio = Date.parse('01/01/2001 ' + $('input:text[name="SOL_Hora_Inicio"]').val());
                     var horaFin = Date.parse('01/01/2001 ' + $('input:text[name="SOL_Hora_Fin"]').val());
 
-                    if ( horaInicio >= horaFin ) {
+                    if (horaInicio >= horaFin) {
                         UIToastr.init('error', '¡Error!', 'Verifique los campos de hora.');
-                    } else if ( fechaRecibida < fechaActual ) {
+                    } else if (fechaRecibida < fechaActual) {
                         UIToastr.init('error', '¡Error!', 'Verifique la fecha en que requiere el espacio.');
                     } else {
                         var route = '{{ route('espacios.academicos.solacad.registroSolicitud') }}';
@@ -179,9 +174,9 @@
                             guia = $("#SOL_nombreGuia").val();
                         }
                         //Validacion de si solicitan software o no
-                        if($('select[name="SOL_NombSoft"]').val()==""){
+                        if ($('select[name="SOL_NombSoft"]').val() == "") {
                             soft = "Ninguno";
-                        }else{
+                        } else {
                             soft = $('select[name="SOL_NombSoft"]').val();
                         }
                         var formData = new FormData();

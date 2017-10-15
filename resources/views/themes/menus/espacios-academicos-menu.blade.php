@@ -134,7 +134,7 @@
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-check-square-o"></i>
-                <span class="title">Registrar asistencia</span>
+                <span class="title">Registrar ingreso</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">

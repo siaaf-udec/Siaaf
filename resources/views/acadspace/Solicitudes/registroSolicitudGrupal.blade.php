@@ -105,15 +105,13 @@
 {{-- END HTML SAMPLE --}}
 
 
-
-<!--//mensaje validacion-->
-
-<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"
+        type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
         type="text/javascript"></script>
-<script type="text/javascript">
 
+<script type="text/javascript">
     jQuery(document).ready(function () {
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
@@ -130,8 +128,6 @@
         $('#SOL_Hora_Fin').timepicker();
         //Campo daterange
         $('input[name="SOL_Rango_Fechas"]').daterangepicker();
-
-
         /*Mostrar campos ocultos*/
         $("#req_guia").css("display", "none");
         $("input[name=SOL_ReqGuia]").click(function () {
@@ -140,7 +136,6 @@
             } else {
                 $("#req_guia").css("display", "none");
             }
-
         });
         $("#req_soft").css("display", "none");
         $("input[name=SOL_Software]").click(function () {
@@ -149,7 +144,6 @@
             } else {
                 $("#req_soft").css("display", "none");
             }
-
         });
         /*Fin mostrar campos ocultos*/
         var wizard = $('#form_wizard_1');
@@ -186,9 +180,9 @@
                             guia = $("#SOL_nombreGuia").val();
                         }
                         //Validacion de si solicitan software o no
-                        if($('select[name="SOL_NombSoft"]').val()==""){
+                        if ($('select[name="SOL_NombSoft"]').val() == "") {
                             soft = "Ninguno";
-                        }else{
+                        } else {
                             soft = $('select[name="SOL_NombSoft"]').val();
                         }
 

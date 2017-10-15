@@ -3,14 +3,14 @@
 
 @push('styles')
     {{--Select2--}}
-    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!-- daterange -->
     <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet"
           type="text/css"/>
-
     <!-- MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -22,9 +22,6 @@
           rel="stylesheet" type="text/css"/>
     {{--Toast--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
-
-
-
 @endpush
 
 @section('content')
@@ -64,11 +61,8 @@
     </div>
     <div class="clearfix">
     </div>
-
     @endcomponent
-
 @endsection
-
 
 @push('plugins')
     {{--MOMENT--}}
@@ -110,10 +104,8 @@
 @push('functions')
     <!--HANDLEBAR-->
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>

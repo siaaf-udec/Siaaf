@@ -2,6 +2,12 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!--sweet alert-->
     <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -49,12 +55,7 @@
             </div>
             <div class="clearfix">
             </div>
-
-
-
-            @endcomponent
-
-
+        @endcomponent
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection
@@ -114,12 +115,12 @@
 | @endpush
 --}}
 @push('functions')
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!--HANDLEBAR-->
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -154,8 +155,15 @@
 
         /*PINTAR TABLA*/
         $(document).ready(function () {
-            $("#laboratorioSeleccionado").append("<option  style='display:none' value='' selected>Seleccione..</option>");
-
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
             //capturar el template para desplegar la informacion
             var template = Handlebars.compile($("#details-template").html());
 
@@ -273,9 +281,9 @@
                             }
                         }
                     })
-                    .done(function (data) {
-                        swal("Eliminado", "La solicitud se ha eliminado correctamente", "success");
-                    })
+                        .done(function (data) {
+                            swal("Eliminado", "La solicitud se ha eliminado correctamente", "success");
+                        })
                         .error(function (data) {
                             swal("Oops", "Ha ocurrido un error", "error");
                         });

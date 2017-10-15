@@ -2,7 +2,12 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!-- MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -24,7 +29,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Incidentes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestion Incidentes'])
             <div class="clearfix">
             </div>
             <br>
@@ -102,17 +107,17 @@
                     </div>
                     {{-- END HTML MODAL CREATE--}}
                 </div>
-
-
                 {{-- END HTML MODAL CREATE--}}
             </div>
+        @endcomponent
     </div>
-    @endcomponent
     {{-- END HTML SAMPLE --}}
 @endsection
 
 
 @push('plugins')
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -146,13 +151,12 @@
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-
+    {{--ROW DETAILS DESPLEGABLE--}}
     <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
@@ -165,11 +169,18 @@
             </tr>
         </table>
     </script>
-
     <script>
-
-        /*PINTAR TABLA*/
         $(document).ready(function () {
+            //inicializar select
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
             var template = Handlebars.compile($("#details-template").html());
             var table, url, columns;
             //Define que tabla cargara los datos
@@ -203,10 +214,8 @@
 
 
             ];
-
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
-
 
             /*ELIMINAR REGISTROS*/
             table.on('click', '.remove', function (e) {
@@ -266,7 +275,7 @@
                 e.preventDefault();
                 $('#modal-create-soft').modal('toggle');
             });
-            /*CREAR AULA CON VALIDACIONES*/
+            /*CREAR INCIDENTE CON VALIDACIONES*/
             var createPermissions = function () {
                 return {
                     init: function () {
@@ -294,6 +303,7 @@
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
+                                    $("#espacios").val('').trigger('change');
                                     $('#modal-create-soft').modal('hide');
                                     $('#form_soft')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
@@ -309,16 +319,13 @@
                 }
             };
 
-
             var form_edit = $('#form_soft');
             var rules_edit = {
                 id_persona: {minlength: 9, required: true, number: true},
-                descripcion: {required: true},
+                descripcion: {required: true, minlength: 5, maxlength: 200},
                 espacios: {required: true}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
-
-
         });
 
     </script>
