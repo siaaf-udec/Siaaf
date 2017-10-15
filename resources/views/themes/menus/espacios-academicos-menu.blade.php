@@ -44,16 +44,10 @@
         </li>
         @endpermission
         @permission('docentes')
-        <li class="nav-item {{ active(['espacios.academicos.espacad.index'], 'start active open') }}">
-            <a href="{{ route('espacios.academicos.espacad.index') }}" class="nav-link nav-toggle">
+        <li class="nav-item {{ active(['espacios.academicos.solacad.indexDoc'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.solacad.indexDoc') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Mis solicitudes</span>
-            </a>
-        </li>
-        <li class="nav-item {{ active(['espacios.academicos.docente.index'], 'start active open') }}">
-            <a href="{{ route('espacios.academicos.docente.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-check-square-o"></i>
-                <span class="title">Registrar Asistencia</span>
             </a>
         </li>
         @endpermission
@@ -130,7 +124,28 @@
             </ul>
         </li>
         @endpermission
-
+        @permission('public')
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-file-pdf-o"></i>
+                <span class="title">Registrar asistencia</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ active(['espacios.academicos.asist.asisEst'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.asist.asisEst') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-users"></i>
+                        <span class="title">Estudiante</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['espacios.academicos.asist.asisDoc'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.asist.asisDoc') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Docente</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endpermission
     </ul>
-
 </li>
