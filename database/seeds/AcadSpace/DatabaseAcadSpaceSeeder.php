@@ -24,8 +24,10 @@ class DatabaseAcadSpaceSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RoleAcadspaceSeeder::class);
+        $this->call(PermissionAcadspaceSeeder::class);
         //$this->call(UsersFinancialTableSeeder::class);
-        Roles::create([
+       /* Roles::create([
             'name' => 'admin', 'display_name' => 'Administrador', 'description' => 'Rol Administrador',
         ]);
 
@@ -88,7 +90,7 @@ class DatabaseAcadSpaceSeeder extends Seeder
         PerimisosAcadSpace::create([
             'name' => "regisHorario", 'display_name' => "Registrar Horario", 'description' => "Registrar Horario", 'module_id' => "1",
 
-        ]);
+        ]);*/
 
     }
 }
