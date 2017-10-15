@@ -14,91 +14,37 @@ Route::get('/', [
 
 $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
+//Ruta para manejar Solicitudes
+Route::group(['prefix' => 'solacad'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    /*RUTAS ASIGNADAS PARA SOLICITUD ROL DOCENTE*/
+    Route::get('indexDoc', [ //Index ROL docente
+        'uses' => $controller . 'SolicitudController@mostrarSolicitudesDocente',
+        'as' => 'espacios.academicos.solacad.indexDoc'
+    ]);
+    Route::get('indexDocAjax', [
+        'uses' => $controller . 'SolicitudController@mostrarSolicitudesDocenteAjax',
+        'as' => 'espacios.academicos.solacad.indexDocAjax'
+    ]);
+    Route::get('crearGrupal', [ //Crear practica grupal
+        'uses' => $controller . 'SolicitudController@crearSolicitudGrupal',
+        'as' => 'espacios.academicos.solacad.crearGrupal'
+    ]);
+    Route::get('crearLibre', [ //Crear practica libre
+        'uses' => $controller . 'SolicitudController@crearSolicitudLibre',
+        'as' => 'espacios.academicos.solacad.crearLibre'
+    ]);
+    Route::post('registrarSolicitud', [ //Registro solicitudes
+        'uses' => $controller . 'SolicitudController@registroSolicitud',
+        'as' => 'espacios.academicos.solacad.registroSolicitud'
+    ]);
+    Route::get('data', [ //Cargar datatable rol docente
+        'uses' => $controller . 'SolicitudController@cargarTablaDoc',
+        'as' => 'espacios.academicos.solacad.data'
+    ]);
+    /*FIN RUTAS ASIGNADAS PARA SOLICITUD ROL DOCENTE*/
+});
 
-Route::get('/editActPrac/{id}', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.editActPrac', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@editActPrac'
-]);
-
-Route::resource('est', $controller . 'EstudiantesController', [   //ruta para el CRUD de estudiantes
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.est.create',
-        'store' => 'espacios.academicos.est.store',
-        'index' => 'espacios.academicos.est.index',
-        'edit' => 'espacios.academicos.est.edit',
-        'update' => 'espacios.academicos.est.update',
-        'destroy' => 'espacios.academicos.est.destroy',
-    ]
-]);
-
-
-Route::get('/editAct/{id}', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.editAct', //Este es el alias de la ruta
-    'uses' => $controller . 'formatosController@editAct'
-]);
-
-
-Route::get('/edit2/{id}', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.edit2', //Este es el alias de la ruta
-    'uses' => $controller . 'softwareController@eliminarSoftware'
-]);
-
-Route::get('/lissolicitudesAprob', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.lissolicitudesAprob', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@listarSolPrueba'
-]);
-
-Route::get('/solicitudesAprob', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.solicitudesAprob', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@data'
-]);
-
-Route::get('/solicitudesSoft', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.solicitudesSoft', //Este es el alias de la ruta
-    'uses' => $controller . 'softwareController@show'
-]);
-
-Route::get('/solicitudesLista', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.mostrarSolicitudes', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@listarSolicitud'
-]);
-
-Route::get('/solicitudesListaLibre', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.mostrarSolicitudesLibre', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@listarSolicitud'
-]);
-
-Route::get('/solicitudesAprobadas', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.solicitudesAprobadas', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@listarSolicitudAprobada'
-]);
-
-Route::get('/misSolicitudes', [    //ruta para listar los docentes registrados.
-    'as' => 'espacios.academicos.misSolicitudes', //Este es el alias de la ruta
-    'uses' => $controller . 'SolicitudController@estadoSolicitudesRealizadas'
-]);
-
-Route::get('/descargarArchivo/{id}', [
-    'as' => 'espacios.academicos.descargarArchivo',
-    'uses' => $controller . 'formatosController@descargar_publicacion'
-]);
-
-Route::get('/listarporSec', [
-    'as' => 'espacios.academicos.listarporSec',
-    'uses' => $controller . 'formatosController@listarporSec'
-]);
-
-Route::get('/reportes', [
-    'as' => 'espacios.academicos.reportes',
-    'uses' => $controller . 'EstudiantesController@reportes'
-]);
-
-/*Route::get('reportes', function () {
-    $data = [];
-    $pdf = PDF::loadView('welcome', $data);
-    return $pdf->download('invoice.pdf');
-})->name('espacios.academicos.reportes');
-*/
 Route::get('reportesDoc', function () {
     $data = [];
     $pdf = PDF::loadView('acadspace.Reportes.reportesDocentes', $data);
@@ -106,22 +52,12 @@ Route::get('reportesDoc', function () {
 })->name('espacios.academicos.reportesDoc');
 
 
-/**CALENDARIO**/
-Route::resource('acadcalendar', $controller . 'CalendarioController', [   //RUTA HORARIO
-    'names' => [ // 'método' => 'alias'
-        'create' => 'espacios.academicos.acadcalendar.create',
-        'store' => 'espacios.academicos.acadcalendar.store',
-        'index' => 'espacios.academicos.acadcalendar.index',
-        'edit' => 'espacios.academicos.acadcalendar.edit',
-        'show' => 'espacios.academicos.acadcalendar.show',
-        'update' => 'espacios.academicos.acadcalendar.update',
-        'destroy' => 'espacios.academicos.acadcalendar.destroy'
-    ]
+
+/**RUTAS CALENDARIO**/
+Route::get('acadcalendar', [ //Cargar datatable en la vista de calendario
+    'uses' => $controller . 'CalendarioController@index',
+    'as' => 'espacios.academicos.acadcalendar.index'
 ]);
-//Ruta para guardar eventos en el calendario
-Route::post('guardarEventos',
-    array('as' => 'guardaEventos',
-        'uses' => 'CalendarioController@create'));
 
 Route::get('data/{sala?}', [ //Cargar datatable en la vista de calendario
     'uses' => $controller . 'CalendarioController@data',
@@ -149,75 +85,27 @@ Route::post('eliminaEvento', [ //Eliminar eventos
     'as' => 'espacios.academicos.espacad.eliminaEvento'
 ]);
 
+/**FIN RUTAS CALENDARIO**/
+
 /*RUTAS PARA MANEJAR EL FORMULARIO DE SOFTWARE*/
 Route::group(['prefix' => 'soft'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
     Route::get('index', [ //MOSTRAR FORMULARIO
-        'uses' => $controller . 'softwareController@index',
+        'uses' => $controller . 'SoftwareController@index',
         'as' => 'espacios.academicos.soft.index'
     ]);
     Route::post('crear', [ //CREAR SOFTWARE
-        'uses' => $controller . 'softwareController@registroSoftware',
+        'uses' => $controller . 'SoftwareController@registroSoftware',
         'as' => 'espacios.academicos.soft.regsoft',
     ]);
     Route::get('listar', [ //CARGAR DATATABLE
-        'uses' => $controller . 'softwareController@data',
+        'uses' => $controller . 'SoftwareController@data',
         'as' => 'espacios.academicos.soft.data',
     ]);
-
     Route::delete('delete/{id?}', [ //ELIMINAR
-        'uses' => $controller . 'softwareController@destroy',
+        'uses' => $controller . 'SoftwareController@destroy',
         'as' => 'espacios.academicos.soft.destroy'
     ])->where(['id' => '[0-9]+']);
-
-    Route::get('json', [ //Mostrar la vista
-        'uses' => $controller . 'softwareController@cargarjson',
-        'as' => 'espacios.academicos.soft.json'
-    ]);
-});
-
-
-/*RUTAS PARA EL FORMULARIO DE SOLICITUD GRUPAL*/
-Route::group(['prefix' => 'espacad'], function () {
-    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('index', [
-        'uses' => $controller . 'SolicitudController@index',
-        'as' => 'espacios.academicos.espacad.index'
-    ]);
-    Route::get('index-ajax', [
-        'uses' => $controller . 'SolicitudController@indexajax',
-        'as' => 'espacios.academicos.espacad.indexajax'
-    ]);
-    Route::get('data', [ //Cargar datatable
-        'uses' => $controller . 'SolicitudController@data',
-        'as' => 'espacios.academicos.espacad.data'
-    ]);
-    Route::post('store', [ //Registro solicitud formulario
-        'uses' => $controller . 'SolicitudController@store',
-        'as' => 'espacios.academicos.espacad.store'
-    ]);
-    Route::get('create', [ //Mostrar la vista
-        'uses' => $controller . 'SolicitudController@create',
-        'as' => 'espacios.academicos.espacad.create'
-    ]);
-    Route::get('createlib', [ //Mostrar la vista
-        'uses' => $controller . 'SolicitudController@createlib',
-        'as' => 'espacios.academicos.espacad.createlib'
-    ]);
-
-    Route::post('registrosol', [ //Registro solicitud formulario
-        'uses' => $controller . 'SolicitudController@registroSolicitudGrupal',
-        'as' => 'espacios.academicos.espacad.registrosol'
-    ]);
-    /*APRENDIENDO*/
-    Route::get('pruebat/{id?}', [
-        'as' => 'espacios.academicos.espacad.pruebat',
-        'uses' => $controller . 'SolicitudController@controladorX'
-    ]);
-    Route::get('alex', [ //Mostrar la vista
-        'uses' => $controller . 'SolicitudController@alexis',
-        'as' => 'espacios.academicos.espacad.alex'
-    ]);
 
 });
 
@@ -226,61 +114,46 @@ Route::group(['prefix' => 'espacad'], function () {
 Route::group(['prefix' => 'evalsol'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
     Route::get('index', [
-        'uses' => $controller . 'AuxiliarController@index',
+        'uses' => $controller . 'SolicitudController@mostrarSolicitudesAuxiliar',
         'as' => 'espacios.academicos.evalsol.index'
     ]);
-    Route::get('cargarSalas/{espacio?}', [
-        'uses' => $controller . 'AuxiliarController@cargarSalas',
+    Route::get('indexFinal', [ //Mostrar solicitudes finalizadas
+        'uses' => $controller . 'SolicitudController@mostrarSolicitudesFinalizadas',
+        'as' => 'espacios.academicos.evalsol.indexFinal'
+    ]);
+    Route::get('cargarSalas/{espacio?}', [ //Cargar salas de acuerdo al espacio
+        'uses' => $controller . 'SolicitudController@cargarSalas',
         'as' => 'espacios.academicos.evalsol.cargarSalas'
     ]);
-    Route::get('data/{espacio?}', [ //Cargar datatable
-        'uses' => $controller . 'AuxiliarController@data',
+    Route::get('data/{espacio?}', [ //Cargar datatable solicitudes grupales
+        'uses' => $controller . 'SolicitudController@cargarTablaSolGrupal',
         'as' => 'espacios.academicos.evalsol.data'
     ]);
-    Route::get('cargarDataLibre/{espacio?}', [ //Cargar datatable
-        'uses' => $controller . 'AuxiliarController@cargarDataLibre',
+    Route::get('cargarDataLibre/{espacio?}', [ //Cargar datatable solicitudes libres
+        'uses' => $controller . 'SolicitudController@cargarTablaSolLibre',
         'as' => 'espacios.academicos.evalsol.cargarDataLibre'
     ]);
-    Route::post('store', [ //Registro solicitud formulario
-        'uses' => $controller . 'AuxiliarController@store',
-        'as' => 'espacios.academicos.evalsol.store'
-    ]);
-    Route::get('create', [ //Mostrar la vista
-        'uses' => $controller . 'AuxiliarController@create',
-        'as' => 'espacios.academicos.evalsol.create'
-    ]);
     Route::post('aprobar', [ //Aprobar solicitud
-        'uses' => $controller . 'AuxiliarController@aprobarSolicitud',
+        'uses' => $controller . 'SolicitudController@aprobarSolicitud',
         'as' => 'espacios.academicos.evalsol.aprobarSol',
     ]);
-    Route::post('aprobarLibre', [ //Aprobar solicitud libre
-        'uses' => $controller . 'AuxiliarController@aprobarSolicitudLibre',
-        'as' => 'espacios.academicos.evalsol.aprobarSolLibre',
-    ]);
 
-    Route::post('reprobar', [ //Aprobar solicitud
-        'uses' => $controller . 'AuxiliarController@agregarAnotacion',
+    Route::post('reprobar', [ //Reprobar solicitud
+        'uses' => $controller . 'SolicitudController@agregarAnotacion',
         'as' => 'espacios.academicos.evalsol.reprobarSol',
-    ]);
-    Route::post('reprobarLibre', [ //Aprobar solicitud
-        'uses' => $controller . 'AuxiliarController@agregarAnotacionLibre',
-        'as' => 'espacios.academicos.evalsol.reprobarSolLibre',
     ]);
 
     Route::post('finalizar', [ //Aprobar solicitud
-        'uses' => $controller . 'AuxiliarController@finalizarProceso',
+        'uses' => $controller . 'SolicitudController@finalizarProceso',
         'as' => 'espacios.academicos.evalsol.finalizarProceso',
     ]);
-    Route::get('indexFinal', [
-        'uses' => $controller . 'AuxiliarController@indexFinal',
-        'as' => 'espacios.academicos.evalsol.indexFinal'
-    ]);
+
     Route::get('mostrarFinalizados/{espacio?}', [
-        'uses' => $controller . 'AuxiliarController@mostrarFinalizados',
+        'uses' => $controller . 'SolicitudController@mostrarFinalizados',
         'as' => 'espacios.academicos.evalsol.mostrarFinalizados',
     ]);
     Route::delete('delete/{id?}', [ //ELIMINAR
-        'uses' => $controller . 'AuxiliarController@destroy',
+        'uses' => $controller . 'SolicitudController@destroy',
         'as' => 'espacios.academicos.evalsol.destroy'
     ])->where(['id' => '[0-9]+']);
 });
@@ -348,7 +221,11 @@ Route::group(['prefix' => 'report'], function () {
         'as' => 'espacios.academicos.report.indexPrueba'
     ]);
     Route::post('cargarRepEst',[ //CREAR REPORTE
-        'uses' => $controller . 'ReporteController@cargarRepEst',
+
+
+
+
+'uses' => $controller . 'ReporteController@cargarRepEst',
         'as'   => 'espacios.academicos.report.cargarRepEst',
     ]);
 
@@ -401,18 +278,70 @@ Route::group(['prefix' => 'incidente'], function () {
 });
 
 /*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
-Route::group(['prefix' => 'docente'], function () {
+Route::group(['prefix' => 'report'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
     Route::get('index',[ //Pagina inicial y captura de rango de fechas
-        'uses' => $controller.'DocentesController@index',
-        'as' => 'espacios.academicos.docente.index'
+        'uses' => $controller.'ReporteController@index',
+        'as' => 'espacios.academicos.report.index'
     ]);
-    Route::post('regisAsistenciaDoc', [ //CREAR REGISTRO ASISTNECIA
-        'uses' => $controller . 'DocentesController@regisAsistenciaDoc',
-        'as'   => 'espacios.academicos.docente.regisAsistenciaDoc',
+
+    Route::get('indexEst',[ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller.'ReporteController@repIndexEst',
+        'as' => 'espacios.academicos.report.indexEst'
+    ]);
+
+    Route::get('indexCarr',[ //Pagina inicial y captura de rango de fechas rep carrera
+        'uses' => $controller.'ReporteController@repIndexCarr',
+        'as' => 'espacios.academicos.report.indexCarr'
+    ]);
+
+    Route::post('repDoc', [ //CREAR REPORTE DOCENTE
+        'uses' => $controller . 'ReporteController@reporDocente',
+        'as'   => 'espacios.academicos.report.repDoc',
+    ]);
+
+    Route::post('repEst', [ //CREAR REPORTE
+        'uses' => $controller . 'ReporteController@cargarRepEst',
+        'as'   => 'espacios.academicos.report.repEst',
+    ]);
+    Route::post('repCarr', [ //CREAR REPORTE CARRERAS
+        'uses' => $controller . 'ReporteController@reporCarrera',
+        'as'   => 'espacios.academicos.report.repCarr',
+    ]);
+    Route::get('DownloadRepEstudiante',[ //DESCARGAR REPORTE
+        'uses' => $controller.'ReporteController@DownloadEstReporte',
+        'as' => 'espacios.academicos.report.downReportEst'
+    ]);
+    Route::get('cargarSalasReportes/{espacio?}', [
+        'uses' => $controller . 'ReporteController@cargarSalasReportes',
+        'as' => 'espacios.academicos.report.cargarSalasReportes'
     ]);
 
 });
 
+/*RUTAS PARA MANEJAR LA ASISTENCIA*/
+Route::group(['prefix' => 'asist'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('asisEst',[ //Pagina inicial asistencia estudiantes
+        'uses' => $controller.'AsistenciaController@asisEst',
+        'as' => 'espacios.academicos.asist.asisEst'
+    ]);
+    Route::get('asisDoc',[ //Pagina inicial asistencia docentes
+        'uses' => $controller.'AsistenciaController@asisDoc',
+        'as' => 'espacios.academicos.asist.asisDoc'
+    ]);
+    Route::post('regisAsistDoc',[ //Registrar asistencia Docente
+        'uses' => $controller.'AsistenciaController@regisAsistenciaDoc',
+        'as' => 'espacios.academicos.asist.regisAsistDoc'
+    ]);
+    Route::post('regisAsistEst',[ //Registrar asistencia Docente
+        'uses' => $controller.'AsistenciaController@regisAsistenciaEst',
+        'as' => 'espacios.academicos.asist.regisAsistEst'
+    ]);
 
+    Route::get('cargarSalasAsitencia/{espacio?}', [
+        'uses' => $controller . 'AsistenciaController@cargarSalasAsitencia',
+        'as' => 'espacios.academicos.asist.cargarSalasAsitencia'
+    ]);
 
+});
