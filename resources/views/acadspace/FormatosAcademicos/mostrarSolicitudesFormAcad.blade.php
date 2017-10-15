@@ -18,7 +18,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Formatos Academicos'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Formatos Academicos'])
             <div class="clearfix">
             </div>
             <br>

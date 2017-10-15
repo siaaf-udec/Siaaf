@@ -274,10 +274,8 @@
 @push('functions')
     <!--HANDLEBAR-->
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->

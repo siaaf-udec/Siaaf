@@ -1,12 +1,13 @@
+@permission('auxapoyo')
 @extends('material.layouts.dashboard')
 
 @push('styles')
-    <!-- SELECT -->
-    {{--
-    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-    --}}
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!-- MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -22,7 +23,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Aulas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers', 'title' => 'Gestion Aulas'])
             <div class="clearfix">
             </div>
             <br>
@@ -132,8 +133,8 @@
 --}}
 
 @push('plugins')
-    <!-- SCRIPT SELECT -->
-    {{--<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>--}}
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -159,27 +160,9 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -189,6 +172,16 @@
 
         /*PINTAR TABLA*/
         $(document).ready(function () {
+            //Aplicando style a select
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
@@ -315,3 +308,4 @@
 
     </script>
 @endpush
+@endpermission

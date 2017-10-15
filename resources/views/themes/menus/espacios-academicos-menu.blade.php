@@ -30,6 +30,12 @@
         @endpermission
 
         @permission('auxapoyo')
+        <li class="nav-item {{ active(['espacios.academicos.aulas.index'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.aulas.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-university"></i>
+                <span class="title">Aulas</span>
+            </a>
+        </li>
         <li class="nav-item {{ active(['espacios.academicos.soft.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.soft.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-tv"></i>
@@ -127,7 +133,7 @@
         @permission('public')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-file-pdf-o"></i>
+                <i class="fa fa-check-square-o"></i>
                 <span class="title">Registrar asistencia</span>
                 <span class="arrow"></span>
             </a>
