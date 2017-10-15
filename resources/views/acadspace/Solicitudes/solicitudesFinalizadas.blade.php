@@ -26,7 +26,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-saved', 'title' => 'Solicitudes con proceso finalizado'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-like', 'title' => 'Solicitudes con proceso finalizado'])
             <div class="clearfix">
             </div>
             <br>

@@ -18,10 +18,6 @@
           type="text/css"/>
     <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
           type="text/css"/>
-    <link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet"
-          type="text/css"/>
     {{--Toast--}}
     <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Styles SWEETALERT  -->
@@ -39,7 +35,7 @@
 
 @endpush
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-calendar', 'title' => 'Gestion espacios academicos'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-calendar', 'title' => 'Gestion espacios academicos'])
 
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
@@ -148,7 +144,7 @@
 
                                                     <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"
                                                            for="drop-remove">
-                                                        remove after drop
+                                                        Remover al asignar
                                                         <input type="checkbox" class="group-checkable"
                                                                id="drop-remove"/>
                                                         <span></span>
@@ -207,17 +203,9 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
     </script>
     {{--Selects--}}
-    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"
-            type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
-            type="text/javascript"></script>
-
-
-
 @endpush
+
 @push('functions')
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
     <!-- Estandar Mensajes -->
@@ -295,8 +283,6 @@
             ];
 
             dataTableServer.init(table, url, columns);
-
-
             /*ENVIANDO EL VALOR DEL SELECT AULA PARA TRAER LOS DATOS*/
             $("#SOL_laboratorios").change(function (event) {
                 /*Limpiar los eventos drag and drop creados dinamicamente*/
@@ -488,7 +474,7 @@
                         var back = copiedEventObject.backgroundColor;
 
                         var sala = document.getElementById("aula").value;
-                        if ($('select[name="aula"]').val() == "") {
+                        if ($('select[name="aula"]').val() == null) {
                             UIToastr.init('error', '¡Error!', 'Antes de registrar eventos seleccione el espacio academico y aula que gestionara');
                         } else {
                             crsfToken = document.getElementsByName("_token")[0].value;
