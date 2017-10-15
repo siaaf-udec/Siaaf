@@ -37,8 +37,6 @@
                             </i>
                             Registrar
                         </a>
-
-
                     </div>
                 </div>
             </div>
@@ -99,38 +97,13 @@
                     </div>
                     {{-- END HTML MODAL CREATE--}}
                 </div>
-
-
                 {{-- END HTML MODAL CREATE--}}
             </div>
     </div>
     @endcomponent
-    </br>
-    </br>
-    </br>
-    </br>
 
-    </div>
-    {{-- END HTML SAMPLE --}}
 @endsection
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 
 @push('plugins')
     {{--Selects--}}
@@ -247,7 +220,6 @@
 
             });
 
-
             /*ABRIR MODAL*/
             $(".create").on('click', function (e) {
                 e.preventDefault();
@@ -295,14 +267,12 @@
                 }
             };
 
-
             var form_edit = $('#form_soft');
             var rules_edit = {
                 nomb_sala: {minlength: 3, required: true},
                 espacios: {required: true}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
-
 
         });
 
