@@ -8,47 +8,53 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
-use App\Container\Acadspace\src\UserAcadSpace;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Acadspace\src\Solicitud;
-use App\Container\Acadspace\src\Software;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
-
-use App\Container\Acadspace\src\Formatos;
+use App\Container\Acadspace\src\Solicitud;
+use App\Container\Acadspace\src\Software;
+use App\Container\Acadspace\src\Aulas;
+use App\Container\Acadspace\src\Comentarios;
 
 
 class SolicitudController extends Controller
 {
 
+
     /**
+     * Mostrar el datatable con las solicitudes realizadas por el docente
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
-    { //Mostrar el datatable con las solicitudes realizadas por el docente
+    public function mostrarSolicitudesDocente()
+    {
         return view('acadspace.Solicitudes.solicitudGrupal');
     }
 
+
     /**
+     * Mostrar el datatable con las solicitudes realizadas por el docente AJAX
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function indexajax()
-    { //Mostrar el datatable con las solicitudes realizadas por el docente
+    public function mostrarSolicitudesDocenteAjax()
+    {
         return view('acadspace.Solicitudes.solicitudGrupal-ajax');
     }
 
 
     /**
+     * vista para crear una practica grupal
+     * retorna los software disponibles del modelo Software
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function create(Request $request)
-    { //vista para registrar una practica grupal
+    public function crearSolicitudGrupal(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('GET')) {
             $soft = new software();
-            $software = $soft->pluck('SOf_nombre_soft', 'SOf_nombre_soft');
+            $software = $soft->pluck('SOF_Nombre_Soft', 'SOF_Nombre_Soft');
             return view('acadspace.Solicitudes.registroSolicitudGrupal', ['software' => $software->toArray()]);
         }
         return AjaxResponse::fail(
@@ -60,14 +66,16 @@ class SolicitudController extends Controller
 
 
     /**
+     * Vista para crear una solicitud libre
+     * retorna los software disponibles del modelo Software
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function createlib(Request $request)
-    { //registro en BD practica libre
+    public function crearSolicitudLibre(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('GET')) {
             $soft = new software();
-            $software = $soft->pluck('SOF_nombre_soft', 'SOf_nombre_soft');
+            $software = $soft->pluck('SOF_Nombre_Soft', 'SOF_Nombre_Soft');
             return view('acadspace.Solicitudes.registroSolicitudPracLibre',
                 [
                     'software' => $software->toArray()
@@ -81,39 +89,36 @@ class SolicitudController extends Controller
 
     }
 
+
     /**
+     * Registro en BD de practicas libre y grupal,
+     * se realiza la comparacion previa
+     * retorna mensaje ajax
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function registroSolicitudGrupal(Request $request)
-    { //registro en BD practicas
+    public function registroSolicitud(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('POST')) {
-
             $id = Auth::id();
-            //Comparo que el software no venga vacio y en ese caso guardo como "ninguno"
-            if (empty($request['SOL_NombSoft'])) {
-                $nombreSoftware = "Ninguno";
-            } else {
-                $nombreSoftware = $request['SOL_NombSoft'];
-            }
 
             if ($request['ID_Practica'] == 1) {
 
                 $model = new Solicitud();
 
-                $model->SOL_guia_practica = $request['SOL_ReqGuia'];
-                $model->SOL_software = $nombreSoftware;
-                $model->SOL_grupo = $request['SOL_grupo'];
-                $model->SOL_cant_estudiantes = $request['SOL_cant_estudiantes'];
-                $model->SOL_hora_inicio = $request['SOL_hora_inicio'];
-                $model->SOL_hora_fin = $request['SOL_hora_fin'];
-                $model->SOL_nucleo_tematico = $request['SOL_nucleo_tematico'];
-                $model->SOL_rango_fechas = $request['SOL_fecha_inicial'];
-                $model->SOL_carrera = $request['SOL_programa'];
-                $model->SOL_id_docente = $id;
-                $model->SOL_estado = 0;
-                $model->SOL_id_practica = 1;
-                $model->SOL_espacio = $request['SOL_espacio'];
+                $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
+                $model->SOL_Software = $request['SOL_NombSoft'];
+                $model->SOL_Grupo = $request['SOL_Grupo'];
+                $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
+                $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
+                $model->SOL_Hora_Fin = $request['SOL_Hora_Fin'];
+                $model->SOL_Nucleo_Tematico = $request['SOL_Nucleo_Tematico'];
+                $model->SOL_fecha_inicial = $request['SOL_fecha_inicial'];
+                $model->SOL_Carrera = $request['SOL_programa'];
+                $model->FK_SOL_Id_Docente = $id;
+                $model->SOL_Estado = 0;
+                $model->SOL_Id_Practica = 1;
+                $model->SOL_Espacio = $request['SOL_Espacio'];
 
                 $model->save();
 
@@ -125,20 +130,20 @@ class SolicitudController extends Controller
             } else {
                 $model = new Solicitud();
 
-                $model->SOL_guia_practica = $request['SOL_ReqGuia'];
-                $model->SOL_software = $nombreSoftware;
-                $model->SOL_grupo = $request['SOL_grupo'];
-                $model->SOL_cant_estudiantes = $request['SOL_cant_estudiantes'];
-                $model->SOL_hora_inicio = $request['SOL_hora_inicio'];
-                $model->SOL_hora_fin = $request['SOL_hora_fin'];
-                $model->SOL_nucleo_tematico = $request['SOL_nucleo_tematico'];
-                $model->SOL_dias = $request['SOL_dias'];
-                $model->SOL_carrera = $request['SOL_programa'];
-                $model->SOL_id_docente = $id;
-                $model->SOL_estado = 0;
-                $model->SOL_id_practica = 2;
-                $model->SOL_espacio = $request['SOL_espacio'];
-                $model->SOL_rango_fechas = $request['SOL_rango_fechas'];
+                $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
+                $model->SOL_Software = $request['SOL_NombSoft'];
+                $model->SOL_Grupo = $request['SOL_Grupo'];
+                $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
+                $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
+                $model->SOL_Hora_Fin = $request['SOL_Hora_Fin'];
+                $model->SOL_Nucleo_Tematico = $request['SOL_Nucleo_Tematico'];
+                $model->SOL_Dias = $request['SOL_Dias'];
+                $model->SOL_Carrera = $request['SOL_programa'];
+                $model->FK_SOL_Id_Docente = $id;
+                $model->SOL_Estado = 0;
+                $model->SOL_Id_Practica = 2;
+                $model->SOL_Espacio = $request['SOL_Espacio'];
+                $model->SOL_Rango_Fechas = $request['SOL_Rango_Fechas'];
 
                 $model->save();
                 return AjaxResponse::success(
@@ -158,38 +163,40 @@ class SolicitudController extends Controller
 
 
     /**
+     * Funcion cargar datatable con solicitudes registradas
+     * por el docente con sesion activa
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function data(Request $request)
+    public function cargarTablaDoc(Request $request)
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
-            $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
-                'SOL_cant_estudiantes', 'SOL_id_practica', 'SOL_estado', 'created_at',
-                'SOL_software', 'FK_SOL_id_sala')
-                ->where('SOL_id_docente', '=', Auth::id())
+            $solicitud = Solicitud::select('PK_SOL_Id_Solicitud', 'SOL_Nucleo_Tematico',
+                'SOL_Cant_Estudiantes', 'SOL_Id_Practica', 'SOL_Estado', 'created_at',
+                'SOL_Software', 'FK_SOL_Id_Sala')
+                ->where('FK_SOL_Id_Docente', '=', Auth::id())
                 ->with(['coment' => function ($query) {
-                    return $query->select('PK_COM_id_comentario', 'COM_comentario',
-                        'FK_COM_id_solicitud');
+                    return $query->select('PK_COM_Id_Comentario', 'COM_Comentario',
+                        'FK_COM_Id_Solicitud');
                 }])
                 ->get();
             return DataTables::of($solicitud)
                 ->addColumn('estado', function ($users) {
-                    if ($users->SOL_estado == 1) {
+                    if ($users->SOL_Estado == 1) {
                         return "<span class='label label-sm label-success'>" . 'Aprobado' . "</span>";
-                    } elseif ($users->SOL_estado == 0) {
+                    } elseif ($users->SOL_Estado == 0) {
                         return "<span class='label label-sm label-warning'>" . 'Pendiente' . "</span>";
-                    } elseif ($users->SOL_estado == 2) {
+                    } elseif ($users->SOL_Estado == 2) {
                         return "<span class='label label-sm label-danger'>" . 'Reprobado' . "</span>";
-                    } elseif ($users->SOL_estado == 3) {
+                    } elseif ($users->SOL_Estado == 3) {
                         return "<span class='label label-sm label-default'>" . 'Finalizado' . "</span>";
                     }
                 })
                 ->addColumn('tipo_prac', function ($users) {
-                    if ($users->SOL_id_practica == 1) {
+                    if ($users->SOL_Id_Practica == 1) {
                         return "Libre";
-                    } elseif ($users->SOL_id_practica == 2) {
+                    } elseif ($users->SOL_Id_Practica == 2) {
                         return "Grupal";
                     }
                 })
@@ -207,66 +214,298 @@ class SolicitudController extends Controller
 
     }
 
-    public function alexis(Request $request)
+    //Metodos relacionados con solicitud Auxiliar de apoyo
+
+    /**
+     * Mostrar el formulario con las solicitudes realizadas por el docente
+     * para ser evaluadas por el auxiliar
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mostrarSolicitudesAuxiliar()
     {
-        $id = Solicitud::where('id_sala', '=', 201)->pluck('SOL_GRUPO');
-        dd($id);
-        return view('acadspace.Solicitudes.prueba');
+        return view('acadspace.Solicitudes.evaluacionSolicitudes');
+    }
+
+    /**
+     * Mostrar el formulario con las solicitudes que ya han terminado su
+     * proceso de aprobacion y asignacion
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mostrarSolicitudesFinalizadas()
+    {
+        return view('acadspace.Solicitudes.solicitudesFinalizadas');
+    }
+
+    /**
+     * Funcion para cargar salas de acuerdo al espacio academico
+     * la info viene en la variable $espacio
+     * y retorna un json con las aulas actualmente registradas
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cargarSalas(Request $request, $espacio)
+    {
+        if ($request->ajax()) {
+            $aula = Aulas::where('SAL_Nombre_Espacio', '=', $espacio)
+                ->get();
+            return response()->json($aula);
+        }
+    }
+
+    /**
+     * Mostrar el datatable con las solicitudes grupales realizadas por el docente
+     * para ser evaluadas por el auxiliar
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\Response
+     */
+    public function cargarTablaSolGrupal(Request $request, $espacio)
+    {
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
+                'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
+                'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas')
+                ->with(['user' => function ($query) {
+                    return $query->select('id', 'name', 'lastname');
+                }])
+                ->where('SOL_Espacio', '=', $espacio)
+                ->where('SOL_Id_Practica', '=', 2)
+                ->where('SOL_Estado', '=', 0)
+                ->get();
+            return DataTables::of($users)
+                ->addColumn('tipo_prac', function ($users) {
+                    if ($users->SOL_Id_Practica == 1) {
+                        return "Libre";
+                    } elseif ($users->SOL_Id_Practica == 2) {
+                        return "Grupal";
+                    }
+                })
+                ->addIndexColumn()
+                ->make(true);
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 
-    public function controladorX(UserAcadSpace $model)
+    /**
+     * Mostrar el datatable con las solicitudes libres realizadas por el docente
+     * para ser evaluadas por el auxiliar
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\Response
+     */
+    public function cargarTablaSolLibre(Request $request, $espacio)
     {
-        $solic = formatos::select(['PK_FAC_id_solicitud',
-            'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
-            ->with(['user' => function ($query) {
-                return $query->select('id', 'name', 'lastname');
-            }])
-            ->where('FAC_estado', '=', 0)
-            ->get();
-        dd($solic);
-        $solic = formatos::select(['PK_FAC_id_solicitud',
-            'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
-            ->with(['user' => function ($query) {
-                return $query->select('id', 'name', 'lastname');
-            }])
-            ->where('FAC_estado', '=', 0)
-            ->get();
-        //dd($solic);
 
+        if ($request->ajax() && $request->isMethod('GET')) {
 
-        $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_nucleo_tematico',
-            'SOL_cant_estudiantes', 'SOL_id_practica', 'SOL_estado',
-            'FK_SOL_id_sala')
-            ->where('SOL_id_docente', '=', 1)
-            ->with(['coment' => function ($query) {
-                return $query->select('PK_COM_id_comentario', 'COM_comentario', 'FK_COM_id_solicitud');
-            }])
-            ->get();
-        dd($solicitud);
+            //Consulta usando 2 tablas
+            $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
+                'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
+                'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas')
+                ->with(['user' => function ($query) {
+                    return $query->select('id', 'name', 'lastname');
+                }])
+                ->where('SOL_Espacio', '=', $espacio)
+                ->where('SOL_Id_Practica', '=', 1)
+                ->where('SOL_Estado', '=', 0)
+                ->get();
+            return DataTables::of($users)
+                ->addColumn('tipo_prac', function ($users) {
+                    if ($users->SOL_Id_Practica == 1) {
+                        return "Libre";
+                    } elseif ($users->SOL_Id_Practica == 2) {
+                        return "Grupal";
+                    }
+                })
+                ->addIndexColumn()
+                ->make(true);
 
+        }
 
-        $alex = Solicitud::select('PK_SOL_id_solicitud', 'SOL_id_docente', 'SOL_nucleo_tematico',
-            'SOL_cant_estudiantes', 'SOL_id_practica', 'created_at', 'SOL_carrera', 'SOL_dias',
-            'SOL_hora_inicio', 'SOL_hora_fin', 'SOL_software')
-            ->with(['user' => function ($query) {
-                return $query->select('id', 'name', 'lastname');
-            }])
-            ->where('FK_SOL_id_sala', '=', 202)
-            ->where('SOL_estado', '=', 1)
-            ->get();
-        dd($alex);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
-
-        $prueba = Solicitud::with('user')
-            ->where('FK_SOL_id_sala', '=', 201)
-            ->where('SOL_estado', '=', 1)
-            ->get();
-        dd($prueba);
-
-
-        return Datatables::of($users)->make(true);
 
     }
+
+    /**
+     * Funcion para aprobar solicitud retorna un mensaje ajax
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function aprobarSolicitud(Request $request)
+    {
+
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Aprobar solicitud
+            $solicitud = Solicitud::findOrFail($request['id_solicitud']);
+            $solicitud->SOL_Estado = 1;
+            $solicitud->FK_SOL_Id_Sala = $request['FK_SOL_Id_Sala'];
+            $solicitud->save();
+
+            $coment = new Comentarios();
+            $coment->COM_Comentario = "Ninguna";
+            $coment->FK_COM_Id_Solicitud = $request['id_solicitud'];
+            $coment->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Solicitud aprobada y asignada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+
+    }
+
+    /**
+     * Funcion para reprobar solicitud y agregar anotacion retorna un mensaje ajax
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function agregarAnotacion(Request $request)
+    {
+
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Agregar comentario a tbl_comentarios y reprobar solicitud
+
+            //Cambio el estado de la solicitud a 2 - en estudio
+            $solicitud = Solicitud::find($request['id_solicitud']);
+            $solicitud->SOL_Estado = 2;
+            $solicitud->save();
+            //Guardo la anotacion en la tabla comentario
+            $coment = new Comentarios();
+            $coment->COM_Comentario = $request['anotacion'];
+            $coment->FK_COM_Id_Solicitud = $request['id_solicitud'];
+            $coment->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Anotacion agregada correctamente.'
+            );
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Funcion para finalizar proceso solicitud
+     * (es decir cuando ya ha sido asignada)
+     * retorna un mensaje ajax
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function finalizarProceso(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Cambio el estado de la solicitud a 3 - proceso finalizado
+            $solicitud = Solicitud::find($request['id_solicitud']);
+            $solicitud->SOL_Estado = 3;
+            $solicitud->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Proceso finalizado correctamente.'
+            );
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+
+    }
+
+    /**
+     *  Mostrar el datatable con las solicitudes finalizadas
+     *  evaluadas por el auxiliar
+     * @param Request $request
+     * @param $sala
+     * @return \Illuminate\Http\Response
+     */
+    public function mostrarFinalizados(Request $request, $sala)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            //Traigo unicamente las solicitudes aprobadas y muestro en el datatable
+            $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
+                'SOL_Nucleo_Tematico', 'SOL_Id_Practica', 'created_at',
+                'SOL_Dias', 'SOL_Hora_Inicio', 'SOL_Hora_Fin',
+                'SOL_Software', 'FK_SOL_Id_Sala', 'SOL_fecha_inicial')
+                ->with(['user' => function ($query) {
+                    return $query->select('id', 'name', 'lastname');
+                }])
+                ->where('SOL_Espacio', '=', $sala)
+                ->where('SOL_Estado', '=', 3)
+                ->get();
+            return DataTables::of($users)
+                ->addColumn('tipo_prac', function ($users) {
+                    if ($users->SOL_Id_Practica == 1) {
+                        return "Libre";
+                    } elseif ($users->SOL_Id_Practica == 2) {
+                        return "Grupal";
+                    }
+                })
+                ->rawColumns(['tipo_prac'])
+                ->addIndexColumn()
+                ->make(true);
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Eliminar solicitudes unicamente permitido por el rol
+     * Auxiliar de apoyo retorna respuesta ajax
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+
+            $solicitud = Solicitud::find($id);
+            $solicitud->delete();
+            $comentario = Comentarios::where('FK_COM_Id_Solicitud', '=', $id);
+            $comentario->delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Solicitud eliminada correctamente.'
+            );
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
 
 }

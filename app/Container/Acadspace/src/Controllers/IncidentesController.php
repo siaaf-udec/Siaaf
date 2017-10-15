@@ -10,21 +10,16 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Incidentes;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 
 class IncidentesController extends Controller
 {
-
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Funcion para mostrar la vista de incidentes
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -32,19 +27,8 @@ class IncidentesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('acadspace.Aulas.formularioAulas');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
+     * Funcion registrar incidente retorna un mensaje Ajax
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function regisIncidente(Request $request)
@@ -52,14 +36,14 @@ class IncidentesController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             Incidentes::create([
-                'FK_INC_id_user' => $request['FK_INC_id_user'],
-                'INC_nombre_espacio' => $request['INC_nombre_espacio'],
-                'INC_descripcion' => $request['INC_descripcion']
+                'FK_INC_Id_User' => $request['FK_INC_Id_User'],
+                'INC_Nombre_Espacio' => $request['INC_Nombre_Espacio'],
+                'INC_Descripcion' => $request['INC_Descripcion']
             ]);
 
             return AjaxResponse::success(
                 '¡Registro exitoso!',
-                'Aula registrada correctamente.'
+                'Incidente registrado correctamente.'
             );
         } else {
             return AjaxResponse::fail(
@@ -69,9 +53,8 @@ class IncidentesController extends Controller
         }
     }
 
-    //Funcion creada para cargar datatable con aulas
-
     /**
+     * Funcion cargar datatable con incidentes registrados
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -93,6 +76,7 @@ class IncidentesController extends Controller
     }
 
     /**
+     * Funcion eliminar incidentes registrados
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\Response

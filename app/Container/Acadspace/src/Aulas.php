@@ -10,13 +10,13 @@ class Aulas extends Model
 {
     protected $connection = 'acadspace';
 
-    protected $table = 'tbl_aulas';
+    protected $table = 'TBL_Aulas';
 
-    protected $primaryKey = 'PK_SAL_id_sala';
+    protected $primaryKey = 'PK_SAL_Id_Sala';
 
     protected $fillable = [
-        'SAL_nombre_sala',
-        'SAL_nombre_espacio'
+        'SAL_Nombre_Sala',
+        'SAL_Nombre_Espacio'
     ];
     //
     public function docente(){

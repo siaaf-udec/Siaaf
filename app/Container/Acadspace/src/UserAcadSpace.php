@@ -21,7 +21,7 @@ class UserAcadSpace extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Container\Users\Src\User', 'SOL_id_docente');
+        return $this->belongsTo('App\Container\Users\Src\User', 'FK_SOL_Id_Docente');
     }
 
 }

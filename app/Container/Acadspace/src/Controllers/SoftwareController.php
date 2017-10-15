@@ -10,39 +10,37 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Acadspace\src\Aulas;
+use App\Container\Acadspace\src\Software;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 
-class AulasController extends Controller
+class SoftwareController extends Controller
 {
 
+
     /**
-     * Funcion para mostrar la vista de Aulas
+     * Funcion mostrar vista de gestion software
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('acadspace.Aulas.formularioAulas');
+        return view('acadspace.Software.formularioSoftware');
     }
 
-
     /**
-     * Funcion para registrar una nueva aula retorna un mensaje Ajax
+     * Funcion para registrar un nuevo software retorna un mensaje Ajax
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function regisAula(Request $request)
+    public function registroSoftware(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            Aulas::create($request->all());
+            Software::create($request->all());
             return AjaxResponse::success(
                 '¡Registro exitoso!',
-                'Aula registrada correctamente.'
+                'Software registrado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -53,16 +51,15 @@ class AulasController extends Controller
     }
 
     /**
-     * Funcion creada para cargar datatable con aulas actuales
+     * Funcion creada para cargar datatable con software
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            // $articulos = software::all(['nombre_soft','version','licencias'])->get();
-            $aulas = Aulas::all();
-            return Datatables::of($aulas)
+            $software = Software::all();
+            return Datatables::of($software)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
@@ -78,7 +75,7 @@ class AulasController extends Controller
 
 
     /**
-     * Funcion para eliminar aulas de acuerdo al id
+     * Funcion para eliminar software entre los registrados
      * retorna mensaje ajax
      * @param Request $request
      * @param $id
@@ -88,12 +85,12 @@ class AulasController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
-            $aulas = Aulas::find($id);
-            $aulas->delete();
+            $software = software::find($id);
+            $software->delete();
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Aula eliminada correctamente.'
+                'Software eliminado correctamente.'
             );
         }
         return AjaxResponse::fail(

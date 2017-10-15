@@ -10,7 +10,7 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Acadspace\src\calendarioSalones;
+use App\Container\Acadspace\src\Calendario;
 use App\Container\Acadspace\src\Solicitud;
 use App\Container\Acadspace\src\Aulas;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -21,19 +21,17 @@ class CalendarioController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Funcion mostrar vista de gestion aulas - calendario
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        /*  $sala = new Aulas();
-          $sala = $sala->pluck('SAL_nombre_sala','SAL_nombre_sala');
-          return view('acadspace.gestionhorarios.calendarioaulas', ['sala'=>$sala->toArray()]);*/
         return view('acadspace.gestionhorarios.calendarioaulas');
     }
 
     /**
+     * Funcion para cargar un select en la vista de acuerdo a la informacion
+     * recibida de otro select que viene en $espacio
      * @param Request $request
      * @param $espacio
      * @return \Illuminate\Http\JsonResponse
@@ -41,13 +39,15 @@ class CalendarioController extends Controller
     public function cargarSalasCalendario(Request $request, $espacio)
     {
         if ($request->ajax()) {
-            $aula = Aulas::where('SAL_nombre_espacio', '=', $espacio)
+            $aula = Aulas::where('SAL_Nombre_Espacio', '=', $espacio)
                 ->get();
             return response()->json($aula);
         }
     }
 
     /**
+     * Retorno un arreglo tipo JSON con todos los eventos actuales en
+     * el calendario de acuerdo a la sala seleccionada
      * @param Request $request
      * @return array
      */
@@ -55,11 +55,11 @@ class CalendarioController extends Controller
     {
         $sala = $request['sala'];
         $data = array();
-        $id = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('PK_CAL_id');
-        $titulo = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_titulo');
-        $color = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_color');
-        $fecha_inicial = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_ini');
-        $fecha_final = calendarioSalones::where('CAL_sala', '=', $sala)->pluck('CAL_fecha_fin');
+        $id = Calendario::where('CAL_Sala', '=', $sala)->pluck('PK_CAL_id');
+        $titulo = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Titulo');
+        $color = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Color');
+        $fecha_inicial = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Fecha_Ini');
+        $fecha_final = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Fecha_Fin');
         $count = count($id);
 
         for ($i = 0; $i < $count; $i++) {
@@ -77,10 +77,11 @@ class CalendarioController extends Controller
 
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     *Funcion para crear evento en el calendario
+     * no retorna nada, la validacion de que se creo
+     * se hace en el formulario
      */
     public function create()
     {
@@ -91,13 +92,13 @@ class CalendarioController extends Controller
         $fecha_final = date('Y-m-d H:i:s', $fecha_fin);
         $color = $_POST['background'];
         $sala = $_POST['salaSeleccionada'];
-        $evento = new calendarioSalones();
+        $evento = new Calendario();
 
-        $evento->CAL_titulo = $titulo;
-        $evento->CAL_fecha_ini = $fecha_inicio;
-        $evento->CAL_fecha_fin = $fecha_final;
-        $evento->CAL_color = $color;
-        $evento->CAL_sala = $sala;
+        $evento->CAL_Titulo = $titulo;
+        $evento->CAL_Fecha_Ini = $fecha_inicio;
+        $evento->CAL_Fecha_Fin = $fecha_final;
+        $evento->CAL_Color = $color;
+        $evento->CAL_Sala = $sala;
 
 
         $evento->save();
@@ -105,7 +106,9 @@ class CalendarioController extends Controller
 
 
     /**
-     *
+     *Funcion para actualizar evento en el calendario
+     * no retorna nada, la validacion de que se actualizo
+     * se hace en el formulario
      */
     public function update()
     {
@@ -118,14 +121,14 @@ class CalendarioController extends Controller
         $allDay = $_POST['allday'];
         $back = $_POST['background'];
 
-        $evento = calendarioSalones::find($id);
-        if ($end == 'NULL') {
+        $evento = Calendario::find($id);
+        if (empty($end)) {
         } else {
-            $evento->CAL_fecha_fin = $end;
+            $evento->CAL_Fecha_Fin = $end;
         }
-        $evento->CAL_fecha_ini = $start;
-        $evento->CAL_color = $back;
-        $evento->CAL_titulo = $title;
+        $evento->CAL_Fecha_Ini = $start;
+        $evento->CAL_Color = $back;
+        $evento->CAL_Titulo = $title;
         //$evento->fechaFin=$end;
 
         $evento->save();
@@ -133,16 +136,18 @@ class CalendarioController extends Controller
 
 
     /**
-     *
+     *Funcion para eliminar un evento del calendario
      */
     public function delete()
     {
         $id = $_POST['id'];
 
-        calendarioSalones::destroy($id);
+        Calendario::destroy($id);
     }
 
     /**
+     * Funcion que carga el datatable con solicitudes aprobadas de acuerdo
+     * a la sala seleccionada
      * @param Request $request
      * @param $sala
      * @return \Illuminate\Http\Response
@@ -152,21 +157,22 @@ class CalendarioController extends Controller
 
         if ($request->ajax() && $request->isMethod('GET')) {
             //unicamente las solicitudes aprobadas y muestra en el datatable
-            $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'SOL_id_docente',
-                'SOL_nucleo_tematico', 'SOL_cant_estudiantes', 'SOL_id_practica',
-                'created_at', 'SOL_carrera', 'SOL_dias', 'SOL_hora_inicio',
-                'SOL_hora_fin', 'SOL_guia_practica', 'SOL_software', 'SOL_rango_fechas')
+            $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
+                'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
+                'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas',
+                'SOL_fecha_inicial')
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
                 }])
-                ->where('FK_SOL_id_sala', '=', $sala)
-                ->where('SOL_estado', '=', 1)
+                ->where('FK_SOL_Id_Sala', '=', $sala)
+                ->where('SOL_Estado', '=', 1)
                 ->get();
             return DataTables::of($solicitud)
                 ->addColumn('tipo_prac', function ($solicitud) {
-                    if ($solicitud->SOL_id_practica == 1) {
+                    if ($solicitud->SOL_Id_Practica == 1) {
                         return "Libre";
-                    } elseif ($solicitud->SOL_id_practica == 2) {
+                    } elseif ($solicitud->SOL_Id_Practica == 2) {
                         return "Grupal";
                     }
                 })

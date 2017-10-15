@@ -88,12 +88,12 @@ class formatosController extends Controller
             if ($archivo !== null) {
                 $url = Storage::disk('acadspace')->putFile('formatos', $archivo);;//Guarda el archivo
                 //Asigna valores a los campos
-                $model->FAC_nombre_doc = $url;
-                $model->FAC_titulo_doc = $request['nombre'];
-                $model->FAC_descripcion_doc = $request['descripcion'];
-                $model->FK_FAC_id_secretaria = $id;
-                $model->FAC_correo = $request['correo'];
-                $model->FAC_estado = 0;
+                $model->FAC_Nombre_Doc = $url;
+                $model->FAC_Titulo_Doc = $request['nombre'];
+                $model->FAC_Descripcion_Doc = $request['descripcion'];
+                $model->FK_FAC_Id_Secretaria = $id;
+                $model->FAC_Correo = $request['correo'];
+                $model->FAC_Estado = 0;
                 $model->save(); //Registra los campos
 
                 //Envio de correo
@@ -127,7 +127,7 @@ class formatosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $solicitud = formatos::find($id);
-            $solicitud->FAC_estado = 1;
+            $solicitud->FAC_Estado = 1;
             $solicitud->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -152,7 +152,7 @@ class formatosController extends Controller
         //Recibe id de solicitud
         $solicitudess = formatos::find($id);
         //Crea ruta con el nombre del archivo a descargar
-        $rutaarchivo = "../storage/app/public/acadspace/" . $solicitudess->FAC_nombre_doc;
+        $rutaarchivo = "../storage/app/public/acadspace/" . $solicitudess->FAC_Nombre_Doc;
         //Retorna y descarga el archivo
         return response()->download($rutaarchivo);
 
@@ -168,21 +168,21 @@ class formatosController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             //$solic = formatos::all();
             $id = Auth::id();//Trae ID usuario
-            $solic = formatos::where('FK_FAC_id_secretaria', $id)->get();//Trae solicitudes por id_secretaria
+            $solic = formatos::where('FK_FAC_Id_Secretaria', $id)->get();//Trae solicitudes por id_secretaria
 
             return DataTables::of($solic)
                 //Realiza consulta ide de estado y carga con nombre
                 ->addColumn('estado', function ($solic) {
-                    if ($solic->FAC_estado == 1) {
+                    if ($solic->FAC_Estado == 1) {
                         return "<span class='label label-sm label-success'>" . 'Revisado' . "</span>";
-                    } elseif ($solic->FAC_estado == 0) {
+                    } elseif ($solic->FAC_Estado == 0) {
                         return "<span class='label label-sm label-warning'>" . 'Pendiente' . "</span>";
                     }
                 })
                 ->rawColumns(['estado'])
                 //Elimina columnas no necesarias
-                ->removeColumn('FAC_correo')
-                ->removeColumn('FAC_descripcion_doc')
+                ->removeColumn('FAC_Correo')
+                ->removeColumn('FAC_Descripcion_Doc')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);//Retorna tabla creada
@@ -206,12 +206,12 @@ class formatosController extends Controller
         $id = Auth::id();//Trae ID usuario
         //Recibe peticion Ajax
         if ($request->ajax() && $request->isMethod('GET')) {
-            $solic = formatos::select(['PK_FAC_id_solicitud',
-                'FAC_titulo_doc', 'created_at', 'FK_FAC_id_secretaria'])
+            $solic = formatos::select(['PK_FAC_Id_Formato',
+                'FAC_Titulo_Doc', 'created_at', 'FK_FAC_Id_Secretaria'])
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
                 }])
-                ->where('FAC_estado', '=', 0)
+                ->where('FAC_Estado', '=', 0)
                 ->get();
             return DataTables::of($solic)
                 ->addIndexColumn()

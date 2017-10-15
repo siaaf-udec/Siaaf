@@ -12,12 +12,12 @@ class Incidentes extends Model
 
     protected $table = 'tbl_incidentes';
 
-    protected $primaryKey = 'PK_INC_id_incidente';
+    protected $primaryKey = 'PK_INC_Id_Incidente';
 
     protected $fillable = [
-        'FK_INC_id_user',
-        'INC_nombre_espacio',
-        'INC_descripcion'
+        'FK_INC_Id_User',
+        'INC_Nombre_Espacio',
+        'INC_Descripcion'
     ];
 
     public function Asistents()

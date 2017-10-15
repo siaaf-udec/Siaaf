@@ -7,21 +7,21 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Users\Src\User;
 
-class formatos extends Model
+class Formatos extends Model
 {
     protected $connection = 'acadspace';
 
-    protected $table = 'tbl_solFormAcad';
+    protected $table = 'TBL_Formatos';
 
-    protected $primaryKey = 'PK_FAC_id_solicitud';
+    protected $primaryKey = 'PK_FAC_Id_Formato';
 
     protected $fillable = [
-        'FAC_titulo_doc',
-        'FAC_descripcion_doc',
-        'FAC_nombre_doc',
-        'FK_FAC_id_secretaria',
-        'FAC_correo',
-        'FAC_estado'
+        'FAC_Titulo_Doc',
+        'FAC_Descripcion_Doc',
+        'FAC_Nombre_Doc',
+        'FK_FAC_Id_Secretaria',
+        'FAC_Correo',
+        'FAC_Estado'
     ];
 
     public function setFileAttribute($file)
@@ -33,7 +33,7 @@ class formatos extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'FK_FAC_id_secretaria');
+        return $this->belongsTo(User::class, 'FK_FAC_Id_Secretaria');
     }
     //
 }

@@ -11,32 +11,36 @@ class Solicitud extends Model
 
     protected $table = 'TBL_solicitud';
 
-    protected $primaryKey = 'PK_SOL_id_solicitud';
+    protected $primaryKey = 'PK_SOL_Id_Solicitud';
 
     protected $fillable = [
-        'SOL_guia_practica',
-        'SOL_software',
-        'SOL_grupo',
-        'SOL_cant_estudiantes',
-        'SOL_id_docente',
-        'SOL_dias',
-        'SOL_hora_inicio',
-        'SOL_hora_fin',
-        'SOL_estado',
-        'SOL_fecha_inicio',
-        'SOL_fecha_fin',
-        'SOL_nucleo_tematico',
-        'SOL_id_practica'
+        'SOL_Guia_Practica',
+        'SOL_Software',
+        'SOL_Grupo',
+        'SOL_Cant_Estudiantes',
+        'FK_SOL_Id_Docente',
+        'SOL_Dias',
+        'SOL_Hora_Fin',
+        'SOL_Hora_Inicio',
+        'SOL_Estado',
+        'SOL_Nucleo_Tematico',
+        'SOL_Id_Practica',
+        'FK_SOL_Id_Sala',
+        'SOL_Carrera',
+        'SOL_Espacio',
+        'SOL_Rango_Fechas'
+
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'SOL_id_docente');
+        return $this->belongsTo(User::class, 'FK_SOL_Id_Docente');
     }
 
 
-    public function coment(){
-        return $this->hasOne(comentariosSolicitud::class,'FK_COM_id_solicitud');
+    public function coment()
+    {
+        return $this->hasOne(Comentarios::class, 'FK_COM_Id_Solicitud', 'PK_SOL_Id_Solicitud');
     }
     //
 }
