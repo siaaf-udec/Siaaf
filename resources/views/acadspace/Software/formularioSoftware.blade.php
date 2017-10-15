@@ -14,7 +14,7 @@
 @section('content')
 {{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Software'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th', 'title' => 'Gestion Software'])
     <div class="clearfix">
     </div>
     <br>
@@ -185,9 +185,9 @@
         columns = [
 
             {data: 'DT_Row_Index'},
-            {data: 'SOF_nombre_soft', name: 'Nombre'},
-            {data: 'SOF_version', name: 'Version'},
-            {data: 'SOF_licencias', name: 'Licencias'},
+            {data: 'SOF_Nombre_Soft', name: 'Nombre'},
+            {data: 'SOF_Version', name: 'Version'},
+            {data: 'SOF_Licencias', name: 'Licencias'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                 data:'action',
@@ -209,7 +209,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('espacios.academicos.soft.destroy') }}'+'/'+dataTable.PK_SOF_id;
+            var route = '{{ route('espacios.academicos.soft.destroy') }}'+'/'+dataTable.PK_SOF_Id;
             var type = 'DELETE';
             var async = async || false;
 
@@ -255,9 +255,9 @@
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('SOF_nombre_soft', $('input:text[name="nombre_soft"]').val());
-                    formData.append('SOF_version', $('input:text[name="version"]').val());
-                    formData.append('SOF_licencias', $('input:text[name="licencias"]').val());
+                    formData.append('SOF_Nombre_Soft', $('input:text[name="nombre_soft"]').val());
+                    formData.append('SOF_Version', $('input:text[name="version"]').val());
+                    formData.append('SOF_Licencias', $('input:text[name="licencias"]').val());
 
                     $.ajax({
                         url: route,

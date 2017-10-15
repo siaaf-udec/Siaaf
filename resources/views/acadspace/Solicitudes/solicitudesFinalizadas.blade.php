@@ -20,7 +20,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Solicitudes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-saved', 'title' => 'Solicitudes con proceso finalizado'])
             <div class="clearfix">
             </div>
             <br>
@@ -138,15 +138,15 @@
             </tr>
             <tr>
                 <td>Solicito para:</td>
-                <td>@{{SOL_dias}}</td>
+                <td>@{{SOL_Dias}} @{{SOL_fecha_inicial}}</td>
             </tr>
             <tr>
-                <td>Hora inicio: @{{SOL_hora_inicio}}</td>
-                <td>Hora fin: @{{SOL_hora_fin}}</td>
+                <td>Hora inicio: @{{SOL_Hora_Inicio}}</td>
+                <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_software}}</td>
+                <td>@{{SOL_Software}}</td>
             </tr>
         </table>
     </script>
@@ -166,8 +166,8 @@
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_nucleo_tematico', name: 'Nucleo tematico'},
-                {data: 'FK_SOL_id_sala', name: 'Sala'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'FK_SOL_Id_Sala', name: 'Sala'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
                     "className": 'details-control',
@@ -206,7 +206,7 @@
                 $.get("cargarSalas/" + event.target.value + "", function (response) {
                     $("#aula").empty();
                     for (i = 0; i < response.length; i++) {
-                        $("#aula").append("<option value='" + response[i].SAL_nombre_sala + "'>" + response[i].SAL_nombre_sala + "</option>")
+                        $("#aula").append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>")
                     }
                 })
 

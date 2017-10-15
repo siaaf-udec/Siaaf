@@ -1,7 +1,7 @@
 {{-- BEGIN HTML SAMPLE --}}
 @permission('docentes')
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Solicitudes'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th-list', 'title' => 'Mis Solicitudes'])
         <div class="clearfix">
         </div>
         <br>
@@ -11,7 +11,8 @@
             <div class="col-md-12">
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Practica
-                        Grupal</a> <a href="javascript:;" class="btn btn-simple btn-success btn-icon createLib"><i
+                        Grupal</a>
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon createLib"><i
                                 class="fa fa-plus"></i>Practica Libre</a></div>
 
             </div>
@@ -48,15 +49,15 @@
         </tr>
         <tr>
             <td>Software:</td>
-            <td>@{{SOL_software}}</td>
+            <td>@{{SOL_Software}}</td>
         </tr>
         <tr>
             <td>Sala asignada:</td>
-            <td>@{{FK_SOL_id_sala}}</td>
+            <td>@{{FK_SOL_Id_Sala}}</td>
         </tr>
         <tr>
             <td>Observacion:</td>
-            <td>@{{coment.COM_comentario}}</td>
+            <td>@{{coment.COM_Comentario}}</td>
         </tr>
     </table>
 </script>
@@ -70,12 +71,12 @@
         var table, url, columns;
 
         table = $('#art-table-ajax');
-        url = "{{ route('espacios.academicos.espacad.data') }}";
+        url = "{{ route('espacios.academicos.solacad.data') }}";
         columns = [
 
             {data: 'DT_Row_Index'},
-            {data: 'SOL_nucleo_tematico', name: 'Nucleo tematico'},
-            {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+            {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+            {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
             {data: 'estado', name: 'Estado'},
             {data: 'tipo_prac', name: 'Practica'},
             {
@@ -107,13 +108,13 @@
 
         $(".create").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('espacios.academicos.espacad.create') }}';
+            var route = '{{ route('espacios.academicos.solacad.crearGrupal') }}';
             $(".content-ajax").load(route);
         });
 
         $(".createLib").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('espacios.academicos.espacad.createlib') }}';
+            var route = '{{ route('espacios.academicos.solacad.crearLibre') }}';
             $(".content-ajax").load(route);
         });
 

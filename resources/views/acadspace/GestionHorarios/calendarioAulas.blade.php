@@ -8,25 +8,38 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
-
+    {{--Fullcalendar--}}
     <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
-    {
-    <link href="{{ asset('assets/main/acadspace/css/fullcalendar.print.css') }}" rel="stylesheet" media='print'
+    <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.print.css') }}" rel="stylesheet" media='print'
           type="text/css"/>
-
-    <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"
-          rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet"
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
           type="text/css"/>
-    <link href="{{ asset('assets/main/acadspace/css/componentsacadspace.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet"
+          type="text/css"/>
+    {{--Toast--}}
+    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Styles SWEETALERT  -->
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
+    <!-- DATATABLE  -->
+    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
+          rel="stylesheet" type="text/css"/>
+
+    {{--Estilo agregado para drag and drop zone--}}
+    <link href="{{asset('assets/main/acadspace/css/componentsacadspace.css')}}" rel="stylesheet"
+          type="text/css"/>
+
 
 @endpush
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gestion espacios academicos'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-calendar', 'title' => 'Gestion espacios academicos'])
 
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
@@ -34,130 +47,144 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="col-md-12">
-                        {!! Field::select('SOL_laboratorios',
-                                                        ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
-                                                        null,
-                                                        [ 'label' => 'Espacio academico:']) !!}
+                        <div class="row">
+                            {!! Field::select('SOL_laboratorios',
+                                                            ['Aulas de computo' => 'Aulas de computo',
+                                                            'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                                            'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                            null,
+                                                            [ 'label' => 'Espacio academico:']) !!}
 
-                        {!! Form::label('label', 'Aula que desea gestionar:')  !!}
+                            {!! Field::select(
+                                                            'aula', null,
+                                                            ['name' => 'aula']) !!}
+                            <br>
+                            <br>
+                            <br>
 
-                        {!! Form::select('aulas',['placeholder'=>'Seleccione'],null,
-                        array('class' => 'select2-hidden-accessible form-control pmd-select2', 'id'=>'aula')) !!}
-
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
-                            @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'Nucleo',
-                            'Estudiantes',
-                            'Practica',
-                            '',
-                            'Acciones'
-                            ])
-                        @endcomponent
+                            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
+                                @slot('columns', [
+                                '#' => ['style' => 'width:20px;'],
+                                'Nucleo',
+                                'Estudiantes',
+                                'Practica',
+                                '',
+                                'Acciones'
+                                ])
+                            @endcomponent
+                        </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="box box-solid">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">Eventos</h4>
-                                </div>
-                                <div class="box-body">
-                                    <!-- the events -->
-                                    <div id="external-events">
-                                        <div class="checkbox">
 
+                    {{--PRUEBA--}}
+
+
+                    <div class="col-md-12">
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="portlet light portlet-fit  calendar">
+                                <div class="portlet-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <!-- BEGIN DRAGGABLE EVENTS PORTLET-->
+                                            <div class="box-header with-border">
+                                                <h4 class="box-title">Eventos</h4>
+                                            </div>
+
+                                            <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                                                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                                                <ul class="fc-color-picker" id="color-chooser">
+                                                    <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-green" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-red" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-fuchsia" href="#"><i
+                                                                    class="fa fa-square"></i></a></li>
+                                                    <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                    <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <form class="inline-form">
+                                                <div class="input-group">
+                                                    <input id="new-event" type="text" class="form-control"
+                                                           placeholder="Titulo del evento">
+
+                                                    <div class="input-group-btn">
+                                                        <button id="add-new-event" type="button"
+                                                                class="btn btn-primary btn-flat">
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                    <!-- /btn-group -->
+                                                </div>
+
+
+                                                <hr/>
+                                                <div class="box-body">
+                                                    <div id="external-events">
+                                                    </div>
+                                                </div>
+                                                <div class="box-body">
+                                                    <!-- the events -->
+
+                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"
+                                                           for="drop-remove">
+                                                        remove after drop
+                                                        <input type="checkbox" class="group-checkable"
+                                                               id="drop-remove"/>
+                                                        <span></span>
+                                                    </label>
+
+                                                </div>
+                                            </form>
+                                            <!-- /.box-body -->
+                                            <div id="event_box" class="margin-bottom-10"></div>
+                                            <hr class="visible-xs"/>
+                                            <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf"
+                                                                                          value=""/>Generar PDF</span>
+                                        </div>
+                                        <!-- END DRAGGABLE EVENTS PORTLET-->
+                                        <div class="col-md-9 col-sm-12">
+                                            <div id="calendar" class="has-toolbar"></div>
                                         </div>
                                     </div>
-                                    <label for="drop-remove">
-                                        <input type="checkbox" id="drop-remove">
-                                        Eliminar al asignar
-                                    </label>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /. box -->
-                            <div class="box box-solid">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Crear evento</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                        <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                                        <ul class="fc-color-picker" id="color-chooser">
-                                            <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>
-                                            </li>
-                                            <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                                            <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /btn-group -->
-                                    <div class="input-group">
-                                        <input id="new-event" type="text" class="form-control"
-                                               placeholder="Titulo de evento">
 
-                                        <div class="input-group-btn">
-                                            <button id="add-new-event" type="button" class="btn btn-primary btn-flat">
-                                                Agregar
-                                            </button>
-                                        </div>
-                                        <!-- /btn-group -->
-                                    </div>
-                                    <br/><br/>
-                                    <!-- /input-group -->
-                                    {!! Form::open(['route' => ['guardaEventos'], 'method' => 'POST', 'id' =>'form-calendario']) !!}
-                                    {!! Form::close() !!}
                                 </div>
-                                <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf"
-                                                                              value=""/>Generar PDF</span>
                             </div>
                         </div>
-                        <!-- /.col -->
-                        <div class="col-md-9">
-                            <div class="box box-primary">
-                                <div class="box-body no-padding">
-                                    <!-- THE CALENDAR -->
-                                    <div id="calendar"></div>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /. box -->
-                        </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
                 </section>
                 <!-- /.content -->
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->
-        @endcomponent
-        </div>
-        </div>
+    @endcomponent
+
 @endsection
 @push('plugins')
     <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+
     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/main/acadspace/js/html2canvas.min.js') }}" type="text/javascript"></script>
@@ -179,6 +206,15 @@
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
     </script>
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
+            type="text/javascript"></script>
+
 
 
 @endpush
@@ -193,27 +229,38 @@
                 <td>@{{user.name}} @{{user.lastname}}</td>
             </tr>
             <tr>
-                <td>Dias seleccionados:</td>
-                <td>@{{SOL_dias}}</td>
+                <td>Solicito para:</td>
+                <td>@{{SOL_Dias}} @{{SOL_fecha_inicial}}</td>
             </tr>
             <tr>
-                <td>Hora inicio: @{{SOL_hora_inicio}}</td>
-                <td>Hora fin: @{{SOL_hora_fin}}</td>
+                <td>Hora inicio: @{{SOL_Hora_Inicio}}</td>
+                <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
                 <td>Guia de practica:</td>
-                <td>@{{SOL_guia_practica}}</td>
+                <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_software}}</td>
+                <td>@{{SOL_Software}}</td>
             </tr>
         </table>
     </script>
     <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
-            $("#SOL_laboratorios").append("<option  style='display:none' value='' selected>Seleccione..</option>");
+
+
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                allowClear: true,
+                placeholder: "Seleccione",
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
+
 
             var template = Handlebars.compile($("#details-template").html());
             var table, url, columns;
@@ -222,8 +269,8 @@
             url = "{{ route('espacios.academicos.acadcalendar.data' ) }}" + '/' + 0;
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_nucleo_tematico', name: 'Nucleo'},
-                {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
                     "className": 'details-control',
@@ -257,13 +304,14 @@
                 /*Cargar select de aulas*/
                 $.get("cargarSalasCalendario/" + event.target.value + "", function (response) {
                     $("#aula").empty();
-                    $("#aula").append("<option value='seleccione'>Seleccione</option>")
+                    $("#aula").append("<option value=''></option>");
                     for (i = 0; i < response.length; i++) {
-                        $("#aula").append("<option value='" + response[i].SAL_nombre_sala + "'>" + response[i].SAL_nombre_sala + "</option>")
+                        $("#aula").append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
                     }
                 });
                 //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
                 $("#aula").change(function (event) {
+                    App.unblockUI('.portlet-form');
                     table = $('#art-table-ajax');
                     var select = $('#aula option:selected').val();
                     table.dataTable().fnDestroy();
@@ -440,27 +488,30 @@
                         var back = copiedEventObject.backgroundColor;
 
                         var sala = document.getElementById("aula").value;
-
-                        crsfToken = document.getElementsByName("_token")[0].value;
-                        $.ajax({
-                            url: 'guardaEventos',
-                            data: 'title=' + title + '&start=' + start + '&allday=' + allDay + '&background=' + back + '&salaSeleccionada=' + sala,
-                            type: "POST",
-                            headers: {
-                                "X-CSRF-TOKEN": crsfToken
-                            },
-                            beforeSend: function () {
-                                App.blockUI({target: '.portlet-form', animate: true});
-                            },
-                            success: function (events) {
-                                UIToastr.init('success', '¡Bien hecho!', 'Evento creado correctamente');
-                                App.unblockUI('.portlet-form');
-                                $('#calendar').fullCalendar('refetchEvents');
-                            },
-                            error: function (json) {
-                                console.log("Error al crear evento");
-                            }
-                        });
+                        if ($('select[name="aula"]').val() == "") {
+                            UIToastr.init('error', '¡Error!', 'Antes de registrar eventos seleccione el espacio academico y aula que gestionara');
+                        } else {
+                            crsfToken = document.getElementsByName("_token")[0].value;
+                            $.ajax({
+                                url: 'guardaEventos',
+                                data: 'title=' + title + '&start=' + start + '&allday=' + allDay + '&background=' + back + '&salaSeleccionada=' + sala,
+                                type: "POST",
+                                headers: {
+                                    "X-CSRF-TOKEN": crsfToken
+                                },
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
+                                success: function (events) {
+                                    UIToastr.init('success', '¡Bien hecho!', 'Evento creado correctamente');
+                                    App.unblockUI('.portlet-form');
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                },
+                                error: function (json) {
+                                    UIToastr.init('error', '¡Error!', 'Error al crear el evento');
+                                }
+                            });
+                        }
                     },
                     eventResize: function (event) {
                         var start = event.start.format("YYYY-MM-DD HH:mm");
@@ -469,7 +520,7 @@
                         if (event.end) {
                             var end = event.end.format("YYYY-MM-DD HH:mm");
                         } else {
-                            var end = "NULL";
+                            var end = null;
                         }
                         crsfToken = document.getElementsByName("_token")[0].value;
                         $.ajax({
@@ -481,10 +532,9 @@
                             },
                             success: function (json) {
                                 UIToastr.init('success', '¡Bien hecho!', 'Evento modificado correctamente');
-                                console.log("Updated Successfully");
                             },
                             error: function (json) {
-                                console.log("Error al actualizar evento");
+                                UIToastr.init('error', '¡Error!', 'Error al modificar el evento');
                             }
                         });
                     },
@@ -508,10 +558,9 @@
                             },
                             success: function (json) {
                                 UIToastr.init('success', '¡Bien hecho!', 'Evento modificado correctamente');
-                                console.log("Updated Successfully eventdrop");
                             },
                             error: function (json) {
-                                console.log("Error al actualizar eventdrop");
+                                UIToastr.init('error', '¡Error!', 'Error al modificar el evento');
                             }
                         });
                     },
@@ -568,7 +617,7 @@
                         } else {
                             var allDay = "No";
                         }
-                        var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;color:white;background:' + back + ';position:absolute;z-index:10001;">' + '<center>' + event.title + '</center>' + '<br>' + 'Inicio: ' + start + '<br>' + 'Fin: ' + end + '</div>';
+                        var tooltip = '<div class="tooltipevent" style="border:1px solid black;margin: 0.5em;padding: 0.5em;width:200px;height:100px;color:white;background:' + back + ';position:absolute;z-index:10001;">' + '<center>' + event.title + '</center>' + '<br>' + 'Inicio: ' + start + '<br>' + 'Fin: ' + end + '</div>';
                         $("body").append(tooltip);
                         $(this).mouseover(function (e) {
                             $(this).css('z-index', 10000);
@@ -629,6 +678,8 @@
                     $("#new-event").val("");
                 });
             });
+
+
         });
     </script>
 

@@ -2,6 +2,12 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!-- MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -16,11 +22,12 @@
 
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Solicitudes'])
+
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-edit', 'title' => 'Gestion Solicitudes'])
+        <div class="col-md-12">
             <div class="clearfix">
                 <br>
-                {!! Field::select('laboratorioSeleccionado',
+                {!! Field::select('SOL_laboratorio',
                                                         ['Aulas de computo' => 'Aulas de computo',
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
                                                         'Laboratorio psicologia' => 'Laboratorio psicologia'],
@@ -37,135 +44,199 @@
                         </li>
                     </ul>
 
-                        <div class="tab-content">
-                            <div class="tab-pane fade active in" id="tab_2_1">
-                                <p>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
-                                        @slot('columns', [
-                                        '#' => ['style' => 'width:20px;'],
-                                        'Nucleo tematico',
-                                        'Estudiantes',
-                                        'Practica',
-                                        ' ' => ['style' => 'width:20px;'],
-                                        'Acciones'
-                                        ])
-                                    @endcomponent
-                                </p>
-                            </div>
-                            <div class="tab-pane fade" id="tab_2_2">
-                                <p>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
-                                        @slot('columns', [
-                                        '#' => ['style' => 'width:20px;'],
-                                        'Nucleo tematico',
-                                        'Estudiantes',
-                                        'Practica',
-                                        ' ' => ['style' => 'width:20px;'],
-                                        'Acciones'
-                                        ])
-                                    @endcomponent
-                                </p>
-                            </div>
-                        </div>
-                </div>
-            </div>
-            {{-- FIN DIVISION NAV--}}
-    </div>
-
-    <br>
-    <br>
-    <br>
-
-    <div class="col-md-12">
-
-    </div>
-    <div class="clearfix">
-    </div>
-    {{--MODAL PARA ACEPTAR SOLICITUD Y ASIGNAR SALA--}}
-    <div class="row">
-        <div class="col-md-12">
-        {{-- BEGIN HTML MODAL UPDATE --}}
-        <!-- responsive -->
-            <div class="modal fade" data-width="760" id="modal-aprobar-sol" tabindex="-1">
-                <div class="modal-header modal-header-success">
-                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                    </button>
-                    <h2 class="modal-title">
-                        <i class="glyphicon glyphicon-user">
-                        </i>
-                        Aprobar solicitud de espacio academico
-                    </h2>
-                </div>
-                <div class="modal-body">
-                    {!! Form::open(['id' => 'form-aceptar-sol', 'class' => '', 'url' => '/forms']) !!}
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab_2_1">
                             <p>
-                                {{--{!! Field::select('Seleccione la sala donde asignara la solicitud:',$sala,
-                                    ['name' => 'sala_seleccionada'])
-                                    !!}--}}
-                                {!! Form::label('label', 'Seleccione el aula donde asignara la solicitud:')  !!}
-
-                                {!! Form::select('aulas',['placeholder'=>'Seleccione'],null, array('class' => 'form-control', 'id'=>'aula')) !!}
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
+                                    @slot('columns', [
+                                    '#' => ['style' => 'width:20px;'],
+                                    'Nucleo tematico',
+                                    'Estudiantes',
+                                    'Practica',
+                                    ' ' => ['style' => 'width:20px;'],
+                                    'Acciones'
+                                    ])
+                                @endcomponent
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="tab_2_2">
+                            <p>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
+                                    @slot('columns', [
+                                    '#' => ['style' => 'width:20px;'],
+                                    'Nucleo tematico',
+                                    'Estudiantes',
+                                    'Practica',
+                                    ' ' => ['style' => 'width:20px;'],
+                                    'Acciones'
+                                    ])
+                                @endcomponent
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                </div>
-                {!! Form::close() !!}
             </div>
-            {{-- END HTML MODAL CREATE--}}
+            {{-- FIN DIVISION NAV--}}
         </div>
-    </div>
-    {{--MODAL PARA REPROBAR SOLICITUD Y ASIGNAR SALA--}}
-    <div class="row">
-        <div class="col-md-12">
-        {{-- BEGIN HTML MODAL UPDATE --}}
-        <!-- responsive -->
-            <div class="modal fade" data-width="760" id="modal-reprobar-sol" tabindex="-1">
-                <div class="modal-header modal-header-success">
-                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                    </button>
-                    <h2 class="modal-title">
-                        <i class="glyphicon glyphicon-user">
-                        </i>
-                        Reprobar solicitud de espacio academico
-                    </h2>
-                </div>
-                <div class="modal-body">
-                    {!! Form::open(['id' => 'form-reprobar-sol', 'class' => '', 'url' => '/forms']) !!}
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ Form::label('Agregar observacion:') }}
-                            {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
 
+        <br>
+        <br>
+        <br>
+
+        <div class="col-md-12">
+
+        </div>
+        <div class="clearfix">
+        </div>
+        {{--MODAL PARA ACEPTAR SOLICITUD Y ASIGNAR SALA--}}
+        <div class="row">
+            <div class="col-md-12">
+            {{-- BEGIN HTML MODAL UPDATE --}}
+            <!-- responsive -->
+                <div class="modal fade" data-width="760" id="modal-aprobar-sol" tabindex="-1">
+                    <div class="modal-header modal-header-success">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                        </button>
+                        <h2 class="modal-title">
+                            <i class="glyphicon glyphicon-check">
+                            </i>
+                            Aprobar solicitud de espacio academico
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'form-aceptar-sol', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    {!! Field::select('aula', null,
+                                                                  ['name' => 'aula']) !!}
+                                </p>
+                            </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-                <div class="modal-footer">
-                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                </div>
-                {!! Form::close() !!}
+                {{-- END HTML MODAL CREATE--}}
             </div>
-            {{-- END HTML MODAL CREATE--}}
         </div>
-    </div>
+        {{--MODAL PARA REPROBAR SOLICITUD --}}
+        <div class="row">
+            <div class="col-md-12">
+            {{-- BEGIN HTML MODAL UPDATE --}}
+            <!-- responsive -->
+                <div class="modal fade" data-width="760" id="modal-reprobar-sol" tabindex="-1">
+                    <div class="modal-header modal-header-success">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                        </button>
+                        <h2 class="modal-title">
+                            <i class="glyphicon glyphicon-remove-sign">
+                            </i>
+                            Reprobar solicitud de espacio academico
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'form-reprobar-sol', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ Form::label('Agregar observacion:') }}
+                                {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                {{-- END HTML MODAL CREATE--}}
+            </div>
+        </div>
+
+        {{--MODAL PARA ACEPTAR SOLICITUD Y ASIGNAR SALA LIBRE--}}
+        <div class="row">
+            <div class="col-md-12">
+            {{-- BEGIN HTML MODAL UPDATE --}}
+            <!-- responsive -->
+                <div class="modal fade" data-width="760" id="modal-aprobar-sol-libre" tabindex="-1">
+                    <div class="modal-header modal-header-success">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                        </button>
+                        <h2 class="modal-title">
+                            <i class="glyphicon glyphicon-check">
+                            </i>
+                            Aprobar solicitud de espacio academico
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'form-aceptar-sol-libre', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    {!! Field::select('aulas', null,
+                                                                  ['name' => 'aulas']) !!}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                {{-- END HTML MODAL CREATE--}}
+            </div>
+        </div>
+        {{--MODAL PARA REPROBAR SOLICITUD LIBRE --}}
+        <div class="row">
+            <div class="col-md-12">
+            {{-- BEGIN HTML MODAL UPDATE --}}
+            <!-- responsive -->
+                <div class="modal fade" data-width="760" id="modal-reprobar-sol-libre" tabindex="-1">
+                    <div class="modal-header modal-header-success">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                        </button>
+                        <h2 class="modal-title">
+                            <i class="glyphicon glyphicon-remove-sign">
+                            </i>
+                            Reprobar solicitud de espacio academico
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'form-reprobar-sol-libre', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ Form::label('Agregar observacion:') }}
+                                {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                {{-- END HTML MODAL CREATE--}}
+            </div>
+        </div>
     @endcomponent
 
-    {{-- END HTML SAMPLE --}}
 @endsection
 
 
@@ -195,6 +266,9 @@
             type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
@@ -217,7 +291,7 @@
             </tr>
             <tr>
                 <td>Programa:</td>
-                <td>@{{SOL_carrera}}</td>
+                <td>@{{SOL_Carrera}}</td>
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
@@ -225,23 +299,23 @@
             </tr>
             <tr>
                 <td>Dias seleccionados:</td>
-                <td>@{{SOL_dias}}</td>
+                <td>@{{SOL_Dias}}</td>
             </tr>
             <tr>
-                <td>Hora inicio: @{{SOL_hora_inicio}}</td>
-                <td>Hora fin: @{{SOL_hora_fin}}</td>
+                <td>Hora inicio: @{{SOL_Hora_Inicio}}</td>
+                <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
                 <td>Guia de practica:</td>
-                <td>@{{SOL_guia_practica}}</td>
+                <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_software}}</td>
+                <td>@{{SOL_Software}}</td>
             </tr>
             <tr>
                 <td>Fechas:</td>
-                <td>@{{SOL_rango_fechas}}</td>
+                <td>@{{SOL_Rango_Fechas}}</td>
             </tr>
         </table>
     </script>
@@ -255,7 +329,7 @@
             </tr>
             <tr>
                 <td>Programa:</td>
-                <td>@{{SOL_carrera}}</td>
+                <td>@{{SOL_Carrera}}</td>
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
@@ -263,29 +337,38 @@
             </tr>
             <tr>
                 <td>Fecha seleccionada:</td>
-                <td>@{{SOL_rango_fechas}}</td>
+                <td>@{{SOL_Rango_Fechas}}</td>
             </tr>
             <tr>
-                <td>Hora inicio: @{{SOL_hora_inicio}}</td>
-                <td>Hora fin: @{{SOL_hora_fin}}</td>
+                <td>Hora inicio: @{{SOL_Hora_Inicio}}</td>
+                <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
                 <td>Guia de practica:</td>
-                <td>@{{SOL_guia_practica}}</td>
+                <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_software}}</td>
+                <td>@{{SOL_Software}}</td>
             </tr>
         </table>
     </script>
 
     <script>
-        $("#laboratorioSeleccionado").append("<option  style='display:none' value='' selected>Seleccione..</option>");
-       $("#vista-tabla").css("display", "none");
+
+        $("#vista-tabla").css("display", "none");
 
         /*PINTAR TABLA SOLICITUDES GRUPALES*/
         $(document).ready(function () {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
             //capturar el template para desplegar la informacion
             var template = Handlebars.compile($("#details-template").html());
 
@@ -296,8 +379,8 @@
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_nucleo_tematico', name: 'Nucleo tematico'},
-                {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
                     "className": 'details-control',
@@ -330,8 +413,8 @@
             columnsLibre = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_nucleo_tematico', name: 'Nucleo tematico'},
-                {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
                     "className": 'details-control',
@@ -357,10 +440,23 @@
             dataTableServer.init(tableLibre, urlLibre, columnsLibre);
 
             //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
-            $("#laboratorioSeleccionado").change(function (event) {
+            $("#SOL_laboratorio").change(function (event) {
                 $("#vista-tabla").css("display", "block");
+                var select = $('#SOL_laboratorio option:selected').val();
+                /*Cargar select de aulas*/
+                $.get("cargarSalas/" + select + "", function (response) {
+                    $('#aula').empty();
+                    $("#aula").append("<option value=''></option>");
+                    for (i = 0; i < response.length; i++) {
+                        $('#aula').append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
+                    }
+                    $('#aulas').empty();
+                    $("#aulas").append("<option value=''></option>");
+                    for (i = 0; i < response.length; i++) {
+                        $('#aulas').append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
+                    }
 
-                var select = $('#laboratorioSeleccionado option:selected').val();
+                });
                 //tabla sol grupal
                 table = $('#art-table-ajax');
                 table.dataTable().fnDestroy();
@@ -375,13 +471,6 @@
                 dataTableServer.init(tableLibre, urlLibre, columnsLibre);
                 tableLibre = tableLibre.DataTable();
 
-                /*Cargar select de aulas*/
-                $.get("cargarSalas/" + event.target.value + "", function (response) {
-                    $("#aula").empty();
-                    for (i = 0; i < response.length; i++) {
-                        $("#aula").append("<option value='" + response[i].SAL_nombre_sala + "'>" + response[i].SAL_nombre_sala + "</option>")
-                    }
-                })
 
             });
 
@@ -424,20 +513,19 @@
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var dataTable = table.row($tr).data();
-
                 $('#modal-aprobar-sol').modal('toggle');
                 /*Asignacion de sala validado*/
                 var createPermissions = function () {
 
                     return {
                         init: function () {
+                            var dataTable = table.row($tr).data();
                             var route = '{{ route('espacios.academicos.evalsol.aprobarSol') }}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
                             formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
-                            formData.append('FK_SOL_id_sala', $('select[name="aulas"]').val());
+                            formData.append('FK_SOL_Id_Sala', $('select[name="aula"]').val());
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -472,7 +560,7 @@
 
                 var form_edit = $('#form-aceptar-sol');
                 var rules_edit = {
-                    sala_seleccionada: {required: true}
+                    aula: {required: true}
                 };
                 FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
             });
@@ -482,21 +570,19 @@
             tableLibre.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var dataTable = tableLibre.row($tr).data();
-
-                $('#modal-aprobar-sol').modal('toggle');
+                $('#modal-aprobar-sol-libre').modal('toggle');
                 /*Asignacion de sala validado*/
-                var createPermissions = function () {
+                var createPermissionsLib = function () {
 
                     return {
                         init: function () {
-                            var route = '{{ route('espacios.academicos.evalsol.aprobarSolLibre') }}';
+                            var dataTable = tableLibre.row($tr).data();
+                            var route = '{{ route('espacios.academicos.evalsol.aprobarSol') }}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
-                            formData.append('id_solicitud_libre', dataTable.PK_SOL_id_solicitud);
-                            formData.append('FK_SOL_id_sala_libre', $('select[name="aulas"]').val());
-                            console.log(formData);
+                            formData.append('id_solicitud', dataTable.PK_SOL_id_solicitud);
+                            formData.append('FK_SOL_Id_Sala', $('select[name="aulas"]').val());
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -512,10 +598,11 @@
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         tableLibre.ajax.reload();
-                                        $('#modal-aprobar-sol').modal('hide');
-                                        $('#form-aceptar-sol')[0].reset(); //Limpia formulario
+                                        $('#modal-aprobar-sol-libre').modal('hide');
+                                        $('#form-aceptar-sol-libre')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
                                         formData = null;
+                                        route = '';
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -529,11 +616,11 @@
                 };
 
 
-                var form_edit = $('#form-aceptar-sol');
+                var form_edit = $('#form-aceptar-sol-libre');
                 var rules_edit = {
-                    sala_seleccionada: {required: true}
+                    aula: {required: true}
                 };
-                FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
+                FormValidationMd.init(form_edit, rules_edit, false, createPermissionsLib());
             });
             /*Fin aprobar solicitud LIBRE*/
 
@@ -542,13 +629,14 @@
             table.on('click', '.remove', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var dataTable = table.row($tr).data();
+
 
                 $('#modal-reprobar-sol').modal('toggle');
                 var createPermissions = function () {
 
                     return {
                         init: function () {
+                            var dataTable = table.row($tr).data();
                             var route = '{{ route('espacios.academicos.evalsol.reprobarSol') }}';
                             var type = 'POST';
                             var async = async || false;
@@ -574,6 +662,7 @@
                                         $('#form-reprobar-sol')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
                                         formData = null;
+                                        route = '';
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -603,12 +692,12 @@
                 $tr = $(this).closest('tr');
                 var dataTable = tableLibre.row($tr).data();
 
-                $('#modal-reprobar-sol').modal('toggle');
+                $('#modal-reprobar-sol-libre').modal('toggle');
                 var createPermissionsLibre = function () {
 
                     return {
                         init: function () {
-                            var route = '{{ route('espacios.academicos.evalsol.reprobarSolLibre') }}';
+                            var route = '{{ route('espacios.academicos.evalsol.reprobarSol') }}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
@@ -629,10 +718,11 @@
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         tableLibre.ajax.reload();
-                                        $('#modal-reprobar-sol').modal('hide');
-                                        $('#form-reprobar-sol')[0].reset(); //Limpia formulario
+                                        $('#modal-reprobar-sol-libre').modal('hide');
+                                        $('#form-reprobar-sol-libre')[0].reset(); //Limpia formulario
                                         UIToastr.init(xhr, response.title, response.message);
                                         formData = null;
+                                        route = '';
                                     }
                                 },
                                 error: function (response, xhr, request) {
@@ -645,7 +735,7 @@
                         }
                     }
                 };
-                var form_edit = $('#form-reprobar-sol');
+                var form_edit = $('#form-reprobar-sol-libre');
                 var rules_edit = {
                     anotacion: {
                         minlength: 5,

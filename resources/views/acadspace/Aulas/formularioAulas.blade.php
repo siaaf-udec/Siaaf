@@ -196,9 +196,9 @@
             columns = [
                 //Carga los datos que ha traido el control
                 {data: 'DT_Row_Index'},
-                {data: 'PK_SAL_id_sala', name: 'id_documento', "visible": false},
-                {data: 'SAL_nombre_sala', name: 'Nombre Sala'},
-                {data: 'SAL_nombre_espacio', name: 'Nombre Espacio'},
+                {data: 'PK_SAL_Id_Sala', name: 'id_documento', "visible": false},
+                {data: 'SAL_Nombre_Sala', name: 'Nombre Sala'},
+                {data: 'SAL_Nombre_Espacio', name: 'Nombre Espacio'},
 
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
@@ -223,7 +223,7 @@
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
                 console.log(dataTable.id);
-                var route = '{{ route('espacios.academicos.aulas.destroy') }}' + '/' + dataTable.PK_SAL_id_sala;
+                var route = '{{ route('espacios.academicos.aulas.destroy') }}' + '/' + dataTable.PK_SAL_Id_Sala;
                 var type = 'DELETE';
                 var async = async || false;
 
@@ -269,8 +269,8 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('SAL_nombre_sala', $('input:text[name="nomb_sala"]').val());
-                        formData.append('SAL_nombre_espacio', $('select[name="espacios"]').val());
+                        formData.append('SAL_Nombre_Sala', $('input:text[name="nomb_sala"]').val());
+                        formData.append('SAL_Nombre_Espacio', $('select[name="espacios"]').val());
 
                         $.ajax({
                             url: route,

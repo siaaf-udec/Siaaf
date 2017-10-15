@@ -2,6 +2,11 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- daterange -->
     <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -15,13 +20,17 @@
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
+    {{--Toast--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+
+
+
 @endpush
 
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Solicitudes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th-list', 'title' => 'Mis Solicitudes'])
             <div class="clearfix">
             </div>
             <br>
@@ -62,7 +71,8 @@
 
 
 @push('plugins')
-
+    {{--MOMENT--}}
+    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -86,6 +96,15 @@
             type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -109,15 +128,15 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_software}}</td>
+                <td>@{{SOL_Software}}</td>
             </tr>
             <tr>
                 <td>Sala asignada:</td>
-                <td>@{{FK_SOL_id_sala}}</td>
+                <td>@{{FK_SOL_Id_Sala}}</td>
             </tr>
             <tr>
                 <td>Observacion:</td>
-                <td>@{{coment.COM_comentario}}</td>
+                <td>@{{coment.COM_Comentario}}</td>
             </tr>
         </table>
     </script>
@@ -131,12 +150,12 @@
             var table, url, columns;
 
             table = $('#art-table-ajax');
-            url = "{{ route('espacios.academicos.espacad.data') }}";
+            url = "{{ route('espacios.academicos.solacad.data') }}";
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_nucleo_tematico', name: 'Nucleo tematico'},
-                {data: 'SOL_cant_estudiantes', name: 'Estudiantes'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'estado', name: 'Estado'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
@@ -167,12 +186,12 @@
             });
             $(".create").on('click', function (e) {
                 e.preventDefault();
-                var route = '{{ route('espacios.academicos.espacad.create') }}';
+                var route = '{{ route('espacios.academicos.solacad.crearGrupal') }}';
                 $(".content-ajax").load(route);
             });
             $(".createLib").on('click', function (e) {
                 e.preventDefault();
-                var route = '{{ route('espacios.academicos.espacad.createlib') }}';
+                var route = '{{ route('espacios.academicos.solacad.crearLibre') }}';
                 $(".content-ajax").load(route);
             });
         });

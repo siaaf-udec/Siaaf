@@ -53,11 +53,11 @@
     <table class="table">
         <tr>
             <td>Full name:</td>
-            <td>@{{SOL_guia_practica}}</td>
+            <td>@{{SOL_Guia_Practica}}</td>
         </tr>
         <tr>
             <td>Email:</td>
-            <td>@{{SOL_software}}</td>
+            <td>@{{SOL_Software}}</td>
         </tr>
         <tr>
             <td>Comentario:</td>
@@ -86,8 +86,8 @@
                     "defaultContent": '<a href="javascript:;" class="btn blue" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
                 },
                 {data: 'PK_SOL_id_solicitud', name: 'id'},
-                {data: 'SOL_guia_practica', name: 'Nucleo'},
-                {data: 'SOL_software', name: 'Guia'},
+                {data: 'SOL_Guia_Practica', name: 'Nucleo'},
+                {data: 'SOL_Software', name: 'Guia'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'updated_at', name: 'updated_at'}
             ]

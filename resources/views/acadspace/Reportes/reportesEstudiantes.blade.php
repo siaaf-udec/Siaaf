@@ -1,15 +1,14 @@
-﻿{{--'css/styleAcadSpace.css.css'--}}
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title>{{ env('APP_NAME') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all" />
     <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     {{-- BEGIN FAVICONS --}}
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicons/apple-icon-57x57.png') }}">
-    <link rel="apple-touchicon" sizes="60x60" href="{{ asset('assets/favicons/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicons/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicons/apple-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicons/apple-icon-76x76.png') }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicons') }}/apple-icon-114x114.png">
@@ -25,17 +24,6 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('assets/favicons') }}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <style type="text/css">
-        h1.uppercase
-        {
-            text-transform: lowercase;
-        }
-
-        h1.uppercase:first-letter
-        {
-            text-transform: uppercase;
-        }
-    </style>
     {{-- ENDS FAVICONS --}}
 </head>
 <body>
@@ -56,7 +44,7 @@
     <div id="details" class="clearfix">
         <div id="client">
             <div class="to">REPORTE GENERADO POR:</div>
-            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Humanos' }}</h2>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Auxliar de Apoyo Academico' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
             <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
@@ -68,15 +56,13 @@
             <div>
                 <button onClick="window.print()" >Imprimir</button>
             </div>
-            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportEst',['sala' => $lab, 'fech' => $code]) }}">
+            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportEst') }}">
                     <i class="fa fa-download">
                     </i>Descargar reporte
                 </a>
             </div>--}}
         </div>
     </div>
-
-    <h1 ALIGN="center">ESTUDIANTES QUE INGRESARON A {{$lab}} ENTRE {{$fech1}} Y {{$fech2}}</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
@@ -90,51 +76,51 @@
         <tr>
             <td class="no">{{$cont++}}</td>
             <td class="unit">{{'INGENIERIA DE SISTEMAS'}}</td>
-            <td class="unit" align="center">{{$totSistemasGrup}}</td>
-            <td class="unit" align="center">{{$totSistemasLibre}}</td>
-            <td class="unit" align="center">{{$totSistemasGrup+$totSistemasLibre}}</td>
+            <td class="unit">{{$totSistemasGrup}}</td>
+            <td class="unit">{{$totSistemasLibre}}</td>
+            <td class="unit">{{$totSistemasGrup+$totSistemasLibre}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit" align="center">{{'INGENIERIA AMBIENTAL'}}</td>
-            <td class="unit" align="center">{{$totAmbientalGrup}}</td>
-            <td class="unit" align="center">{{$totAmbientalLibre}}</td>
-            <td class="unit" align="center">{{$totAmbientalGrup+$totAmbientalLibre}}</td>
+            <td class="unit">{{'INGENIERIA AMBIENTAL'}}</td>
+            <td class="unit">{{$totAmbientalGrup}}</td>
+            <td class="unit">{{$totAmbientalLibre}}</td>
+            <td class="unit">{{$totAmbientalGrup+$totAmbientalLibre}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit" align="center">{{'INGENIERIA AGRONOMICA'}}</td>
-            <td class="unit" align="center">{{$totAgronomicaGrup}}</td>
-            <td class="unit" align="center">{{$totAgronomicaLibre}}</td>
-            <td class="unit" align="center">{{$totAgronomicaLibre+$totAgronomicaGrup}}</td>
+            <td class="unit">{{'INGENIERIA AGRONOMICA'}}</td>
+            <td class="unit">{{$totAgronomicaGrup}}</td>
+            <td class="unit">{{$totAgronomicaLibre}}</td>
+            <td class="unit">{{$totAgronomicaLibre+$totAgronomicaGrup}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
             <td class="unit">{{'ADMINISTRACION'}}</td>
-            <td class="unit" align="center">{{$totAdminGrup}}</td>
-            <td class="unit" align="center">{{$totAdminLibre}}</td>
-            <td class="unit" align="center">{{$totAdminLibre+$totAdminGrup}}</td>
+            <td class="unit">{{$totAdminGrup}}</td>
+            <td class="unit">{{$totAdminLibre}}</td>
+            <td class="unit">{{$totAdminLibre+$totAdminGrup}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
             <td class="unit">{{'CONTADURIA'}}</td>
-            <td class="unit" align="center">{{$totContaduriaGrup}}</td>
-            <td class="unit" align="center">{{$totContaduriaLibre}}</td>
-            <td class="unit" align="center">{{$totContaduriaLibre+$totContaduriaGrup}}</td>
+            <td class="unit">{{$totContaduriaGrup}}</td>
+            <td class="unit">{{$totContaduriaLibre}}</td>
+            <td class="unit">{{$totContaduriaLibre+$totContaduriaGrup}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
             <td class="unit">{{'PSICOLOGIA'}}</td>
-            <td class="unit" align="center">{{$totPiscologiaaGrup}}</td>
-            <td class="unit" align="center">{{$totPiscologiaLibre}}</td>
-            <td class="unit" align="center">{{$totPiscologiaLibre+$totPiscologiaaGrup}}</td>
+            <td class="unit">{{$totPiscologiaaGrup}}</td>
+            <td class="unit">{{$totPiscologiaLibre}}</td>
+            <td class="unit">{{$totPiscologiaLibre+$totPiscologiaaGrup}}</td>
         </tr>
         <tr>
             <td class="no"></td>
             <td class="unit">{{'TOTAL'}}</td>
             <td class="unit" align="center">{{$totPiscologiaaGrup+$totContaduriaGrup+$totAdminGrup+$totAgronomicaGrup+$totAmbientalGrup+$totSistemasGrup}}</td>
-            <td class="unit" align="center">{{$totPiscologiaLibre+$totContaduriaLibre+$totAdminLibre+$totAgronomicaLibre+$totAmbientalLibre+$totSistemasLibre}}</td>
-            <td class="unit" align="center">{{$totalTot}}</td>
+            <td class="unit">{{$totPiscologiaLibre+$totContaduriaLibre+$totAdminLibre+$totAgronomicaLibre+$totAmbientalLibre+$totSistemasLibre}}</td>
+            <td class="unit">{{$totalTot}}</td>
         </tr>
     </table>
     <br><br>

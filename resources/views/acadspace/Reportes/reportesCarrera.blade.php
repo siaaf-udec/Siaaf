@@ -1,3 +1,4 @@
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +38,7 @@
         <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
         <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
     </div>
-    </div>
+
 </header>
 <main>
     <div id="details" class="clearfix">
@@ -49,49 +50,67 @@
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
-            <div class="date">Total: {{$totalTot}} Docentes</div>
+            <div class="date">Total: {{$totalTot}} Estudiantes</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
                 <button onClick="window.print()" >Imprimir</button>
             </div>
-            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportDoc') }}">
+            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportEst') }}">
                     <i class="fa fa-download">
                     </i>Descargar reporte
                 </a>
             </div>--}}
         </div>
     </div>
-    <h1>DOCENTES QUE INGRESARON A {{$aula}} - {{$lab}} ENTRE {{$fech1}} Y {{$fech2}}</h1>
-
+    <div align="center">
+        <h1>ESTUDIANTES DE {{$carrera}} QUE INGERSARON
+            A LABORATORIOS ENTRE {{$fech1}} Y {{$fech2}}</h1>
+    </div>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
             <th class="no" >#</th>
-            <th class="unit"><b>CÉDULA</b></th>
-            <th class="unit"><b>FECHA</b></th>
-            <th class="unit"><b>MATERIA</b></th>
-            <th class="unit"><b># ESTUDIANTES</b></th>
-
+            <th class="unit"><b>ESPACIO ACADEMICO</b></th>
+            <th class="unit"><b>PRACTICA GRUPAL</b></th>
+            <th class="unit"><b>PRACTICA LIBRE</b></th>
+            <th class="unit"><b>TOTAL</b></th>
         </tr>
         </thead>
-        @foreach($docentes as $docente)
-            <tbody>
-            <tr>
-                <td class="no">{{$cont++}}</td>
-                <td class="desc">{{$docente->ASIS_Id_Identificacion}}</td>
-                <td class="desc">{{$docente->created_at}}</td>
-                <td class="desc">{{$docente->ASIS_Nombre_Materia}}</td>
-                <td class="desc">{{$docente->ASIS_Cant_Estudiantes}}</td>
-
-            </tr>
-            @endforeach
-            </tbody>
-
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'AULAS DE COMPUTO'}}</td>
+            <td class="unit">{{$sistGrup}}</td>
+            <td class="unit">{{$sistLibre}}</td>
+            <td class="unit">{{$sistGrup+$sistLibre}}</td>
+        </tr>
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'LABORATORIO PSICOLOGIA'}}</td>
+            <td class="unit">{{$psicGrup}}</td>
+            <td class="unit">{{$psicLibre}}</td>
+            <td class="unit">{{$psicGrup+$psicLibre}}</td>
+        </tr>
+        <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'CIENCIAS AGROPECUARIAS Y AMBIENTALES'}}</td>
+            <td class="unit">{{$ciencGrup}}</td>
+            <td class="unit">{{$ciencLibre}}</td>
+            <td class="unit">{{$ciencGrup+$ciencLibre}}</td>
+        </tr>
+        <tr>
+            <td class="no"></td>
+            <td class="unit">{{'TOTAL'}}</td>
+            <td class="unit" align="center">{{$sistGrup+$psicGrup+$ciencGrup}}</td>
+            <td class="unit">{{$sistLibre+$psicLibre+$ciencLibre}}</td>
+            <td class="unit">{{$totalTot}}</td>
+        </tr>
     </table>
-    <div id="thanks">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
+    <br><br>
+    <div id="thanks" align="center">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
 
 </main>
-</body>
-</html>
 
+</body>
+
+</html>

@@ -2,33 +2,55 @@
 
 @section('page-title', 'Control Estudiante:')
 @push('styles')
-<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet"
+          type="text/css"/>
+    {{--TOAST--}}
+    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de solicitud'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Registro de asistencia estudiantes'])
 
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.est.store']]) !!}
+                    {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
 
                     <div class="form-body">
+                        {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                                        ['help' => 'Digita el codigo','icon'=>'fa fa-credit-card'] ) !!}
 
-                        {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                         ['help' => 'Digita el codigo','icon'=>'fa fa-desktop'] ) !!}
+                        {!! Field::select('SOL_carrera',
+                                          ['1' => 'Ingenieria de Sistemas', '2' => 'Ingenieria Ambiental',
+                                          '3' => 'Ingenieria Agronomica', '4' => 'Administracion',
+                                          '5' => 'Psicologia', '6' => 'Contaduria','7' => 'Otro'],
+                                          null,
+                                          [ 'label' => 'Programa :']) !!}
 
 
-                        {!! Field:: text('nombre',null,['label'=>'Nombre estudiante','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                         ['help' => 'Digita tu nombre.','icon'=>'fa fa-user']) !!}
+                        {!! Field::select('SOL_laboratorios',
+                                          ['Aulas de Computo' => 'Aulas de Computo',
+                                          'Laboratorio psicologia' => 'Laboratorio psicologia',
+                                          'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                          null,
+                                          [ 'label' => 'Espacio academico:']) !!}
 
+                        {!! Field::select(
+                                                           'aula', null,
+                                                           ['name' => 'aula']) !!}
+                        <br>
 
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
-                                    {{ Form::reset('Cancelar', ['class' => 'btn btn-danger']) }}
-
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                                 </div>
                             </div>
                         </div>
@@ -44,125 +66,120 @@
 @endsection
 
 @push('plugins')
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>@endpush
+    {{--JQUERY--}}
+    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
+            type="text/javascript"></script>
+    {{--TOAST--}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}"
+            type="text/javascript"></script>
+    {{--Selects--}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
+            type="text/javascript"></script>
+@endpush
+
 @push('functions')
-<script type="text/javascript">
-    var FormValidationMd = function() {
+    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
+    </script>
 
-        var handleValidation = function() {
+    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+    <!-- Estandar Mensajes -->
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <!-- Estandar Datatable -->
+    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+    <script>
 
-            var form1 = $('#form_material');
-            var error1 = $('.alert-danger', form1);
-            var success1 = $('.alert-success', form1);
-
-            form1.validate({
-                errorElement: 'span',
-                errorClass: 'help-block help-block-error',
-                focusInvalid: true,
-                ignore: "",
-                messages: {
-                    'tags[]': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    },
-                    'radios': {
-                        required: 'Por favor marca una opción',
-                        minlength: jQuery.validator.format("Al menos {0} items deben ser seleccionados"),
-                    }
-                },
-                rules: {
-                    codigo: {
-                        required: true
-                    },
-                    nombre: {
-                        required: true
-                    }
-                },
-
-                invalidHandler: function(event, validator) { //display error alert on form submit
-                    success1.hide();
-                    error1.show();
-                    App.scrollTo(error1, -200);
-                },
-
-                errorPlacement: function(error, element) {
-                    if (element.is(':checkbox')) {
-                        error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                    } else if (element.is(':radio')) {
-                        error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                    } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
-                    }
-                },
-
-                highlight: function(element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function(element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-
-                success: function(label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function(form) {
-                    success1.show();
-                    error1.hide();
+        jQuery(document).ready(function () {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                allowClear: true,
+                placeholder: "Seleccione",
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
                 }
             });
-        }
-
-        return {
-            init: function() {
-                handleValidation();
-            }
-        };
-    }();
-
-            @if(Session::has('message'))
-    var type = "{{Session::get('alert-type','info')}}"
-    switch (type) {
-        case 'success':
-            toastr.options.closeButton = true;
-            toastr.success("{{Session::get('message')}}", 'Registro exitoso:');
-            break;
-        case 'info':
-            toastr.options.closeButton = true;
-            toastr.info("{{Session::get('message')}}", 'Registro completo:');
-            break;
-    }
-            @endif
-
-    var ComponentsBootstrapMaxlength = function () {
-
-            var handleBootstrapMaxlength = function() {
-                $("input[maxlength], textarea[maxlength]").maxlength({
-                    limitReachedClass: "label label-danger",
-                    alwaysShow: true
+            moment.locale('es');
+            $("#SOL_laboratorios").change(function (event) {
+                /*Cargar select de aulas*/
+                $.get("cargarSalasAsitencia/" + event.target.value + "", function (response) {
+                    $("#aula").empty();
+                    $("#aula").append("<option value=''></option>");
+                    for (i = 0; i < response.length; i++) {
+                        $("#aula").append("<option value='" + response[i].PK_SAL_Id_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>")
+                    }
                 });
-            }
+            });
+            /*VALIDACIONES*/
+            var wizard = $('#form_wizard_1');
+            /*Crear Solicitud*/
+            var createUsers = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('espacios.academicos.asist.regisAsistEst') }}';
+                        var type = 'POST';
+                        var async = async || false;
 
-            return {
-                //main function to initiate the module
-                init: function () {
-                    handleBootstrapMaxlength();
+                        var formData = new FormData();
+                        formData.append('ASIS_Id_Carrera', $('select[name="SOL_carrera"]').val());
+                        formData.append('ASIS_Id_Identificacion', $('input:text[name="codigo"]').val());
+                        formData.append('ASIS_Espacio_Academico', $('select[name="SOL_laboratorios"]').val());
+                        formData.append('ASIS_Espacio', $('select[name="aula"]').val());
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    $('#form_sol_create')[0].reset(); //Limpia formulario
+                                    $('#aula').val('').trigger('change');
+                                    $("#SOL_carrera").val('').trigger('change');
+                                    $("#SOL_laboratorios").val('').trigger('change');
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
                 }
             };
 
-        }();
-    jQuery(document).ready(function() {
-        FormValidationMd.init();
-        ComponentsBootstrapMaxlength.init();
-    });
+            var form_edit = $('#form_sol_create');
+            var rules_edit = {
+                codigo: {required: true, number: true, minlength: 9, maxlength: 9},
+                SOL_carrera: {required: true},
+                SOL_laboratorios: {required: true},
+                aula: {required: true}
+            };
+            FormValidationMd.init(form_edit, rules_edit, false, createUsers());
 
-</script>
+        });
+
+    </script>
 @endpush
+

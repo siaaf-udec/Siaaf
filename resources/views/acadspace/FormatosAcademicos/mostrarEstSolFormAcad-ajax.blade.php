@@ -98,8 +98,8 @@
         columns = [
             //Carga los datos que ha traido el control
             {data: 'DT_Row_Index'},
-            {data: 'PK_FAC_id_solicitud', name: 'id_documento', "visible": false},
-            {data: 'FAC_titulo_doc', name: 'Formato Academico'},
+            {data: 'PK_FAC_Id_Formato', name: 'id_documento', "visible": false},
+            {data: 'FAC_Titulo_Doc', name: 'Formato Academico'},
             {data: 'created_at', name: 'Fecha'},
             {data: 'estado', name: 'Estado'},
             {
@@ -126,7 +126,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.location.href = '{{ route('espacios.academicos.descargarArchivo') }}' + '/' + dataTable.PK_FAC_id_solicitudF;
+                window.location.href = '{{ route('espacios.academicos.descargarArchivo') }}' + '/' + dataTable.PK_FAC_Id_FormatoF;
             });
         });
 
