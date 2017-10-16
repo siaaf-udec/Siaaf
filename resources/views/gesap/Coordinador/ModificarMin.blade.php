@@ -9,9 +9,9 @@
         @foreach ($anteproyecto as $anteproyecto)
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-modificar-min']) !!} 
             {!! Field::hidden('_method', 'PUT') !!}
-            {!! Field::hidden('PK_radicacion', $anteproyecto->PK_RDCN_idRadicacion) !!}
+            {!! Field::hidden('PK_radicacion', $anteproyecto->PK_RDCN_IdRadicacion) !!}
         
-            {!! Field::hidden('PK_proyecto', $anteproyecto->PK_NPRY_idMinr008) !!}
+            {!! Field::hidden('PK_proyecto', $anteproyecto->PK_NPRY_IdMinr008) !!}
         
         
         
@@ -90,7 +90,7 @@
                                     @if(isset($estudiante12[0]))
                                 @foreach ($estudiante12 as $estu1)
                                     @if( strnatcasecmp ($estu1->NCRD_Cargo,"ESTUDIANTE 1")==0) 
-                                        {!! Field::hidden('PK_estudiante1',  $estu1->PK_NCRD_idCargo ) !!}    
+                                        {!! Field::hidden('PK_estudiante1',  $estu1->PK_NCRD_IdCargo ) !!}    
                                         {!! Field::select('estudiante1',$estudiantes,$estu1->Cedula,[ 'label' => ' Estudiante 1', 'required'])!!}
                                     @endif
                                 @endforeach
@@ -102,7 +102,7 @@
 @if(isset($estudiante12[1]))
                                 @foreach ($estudiante12 as $estu2)
                                     @if( strnatcasecmp($estu2->NCRD_Cargo,"ESTUDIANTE 2")==0) 
-                                        {!! Field::hidden('PK_estudiante2', $estu2->PK_NCRD_idCargo) !!}
+                                        {!! Field::hidden('PK_estudiante2', $estu2->PK_NCRD_IdCargo) !!}
                                         {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),$estu2->Cedula,[ 'label' => 'Estudiante 2', 'required']) !!}
                                     @endif
                                 @endforeach
@@ -368,7 +368,7 @@
         var messages = {};
         
         FormWizard.init(wizard, form, rules, messages, createProject());
-        $('.#link_back').on('click', function (e) {
+        $('#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('min.index.ajax') }}';
             $(".content-ajax").load(route);

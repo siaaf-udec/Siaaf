@@ -13,9 +13,11 @@ class CreateDocumentosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('tbl_Documentos', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_Documentos', function (Blueprint $table) {
             $table->increments('PK_DMNT_IdProyecto');
-            $table->string('DMNT_Estado',30);
+            $table->String('DMNT_Nombre',50);
+            $table->String('DMNT_Descripcion',100);
+            $table->String('DMNT_Archivo')->nullable();
             $table->integer('FK_TBL_Proyecto_Id')->unsigned();
             $table->foreign('FK_TBL_Proyecto_Id')->references('PK_PRYT_IdProyecto')->on('TBL_Proyecto')->onDelete('cascade');
             $table->timestamps();

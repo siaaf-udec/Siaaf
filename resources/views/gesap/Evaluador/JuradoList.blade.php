@@ -201,7 +201,7 @@
 
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    
     <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
@@ -317,6 +317,7 @@ jQuery(document).ready(function () {
                searchable: false,
                exportable: false,
                printable: false,
+            responsivePriority:2,
                className: '',   
                render: function ( data, type, full, meta ) {
                  return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> Observaciones</i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i>Concepto Final</a>';
@@ -424,7 +425,7 @@ jQuery(document).ready(function () {
                     var formData = new FormData();
                     formData.append('observacion', $('#observacion').val());
                     formData.append('user', $('input[name="user"]').val());
-                    formData.append('proyecto', $('input[name="PK_anteproyecto"]').val());
+                    formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
                     var FileMin =  document.getElementById("Min");
                     if ($('#Min').get(0).files.length === 0) {
                         formData.append('Min', "Vacio");  
@@ -437,7 +438,6 @@ jQuery(document).ready(function () {
                     }else{
                         formData.append('Requerimientos', FileReq.files[0]);    
                     };
-
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },

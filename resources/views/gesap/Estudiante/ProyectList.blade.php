@@ -6,6 +6,7 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" /><link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Dashboard')
@@ -54,6 +55,9 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+    <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -154,19 +158,16 @@ jQuery(document).ready(function () {
                             return "No hay asignado"
                     },className:'none',searchable: true},
            {data: 'NPRY_Estado',searchable: true},
-            {data:'NPRY_Estado',
+            {data:'action',
              className:'',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
             exportable: false,
             printable: false,
+            responsivePriority:2,
             render: function ( data, type, full, meta ) {
-                var str = new String;
-                str=full.NPRY_Estado;
-                var str = new String;
-                str2="APROBADO";
-                if(full.anteproyecto.NPRY_Estado=="APROBADO"){
+                if(full.anteproyecto.proyecto!=null){
                     return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon create"><i class="icon-eye"></i>Actividades</a>';
                 }else{
                     return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';

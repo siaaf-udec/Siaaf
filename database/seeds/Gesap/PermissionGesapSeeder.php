@@ -24,5 +24,6 @@ class PermissionGesapSeeder extends Seeder
             ['name'=>'See_Observations_Gesap','display_name'=>'Ver Observaciones','description'=>'Ver las observaciones realizadas al proyecto en especifico','module_id'=>'7'],
             ['name'=>'Update_Final_Project_Gesap','display_name'=>'Subir Archivos de Proyecto','description'=>'Subida de archivos para el proyecto final','module_id'=>'7']
         ]);
+        
     }
 }

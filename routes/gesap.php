@@ -108,6 +108,21 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
     Route::get('evaluar/ver/director/ajax', [
     'as' => 'anteproyecto.index.directorList.ajax',
     'uses' => $controller.'EvaluatorController@directorAjax'
+    ]); 
+    
+    Route::get('evaluar/aprobar/{id}', [
+    'as' => 'proyecto.aprobado',
+    'uses' => $controller.'EvaluatorController@approved'
+    ]);
+    
+    Route::post('actividades/new', [
+        'as' => 'proyecto.nueva.actividad',
+        'uses' => $controller.'EvaluatorController@storeActividad'
+    ]);
+    
+    Route::delete('actividades/{id?}', [
+        'uses' => $controller.'EvaluatorController@destroyActivity',
+        'as' => 'actividad.destroy'
     ]);
 
 
@@ -128,12 +143,17 @@ Route::group(['middleware' => ['role:Student_Gesap']], function () use ($control
     ]);
 });
 Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
-    Route::get('actividades/{id}', [
-        'as' => 'proyecto.actividades',
-        'uses' => $controller.'StudentController@actividad'
-    ]);
+    
+    
+  
 });
 /*DATATABLES RUTAS*/
+
+Route::get('actividades/{id}', [
+        'as' => 'proyecto.actividades',
+        'uses' => $controller.'StudentController@actividad'
+    ]); 
+
 Route::get('estudiante', [
     'as' => 'anteproyecto.studentList',
     'uses' => $controller.'StudentController@studentList'

@@ -13,6 +13,7 @@ use Yajra\DataTables\DataTables;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
+use Carbon\Carbon;
 
 use App\Http\Controllers\Controller;
 
@@ -26,6 +27,8 @@ use App\Container\gesap\src;
 use App\Container\gesap\src\Observaciones;
 use App\Container\gesap\src\CheckObservaciones;
 use App\Container\gesap\src\Respuesta;
+use App\Container\gesap\src\Proyecto;
+use App\Container\gesap\src\Documentos;
 use App\Container\gesap\src\Conceptos;
 use App\Container\Users\Src\User;
 
@@ -56,7 +59,7 @@ class EvaluatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $jurado = Encargados::select('PK_NCRD_IdCargo')
-                        ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('proyecto'))
+                        ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('PK_anteproyecto'))
                         ->where('FK_Developer_User_Id', '=', $request->get('user'))
                         ->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
@@ -72,22 +75,30 @@ class EvaluatorController extends Controller
             $checkobservacion= new CheckObservaciones();
             $checkobservacion->FK_TBL_Observaciones_Id=$observacion->PK_BVCS_IdObservacion;
             $checkobservacion->save();
-          
-            if ($request->get('Min')=="Vacio" || $request->get('Requerimientos')=="Vacio") {
+            $date = Carbon::now();
+            $date= $date->format('his');
+            
+            if ($request->get('Min')!="Vacio" || $request->get('Requerimientos')!="Vacio") {
                 $respuesta=new Respuesta();
                 if ($request->get('Min')=="Vacio") {
                     $respuesta->RPST_RMin="NO FILE";
                 } else {
-                    $respuesta->RPST_RMin=$request['Min']->getClientOriginalName();
+                    $nombre = $date."_".$request['Min']->getClientOriginalName();
+                    $respuesta->RPST_RMin=$nombre;
+                    \Storage::disk('local')->put($nombre, \File::get($request->file('Min')));
                 }
-                if ($request->get('Requerimientos')!="Vacio") {
-                    $respuesta->RPST_Requerimientos=$request['Requerimientos']->getClientOriginalName();
-                } else {
+                if ($request->get('Requerimientos')=="Vacio") {
                     $respuesta->RPST_Requerimientos="NO FILE";
+                } else {
+                    $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
+                    $respuesta->RPST_Requerimientos=$nombre;
+                    \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
+                    
                 }
                 $respuesta->FK_TBL_Observaciones_Id=$observacion->PK_BVCS_IdObservacion;
                 $respuesta->save();
             }
+        
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Observacion Guardada correctamente.'
@@ -151,7 +162,7 @@ class EvaluatorController extends Controller
                     'CNPT_Tipo'    =>"Anteproyecto",
                     'FK_TBL_Encargado_Id'=>$jurado->PK_NCRD_IdCargo
                 ]);
-                if ($encargado2!=null) {
+                if ($encargado2 != null) {
                     if ($request->get('concepto')!=$encargado2->CNPT_Concepto) {
                         $anteproyecto->NPRY_Estado="PENDIENTE";
                         $anteproyecto->save();
@@ -159,7 +170,26 @@ class EvaluatorController extends Controller
                             '¡Registro exitoso!',
                             'Los conceptos no estan deacuerdo.'
                         );
+                    } else {
+                        if ($request->get('concepto')==1 && $encargado2->CNPT_Concepto==1) {
+                            $anteproyecto->NPRY_Estado="APROBADO";
+                        } else {
+                            if ($request->get('concepto')==2  && $encargado2->CNPT_Concepto==2) {
+                                $anteproyecto->NPRY_Estado="APLAZADO";
+                            } else {
+                                if ($request->get('concepto')==3 ) {
+                                    $anteproyecto->NPRY_Estado="RECHAZADO";
+                                } else {
+                                    $anteproyecto->NPRY_Estado="COMPLETADO";
+                                }
+                            }
+                        }
                     }
+                    $anteproyecto->save();
+                    return AjaxResponse::success(
+                        '¡Actualizacion exitosa!',
+                        'El concepto se ha actualizado correctamente.'
+                    );
                 }
                 $anteproyecto->NPRY_Estado="EN REVISION";
                 $anteproyecto->save();
@@ -216,6 +246,62 @@ class EvaluatorController extends Controller
         
     }
     
+     /*
+     * Función de almacenamiento en la base de datos de actividades para el estudiante
+     *
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeActividad(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $actividad=new Documentos();
+            $actividad->DMNT_Nombre= $request->get('nombre');
+            $actividad->DMNT_Descripcion= $request->get('descripcion');
+            $actividad->FK_TBL_Proyecto_Id= $request->get('PK_proyecto');
+            $actividad->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Nueva actividad creada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    /**
+     * Funcion de eliminacion de activides de la base de datos
+     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function destroyActivity($id, Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+ 
+            $actividad = Documentos::findOrFail($id);
+            $actividad->delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+        
+    }
+    
+    
+    
+    
     /*
      * Listado de proyectos asignados como director
      *
@@ -266,6 +352,52 @@ class EvaluatorController extends Controller
         );
     }
     
+    public function approved($id, Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $proyecto= new Proyecto();
+            $proyecto->FK_TBL_Anteproyecto_Id=$id;
+            $proyecto->save();
+            
+            
+            $proyecto->documentos()->saveMany([
+                new Documentos(['DMNT_Nombre'=>'Carta de Aval del director de proyecto','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marcos de Referencia','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Modelado de Sistema ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Desarrollo','DMNT_Descripcion'=>'(Codigo,Programacion)']),
+                new Documentos(['DMNT_Nombre'=>'Registro  de Pruebas','DMNT_Descripcion'=>'CALISOFT']),
+                new Documentos(['DMNT_Nombre'=>'Artículo de propuesta','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Artículo de proyecto','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Manual Técnico','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Manual de Usuario','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Libro','DMNT_Descripcion'=>'Min 80 hojas']),
+                new Documentos(['DMNT_Nombre'=>'Repositorio DICTUM ','DMNT_Descripcion'=>'Formato AAAr113_V1'])
+            ]);
+            
+            
+            
+            
+            
+            
+            
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Proyecto activado correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+        
+    }
+    
+    
+    
+    
+    
     /*
     * Consulta de observaciones de proyecto especifico
     *
@@ -301,7 +433,7 @@ class EvaluatorController extends Controller
                         ->where('NCRD_Cargo', '=', "Director")
                         ->where('FK_Developer_user_Id', '=', $request->user()->id)
                         ->with(['anteproyecto' => function ($proyecto) {
-                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2']);
+                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2','proyecto']);
                         }])
                         ->get();
         return Datatables::of($anteproyectos)

@@ -6,6 +6,9 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" /><link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+
 @endpush
 
 @section('title', '| Dashboard')
@@ -55,10 +58,17 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+ <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
+    
 jQuery(document).ready(function () {
     var table, url;
     table = $('#lista-anteproyecto');
@@ -161,7 +171,18 @@ jQuery(document).ready(function () {
             orderable: false,
             exportable: false,
             printable: false,
-            defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>',
+            responsivePriority:2,
+            render: function ( data, type, full, meta ) {
+                if(full.anteproyecto.NPRY_Estado=="APROBADO"){
+                    if(full.anteproyecto.proyecto==null){
+                        return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-eye"></i>Activar actividades</a>';
+                    }else{
+                        return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-eye"></i>Actividades</a>';
+                    }
+                }else{
+                    return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';
+                }
+                 }, 
 
             
             }
@@ -198,6 +219,69 @@ table = table.DataTable();
             $(".content-ajax").load(route);
         });
     });
+    
+    table.on('click', '#proyecto', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+        var route = '/gesap/evaluar/aprobar/'+O.anteproyecto.PK_NPRY_IdMinr008;
+        var type = 'GET';
+        var async = async || false;
+        swal({
+            title: "¿Esta seguro?",
+            text: "Esta aprobando la continuacion del anteproyecto a un proyecto",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "De acuerdo",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: true,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    url: route,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+                swal.close();
+            } else {
+                swal("Cancelado", "No se eliminó ningun proyecto", "error");
+            }
+        });
+    });
+    
+    table.on('click', '#actividades', function (e) {
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var O = table.row($tr).data();
+	    $.ajax({
+            type: "GET",
+            url: '',
+            dataType: "html",
+        }).done(function (data) {
+            route = '/gesap/actividades/'+O.anteproyecto.PK_NPRY_IdMinr008;
+            $(".content-ajax").load(route);
+        });
+    });
+    
+    
     
 });
 </script>

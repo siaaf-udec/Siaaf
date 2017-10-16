@@ -225,6 +225,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
+                        responsivePriority:2,
                         defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
                     }
                 ],

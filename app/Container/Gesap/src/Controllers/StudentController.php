@@ -23,6 +23,7 @@ use App\Container\Overall\Src\Facades\UploadFile;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
+use App\Container\gesap\src\Documentos;
 use App\Container\gesap\src\Encargados;
 
 class StudentController extends Controller
@@ -51,9 +52,18 @@ class StudentController extends Controller
      */
     public function actividad($id, Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET')) {
+        if ($request->ajax() && $request->isMethod('GET')){
+            $anteproyecto=Anteproyecto::select('*')
+                    ->where('PK_NPRY_IdMinr008', '=', $id)
+                    ->with(['radicacion',
+                            'proyecto' => function ($proyecto) {
+                                $proyecto->with('documentos');
+                            }])
+                    ->get();
+            
             return view($this->path.'Actividades', [
-                'id' => $id
+                'id' => $id,
+                'anteproyecto' => $anteproyecto
             ]);
         }
         return AjaxResponse::fail(
@@ -61,6 +71,10 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    
+    
+    
+   
     
     /*
     * Consulta de proyectos con sus datos correspondientes asignados al usuario actual como estudiante
@@ -77,7 +91,7 @@ class StudentController extends Controller
                         })
                         ->where('FK_Developer_User_Id', '=', $request->user()->id)
                         ->with(['anteproyecto' => function ($proyecto) {
-                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2','conceptoFinal']);
+                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2','conceptoFinal','proyecto']);
                         }])
                         ->get();
         
