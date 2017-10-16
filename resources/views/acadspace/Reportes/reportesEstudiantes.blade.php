@@ -1,11 +1,11 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title>{{ env('APP_NAME') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all" />
-    <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all"/>
+    <link rel="stylesheet" href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}"
+          type="text/css"/>
     {{-- BEGIN FAVICONS --}}
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicons/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicons/apple-icon-60x60.png') }}">
@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicons') }}/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicons') }}/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicons') }}/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/favicons') }}/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/favicons') }}/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicons') }}/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicons') }}/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicons') }}/favicon-16x16.png">
@@ -35,8 +35,9 @@
         <h2 class="name">{{ env('APP_NAME') }}</h2>
         <div> Calle 14 con Avenida 15 <i class="fa fa-map-signs"></i></div>
         <div>Universidad de Cundinamarca - Ext. Facatativá <i class="fa fa-map-marker" aria-hidden="true"></i></div>
-        <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
-        <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
+        <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i></div>
+        <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i>
+        </div>
     </div>
 
 </header>
@@ -46,7 +47,9 @@
             <div class="to">REPORTE GENERADO POR:</div>
             <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Auxliar de Apoyo Academico' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
-            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
+            <div class="email"><a
+                        href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a>
+            </div>
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
@@ -54,19 +57,19 @@
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
-                <button onClick="window.print()" >Imprimir</button>
+                <button onClick="window.print()">Imprimir</button>
             </div>
-            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportEst') }}">
-                    <i class="fa fa-download">
-                    </i>Descargar reporte
-                </a>
-            </div>--}}
         </div>
+    </div>
+    <div align="center">
+        <h1>Estudiantes que ingresaron a {{$lab}}</h1>
+        <h1>entre {{$fech1}} y {{$fech2}}</h1>
+
     </div>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="no" >#</th>
+            <th class="no">#</th>
             <th class="unit"><b>CARRERA</b></th>
             <th class="unit"><b>PRACTICA GRUPAL</b></th>
             <th class="unit"><b>PRACTICA LIBRE</b></th>
@@ -118,7 +121,8 @@
         <tr>
             <td class="no"></td>
             <td class="unit">{{'TOTAL'}}</td>
-            <td class="unit" align="center">{{$totPiscologiaaGrup+$totContaduriaGrup+$totAdminGrup+$totAgronomicaGrup+$totAmbientalGrup+$totSistemasGrup}}</td>
+            <td class="unit"
+                align="center">{{$totPiscologiaaGrup+$totContaduriaGrup+$totAdminGrup+$totAgronomicaGrup+$totAmbientalGrup+$totSistemasGrup}}</td>
             <td class="unit">{{$totPiscologiaLibre+$totContaduriaLibre+$totAdminLibre+$totAgronomicaLibre+$totAmbientalLibre+$totSistemasLibre}}</td>
             <td class="unit">{{$totalTot}}</td>
         </tr>

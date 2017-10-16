@@ -129,7 +129,6 @@ class CalendarioController extends Controller
         $evento->CAL_Fecha_Ini = $start;
         $evento->CAL_Color = $back;
         $evento->CAL_Titulo = $title;
-        //$evento->fechaFin=$end;
 
         $evento->save();
     }

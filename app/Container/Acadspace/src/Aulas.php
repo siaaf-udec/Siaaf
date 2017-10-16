@@ -19,7 +19,4 @@ class Aulas extends Model
         'SAL_Nombre_Espacio'
     ];
     //
-    public function docente(){
-        return $this->hasOne(Docentes::class);
-    }
 }

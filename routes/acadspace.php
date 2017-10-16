@@ -52,7 +52,6 @@ Route::get('reportesDoc', function () {
 })->name('espacios.academicos.reportesDoc');
 
 
-
 /**RUTAS CALENDARIO**/
 Route::get('acadcalendar', [ //Cargar datatable en la vista de calendario
     'uses' => $controller . 'CalendarioController@index',
@@ -204,29 +203,27 @@ Route::group(['prefix' => 'formacad'], function () {
 /*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
 Route::group(['prefix' => 'report'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('index',[ //Pagina inicial y captura de rango de fechas
-        'uses' => $controller.'ReporteController@index',
+    Route::get('index', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@index',
         'as' => 'espacios.academicos.report.index'
     ]);
-    Route::get('cargarSalasReportes/{sala?}',[ //CARGAR SALAS
-        'uses' => $controller.'ReporteController@cargarSalasReportes',
+    Route::get('cargarSalasReportes/{sala?}', [ //CARGAR SALAS
+        'uses' => $controller . 'ReporteController@cargarSalasReportes',
         'as' => 'espacios.academicos.report.cargarSalasReportes'
     ]);
     Route::post('repDoc', [ //CREAR REPORTE DOCENTE
         'uses' => $controller . 'ReporteController@reporDocente',
-        'as'   => 'espacios.academicos.report.repDoc',
+        'as' => 'espacios.academicos.report.repDoc',
     ]);
-    Route::get('repEst',[ //Pagina inicial y captura de rango de fechas
-        'uses' => $controller.'ReporteController@repEst',
+    Route::get('repEst', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@repEst',
         'as' => 'espacios.academicos.report.indexPrueba'
     ]);
-    Route::post('cargarRepEst',[ //CREAR REPORTE
+    Route::post('cargarRepEst', [ //CREAR REPORTE
 
 
-
-
-'uses' => $controller . 'ReporteController@cargarRepEst',
-        'as'   => 'espacios.academicos.report.cargarRepEst',
+        'uses' => $controller . 'ReporteController@cargarRepEst',
+        'as' => 'espacios.academicos.report.cargarRepEst',
     ]);
 
 });
@@ -280,36 +277,36 @@ Route::group(['prefix' => 'incidente'], function () {
 /*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
 Route::group(['prefix' => 'report'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('index',[ //Pagina inicial y captura de rango de fechas
-        'uses' => $controller.'ReporteController@index',
+    Route::get('index', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@index',
         'as' => 'espacios.academicos.report.index'
     ]);
 
-    Route::get('indexEst',[ //Pagina inicial y captura de rango de fechas
-        'uses' => $controller.'ReporteController@repIndexEst',
+    Route::get('indexEst', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@repIndexEst',
         'as' => 'espacios.academicos.report.indexEst'
     ]);
 
-    Route::get('indexCarr',[ //Pagina inicial y captura de rango de fechas rep carrera
-        'uses' => $controller.'ReporteController@repIndexCarr',
+    Route::get('indexCarr', [ //Pagina inicial y captura de rango de fechas rep carrera
+        'uses' => $controller . 'ReporteController@repIndexCarr',
         'as' => 'espacios.academicos.report.indexCarr'
     ]);
 
     Route::post('repDoc', [ //CREAR REPORTE DOCENTE
         'uses' => $controller . 'ReporteController@reporDocente',
-        'as'   => 'espacios.academicos.report.repDoc',
+        'as' => 'espacios.academicos.report.repDoc',
     ]);
 
     Route::post('repEst', [ //CREAR REPORTE
         'uses' => $controller . 'ReporteController@cargarRepEst',
-        'as'   => 'espacios.academicos.report.repEst',
+        'as' => 'espacios.academicos.report.repEst',
     ]);
     Route::post('repCarr', [ //CREAR REPORTE CARRERAS
         'uses' => $controller . 'ReporteController@reporCarrera',
-        'as'   => 'espacios.academicos.report.repCarr',
+        'as' => 'espacios.academicos.report.repCarr',
     ]);
-    Route::get('DownloadRepEstudiante',[ //DESCARGAR REPORTE
-        'uses' => $controller.'ReporteController@DownloadEstReporte',
+    Route::get('DownloadRepEstudiante', [ //DESCARGAR REPORTE
+        'uses' => $controller . 'ReporteController@DownloadEstReporte',
         'as' => 'espacios.academicos.report.downReportEst'
     ]);
     Route::get('cargarSalasReportes/{espacio?}', [
@@ -322,20 +319,20 @@ Route::group(['prefix' => 'report'], function () {
 /*RUTAS PARA MANEJAR LA ASISTENCIA*/
 Route::group(['prefix' => 'asist'], function () {
     $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
-    Route::get('asisEst',[ //Pagina inicial asistencia estudiantes
-        'uses' => $controller.'AsistenciaController@asisEst',
+    Route::get('asisEst', [ //Pagina inicial asistencia estudiantes
+        'uses' => $controller . 'AsistenciaController@asisEst',
         'as' => 'espacios.academicos.asist.asisEst'
     ]);
-    Route::get('asisDoc',[ //Pagina inicial asistencia docentes
-        'uses' => $controller.'AsistenciaController@asisDoc',
+    Route::get('asisDoc', [ //Pagina inicial asistencia docentes
+        'uses' => $controller . 'AsistenciaController@asisDoc',
         'as' => 'espacios.academicos.asist.asisDoc'
     ]);
-    Route::post('regisAsistDoc',[ //Registrar asistencia Docente
-        'uses' => $controller.'AsistenciaController@regisAsistenciaDoc',
+    Route::post('regisAsistDoc', [ //Registrar asistencia Docente
+        'uses' => $controller . 'AsistenciaController@regisAsistenciaDoc',
         'as' => 'espacios.academicos.asist.regisAsistDoc'
     ]);
-    Route::post('regisAsistEst',[ //Registrar asistencia Docente
-        'uses' => $controller.'AsistenciaController@regisAsistenciaEst',
+    Route::post('regisAsistEst', [ //Registrar asistencia Docente
+        'uses' => $controller . 'AsistenciaController@regisAsistenciaEst',
         'as' => 'espacios.academicos.asist.regisAsistEst'
     ]);
 

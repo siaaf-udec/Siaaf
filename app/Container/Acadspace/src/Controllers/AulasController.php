@@ -10,12 +10,9 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Aulas;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-
 
 class AulasController extends Controller
 {
@@ -102,6 +99,5 @@ class AulasController extends Controller
         );
 
     }
-
 
 }

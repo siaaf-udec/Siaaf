@@ -127,6 +127,12 @@
                         <span class="title">Estudiantes</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.report.indexCarr'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.report.indexCarr') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-graduation-cap"></i>
+                        <span class="title">Carreras</span>
+                    </a>
+                </li>
             </ul>
         </li>
         @endpermission

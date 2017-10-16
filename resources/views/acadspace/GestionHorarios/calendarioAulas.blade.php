@@ -575,7 +575,7 @@
                                 type: "POST",
                                 success: function () {
                                     $('#calendar').fullCalendar('removeEvents', event._id);
-                                    console.log("Evento eliminado");
+
                                 }
                             })
                                 .done(function (data) {
@@ -585,9 +585,7 @@
                                     swal("Oops", "Ha ocurrido un error", "error");
                                 });
                         });
-                        /*else {
-                                           console.log("Cancelado");
-                                       }*/
+
                     },
 
                     eventMouseover: function (event, jsEvent, view) {

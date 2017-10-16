@@ -10,32 +10,38 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Acadspace\src\Asistencia;
 use App\Container\Acadspace\src\Aulas;
-use App\Container\Acadspace\src\Solicitud;
-use Illuminate\Support\Facades\DB;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class AsistenciaController extends Controller
 {
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Retorna la vista de control estudiante
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function asisEst()
     {
         return view('acadspace.controlEstudiante');
     }
 
+    /**
+     * Retorna la vista de control docente
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function asisDoc()
     {
         return view('acadspace.controlDocente');
     }
 
+    /**
+     * Recibe el parametro espacio y retorna un json con las aulas
+     * disponibles de acuerdo al espacio
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cargarSalasAsitencia(Request $request, $espacio)
     {
         if ($request->ajax()) {
@@ -45,9 +51,10 @@ class AsistenciaController extends Controller
         }
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
+     * Registra ingreso del estudiante
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function regisAsistenciaEst(Request $request)
@@ -55,7 +62,6 @@ class AsistenciaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $model = new Asistencia();
-
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
             $model->ASIS_Espacio_Academico = $request['ASIS_Espacio_Academico'];
             $model->ASIS_Espacio = $request['ASIS_Espacio'];
@@ -65,20 +71,25 @@ class AsistenciaController extends Controller
             $model->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Asistencia registrada correctamente.'
+                'Ingreso registrado correctamente.'
             );
 
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
 
     }
 
 
+    /**
+     * Registra ingreso del docente
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function regisAsistenciaDoc(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -96,15 +107,15 @@ class AsistenciaController extends Controller
             $model->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Asistencia registrada correctamente.'
+                'Ingreso registrado correctamente.'
             );
 
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
 }

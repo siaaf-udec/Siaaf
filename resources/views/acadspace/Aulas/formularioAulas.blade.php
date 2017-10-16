@@ -188,7 +188,6 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                console.log(dataTable.id);
                 var route = '{{ route('espacios.academicos.aulas.destroy') }}' + '/' + dataTable.PK_SAL_Id_Sala;
                 var type = 'DELETE';
                 var async = async || false;

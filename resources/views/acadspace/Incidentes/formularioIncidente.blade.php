@@ -222,7 +222,6 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                console.log(dataTable.id);
                 var route = '{{ route('espacios.academicos.incidente.destroy') }}' + '/' + dataTable.PK_INC_Id_Incidente;
                 var type = 'DELETE';
                 var async = async || false;

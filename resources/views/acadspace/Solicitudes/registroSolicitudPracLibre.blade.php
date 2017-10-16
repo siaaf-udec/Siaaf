@@ -144,7 +144,6 @@
         var mm = today.getMonth() + 1; //hoy es 0!
         var yyyy = today.getFullYear();
         var hoy = yyyy + '-' + mm + '-' + 08;
-        console.log(Date.parse(today));
 
 
         /*Crear Solicitud*/

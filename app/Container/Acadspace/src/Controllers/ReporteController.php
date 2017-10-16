@@ -23,27 +23,41 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 class ReporteController extends Controller
 {
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Retorna la vista de reportes docente
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
         return view('acadspace.Reportes.reportesIndex');
     }
+
+    /**
+     * Retorna la vista de reportes estudiantes
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function repIndexEst()
     {
         return view('acadspace.Reportes.reportesIndexEst');
     }
+
+    /**
+     * Retorna la vista de reportes carrera
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function repIndexCarr()
     {
         return view('acadspace.Reportes.reportesIndexCarr');
     }
 
 
-
+    /**
+     * Recibe el parametro espacio y retorna un json con las aulas
+     * disponibles de acuerdo al espacio
+     * @param Request $request
+     * @param $espacio
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cargarSalasReportes(Request $request, $espacio)
     {
         if ($request->ajax()) {
@@ -52,23 +66,32 @@ class ReporteController extends Controller
             return response()->json($aula);
         }
     }
+
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $fech
+     * @return string
      */
-    public function changeForm($fech){
+    public function changeForm($fech)
+    {
         //10-05-2101
         $aaaa = substr($fech, -4);
-        $dd  = substr($fech, -7,-5);
-        $mm = substr($fech, -10,-8);
-
-        return $aaaa.'-'.$mm.'-'.$dd;
+        $dd = substr($fech, -7, -5);
+        $mm = substr($fech, -10, -8);
+        return $aaaa . '-' . $mm . '-' . $dd;
     }
 
 
-    public function obtenerTotalEstLab($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac){
+    /**
+     * @param $fech1
+     * @param $fech2
+     * @param $id_Lab
+     * @param $id_carr
+     * @param $id_tipPrac
+     * @return int
+     */
+    public function obtenerTotalEstLab($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac)
+    {
         //10-05-2101
         $estudiantes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
             ->where('ASIS_Id_Carrera', '=', $id_carr)
@@ -80,7 +103,16 @@ class ReporteController extends Controller
         return $total;
     }
 
-    public function obtenerTotalEstPracGrupal($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac){
+    /**
+     * @param $fech1
+     * @param $fech2
+     * @param $id_Lab
+     * @param $id_carr
+     * @param $id_tipPrac
+     * @return int
+     */
+    public function obtenerTotalEstPracGrupal($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac)
+    {
         //10-05-2101
         $total = 0;
         $estudiantes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
@@ -89,53 +121,51 @@ class ReporteController extends Controller
             ->where('ASIS_Espacio_Academico', '=', $id_Lab)
             ->get();
 
-            foreach($estudiantes as $estudiante){
-                $tot = $estudiante->ASIS_Cant_Estudiantes;
-                $total = $total + $tot;
-            }
+        foreach ($estudiantes as $estudiante) {
+            $tot = $estudiante->ASIS_Cant_Estudiantes;
+            $total = $total + $tot;
+        }
 
         return $total;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function cargarRepEst(Request $request)
     {
         $data = $request->all();
         $code = $data['date_range'];
         $lab = $request['SOL_laboratorios'];
-
         $f2 = substr($code, -10);
         $f1 = substr($code, -23, -13);
-
-        $fech1=$this->changeForm($f1);
-        $fech2=$this->changeForm($f2);
-
+        $fech1 = $this->changeForm($f1);
+        $fech2 = $this->changeForm($f2);
         $date = date("d/m/Y");
         $time = date("h:i A");
+        $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
+        $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1, 2);
+        $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2, 1);
+        $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2, 2);
+        $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3, 1);
+        $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 3, 2);
+        $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4, 1);
+        $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4, 2);
+        $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5, 1);
+        $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5, 2);
+        $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6, 1);
+        $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6, 2);
 
-
-        $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1,1);
-        $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1,2);
-        $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2,1);
-        $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2,2);
-        $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3,1);
-        $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2,  $lab,3,2);
-        $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4,1);
-        $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4,2);
-        $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5,1);
-        $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5,2);
-        $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6,1);
-        $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6,2);
-
-
-        $totalTot = $totSistemasLibre+ $totSistemasGrup+ $totAmbientalLibre + $totAmbientalGrup
-            + $totAgronomicaLibre + $totAgronomicaGrup +$totAdminLibre+ $totAdminGrup + $totContaduriaLibre
-            + $totContaduriaGrup + $totPiscologiaLibre +$totPiscologiaaGrup;
+        $totalTot = $totSistemasLibre + $totSistemasGrup + $totAmbientalLibre + $totAmbientalGrup
+            + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
+            + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup;
 
         $cont = 1;
         return view('acadspace.Reportes.ReportesEstudiantes',
-            compact('totSistemasLibre','totSistemasGrup',
-                'totAmbientalLibre','totAmbientalGrup',
-                'totAgronomicaLibre','totAgronomicaGrup',
+            compact('totSistemasLibre', 'totSistemasGrup',
+                'totAmbientalLibre', 'totAmbientalGrup',
+                'totAgronomicaLibre', 'totAgronomicaGrup',
                 'totAdminLibre', 'totAdminGrup',
                 'totContaduriaLibre', 'totContaduriaGrup',
                 'totPiscologiaLibre', 'totPiscologiaaGrup',
@@ -146,172 +176,152 @@ class ReporteController extends Controller
     }
 
 
-    public function obtenerCarrera($codigo){
+    /**
+     * @param $codigo
+     * @return int
+     */
+    public function obtenerCarrera($codigo)
+    {
 
         $rest = substr($codigo, -8, -6); // devuelve "d"
 
-            if($rest == '61'){
-                $id_carr = 1;//Ing Sistemas
-            }
-            if($rest == '63'){
-                $id_carr = 2;//Ing Ambiental
-            }
-            if($rest == '60'){
-                $id_carr = 3;//Ing Agronomica
-            }
-            if($rest == '10'){
-                $id_carr = 4;//Administracion
-            }
-            if($rest == '14'){
-                $id_carr = 5;//Contaduria
-            }
-            if($rest == '40'){
-                $id_carr = 6;//Piscologia
-            }
+        if ($rest == '61') {
+            $id_carr = 1;//Ing Sistemas
+        }
+        if ($rest == '63') {
+            $id_carr = 2;//Ing Ambiental
+        }
+        if ($rest == '60') {
+            $id_carr = 3;//Ing Agronomica
+        }
+        if ($rest == '10') {
+            $id_carr = 4;//Administracion
+        }
+        if ($rest == '14') {
+            $id_carr = 5;//Contaduria
+        }
+        if ($rest == '40') {
+            $id_carr = 6;//Piscologia
+        }
 
         return $id_carr;
     }
+
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-
-
     public function reporCarrera(Request $request)
     {
         $data = $request->all();
-
         $fecha = $data['date_range'];
         $carr = $request['SOL_carrera'];
-
-        switch ($carr){
+        switch ($carr) {
             case 1:
-                $carrera = 'INGENIERIA DE SISTEMAS';
+                $carrera = 'Ingeniería de Sistemas';
                 break;
             case 2:
-                $carrera = 'INGENIERIA AMBIENTAL';
+                $carrera = 'Ingeniería Ambiental';
                 break;
             case 3:
-                $carrera = 'INGENIERIA AGRONOMICA';
+                $carrera = 'Ingeniería Agronomica';
                 break;
             case 4:
-                $carrera = 'ADMINISTRACION';
+                $carrera = 'Administración';
                 break;
             case 5:
-                $carrera = 'PSICOLOGIA';
+                $carrera = 'Psicología';
                 break;
             case 6:
-                $carrera = 'CONTADURIA';
+                $carrera = 'Contaduría';
                 break;
 
         }
         $f2 = substr($fecha, -10);
         $f1 = substr($fecha, -23, -13);
 
-        $fech1=$this->changeForm($f1);//Cambia el formato de la fecha
-        $fech2=$this->changeForm($f2);
+        $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+        $fech2 = $this->changeForm($f2);
 
         $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
         $time = date("h:i A");
 
-        $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Aulas de computo', $carr,1);
-        $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Aulas de computo', $carr,2);
-        $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Laboratorio psicologia', $carr,1);
-        $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Laboratorio psicologia', $carr,2);
-        $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr,1);
-        $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr,2);
+        $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Aulas de computo', $carr, 1);
+        $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Aulas de computo', $carr, 2);
+        $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Laboratorio psicologia', $carr, 1);
+        $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Laboratorio psicologia', $carr, 2);
+        $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 1);
+        $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 2);
 
 
-
-        $totalTot = $sistLibre+$sistGrup+$psicLibre+$psicGrup+$ciencLibre+$ciencGrup;
+        $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
 
         $cont = 1;
         return view('acadspace.Reportes.reportesCarrera',
-            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha','carrera',
-                'sistLibre','sistGrup','psicLibre','psicGrup','ciencLibre','ciencGrup')
+            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
+                'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
         );
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function reporDocente(Request $request)
     {
         $data = $request->all();
 
-            $fecha = $data['date_range'];
-            $lab = $request['SOL_laboratorios'];
-            $aula = $request['aulas'];
+        $fecha = $data['date_range'];
+        $lab = $request['SOL_laboratorios'];
+        $aula = $request['aula'];
 
-            $f2 = substr($fecha, -10);
-            $f1 = substr($fecha, -23, -13);
+        $f2 = substr($fecha, -10);
+        $f1 = substr($fecha, -23, -13);
 
-            $fech1=$this->changeForm($f1);//Cambia el formato de la fecha
-            $fech2=$this->changeForm($f2);
+        $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+        $fech2 = $this->changeForm($f2);
 
-            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
-            $time = date("h:i A");
+        $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+        $time = date("h:i A");
 
-            $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
-                ->where('ASIS_Espacio', '=', $aula)
-                ->where('ASIS_Tipo_Practica', '=', 2)
-                ->orderBy('created_at', 'asc')
-                ->get();
+        $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
+        foreach ($nomAula as $nombAula) {
+            $nombreAula = $nombAula->SAL_Nombre_Sala;
+        }
 
-            $totalTot = count($docentes);
+        $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
+            ->where('ASIS_Espacio', '=', $aula)
+            ->where('ASIS_Tipo_Practica', '=', 2)
+            ->orderBy('created_at', 'asc')
+            ->get();
 
-            $cont = 1;
-            return view('acadspace.Reportes.ReportesDocentes',
-                compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha')
-            );
+        $totalTot = count($docentes);
 
-
+        $cont = 1;
+        return view('acadspace.Reportes.ReportesDocentes',
+            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha', 'nombreAula')
+        );
 
 
     }
 
 
-    public function obtCont($model,$id)
+    /**
+     * @param $model
+     * @param $id
+     * @return int
+     */
+    public function obtCont($model, $id)
     {
-        $cont=0;
-        foreach($model as $user)
-        {
-            if($user->id_carrera == $id) {
+        $cont = 0;
+        foreach ($model as $user) {
+            if ($user->id_carrera == $id) {
                 $cont = $cont + 1;
             }
         }
         return $cont;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-
     }
 
 

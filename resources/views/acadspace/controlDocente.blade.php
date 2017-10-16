@@ -17,7 +17,7 @@
 @endpush
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Registro de asistencia docentes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Registro ingreso docentes'])
 
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
@@ -140,7 +140,6 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        //formData.append('DOC_tipo_practica', $('select[name="DOC_tipo_practica"]').val());
                         formData.append('ASIS_Id_Carrera', $('select[name="SOL_carrera"]').val());
                         formData.append('ASIS_Id_Identificacion', $('input:text[name="codigo"]').val());
                         formData.append('ASIS_Espacio_Academico', $('select[name="SOL_laboratorios"]').val());
@@ -186,7 +185,7 @@
                 SOL_laboratorios: {required: true},
                 materia: {required: true, minlength: 3},
                 SOL_carrera: {required: true},
-                SOL_cant_estudiantes: {required: true, number: true, maxlength:2},
+                SOL_cant_estudiantes: {required: true, number: true, maxlength: 2},
                 aulas: {required: true}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createUsers());
