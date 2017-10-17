@@ -136,9 +136,10 @@ class DocumentController extends Controller
                     ]);
             } else {
                 return AjaxResponse::success(
-                    '¡Error!',
-                    'El empleado no se encuentra registrado.'
+                    '¡Lo sentimos!',
+                    'Empleado no registrado'
                 );
+
             }
         } else {
             return AjaxResponse::fail(
