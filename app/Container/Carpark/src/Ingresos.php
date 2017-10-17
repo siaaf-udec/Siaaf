@@ -13,7 +13,7 @@ class Ingresos extends Model
     protected $primaryKey = 'PK_CI_IdIngreso';
 
     protected $fillable = [
-    	'PK_CI_IdIngreso',
+        'PK_CI_IdIngreso',
         'CI_NombresUser',
         'CI_CodigoUser',
         'CI_Placa',

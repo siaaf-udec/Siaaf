@@ -8,16 +8,16 @@
                             ],
      ])
         <div class="row">
-            <div class="col-md-7 col-md-offset-2">                
+            <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form_filtrar_fecha','method'=>'POST','target'=>'_blank','route'=> ['parqueadero.reportesCarpark.filtradoFecha']]) !!}
 
-                <div class="form-body">                    
-                    
+                <div class="form-body">
+
                     {!! Field::text('FechasLimite',['label'=>'Rango De Fechas','required', 'auto' => 'off', 'class' => 'range-date-time-picker'],['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
-                                    
+
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-0">                                
+                            <div class="col-md-12 col-md-offset-0">
                                 @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
@@ -42,15 +42,15 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
-  
+
     var ComponentsDateTimePickers = function () {
 
-            var handleDateRangePickers = function () {                
+            var handleDateRangePickers = function () {
                 $('.range-date-time-picker').daterangepicker({
                         opens: (App.isRTL() ? 'left' : 'right'),
                         startDate: moment().subtract('days', 29),
                         endDate: moment(),
-                    
+
                         dateLimit: {
                             days: 60
                         },
@@ -98,9 +98,9 @@
             };
 
         }();
-        
+
     jQuery(document).ready(function () {
-        ComponentsDateTimePickers.init();        
+        ComponentsDateTimePickers.init();
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

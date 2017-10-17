@@ -1,11 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario edición de vehículos'])
-    @slot('actions', [
-           'link_cancel' => [
-               'link' => '',
-               'icon' => 'fa fa-arrow-left',
-                            ],
-            ])
+        @slot('actions', [
+               'link_cancel' => [
+                   'link' => '',
+                   'icon' => 'fa fa-arrow-left',
+                                ],
+                ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($infoMoto,['id'=>'form_moto_update', 'url' => '/forms']) !!}
@@ -14,7 +14,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            
+
                             {!! Field:: text('PK_CM_IdMoto',$infoMoto['PK_CM_IdMoto'],['label'=>'Código del vehículo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                          ['icon'=>'fa fa-id-card-o'] ) !!}
 
@@ -23,7 +23,7 @@
 
                             {!! Field:: text('CM_Marca',$infoMoto['CM_Marca'],['label'=>'Marca del vehículo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite la marca del vehículo.','icon'=>'fa fa-credit-card'] ) !!}
-                            
+
 
                         </div>
                         <div class="col-md-6">
@@ -35,49 +35,59 @@
                                                          ['help' => 'Digite el número del SOAT vigente.','icon'=>'fa fa-id-card-o'] ) !!}
 
                             {!! Field::date('CM_fechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'on', 'data-date-format' => "yyyy-mm-dd",'data-date-start-date' => "+0d",'placeholder'=>'Valor Fecha'],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!}
-                            
 
-                        </div>             
+
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
+                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                            src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}"
+                                            class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250"
+                                            data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}" class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
+                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                            src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}"
+                                            class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250"
+                                            data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a  href="javascript:;"><img src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}" class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250" data-toggle="modal"></a>@endpermission
-                            </div>
-                        </div>        
-                    </div>                               
-
-                    
-                </div>              
-                
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12 col-md-offset-4">                                
-                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
-                                            class="fa fa-angle-left"></i>
-                                    Cancelar
-                                </a>@endpermission
-
-                                @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
-                                {!! Form::close() !!}
+                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                            src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}"
+                                            class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250"
+                                            data-toggle="modal"></a>@endpermission
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+
+
+                </div>
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-4">
+                            @permission('ADMIN_CARPARK')<a href="javascript:;"
+                                                           class="btn btn-outline red button-cancel"><i
+                                        class="fa fa-angle-left"></i>
+                                Cancelar
+                            </a>@endpermission
+
+                            @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-    @endcomponent
+@endcomponent
 
-    
+
 <!-- Modal Update Foto -->
     <div class="clearfix"></div>
     <div class="modal fade" id="modal-update-FotoMoto" tabindex="-1">
@@ -87,25 +97,25 @@
                 <i class="glyphicon glyphicon-user"></i>
                 Editar Foto Del Vehículo
             </h2>
-        </div> 
-        <div class="modal-body ">        
+        </div>
+        <div class="modal-body ">
             {!! Form::model ($infoMoto, ['id'=>'form_update_FotoMoto', 'url' => '/forms'])  !!}
             <div class="row">
                 <div class="col-md-12 col-md-offset-3">
-                    <p>                                          
+                    <p>
                         {!! Field::file('CM_UrlFotoM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
-                </div>                
+                </div>
             </div>
         </div>
-        <div class="modal-footer">            
-            
+        <div class="modal-footer">
+
             {!! Form::close() !!}
         </div>
-        
-    </div> 
+
+    </div>
 
     <!-- Fin Modal Update Foto -->
 
@@ -118,25 +128,25 @@
                 <i class="glyphicon glyphicon-user"></i>
                 Editar Foto De Tarjeta De Propiedad Del Vehículo
             </h2>
-        </div> 
-        <div class="modal-body ">        
+        </div>
+        <div class="modal-body ">
             {!! Form::model ($infoMoto, ['id'=>'form_update_FotoPropiedad', 'url' => '/forms'])  !!}
             <div class="row">
                 <div class="col-md-12 col-md-offset-3">
-                    <p>                                          
+                    <p>
                         {!! Field::file('CM_UrlPropiedadM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
-                </div>                
+                </div>
             </div>
         </div>
-        <div class="modal-footer">            
-            
+        <div class="modal-footer">
+
             {!! Form::close() !!}
         </div>
-        
-    </div> 
+
+    </div>
 
     <!-- Fin Modal Update Propiedad -->
 
@@ -149,36 +159,42 @@
                 <i class="glyphicon glyphicon-user"></i>
                 Editar Foto De SOAT Del Vehículo
             </h2>
-        </div> 
-        <div class="modal-body ">        
+        </div>
+        <div class="modal-body ">
             {!! Form::model ($infoMoto, ['id'=>'form_update_FotoSOAT', 'url' => '/forms'])  !!}
             <div class="row">
                 <div class="col-md-12 col-md-offset-3">
-                    <p>                                          
+                    <p>
                         {!! Field::file('CM_UrlSoatM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
-                </div>                
+                </div>
             </div>
         </div>
-        <div class="modal-footer">            
-            
+        <div class="modal-footer">
+
             {!! Form::close() !!}
         </div>
-        
-    </div> 
+
+    </div>
 
     <!-- Fin Modal Update SOAT -->
 
 </div>
 <!-- file script -->
-<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></scripts>
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}"
+        type="text/javascript"></scripts>
 
-<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></scripts>
+    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <
+    script
+    src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
+    type = "text/javascript" > < / scripts >
 
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+        < script
+    src = "{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}"
+    type = "text/javascript" ></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -188,17 +204,17 @@
         $('.date-picker').datepicker({
             rtl: App.isRTL(),
             orientation: "left",
-            autoclose: true,            
+            autoclose: true,
             regional: 'es',
             closeText: 'Cerrar',
             prevText: '<Ant',
             nextText: 'Sig>',
             currentText: 'Hoy',
             monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
             weekHeader: 'Sm',
             dateFormat: 'yyyy-mm-dd',
             firstDay: 1,
@@ -208,7 +224,7 @@
         /*FIN Configuracion de input tipo fecha*/
 
         // $('#CM_fechaSoat').attr('')
-        
+
 
         var updateMoto = function () {
             return {
@@ -218,14 +234,14 @@
                     var async = async || false;
 
                     var formData = new FormData();
-                    
+
                     formData.append('PK_CM_IdMoto', $('input:text[name="PK_CM_IdMoto"]').val());
                     formData.append('CM_Placa', $('input:text[name="CM_Placa"]').val());
                     formData.append('CM_Marca', $('input:text[name="CM_Marca"]').val());
                     formData.append('CM_NuPropiedad', $('input:text[name="CM_NuPropiedad"]').val());
                     formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
                     formData.append('CM_fechaSoat', $('#CM_fechaSoat').val());
-                                              
+
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -259,25 +275,25 @@
         };
         var form = $('#form_moto_update');
         var formRules = {
-            CM_UrlFoto:{required: true}, 
-            CM_Placa: {minlength: 5, maxlength: 6,required: true},
-            CM_Marca:{required: true, minlength: 5, maxlength: 50},
-            CM_NuPropiedad:{required: true, minlength: 5, maxlength: 20},
-            CM_NuSoat:{required: true, minlength: 5, maxlength: 20},
-            CM_UrlPropiedad:{required: true},
-            CM_UrlSoat:{required: true},            
+            CM_UrlFoto: {required: true},
+            CM_Placa: {minlength: 5, maxlength: 6, required: true},
+            CM_Marca: {required: true, minlength: 5, maxlength: 50},
+            CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20},
+            CM_NuSoat: {required: true, minlength: 5, maxlength: 20},
+            CM_UrlPropiedad: {required: true},
+            CM_UrlSoat: {required: true},
         };
-        FormValidationMd.init(form, formRules, false, updateMoto());        
+        FormValidationMd.init(form, formRules, false, updateMoto());
 
         ////////////////////////////////////////////////////////////////////////
         /////////////////////Función Editar Foto Moto ///////////////////////////////////
         var updateFotoMoto = function () {
-            return{
+            return {
                 init: function () {
                     var codigo = <?php echo $infoMoto['PK_CM_IdMoto'];?>
                     //var route = '{{ route('parqueadero.usuariosCarpark.updateFotoUsuario') }}'+'/'+codigo;
                     var route = '{{ route('parqueadero.motosCarpark.updateFotoMoto') }}';
-                    route = route.concat("/",codigo);
+                    route = route.concat("/", codigo);
                     var type = 'POST';
                     var async = async || false;
 
@@ -285,11 +301,11 @@
 
                     var File = document.getElementById("CM_UrlFotoM");
 
-                    formData.append('CM_UrlFoto',File.files[0]);                
+                    formData.append('CM_UrlFoto', File.files[0]);
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -304,14 +320,14 @@
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-FotoMoto').modal('hide');
                                 $('#form_update_FotoMoto')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.motosCarpark.editar') }}'+'/'+codigo;
+                                var route = '{{ route('parqueadero.motosCarpark.editar') }}' + '/' + codigo;
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -322,20 +338,20 @@
 
         var formFotoMoto = $('#form_update_FotoMoto');
         var formFotoRulesMoto = {
-            CM_UrlFotoM:{required: true},                    
+            CM_UrlFotoM: {required: true},
         };
-        FormValidationMd.init(formFotoMoto,formFotoRulesMoto,false,updateFotoMoto());
+        FormValidationMd.init(formFotoMoto, formFotoRulesMoto, false, updateFotoMoto());
 
         /////////////////////Fin Función Editar Foto Moto////////////////////////////////
 
         /////////////////////Función Editar Foto Propiedad ///////////////////////////////////
         var updateFotoPropiedad = function () {
-            return{
+            return {
                 init: function () {
                     var codigo = <?php echo $infoMoto['PK_CM_IdMoto'];?>
                     //var route = '{{ route('parqueadero.usuariosCarpark.updateFotoUsuario') }}'+'/'+codigo;
                     var route = '{{ route('parqueadero.motosCarpark.updateFotoPropiedad') }}';
-                    route = route.concat("/",codigo);
+                    route = route.concat("/", codigo);
                     var type = 'POST';
                     var async = async || false;
 
@@ -343,11 +359,11 @@
 
                     var File = document.getElementById("CM_UrlPropiedadM");
 
-                    formData.append('CM_UrlPropiedad',File.files[0]);                
+                    formData.append('CM_UrlPropiedad', File.files[0]);
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -362,14 +378,14 @@
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-FotoProp').modal('hide');
                                 $('#form_update_FotoPropiedad')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.motosCarpark.editar') }}'+'/'+codigo;
+                                var route = '{{ route('parqueadero.motosCarpark.editar') }}' + '/' + codigo;
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -380,20 +396,20 @@
 
         var formFotoPropiedad = $('#form_update_FotoPropiedad');
         var formFotoRulesPropiedad = {
-            CM_UrlPropiedadM:{required: true},                    
+            CM_UrlPropiedadM: {required: true},
         };
-        FormValidationMd.init(formFotoPropiedad,formFotoRulesPropiedad,false,updateFotoPropiedad());
+        FormValidationMd.init(formFotoPropiedad, formFotoRulesPropiedad, false, updateFotoPropiedad());
 
         /////////////////////Fin Función Editar Foto Propiedad////////////////////////////////
 
         /////////////////////Función Editar Foto SOAT ///////////////////////////////////
         var UpdateFotoSOAT = function () {
-            return{
+            return {
                 init: function () {
                     var codigo = <?php echo $infoMoto['PK_CM_IdMoto'];?>
                     //var route = '{{ route('parqueadero.usuariosCarpark.updateFotoUsuario') }}'+'/'+codigo;
                     var route = '{{ route('parqueadero.motosCarpark.UpdateFotoSOAT') }}';
-                    route = route.concat("/",codigo);
+                    route = route.concat("/", codigo);
                     var type = 'POST';
                     var async = async || false;
 
@@ -401,11 +417,11 @@
 
                     var File = document.getElementById("CM_UrlSoatM");
 
-                    formData.append('CM_UrlSoat',File.files[0]);                
+                    formData.append('CM_UrlSoat', File.files[0]);
 
                     $.ajax({
                         url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
                         type: type,
                         contentType: false,
@@ -420,14 +436,14 @@
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-FotoSOAT').modal('hide');
                                 $('#form_update_FotoSOAT')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
+                                UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.motosCarpark.editar') }}'+'/'+codigo;
+                                var route = '{{ route('parqueadero.motosCarpark.editar') }}' + '/' + codigo;
                                 $(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -438,9 +454,9 @@
 
         var formFotoSOAT = $('#form_update_FotoSOAT');
         var formFotoRulesSOAT = {
-            CM_UrlSoatM:{required: true},                    
+            CM_UrlSoatM: {required: true},
         };
-        FormValidationMd.init(formFotoSOAT,formFotoRulesSOAT,false,UpdateFotoSOAT());
+        FormValidationMd.init(formFotoSOAT, formFotoRulesSOAT, false, UpdateFotoSOAT());
 
         /////////////////////Fin Función Editar Foto SOAT////////////////////////////////
 
@@ -451,32 +467,32 @@
         });
 
 
-     //////////// Editar la fotos //////////////////////
+        //////////// Editar la fotos //////////////////////
 
-       $( ".UpdateFotoMoto" ).on('click', function (e) {
-                e.preventDefault();
-                $('#modal-update-FotoMoto').modal('toggle');
-
-        });
-
-       $( ".UpdateFotoPropiedad" ).on('click', function (e) {
-                e.preventDefault();
-                $('#modal-update-FotoProp').modal('toggle');
+        $(".UpdateFotoMoto").on('click', function (e) {
+            e.preventDefault();
+            $('#modal-update-FotoMoto').modal('toggle');
 
         });
 
-       $( ".UpdateFotoSOAT" ).on('click', function (e) {
-                e.preventDefault();
-                $('#modal-update-FotoSOAT').modal('toggle');
+        $(".UpdateFotoPropiedad").on('click', function (e) {
+            e.preventDefault();
+            $('#modal-update-FotoProp').modal('toggle');
 
-        });   
+        });
 
-       ////////////Fin Editar Foto Perfil ////////////////////////
-        $( "#link_cancel" ).on('click', function (e) {
-       var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
-       $(".content-ajax").load(route);
-       });
+        $(".UpdateFotoSOAT").on('click', function (e) {
+            e.preventDefault();
+            $('#modal-update-FotoSOAT').modal('toggle');
 
-    });       
+        });
+
+        ////////////Fin Editar Foto Perfil ////////////////////////
+        $("#link_cancel").on('click', function (e) {
+            var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
+
+    });
 
 </script>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Container\Carpark\src\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use App\Container\Carpark\src\Dependencias;
@@ -22,143 +23,134 @@ class MotosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
         return view('carpark.motos.tablaMotos');
     }
 
     /**
      * Muestra todos los usuarios registradas por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function indexAjax (Request $request)
+    public function indexAjax(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('carpark.motos.ajaxTablaMotos');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
-    }    
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 
     /**
      * Función que muestra el formulario de registro de un nuevo vehiculo.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function create (Request $request,$id)//
+    public function create(Request $request, $id)//
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $codigoUsuario = $id;
             return view('carpark.motos.registroMoto',
                 [
-                    'codigoUsuario' =>  $codigoUsuario,
+                    'codigoUsuario' => $codigoUsuario,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Función que almacena en la base de datos un nuevo vehículo.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST'))
-        {
-                          
+        if ($request->ajax() && $request->isMethod('POST')) {
+
             $imgMoto = $request->file('CM_UrlFoto');
             $imgProp = $request->file('CM_UrlPropiedad');
             $imgSOAT = $request->file('CM_UrlSoat');
             $urlMoto = Storage::disk('developer')->putFile('carpark/motos', $imgMoto);
-            $urlMoto = "developer/".$urlMoto;
+            $urlMoto = "developer/" . $urlMoto;
             $urlProp = Storage::disk('developer')->putFile('carpark/motos', $imgProp);
-            $urlProp = "developer/".$urlProp;
+            $urlProp = "developer/" . $urlProp;
             $urlSOAT = Storage::disk('developer')->putFile('carpark/motos', $imgSOAT);
-            $urlSOAT = "developer/".$urlSOAT;
+            $urlSOAT = "developer/" . $urlSOAT;
             $generadorID = date_create();
 
 
             Motos::create([
-                'PK_CM_IdMoto'     => date_timestamp_get($generadorID),
-                'CM_Placa'         => strtoupper($request['CM_Placa']),
-                'CM_Marca'         => $request['CM_Marca'],
-                'CM_NuPropiedad'   => $request['CM_NuPropiedad'],
-                'CM_NuSoat'        => $request['CM_NuSoat'],               
-                'CM_fechaSoat'     => $request['CM_fechaSoat'],
-                'CM_UrlFoto'       => $urlMoto,
-                'CM_UrlPropiedad'  => $urlProp,                
-                'CM_UrlSoat'       => $urlSOAT,
-                'FK_CM_CodigoUser' => $request['FK_CM_CodigoUser'],                
+                'PK_CM_IdMoto' => date_timestamp_get($generadorID),
+                'CM_Placa' => strtoupper($request['CM_Placa']),
+                'CM_Marca' => $request['CM_Marca'],
+                'CM_NuPropiedad' => $request['CM_NuPropiedad'],
+                'CM_NuSoat' => $request['CM_NuSoat'],
+                'CM_fechaSoat' => $request['CM_fechaSoat'],
+                'CM_UrlFoto' => $urlMoto,
+                'CM_UrlPropiedad' => $urlProp,
+                'CM_UrlSoat' => $urlSOAT,
+                'FK_CM_CodigoUser' => $request['FK_CM_CodigoUser'],
             ]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos almacenados correctamente.'
-            );                
-        }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Presenta el formulario con los datos para editar el regitro de un vehículo deseado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function editar(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
-            
+
             return view('carpark.motos.editarMoto',
                 [
                     'infoMoto' => $infoMoto,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu Controller.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu Controller.'
+        );
+
     }
 
     /**
      * Se realiza la actualización de los datos de un usuario.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function update (Request $request)
+    public function update(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {            
+        if ($request->ajax() && $request->isMethod('POST')) {
             $moto = Motos::find($request['PK_CM_IdMoto']);
             $moto->fill($request->all());
             $moto->CM_Placa = strtoupper($request['CM_Placa']);
@@ -168,158 +160,148 @@ class MotosController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Se realiza la eliminación de los registros de un usuario.
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('DELETE'))
-        {                                
+        if ($request->ajax() && $request->isMethod('DELETE')) {
             Motos::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos eliminados correctamente del vehículo.'
-            );            
-        }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Muestra el perfil de un vehículo especifico.
      *
-     * @param  int  $id
-     * @param  int  $request
+     * @param  int $id
+     * @param  int $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verMoto(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
-            $infoMoto = Motos::with('relacionMotosUsuarios')->where('PK_CM_IdMoto',$id)->get();            
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoMoto = Motos::with('relacionMotosUsuarios')->where('PK_CM_IdMoto', $id)->get();
 
             return view('carpark.motos.perfilMoto',
                 [
-                    'infoMoto'    => $infoMoto,
+                    'infoMoto' => $infoMoto,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Se realiza la actualización de la foto de perfil de un vehículo.
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoMoto(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $img = $request->file('CM_UrlFoto');
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
-            $url = "developer/".$url;
+            $url = "developer/" . $url;
 
             $usuariosPK = Motos::find($id);
-            $usuariosPK ->CM_UrlFoto = $url;
-            $usuariosPK ->save();
+            $usuariosPK->CM_UrlFoto = $url;
+            $usuariosPK->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
-    
+
     /**
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoPropiedad(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $img = $request->file('CM_UrlPropiedad');
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
-            $url = "developer/".$url;
+            $url = "developer/" . $url;
 
             $usuariosPK = Motos::find($id);
-            $usuariosPK ->CM_UrlPropiedad = $url;
-            $usuariosPK ->save();
+            $usuariosPK->CM_UrlPropiedad = $url;
+            $usuariosPK->save();
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
-    
+
     /**
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function UpdateFotoSOAT(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $img = $request->file('CM_UrlSoat');
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
-            $url = "developer/".$url;
+            $url = "developer/" . $url;
 
             $usuariosPK = Motos::find($id);
-            $usuariosPK ->CM_UrlSoat = $url;
-            $usuariosPK ->save();
+            $usuariosPK->CM_UrlSoat = $url;
+            $usuariosPK->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 }

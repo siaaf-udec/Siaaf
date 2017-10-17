@@ -1,25 +1,25 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de dependencias'])
-       @slot('actions', [
-           'link_cancel' => [
-               'link' => '',
-               'icon' => 'fa fa-arrow-left',
-                            ],
-            ])
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+                             ],
+             ])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 {!! Form::open (['id'=>'form_dependencia_create', 'url' => '/forms']) !!}
 
-                <div class="form-body">                    
+                <div class="form-body">
 
                     {!! Field:: text('CD_Dependencia',null,['label'=>'Nombre de la dependencia:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],['help' => 'Digite el nombre de la dependencia.','icon'=>'fa fa-user']) !!}
 
-                    
 
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-0">                                
-                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                            <div class="col-md-12 col-md-offset-0">
+                                @permission('ADMIN_CARPARK')<a href="javascript:;"
+                                                               class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>@endpermission
                                     Cancelar
                                 </a>
@@ -112,9 +112,9 @@
             $(".content-ajax").load(route);
         });
 
-        $( "#link_cancel" ).on('click', function (e) {
-       var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
-       $(".content-ajax").load(route);
+        $("#link_cancel").on('click', function (e) {
+            var route = '{{ route('parqueadero.dependenciasCarpark.index.ajax') }}';
+            $(".content-ajax").load(route);
         });
 
     });

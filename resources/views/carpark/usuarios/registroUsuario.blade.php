@@ -1,11 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de usuarios'])
-       @slot('actions', [
-           'link_cancel' => [
-               'link' => '',
-               'icon' => 'fa fa-arrow-left',
-                            ],
-        ])
+        @slot('actions', [
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+                             ],
+         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($listaDependencias,['id'=>'form_usuario_create', 'url' => '/forms']) !!}
@@ -53,12 +53,13 @@
                             {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
                         </div>
                     </div>
-                        
+
 
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-0">                                
-                                @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i
+                            <div class="col-md-12 col-md-offset-0">
+                                @permission('ADMIN_CARPARK')<a href="javascript:;"
+                                                               class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
@@ -75,10 +76,14 @@
     @endcomponent
 </div>
 <!-- file script -->
-<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></scripts>
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}"
+        type="text/javascript"></scripts>
 
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <
+    script
+    src = "{{ asset('assets/main/scripts/form-validation-md.js') }}"
+    type = "text/javascript" ></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
@@ -88,8 +93,8 @@
         var $widget_select_SelectDependencia = $('select[name="SelectDependencia"]');
 
         var route_Dependencia = '{{ route('parqueadero.usuariosCarpark.listDependencias') }}';
-        $.get(route_Dependencia, function(response, status){
-            $( response.data ).each(function( key,value ) {
+        $.get(route_Dependencia, function (response, status) {
+            $(response.data).each(function (key, value) {
                 $widget_select_SelectDependencia.append(new Option(value.CD_Dependencia, value.PK_CD_IdDependencia));
             });
             $widget_select_SelectDependencia.val([]);
@@ -131,11 +136,11 @@
                     formData.append('CU_Correo', $('input[name="CU_Correo"]').val());
                     formData.append('CU_Direccion', $('input:text[name="CU_Direccion"]').val());
 
-                    formData.append('CU_UrlFoto',File.files[0]);
-                                        
+                    formData.append('CU_UrlFoto', File.files[0]);
+
                     formData.append('FK_CU_IdEstado', $('select[name="FK_CU_IdEstado"]').val());
                     formData.append('FK_CU_IdDependencia', $('select[name="SelectDependencia"]').val());
-                    
+
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -169,15 +174,15 @@
         };
         var form = $('#form_usuario_create');
         var formRules = {
-            CU_UrlFoto:{required: true}, 
-            CU_Cedula: {minlength: 8, maxlength: 10,required: true, number:true},
-            PK_CU_Codigo:{required: true, minlength: 9, maxlength: 9, number:true},
-            CU_Nombre1:{required: true},            
-            CU_Apellido1:{required: true},              
-            CU_Correo:{required: true, email:true},
-            CU_Direccion:{required: true},
-            FK_CU_IdDependencia:{required: true},
-            FK_CU_IdEstado:{required: true},
+            CU_UrlFoto: {required: true},
+            CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true},
+            PK_CU_Codigo: {required: true, minlength: 9, maxlength: 9, number: true},
+            CU_Nombre1: {required: true},
+            CU_Apellido1: {required: true},
+            CU_Correo: {required: true, email: true},
+            CU_Direccion: {required: true},
+            FK_CU_IdDependencia: {required: true},
+            FK_CU_IdEstado: {required: true},
         };
         FormValidationMd.init(form, formRules, false, createUsers());
 
@@ -187,12 +192,10 @@
             $(".content-ajax").load(route);
         });
 
-        $( "#link_cancel" ).on('click', function (e) {
-       var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-       $(".content-ajax").load(route);
+        $("#link_cancel").on('click', function (e) {
+            var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+            $(".content-ajax").load(route);
         });
-
-
 
 
     });

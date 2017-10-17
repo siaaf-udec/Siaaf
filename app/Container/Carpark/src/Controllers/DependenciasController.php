@@ -35,85 +35,78 @@ class DependenciasController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('carpark.dependencias.registroDependencias');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Función que almacena en la base de datos un nuevo registro de acción.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
             $generadorID = date_create();
             Dependencias::create([
-                'PK_CD_IdDependencia'  => date_timestamp_get($generadorID),
-                'CD_Dependencia'       => $request['CD_Dependencia'],
+                'PK_CD_IdDependencia' => date_timestamp_get($generadorID),
+                'CD_Dependencia' => $request['CD_Dependencia'],
             ]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos almacenados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
- 
 
     /**
      * Presenta el formulario con los datos para editar el regitro de una dependencia.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function edit (Request $request, $id)
+    public function edit(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $dependenciaRegistrada = Dependencias::find($id);
             return view('carpark.dependencias.editarDependencia',
                 [
                     'dependenciaRegistrada' => $dependenciaRegistrada,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Se realiza la actualización de los datos de una dependencia.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function update (Request $request)//
+    public function update(Request $request)//
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $empleado = Dependencias::find($request['PK_CD_IdDependencia']);
             $empleado->fill($request->all());
             $empleado->save();
@@ -122,35 +115,32 @@ class DependenciasController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
-    
+
     /**
      * Muestra todos las dependencias registradas por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response  | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function indexAjax (Request $request)
+    public function indexAjax(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('carpark.dependencias.ajaxTablaDependencias');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
-    }       
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 
 }

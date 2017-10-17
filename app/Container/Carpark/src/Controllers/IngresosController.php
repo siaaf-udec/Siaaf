@@ -25,29 +25,27 @@ class IngresosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
-    	return view('carpark.ingresos.tablaIngresos');
+    {
+        return view('carpark.ingresos.tablaIngresos');
     }
 
     /**
      * Muestra la vista de inicio de la información de motocicletas dentro del parqueadero medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function indexAjax (Request $request)
+    public function indexAjax(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('carpark.ingresos.ajaxTablaIngresos');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
@@ -57,201 +55,199 @@ class IngresosController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('carpark.ingresos.registroIngreso');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
-     /**
+    /**
      * Función que que devuelve el formulario para registro de ingresos.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verificar(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')){
-            $infoMoto = Motos::where([['CM_Placa','=',$request['PlacaMoto']],['FK_CM_CodigoUser','=',$request['CodigoUsuario']]])->get();            
-            
-            if($infoMoto == '[]')
-            {
-            	$IdError=422;
-            	return AjaxResponse::success(            		
-                	'¡Lo sentimos!',
-                	'No se pudo completar tu solicitud-valores inexistentes.',
-                	$IdError
-            	);
-            }else{
-            	$idMoto = $infoMoto[0]['PK_CM_IdMoto'];
-            	return AjaxResponse::success(
-                	'¡Bien hecho!',
-                	'Datos encontrados.',
-                	$idMoto
-            	);     
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $infoMoto = Motos::where([['CM_Placa', '=', $request['PlacaMoto']], ['FK_CM_CodigoUser', '=', $request['CodigoUsuario']]])->get();
+
+            if ($infoMoto === '[]') {
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud-valores inexistentes.',
+                    $IdError
+                );
+            } else {
+                $idMoto = $infoMoto[0]['PK_CM_IdMoto'];
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos encontrados.',
+                    $idMoto
+                );
             }
 
 
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function confirmar (Request $request, $id)
+    public function confirmar(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET'))
-        {
+        if ($request->ajax() && $request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
-            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);                        
+            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
             return view('carpark.ingresos.confirmacion',
                 [
-                    'infoMoto'    => $infoMoto,
+                    'infoMoto' => $infoMoto,
                     'infoUsuario' => $infoUsuario,
                 ]);
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
-    
+
     /**
      * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function confirmarTarjeta ($id)
+    public function confirmarTarjeta(Request $request, $id)
     {
-        $infoMoto = Motos::find($id);
-        $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);                        
+        if ($request->isMethod('GET')) {
+            $infoMoto = Motos::find($id);
+            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
-        return view('carpark.ingresos.confirmacionTarjeta',
-            [
-                'infoMoto'    => $infoMoto,
-                'infoUsuario' => $infoUsuario,
-            ]);
+            return view('carpark.ingresos.confirmacionTarjeta',
+                [
+                    'infoMoto' => $infoMoto,
+                    'infoUsuario' => $infoUsuario,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Función que almacena en la base de datos un las acciones del parqueadero.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')){
-        	////////////////Validación entrada o salida//////////////////
-        	$infoIngresos = Ingresos::where([['CI_CodigoUser','=',$request['CI_CodigoUser']],['CI_CodigoMoto','=',$request['CI_CodigoMoto']]])->get();
-        	if($infoIngresos == '[]')        		
-        	{
-        		$generadorID = date_create();
-	            Ingresos::create([
-	                'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
-	                'CI_NombresUser'  => $request['CI_NombresUser'],
-	                'CI_CodigoUser'   => $request['CI_CodigoUser'],
-	                'CI_Placa'        => $request['CI_Placa'],
-	                'CI_CodigoMoto'   => $request['CI_CodigoMoto']
-	            ]);
-	            
-	            return AjaxResponse::success(
-	                '¡Bien hecho!',
-	                'Ingreso almacenados correctamente.'
-	            );	
-        	}else{
-        		$generadorID = date_create();
-        		Historiales::create([
-        			'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
-        			'CH_NombresUser'  => $request['CI_NombresUser'],
-        			'CH_CodigoUser'   => $request['CI_CodigoUser'],
-        			'CH_Placa'  	  => $request['CI_Placa'],
-        			'CH_CodigoMoto'   => $request['CI_CodigoMoto'],
-        			'CH_FHentrada'    => $infoIngresos[0]['created_at'],        			
-        		]);
+        if ($request->ajax() && $request->isMethod('POST')) {
+            ////////////////Validación entrada o salida//////////////////
+            $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
+            if ($infoIngresos === '[]') {
+                $generadorID = date_create();
+                Ingresos::create([
+                    'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
+                    'CI_NombresUser' => $request['CI_NombresUser'],
+                    'CI_CodigoUser' => $request['CI_CodigoUser'],
+                    'CI_Placa' => $request['CI_Placa'],
+                    'CI_CodigoMoto' => $request['CI_CodigoMoto']
+                ]);
 
-        		Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Ingreso almacenados correctamente.'
+                );
+            } else {
+                $generadorID = date_create();
+                Historiales::create([
+                    'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
+                    'CH_NombresUser' => $request['CI_NombresUser'],
+                    'CH_CodigoUser' => $request['CI_CodigoUser'],
+                    'CH_Placa' => $request['CI_Placa'],
+                    'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+                    'CH_FHentrada' => $infoIngresos[0]['created_at'],
+                ]);
 
-        		return AjaxResponse::success(
-	                '¡Bien hecho!',
-	                'Salida almacenada correctamente.'
-	            );
-        	}
-            
+                Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Salida almacenada correctamente.'
+                );
+            }
+
             //////////////// FIN Validación entrada o salida//////////////////
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
-    
+
     /**
      * Función que almacena en la base de datos un las acciones del parqueadero.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function storeTarjeta(Request $request)
-    {        
+    {
         ////////////////Validación entrada o salida//////////////////
-        $infoIngresos = Ingresos::where([['CI_CodigoUser','=',$request['CI_CodigoUser']],['CI_CodigoMoto','=',$request['CI_CodigoMoto']]])->get();
-        if($infoIngresos == '[]')               
-        {
+        $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
+        if ($infoIngresos === '[]') {
             $generadorID = date_create();
             Ingresos::create([
                 'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
-                'CI_NombresUser'  => $request['CI_NombresUser'],
-                'CI_CodigoUser'   => $request['CI_CodigoUser'],
-                'CI_Placa'        => $request['CI_Placa'],
-                'CI_CodigoMoto'   => $request['CI_CodigoMoto']
+                'CI_NombresUser' => $request['CI_NombresUser'],
+                'CI_CodigoUser' => $request['CI_CodigoUser'],
+                'CI_Placa' => $request['CI_Placa'],
+                'CI_CodigoMoto' => $request['CI_CodigoMoto']
             ]);
-              
+
             return view('carpark.ingresos.tablaIngresos');
-        }else{
+        } else {
             $generadorID = date_create();
             Historiales::create([
                 'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
-                'CH_NombresUser'  => $request['CI_NombresUser'],
-                'CH_CodigoUser'   => $request['CI_CodigoUser'],
-                'CH_Placa'        => $request['CI_Placa'],
-                'CH_CodigoMoto'   => $request['CI_CodigoMoto'],
-                'CH_FHentrada'    => $infoIngresos[0]['created_at'],                    
+                'CH_NombresUser' => $request['CI_NombresUser'],
+                'CH_CodigoUser' => $request['CI_CodigoUser'],
+                'CH_Placa' => $request['CI_Placa'],
+                'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+                'CH_FHentrada' => $infoIngresos[0]['created_at'],
             ]);
 
             Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
 
             return view('carpark.ingresos.tablaIngresos');
         }
-            
+
         //////////////// FIN Validación entrada o salida//////////////////        
-    }    
+    }
 
 }

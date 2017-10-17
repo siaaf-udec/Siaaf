@@ -1,15 +1,19 @@
 @permission('FUNC_CARPARK')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Motocicletas dentro de la Universidad:'])
-        <br>            
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    @permission('FUNC_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
+                    @permission('FUNC_CARPARK')<a href="javascript:;"
+                                                  class="btn btn-simple btn-success btn-icon create">
                         <i class="fa fa-plus">
                         </i>Acción
                     </a>@endpermission
-                    @permission('ADMIN_CARPARK')<a href="javascript:;" class="btn btn-simple btn-success btn-icon reports"  title="Reporte" ><i class="glyphicon glyphicon-list-alt"></i>Reporte de Ingresos</a><br>@endpermission
+                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                                                   class="btn btn-simple btn-success btn-icon reports"
+                                                   title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
+                        de Ingresos</a><br>@endpermission
                 </div>
             </div>
         </div>
@@ -34,34 +38,33 @@
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
-jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
 
-        var table, url,columns;
+        var table, url, columns;
         table = $('#listaMotosDentro');
         url = "{{ route('parqueadero.ingresosCarpark.tablaMotosDentro')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'CI_NombresUser', name: 'Nombre Usuario'},   
-            {data: 'CI_CodigoUser', name: 'Código Usuario'},   
-            {data: 'CI_Placa', name: 'Placa'},   
-            {data: 'CI_CodigoMoto', name: 'PK_CI_IdIngreso'}            
+            {data: 'CI_NombresUser', name: 'Nombre Usuario'},
+            {data: 'CI_CodigoUser', name: 'Código Usuario'},
+            {data: 'CI_Placa', name: 'Placa'},
+            {data: 'CI_CodigoMoto', name: 'PK_CI_IdIngreso'}
         ];
         dataTableServer.init(table, url, columns);
-        
-        $( ".create" ).on('click', function (e) {
+
+        $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('parqueadero.ingresosCarpark.create') }}';
             $(".content-ajax").load(route);
         });
-        
-        $( ".reports" ).on('click', function (e) {
+
+        $(".reports").on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            $.ajax({
-            }).done(function(){
+            $.ajax({}).done(function () {
                 window.open('{{ route('parqueadero.reportesCarpark.ReporteMotosDentro') }}', '_blank');
             });
         });
-        
+
     });
 </script>

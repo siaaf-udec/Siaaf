@@ -1,9 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
-        <td background="{{ asset('assets/pages/mail/images/bg.jpg') }}" bgcolor="#494c50" valign="top" style="background-size: cover; background-position: center;">
+        <td background="{{ asset('assets/pages/mail/images/bg.jpg') }}" bgcolor="#494c50" valign="top"
+            style="background-size: cover; background-position: center;">
             <table border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
                     <td height="50"></td>
@@ -11,7 +13,7 @@
                 <!-- logo -->
                 <tr>
                     <td align="center" style="line-height: 0px;">
-                        
+
                     </td>
                 </tr>
                 <!-- end logo -->
@@ -20,7 +22,8 @@
                 </tr>
                 <!-- content -->
                 <tr>
-                    <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:11px; color:#FFFFFF;text-transform:uppercase; letter-spacing:4px;">{{ env('APP_NAME') }}</td>
+                    <td align="center"
+                        style="font-family: 'Open Sans', Arial, sans-serif; font-size:11px; color:#FFFFFF;text-transform:uppercase; letter-spacing:4px;">{{ env('APP_NAME') }}</td>
                 </tr>
                 <!-- end content -->
                 <tr>
@@ -28,7 +31,9 @@
                 </tr>
                 <tr>
                     <td align="center" width="600">
-                        <table align="center" bgcolor="#FFFFFF" style="border-radius:4px; box-shadow: 0px -3px 0px #D4D2D2;" width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <table align="center" bgcolor="#FFFFFF"
+                               style="border-radius:4px; box-shadow: 0px -3px 0px #D4D2D2;" width="95%" border="0"
+                               cellspacing="0" cellpadding="0">
                             <tr>
                                 <td height="50"></td>
                             </tr>
@@ -37,7 +42,8 @@
                                     <table align="center" width="90%" border="0" cellspacing="0" cellpadding="0">
                                         <!-- title -->
                                         <tr>
-                                            <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;"> {{ ( isset( $title ) ) ? $title : $user['CU_Nombre1'] }} </td>
+                                            <td align="center"
+                                                style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;"> {{ ( isset( $title ) ) ? $title : $user['CU_Nombre1'] }} </td>
                                         </tr>
                                         <!-- end title -->
                                         <tr>
@@ -54,7 +60,8 @@
                                         </tr>
                                         <!-- content -->
                                         <tr>
-                                            <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;">
+                                            <td align="center"
+                                                style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;">
                                                 {{ ( isset( $body ) ) ? $body : 'Advertencia, recuerda que el parqueadero de la Universidad De Cundinamarca cierra a las 22 horas, así que es necesario que por favor saques tu vehículo de allí o se procederá a tomar acciones' }}
                                                 <br>
                                                 Sistema de Información para el Apoyo Administrativo UdeC - Facatativá
@@ -68,13 +75,13 @@
                                 <td height="40"></td>
                             </tr>
                             <!-- button -->
-                            
+
                             <!-- end option -->
                         </table>
                     </td>
                 </tr>
                 <tr>
-                    <td height="22" align="center" style="line-height:0px;">                        
+                    <td height="22" align="center" style="line-height:0px;">
                     </td>
                 </tr>
                 <tr>
@@ -83,20 +90,23 @@
                 <!-- profile-img -->
                 <tr>
                     <td height="100" align="center" style="line-height:0px;">
-                        
+
                     </td>
                 </tr>
                 <!-- end profile-img -->
                 <tr>
                     <td height="30"></td>
                 </tr>
-                
+
                 <tr>
                     <td height="15"></td>
                 </tr>
                 <!-- copyright -->
                 <tr>
-                    <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#FFFFFF;">© {{ \Carbon\Carbon::now()->year }} {{ env('APP_NAME') }}. All Rights Reserved.</td>
+                    <td align="center"
+                        style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#FFFFFF;">
+                        © {{ \Carbon\Carbon::now()->year }} {{ env('APP_NAME') }}. All Rights Reserved.
+                    </td>
                 </tr>
                 <!-- end copyright -->
                 <tr>

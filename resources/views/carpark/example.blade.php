@@ -21,7 +21,8 @@
 | @endpush
 --}}
 @push('styles')
-<link href="{{-- asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') --}}" rel="stylesheet" type="text/css" />
+<link href="{{-- asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') --}}" rel="stylesheet"
+      type="text/css"/>
 @endpush
 
 

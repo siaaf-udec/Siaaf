@@ -1,36 +1,28 @@
 <?php
 
 use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Estados;
-use App\Container\Carpark\src\Usuarios;
-use App\Container\Carpark\src\Motos;
-use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Historiales;
-use Yajra\DataTables\DataTables;
+use App\Container\Carpark\src\Ingresos;
+use App\Container\Carpark\src\Motos;
+use App\Container\Carpark\src\Usuarios;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 /**
  * Parqueadero
  */
-//RUTA DE EJEMPLO
-Route::get('/', [
-    'as'   => 'parqueaderos.index',
-    'uses' => function () {
-        return view('carpark.example');
-    },
-]);
 
 Route::group(['middleware' => ['auth']], function () {
 
-//Rutas Usuarios Parqueadero//////////////////////////////////////////
+//Rutas Usuarios Parqueadero
 
-    Route::group(['prefix' => 'usuariosCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
+    Route::group(['prefix' => 'usuariosCarpark', 'middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('index', [
             'uses' => $controller . 'UsuariosController@index',
-            'as'   => 'parqueadero.usuariosCarpark.index',
+            'as' => 'parqueadero.usuariosCarpark.index',
         ]);
 
         Route::get('index/ajax', [
@@ -55,13 +47,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
-        Route::get('DependenciasUser',[
-            'uses' => $controller.'UsuariosController@listarDependencias',
+        Route::get('DependenciasUser', [
+            'uses' => $controller . 'UsuariosController@listarDependencias',
             'as' => 'parqueadero.usuariosCarpark.listDependencias'
-        ]);        
+        ]);
 
-        Route::get('EstadosUser',[
-            'uses' => $controller.'UsuariosController@listarEstados',
+        Route::get('EstadosUser', [
+            'uses' => $controller . 'UsuariosController@listarEstados',
             'as' => 'parqueadero.usuariosCarpark.listEstados'
         ]);
 
@@ -100,18 +92,18 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.usuariosCarpark.destroy'
         ]);
 
-        
+
     });
 ///////////////FIN Rutas Usuarios Parqueadero//////////////////////////////////////
 
 ////////////////////Inicio Rutas para Motos //////////////////////////////////////
-    Route::group(['prefix' => 'motosCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
+    Route::group(['prefix' => 'motosCarpark', 'middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('index', [
             'uses' => $controller . 'MotosController@index',
-            'as'   => 'parqueadero.motosCarpark.index',
+            'as' => 'parqueadero.motosCarpark.index',
         ]);
 
         Route::get('index/ajax', [
@@ -145,12 +137,12 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'MotosController@store',   //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
             'as' => 'parqueadero.motosCarpark.store'
         ]);
-        
+
         Route::get('verMoto/{id?}', [
             'uses' => $controller . 'MotosController@verMoto',     //ruta que conduce al controlador para ver el perfil de un vehículo.
             'as' => 'parqueadero.motosCarpark.verMoto'
         ]);
-        
+
         Route::get('editar/{id?}', [
             'uses' => $controller . 'MotosController@editar',     //ruta que conduce al controlador para ver el perfil de un usuario.
             'as' => 'parqueadero.motosCarpark.editar'
@@ -174,26 +166,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('UpdateFotoSOAT/{id?}', [
             'uses' => $controller . 'MotosController@UpdateFotoSOAT',      //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad del vehículo
             'as' => 'parqueadero.motosCarpark.UpdateFotoSOAT'
-        ]);    
+        ]);
 
         Route::delete('destroy/{id?}', [
             'uses' => $controller . 'MotosController@destroy', //ruta que conduce al controlador para eliminar un registro vehículo
             'as' => 'parqueadero.motosCarpark.destroy'
         ]);
-        
+
 
     });
 /////////////////////FIN Rutas Para Motos/////////////////////////////////////////
 
 //////////////////// Inicio Rutas Para Las Dependencias/////////////////////////
 
-    Route::group(['prefix' => 'dependenciasCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
+    Route::group(['prefix' => 'dependenciasCarpark', 'middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('index', [
             'uses' => $controller . 'DependenciasController@index',
-            'as'   => 'parqueadero.dependenciasCarpark.index',
+            'as' => 'parqueadero.dependenciasCarpark.index',
         ]);
 
         Route::get('tablaDependencias', [   //ruta que realiza la consulta de las dependencias registradas
@@ -216,8 +208,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create', [
             'uses' => $controller . 'DependenciasController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una dependencia
             'as' => 'parqueadero.dependenciasCarpark.create'
-        ]);    
-        
+        ]);
+
         Route::post('store', [
             'uses' => $controller . 'DependenciasController@store',   //ruta que conduce al controlador para alamacenar los datos de la dependencia
             'as' => 'parqueadero.dependenciasCarpark.store'
@@ -236,7 +228,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('dependencia/update', [
             'uses' => $controller . 'DependenciasController@update',      //ruta que conduce al controlador para actulizar datos de la dependencia
             'as' => 'parqueadero.dependenciasCarpark.update'
-        ]);        
+        ]);
 
     });
 
@@ -244,7 +236,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 ///////////////////////INICIO Rutas Para Los Reportes///////////////////////////
 
-    Route::group(['prefix' => 'reportesCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
+    Route::group(['prefix' => 'reportesCarpark', 'middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
@@ -252,11 +244,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ReportesController@reporteDependencia',  //ruta que conduce al controlador para mostrar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.reporteDependencia'
         ]);
-        
+
         Route::get('DescargarReporteDependencia', [
             'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarReporteDependencia'
-        ]); 
+        ]);
 
         Route::get('reporteUsuariosRegistrados', [
             'uses' => $controller . 'ReportesController@reporteUsuariosRegistrados',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
@@ -266,7 +258,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('DescargarreporteUsuariosRegistrados', [
             'uses' => $controller . 'ReportesController@DescargarreporteUsuariosRegistrados',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarreporteUsuariosRegistrados'
-        ]); 
+        ]);
 
         Route::get('reporteMotosRegistradas', [
             'uses' => $controller . 'ReportesController@reporteMotosRegistradas',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
@@ -276,8 +268,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('DescargarreporteMotosRegistradas', [
             'uses' => $controller . 'ReportesController@DescargarreporteMotosRegistradas',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarreporteMotosRegistradas'
-        ]); 
-        
+        ]);
+
         Route::get('ReporteMotosDentro', [
             'uses' => $controller . 'ReportesController@ReporteMotosDentro',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
             'as' => 'parqueadero.reportesCarpark.ReporteMotosDentro'
@@ -286,8 +278,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('DescargarReporteMotosDentro', [
             'uses' => $controller . 'ReportesController@DescargarReporteMotosDentro',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarReporteMotosDentro'
-        ]); 
-        
+        ]);
+
         Route::get('ReporteHistorico', [
             'uses' => $controller . 'ReportesController@ReporteHistorico',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
             'as' => 'parqueadero.reportesCarpark.ReporteHistorico'
@@ -296,7 +288,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('DescargarReporteHistorico', [
             'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
-        ]);         
+        ]);
 
         Route::post('filtradoFecha', [
             'uses' => $controller . 'ReportesController@filtradoFecha',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
@@ -311,56 +303,56 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('filtradoCodigo', [
             'uses' => $controller . 'ReportesController@filtradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.filtradoCodigo'
-        ]);  
+        ]);
 
         Route::get('DescargarfiltradoCodigo/{id?}', [
             'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoCodigo'
         ]);
-        
+
         Route::post('filtradoPlaca', [
             'uses' => $controller . 'ReportesController@filtradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.filtradoPlaca'
-        ]);  
-        
+        ]);
+
         Route::get('DescargarfiltradoPlaca/{id?}', [
             'uses' => $controller . 'ReportesController@DescargarfiltradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoPlaca'
         ]);
 
-        
+
         Route::get('reporteUsuario/{id?}', [
             'uses' => $controller . 'ReportesController@reporteUsuario',  //ruta que conduce al controlador para ver el reporte de un usuario registrado
             'as' => 'parqueadero.reportesCarpark.reporteUsuario'
-        ]);  
+        ]);
 
         Route::get('descargarreporteUsuario/{id?}', [
             'uses' => $controller . 'ReportesController@descargarreporteUsuario',  //ruta que conduce al controlador para descargar el reporte de un usuario registrado
             'as' => 'parqueadero.reportesCarpark.descargarreporteUsuario'
-        ]);  
+        ]);
 
         Route::get('reporteMoto/{id?}', [
             'uses' => $controller . 'ReportesController@reporteMoto',  //ruta que conduce al controlador para ver el reporte de una moto registrada
             'as' => 'parqueadero.reportesCarpark.reporteMoto'
-        ]);  
+        ]);
 
         Route::get('descargarreporteMoto/{id?}', [
             'uses' => $controller . 'ReportesController@descargarreporteMoto',  //ruta que conduce al controlador para descargar el reporte una moto registrada
             'as' => 'parqueadero.reportesCarpark.descargarreporteMoto'
-        ]);  
+        ]);
 
     });
 
 ///////////////////////FIN Rutas Para Los Reportes//////////////////////////////
 
 ////////////////////Inicio Rutas para Ingresos //////////////////////////////////////
-    Route::group(['prefix' => 'ingresosCarpark','middleware' => ['permission:FUNC_CARPARK']], function () {
+    Route::group(['prefix' => 'ingresosCarpark', 'middleware' => ['permission:FUNC_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('index', [
             'uses' => $controller . 'IngresosController@index',
-            'as'   => 'parqueadero.ingresosCarpark.index',
+            'as' => 'parqueadero.ingresosCarpark.index',
         ]);
 
         Route::get('index/ajax', [
@@ -384,12 +376,12 @@ Route::group(['middleware' => ['auth']], function () {
             }
 
         ]);
-        
+
         Route::get('create', [
             'uses' => $controller . 'IngresosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
             'as' => 'parqueadero.ingresosCarpark.create'
-        ]); 
-        
+        ]);
+
         Route::post('verificar', [
             'uses' => $controller . 'IngresosController@verificar',  //ruta que conduce al controlador para mostrar el formulario de verificación de información
             'as' => 'parqueadero.ingresosCarpark.verificar'
@@ -399,17 +391,17 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'IngresosController@store',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
             'as' => 'parqueadero.ingresosCarpark.store'
         ]);
-        
+
         Route::get('confirmar/{id?}', [
             'uses' => $controller . 'IngresosController@confirmar',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
             'as' => 'parqueadero.ingresosCarpark.confirmar'
-        ]); 
-        
+        ]);
+
         Route::get('1e6548467c256f201b82f9f20dac907b/{id?}', [
             'uses' => $controller . 'IngresosController@confirmarTarjeta',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
             'as' => 'parqueadero.ingresosCarpark.1e6548467c256f201b82f9f20dac907b'
-        ]); 
-        
+        ]);
+
         Route::post('storeTarjeta', [
             'uses' => $controller . 'IngresosController@storeTarjeta',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
             'as' => 'parqueadero.ingresosCarpark.registroTarjeta'
@@ -420,13 +412,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 ///////////////////////Rutas Para Los Historiales//////////////////////////////
 
-     Route::group(['prefix' => 'historialesCarpark','middleware' => ['permission:ADMIN_CARPARK']], function () {
+    Route::group(['prefix' => 'historialesCarpark', 'middleware' => ['permission:ADMIN_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('index', [
             'uses' => $controller . 'HistorialController@index',
-            'as'   => 'parqueadero.historialesCarpark.index',
+            'as' => 'parqueadero.historialesCarpark.index',
         ]);
 
         Route::get('index/ajax', [
@@ -450,39 +442,39 @@ Route::group(['middleware' => ['auth']], function () {
             }
 
         ]);
-        
+
         Route::get('filtrarFecha', [
             'uses' => $controller . 'HistorialController@filtrarFecha',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
             'as' => 'parqueadero.historialesCarpark.filtrarFecha'
-        ]); 
-        
+        ]);
+
         Route::get('filtrarCodigo', [
             'uses' => $controller . 'HistorialController@filtrarCodigo',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
             'as' => 'parqueadero.historialesCarpark.filtrarCodigo'
-        ]); 
-        
+        ]);
+
         Route::get('filtrarPlaca', [
             'uses' => $controller . 'HistorialController@filtrarPlaca',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
             'as' => 'parqueadero.historialesCarpark.filtrarPlaca'
-        ]); 
+        ]);
 
     });
 ///////////////////////FIN Rutas Para Los Historiales//////////////////////////////
 
 ///////////////////////INICIO Rutas Para Los Correos//////////////////////////////
-     
-    Route::group(['prefix' => 'correosCarpark','middleware' => ['permission:FUNC_CARPARK']], function () {
+
+    Route::group(['prefix' => 'correosCarpark', 'middleware' => ['permission:FUNC_CARPARK']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
         Route::get('cerrarParqueadero', [
             'uses' => $controller . 'CorreosController@cerrarParqueadero',
-            'as'   => 'parqueaderos.correosCarpark.cerrarParqueadero',
+            'as' => 'parqueaderos.correosCarpark.cerrarParqueadero',
         ]);
 
         Route::post('enviarMail', [
             'uses' => $controller . 'CorreosController@enviarMail',
-            'as'   => 'parqueaderos.correosCarpark.enviarMail',
+            'as' => 'parqueaderos.correosCarpark.enviarMail',
         ]);
 
     });

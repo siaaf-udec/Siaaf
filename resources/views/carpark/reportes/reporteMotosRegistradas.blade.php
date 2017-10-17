@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>{{ env('APP_NAME') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all" />
-    <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/styleTalentoHumano.css') }}" media="all"/>
+    <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css"/>
 
     {{-- BEGIN FAVICONS --}}
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicons/apple-icon-57x57.png') }}">
@@ -16,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicons') }}/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicons') }}/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicons') }}/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/favicons') }}/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/favicons') }}/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicons') }}/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicons') }}/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicons') }}/favicon-16x16.png">
@@ -35,8 +36,9 @@
         <h2 class="name">{{ env('APP_NAME') }}</h2>
         <div> Calle 14 con Avenida 15 <i class="fa fa-map-signs"></i></div>
         <div>Universidad de Cundinamarca - Ext. Facatativá <i class="fa fa-map-marker" aria-hidden="true"></i></div>
-        <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i> </div>
-        <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i> </div>
+        <div> (+57 1) 892 0706 | 892 0707 <i class="fa fa-phone"></i></div>
+        <div><a href="mailto:unicundi@ucundinamarca.edu.co ">unicundi@ucundinamarca.edu.co</a> <i class="fa fa-at"></i>
+        </div>
     </div>
 </header>
 <main>
@@ -53,9 +55,9 @@
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarreporteMotosRegistradas') }}">
-                <i class="fa fa-download">
-                </i>Descargar reporte
-            </a>
+                    <i class="fa fa-download">
+                    </i>Descargar reporte
+                </a>
             </div>
         </div>
     </div>
@@ -63,11 +65,11 @@
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="no" >#</th>
+            <th class="no">#</th>
             <th class="unit"><b>Código Vehículo</b></th>
-            <th class="unit"><b>Placa</b></th>            
+            <th class="unit"><b>Placa</b></th>
             <th class="unit"><b>Marca</b></th>
-            <th class="unit"><b>Nombre Propietario</b></th>            
+            <th class="unit"><b>Nombre Propietario</b></th>
 
         </tr>
         </thead>
@@ -78,7 +80,7 @@
                 <td class="unit">{{$infoMoto->PK_CM_IdMoto}}</td>
                 <td class="desc">{{$infoMoto->CM_Placa}}</td>
                 <td class="unit">{{$infoMoto->CM_Marca}}</td>
-                <td class="desc">{{$infoMoto->Nombre.' '.$infoMoto->Apellido}}</td>                
+                <td class="desc">{{$infoMoto->Nombre.' '.$infoMoto->Apellido}}</td>
 
 
             </tr>

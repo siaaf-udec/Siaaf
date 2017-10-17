@@ -36,11 +36,11 @@ class Usuarios extends Model
     {
         return $this->hasOne(Estados::class, 'PK_CE_IdEstados', 'FK_CU_IdEstado');
     }
+
     public function relacionUsuariosMotos()
     {
         return $this->hasMany(Motos::class, 'FK_CM_CodigoUser', 'PK_CU_Codigo');
     }
 
-    
 
 }

@@ -23,7 +23,7 @@ class Motos extends Model
         'CM_UrlPropiedad',
         'CM_UrlSoat',
         'FK_CM_CodigoUser',
-    ];    
+    ];
 
     public function relacionMotosUsuarios()
     {

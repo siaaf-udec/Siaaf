@@ -1,77 +1,81 @@
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de confirmación de acción'])
-           @slot('actions', [
-           'link_cancel' => [
-               'link' => '',
-               'icon' => 'fa fa-arrow-left',
-                            ],
-            ])
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de confirmación de acción'])
+        @slot('actions', [
+        'link_cancel' => [
+            'link' => '',
+            'icon' => 'fa fa-arrow-left',
+                         ],
+         ])
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([$infoMoto], ['id'=>'form_confirm_ingreso', 'url' => '/forms'])  !!}
 
-                    <div class="form-body">
+                <div class="form-body">
 
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <img src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}" class="img-circle"
+                                 height="250" width="250">
+                        </div>
+
+                        <div class="col-md-6">
+                            <img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="" height="250"
+                                 width="250">
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            {!! Field:: text('CI_CodigoUser',$infoUsuario['PK_CU_Codigo'],['label'=>'Código del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                         ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+
+                            {!! Field:: text('CI_NombresUser',$infoUsuario['CU_Nombre1'].' '.$infoUsuario['CU_Apellido1'],['label'=>'Nombre del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+
+
+                        </div>
+                        <div class="col-md-6">
+
+                            {!! Field:: text('CI_Placa',$infoMoto['CM_Placa'],['label'=>'Placa del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                         ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+
+                            {!! Field:: text('CI_CodigoMoto',$infoMoto['PK_CM_IdMoto'],['label'=>'Código del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                         ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
                         <div class="row">
-
-                            <div class="col-md-6">
-                                <img src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}" class="img-circle" height="250" width="250">
-                            </div>
-
-                            <div class="col-md-6">
-                                <img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="" height="250" width="250">
-                            </div>
-
-                        </div>
-                        <br>
-                        <div class="row">
-
-                            <div class="col-md-6">
-
-                                {!! Field:: text('CI_CodigoUser',$infoUsuario['PK_CU_Codigo'],['label'=>'Código del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
-                                                             
-                                {!! Field:: text('CI_NombresUser',$infoUsuario['CU_Nombre1'].' '.$infoUsuario['CU_Apellido1'],['label'=>'Nombre del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                                 ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
-
-                                
-                            </div>                            
-                            <div class="col-md-6">
-
-                                {!! Field:: text('CI_Placa',$infoMoto['CM_Placa'],['label'=>'Placa del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
-
-                                {!! Field:: text('CI_CodigoMoto',$infoMoto['PK_CM_IdMoto'],['label'=>'Código del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-5">                                    
-                                    @permission('FUNC_CARPARK')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
-                                        Volver
-                                    </a>@endpermission
-                                    @permission('FUNC_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
-                                </div>
+                            <div class="col-md-12 col-md-offset-5">
+                                @permission('FUNC_CARPARK')<a href="javascript:;"
+                                                              class="btn btn-outline red button-cancel"><i
+                                            class="fa fa-angle-left"></i>
+                                    Volver
+                                </a>@endpermission
+                                @permission('FUNC_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
+                    </div>
                     {!! Form::close() !!}
+                </div>
             </div>
         </div>
-    </div>
-        @endcomponent
-    </div>
+    @endcomponent
+</div>
 
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-jQuery(document).ready(function() {  
-    
-    var createAccion = function () {
+    jQuery(document).ready(function () {
+
+        var createAccion = function () {
             return {
                 init: function () {
                     var route = '{{ route('parqueadero.ingresosCarpark.store') }}';
@@ -137,12 +141,12 @@ jQuery(document).ready(function() {
         });
 
 
-       $( "#link_cancel" ).on('click', function (e) {
-       var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
-       $(".content-ajax").load(route);
-       });
- 
+        $("#link_cancel").on('click', function (e) {
+            var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
+            $(".content-ajax").load(route);
+        });
 
-    }); 
+
+    });
 
 </script>

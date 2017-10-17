@@ -30,11 +30,10 @@ class CorreosController extends Controller
 
         return view('carpark.correos.cerrarPark');
     }
-    
+
     public function enviarMail(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
+        if ($request->ajax() && $request->isMethod('POST')) {
             $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
             for ($i = 0; $i < sizeof($infoEntradas); $i++) {
                 $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
@@ -51,14 +50,13 @@ class CorreosController extends Controller
                 'Correos Enviados Correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
-    
+
 }
