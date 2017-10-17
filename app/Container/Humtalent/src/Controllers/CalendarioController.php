@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Humtalent\src\Event;
 use App\Container\Humtalent\src\Notification;
+use App\Container\Humtalent\src\Asistent;
 
 
 class CalendarioController extends Controller
@@ -296,6 +297,7 @@ class CalendarioController extends Controller
                 ->delete();     //y se realiza la respectiva eliminación
             } else//si no es un recordatorio se deduce que es un evento
             {
+                Asistent::where('FK_TBL_Eventos_IdEvento',$request['eventId'])->delete();
                 Event::where('PK_EVNT_IdEvento', $request['eventId'])//se busca el registro a eliminar
                 ->delete();//se realiza la eliminación
             }
