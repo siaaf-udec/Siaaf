@@ -144,8 +144,12 @@ Route::group(['middleware' => ['role:Student_Gesap']], function () use ($control
 });
 Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
     
+    Route::post('actividades/documento', [
+        'as' => 'proyecto.actividades.upload',
+        'uses' => $controller.'StudentController@uploadActividad'
+    ]); 
     
-  
+    
 });
 /*DATATABLES RUTAS*/
 

@@ -57,7 +57,7 @@
                                                             @endpermission
                                                              @permission('Update_Final_Project_Gesap')
                                                             <div class="list-datetime"> 
-                                                                <a class="task-trash download" id=""  href="javascript:;">
+                                                                <a class="task-trash upload" id=""  href="javascript:;">
                                                                     <i class="fa fa-upload"></i>
                                                                 </a>
                                                             </div>
@@ -195,7 +195,7 @@
         <div class="row">
             <div class="col-md-12">
                     <!-- Modal -->
-                    <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="modal_documento" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
@@ -206,7 +206,7 @@
                                 <div class="modal-body">
                                                                       
                                     {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
-                                    
+                                    {!! Field::hidden('PK_actividad') !!}
                                     
                                     <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
                                     {!! Form::close() !!}
@@ -245,10 +245,17 @@ jQuery(document).ready(function () {
     $("#pendientes").html($("#pending li").size())
     
     $('#create').on('click', function (e) {
-            e.preventDefault();
-            $('#modal-create-activity').modal('toggle');
+        e.preventDefault();
+        $('#modal-create-activity').modal('toggle');
     });
     
+    $('.upload').on('click', function (e) {
+        e.preventDefault();
+        var parent = $(this).closest('li').attr('id');
+        $('input[name="PK_actividad"]').val(parent);
+        $('#modal_documento').modal('toggle');
+    });
+        
     var createActivity = function () {
             return{
                 init: function () {
@@ -301,54 +308,65 @@ jQuery(document).ready(function () {
     FormValidationMd.init(form,rules,false,createActivity());
     
     $('.delete').on('click', function (e) {
-            e.preventDefault();
-            var parent = $(this).closest('li').attr('id');
-        console.log(parent);
-            var route = '/gesap/actividades/'+$(this).closest('li').attr('id');
-            var type = 'DELETE';
-            var async = async || false;
-            swal({
-                    title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar la actividad seleccionado?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "De acuerdo",
-                    cancelButtonText: "Cancelar",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        $.ajax({
-                            url: route,
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    //$('.panel-collapse').ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    $('#'+parent).remove();
-                                    
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'error') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
+        e.preventDefault();
+        var parent = $(this).closest('li').attr('id');
+        var route = '/gesap/actividades/'+$(this).closest('li').attr('id');
+        var type = 'DELETE';
+        var async = async || false;
+        swal({
+            title: "¿Esta seguro?",
+            text: "¿Esta seguro de eliminar la actividad seleccionado?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "De acuerdo",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: true,
+            closeOnCancel: false
+        },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        processData: false,
+                        async: async,
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                //$('.panel-collapse').ajax.reload();
+                                UIToastr.init(xhr, response.title, response.message);
+                                $('#'+parent).remove();
                             }
-                        });
-                        swal.close();
-                    } else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
-                    }
-                });
-
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                    swal.close();
+                } else {
+                    swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                }
+            });
         });
     
+    var documento = function () {
+          return {
+              init: function () {
+                    alert('Seguro que desea subir este archivo');
+              }
+          };
+        };
+        var route = '{{ route("proyecto.actividades.upload") }}';
+    
+        var formatfile = 'image/*,.jpeg,.pdf,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.PDF';
+        var numfile = 1;
+        
+       $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(), name));
+    
 });
-</script>
+</script>   

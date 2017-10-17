@@ -18,7 +18,10 @@ class CreateRespuestaTable extends Migration
             $table->string('RPST_RMin');
             $table->string('RPST_Requerimientos');
             $table->integer('FK_TBL_Observaciones_Id')->unsigned();
-            $table->foreign('FK_TBL_Observaciones_Id')->references('PK_BVCS_IdObservacion')->on('TBL_Observaciones')->onDelete('cascade');
+            $table->foreign('FK_TBL_Observaciones_Id')
+                ->references('PK_BVCS_IdObservacion')
+                ->on('TBL_Observaciones')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ class CreateRespuestaTable extends Migration
      */
     public function down()
     {
-     Schema::dropIfExists('TBL_Respuesta');
+        Schema::dropIfExists('TBL_Respuesta');
     }
 }

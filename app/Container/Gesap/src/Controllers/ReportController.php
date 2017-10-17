@@ -89,17 +89,23 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function juryProject( $jury)
+    public function juryProject($jury)
     {
-        $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'conceptofinal',
-                   'encargados' => function ($encargados) use ($jury) {
+        $proyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
+            ->with(['radicacion',
+                    'director',
+                    'jurado1',
+                    'jurado2',
+                    'estudiante1',
+                    'estudiante2',
+                    'conceptofinal',
+                    'encargados' => function ($encargados) use ($jury) {
                         $encargados->where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
                         });
                         $encargados->where('FK_developer_user_id', '=', $jury);
-            }])
+                    }])
             ->get();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos
@@ -113,28 +119,22 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function directorProject($director)
+    public function directorProject(Resquest $request)
     {
         $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2',
-                   'encargados' => function ($encargados) use ($request) {
+            ->with(['radicacion',
+                    'director',
+                    'jurado1',
+                    'jurado2',
+                    'estudiante1',
+                    'estudiante2',
+                    'encargados' => function ($encargados) use ($request) {
                         $encargados->where('E.NCRD_Cargo', '=', "Director");
                         $encargados->where('FK_developer_user_id', '=', $request->user()->id);
-            }])
+                    }])
             ->get();
         return view($this->path.'PDF.AnteproyectosPDF', [
             'proyectos'=>$proyectos
         ]);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

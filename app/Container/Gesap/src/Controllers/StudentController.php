@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
+use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\File;
@@ -52,7 +53,7 @@ class StudentController extends Controller
      */
     public function actividad($id, Request $request)
     {
-        if ($request->ajax() && $request->isMethod('GET')){
+        if ($request->ajax() && $request->isMethod('GET')) {
             $anteproyecto=Anteproyecto::select('*')
                     ->where('PK_NPRY_IdMinr008', '=', $id)
                     ->with(['radicacion',
@@ -73,6 +74,22 @@ class StudentController extends Controller
     }
     
     
+    public function uploadActividad(Request $request)
+    {
+        
+        $date = Carbon::now();
+        $date= $date->format('his');
+        $files = $request->file('file');
+        $Ubicacion="gesap/proyecto/".$request->get('PK_actividad');
+        foreach ($files as $file) {
+            $nombre=$date."_".$file->getClientOriginalName();
+            \Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
+            $documento = Documentos::findOrFail($request->get('PK_actividad'));
+            $documento->DMNT_Archivo =$nombre;
+            $documento->save();
+        }
+        return $request;
+    }
     
    
     
@@ -88,42 +105,62 @@ class StudentController extends Controller
         $anteproyectos = Encargados::where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Estudiante 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Estudiante 2");
-                        })
-                        ->where('FK_Developer_User_Id', '=', $request->user()->id)
-                        ->with(['anteproyecto' => function ($proyecto) {
-                            $proyecto->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2','conceptoFinal','proyecto']);
-                        }])
-                        ->get();
+        })
+            ->where('FK_Developer_User_Id', '=', $request->user()->id)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'conceptoFinal',
+                                 'proyecto']);
+            }])
+            ->get();
         
-        return Datatables::of($anteproyectos)->addColumn('NPRY_Estado', function ($users){
-                    if(!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')){
-                        return "<span class='label label-sm label-warning'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                    }else
-                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')){
-                            return "<span class='label label-sm label-warning'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                        }else{
-                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')){
-                                return "<span class='label label-sm label-success'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                            }else{
-                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')){
-                                    return "<span class='label label-sm label-danger'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                                }else{
-                                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')){
-                                        return "<span class='label label-sm label-danger'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                                    }else{
-                                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')){
-                                            return "<span class='label label-sm label-success'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                                        }else{
-                                            return "<span class='label label-sm label-info'>".$users->anteproyecto->NPRY_Estado. "</span>";
-                                        }   
-                                    }
-                                    
+        return Datatables::of($anteproyectos)->addColumn('NPRY_Estado', function ($users) {
+            if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
+                return "<span class='label label-sm label-warning'>"
+                    .$users->anteproyecto->NPRY_Estado
+                    ."</span>";
+            } else {
+                if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
+                    return "<span class='label label-sm label-warning'>"
+                        .$users->anteproyecto->NPRY_Estado
+                        ."</span>";
+                } else {
+                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
+                        return "<span class='label label-sm label-success'>"
+                            .$users->anteproyecto->NPRY_Estado
+                            ."</span>";
+                    } else {
+                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
+                            return "<span class='label label-sm label-danger'>"
+                                .$users->anteproyecto->NPRY_Estado
+                                ."</span>";
+                        } else {
+                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
+                                return "<span class='label label-sm label-danger'>"
+                                    .$users->anteproyecto->NPRY_Estado
+                                    ."</span>";
+                            } else {
+                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
+                                    return "<span class='label label-sm label-success'>"
+                                        .$users->anteproyecto->NPRY_Estado
+                                        ."</span>";
+                                } else {
+                                    return "<span class='label label-sm label-info'>"
+                                        .$users->anteproyecto->NPRY_Estado
+                                        ."</span>";
                                 }
-                                
                             }
                         }
-                })
-                ->rawColumns(['NPRY_Estado'])
-                ->addIndexColumn()->make(true);
+                    }
+                }
+            }
+        })
+            ->rawColumns(['NPRY_Estado'])
+            ->addIndexColumn()->make(true);
     }
 }

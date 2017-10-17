@@ -17,10 +17,13 @@ class CreateEncargadosTable extends Migration
             $table->increments('PK_NCRD_IdCargo');
             
             $table->integer('FK_TBL_Anteproyecto_Id')->unsigned();
-            $table->foreign('FK_TBL_Anteproyecto_Id')->references('PK_NPRY_IdMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
+            $table->foreign('FK_TBL_Anteproyecto_Id')
+                ->references('PK_NPRY_IdMinr008')
+                ->on('TBL_Anteproyecto')
+                ->onDelete('cascade');
             
             $table->integer('FK_Developer_User_Id')->unsigned();
-            $table->string('NCRD_Cargo',90);
+            $table->string('NCRD_Cargo', 90);
             
             $table->timestamps();
         });

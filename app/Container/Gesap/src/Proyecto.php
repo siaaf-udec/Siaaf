@@ -19,7 +19,7 @@ class Proyecto extends Model
         return $this->belongsto(Anteproyecto::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
     
-     public function documentos()
+    public function documentos()
     {
         return $this->hasMany(Documentos::class, 'FK_TBL_Proyecto_Id', 'PK_PRYT_IdProyecto');
     }

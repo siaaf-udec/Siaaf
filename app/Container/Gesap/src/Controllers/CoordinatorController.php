@@ -420,34 +420,47 @@ class CoordinatorController extends Controller
             ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
             ->get();
         return Datatables::of($anteproyectos)
-                ->addColumn('NPRY_Estado', function ($users){
-                    if(!strcmp($users->NPRY_Estado, 'EN REVISION')){
-                        return "<span class='label label-sm label-warning'>".$users->NPRY_Estado. "</span>";
-                    }else
-                        if (!strcmp($users->NPRY_Estado, 'PENDIENTE')){
-                            return "<span class='label label-sm label-warning'>".$users->NPRY_Estado. "</span>";
-                        }else{
-                            if (!strcmp($users->NPRY_Estado, 'APROBADO')){
-                                return "<span class='label label-sm label-success'>".$users->NPRY_Estado. "</span>";
-                            }else{
-                                if (!strcmp($users->NPRY_Estado, 'APLAZADO')){
-                                    return "<span class='label label-sm label-danger'>".$users->NPRY_Estado. "</span>";
-                                }else{
-                                    if (!strcmp($users->NPRY_Estado, 'RECHAZADO')){
-                                        return "<span class='label label-sm label-danger'>".$users->NPRY_Estado. "</span>";
-                                    }else{
-                                        if (!strcmp($users->NPRY_Estado, 'COMPLETADO')){
-                                            return "<span class='label label-sm label-success'>".$users->NPRY_Estado. "</span>";
-                                        }else{
-                                            return "<span class='label label-sm label-info'>".$users->NPRY_Estado. "</span>";
-                                        }   
+            ->addColumn('NPRY_Estado', function ($users) {
+                if (!strcmp($users->NPRY_Estado, 'EN REVISION')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->NPRY_Estado
+                            ."</span>";
+                } else {
+                    if (!strcmp($users->NPRY_Estado, 'PENDIENTE')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->NPRY_Estado
+                            ."</span>";
+                    } else {
+                        if (!strcmp($users->NPRY_Estado, 'APROBADO')) {
+                            return "<span class='label label-sm label-success'>"
+                                .$users->NPRY_Estado
+                                ."</span>";
+                        } else {
+                            if (!strcmp($users->NPRY_Estado, 'APLAZADO')) {
+                                return "<span class='label label-sm label-danger'>"
+                                    .$users->NPRY_Estado
+                                    ."</span>";
+                            } else {
+                                if (!strcmp($users->NPRY_Estado, 'RECHAZADO')) {
+                                    return "<span class='label label-sm label-danger'>"
+                                        .$users->NPRY_Estado
+                                        ."</span>";
+                                } else {
+                                    if (!strcmp($users->NPRY_Estado, 'COMPLETADO')) {
+                                        return "<span class='label label-sm label-success'>"
+                                            .$users->NPRY_Estado
+                                            ."</span>";
+                                    } else {
+                                        return "<span class='label label-sm label-info'>"
+                                            .$users->NPRY_Estado
+                                            ."</span>";
                                     }
-                                    
                                 }
-                                
                             }
                         }
-                })
+                    }
+                }
+            })
                 ->rawColumns(['NPRY_Estado'])
                 ->addIndexColumn()->make(true);
         

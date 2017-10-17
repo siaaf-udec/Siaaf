@@ -13,11 +13,14 @@ class CreateProyectoTable extends Migration
      */
     public function up()
     {
-            Schema::connection('gesap')->create('TBL_Proyecto', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_Proyecto', function (Blueprint $table) {
             $table->increments('PK_PRYT_IdProyecto');
-            $table->string('PRYT_Estado',90)->default("EN CURSO");
+            $table->string('PRYT_Estado', 90)->default("EN CURSO");
             $table->integer('FK_TBL_Anteproyecto_Id')->unsigned();
-            $table->foreign('FK_TBL_Anteproyecto_Id')->references('PK_NPRY_IdMinr008')->on('TBL_Anteproyecto')->onDelete('cascade');
+            $table->foreign('FK_TBL_Anteproyecto_Id')
+                ->references('PK_NPRY_IdMinr008')
+                ->on('TBL_Anteproyecto')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateProyectoTable extends Migration
      */
     public function down()
     {
-     Schema::dropIfExists('TBL_Proyecto');
+        Schema::dropIfExists('TBL_Proyecto');
     }
 }
