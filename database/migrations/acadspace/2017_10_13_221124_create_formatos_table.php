@@ -15,10 +15,10 @@ class CreateFormatosTable extends Migration
     {
         Schema::connection('acadspace')->create('TBL_Formatos', function (Blueprint $table) {
             $table->increments('PK_FAC_Id_Formato')->unsigned()->unique();
-            $table->string('FAC_Titulo_Doc',50);
-            $table->string('FAC_Descripcion_Doc',255);
-            $table->string('FAC_Nombre_Doc',255);
-            $table->string('FAC_Correo',100);
+            $table->string('FAC_Titulo_Doc',50)->nullable();
+            $table->string('FAC_Descripcion_Doc',255)->nullable();
+            $table->string('FAC_Nombre_Doc',255)->nullable();
+            $table->string('FAC_Correo',100)->nullable();
             $table->integer('FAC_Estado')->unsigned();
             $table->integer('FK_FAC_Id_Secretaria')->unsigned();
             $table->timestamps();

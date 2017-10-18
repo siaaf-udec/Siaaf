@@ -24,6 +24,7 @@ class formatosController extends Controller
 {
 
     /**
+     * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -33,6 +34,7 @@ class formatosController extends Controller
     }
 
     /**
+     * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function indexajax()
@@ -42,6 +44,7 @@ class formatosController extends Controller
     }
 
     /**
+     * Funcion para mostrar la vista de solicitudes de formatos academicos para el administrador
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function listSol()
@@ -51,34 +54,16 @@ class formatosController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
-     */
-    public function create(Request $request)
-    {
-
-        //Recibe peticion Ajax
-        if ($request->ajax() && $request->isMethod('GET')) {
-            //Carga formulario para crear solicitud
-            return view('acadspace.FormatosAcademicos.registroSolicitudFormAcad');
-
-        }
-        //Envia notificacion de no recibir peticion ajax
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
-
 
     /**
+     * Funcion para registrar un nuevo formato academico mediante ajax
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        /* $path = public_path()."storage.app.public.Acadspace.Formatos.";
+         $files = $request->file('file');*/
         $id = Auth::id();
         if ($request->ajax() && $request->isMethod('POST')) {
             $model = new formatos();//Crea nuevo modelo
@@ -101,8 +86,8 @@ class formatosController extends Controller
 
 
 
-
     /**
+     * Funcion para editar el estado de la solicitud, 0 => sin revisar; 1=> editada
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\Response
@@ -127,6 +112,7 @@ class formatosController extends Controller
 
 
     /**
+     * Funcion para descargar el archivo que se ha cargado en la solicitud
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -143,6 +129,7 @@ class formatosController extends Controller
     }
 
     /**
+     * funcion para cargar las solicitudes realizadas y saber el estado actual en el que esta
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -182,6 +169,7 @@ class formatosController extends Controller
     }
 
     /**
+     * funcion para cargar las solicitudes existentes sin editar en la tabla
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
