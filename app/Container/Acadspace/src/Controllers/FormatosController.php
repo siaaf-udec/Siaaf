@@ -71,7 +71,10 @@ class formatosController extends Controller
             foreach ($archivos as $archivo) {
                 $url = Storage::disk('acadspace')->putFile('formatos', $archivo);
             }
+            $model->FAC_Titulo_Doc = $request['titulo'];
+            $model->FAC_Descripcion_Doc = $request['descripcion'];
             $model->FAC_Nombre_Doc = $url;
+            $model->FAC_Correo = $request['email'];
             $model->FAC_Estado = 0;
             $model->FK_FAC_Id_Secretaria = $id;
             $model->save();
@@ -82,8 +85,11 @@ class formatosController extends Controller
             );
 
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
-
 
 
     /**
