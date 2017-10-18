@@ -18,6 +18,9 @@ use App\Container\Acadspace\src\Solicitud;
 use App\Container\Acadspace\src\Software;
 use App\Container\Acadspace\src\Aulas;
 use App\Container\Acadspace\src\Comentarios;
+use App\Container\Users\src\User;
+use App\Notifications\HeaderSiaaf;
+
 
 
 class SolicitudController extends Controller
@@ -342,6 +345,7 @@ class SolicitudController extends Controller
 
     /**
      * Funcion para aprobar solicitud retorna un mensaje ajax
+     * y envia notificacion al usuario
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -359,6 +363,16 @@ class SolicitudController extends Controller
             $coment->COM_Comentario = "Ninguna";
             $coment->FK_COM_Id_Solicitud = $request['id_solicitud'];
             $coment->save();
+
+
+            $user = User::find($solicitud->FK_SOL_Id_Docente);
+            $data = [
+                'url' => url('espacios-academicos/solacad/indexDoc'),
+                'description' => '¡Tiene una solicitud aprobada!',
+                'image' => 'assets/layouts/layout2/img/search_icon_light.png'
+            ];
+            $user->notify(new HeaderSiaaf($data)); // se crea la notificación
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Solicitud aprobada y asignada correctamente.'
@@ -392,6 +406,14 @@ class SolicitudController extends Controller
             $coment->COM_Comentario = $request['anotacion'];
             $coment->FK_COM_Id_Solicitud = $request['id_solicitud'];
             $coment->save();
+
+            $user = User::find($solicitud->FK_SOL_Id_Docente);
+            $data = [
+                'url' => url('espacios-academicos/solacad/indexDoc'),
+                'description' => '¡Tiene una solicitud rechazada!',
+                'image' => 'assets/layouts/layout2/img/search_icon_light.png'
+            ];
+            $user->notify(new HeaderSiaaf($data)); // se crea la notificación
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

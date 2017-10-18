@@ -183,7 +183,6 @@
 
     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
             type="text/javascript"></script>
-    <script src="{{ asset('assets/main/acadspace/js/html2canvas.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"

@@ -69,6 +69,8 @@ class ReporteController extends Controller
 
 
     /**
+     * Recibe el formato de fecha del data_range_picker
+     * y lo cambia por el formato usado en BD
      * @param $fech
      * @return string
      */
@@ -83,6 +85,10 @@ class ReporteController extends Controller
 
 
     /**
+     * Obtiene los rangos de fecha, el nombre del laboratorio, el id de la carrera
+     * (1-Sistemas, 2-Ambiental, 3-Agronomia, 4-Administracion, 5-Contaduria, 6-Psicologia)
+     * y el id de tipo de practica (1-libre, 2-grupal)
+     * para retornar la cantidad de estudiantes que han ingresado
      * @param $fech1
      * @param $fech2
      * @param $id_Lab
@@ -104,6 +110,10 @@ class ReporteController extends Controller
     }
 
     /**
+     * Obtiene los rangos de fecha, el nombre del laboratorio, el id de la carrera
+     * (1-Sistemas, 2-Ambiental, 3-Agronomia, 4-Administracion, 5-Contaduria, 6-Psicologia)
+     * y el id de tipo de practica (1-libre, 2-grupal)
+     * para retornar la cantidad de estudiantes que han ingresado
      * @param $fech1
      * @param $fech2
      * @param $id_Lab
@@ -130,6 +140,9 @@ class ReporteController extends Controller
     }
 
     /**
+     * Recibe los campos de la vista ReportesIndexEst y llama las funcion "changeform" para obtener
+     * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
+     * que han ingresado al laboratorio elegido
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -176,39 +189,11 @@ class ReporteController extends Controller
     }
 
 
-    /**
-     * @param $codigo
-     * @return int
-     */
-    public function obtenerCarrera($codigo)
-    {
-
-        $rest = substr($codigo, -8, -6); // devuelve "d"
-
-        if ($rest == '61') {
-            $id_carr = 1;//Ing Sistemas
-        }
-        if ($rest == '63') {
-            $id_carr = 2;//Ing Ambiental
-        }
-        if ($rest == '60') {
-            $id_carr = 3;//Ing Agronomica
-        }
-        if ($rest == '10') {
-            $id_carr = 4;//Administracion
-        }
-        if ($rest == '14') {
-            $id_carr = 5;//Contaduria
-        }
-        if ($rest == '40') {
-            $id_carr = 6;//Piscologia
-        }
-
-        return $id_carr;
-    }
-
 
     /**
+     * Recibe los campos de la vista ReportesIndexCarr y llama las funcion "changeform" para obtener
+     * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
+     * que han ingresado a todos los espacios academicos
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -266,6 +251,9 @@ class ReporteController extends Controller
     }
 
     /**
+     * Recibe los campos de la vista ReportesIndex y llama las funcion "changeform" para obtener
+     * la fecha en el formato necesario. Obtiene la cantidad de docentes que han ingresado
+     * al laboratorio elegido entre las fechas proporcionadas
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -305,23 +293,6 @@ class ReporteController extends Controller
         );
 
 
-    }
-
-
-    /**
-     * @param $model
-     * @param $id
-     * @return int
-     */
-    public function obtCont($model, $id)
-    {
-        $cont = 0;
-        foreach ($model as $user) {
-            if ($user->id_carrera == $id) {
-                $cont = $cont + 1;
-            }
-        }
-        return $cont;
     }
 
 

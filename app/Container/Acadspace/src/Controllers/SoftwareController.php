@@ -15,6 +15,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 
+
+
 class SoftwareController extends Controller
 {
 
@@ -35,13 +37,17 @@ class SoftwareController extends Controller
      */
     public function registroSoftware(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {
 
+
+        if ($request->ajax() && $request->isMethod('POST')) {
             Software::create($request->all());
             return AjaxResponse::success(
                 '¡Registro exitoso!',
                 'Software registrado correctamente.'
+
             );
+
+
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

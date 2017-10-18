@@ -79,43 +79,27 @@ class formatosController extends Controller
      */
     public function store(Request $request)
     {
-        //Recibe peticion Ajax
+        $id = Auth::id();
         if ($request->ajax() && $request->isMethod('POST')) {
-
             $model = new formatos();//Crea nuevo modelo
-            $id = Auth::id();//Trae ID usuario
-            $archivo = $request->file('path');//Recibe archivo a cargar
-            if ($archivo !== null) {
-                $url = Storage::disk('acadspace')->putFile('formatos', $archivo);;//Guarda el archivo
-                //Asigna valores a los campos
-                $model->FAC_Nombre_Doc = $url;
-                $model->FAC_Titulo_Doc = $request['nombre'];
-                $model->FAC_Descripcion_Doc = $request['descripcion'];
-                $model->FK_FAC_Id_Secretaria = $id;
-                $model->FAC_Correo = $request['correo'];
-                $model->FAC_Estado = 0;
-                $model->save(); //Registra los campos
-
-                //Envio de correo
-                Mail::to($request['correo'])->send(new EmailAcadspace("Nuevo formato academico", "Ha recibido un nuevo formato academico"));
-
-                return AjaxResponse::success(
-                //Envia notificacion de registro satisfactorio
-                    '¡Bien hecho!',
-                    'Formato registrado correctamente.'
-                );
+            $archivos = $request->file('file');
+            foreach ($archivos as $archivo) {
+                $url = Storage::disk('acadspace')->putFile('formatos', $archivo);
             }
-
+            $model->FAC_Nombre_Doc = $url;
+            $model->FAC_Estado = 0;
+            $model->FK_FAC_Id_Secretaria = $id;
+            $model->save();
+            return AjaxResponse::success(
+            //Envia notificacion de registro satisfactorio
+                '¡Bien hecho!',
+                'Formato registrado correctamente.'
+            );
 
         }
-        //Envia notificacion de no recibir peticion ajax
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-
     }
+
+
 
 
     /**

@@ -23,7 +23,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers', 'title' => 'Gestion Aulas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers', 'title' => 'Gestión Aulas'])
             <div class="clearfix">
             </div>
             <br>
@@ -81,7 +81,7 @@
                                     ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
 
                                     {!! Field::select('espacios',
-                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                        ['Aulas de Cómputo' => 'Aulas de Cómputo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
                                         null,
                                         [ 'label' => 'Seleccionar un espacio']) !!}
 
