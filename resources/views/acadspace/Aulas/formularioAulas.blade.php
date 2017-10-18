@@ -81,7 +81,7 @@
                                     ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
 
                                     {!! Field::select('espacios',
-                                        ['Aulas de Cómputo' => 'Aulas de Cómputo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
                                         null,
                                         [ 'label' => 'Seleccionar un espacio']) !!}
 
