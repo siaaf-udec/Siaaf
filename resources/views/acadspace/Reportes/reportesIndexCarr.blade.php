@@ -23,7 +23,7 @@
             <div class="row">
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.report.repCarr'], 'target'=>'_blank']) !!}
+                    {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'target'=>'_blank', 'url' => '/forms']) !!}
                     <div class="form-body">
                         {!! Field::select('SOL_carrera',
                                       ['1' => 'Ingeniería de Sistemas', '2' => 'Ingeniería Ambiental',
@@ -82,6 +82,38 @@
         $(document).ready(function () {
             $('input[name="date_range"]').daterangepicker();
 
+            var createUsers = function () {
+                return {
+                    init: function () {
+
+                        var route = '{{ route('espacios.academicos.report.repCarr') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('SOL_carrera', $('select[name="SOL_carrera"]').val());
+                        formData.append('date_range', $('input:text[name="date_range"]').val());
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: false
+                        });
+                    }
+                }
+            };
+            var form_edit = $('#form_sol_create');
+            var rules_edit = {
+                SOL_carrera: {required: true},
+                date_range: {required: true}
+
+            };
+            FormValidationMd.init(form_edit, rules_edit, false, createUsers());
         });
 
 

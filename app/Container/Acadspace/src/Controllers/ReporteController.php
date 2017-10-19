@@ -150,44 +150,45 @@ class ReporteController extends Controller
      */
     public function cargarRepEst(Request $request)
     {
-        $data = $request->all();
-        $code = $data['date_range'];
-        $lab = $request['SOL_laboratorios'];
-        $f2 = substr($code, -10);
-        $f1 = substr($code, -23, -13);
-        $fech1 = $this->changeForm($f1);
-        $fech2 = $this->changeForm($f2);
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
-        $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1, 2);
-        $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2, 1);
-        $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2, 2);
-        $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3, 1);
-        $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 3, 2);
-        $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4, 1);
-        $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4, 2);
-        $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5, 1);
-        $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5, 2);
-        $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6, 1);
-        $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6, 2);
+        if ($request->ajax() && $request->isMethod('POST')) {
 
-        $totalTot = $totSistemasLibre + $totSistemasGrup + $totAmbientalLibre + $totAmbientalGrup
-            + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
-            + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup;
+            $code = $request['date_range'];
+            $lab = $request['SOL_laboratorios'];
 
-        $cont = 1;
-        return view('acadspace.Reportes.ReportesEstudiantes',
-            compact('totSistemasLibre', 'totSistemasGrup',
-                'totAmbientalLibre', 'totAmbientalGrup',
-                'totAgronomicaLibre', 'totAgronomicaGrup',
-                'totAdminLibre', 'totAdminGrup',
-                'totContaduriaLibre', 'totContaduriaGrup',
-                'totPiscologiaLibre', 'totPiscologiaaGrup',
-                'totalTot', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code')
-        );
+            $f2 = substr($code, -10);
+            $f1 = substr($code, -23, -13);
+            $fech1 = $this->changeForm($f1);
+            $fech2 = $this->changeForm($f2);
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
+            $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1, 2);
+            $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2, 1);
+            $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2, 2);
+            $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3, 1);
+            $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 3, 2);
+            $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4, 1);
+            $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4, 2);
+            $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5, 1);
+            $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5, 2);
+            $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6, 1);
+            $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6, 2);
 
+            $totalTot = $totSistemasLibre + $totSistemasGrup + $totAmbientalLibre + $totAmbientalGrup
+                + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
+                + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup;
 
+            $cont = 1;
+            return view('acadspace.Reportes.ReportesEstudiantes',
+                compact('totSistemasLibre', 'totSistemasGrup',
+                    'totAmbientalLibre', 'totAmbientalGrup',
+                    'totAgronomicaLibre', 'totAgronomicaGrup',
+                    'totAdminLibre', 'totAdminGrup',
+                    'totContaduriaLibre', 'totContaduriaGrup',
+                    'totPiscologiaLibre', 'totPiscologiaaGrup',
+                    'totalTot', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code')
+            );
+        }
     }
 
 
@@ -201,55 +202,57 @@ class ReporteController extends Controller
      */
     public function reporCarrera(Request $request)
     {
-        $data = $request->all();
-        $fecha = $data['date_range'];
-        $carr = $request['SOL_carrera'];
-        switch ($carr) {
-            case 1:
-                $carrera = 'Ingeniería de Sistemas';
-                break;
-            case 2:
-                $carrera = 'Ingeniería Ambiental';
-                break;
-            case 3:
-                $carrera = 'Ingeniería Agronomica';
-                break;
-            case 4:
-                $carrera = 'Administración';
-                break;
-            case 5:
-                $carrera = 'Psicología';
-                break;
-            case 6:
-                $carrera = 'Contaduría';
-                break;
+        if ($request->ajax() && $request->isMethod('POST')) {
 
+            $fecha = $request['date_range'];
+            $carr = $request['SOL_carrera'];
+
+            switch ($carr) {
+                case 1:
+                    $carrera = 'Ingeniería de Sistemas';
+                    break;
+                case 2:
+                    $carrera = 'Ingeniería Ambiental';
+                    break;
+                case 3:
+                    $carrera = 'Ingeniería Agronomica';
+                    break;
+                case 4:
+                    $carrera = 'Administración';
+                    break;
+                case 5:
+                    $carrera = 'Psicología';
+                    break;
+                case 6:
+                    $carrera = 'Contaduría';
+                    break;
+
+            }
+            $f2 = substr($fecha, -10);
+            $f1 = substr($fecha, -23, -13);
+
+            $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+            $fech2 = $this->changeForm($f2);
+
+            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+            $time = date("h:i A");
+
+            $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Aulas de computo', $carr, 1);
+            $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Aulas de computo', $carr, 2);
+            $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Laboratorio psicologia', $carr, 1);
+            $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Laboratorio psicologia', $carr, 2);
+            $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 1);
+            $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 2);
+
+
+            $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
+
+            $cont = 1;
+            return view('acadspace.Reportes.reportesCarrera',
+                compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
+                    'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
+            );
         }
-        $f2 = substr($fecha, -10);
-        $f1 = substr($fecha, -23, -13);
-
-        $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
-        $fech2 = $this->changeForm($f2);
-
-        $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
-        $time = date("h:i A");
-
-        $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Aulas de computo', $carr, 1);
-        $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Aulas de computo', $carr, 2);
-        $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Laboratorio psicologia', $carr, 1);
-        $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Laboratorio psicologia', $carr, 2);
-        $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 1);
-        $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 2);
-
-
-        $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
-
-        $cont = 1;
-        return view('acadspace.Reportes.reportesCarrera',
-            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
-                'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
-        );
-
     }
 
     /**
