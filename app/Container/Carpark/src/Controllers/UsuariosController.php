@@ -294,12 +294,12 @@ class UsuariosController extends Controller
                 [
                     'infoUsuario' => $infoUsuario,
                 ]);
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 }

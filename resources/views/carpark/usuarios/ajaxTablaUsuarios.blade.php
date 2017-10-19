@@ -5,14 +5,14 @@
             <div class="col-md-12">
                 <div class="actions">
                     @permission('CREATE_USER_CARPARK')<a href="javascript:;"
-                                                   class="btn btn-simple btn-success btn-icon create"
-                                                   title="Registar nuevo usuario">
+                                                         class="btn btn-simple btn-success btn-icon create"
+                                                         title="Registar nuevo usuario">
                         <i class="fa fa-plus">
                         </i>Nuevo
                     </a>@endpermission
                     @permission('REPORT_USER_CARPARK')<a href="javascript:;"
-                                                   class="btn btn-simple btn-success btn-icon reports"
-                                                   title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
+                                                         class="btn btn-simple btn-success btn-icon reports"
+                                                         title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         de Usuarios</a>@endpermission
                     <br>
                 </div>

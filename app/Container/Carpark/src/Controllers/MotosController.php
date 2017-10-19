@@ -4,7 +4,6 @@ namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
-use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -52,10 +51,9 @@ class MotosController extends Controller
     public function create(Request $request, $id)//
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $codigoUsuario = $id;
             return view('carpark.motos.registroMoto',
                 [
-                    'codigoUsuario' => $codigoUsuario,
+                    'codigoUsuario' => $id,
                 ]);
         }
 
@@ -142,7 +140,7 @@ class MotosController extends Controller
      * Se realiza la actualización de los datos de un vehículo.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
     {
@@ -169,7 +167,7 @@ class MotosController extends Controller
      *
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
@@ -192,7 +190,7 @@ class MotosController extends Controller
      * Muestra el perfil de un vehículo especifico.
      *
      * @param  int $id
-     * @param  int $request
+     * @param Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verMoto(Request $request, $id)

@@ -80,14 +80,14 @@ class IngresosController extends Controller
                     'No se pudo completar tu solicitud-valores inexistentes.',
                     $IdError
                 );
-            } else {
-                $idMoto = $infoMoto[0]['PK_CM_IdMoto'];
-                return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'Datos encontrados.',
-                    $idMoto
-                );
             }
+
+            $idMoto = $infoMoto[0]['PK_CM_IdMoto'];
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos encontrados.',
+                $idMoto
+            );
 
 
         }
@@ -177,24 +177,24 @@ class IngresosController extends Controller
                     '¡Bien hecho!',
                     'Ingreso almacenados correctamente.'
                 );
-            } else {
-                $generadorID = date_create();
-                Historiales::create([
-                    'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
-                    'CH_NombresUser'    => $request['CI_NombresUser'],
-                    'CH_CodigoUser'     => $request['CI_CodigoUser'],
-                    'CH_Placa'          => $request['CI_Placa'],
-                    'CH_CodigoMoto'     => $request['CI_CodigoMoto'],
-                    'CH_FHentrada'      => $infoIngresos[0]['created_at'],
-                ]);
-
-                Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
-
-                return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'Salida almacenada correctamente.'
-                );
             }
+
+            $generadorID = date_create();
+            Historiales::create([
+                'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+                'CH_NombresUser' => $request['CI_NombresUser'],
+                'CH_CodigoUser' => $request['CI_CodigoUser'],
+                'CH_Placa' => $request['CI_Placa'],
+                'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+                'CH_FHentrada' => $infoIngresos[0]['created_at'],
+            ]);
+
+            Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Salida almacenada correctamente.'
+            );
 
             //////////////// FIN Validación entrada o salida//////////////////
         }
@@ -227,21 +227,21 @@ class IngresosController extends Controller
             ]);
 
             return view('carpark.ingresos.tablaIngresos');
-        } else {
-            $generadorID = date_create();
-            Historiales::create([
-                'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
-                'CH_NombresUser'    => $request['CI_NombresUser'],
-                'CH_CodigoUser'     => $request['CI_CodigoUser'],
-                'CH_Placa'          => $request['CI_Placa'],
-                'CH_CodigoMoto'     => $request['CI_CodigoMoto'],
-                'CH_FHentrada'      => $infoIngresos[0]['created_at'],
-            ]);
-
-            Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
-
-            return view('carpark.ingresos.tablaIngresos');
         }
+
+        $generadorID = date_create();
+        Historiales::create([
+            'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+            'CH_NombresUser' => $request['CI_NombresUser'],
+            'CH_CodigoUser' => $request['CI_CodigoUser'],
+            'CH_Placa' => $request['CI_Placa'],
+            'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+            'CH_FHentrada' => $infoIngresos[0]['created_at'],
+        ]);
+
+        Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+
+        return view('carpark.ingresos.tablaIngresos');
 
         //////////////// FIN Validación entrada o salida//////////////////        
     }

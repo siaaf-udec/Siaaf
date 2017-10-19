@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
                                 @permission('UPDATE_DEPENDENCIA_CARPARK')<a href="javascript:;"
-                                                               class="btn btn-outline red button-cancel"><i
+                                                                            class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission

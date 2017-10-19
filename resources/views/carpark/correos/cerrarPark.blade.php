@@ -12,7 +12,7 @@
 @section('page-title', 'Parqueadero Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-@permission('FUNC_CARPARK')
+    @permission('FUNC_CARPARK')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Enviar correos informativos de cierre de parqueadero:'])
             <br>
@@ -24,7 +24,7 @@
                 <div class="col-md-12 col-md-offset-5">
                     <div class="actions">
                         @permission('CLOSE_CARPARK')<a href="javascript:;" class="btn btn-danger btn-icon enviarCorreos"
-                                                      title="Registar nueva dependencia"><i
+                                                       title="Registar nueva dependencia"><i
                                     class="fa fa-paper-plane"></i>Enviar Correos</a>@endpermission
                     </div>
                 </div>
@@ -32,23 +32,24 @@
             <br>
         @endcomponent
     </div>
-@endpermission
+    @endpermission
 @endsection
 
 @push('plugins')
 <!-- Datatables Scripts -->
 
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
+        type="text/javascript"></script>
 
-    <script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
 
 @endpush
 @push('functions')
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
 
     jQuery(document).ready(function () {
 
