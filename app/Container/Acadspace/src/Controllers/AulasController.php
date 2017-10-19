@@ -29,7 +29,7 @@ class AulasController extends Controller
 
     /**
      * Funcion para registrar una nueva aula retorna un mensaje Ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function regisAula(Request $request)
@@ -51,8 +51,8 @@ class AulasController extends Controller
 
     /**
      * Funcion creada para cargar datatable con aulas actuales
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Yajra\DataTables\DataTables | \Illuminate\Http\Response
      */
     public function data(Request $request)
     {
@@ -77,8 +77,8 @@ class AulasController extends Controller
     /**
      * Funcion para eliminar aulas de acuerdo al id
      * retorna mensaje ajax
-     * @param Request $request
-     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)

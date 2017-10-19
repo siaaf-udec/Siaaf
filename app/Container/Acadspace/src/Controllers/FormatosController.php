@@ -57,7 +57,7 @@ class formatosController extends Controller
 
     /**
      * Funcion para registrar un nuevo formato academico mediante ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -94,8 +94,8 @@ class formatosController extends Controller
 
     /**
      * Funcion para editar el estado de la solicitud, 0 => sin revisar; 1=> editada
-     * @param Request $request
-     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
@@ -119,9 +119,9 @@ class formatosController extends Controller
 
     /**
      * Funcion para descargar el archivo que se ha cargado en la solicitud
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory
      */
     public function descargar_publicacion(Request $request, $id)
     {
@@ -136,8 +136,8 @@ class formatosController extends Controller
 
     /**
      * funcion para cargar las solicitudes realizadas y saber el estado actual en el que esta
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Yajra\DataTables\DataTables | \Illuminate\Http\Response
      */
     public function data(Request $request)
     {
@@ -176,8 +176,8 @@ class formatosController extends Controller
 
     /**
      * funcion para cargar las solicitudes existentes sin editar en la tabla
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function dataListSol(Request $request)
     {

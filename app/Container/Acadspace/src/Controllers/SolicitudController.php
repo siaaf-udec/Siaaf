@@ -50,8 +50,8 @@ class SolicitudController extends Controller
     /**
      * vista para crear una practica grupal
      * retorna los software disponibles del modelo Software
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response | \Illuminate\View\View
      */
     public function crearSolicitudGrupal(Request $request)
     {
@@ -71,8 +71,8 @@ class SolicitudController extends Controller
     /**
      * Vista para crear una solicitud libre
      * retorna los software disponibles del modelo Software
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response | \Illuminate\View\View
      */
     public function crearSolicitudLibre(Request $request)
     {
@@ -97,7 +97,7 @@ class SolicitudController extends Controller
      * Registro en BD de practicas libre y grupal,
      * se realiza la comparacion previa
      * retorna mensaje ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function registroSolicitud(Request $request)
@@ -168,8 +168,8 @@ class SolicitudController extends Controller
     /**
      * Funcion cargar datatable con solicitudes registradas
      * por el docente con sesion activa
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function cargarTablaDoc(Request $request)
     {
@@ -243,8 +243,8 @@ class SolicitudController extends Controller
      * Funcion para cargar salas de acuerdo al espacio academico
      * la info viene en la variable $espacio
      * y retorna un json con las aulas actualmente registradas
-     * @param Request $request
-     * @param $espacio
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $espacio
      * @return \Illuminate\Http\JsonResponse
      */
     public function cargarSalas(Request $request, $espacio)
@@ -259,9 +259,9 @@ class SolicitudController extends Controller
     /**
      * Mostrar el datatable con las solicitudes grupales realizadas por el docente
      * para ser evaluadas por el auxiliar
-     * @param Request $request
-     * @param $espacio
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $espacio
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function cargarTablaSolGrupal(Request $request, $espacio)
     {
@@ -301,9 +301,9 @@ class SolicitudController extends Controller
     /**
      * Mostrar el datatable con las solicitudes libres realizadas por el docente
      * para ser evaluadas por el auxiliar
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @param $espacio
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function cargarTablaSolLibre(Request $request, $espacio)
     {
@@ -346,7 +346,7 @@ class SolicitudController extends Controller
     /**
      * Funcion para aprobar solicitud retorna un mensaje ajax
      * y envia notificacion al usuario
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function aprobarSolicitud(Request $request)
@@ -388,7 +388,7 @@ class SolicitudController extends Controller
 
     /**
      * Funcion para reprobar solicitud y agregar anotacion retorna un mensaje ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function agregarAnotacion(Request $request)
@@ -433,7 +433,7 @@ class SolicitudController extends Controller
      * Funcion para finalizar proceso solicitud
      * (es decir cuando ya ha sido asignada)
      * retorna un mensaje ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function finalizarProceso(Request $request)
@@ -462,9 +462,9 @@ class SolicitudController extends Controller
     /**
      *  Mostrar el datatable con las solicitudes finalizadas
      *  evaluadas por el auxiliar
-     * @param Request $request
-     * @param $sala
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $sala
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function mostrarFinalizados(Request $request, $sala)
     {
@@ -504,8 +504,8 @@ class SolicitudController extends Controller
     /**
      * Eliminar solicitudes unicamente permitido por el rol
      * Auxiliar de apoyo retorna respuesta ajax
-     * @param Request $request
-     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)

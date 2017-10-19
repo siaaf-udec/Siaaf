@@ -38,8 +38,8 @@ class AsistenciaController extends Controller
     /**
      * Recibe el parametro espacio y retorna un json con las aulas
      * disponibles de acuerdo al espacio
-     * @param Request $request
-     * @param $espacio
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $espacio
      * @return \Illuminate\Http\JsonResponse
      */
     public function cargarSalasAsitencia(Request $request, $espacio)
@@ -54,7 +54,7 @@ class AsistenciaController extends Controller
 
     /**
      * Registra ingreso del estudiante
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function regisAsistenciaEst(Request $request)
@@ -87,7 +87,7 @@ class AsistenciaController extends Controller
 
     /**
      * Registra ingreso del docente
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function regisAsistenciaDoc(Request $request)

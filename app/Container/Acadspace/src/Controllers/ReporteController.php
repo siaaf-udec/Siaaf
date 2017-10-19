@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 
+
+
 class ReporteController extends Controller
 {
 
@@ -54,8 +56,8 @@ class ReporteController extends Controller
     /**
      * Recibe el parametro espacio y retorna un json con las aulas
      * disponibles de acuerdo al espacio
-     * @param Request $request
-     * @param $espacio
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $espacio
      * @return \Illuminate\Http\JsonResponse
      */
     public function cargarSalasReportes(Request $request, $espacio)
@@ -71,7 +73,7 @@ class ReporteController extends Controller
     /**
      * Recibe el formato de fecha del data_range_picker
      * y lo cambia por el formato usado en BD
-     * @param $fech
+     * @param datetime $fech
      * @return string
      */
     public function changeForm($fech)
@@ -89,11 +91,11 @@ class ReporteController extends Controller
      * (1-Sistemas, 2-Ambiental, 3-Agronomia, 4-Administracion, 5-Contaduria, 6-Psicologia)
      * y el id de tipo de practica (1-libre, 2-grupal)
      * para retornar la cantidad de estudiantes que han ingresado
-     * @param $fech1
-     * @param $fech2
-     * @param $id_Lab
-     * @param $id_carr
-     * @param $id_tipPrac
+     * @param date $fech1
+     * @param date $fech2
+     * @param varchar $id_Lab
+     * @param int $id_carr
+     * @param int $id_tipPrac
      * @return int
      */
     public function obtenerTotalEstLab($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac)
@@ -114,11 +116,11 @@ class ReporteController extends Controller
      * (1-Sistemas, 2-Ambiental, 3-Agronomia, 4-Administracion, 5-Contaduria, 6-Psicologia)
      * y el id de tipo de practica (1-libre, 2-grupal)
      * para retornar la cantidad de estudiantes que han ingresado
-     * @param $fech1
-     * @param $fech2
-     * @param $id_Lab
-     * @param $id_carr
-     * @param $id_tipPrac
+     * @param date $fech1
+     * @param date $fech2
+     * @param varchar $id_Lab
+     * @param int $id_carr
+     * @param int $id_tipPrac
      * @return int
      */
     public function obtenerTotalEstPracGrupal($fech1, $fech2, $id_Lab, $id_carr, $id_tipPrac)
@@ -143,7 +145,7 @@ class ReporteController extends Controller
      * Recibe los campos de la vista ReportesIndexEst y llama las funcion "changeform" para obtener
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado al laboratorio elegido
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function cargarRepEst(Request $request)
@@ -194,7 +196,7 @@ class ReporteController extends Controller
      * Recibe los campos de la vista ReportesIndexCarr y llama las funcion "changeform" para obtener
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado a todos los espacios academicos
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function reporCarrera(Request $request)
@@ -254,44 +256,45 @@ class ReporteController extends Controller
      * Recibe los campos de la vista ReportesIndex y llama las funcion "changeform" para obtener
      * la fecha en el formato necesario. Obtiene la cantidad de docentes que han ingresado
      * al laboratorio elegido entre las fechas proporcionadas
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function reporDocente(Request $request)
     {
-        $data = $request->all();
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $fecha = $request['date_range'];
+            $lab = $request['SOL_laboratorios'];
+            $aula = $request['aula'];
 
-        $fecha = $data['date_range'];
-        $lab = $request['SOL_laboratorios'];
-        $aula = $request['aula'];
 
-        $f2 = substr($fecha, -10);
-        $f1 = substr($fecha, -23, -13);
+            $f2 = substr($fecha, -10);
+            $f1 = substr($fecha, -23, -13);
 
-        $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
-        $fech2 = $this->changeForm($f2);
+            $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+            $fech2 = $this->changeForm($f2);
 
-        $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
-        $time = date("h:i A");
+            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+            $time = date("h:i A");
 
-        $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
-        foreach ($nomAula as $nombAula) {
-            $nombreAula = $nombAula->SAL_Nombre_Sala;
+            $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
+            foreach ($nomAula as $nombAula) {
+                $nombreAula = $nombAula->SAL_Nombre_Sala;
+            }
+
+            $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
+                ->where('ASIS_Espacio', '=', $aula)
+                ->where('ASIS_Tipo_Practica', '=', 2)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $totalTot = count($docentes);
+
+            $cont = 1;
+            return view('acadspace.Reportes.ReportesDocentes',
+                compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha', 'nombreAula')
+            );
+
         }
-
-        $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
-            ->where('ASIS_Espacio', '=', $aula)
-            ->where('ASIS_Tipo_Practica', '=', 2)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        $totalTot = count($docentes);
-
-        $cont = 1;
-        return view('acadspace.Reportes.ReportesDocentes',
-            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha', 'nombreAula')
-        );
-
 
     }
 

@@ -32,7 +32,7 @@ class SoftwareController extends Controller
 
     /**
      * Funcion para registrar un nuevo software retorna un mensaje Ajax
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function registroSoftware(Request $request)
@@ -58,8 +58,8 @@ class SoftwareController extends Controller
 
     /**
      * Funcion creada para cargar datatable con software
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function data(Request $request)
     {
@@ -83,8 +83,8 @@ class SoftwareController extends Controller
     /**
      * Funcion para eliminar software entre los registrados
      * retorna mensaje ajax
-     * @param Request $request
-     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)

@@ -25,7 +25,7 @@
             <div class="row">
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['method'=>'POST', 'route'=> ['espacios.academicos.report.repDoc'], 'target'=>'_blank']) !!}
+                    {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'target'=>'_blank', 'url' => '/forms']) !!}
 
                     <div class="form-body">
                         {!! Field::select('SOL_laboratorios',
@@ -48,7 +48,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">
-                                    {{ Form::submit('Reporte Docentes', ['class' => 'btn blue']) }}
+                                    {!! Form::submit('Reporte Docentes', ['class' => 'btn blue button-submit']) !!}
 
                                 </div>
                             </div>
@@ -121,6 +121,41 @@
                     }
                 });
             });
+
+            var createUsers = function () {
+                return {
+                    init: function () {
+
+                        var route = '{{ route('espacios.academicos.report.repDoc') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                            var formData = new FormData();
+                            formData.append('SOL_laboratorios', $('select[name="SOL_laboratorios"]').val());
+                            formData.append('aula', $('select[name="aula"]').val());
+                            formData.append('date_range', $('input:text[name="date_range"]').val());
+
+                            $.ajax({
+                                url: route,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                cache: false,
+                                type: type,
+                                contentType: false,
+                                data: formData,
+                                processData: false,
+                                async: false
+                            });
+                    }
+                }
+            };
+            var form_edit = $('#form_sol_create');
+            var rules_edit = {
+                SOL_laboratorios: {required: true},
+                aula: {required: true},
+                date_range: {required: true}
+
+            };
+            FormValidationMd.init(form_edit, rules_edit, false, createUsers());
 
 
         });

@@ -32,8 +32,8 @@ class CalendarioController extends Controller
     /**
      * Funcion para cargar un select en la vista de acuerdo a la informacion
      * recibida de otro select que viene en $espacio
-     * @param Request $request
-     * @param $espacio
+     * @param \Illuminate\Http\Request $request
+     * @param varchar $espacio
      * @return \Illuminate\Http\JsonResponse
      */
     public function cargarSalasCalendario(Request $request, $espacio)
@@ -48,7 +48,7 @@ class CalendarioController extends Controller
     /**
      * Retorno un arreglo tipo JSON con todos los eventos actuales en
      * el calendario de acuerdo a la sala seleccionada
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function cargaEventos(Request $request)
@@ -147,9 +147,9 @@ class CalendarioController extends Controller
     /**
      * Funcion que carga el datatable con solicitudes aprobadas de acuerdo
      * a la sala seleccionada
-     * @param Request $request
-     * @param $sala
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param id $sala
+     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
      */
     public function data(Request $request, $sala)
     {
