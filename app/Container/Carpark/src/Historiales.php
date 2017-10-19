@@ -8,12 +8,12 @@ class Historiales extends Model
 {
     protected $connection = 'carpark';
 
-    protected $table = 'TBL_Carpark_historiales';
+    protected $table = 'TBL_Carpark_Historiales';
 
-    protected $primaryKey = 'PK_CH_IdHistoia';
+    protected $primaryKey = 'PK_CH_IdHistorial';
 
     protected $fillable = [
-        'PK_CH_IdHistoia',
+        'PK_CH_IdHistorial',
         'CH_NombresUser',
         'CH_CodigoUser',
         'CH_Placa',

@@ -8,7 +8,7 @@ class Motos extends Model
 {
     protected $connection = 'carpark';
 
-    protected $table = 'TBL_Carpark_motos';
+    protected $table = 'TBL_Carpark_Motos';
 
     protected $primaryKey = 'PK_CM_IdMoto';
 
@@ -18,7 +18,7 @@ class Motos extends Model
         'CM_Marca',
         'CM_NuPropiedad',
         'CM_NuSoat',
-        'CM_fechaSoat',
+        'CM_FechaSoat',
         'CM_UrlFoto',
         'CM_UrlPropiedad',
         'CM_UrlSoat',

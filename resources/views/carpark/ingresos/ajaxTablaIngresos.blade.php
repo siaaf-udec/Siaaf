@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    @permission('FUNC_CARPARK')<a href="javascript:;"
+                    @permission('CREATE_INGRESO_CARPARK')<a href="javascript:;"
                                                   class="btn btn-simple btn-success btn-icon create">
                         <i class="fa fa-plus">
                         </i>Acción
                     </a>@endpermission
-                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                    @permission('REPORT_INGRESO_CARPARK')<a href="javascript:;"
                                                    class="btn btn-simple btn-success btn-icon reports"
                                                    title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         de Ingresos</a><br>@endpermission

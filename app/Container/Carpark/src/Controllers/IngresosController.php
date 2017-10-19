@@ -3,15 +3,11 @@
 namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
-use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -49,7 +45,7 @@ class IngresosController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario de registro de una nueva entrada o salida.
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -67,7 +63,7 @@ class IngresosController extends Controller
     }
 
     /**
-     * Función que que devuelve el formulario para registro de ingresos.
+     * Función que que devuelve el formulario para verificar registro de ingresos.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -77,7 +73,7 @@ class IngresosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $infoMoto = Motos::where([['CM_Placa', '=', $request['PlacaMoto']], ['FK_CM_CodigoUser', '=', $request['CodigoUsuario']]])->get();
 
-            if ($infoMoto === '[]') {
+            if ($infoMoto == '[]') {
                 $IdError = 422;
                 return AjaxResponse::success(
                     '¡Lo sentimos!',
@@ -104,7 +100,7 @@ class IngresosController extends Controller
     }
 
     /**
-     * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
+     * Presenta el formulario con los datos para confirmar el regitro de un ingreso o salida.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -131,7 +127,7 @@ class IngresosController extends Controller
     }
 
     /**
-     * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
+     * Presenta el formulario con los datos para confirmar el regitro de un ingreso o salida por medio de la tarjeta RFID.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -167,7 +163,7 @@ class IngresosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             ////////////////Validación entrada o salida//////////////////
             $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
-            if ($infoIngresos === '[]') {
+            if ($infoIngresos == '[]') {
                 $generadorID = date_create();
                 Ingresos::create([
                     'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
@@ -184,12 +180,12 @@ class IngresosController extends Controller
             } else {
                 $generadorID = date_create();
                 Historiales::create([
-                    'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
-                    'CH_NombresUser' => $request['CI_NombresUser'],
-                    'CH_CodigoUser' => $request['CI_CodigoUser'],
-                    'CH_Placa' => $request['CI_Placa'],
-                    'CH_CodigoMoto' => $request['CI_CodigoMoto'],
-                    'CH_FHentrada' => $infoIngresos[0]['created_at'],
+                    'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+                    'CH_NombresUser'    => $request['CI_NombresUser'],
+                    'CH_CodigoUser'     => $request['CI_CodigoUser'],
+                    'CH_Placa'          => $request['CI_Placa'],
+                    'CH_CodigoMoto'     => $request['CI_CodigoMoto'],
+                    'CH_FHentrada'      => $infoIngresos[0]['created_at'],
                 ]);
 
                 Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
@@ -211,7 +207,7 @@ class IngresosController extends Controller
     }
 
     /**
-     * Función que almacena en la base de datos un las acciones del parqueadero.
+     * Función que almacena en la base de datos un las acciones del parqueadero por medio de la tarjeta RFID.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -220,7 +216,7 @@ class IngresosController extends Controller
     {
         ////////////////Validación entrada o salida//////////////////
         $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
-        if ($infoIngresos === '[]') {
+        if ($infoIngresos == '[]') {
             $generadorID = date_create();
             Ingresos::create([
                 'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
@@ -234,12 +230,12 @@ class IngresosController extends Controller
         } else {
             $generadorID = date_create();
             Historiales::create([
-                'PK_CH_IdHistoia' => date_timestamp_get($generadorID),
-                'CH_NombresUser' => $request['CI_NombresUser'],
-                'CH_CodigoUser' => $request['CI_CodigoUser'],
-                'CH_Placa' => $request['CI_Placa'],
-                'CH_CodigoMoto' => $request['CI_CodigoMoto'],
-                'CH_FHentrada' => $infoIngresos[0]['created_at'],
+                'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+                'CH_NombresUser'    => $request['CI_NombresUser'],
+                'CH_CodigoUser'     => $request['CI_CodigoUser'],
+                'CH_Placa'          => $request['CI_Placa'],
+                'CH_CodigoMoto'     => $request['CI_CodigoMoto'],
+                'CH_FHentrada'      => $infoIngresos[0]['created_at'],
             ]);
 
             Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada

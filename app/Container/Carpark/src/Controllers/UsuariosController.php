@@ -8,10 +8,7 @@ use App\Container\Carpark\src\Dependencias;
 use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
-use App\Container\Carpark\src\Ingresos;
-use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
-use App\Container\Overall\Src\Facades\UploadFile;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -19,7 +16,7 @@ use Yajra\Datatables\Datatables;
 class UsuariosController extends Controller
 {
     /**
-     * Muestra todos los empleados registrados.
+     * Muestra todos los usuarios registrados.
      *
      * @return \Illuminate\Http\Response
      */
@@ -49,7 +46,7 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Función que muestra el formulario de registro de un nuevo empleado.
+     * Función que muestra el formulario de registro de un nuevo usuario.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -72,7 +69,7 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de dependencias registradas.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -95,7 +92,7 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     *  Muestra la lista de estados registrados.
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */

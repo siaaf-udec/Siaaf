@@ -4,12 +4,8 @@ namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
-use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
-use App\Container\Carpark\src\Ingresos;
-use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
@@ -98,7 +94,7 @@ class MotosController extends Controller
                 'CM_Marca' => $request['CM_Marca'],
                 'CM_NuPropiedad' => $request['CM_NuPropiedad'],
                 'CM_NuSoat' => $request['CM_NuSoat'],
-                'CM_fechaSoat' => $request['CM_fechaSoat'],
+                'CM_FechaSoat' => $request['CM_FechaSoat'],
                 'CM_UrlFoto' => $urlMoto,
                 'CM_UrlPropiedad' => $urlProp,
                 'CM_UrlSoat' => $urlSOAT,
@@ -143,7 +139,7 @@ class MotosController extends Controller
     }
 
     /**
-     * Se realiza la actualización de los datos de un usuario.
+     * Se realiza la actualización de los datos de un vehículo.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -169,7 +165,7 @@ class MotosController extends Controller
     }
 
     /**
-     * Se realiza la eliminación de los registros de un usuario.
+     * Se realiza la eliminación de los registros de un vehículo.
      *
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
@@ -230,9 +226,9 @@ class MotosController extends Controller
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
             $url = "developer/" . $url;
 
-            $usuariosPK = Motos::find($id);
-            $usuariosPK->CM_UrlFoto = $url;
-            $usuariosPK->save();
+            $infoMoto = Motos::find($id);
+            $infoMoto->CM_UrlFoto = $url;
+            $infoMoto->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -259,9 +255,9 @@ class MotosController extends Controller
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
             $url = "developer/" . $url;
 
-            $usuariosPK = Motos::find($id);
-            $usuariosPK->CM_UrlPropiedad = $url;
-            $usuariosPK->save();
+            $infoMoto = Motos::find($id);
+            $infoMoto->CM_UrlPropiedad = $url;
+            $infoMoto->save();
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -289,9 +285,9 @@ class MotosController extends Controller
             $url = Storage::disk('developer')->putFile('carpark/motos', $img);
             $url = "developer/" . $url;
 
-            $usuariosPK = Motos::find($id);
-            $usuariosPK->CM_UrlSoat = $url;
-            $usuariosPK->save();
+            $infoMoto = Motos::find($id);
+            $infoMoto->CM_UrlSoat = $url;
+            $infoMoto->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'

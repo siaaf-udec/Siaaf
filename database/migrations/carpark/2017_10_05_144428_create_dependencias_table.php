@@ -13,7 +13,7 @@ class CreateDependenciasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_dependencias', function (Blueprint $table) {
+        Schema::connection('carpark')->create('TBL_Carpark_Dependencias', function (Blueprint $table) {
             $table->integer('PK_CD_IdDependencia')->unsigned()->unique()->primary();
             $table->String('CD_Dependencia', 50);
 
@@ -28,6 +28,6 @@ class CreateDependenciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_dependencias');
+        Schema::dropIfExists('TBL_Carpark_Dependencias');
     }
 }

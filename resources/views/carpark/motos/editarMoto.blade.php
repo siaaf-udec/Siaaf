@@ -34,7 +34,7 @@
                             {!! Field:: text('CM_NuSoat',$infoMoto['CM_NuSoat'],['label'=>'Número del SOAT:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite el número del SOAT vigente.','icon'=>'fa fa-id-card-o'] ) !!}
 
-                            {!! Field::date('CM_fechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'on', 'data-date-format' => "yyyy-mm-dd",'data-date-start-date' => "+0d",'placeholder'=>'Valor Fecha'],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CM_FechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'on', 'data-date-format' => "yyyy-mm-dd",'data-date-start-date' => "+0d",'placeholder'=>'Valor Fecha'],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!}
 
 
                         </div>
@@ -43,21 +43,21 @@
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}"
                                             class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}"
                                             class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
-                                @permission('ADMIN_CARPARK')<a href="javascript:;"><img
+                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}"
                                             class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
@@ -71,13 +71,13 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                            @permission('ADMIN_CARPARK')<a href="javascript:;"
+                            @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"
                                                            class="btn btn-outline red button-cancel"><i
                                         class="fa fa-angle-left"></i>
                                 Cancelar
                             </a>@endpermission
 
-                            @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                            @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                         {!! Field::file('CM_UrlFotoM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                         {!! Field::file('CM_UrlPropiedadM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>
@@ -168,7 +168,7 @@
                         {!! Field::file('CM_UrlSoatM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('ADMIN_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>
@@ -183,18 +183,10 @@
 
 </div>
 <!-- file script -->
-<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}"
-        type="text/javascript"></scripts>
-
-    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <
-    script
-    src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
-    type = "text/javascript" > < / scripts >
-
-        < script
-    src = "{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}"
-    type = "text/javascript" ></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
+<script src = "{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -240,7 +232,7 @@
                     formData.append('CM_Marca', $('input:text[name="CM_Marca"]').val());
                     formData.append('CM_NuPropiedad', $('input:text[name="CM_NuPropiedad"]').val());
                     formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
-                    formData.append('CM_fechaSoat', $('#CM_fechaSoat').val());
+                    formData.append('CM_FechaSoat', $('#CM_FechaSoat').val());
 
                     $.ajax({
                         url: route,

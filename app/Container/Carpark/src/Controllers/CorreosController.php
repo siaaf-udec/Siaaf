@@ -31,6 +31,12 @@ class CorreosController extends Controller
         return view('carpark.correos.cerrarPark');
     }
 
+    /**
+     * Función que envia los correos de advertencia.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function enviarMail(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {

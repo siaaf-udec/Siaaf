@@ -13,7 +13,7 @@ class CreateIngresosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_ingresos', function (Blueprint $table) {
+        Schema::connection('carpark')->create('TBL_Carpark_Ingresos', function (Blueprint $table) {
             $table->integer('PK_CI_IdIngreso')->unsigned()->unique()->primary();
             $table->String('CI_NombresUser', 100);
             $table->integer('CI_CodigoUser')->unsigned();
@@ -31,6 +31,6 @@ class CreateIngresosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_ingresos');
+        Schema::dropIfExists('TBL_Carpark_Ingresos');
     }
 }

@@ -3,25 +3,19 @@
 @push('styles')
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
-      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <!-- toastr Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
-
-<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
-      type="text/css"/>
-<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css"/>
 
 @endpush
 
 @section('title', '| Información del parqueadero')
 
-@section('page-title', 'Listado motocicletas en el parqueadero:')
+@section('page-title', 'Parqueadero Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-    @permission('FUNC_CARPARK')
+    @permission('CREATE_INGRESO_CARPARK')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de confirmación de acción'])
             @slot('actions', [
@@ -77,12 +71,12 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-5">
-                                    @permission('FUNC_CARPARK')<a href="javascript:;"
+                                    @permission('CREATE_INGRESO_CARPARK')<a href="javascript:;"
                                                                   class="btn btn-outline red button-cancel"><i
                                                 class="fa fa-angle-left"></i>
                                         Volver
                                     </a>@endpermission
-                                    @permission('FUNC_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                    @permission('CREATE_INGRESO_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                                 </div>
                             </div>
                         </div>

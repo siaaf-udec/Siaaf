@@ -71,7 +71,7 @@
 
                 <h3>Número De Tarjeta De Propiedad Del Vehiculo: {{$infoMoto->CM_NuPropiedad}}</h3>
                 <h3>Número De SOAT Del Vehiculo: {{$infoMoto->CM_NuSoat}}</h3>
-                <h3>Fecha De Vencimiento Del SOAT: {{$infoMoto->CM_fechaSoat}}</h3>
+                <h3>Fecha De Vencimiento Del SOAT: {{$infoMoto->CM_FechaSoat}}</h3>
             </div>
         </div>
         <span></span>

@@ -3,15 +3,8 @@
 namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
 use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Estados;
-use App\Container\Carpark\src\Usuarios;
-use App\Container\Carpark\src\Motos;
-use App\Container\Carpark\src\Ingresos;
-use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -19,7 +12,7 @@ use Yajra\Datatables\Datatables;
 class DependenciasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * muestra la tabla de información de las dependencias.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +22,7 @@ class DependenciasController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * muestra la tabla de información de las dependencias por medio de petición ajax.
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -47,7 +40,7 @@ class DependenciasController extends Controller
     }
 
     /**
-     * Función que almacena en la base de datos un nuevo registro de acción.
+     * Función que almacena en la base de datos un nuevo registro de una dependencia.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse

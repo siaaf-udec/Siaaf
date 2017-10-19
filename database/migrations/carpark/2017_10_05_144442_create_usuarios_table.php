@@ -13,7 +13,7 @@ class CreateUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_usuarios', function (Blueprint $table) {
+        Schema::connection('carpark')->create('TBL_Carpark_Usuarios', function (Blueprint $table) {
             $table->integer('PK_CU_Codigo')->unsigned()->unique()->primary();
             $table->integer('CU_Cedula');
             $table->String('CU_Nombre1', 50);
@@ -25,9 +25,9 @@ class CreateUsuariosTable extends Migration
             $table->String('CU_Direccion', 70);
             $table->String('CU_UrlFoto', 90);
             $table->integer('FK_CU_IdEstado')->unsigned();
-            $table->foreign('FK_CU_IdEstado')->references('PK_CE_IdEstados')->on('TBL_Carpark_estados');
+            $table->foreign('FK_CU_IdEstado')->references('PK_CE_IdEstados')->on('TBL_Carpark_Estados');
             $table->integer('FK_CU_IdDependencia')->unsigned();
-            $table->foreign('FK_CU_IdDependencia')->references('PK_CD_IdDependencia')->on('TBL_Carpark_dependencias');
+            $table->foreign('FK_CU_IdDependencia')->references('PK_CD_IdDependencia')->on('TBL_Carpark_Dependencias');
 
             $table->timestamps();
         });
@@ -40,6 +40,6 @@ class CreateUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_usuarios');
+        Schema::dropIfExists('TBL_Carpark_Usuarios');
     }
 }

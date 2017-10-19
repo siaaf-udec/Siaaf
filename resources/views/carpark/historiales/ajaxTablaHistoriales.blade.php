@@ -4,19 +4,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                    @permission('REPORT_HISTORIAL_CARPARK')<a href="javascript:;"
                                                    class="btn btn-simple btn-success btn-icon reports"
                                                    title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         Historico</a>@endpermission
-                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                    @permission('REPORT_HISTOFECHA_CARPARK')<a href="javascript:;"
                                                    class="btn btn-simple btn-success btn-icon reporteFecha"
                                                    title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         Fechas</a>@endpermission
-                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                    @permission('REPORT_HISTOCODIGO_CARPARK')<a href="javascript:;"
                                                    class="btn btn-simple btn-success btn-icon reporteCodigo"
                                                    title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         Por Código</a>@endpermission
-                    @permission('ADMIN_CARPARK')<a href="javascript:;"
+                    @permission('REPORT_HISTOPLACA_CARPARK')<a href="javascript:;"
                                                    class="btn btn-simple btn-success btn-icon reportePlaca"
                                                    title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         Por Placa</a>@endpermission

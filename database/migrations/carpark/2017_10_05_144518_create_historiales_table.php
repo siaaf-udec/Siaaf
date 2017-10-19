@@ -13,8 +13,8 @@ class CreateHistorialesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_historiales', function (Blueprint $table) {
-            $table->integer('PK_CH_IdHistoia')->unsigned()->unique()->primary();
+        Schema::connection('carpark')->create('TBL_Carpark_Historiales', function (Blueprint $table) {
+            $table->integer('PK_CH_IdHistorial')->unsigned()->unique()->primary();
             $table->String('CH_NombresUser', 100);
             $table->integer('CH_CodigoUser')->unsigned();
             $table->String('CH_Placa', 6);
@@ -33,6 +33,6 @@ class CreateHistorialesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_historiales');
+        Schema::dropIfExists('TBL_Carpark_Historiales');
     }
 }

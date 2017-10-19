@@ -8,7 +8,7 @@ class Ingresos extends Model
 {
     protected $connection = 'carpark';
 
-    protected $table = 'TBL_Carpark_ingresos';
+    protected $table = 'TBL_Carpark_Ingresos';
 
     protected $primaryKey = 'PK_CI_IdIngreso';
 

@@ -13,7 +13,7 @@ class CreateEstadosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_estados', function (Blueprint $table) {
+        Schema::connection('carpark')->create('TBL_Carpark_Estados', function (Blueprint $table) {
             $table->integer('PK_CE_IdEstados')->unsigned()->unique()->primary();
             $table->String('CE_Estados', 20);
 
@@ -28,6 +28,6 @@ class CreateEstadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_estados');
+        Schema::dropIfExists('TBL_Carpark_Estados');
     }
 }

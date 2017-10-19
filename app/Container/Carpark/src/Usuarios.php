@@ -8,7 +8,7 @@ class Usuarios extends Model
 {
     protected $connection = 'carpark';
 
-    protected $table = 'TBL_Carpark_usuarios';
+    protected $table = 'TBL_Carpark_Usuarios';
 
     protected $primaryKey = 'PK_CU_Codigo';
 
