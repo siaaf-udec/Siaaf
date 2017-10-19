@@ -51,6 +51,9 @@
                             {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
 
                             {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
+
+                            {!! Field::checkbox('acceptTeminos', '1', ['label' => 'Acepta términos y condiciones de la resolución número 307 de 2008.','required']) !!}
+
                         </div>
                     </div>
 
@@ -179,6 +182,7 @@
             CU_Direccion: {required: true},
             FK_CU_IdDependencia: {required: true},
             FK_CU_IdEstado: {required: true},
+            acceptTeminos: {required: true},
         };
         FormValidationMd.init(form, formRules, false, createUsers());
 

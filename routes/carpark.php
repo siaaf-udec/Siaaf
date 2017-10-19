@@ -27,17 +27,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de ususarios
         Route::get('index', [
             'uses' => $controller . 'UsuariosController@index',
             'as' => 'parqueadero.usuariosCarpark.index',
         ]);
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de ususarios por medio de petición ajax
         Route::get('index/ajax', [
             'uses' => $controller . 'UsuariosController@indexAjax',
-            'as' => 'parqueadero.usuariosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+            'as' => 'parqueadero.usuariosCarpark.index.ajax'             
         ]);
 
-        Route::get('tablaUsuarios', [   //ruta que realiza la consulta de los usuarios registrados
+        //ruta que realiza la consulta de los usuarios registrados
+        Route::get('tablaUsuarios', [   
             'as' => 'parqueadero.usuariosCarpark.tablaUsuarios',
             'uses' => function (Request $request) {
                 if ($request->ajax()) {
@@ -54,48 +57,57 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
+        //Ruta que carga la información de dependencias ancladas a los usuarios
         Route::get('DependenciasUser', [
             'uses' => $controller . 'UsuariosController@listarDependencias',
             'as' => 'parqueadero.usuariosCarpark.listDependencias'
         ]);
 
+        //Ruta que carga la información de estados anclados a los usuarios
         Route::get('EstadosUser', [
             'uses' => $controller . 'UsuariosController@listarEstados',
             'as' => 'parqueadero.usuariosCarpark.listEstados'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
         Route::get('create', [
-            'uses' => $controller . 'UsuariosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
+            'uses' => $controller . 'UsuariosController@create',  
             'as' => 'parqueadero.usuariosCarpark.create'
         ]);
 
+        //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
         Route::post('store', [
-            'uses' => $controller . 'UsuariosController@store',   //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
+            'uses' => $controller . 'UsuariosController@store',   
             'as' => 'parqueadero.usuariosCarpark.store'
         ]);
 
+        //ruta que conduce al controlador para ver el perfil de un usuario.
         Route::get('verPerfil/{id?}', [
-            'uses' => $controller . 'UsuariosController@verPerfil',     //ruta que conduce al controlador para ver el perfil de un usuario.
+            'uses' => $controller . 'UsuariosController@verPerfil',     
             'as' => 'parqueadero.usuariosCarpark.verPerfil'
         ]);
 
+        //ruta que conduce al controlador para ver el perfil de un usuario.
         Route::get('editar/{id?}', [
-            'uses' => $controller . 'UsuariosController@edit',     //ruta que conduce al controlador para ver el perfil de un usuario.
+            'uses' => $controller . 'UsuariosController@edit',     
             'as' => 'parqueadero.usuariosCarpark.edit'
         ]);
 
+        //ruta que conduce al controlador para actulizar datos del usuario
         Route::post('update', [
-            'uses' => $controller . 'UsuariosController@update',      //ruta que conduce al controlador para actulizar datos del usuario
+            'uses' => $controller . 'UsuariosController@update',      
             'as' => 'parqueadero.usuariosCarpark.update'
         ]);
 
+        //ruta que conduce al controlador para actulizar la foto de perfil del usuario
         Route::post('updateFotoUsuario/{id?}', [
-            'uses' => $controller . 'UsuariosController@updateFotoUsuario',      //ruta que conduce al controlador para actulizar la foto de perfil del usuario
+            'uses' => $controller . 'UsuariosController@updateFotoUsuario',      
             'as' => 'parqueadero.usuariosCarpark.updateFotoUsuario'
         ]);
 
+        //ruta que conduce al controlador para eliminar un registro de un usuario
         Route::delete('destroy/{id?}', [
-            'uses' => $controller . 'UsuariosController@destroy', //ruta que conduce al controlador para eliminar un registro de empleado
+            'uses' => $controller . 'UsuariosController@destroy', 
             'as' => 'parqueadero.usuariosCarpark.destroy'
         ]);
 
@@ -108,17 +120,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de motocicletas
         Route::get('index', [
             'uses' => $controller . 'MotosController@index',
             'as' => 'parqueadero.motosCarpark.index',
         ]);
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de motocicletas por medio de petición ajax
         Route::get('index/ajax', [
             'uses' => $controller . 'MotosController@indexAjax',
-            'as' => 'parqueadero.motosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+            'as' => 'parqueadero.motosCarpark.index.ajax'             
         ]);
 
-        Route::get('tablaMotos', [   //ruta que realiza la consulta de los vehículos registrados
+        //ruta que realiza la consulta de las motocicletas registradas
+        Route::get('tablaMotos', [   
             'as' => 'parqueadero.motosCarpark.tablaMotos',
             'uses' => function (Request $request) {
                 if ($request->ajax()) {
@@ -135,48 +150,57 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para registrar una motocicleta
         Route::get('create/{id?}', [
-            'uses' => $controller . 'MotosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
+            'uses' => $controller . 'MotosController@create',  
             'as' => 'parqueadero.motosCarpark.RegistrarMoto'
         ]);
 
+        //ruta que conduce al controlador para alamacenar los datos de la motocicleta en la base de datos
         Route::post('store', [
-            'uses' => $controller . 'MotosController@store',   //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
+            'uses' => $controller . 'MotosController@store',   
             'as' => 'parqueadero.motosCarpark.store'
         ]);
 
+        //ruta que conduce al controlador para ver el perfil de una motocicleta.
         Route::get('verMoto/{id?}', [
-            'uses' => $controller . 'MotosController@verMoto',     //ruta que conduce al controlador para ver el perfil de un vehículo.
+            'uses' => $controller . 'MotosController@verMoto',     
             'as' => 'parqueadero.motosCarpark.verMoto'
         ]);
 
+        //ruta que conduce al controlador para editar el perfil de una motocicleta.
         Route::get('editar/{id?}', [
-            'uses' => $controller . 'MotosController@editar',     //ruta que conduce al controlador para ver el perfil de un usuario.
+            'uses' => $controller . 'MotosController@editar',     
             'as' => 'parqueadero.motosCarpark.editar'
         ]);
 
+        //ruta que conduce al controlador para actulizar datos de la motocicleta
         Route::post('update', [
-            'uses' => $controller . 'MotosController@update',      //ruta que conduce al controlador para actulizar datos del usuario
+            'uses' => $controller . 'MotosController@update',      
             'as' => 'parqueadero.motosCarpark.update'
         ]);
 
+        //ruta que conduce al controlador para actulizar la foto de perfil de la motocicleta
         Route::post('updateFotoMoto/{id?}', [
-            'uses' => $controller . 'MotosController@updateFotoMoto',      //ruta que conduce al controlador para actulizar la foto de perfil del vehículo
+            'uses' => $controller . 'MotosController@updateFotoMoto',      
             'as' => 'parqueadero.motosCarpark.updateFotoMoto'
         ]);
 
+        //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad de la motocicleta
         Route::post('updateFotoPropiedad/{id?}', [
-            'uses' => $controller . 'MotosController@updateFotoPropiedad',      //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad del vehículo
+            'uses' => $controller . 'MotosController@updateFotoPropiedad',      
             'as' => 'parqueadero.motosCarpark.updateFotoPropiedad'
         ]);
 
+        //ruta que conduce al controlador para actulizar la foto del soat de la motocicleta
         Route::post('UpdateFotoSOAT/{id?}', [
-            'uses' => $controller . 'MotosController@UpdateFotoSOAT',      //ruta que conduce al controlador para actulizar la foto de la tarjeta de propiedad del vehículo
+            'uses' => $controller . 'MotosController@UpdateFotoSOAT',      
             'as' => 'parqueadero.motosCarpark.UpdateFotoSOAT'
         ]);
 
+        //ruta que conduce al controlador para eliminar un registro de una motocicleta
         Route::delete('destroy/{id?}', [
-            'uses' => $controller . 'MotosController@destroy', //ruta que conduce al controlador para eliminar un registro vehículo
+            'uses' => $controller . 'MotosController@destroy', 
             'as' => 'parqueadero.motosCarpark.destroy'
         ]);
 
@@ -190,12 +214,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan las dependencias
         Route::get('index', [
             'uses' => $controller . 'DependenciasController@index',
             'as' => 'parqueadero.dependenciasCarpark.index',
         ]);
 
-        Route::get('tablaDependencias', [   //ruta que realiza la consulta de las dependencias registradas
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan las dependencias por medio de petición ajax
+        Route::get('index/ajax', [
+            'uses' => $controller . 'DependenciasController@indexAjax',
+            'as' => 'parqueadero.dependenciasCarpark.index.ajax'             
+        ]);
+
+        //ruta que realiza la consulta de las dependencias registradas
+        Route::get('tablaDependencias', [   
             'as' => 'parqueadero.dependenciasCarpark.tablaDependencias',
             'uses' => function (Request $request) {
                 if ($request->ajax()) {
@@ -212,28 +244,27 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para registrar una dependencia
         Route::get('create', [
-            'uses' => $controller . 'DependenciasController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una dependencia
+            'uses' => $controller . 'DependenciasController@create',  
             'as' => 'parqueadero.dependenciasCarpark.create'
         ]);
 
+        //ruta que conduce al controlador para alamacenar los datos de la dependencia
         Route::post('store', [
-            'uses' => $controller . 'DependenciasController@store',   //ruta que conduce al controlador para alamacenar los datos de la dependencia
+            'uses' => $controller . 'DependenciasController@store',   
             'as' => 'parqueadero.dependenciasCarpark.store'
         ]);
-
-        Route::get('index/ajax', [
-            'uses' => $controller . 'DependenciasController@indexAjax',
-            'as' => 'parqueadero.dependenciasCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
-        ]);
-
+        
+        //ruta que conduce al controlador para mostar el formulario para editar datos registrados
         Route::get('dependencia/edit/{id?}', [
-            'uses' => $controller . 'DependenciasController@edit',     //ruta que conduce al controlador para mostar el formulario para editar datos registrados
+            'uses' => $controller . 'DependenciasController@edit',     
             'as' => 'parqueadero.dependenciasCarpark.edit'
         ]);
 
+        //ruta que conduce al controlador para actulizar datos de la dependencia
         Route::post('dependencia/update', [
-            'uses' => $controller . 'DependenciasController@update',      //ruta que conduce al controlador para actulizar datos de la dependencia
+            'uses' => $controller . 'DependenciasController@update',      
             'as' => 'parqueadero.dependenciasCarpark.update'
         ]);
 
@@ -247,104 +278,123 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar el reporte de las dependencias registradas
         Route::get('reporteDependencia', [
-            'uses' => $controller . 'ReportesController@reporteDependencia',  //ruta que conduce al controlador para mostrar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@reporteDependencia',  
             'as' => 'parqueadero.reportesCarpark.reporteDependencia'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
         Route::get('DescargarReporteDependencia', [
-            'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteDependencia'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('reporteUsuariosRegistrados', [
-            'uses' => $controller . 'ReportesController@reporteUsuariosRegistrados',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'uses' => $controller . 'ReportesController@reporteUsuariosRegistrados',  
             'as' => 'parqueadero.reportesCarpark.reporteUsuariosRegistrados'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
         Route::get('DescargarreporteUsuariosRegistrados', [
-            'uses' => $controller . 'ReportesController@DescargarreporteUsuariosRegistrados',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarreporteUsuariosRegistrados',  
             'as' => 'parqueadero.reportesCarpark.DescargarreporteUsuariosRegistrados'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte de las motocicletas registradas
         Route::get('reporteMotosRegistradas', [
-            'uses' => $controller . 'ReportesController@reporteMotosRegistradas',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'uses' => $controller . 'ReportesController@reporteMotosRegistradas',  
             'as' => 'parqueadero.reportesCarpark.reporteMotosRegistradas'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte de las las motocicletas registradas
         Route::get('DescargarreporteMotosRegistradas', [
-            'uses' => $controller . 'ReportesController@DescargarreporteMotosRegistradas',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarreporteMotosRegistradas',  
             'as' => 'parqueadero.reportesCarpark.DescargarreporteMotosRegistradas'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte de las motocicletas que se encuentran dentro de la universidad
         Route::get('ReporteMotosDentro', [
-            'uses' => $controller . 'ReportesController@ReporteMotosDentro',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'uses' => $controller . 'ReportesController@ReporteMotosDentro',  
             'as' => 'parqueadero.reportesCarpark.ReporteMotosDentro'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte de las motocicletas que se encuentran dentro de la universidad
         Route::get('DescargarReporteMotosDentro', [
-            'uses' => $controller . 'ReportesController@DescargarReporteMotosDentro',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarReporteMotosDentro',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteMotosDentro'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte historico de las entradas y salidas de los usuarios y motocicletas
         Route::get('ReporteHistorico', [
-            'uses' => $controller . 'ReportesController@ReporteHistorico',  //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+            'uses' => $controller . 'ReportesController@ReporteHistorico',  
             'as' => 'parqueadero.reportesCarpark.ReporteHistorico'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas
         Route::get('DescargarReporteHistorico', [
-            'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por fechas
         Route::post('filtradoFecha', [
-            'uses' => $controller . 'ReportesController@filtradoFecha',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@filtradoFecha', 
             'as' => 'parqueadero.reportesCarpark.filtradoFecha'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por fechas
         Route::get('DescargarfiltradoFecha/{limMinGET?}/{limMaxGET?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoFecha',  //ruta que conduce al controlador para descargar el reporte de las historias por fecha
+            'uses' => $controller . 'ReportesController@DescargarfiltradoFecha',
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoFecha'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por código
         Route::post('filtradoCodigo', [
-            'uses' => $controller . 'ReportesController@filtradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@filtradoCodigo', 
             'as' => 'parqueadero.reportesCarpark.filtradoCodigo'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por código
         Route::get('DescargarfiltradoCodigo/{id?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo', 
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoCodigo'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por placa
         Route::post('filtradoPlaca', [
-            'uses' => $controller . 'ReportesController@filtradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@filtradoPlaca', 
             'as' => 'parqueadero.reportesCarpark.filtradoPlaca'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por placa
         Route::get('DescargarfiltradoPlaca/{id?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoPlaca',  //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
+            'uses' => $controller . 'ReportesController@DescargarfiltradoPlaca', 
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoPlaca'
         ]);
 
-
+        //ruta que conduce al controlador para ver el reporte del perfil de un usuario registrado
         Route::get('reporteUsuario/{id?}', [
-            'uses' => $controller . 'ReportesController@reporteUsuario',  //ruta que conduce al controlador para ver el reporte de un usuario registrado
+            'uses' => $controller . 'ReportesController@reporteUsuario',  
             'as' => 'parqueadero.reportesCarpark.reporteUsuario'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte del perfil de un usuario registrado
         Route::get('descargarreporteUsuario/{id?}', [
-            'uses' => $controller . 'ReportesController@descargarreporteUsuario',  //ruta que conduce al controlador para descargar el reporte de un usuario registrado
+            'uses' => $controller . 'ReportesController@descargarreporteUsuario', 
             'as' => 'parqueadero.reportesCarpark.descargarreporteUsuario'
         ]);
 
+        //ruta que conduce al controlador para ver el reporte del perfil de una moto registrada
         Route::get('reporteMoto/{id?}', [
-            'uses' => $controller . 'ReportesController@reporteMoto',  //ruta que conduce al controlador para ver el reporte de una moto registrada
+            'uses' => $controller . 'ReportesController@reporteMoto',  
             'as' => 'parqueadero.reportesCarpark.reporteMoto'
         ]);
 
+        //ruta que conduce al controlador para descargar el reporte del perfil de una moto registrada
         Route::get('descargarreporteMoto/{id?}', [
-            'uses' => $controller . 'ReportesController@descargarreporteMoto',  //ruta que conduce al controlador para descargar el reporte una moto registrada
+            'uses' => $controller . 'ReportesController@descargarreporteMoto',  
             'as' => 'parqueadero.reportesCarpark.descargarreporteMoto'
         ]);
 
@@ -357,17 +407,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de ingresos
         Route::get('index', [
             'uses' => $controller . 'IngresosController@index',
             'as' => 'parqueadero.ingresosCarpark.index',
         ]);
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de ingresos por medio de petición ajax
         Route::get('index/ajax', [
             'uses' => $controller . 'IngresosController@indexAjax',
-            'as' => 'parqueadero.ingresosCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+            'as' => 'parqueadero.ingresosCarpark.index.ajax'             
         ]);
 
-        Route::get('tablaMotosDentro', [   //ruta que realiza la consulta de las dependencias registradas
+        //ruta que realiza la consulta de los ingresos registrados
+        Route::get('tablaMotosDentro', [   
             'as' => 'parqueadero.ingresosCarpark.tablaMotosDentro',
             'uses' => function (Request $request) {
                 if ($request->ajax()) {
@@ -384,33 +437,39 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para registrar una acción de ingreso o salida
         Route::get('create', [
-            'uses' => $controller . 'IngresosController@create',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'uses' => $controller . 'IngresosController@create', 
             'as' => 'parqueadero.ingresosCarpark.create'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario de verificación de información del usuario entrante o saliente
         Route::post('verificar', [
-            'uses' => $controller . 'IngresosController@verificar',  //ruta que conduce al controlador para mostrar el formulario de verificación de información
+            'uses' => $controller . 'IngresosController@verificar',  
             'as' => 'parqueadero.ingresosCarpark.verificar'
         ]);
 
+        //ruta que conduce al controlador para alamacenar los datos de ingreso y salida 
         Route::post('store', [
-            'uses' => $controller . 'IngresosController@store',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
+            'uses' => $controller . 'IngresosController@store',   
             'as' => 'parqueadero.ingresosCarpark.store'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para registrar una acción y proceder a almacenarlos
         Route::get('confirmar/{id?}', [
-            'uses' => $controller . 'IngresosController@confirmar',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'uses' => $controller . 'IngresosController@confirmar',  
             'as' => 'parqueadero.ingresosCarpark.confirmar'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario de verificación de información del usuario entrante o saliente por medio de tarjeta RFID (python)
         Route::get('1e6548467c256f201b82f9f20dac907b/{id?}', [
-            'uses' => $controller . 'IngresosController@confirmarTarjeta',  //ruta que conduce al controlador para mostrar el formulario para registrar una acción
+            'uses' => $controller . 'IngresosController@confirmarTarjeta',  
             'as' => 'parqueadero.ingresosCarpark.1e6548467c256f201b82f9f20dac907b'
         ]);
 
+        //ruta que conduce al controlador para alamacenar los datos de ingreso y salida desde la tarjeta RFID (python)
         Route::post('storeTarjeta', [
-            'uses' => $controller . 'IngresosController@storeTarjeta',   //ruta que conduce al controlador para alamacenar los datos de ingreso y salida
+            'uses' => $controller . 'IngresosController@storeTarjeta',   
             'as' => 'parqueadero.ingresosCarpark.registroTarjeta'
         ]);
 
@@ -423,17 +482,20 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de uso del parqueadero
         Route::get('index', [
             'uses' => $controller . 'HistorialController@index',
             'as' => 'parqueadero.historialesCarpark.index',
         ]);
 
+        //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros de uso del parqueadero por medio de ajax
         Route::get('index/ajax', [
             'uses' => $controller . 'HistorialController@indexAjax',
-            'as' => 'parqueadero.historialesCarpark.index.ajax'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan registros
+            'as' => 'parqueadero.historialesCarpark.index.ajax'             
         ]);
 
-        Route::get('tablaHistoriales', [   //ruta que realiza la consulta de las dependencias registradas
+        //ruta que realiza la consulta de los historiales registradas
+        Route::get('tablaHistoriales', [   
             'as' => 'parqueadero.dependenciasCarpark.tablaHistoriales',
             'uses' => function (Request $request) {
                 if ($request->ajax()) {
@@ -450,18 +512,21 @@ Route::group(['middleware' => ['auth']], function () {
 
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
         Route::get('filtrarFecha', [
-            'uses' => $controller . 'HistorialController@filtrarFecha',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'uses' => $controller . 'HistorialController@filtrarFecha',  
             'as' => 'parqueadero.historialesCarpark.filtrarFecha'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por código
         Route::get('filtrarCodigo', [
-            'uses' => $controller . 'HistorialController@filtrarCodigo',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'uses' => $controller . 'HistorialController@filtrarCodigo',  
             'as' => 'parqueadero.historialesCarpark.filtrarCodigo'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por placa
         Route::get('filtrarPlaca', [
-            'uses' => $controller . 'HistorialController@filtrarPlaca',  //ruta que conduce al controlador para mostrar el formulario para filtrar reportes por fecha
+            'uses' => $controller . 'HistorialController@filtrarPlaca',  
             'as' => 'parqueadero.historialesCarpark.filtrarPlaca'
         ]);
 
@@ -474,11 +539,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\Carpark\\src\\Controllers\\";
 
+        //ruta que conduce al controlador para mostrar el botón de envio de correos de advertencia
         Route::get('cerrarParqueadero', [
             'uses' => $controller . 'CorreosController@cerrarParqueadero',
             'as' => 'parqueaderos.correosCarpark.cerrarParqueadero',
         ]);
 
+        //ruta que conduce al controlador para enviar los correos de advertencia
         Route::post('enviarMail', [
             'uses' => $controller . 'CorreosController@enviarMail',
             'as' => 'parqueaderos.correosCarpark.enviarMail',
