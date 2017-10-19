@@ -34,7 +34,7 @@
             {!! Field::select('laboratorioSeleccionado',
                                                         ['Aulas de computo' => 'Aulas de computo',
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                         null,
                                                         [ 'label' => 'Espacio academico:']) !!}
             <br>
@@ -45,9 +45,9 @@
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
-                    'Nucleo tematico',
+                    'Núcleo temático',
                     'Sala',
-                    'Practica',
+                    'Práctica',
                     ' ' => ['style' => 'width:20px;'],
                     'Acciones'
                     ])
@@ -130,7 +130,7 @@
     <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
-                <td>Fecha de creacion:</td>
+                <td>Fecha de creación:</td>
                 <td>@{{created_at}}</td>
             </tr>
             <tr>
@@ -174,9 +174,9 @@
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
                 {data: 'FK_SOL_Id_Sala', name: 'Sala'},
-                {data: 'tipo_prac', name: 'Practica'},
+                {data: 'tipo_prac', name: 'Práctica'},
                 {
                     "className": 'details-control',
                     "orderable": false,

@@ -25,14 +25,14 @@
 
                     <div class="form-body">
 
-                        {!! Field:: text('codigo',null,['label'=>'Identificacion:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'11','autocomplete'=>'off'],
-                                                        ['help' => 'Digita el codigo o identificacion','icon'=>'fa fa-credit-card'] ) !!}
+                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'11','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la identificación del docente','icon'=>'fa fa-credit-card'] ) !!}
 
 
                         {!! Field::select('SOL_carrera',
-                                          ['1' => 'Ingenieria de Sistemas', '2' => 'Ingenieria Ambiental',
-                                          '3' => 'Ingenieria Agronomica', '4' => 'Administracion',
-                                          '5' => 'Psicologia', '6' => 'Contaduria'],
+                                          ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
+                                          '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
+                                          '5' => 'Psicología', '6' => 'Contaduría'],
                                           null,
                                           [ 'label' => 'Programa:']) !!}
 
@@ -41,11 +41,11 @@
 
 
                         {!! Field::select('SOL_laboratorios',
-                                ['Aulas de Computo' => 'Aulas de Computo',
-                                'Laboratorio psicologia' => 'Laboratorio psicologia',
-                                'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                null,
-                                [ 'label' => 'Espacio academico:']) !!}
+                                ['Aulas de computo' => 'Aulas de computo',
+                                    'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                    'Laboratorio psicologia' => 'Laboratorio psicología'],
+                                    null,
+                                [ 'label' => 'Espacio académico:']) !!}
 
                         {!! Field::select(
                                                           'aula', null,

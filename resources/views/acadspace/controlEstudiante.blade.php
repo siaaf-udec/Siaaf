@@ -25,21 +25,21 @@
 
                     <div class="form-body">
                         {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
-                                                        ['help' => 'Digita el codigo','icon'=>'fa fa-credit-card'] ) !!}
+                                                        ['help' => 'Digite el codigo','icon'=>'fa fa-credit-card'] ) !!}
 
                         {!! Field::select('SOL_carrera',
-                                          ['1' => 'Ingenieria de Sistemas', '2' => 'Ingenieria Ambiental',
-                                          '3' => 'Ingenieria Agronomica', '4' => 'Administracion',
-                                          '5' => 'Psicologia', '6' => 'Contaduria','7' => 'Otro'],
+                                          ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
+                                          '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
+                                          '5' => 'Psicología', '6' => 'Contaduría'],
                                           null,
                                           [ 'label' => 'Programa :']) !!}
 
 
                         {!! Field::select('SOL_laboratorios',
-                                          ['Aulas de Computo' => 'Aulas de Computo',
-                                          'Laboratorio psicologia' => 'Laboratorio psicologia',
-                                          'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                          null,
+                                          ['Aulas de computo' => 'Aulas de computo',
+                                            'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
+                                            'Laboratorio psicologia' => 'Laboratorio psicología'],
+                                             null,
                                           [ 'label' => 'Espacio academico:']) !!}
 
                         {!! Field::select(

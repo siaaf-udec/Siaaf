@@ -51,10 +51,10 @@
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
             @slot('columns', [
             '#' => ['style' => 'width:20px;'],
-            'Nucleo tematico',
+            'Núcleo temático',
             'Estudiantes' => ['class' => 'min-phone-l'],
             'Estado' => ['class' => 'min-phone-l'],
-            'Practica' => ['class' => 'min-phone-l'],
+            'Práctica' => ['class' => 'min-phone-l'],
             ' '
             ])
         @endcomponent
@@ -115,7 +115,7 @@
     <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
-                <td>Fecha de creacion:</td>
+                <td>Fecha de creación:</td>
                 <td>@{{created_at}}</td>
             </tr>
             <tr>
@@ -127,7 +127,7 @@
                 <td>@{{FK_SOL_Id_Sala}}</td>
             </tr>
             <tr>
-                <td>Observacion:</td>
+                <td>Observación:</td>
                 <td>@{{coment.COM_Comentario}}</td>
             </tr>
         </table>
@@ -146,10 +146,10 @@
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'estado', name: 'Estado'},
-                {data: 'tipo_prac', name: 'Practica'},
+                {data: 'tipo_prac', name: 'Práctica'},
                 {
                     "className": 'details-control',
                     "orderable": false,

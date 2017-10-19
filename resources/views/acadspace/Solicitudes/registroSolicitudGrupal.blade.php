@@ -52,7 +52,7 @@
                                 {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_soft">
-                                    {!! Field::select('Seleccione software entre los disponiles actualmente:',$software,
+                                    {!! Field::select('Seleccione software entre los disponibles actualmente:',$software,
                                     ['name' => 'SOL_NombSoft'])
                                     !!}
                                 </div>
@@ -64,24 +64,24 @@
                                 ['icon'=>'fa fa-group'] ) !!}
 
                                 {!! Field::checkboxes('SOL_Dias',
-                                ['Lunes' => 'Lunes', 'Martes' => 'Martes', 'Miercoles' => 'Miercoles', 'Jueves' => 'Jueves', 'Viernes' => 'Viernes','Sabado' => 'Sabado'],null,
-                                ['inline', 'label' => 'Seleccione los dias que requiere el espacio:']) !!}
+                                ['Lunes' => 'Lunes', 'Martes' => 'Martes', 'Miercoles' => 'Miércoles', 'Jueves' => 'Jueves', 'Viernes' => 'Viernes','Sabado' => 'Sábado'],null,
+                                ['inline', 'label' => 'Seleccione los días que requiere el espacio:']) !!}
 
                                 {!! Field::text(
                                 'SOL_Hora_Inicio',
                                 ['label' => 'Hora de inicio:', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'auto' => 'off'],
-                                ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
+                                ['help' => 'Seleccione la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
                                 {!! Field::text(
                                 'SOL_Hora_Fin',
                                 ['label' => 'Hora de fin:', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'auto' => 'off'],
-                                ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
+                                ['help' => 'Seleccione la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
 
                                 {!! Field::text(
                                'SOL_Rango_Fechas',
                                ['required','readonly', 'auto' => 'off', 'class' => 'range-date-time-picker', 'label' => 'Seleccione el rango de fechas en que solicita el espacio:'],
-                               ['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
+                               ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
 
                             </div>
                             <div class="form-actions">

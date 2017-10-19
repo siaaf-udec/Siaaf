@@ -23,36 +23,36 @@
                                 {!! Field::select('SOL_laboratorios',
                                                         ['Aulas de computo' => 'Aulas de computo',
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                         null,
                                                         ['label' => 'Seleccione el espacio academico que requiere:']) !!}
 
                                 {!! Field::select('SOL_programa',
-                                                    ['Ingenieria de sistemas' => 'Ingenieria de sistemas',
-                                                     'Ingenieria Ambiental' => 'Ingenieria Ambiental',
-                                                     'Ingenieria agronomica' => 'Ingenieria agronomica',
-                                                     'Psicologia' => 'Psicologia',
-                                                      'Administracion de empresas' => 'Administracion de empresas',
-                                                      'Contaduria' => 'Contaduria'],
+                                                    ['Ingenieria de sistemas' => 'Ingeniería de sistemas',
+                                                     'Ingenieria Ambiental' => 'Ingeniería Ambiental',
+                                                     'Ingenieria agronomica' => 'Ingeniería agronomica',
+                                                     'Psicologia' => 'Psicología',
+                                                      'Administracion de empresas' => 'Administraciín de empresas',
+                                                      'Contaduria' => 'Contaduría'],
                                                     null,
                                                     [ 'label' => 'Programa al que pertenece:']) !!}
 
                                 {!! Field::hidden('ID_Practica', '1') !!}
 
-                                {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere guia de practica?', 'icon'=>'fa fa-user']) !!}
+                                {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere guía de práctica?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_guia">
-                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                 ['icon'=>'fa fa-group'] ) !!}
                                 </div>
 
-                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
+                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                ['help' => 'Digite el núcleo temático.','icon'=>'fa fa-building-o'] ) !!}
 
                                 {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_soft">
-                                    {!! Field::select('Seleccione software entre los disponiles actualmente:',$software,
+                                    {!! Field::select('Seleccione software entre los disponibles actualmente:',$software,
                                     ['name' => 'SOL_NombSoft'])
                                     !!}
                                 </div>
@@ -71,12 +71,12 @@
                                 {!! Field::text(
                                 'SOL_Hora_Inicio',
                                 ['label' => 'Hora de inicio', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
-                                ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
+                                ['help' => 'Seleccione la hora.', 'icon' => 'fa fa-clock-o']) !!}
 
                                 {!! Field::text(
                                 'SOL_Hora_Fin',
                                 ['label' => 'Hora de fin', 'class' => 'timepicker timepicker-no-seconds', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", 'required', 'auto' => 'off'],
-                                ['help' => 'Selecciona la hora.', 'icon' => 'fa fa-clock-o']) !!}
+                                ['help' => 'Seleccione la hora.', 'icon' => 'fa fa-clock-o']) !!}
                             </div>
                             <div class="form-actions">
                                 <div class="row">
