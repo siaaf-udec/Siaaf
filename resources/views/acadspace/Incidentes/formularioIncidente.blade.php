@@ -29,7 +29,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestion Incidentes'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestión Incidentes'])
             <div class="clearfix">
             </div>
             <br>
@@ -55,7 +55,7 @@
                     'id_incidente',
                     '  ',
                     '#',
-                    'Codigo',
+                    'Código',
                     'Nombre Espacio',
                     'Acciones' => ['style' => 'width:45px;']
                     ])
@@ -83,8 +83,8 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('id_persona',null,
-                                    ['label'=>'Codigo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                    ['help' => 'Digita el codigo o identificacion de la persona','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Código:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                    ['help' => 'Digite el código o identificación de la persona','icon'=>'fa fa-user'] ) !!}
 
                                     {!! Field::select('espacios',
                                         ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
@@ -92,8 +92,8 @@
                                         [ 'label' => 'Seleccionar un espacio']) !!}
 
                                     {!! Field:: textarea('descripcion',null,
-                                         ['label'=>'Descripcion Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                                         ['help' => 'Digita la descripcion','icon'=>'fa fa-desktop'] ) !!}
+                                         ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
+                                         ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
 
                                 </div>
 
@@ -196,7 +196,7 @@
                     "defaultContent": ''
                 },
                 {data: 'DT_Row_Index'},
-                {data: 'FK_INC_Id_User', name: 'Codigo'},
+                {data: 'FK_INC_Id_User', name: 'Código'},
                 {data: 'INC_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',

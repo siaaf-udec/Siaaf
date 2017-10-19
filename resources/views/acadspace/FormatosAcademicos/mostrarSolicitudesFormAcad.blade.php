@@ -18,7 +18,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Formatos Academicos'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-notebook', 'title' => 'Formatos Académicos'])
             <div class="clearfix">
             </div>
             <br>
@@ -39,7 +39,7 @@
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id_documento',
-                    'Formato Academico',
+                    'Formato Académico ',
                     'Fecha',
                     'Secretaria',
                     'Acciones' => ['style' => 'width:150px;']

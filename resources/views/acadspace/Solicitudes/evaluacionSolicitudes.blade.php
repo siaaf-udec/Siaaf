@@ -23,16 +23,16 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
 
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-edit', 'title' => 'Gestion Solicitudes'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-edit', 'title' => 'Gestión Solicitudes'])
         <div class="col-md-12">
             <div class="clearfix">
                 <br>
                 {!! Field::select('SOL_laboratorio',
                                                         ['Aulas de computo' => 'Aulas de computo',
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                         null,
-                                                        [ 'label' => 'Espacio academico a gestionar:']) !!}
+                                                        [ 'label' => 'Espacio académico a gestionar:']) !!}
                 {{--DIVISION NAV--}}
                 <div class="portlet-body" id="vista-tabla">
                     <ul class="nav nav-pills">
@@ -54,7 +54,7 @@
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
-                                    'Nucleo tematico',
+                                    'Núcleo temático',
                                     'Estudiantes',
                                     'Practica',
                                     ' ' => ['style' => 'width:20px;'],
@@ -72,7 +72,7 @@
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
-                                    'Nucleo tematico',
+                                    'Núcleo temático',
                                     'Estudiantes',
                                     'Practica',
                                     ' ' => ['style' => 'width:20px;'],
@@ -108,7 +108,7 @@
                         <h2 class="modal-title">
                             <i class="glyphicon glyphicon-check">
                             </i>
-                            Aprobar solicitud de espacio academico
+                            Aprobar solicitud de espacio académico
                         </h2>
                     </div>
                     <div class="modal-body">
@@ -143,14 +143,14 @@
                         <h2 class="modal-title">
                             <i class="glyphicon glyphicon-remove-sign">
                             </i>
-                            Reprobar solicitud de espacio academico
+                            Reprobar solicitud de espacio académico
                         </h2>
                     </div>
                     <div class="modal-body">
                         {!! Form::open(['id' => 'form-reprobar-sol', 'class' => '', 'url' => '/forms']) !!}
                         <div class="row">
                             <div class="col-md-12">
-                                {{ Form::label('Agregar observacion:') }}
+                                {{ Form::label('Agregar observación:') }}
                                 {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
 
                             </div>
@@ -178,7 +178,7 @@
                         <h2 class="modal-title">
                             <i class="glyphicon glyphicon-check">
                             </i>
-                            Aprobar solicitud de espacio academico
+                            Aprobar solicitud de espacio académico
                         </h2>
                     </div>
                     <div class="modal-body">
@@ -213,14 +213,14 @@
                         <h2 class="modal-title">
                             <i class="glyphicon glyphicon-remove-sign">
                             </i>
-                            Reprobar solicitud de espacio academico
+                            Reprobar solicitud de espacio académico
                         </h2>
                     </div>
                     <div class="modal-body">
                         {!! Form::open(['id' => 'form-reprobar-sol-libre', 'class' => '', 'url' => '/forms']) !!}
                         <div class="row">
                             <div class="col-md-12">
-                                {{ Form::label('Agregar observacion:') }}
+                                {{ Form::label('Agregar observación:') }}
                                 {!! Form::textarea('anotacion_libre',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
                             </div>
                         </div>
@@ -376,7 +376,7 @@
             columns = [
 
                 {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {

@@ -66,7 +66,7 @@
                                         <tr>
                                             <td align="center"
                                                 style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;">
-                                                {{ ( isset( $body ) ) ? $body : 'Ha recibido un formato academico para revision.' }}
+                                                {{ ( isset( $body ) ) ? $body : 'Ha recibido un formato académico para revisión.' }}
                                                 <br>
                                                 Sistema de Información para el Apoyo Administrativo UdeC - Facatativá
                                             </td>

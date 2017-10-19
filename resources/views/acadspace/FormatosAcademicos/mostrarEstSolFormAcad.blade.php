@@ -20,7 +20,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formatos Academicos'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formatos Académicos'])
             <div class="clearfix">
             </div>
             <br>
@@ -45,7 +45,7 @@
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id_documento',
-                    'Formato Academico',
+                    'Formato Académico',
                     'Fecha',
                     'Estado',
                     'Acciones' => ['style' => 'width:45px;']
@@ -65,7 +65,7 @@
                             <h2 class="modal-title">
                                 <i class="fa fa-file-pdf-o">
                                 </i>
-                                Registrar formato academico
+                                Registrar formato académico
                             </h2>
                         </div>
 
@@ -76,19 +76,24 @@
                                     <div class="form-wizard">
                                         <div class="form-body">
                                             <div class="row">
-                                                {!! Field::text('titulo', ['label' => 'Nombre Documento:', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-file-pdf-o', 'help' => 'Ingrese el nombre.']) !!}
+                                                <div align="left">
 
-                                                {!! Field::text('descripcion', ['label' => 'Descripcion:', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-edit', 'help' => 'Ingrese la descripcion.']) !!}
+                                                    {!! Field::text('titulo', ['label' => 'Nombre Documento:', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-file-pdf-o', 'help' => 'Ingrese el nombre.']) !!}
 
-                                                 {!! Field::email('email', ['required', 'max' => 80, 'label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
+                                                    {{ Form::label('Agregar observación:') }}
+                                                    {!! Form::textarea('descripcion',null,['class'=>'form-control', 'rows' => 3, 'cols' => 40]) !!}
 
-                                                <h3 class="block">Formato academico</h3>
+                                                    {!! Field::email('email', ['required', 'max' => 80, 'label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
+
+                                                </div>
+
+                                                <h3 class="block">Formato académico</h3>
                                                 <div class="form-group">
                                                     <div class="dropzone dropzone-file-area data-dz-size"
                                                          id="my_dropzone">
                                                         <h3 class="sbold">Arrastra o da click aquí para cargar
                                                             archivos</h3>
-                                                        <p> Por favor sube el formato academico en un formato pdf. </p>
+                                                        <p> Por favor sube el formato académico en un formato pdf. </p>
                                                     </div>
                                                 </div>
 
@@ -101,7 +106,6 @@
                                     {!! Form::close() !!}
 
                                 </div>
-                            </div>
 
                         </div>
 
@@ -110,6 +114,7 @@
                     </div>
                 </div>
             </div>
+    </div>
         @endcomponent
         {{-- END HTML SAMPLE --}}
         @endsection
@@ -192,20 +197,7 @@
                         formatfile = '.pdf',
                         numfile = 1;
                     FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
-                    /*Prueba*/
-                    /*var x = function () {
-                        return {
-                            init: function () {
-                                $('#modal-create-soft').modal('hide');
-                                table.ajax.reload();
-                            }
-                        };
-                    };
 
-
-                    var formatfile = ".pdf,.PDF";
-                    var numfile = 1;
-                    FormDropzone.init(route, formatfile, numfile, x());*/
 
                     /*cargar tabla*/
                     var table, url, columns;

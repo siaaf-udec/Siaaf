@@ -35,7 +35,7 @@
 
 @endpush
 @section('content')
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-calendar', 'title' => 'Gestion espacios academicos'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-calendar', 'title' => 'Gestión espacios académicos'])
 
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
@@ -47,9 +47,9 @@
                             {!! Field::select('SOL_laboratorios',
                                                             ['Aulas de computo' => 'Aulas de computo',
                                                             'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                            'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                            'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                             null,
-                                                            [ 'label' => 'Espacio academico:']) !!}
+                                                            [ 'label' => 'Espacio académico:']) !!}
 
                             {!! Field::select(
                                                             'aula', null,
@@ -224,7 +224,7 @@
                 <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
-                <td>Guia de practica:</td>
+                <td>Guía de práctica:</td>
                 <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>

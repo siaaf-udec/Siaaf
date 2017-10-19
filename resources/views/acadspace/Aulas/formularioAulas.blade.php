@@ -78,10 +78,10 @@
 
                                     {!! Field:: text('nomb_sala',null,
                                     ['label'=>'Nombre Sala:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                    ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
+                                    ['help' => 'Digite el nombre','icon'=>'fa fa-desktop'] ) !!}
 
                                     {!! Field::select('espacios',
-                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
+                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicología', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
                                         null,
                                         [ 'label' => 'Seleccionar un espacio']) !!}
 

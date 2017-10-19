@@ -33,7 +33,7 @@
                                       [ 'label' => 'Seleccione la carrera :']) !!}
 
                         {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
-                        ['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
+                        ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">

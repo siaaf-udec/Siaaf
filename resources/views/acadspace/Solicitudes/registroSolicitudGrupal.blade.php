@@ -24,29 +24,29 @@
                                 {!! Field::select('SOL_laboratorios',
                                                         ['Aulas de computo' => 'Aulas de computo',
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicologia'],
+                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                         null,
-                                                        [ 'label' => 'Espacio academico que requiere:']) !!}
+                                                        [ 'label' => 'Espacio académico que requiere:']) !!}
 
                                 {!! Field::select('SOL_programa',
-                                                    ['Ingenieria de sistemas' => 'Ingenieria de sistemas',
-                                                     'Ingenieria Ambiental' => 'Ingenieria Ambiental',
-                                                     'Ingenieria agronomica' => 'Ingenieria agronomica',
-                                                     'Psicologia' => 'Psicologia',
-                                                      'Administracion de empresas' => 'Administracion de empresas',
-                                                      'Contaduria' => 'Contaduria',
+                                                    ['Ingenieria de sistemas' => 'Ingeniería de sistemas',
+                                                     'Ingenieria Ambiental' => 'Ingeniería Ambiental',
+                                                     'Ingenieria agronomica' => 'Ingeniería agronomica',
+                                                     'Psicologia' => 'Psicología',
+                                                      'Administracion de empresas' => 'Administraciín de empresas',
+                                                      'Contaduria' => 'Contaduría',
                                                       'Otro' => 'Otro'],
                                                     null,
                                                     [ 'label' => 'Programa al que pertenece:']) !!}
 
-                                {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere guia de practica?', 'icon'=>'fa fa-user']) !!}
+                                {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere guía de practica?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_guia">
-                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                 ['icon'=>'fa fa-group'] ) !!}
                                 </div>
 
-                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Nucleo tematico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                 ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
 
                                 {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}

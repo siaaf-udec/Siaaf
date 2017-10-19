@@ -33,7 +33,7 @@
                             'Laboratorio psicología' => 'Laboratorio psicología',
                             'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
                             null,
-                            [ 'label' => 'Espacio academico:']) !!}
+                            [ 'label' => 'Espacio académico:']) !!}
 
 
                         {!! Field::select(
@@ -42,7 +42,7 @@
                         <br>
 
                         {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
-                        ['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
+                        ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
 
 
                         <div class="form-actions">

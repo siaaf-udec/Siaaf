@@ -69,7 +69,7 @@
         <thead>
         <tr>
             <th class="no">#</th>
-            <th class="unit"><b>ESPACIO ACADEMICO</b></th>
+            <th class="unit"><b>ESPACIO ACADÉMICO</b></th>
             <th class="unit"><b>PRACTICA GRUPAL</b></th>
             <th class="unit"><b>PRACTICA LIBRE</b></th>
             <th class="unit"><b>TOTAL</b></th>
@@ -84,7 +84,7 @@
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'LABORATORIO PSICOLOGIA'}}</td>
+            <td class="unit">{{'LABORATORIO PSICOLOGÍA'}}</td>
             <td class="unit">{{$psicGrup}}</td>
             <td class="unit">{{$psicLibre}}</td>
             <td class="unit">{{$psicGrup+$psicLibre}}</td>

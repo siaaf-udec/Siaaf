@@ -78,35 +78,35 @@
         </thead>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'INGENIERIA DE SISTEMAS'}}</td>
+            <td class="unit">{{'INGENIERÍA DE SISTEMAS'}}</td>
             <td class="unit">{{$totSistemasGrup}}</td>
             <td class="unit">{{$totSistemasLibre}}</td>
             <td class="unit">{{$totSistemasGrup+$totSistemasLibre}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'INGENIERIA AMBIENTAL'}}</td>
+            <td class="unit">{{'INGENIERÍA AMBIENTAL'}}</td>
             <td class="unit">{{$totAmbientalGrup}}</td>
             <td class="unit">{{$totAmbientalLibre}}</td>
             <td class="unit">{{$totAmbientalGrup+$totAmbientalLibre}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'INGENIERIA AGRONOMICA'}}</td>
+            <td class="unit">{{'INGENIERÍA AGRONOMICA'}}</td>
             <td class="unit">{{$totAgronomicaGrup}}</td>
             <td class="unit">{{$totAgronomicaLibre}}</td>
             <td class="unit">{{$totAgronomicaLibre+$totAgronomicaGrup}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'ADMINISTRACION'}}</td>
+            <td class="unit">{{'ADMINISTRACIÓN'}}</td>
             <td class="unit">{{$totAdminGrup}}</td>
             <td class="unit">{{$totAdminLibre}}</td>
             <td class="unit">{{$totAdminLibre+$totAdminGrup}}</td>
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'CONTADURIA'}}</td>
+            <td class="unit">{{'CONTADURÍA'}}</td>
             <td class="unit">{{$totContaduriaGrup}}</td>
             <td class="unit">{{$totContaduriaLibre}}</td>
             <td class="unit">{{$totContaduriaLibre+$totContaduriaGrup}}</td>

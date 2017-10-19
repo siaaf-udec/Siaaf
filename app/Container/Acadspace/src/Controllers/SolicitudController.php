@@ -417,7 +417,7 @@ class SolicitudController extends Controller
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Anotacion agregada correctamente.'
+                'Anotación agregada correctamente.'
             );
 
         }

@@ -31,10 +31,10 @@
                             'Laboratorio psicología' => 'Laboratorio psicología',
                             'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
                             null,
-                            [ 'label' => 'Seleccione el espacio academico que requiere:']) !!}
+                            [ 'label' => 'Seleccione el espacio académico que requiere:']) !!}
 
                         {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
-                        ['help' => 'Selecciona un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
+                        ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">

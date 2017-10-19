@@ -17,7 +17,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th', 'title' => 'Gestion Software'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th', 'title' => 'Gestión Software'])
 
             <div class="clearfix">
             </div>
@@ -45,7 +45,7 @@
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'Nombre',
-                    'Version',
+                    'Versión',
                     'Licencias',
                     'Acciones' => ['style' => 'width:45px;']
                     ])
@@ -74,16 +74,16 @@
 
                                     {!! Field:: text('nombre_soft',null,
                                     ['label'=>'Nombre Software:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                    ['help' => 'Digita el nombre','icon'=>'fa fa-desktop'] ) !!}
+                                    ['help' => 'Digite el nombre','icon'=>'fa fa-desktop'] ) !!}
 
 
                                     {!! Field:: text('version',null,
-                                    ['label'=>'Version','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                    ['help' => 'Digita la version.','icon'=>'fa fa-desktop']) !!}
+                                    ['label'=>'Versión','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    ['help' => 'Digite la versión.','icon'=>'fa fa-desktop']) !!}
 
                                     {!! Field:: text('licencias',null,
                                     ['label'=>'Cantidad de licencias','class'=> 'form-control', 'autofocus', 'maxlength'=>'2','autocomplete'=>'off'],
-                                    ['help' => 'Digita cantidad de licencias disponibles.','icon'=>'fa fa-user']) !!}
+                                    ['help' => 'Digite cantidad de licencias disponibles.','icon'=>'fa fa-user']) !!}
 
                                 </div>
 
@@ -156,7 +156,7 @@
 
                 {data: 'DT_Row_Index'},
                 {data: 'SOF_Nombre_Soft', name: 'Nombre'},
-                {data: 'SOF_Version', name: 'Version'},
+                {data: 'SOF_Version', name: 'Versión'},
                 {data: 'SOF_Licencias', name: 'Licencias'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
