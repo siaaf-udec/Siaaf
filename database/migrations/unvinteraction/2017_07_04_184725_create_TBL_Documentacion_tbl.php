@@ -19,11 +19,6 @@ class CreateTBLDocumentacionTbl extends Migration
             $table->increments('PK_Documentacion');
             $table->string('Entidad',120); 
             $table->string('Ubicacion',120); 
-            $table->string('Tipo',120); 
-<<<<<<< Updated upstream
-             $table->string('Descripcion',120);
-=======
->>>>>>> Stashed changes
             $table->integer('FK_TBL_Convenios')->unsigned();
             $table->foreign('FK_TBL_Convenios')->references('PK_Convenios')->on('TBL_Convenios');
             
