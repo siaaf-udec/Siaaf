@@ -4,6 +4,7 @@
 namespace App\Container\Humtalent\src\Controllers;
 
 use Illuminate\Http\Request;
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Container\Humtalent\src\DocumentacionPersona;
 use App\Container\Humtalent\src\StatusOfDocument;
@@ -614,7 +615,7 @@ class DocumentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadReporteRadicacionEmpleados( Request $request, $id)
     {
@@ -662,12 +663,7 @@ class DocumentController extends Controller
                         'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
             }
             catch ( Exception $e){
-
-                return view('humtalent.reportes.ReporteRadicacionEmpleados',
-                    compact('empleado', 'date', 'time', 'noEPS',
-                        'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
-                );
-
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -722,7 +718,7 @@ class DocumentController extends Controller
      *  Presenta el reporte de la radicación de los documentos para todos los empleados para descargar
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadReporteConsolidadoEmpleados( Request $request)
     {
@@ -764,8 +760,7 @@ class DocumentController extends Controller
             }
             catch ( Exception $e ){
 
-                return view('humtalent.reportes.ReporteConsolidadoEmpleados',
-                    compact('empleados', 'date', 'time', 'cont'));
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }

@@ -12,6 +12,7 @@ use App\Container\Humtalent\src\Asistent;
 use App\Container\Humtalent\src\Induction;
 use App\Container\Humtalent\src\Mail\EmailTalentoHumano;
 use File;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Humtalent\src\Persona;
@@ -473,7 +474,6 @@ class EmpleadoController extends Controller
     public function reporteContactoEmpleados(Request $request)
     {
         if ($request->isMethod('GET')) {
-
             $date = date("d/m/Y");
             $time = date("h:i A");
             $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
@@ -489,7 +489,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte de datos de contacto de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadContactoReporte(Request $request)
     {
@@ -508,10 +508,7 @@ class EmpleadoController extends Controller
                 )->download('ReporteContacto.pdf');
 
             } catch ( Exception $e ){
-
-                return view('humtalent.reportes.ReporteContactoEmpleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -542,7 +539,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte de datos de dirección de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadDireccionReporte(Request $request)
     {
@@ -558,9 +555,7 @@ class EmpleadoController extends Controller
                 )->download('ReporteDireccion.pdf');
             }
             catch ( Exception $e ){
-                return view('humtalent.reportes.ReporteDireccionEmpleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -591,7 +586,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por programa.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadSalario1Reporte( Request $request)
     {
@@ -610,10 +605,7 @@ class EmpleadoController extends Controller
             }
             catch (Exception $e){
 
-                return view('humtalent.reportes.ReporteSalario1Empleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
-
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -642,7 +634,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por rol.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadSalario2Reporte( Request $request)
     {
@@ -660,9 +652,7 @@ class EmpleadoController extends Controller
                 )->download('ReporteSalarioRol.pdf');
             }
             catch ( Exception $e){
-                return view('humtalent.reportes.ReporteSalario2Empleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -694,7 +684,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte correspondiente a las afiliaciones que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadAfiliacionesReporte( Request $request)
     {
@@ -712,9 +702,7 @@ class EmpleadoController extends Controller
                 )->download('ReporteAfiliaciones.pdf');
             }
             catch ( Exception $e ){
-                return view('humtalent.reportes.ReporteAfiliacionesEmpleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }
@@ -745,7 +733,7 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte correspondiente al estado que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
     public function downloadEstadoReporte( Request $request)
     {
@@ -763,9 +751,7 @@ class EmpleadoController extends Controller
                 )->download('ReporteEstado.pdf');
             }
             catch ( Exception $e ){
-                return view('humtalent.reportes.ReporteEstadoEmpleados',
-                    compact('empleados', 'date', 'time', 'total', 'cont')
-                );
+                return view('humtalent.empleado.tablasEmpleados');
             }
         }
     }

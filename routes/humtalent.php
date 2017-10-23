@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::get('index', [
             'uses' => $controller . 'EmpleadoController@index',
-            'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados reegistrados
+            'as' => 'talento.humano.empleado.index'             //ruta que conduce al controlador para mostrar  la tabla donde se cargan los empleados registrados
         ]);
         Route::get('index/ajax', [
             'uses' => $controller . 'EmpleadoController@indexAjax',
