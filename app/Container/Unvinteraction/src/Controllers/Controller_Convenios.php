@@ -215,6 +215,16 @@ class Controller_Convenios extends Controller
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
     }
+    public function Reporte()
+    {
+        $convenio= TBL_Convenios::where('PK_Convenios','=',1)->select('PK_Convenios','Nombre')
+            ->with([
+                    'convenios_Sedes'=>function ($query) {
+                    $query->select('PK_Sede','Sede');
+                    $query->where('FK_TBL_Sede','=','PK_Sede');
+                    }])->get();
+        return $convenio;
+    }
     
     //______________________END___CONVENIOS____________________________
 }

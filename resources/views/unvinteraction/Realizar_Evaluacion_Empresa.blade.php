@@ -22,7 +22,18 @@
  
     @endforeach
 @endif
-{{ Form::submit('Registrar', ['class' => 'btn blue']) }}
-{{ Form::reset('Cancelar', ['class' => 'btn btn-danger']) }}
+{{ Form::submit('Registrar', ['class' => 'btn blue atras']) }}
+{{ Form::reset('Cancelar', ['class' => 'btn btn-danger atras']) }}
 {!! Form::close() !!}
 @endcomponent
+<script type="text/javascript">
+jQuery(document).ready(function () {  
+
+  $('.atras').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('Documentos_Convenios.Documentos_Convenios',[$convenio]) }}';
+            $(".content-ajax").load(route);
+        });
+  
+});
+</script>
