@@ -7,7 +7,7 @@ use App\Container\Carpark\src\Dependencias;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class DependenciasController extends Controller
 {
@@ -22,6 +22,25 @@ class DependenciasController extends Controller
     }
 
     /**
+     * Muestra todos las dependencias registradas por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response  | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function indexAjax(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('carpark.dependencias.ajaxTablaDependencias');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
      * muestra la tabla de información de las dependencias por medio de petición ajax.
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -32,6 +51,27 @@ class DependenciasController extends Controller
             return view('carpark.dependencias.registroDependencias');
         }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que consulta las dependencias registradas y las envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaDependencias(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return Datatables::of(Dependencias::all())
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -107,26 +147,6 @@ class DependenciasController extends Controller
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
-
-
-    /**
-     * Muestra todos las dependencias registradas por medio de una petición ajax.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response  | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function indexAjax(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            return view('carpark.dependencias.ajaxTablaDependencias');
         }
 
         return AjaxResponse::fail(

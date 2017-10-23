@@ -23,7 +23,7 @@ class CorreosController extends Controller
     /**
      * Muestra el boton para cerrar el parqueadero y enviar los correos de advertencia a los usuarios que aún tienen su vehículo en la universidad.
      *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Illuminate\Http\Response
      */
     public function cerrarParqueadero()
     {

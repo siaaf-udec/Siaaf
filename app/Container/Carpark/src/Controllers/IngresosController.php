@@ -10,7 +10,7 @@ use App\Container\Carpark\src\Historiales;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class IngresosController extends Controller
 {
@@ -45,8 +45,30 @@ class IngresosController extends Controller
     }
 
     /**
+     * Función que consulta las motos dentro del parqueadero las envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaMotosDentro(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return Datatables::of(Ingresos::all())  
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')                  
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
      * Muestra el formulario de registro de una nueva entrada o salida.
      *
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
@@ -66,7 +88,7 @@ class IngresosController extends Controller
      * Función que que devuelve el formulario para verificar registro de ingresos.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verificar(Request $request)
     {
@@ -137,6 +159,12 @@ class IngresosController extends Controller
     {
         if ($request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
+
+            if (is_null($infoMoto))
+            {
+                return view('carpark.ingresos.tablaIngresos');
+            }            
+
             $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
             return view('carpark.ingresos.confirmacionTarjeta',
@@ -156,7 +184,7 @@ class IngresosController extends Controller
      * Función que almacena en la base de datos un las acciones del parqueadero.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -207,10 +235,42 @@ class IngresosController extends Controller
     }
 
     /**
+     * Presenta el formulario con los datos para confirmar el regitro de un ingreso o salida por medio de la tarjeta RFID.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function confirmarTarjetaMasIA(Request $request, $id, $placa)
+    {
+        if ($request->isMethod('GET')) {
+            $infoMoto = Motos::where([['PK_CM_IdMoto', '=', $id], ['CM_Placa', '=', $placa]])->get();
+            
+            if ($infoMoto == '[]')
+            {
+                return view('carpark.ingresos.tablaIngresos');
+            }            
+            $infoMoto = Motos::find($id);
+            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
+
+            return view('carpark.ingresos.confirmacionTarjeta',
+                [
+                    'infoMoto' => $infoMoto,
+                    'infoUsuario' => $infoUsuario,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
      * Función que almacena en la base de datos un las acciones del parqueadero por medio de la tarjeta RFID.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function storeTarjeta(Request $request)
     {

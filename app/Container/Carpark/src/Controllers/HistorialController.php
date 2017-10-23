@@ -5,7 +5,8 @@ namespace App\Container\Carpark\src\Controllers;
 use Illuminate\Http\Request;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use App\Container\Carpark\src\Historiales;
+use Yajra\DataTables\DataTables;
 
 class HistorialController extends Controller
 {
@@ -39,7 +40,29 @@ class HistorialController extends Controller
     }
 
     /**
-     * Función que muestra el formulario de filtrado de un reporte de historiales.
+     * Función que consulta los historiales registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaHistoriales(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {            
+            return Datatables::of(Historiales::all())
+                    ->removeColumn('CH_CodigoMoto') 
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')                   
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que muestra el formulario de filtrado de un reporte de historiales por fechas.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -58,7 +81,7 @@ class HistorialController extends Controller
     }
 
     /**
-     * Función que muestra el formulario de filtrado de un reporte de historiales.
+     * Función que muestra el formulario de filtrado de un reporte de historiales por código de usuario.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -77,7 +100,7 @@ class HistorialController extends Controller
     }
 
     /**
-     * Función que muestra el formulario de filtrado de un reporte de historiales.
+     * Función que muestra el formulario de filtrado de un reporte de historiales por placa de la moto.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse

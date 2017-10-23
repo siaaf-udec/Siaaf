@@ -21,6 +21,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente al las dependencias registradas.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function reporteDependencia(Request $request)
@@ -40,9 +41,10 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente al las dependencias registradas.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function DescargarReporteDependencia(Request $request)
+    public function descargarReporteDependencia(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -69,6 +71,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a los usuarios registrados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function reporteUsuariosRegistrados(Request $request)
@@ -94,9 +97,10 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a los usuarios registrados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function DescargarreporteUsuariosRegistrados(Request $request)
+    public function descargarreporteUsuariosRegistrados(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -129,6 +133,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a los usuarios registrados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function reporteMotosRegistradas(Request $request)
@@ -154,9 +159,10 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a los usuarios registrados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function DescargarreporteMotosRegistradas(Request $request)
+    public function descargarreporteMotosRegistradas(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -188,9 +194,10 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ReporteMotosDentro(Request $request)
+    public function reporteMotosDentro(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -208,9 +215,10 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function DescargarReporteMotosDentro(Request $request)
+    public function descargarReporteMotosDentro(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -233,9 +241,10 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ReporteHistorico(Request $request)
+    public function reporteHistorico(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -253,9 +262,10 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function DescargarReporteHistorico(Request $request)
+    public function descargarReporteHistorico(Request $request)
     {
         if ($request->isMethod('GET')) 
         {
@@ -279,6 +289,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function filtradoFecha(Request $request)
@@ -304,9 +315,12 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las historiales filtrados por fecha.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $limMinGET
+     * @param  string $limMaxGET
      * @return \Illuminate\Http\Response
      */
-    public function DescargarfiltradoFecha(Request $request, $limMinGET, $limMaxGET)
+    public function descargarFiltradoFecha(Request $request, $limMinGET, $limMaxGET)
     {
         if ($request->isMethod('GET')) 
         {
@@ -332,6 +346,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function filtradoCodigo(Request $request)
@@ -353,9 +368,11 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las historiales filtrados por codigo.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function DescargarfiltradoCodigo(Request $request, $id)
+    public function descargarFiltradoCodigo(Request $request, $id)
     {
         if ($request->isMethod('GET')) 
         {
@@ -380,6 +397,7 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a las historiales filtrados por codigo.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function filtradoPlaca(Request $request)
@@ -401,9 +419,11 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a las historiales filtrados por codigo.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $id
      * @return \Illuminate\Http\Response
      */
-    public function DescargarfiltradoPlaca(Request $request, $id)
+    public function descargarFiltradoPlaca(Request $request, $id)
     {
         if ($request->isMethod('GET')) 
         {
@@ -427,6 +447,8 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a la información de un usuario concretro.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function reporteUsuario(Request $request, $id)
@@ -449,9 +471,11 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a la información de un usuario concretro.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function descargarreporteUsuario(Request $request, $id)
+    public function descargarReporteUsuario(Request $request, $id)
     {
         if ($request->isMethod('GET')) 
         {
@@ -477,6 +501,8 @@ class ReportesController extends Controller
     /**
      * Permite generar el reporte correspondiente a la información de un usuario concretro.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $id
      * @return \Illuminate\Http\Response
      */
     public function reporteMoto(Request $request, $id)
@@ -500,9 +526,11 @@ class ReportesController extends Controller
     /**
      * Permite descargar el reporte correspondiente a la información de un usuario concretro.
      *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function descargarreporteMoto(Request $request, $id)
+    public function descargarReporteMoto(Request $request, $id)
     {
         if ($request->isMethod('GET')) 
         {

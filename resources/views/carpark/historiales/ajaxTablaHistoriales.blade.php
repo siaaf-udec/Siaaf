@@ -8,7 +8,7 @@
                                                               class="btn btn-simple btn-success btn-icon reports"
                                                               title="Reporte"><i
                                 class="glyphicon glyphicon-list-alt"></i>Reporte
-                        Historico</a>@endpermission
+                        Histórico</a>@endpermission
                     @permission('REPORT_HISTOFECHA_CARPARK')<a href="javascript:;"
                                                                class="btn btn-simple btn-success btn-icon reporteFecha"
                                                                title="Reporte"><i

@@ -51,7 +51,7 @@
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
-            <div class="date">Total Historico: {{$total}}</div>
+            <div class="date">Total Histórico: {{$total}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarReporteHistorico') }}">

@@ -8,12 +8,12 @@ use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class MotosController extends Controller
 {
     /**
-     * Muestra todos los vehículos registrados.
+     * Muestra todos las motos registradas.
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,6 +34,34 @@ class MotosController extends Controller
             return view('carpark.motos.ajaxTablaMotos');
         }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que consulta las motos registradas y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaMotos(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {            
+            return Datatables::of(Motos::all())
+                    ->removeColumn('CM_NuPropiedad')
+                    ->removeColumn('CM_NuSoat')
+                    ->removeColumn('CM_FechaSoat')
+                    ->removeColumn('CM_UrlFoto')
+                    ->removeColumn('CU_Direccion')
+                    ->removeColumn('CU_UrlFoto')
+                    ->removeColumn('CM_UrlSoat')                    
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -68,7 +96,7 @@ class MotosController extends Controller
      * Función que almacena en la base de datos un nuevo vehículo.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -215,7 +243,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de perfil de un vehículo.
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoMoto(Request $request, $id)
     {
@@ -244,7 +272,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoPropiedad(Request $request, $id)
     {
@@ -274,7 +302,7 @@ class MotosController extends Controller
      * Se realiza la actualización de la foto de la tarjeta de propiedad de un vehículo.
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function UpdateFotoSOAT(Request $request, $id)
     {

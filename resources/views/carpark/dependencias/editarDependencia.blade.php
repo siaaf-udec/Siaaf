@@ -37,28 +37,12 @@
     @endcomponent
 </div>
 
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
-        /*Configuracion de Select*/
-        $.fn.select2.defaults.set("theme", "bootstrap");
-        $(".pmd-select2").select2({
-            placeholder: "Selecccionar",
-            allowClear: true,
-            width: 'auto',
-            escapeMarkup: function (m) {
-                return m;
-            }
-        });
-
-        $('.pmd-select2', form).change(function () {
-            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-        });
-
-        var createDependencia = function () {
+        var updateDependencia = function () {
             return {
                 init: function () {
                     var route = '{{ route('parqueadero.dependenciasCarpark.update') }}';
@@ -106,7 +90,7 @@
             CD_Dependencia: {required: true, maxlength: 50, minlength: 5},
         };
 
-        FormValidationMd.init(form, formRules, false, createDependencia());
+        FormValidationMd.init(form, formRules, false, updateDependencia());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

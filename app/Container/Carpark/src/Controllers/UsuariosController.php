@@ -4,6 +4,7 @@ namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
+use Yajra\DataTables\DataTables;
 use App\Container\Carpark\src\Dependencias;
 use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
@@ -11,7 +12,6 @@ use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 class UsuariosController extends Controller
 {
@@ -46,6 +46,35 @@ class UsuariosController extends Controller
     }
 
     /**
+     * Función que consulta los usuarios registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaUsuarios(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return Datatables::of(Usuarios::all())
+                    ->removeColumn('CU_Cedula')
+                    ->removeColumn('CU_Nombre2')
+                    ->removeColumn('CU_Apellido2')
+                    ->removeColumn('CU_Telefono')
+                    ->removeColumn('CU_Direccion')
+                    ->removeColumn('CU_UrlFoto')
+                    ->removeColumn('FK_CU_IdEstado')
+                    ->removeColumn('FK_CU_IdDependencia')
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
      * Función que muestra el formulario de registro de un nuevo usuario.
      *
      * @param  \Illuminate\Http\Request $request
@@ -69,10 +98,10 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Muestra la lista de dependencias registradas.
+     * Muestra la lista de dependencias registradas para el select del registro.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarDependencias(Request $request)
     {
@@ -92,9 +121,10 @@ class UsuariosController extends Controller
     }
 
     /**
-     *  Muestra la lista de estados registrados.
+     *  Muestra la lista de estados registrados para el select del registro.
      *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarEstados(Request $request)
     {
@@ -117,7 +147,7 @@ class UsuariosController extends Controller
      * Función que almacena en la base de datos un nuevo usuario.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
@@ -150,9 +180,9 @@ class UsuariosController extends Controller
                 );
             }
 
-            return AjaxResponse::fail(
+            return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
+                'No se pudo completar tu solicitud, el código ya está registrado.'
             );
 
         }
@@ -192,7 +222,7 @@ class UsuariosController extends Controller
      * Se realiza la actualización de los datos de un usuario.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
     {
@@ -216,7 +246,8 @@ class UsuariosController extends Controller
      * Se realiza la actualización de la foto de perfil de un usuario.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  int $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function updateFotoUsuario(Request $request, $id)
     {
@@ -246,7 +277,7 @@ class UsuariosController extends Controller
      *
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {
@@ -284,6 +315,7 @@ class UsuariosController extends Controller
      * Muestra el perfil de un usuario especifico.
      *
      * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verPerfil(Request $request, $id)

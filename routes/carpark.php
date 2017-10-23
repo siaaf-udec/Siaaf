@@ -1,12 +1,6 @@
 <?php
 
-use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Historiales;
-use App\Container\Carpark\src\Ingresos;
-use App\Container\Carpark\src\Motos;
-use App\Container\Carpark\src\Usuarios;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 
 /**
  * Parqueadero
@@ -41,20 +35,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de los usuarios registrados
         Route::get('tablaUsuarios', [   
-            'as' => 'parqueadero.usuariosCarpark.tablaUsuarios',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Usuarios::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
-
+            'uses' => $controller . 'UsuariosController@tablaUsuarios',
+            'as' => 'parqueadero.usuariosCarpark.tablaUsuarios'            
         ]);
 
         //Ruta que carga la información de dependencias ancladas a los usuarios
@@ -134,20 +116,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de las motocicletas registradas
         Route::get('tablaMotos', [   
-            'as' => 'parqueadero.motosCarpark.tablaMotos',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Motos::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
-
+            'uses' => $controller . 'MotosController@tablaMotos',
+            'as' => 'parqueadero.motosCarpark.tablaMotos'            
         ]);
 
         //ruta que conduce al controlador para mostrar el formulario para registrar una motocicleta
@@ -228,20 +198,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de las dependencias registradas
         Route::get('tablaDependencias', [   
-            'as' => 'parqueadero.dependenciasCarpark.tablaDependencias',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Dependencias::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
-
+            'uses' => $controller . 'DependenciasController@tablaDependencias',
+            'as' => 'parqueadero.dependenciasCarpark.tablaDependencias'
         ]);
 
         //ruta que conduce al controlador para mostrar el formulario para registrar una dependencia
@@ -285,8 +243,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
-        Route::get('DescargarReporteDependencia', [
-            'uses' => $controller . 'ReportesController@DescargarReporteDependencia',  
+        Route::get('descargarReporteDependencia', [
+            'uses' => $controller . 'ReportesController@descargarReporteDependencia',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteDependencia'
         ]);
 
@@ -297,8 +255,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte de las dependencias registradas
-        Route::get('DescargarreporteUsuariosRegistrados', [
-            'uses' => $controller . 'ReportesController@DescargarreporteUsuariosRegistrados',  
+        Route::get('descargarreporteUsuariosRegistrados', [
+            'uses' => $controller . 'ReportesController@descargarreporteUsuariosRegistrados',  
             'as' => 'parqueadero.reportesCarpark.DescargarreporteUsuariosRegistrados'
         ]);
 
@@ -309,32 +267,32 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte de las las motocicletas registradas
-        Route::get('DescargarreporteMotosRegistradas', [
-            'uses' => $controller . 'ReportesController@DescargarreporteMotosRegistradas',  
+        Route::get('descargarreporteMotosRegistradas', [
+            'uses' => $controller . 'ReportesController@descargarreporteMotosRegistradas',  
             'as' => 'parqueadero.reportesCarpark.DescargarreporteMotosRegistradas'
         ]);
 
         //ruta que conduce al controlador para mostrar el reporte de las motocicletas que se encuentran dentro de la universidad
-        Route::get('ReporteMotosDentro', [
-            'uses' => $controller . 'ReportesController@ReporteMotosDentro',  
+        Route::get('reporteMotosDentro', [
+            'uses' => $controller . 'ReportesController@reporteMotosDentro',  
             'as' => 'parqueadero.reportesCarpark.ReporteMotosDentro'
         ]);
 
         //ruta que conduce al controlador para descargar el reporte de las motocicletas que se encuentran dentro de la universidad
-        Route::get('DescargarReporteMotosDentro', [
-            'uses' => $controller . 'ReportesController@DescargarReporteMotosDentro',  
+        Route::get('descargarReporteMotosDentro', [
+            'uses' => $controller . 'ReportesController@descargarReporteMotosDentro',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteMotosDentro'
         ]);
 
         //ruta que conduce al controlador para mostrar el reporte historico de las entradas y salidas de los usuarios y motocicletas
-        Route::get('ReporteHistorico', [
-            'uses' => $controller . 'ReportesController@ReporteHistorico',  
+        Route::get('reporteHistorico', [
+            'uses' => $controller . 'ReportesController@reporteHistorico',  
             'as' => 'parqueadero.reportesCarpark.ReporteHistorico'
         ]);
 
         //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas
-        Route::get('DescargarReporteHistorico', [
-            'uses' => $controller . 'ReportesController@DescargarReporteHistorico',  
+        Route::get('descargarReporteHistorico', [
+            'uses' => $controller . 'ReportesController@descargarReporteHistorico',  
             'as' => 'parqueadero.reportesCarpark.DescargarReporteHistorico'
         ]);
 
@@ -345,8 +303,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por fechas
-        Route::get('DescargarfiltradoFecha/{limMinGET?}/{limMaxGET?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoFecha',
+        Route::get('descargarFiltradoFecha/{limMinGET?}/{limMaxGET?}', [
+            'uses' => $controller . 'ReportesController@descargarFiltradoFecha',
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoFecha'
         ]);
 
@@ -357,8 +315,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por código
-        Route::get('DescargarfiltradoCodigo/{id?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoCodigo', 
+        Route::get('/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarFiltradoCodigo', 
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoCodigo'
         ]);
 
@@ -369,8 +327,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte historico de las entradas y salidas de los usuarios y motocicletas filtrado por placa
-        Route::get('DescargarfiltradoPlaca/{id?}', [
-            'uses' => $controller . 'ReportesController@DescargarfiltradoPlaca', 
+        Route::get('descargarFiltradoPlaca/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarFiltradoPlaca', 
             'as' => 'parqueadero.reportesCarpark.DescargarfiltradoPlaca'
         ]);
 
@@ -381,8 +339,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte del perfil de un usuario registrado
-        Route::get('descargarreporteUsuario/{id?}', [
-            'uses' => $controller . 'ReportesController@descargarreporteUsuario', 
+        Route::get('descargarReporteUsuario/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarReporteUsuario', 
             'as' => 'parqueadero.reportesCarpark.descargarreporteUsuario'
         ]);
 
@@ -393,8 +351,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para descargar el reporte del perfil de una moto registrada
-        Route::get('descargarreporteMoto/{id?}', [
-            'uses' => $controller . 'ReportesController@descargarreporteMoto',  
+        Route::get('descargarReporteMoto/{id?}', [
+            'uses' => $controller . 'ReportesController@descargarReporteMoto',  
             'as' => 'parqueadero.reportesCarpark.descargarreporteMoto'
         ]);
 
@@ -421,20 +379,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de los ingresos registrados
         Route::get('tablaMotosDentro', [   
-            'as' => 'parqueadero.ingresosCarpark.tablaMotosDentro',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Ingresos::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
-
+            'uses' => $controller . 'IngresosController@tablaMotosDentro',
+            'as' => 'parqueadero.ingresosCarpark.tablaMotosDentro'      
         ]);
 
         //ruta que conduce al controlador para mostrar el formulario para registrar una acción de ingreso o salida
@@ -473,6 +419,12 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.ingresosCarpark.registroTarjeta'
         ]);
 
+        //ruta que conduce al controlador para mostrar el formulario de verificación de información del usuario entrante o saliente por medio de tarjeta RFID y el reconocimiento de caracteres (python)
+        Route::get('1e6548467c256f201b82f9f20dac907b/{id?}/{placa?}', [
+            'uses' => $controller . 'IngresosController@confirmarTarjetaMasIA',  
+            'as' => 'parqueadero.ingresosCarpark.1e6548467c256f201b82f9f20dac907b'
+        ]);        
+
     });
 ///////////////////////FIN Rutas Para Los Ingresos//////////////////////////////
 
@@ -496,19 +448,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de los historiales registradas
         Route::get('tablaHistoriales', [   
-            'as' => 'parqueadero.dependenciasCarpark.tablaHistoriales',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Historiales::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
+            'uses' => $controller . 'HistorialController@tablaHistoriales',
+            'as' => 'parqueadero.dependenciasCarpark.tablaHistoriales'
 
         ]);
 

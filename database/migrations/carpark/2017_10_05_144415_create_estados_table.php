@@ -14,7 +14,7 @@ class CreateEstadosTable extends Migration
     public function up()
     {
         Schema::connection('carpark')->create('TBL_Carpark_Estados', function (Blueprint $table) {
-            $table->integer('PK_CE_IdEstados')->unsigned()->unique()->primary();
+            $table->increments('PK_CE_IdEstados');
             $table->String('CE_Estados', 20);
 
             $table->timestamps();

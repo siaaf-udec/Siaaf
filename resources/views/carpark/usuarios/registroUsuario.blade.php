@@ -30,6 +30,8 @@
 
                             {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!}
+                            
+                            <a href="http://intranet.unicundi.edu.co/portal/index.php/resoluciones/774-resolucion-307-de-diciembre-4-de-2008" target="_blank">Ver la resolución número 307 de 2008</a>
                         </div>
                         <div class="col-md-6">
 

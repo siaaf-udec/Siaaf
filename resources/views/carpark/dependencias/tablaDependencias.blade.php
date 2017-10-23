@@ -76,9 +76,6 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
         type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/stewartlord-identicon/identicon.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/stewartlord-identicon/pnglib.js') }}" type="text/javascript"></script>
-
 @endpush
 @push('functions')
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
