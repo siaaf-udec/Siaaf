@@ -12,12 +12,12 @@
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'DIRECTOR')
+@section('page-title', 'Anteproyectos/Proyectos como Director')
 
 
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Director'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Director'])
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
@@ -57,6 +57,8 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script> 
 @endpush
 
 @push('functions')
@@ -118,7 +120,7 @@
                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
                         render: function (data, type, full, meta) {
                             if(data=="NO FILE"){
-                                return "NO FILE";    
+                                return "NO APLICA";    
                             }else{
                                 return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                             }  
@@ -128,39 +130,43 @@
                        if(data.anteproyecto.director[0]!=null){
                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
                         }else{
-                            return "No hay asignado";
+                            return "SIN ASIGNAR";
                         }
                    },className:'none',searchable: true},
                    {data: function (data, type, dataToSet) {
                        if(data.anteproyecto.estudiante1[0]!=null){
                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
                         }else{
-                           return "No hay asignado"
+                           return "SIN ASIGNAR"
                         }
                    },className:'none',searchable: true},
                    {data: function (data, type, dataToSet) {
                        if(data.anteproyecto.estudiante2[0]!=null){
                             return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
                        }else{
-                           return "No hay asignado"
+                           return "SIN ASIGNAR"
                        }
                    }, className:'none',searchable: true},
                    {data: function (data, type, dataToSet) {
                        if(data.anteproyecto.jurado1[0]!=null){
                            return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
                        }else{
-                           return "No hay asignado"
+                           return "SIN ASIGNAR"
                        }
                    }, className:'none',searchable: true},
                    {data: function (data, type, dataToSet) {
                        if(data.anteproyecto.jurado2[0]!=null){
                            return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
                        }else{
-                           return "No hay asignado"
+                           return "SIN ASIGNAR"
                        }
                    },className:'none',searchable: true},
+                    
                    {data: 'NPRY_Estado',searchable: true},
-                   {data:'action',className:'',searchable: false,
+                    
+                   {data:'action',
+                    className:'',
+                    searchable: false,
                     name:'action',
                     title:'Acciones',
                     orderable: false,
@@ -170,9 +176,14 @@
                     render: function ( data, type, full, meta ) {
                         if(full.anteproyecto.NPRY_Estado=="APROBADO"){
                             if(full.anteproyecto.proyecto==null){
-                                return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-eye"></i>Dar Aval</a>';
+                                return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>';
                             }else{
-                                return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-eye"></i>Actividades</a>';
+                                if (full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO") {
+                                     return '<center><span class="label label-sm label-success">Proyecto Terminado</span></center><br><center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
+                                 } else {
+                                    return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>';
+                                 } 
+                                
                             }
                         }else{
                             return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';
@@ -261,8 +272,56 @@
                     }
                 );
     });
+            
+            table.on('click', '#close', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var O = table.row($tr).data();
+                var route = '/gesap/evaluar/cerrar/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                var type = 'GET';
+                var async = async || false;
+                swal({
+                    title: "¿Esta seguro?",
+                    text: "Esta cerrando el proyecto,No se podra crear o modificar datos ni documentos",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                     function(isConfirm){
+                        if (isConfirm) {
+                            $.ajax({
+                                url: route,
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                cache: false,
+                                type: type,
+                                contentType: false,
+                                processData: false,
+                                async: async,
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        table.ajax.reload();
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 &&  xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                                }
+                            });
+                            swal.close();
+                        } else {
+                            swal("Cancelado", "No se cerró ningun proyecto", "error");
+                        }
+                    }
+                );
+    });
     
-            table.on('click', '#actividades', function (e) {
+    table.on('click', '#actividades', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var O = table.row($tr).data();
@@ -275,6 +334,7 @@
                     $(".content-ajax").load(route);
                 });
             });
+            
         });
 </script>
 @endpush

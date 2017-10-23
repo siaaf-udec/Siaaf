@@ -100,7 +100,7 @@ class EvaluatorController extends Controller
             }
         
             return AjaxResponse::success(
-                '¡Bien hecho!',
+                '¡Registro Exitoso!',
                 'Observacion Guardada correctamente.'
             );
         }
@@ -156,7 +156,6 @@ class EvaluatorController extends Controller
         
             if ($encargado==null) {//Averiguo si se encontro un concepto previo
                 //si no lo hay se crea el concepto nuevo de este jurado respecto al proyecto
-                
                 Conceptos::create([
                     'CNPT_Concepto'=>$request->get('concepto') ,
                     'CNPT_Tipo'    =>"Anteproyecto",
@@ -168,7 +167,7 @@ class EvaluatorController extends Controller
                         $anteproyecto->save();
                         return AjaxResponse::success(
                             '¡Registro exitoso!',
-                            'Los conceptos no estan deacuerdo.'
+                            'Los conceptos entre jurados no estan deacuerdo.'
                         );
                     } else {
                         if ($request->get('concepto')==1 && $encargado2->CNPT_Concepto==1) {
@@ -206,7 +205,7 @@ class EvaluatorController extends Controller
                         $anteproyecto->NPRY_Estado="PENDIENTE";
                         $anteproyecto->save();
                         return AjaxResponse::success(
-                            '¡Registro exitoso!',
+                            '¡Actualizacion Exitosa!',
                             'Los conceptos no estan deacuerdo.'
                         );
                     } else {
@@ -262,7 +261,7 @@ class EvaluatorController extends Controller
             $actividad->FK_TBL_Proyecto_Id= $request->get('PK_proyecto');
             $actividad->save();
             return AjaxResponse::success(
-                '¡Bien hecho!',
+                '¡Creacion Existosa!',
                 'Nueva actividad creada correctamente.'
             );
         }
@@ -287,7 +286,7 @@ class EvaluatorController extends Controller
             $actividad = Documentos::findOrFail($id);
             $actividad->delete();
             return AjaxResponse::success(
-                '¡Bien hecho!',
+                '¡Eliminacion Exitosa!',
                 'Datos eliminados correctamente.'
             );
         }
@@ -298,9 +297,6 @@ class EvaluatorController extends Controller
         
         
     }
-    
-    
-    
     
     /*
      * Listado de proyectos asignados como director
@@ -362,8 +358,16 @@ class EvaluatorController extends Controller
             
             $proyecto->documentos()->saveMany([
                 new Documentos(['DMNT_Nombre'=>'Carta de Aval del director de proyecto','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marcos de Referencia','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Modelado de Sistema ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Histórico','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Teórico','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Legal','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama MER ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagramas de clases ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagramas de casos de uso ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de secuencia ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de actividades ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de despliegue ','DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de colaboracion ','DMNT_Descripcion'=>'']),
                 new Documentos(['DMNT_Nombre'=>'Desarrollo','DMNT_Descripcion'=>'(Codigo,Programacion)']),
                 new Documentos(['DMNT_Nombre'=>'Registro  de Pruebas','DMNT_Descripcion'=>'CALISOFT']),
                 new Documentos(['DMNT_Nombre'=>'Artículo de propuesta','DMNT_Descripcion'=>'']),
@@ -373,16 +377,9 @@ class EvaluatorController extends Controller
                 new Documentos(['DMNT_Nombre'=>'Libro','DMNT_Descripcion'=>'Min 80 hojas']),
                 new Documentos(['DMNT_Nombre'=>'Repositorio DICTUM ','DMNT_Descripcion'=>'Formato AAAr113_V1'])
             ]);
-            
-            
-            
-            
-            
-            
-            
-            
+        
             return AjaxResponse::success(
-                '¡Bien hecho!',
+                '¡Activacion Exitosa!',
                 'Proyecto activado correctamente.'
             );
         }
@@ -394,7 +391,22 @@ class EvaluatorController extends Controller
         
     }
     
-    
+    public function closeProject($id, Request $request){
+         if ($request->ajax() && $request->isMethod('GET')) {
+            $proyecto=Proyecto::where('FK_TBL_Anteproyecto_Id','=',$id)->first();
+            $proyecto->PRYT_Estado="TERMINADO";
+            $proyecto->save();
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Proyecto cerrado correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
     
     
     
@@ -417,7 +429,12 @@ class EvaluatorController extends Controller
                 },
                 'respuesta'])
                 ->get();
-        return Datatables::of($observaciones)->addIndexColumn()->make(true);
+        return Datatables::of($observaciones)
+            ->removeColumn('PK_BVCS_IdObservacion')
+            ->removeColumn('FK_TBL_Encargado_Id')
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->addIndexColumn()->make(true);
     }
 
     /*
@@ -443,6 +460,9 @@ class EvaluatorController extends Controller
                         }])
                         ->get();
         return Datatables::of($anteproyectos)
+            ->removeColumn('FK_Developer_User_Id')
+            ->removeColumn('FK_TBL_Anteproyecto_Id')
+            ->removeColumn('PK_NCRD_IdCargo')
             ->addColumn('NPRY_Estado', function ($users) {
                 if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                         return "<span class='label label-sm label-warning'>"
@@ -495,9 +515,7 @@ class EvaluatorController extends Controller
     * @return Yajra\DataTables\DataTables
     */
     public function juryList(Request $request)
-    {
-        
-        
+    { 
         $anteproyectos = Encargados::where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
@@ -514,7 +532,11 @@ class EvaluatorController extends Controller
             }])
             ->get();
             
-            return Datatables::of($anteproyectos)->addColumn('NPRY_Estado', function ($users) {
+            return Datatables::of($anteproyectos)
+                ->removeColumn('FK_Developer_User_Id')
+                ->removeColumn('FK_TBL_Anteproyecto_Id')
+                ->removeColumn('PK_NCRD_IdCargo')
+                ->addColumn('NPRY_Estado', function ($users) {
                 if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                         return "<span class='label label-sm label-warning'>"
                             .$users->anteproyecto->NPRY_Estado

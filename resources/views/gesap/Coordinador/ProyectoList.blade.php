@@ -28,27 +28,18 @@
 
     <link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-
-    <style>
-
-    </style>
 @endpush
 
-@section('title', '| Anteproyectos')
+@section('title', '| Proyectos')
 
-@section('page-title', 'Anteproyectos')
+@section('page-title', 'Proyectos')
 
 
 @section('content')
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Proyectos'])
         <div class="row">
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="clearfix"> </div><br><br>
+            <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
                     @slot('columns', [
@@ -60,14 +51,11 @@
                         'Fecha Radicacion',
                         'Fecha Limite',
                         'Estado',
-                        'Min o E.A',
-                        'Requerimientos',
                         'Director',
                         'Estudiante 1',
                         'Estudiante 2',
                         'Jurado 1',
-                        'Jurado 2',
-                        'Acciones' => ['style' => 'width:160px;']
+                        'Jurado 2'
                     ])
                 @endcomponent
             </div>
@@ -122,7 +110,7 @@
         {
             var table, url;
             table = $('#lista-anteproyecto');
-            url = "{{ route('anteproyecto.list') }}";
+            url = "{{ route('proyecto.list') }}";
 
             table.DataTable(
             {
@@ -165,86 +153,44 @@
                 },
                 columns:[
                     {data: 'DT_Row_Index'},
-                    {data: 'PK_NPRY_IdMinr008', "visible": false },
+                    {data: 'PK_PRYT_IdProyecto', "visible": false },
                     {data: 'NPRY_Titulo', searchable: true},
-                    {data: 'NPRY_Keywords', searchable: true},
-                    {data: 'NPRY_Duracion',searchable: true},
-                    {data: 'NPRY_FechaR', className:'none',searchable: true},
-                    {data: 'NPRY_FechaL', className:'none',searchable: true},
-                    {data: 'NPRY_Estado',searchable: true, name: 'Estado'},
-                    {data: 'radicacion.RDCN_Min',className:'none',
-                        render: function (data, type, full, meta) 
-                        {
-                            return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
-                        }
-                    },
-                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
-                        render: function (data, type, full, meta) 
-                        {
-                            if(data=="NO FILE"){
-                                return "NO APLICA";    
-                            }else{
-                                return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
-                            }  
-                        }
-                    },  
+                    {data: 'anteproyecto.NPRY_Keywords', searchable: true},
+                    {data: 'anteproyecto.NPRY_Duracion',searchable: true},
+                    {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
+                    {data: 'anteproyecto.NPRY_FechaL',searchable: true},
+                    {data: 'PRYT_Estado',searchable: true, name: 'Estado'},
                     {data:  function (data, type, dataToSet) {
-                        if(data.director[0]!=null)
-                            return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
+                        if(data.anteproyecto.director[0]!=null)
+                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
                         else
                             return "SIN ASIGNAR"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
-                        if(data.estudiante1[0]!=null)
-                            return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante1[0]!=null)
+                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
                         else
                             return "SIN ASIGNAR"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        if(data.estudiante2[0]!=null)
-                        return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
+                        if(data.anteproyecto.estudiante2[0]!=null)
+                        return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
                         else
                             return "SIN ASIGNAR"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        if(data.jurado1[0]!=null)
-                        return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado1[0]!=null)
+                        return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
                         else
                             return "SIN ASIGNAR"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
-                        if(data.jurado2[0]!=null)
-                        return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
+                        if(data.anteproyecto.jurado2[0]!=null)
+                        return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
                         else
                             return "SIN ASIGNAR"
-                    },className:'none',searchable: true},
-                     
-                    {data:'action',
-                     className:'',
-                     searchable: false,
-                     name:'action',
-                     title:'Acciones',
-                     orderable: false,
-                     exportable: false,
-                     printable: false,
-                     responsivePriority:2,
-                     render: function ( data, type, full, meta ) {
-                         if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
-                             if(full.proyecto==null){
-                                 return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
-                             }else{
-                                 if (full.proyecto.PRYT_Estado=="TERMINADO") {
-                                     return '<span class="label label-sm label-success">Proyecto Terminado</span>';
-                                 } else {
-                                    return '<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><span class="label label-sm label-success">Proyecto en curso</span>'; 
-                                 } 
-                             }
-                         }else{
-                             return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
-                         }
-                     }, 
-                    }
+                    },className:'none',searchable: true}
                 ],
                 buttons: [
                     { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -270,94 +216,10 @@
                 $(".content-ajax").load(route);
             });
             
-
             
-            
-            table = table.DataTable();
-            table.on('click', '.edit', function (e)
-            {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-	           $.ajax(
-                {
-                    type: "GET",
-                    url: '',
-                    dataType: "html",
-                }).done(function (data) 
-                {
-                    route = '/gesap/min/'+O.PK_NPRY_IdMinr008+'/edit';
-                   $(".content-ajax").load(route);
-                });
-            });
-    
-            table.on('click', '.assign', function (e)
-            {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-	           $.ajax(
-                {
-                    type: "GET",
-                    url: '',
-                    dataType: "html",
-                }).done(function (data) 
-                {
-                    route = '/gesap/min/asignar/'+O.PK_NPRY_IdMinr008;
-                   $(".content-ajax").load(route);
-                });
-            });
-            
-            table.on('click', '.remove', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var O = table.row($tr).data();
-            var route = 'min/'+O.PK_NPRY_IdMinr008;
-            var type = 'DELETE';
-            var async = async || false;
-            swal({
-                    title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el Anteproyecto seleccionado?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "De acuerdo",
-                    cancelButtonText: "Cancelar",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        $.ajax({
-                            url: route,
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'error') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            }
-                        });
-                        swal.close();
-                    } else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
-                    }
-                });
-
-        });
-            
-            table.on('click','.boton_mas_info',function(){
+            table = table.DataTable();    
+           
+                        table.on('click','.boton_mas_info',function(){
  
                 if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
                     $(this).parent().find('.texto-ocultado').css('display','inline');
@@ -369,7 +231,14 @@
                     $(this).html('Ver más');
                 };
             }); 
+
+            
+            
+            
+            
+            
+            
+            
         });
-        
     </script>
 @endpush

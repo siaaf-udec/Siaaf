@@ -20,11 +20,11 @@
 
 @section('page-title', 'JURADO')
 
-@section('page-description', 'Lista de proyectos como jurado')
+@section('page-title', 'Anteproyectos/Proyectos como Jurado')
 
 @section('content')
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Anteproyecto Jurado'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list  ', 'title' => 'Jurado'])
         <div class="row">
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])

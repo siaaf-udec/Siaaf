@@ -1,3 +1,4 @@
+<div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-users', 'title' => 'Asignar'])
     @slot('actions', [
             'link_back' => [
@@ -35,21 +36,15 @@
                                 <div class="progress-bar progress-bar-success"></div>
                             </div>
                             <div class="tab-content">
-                                <div class="alert alert-danger display-none">
-                                    <button class="close" data-dismiss="alert"></button> Errores.Por favor revisar nuevamente  
-                                </div>
-                                <div class="alert alert-success display-none">
-                                    <button class="close" data-dismiss="alert"></button> La asignacion ha sido satisfactoria    
-                                </div>
                                 <div class="tab-pane active" id="tab1">
                                     <h3 class="block">Escoger Director</h3>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
-                                            @if(isset($encargados[0]))
-                                                @foreach ($encargados as $direc)
+                                            @if(isset($encargados[0]->encargados[0]))
+                                                @foreach ($encargados[0]->encargados as $direc)
                                                     @if( strnatcasecmp($direc->NCRD_Cargo,"Director")==0) 
                                                         {!! Field::hidden('PK_director', $direc->PK_NCRD_IdCargo) !!}    
-                                                        {!! Field::select('director',$docentes,$direc->Cedula)!!}
+                                                        {!! Field::select('director',$docentes,$direc->FK_Developer_User_Id)!!}
                                                     @endif
                                                 @endforeach
                                             @else
@@ -62,22 +57,22 @@
                                     <h3 class="block">Escoger Jurados</h3>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-6 col-md-offset-3">
-                                            @if(isset($encargados[1]))
-                                                @foreach ($encargados as $jur1)
+                                            @if(isset($encargados[0]->encargados[1]))
+                                                @foreach ($encargados[0]->encargados as $jur1)
                                                     @if( strnatcasecmp($jur1->NCRD_Cargo,"Jurado 1")==0) 
                                                         {!! Field::hidden('PK_jurado1', $jur1->PK_NCRD_IdCargo) !!}    
-                                                        {!! Field::select('jurado1',$docentes,$jur1->Cedula)!!}
+                                                        {!! Field::select('jurado1',$docentes,$jur1->FK_Developer_User_Id)!!}
                                                     @endif
                                                 @endforeach
                                             @else
                                                 {!! Field::select('jurado1',$docentes,null) !!}
                                             @endif                                    
                                             <hr>
-                                            @if(isset($encargados[2]))
-                                                @foreach ($encargados as $jur2)
+                                            @if(isset($encargados[0]->encargados[2]))
+                                                @foreach ($encargados[0]->encargados as $jur2)
                                                     @if( strnatcasecmp($jur2->NCRD_Cargo,"Jurado 2")==0) 
                                                         {!! Field::hidden('PK_jurado2', $jur2->PK_NCRD_IdCargo) !!}    
-                                                        {!! Field::select('jurado2',$docentes,$jur2->Cedula)!!}
+                                                        {!! Field::select('jurado2',$docentes,$jur2->FK_Developer_User_Id)!!}
                                                     @endif
                                                 @endforeach
                                             @else
@@ -133,9 +128,10 @@
         @endforeach
     </div>
 @endcomponent
+</div>
 
 @push('functions')
-<script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/gesap/js/form-wizard-3.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
 </script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
@@ -166,8 +162,8 @@ jQuery(document).ready(function() {
     
         var rules = {
             director: {required: true},
-            jurado1: {required: true},
-            jurado2: {required: true}
+            jurado1: {required: true, notEqualTo:'#jurado2'},
+            jurado2: {required: true, notEqualTo:'#jurado1'}
         };
             
         var wizard =  $('#form_wizard_1');

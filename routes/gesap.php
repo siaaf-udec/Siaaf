@@ -23,6 +23,16 @@ Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function ()
         'uses' => $controller.'CoordinatorController@destroy',
         'as' => 'min.destroy'
     ]);
+    
+    Route::get('project/', [
+        'uses' => $controller.'CoordinatorController@indexProject',
+        'as' => 'project.index'
+    ]);
+    Route::delete('project/{id?}', [
+        'uses' => $controller.'CoordinatorController@destroyProject',
+        'as' => 'project.destroy'
+    ]);
+    
 });
     
 Route::group(['middleware' => ['permission:Create_Project_Gesap']], function () use ($controller) {
@@ -115,6 +125,11 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
     'uses' => $controller.'EvaluatorController@approved'
     ]);
     
+    Route::get('evaluar/cerrar/{id}', [
+    'as' => 'proyecto.cerrar',
+    'uses' => $controller.'EvaluatorController@closeProject'
+    ]);
+    
     Route::post('actividades/new', [
         'as' => 'proyecto.nueva.actividad',
         'uses' => $controller.'EvaluatorController@storeActividad'
@@ -135,14 +150,16 @@ Route::group(['middleware' => ['permission:See_Observations_Gesap']], function (
     ]);
 });
 /*ESTUDIANTE*/
-Route::group(['middleware' => ['role:Student_Gesap']], function () use ($controller) {
-    
-    Route::get('evaluar/ver/proyecto', [
+
+Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
+        Route::get('evaluar/ver/proyecto', [
         'as' => 'anteproyecto.index.studentList',
         'uses' => $controller.'StudentController@proyecto'
     ]);
-});
-Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
+    Route::get('evaluar/ver/proyecto/ajax', [
+        'as' => 'anteproyecto.index.studentList.ajax',
+        'uses' => $controller.'StudentController@proyectoajax'
+    ]);
     
     Route::post('actividades/documento', [
         'as' => 'proyecto.actividades.upload',
@@ -152,6 +169,28 @@ Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], functi
     
 });
 /*DATATABLES RUTAS*/
+Route::get('graficos/', [
+        'as' => 'graficos',
+        'uses' => $controller.'ReportController@graficos'
+    ]); 
+
+Route::get('graficos/data/preliminary', [
+        'as' => 'data.chart.preliminary',
+        'uses' => $controller.'ReportController@getPreliminary'
+    ]); 
+Route::get('graficos/data/project', [
+        'as' => 'data.chart.project',
+        'uses' => $controller.'ReportController@getProject'
+    ]); 
+Route::get('graficos/data/Jury', [
+        'as' => 'data.chart.jury',
+        'uses' => $controller.'ReportController@getJury'
+    ]); 
+
+Route::get('graficos/data/Director', [
+        'as' => 'data.chart.director',
+        'uses' => $controller.'ReportController@getDirector'
+    ]); 
 
 Route::get('actividades/{id}', [
         'as' => 'proyecto.actividades',
@@ -165,6 +204,11 @@ Route::get('estudiante', [
     
 Route::get('anteproyecto', [
     'as' => 'anteproyecto.list',
+    'uses' => $controller.'CoordinatorController@preliminaryList'
+]);
+
+Route::get('proyecto', [
+    'as' => 'proyecto.list',
     'uses' => $controller.'CoordinatorController@projectList'
 ]);
 
@@ -192,6 +236,16 @@ Route::get('download/{archivo}', function ($archivo) {
        return response()->download($url);
      abort(404);
 });
+Route::get('download/proyecto/{actividad}/{archivo}', function ($actividad, $archivo) { 
+     $public_path = public_path(); 
+     $url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo; 
+     if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) 
+       return response()->download($url); 
+    abort(404); 
+      
+}); 
+
+
 
 Route::get('Reporte', $controller.'ReportController@index')->name('report.index');
 Route::get('ReportAnteproyect', $controller.'ReportController@allProject')->name('report.all.project');

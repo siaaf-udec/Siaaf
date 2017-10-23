@@ -1,4 +1,5 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
+<div class="col-md-12">
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-pencil', 'title' => 'Modificar Anteproyecto'])
     @slot('actions', [
             'link_back' => [
                 'link' => '',
@@ -87,11 +88,11 @@
                             <h3 class="block">Estudiantes proponentes</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-8 col-lg-6">
-                                    @if(isset($estudiante12[0]))
-                                @foreach ($estudiante12 as $estu1)
+                                    @if(isset($estudiante12[0]->encargados[0]))
+                                    @foreach ($estudiante12[0]->encargados as $estu1)
                                     @if( strnatcasecmp ($estu1->NCRD_Cargo,"ESTUDIANTE 1")==0) 
                                         {!! Field::hidden('PK_estudiante1',  $estu1->PK_NCRD_IdCargo ) !!}    
-                                        {!! Field::select('estudiante1',$estudiantes,$estu1->Cedula,[ 'label' => ' Estudiante 1', 'required'])!!}
+                                        {!! Field::select('estudiante1',$estudiantes,$estu1->FK_Developer_User_Id,[ 'label' => ' Estudiante 1', 'required'])!!}
                                     @endif
                                 @endforeach
                             @else
@@ -99,11 +100,11 @@
                             @endif
                                 </div>
                                 <div class="col-xs-12 col-md-8 col-lg-6">
-@if(isset($estudiante12[1]))
-                                @foreach ($estudiante12 as $estu2)
+                                @if(isset($estudiante12[0]->encargados[1]))
+                                @foreach ($estudiante12[0]->encargados as $estu2)
                                     @if( strnatcasecmp($estu2->NCRD_Cargo,"ESTUDIANTE 2")==0) 
                                         {!! Field::hidden('PK_estudiante2', $estu2->PK_NCRD_IdCargo) !!}
-                                        {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),$estu2->Cedula,[ 'label' => 'Estudiante 2', 'required']) !!}
+                                        {!!Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),$estu2->FK_Developer_User_Id,[ 'label' => 'Estudiante 2', 'required']) !!}
                                     @endif
                                 @endforeach
                             @else
@@ -137,6 +138,7 @@
                         </div>
                         <div class="tab-pane" id="tab4">
                             <h3 class="block">Documentos radicados</h3>
+                            <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12" id="file">
                                 <div class="form-md-line-input" style="margin: 0 0 35px;">
                                     <div class="fileinput-new input-icon" data-provides="fileinput">    
@@ -174,32 +176,50 @@
                                 </div>     
                             </div>
                         </div>
+                        </div>
                 <div class="tab-pane" id="tab5">
-                    <h3 class="block">Datos</h3>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Anteproyecto:</label>
-                            <div class="col-md-4">
-                                            <p class="form-control-static" data-display="title">  </p>
+                    <h3 class="block">Confirmacion</h3>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Titulo:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="title"> </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Director:</label>
-                                        <div class="col-md-4">
+                                        <label class="control-label col-md-4">Palabras Clave:</label>
+                                        <div class="col-md-8">
                                             <p class="form-control-static" data-display="Keywords"> </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Jurado 1:</label>
-                                        <div class="col-md-4">
-                                            <p class="form-control-static" data-display="estudiante1"> </p>
+                                        <label class="control-label col-md-4">Estudiantes:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="estudiante1"></p>
+                                            <p class="form-control-static" data-display="estudiante2"></p>
                                         </div>
-                                    </div>
+                                    </div>    
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Jurado 2:</label>
-                                        <div class="col-md-4">
-                                            <p class="form-control-static" data-display="estudiante2"> </p>
+                                        <label class="control-label col-md-4">Duracion del proyecto:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="duracion"></p>
                                         </div>
-                                    </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Fecha de Radicacion:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="FechaR"></p>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Fecha Limite de Evaluacion:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="FechaL"></p>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
                                 </div>
             </div>  
                 </div>  
@@ -221,13 +241,14 @@
         {!! Form::close() !!}
         @endforeach 
     </div>
-@endcomponent   
+@endcomponent  
+</div>
 
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
 </script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
 </script>
-<script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/gesap/js/form-wizard-5.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $('.portlet-form').attr("id","form_wizard_1");
     $('.select2-selection--single').addClass('form-control');    
@@ -272,16 +293,16 @@
         });        
         
         var rules = {
-                title:{required: true,minlength: 6,maxlength:500},
-                estudiante1:{required: true},
-                estudiante2:{required: true},
-                Keywords:{required: true,minlength: 4,maxlength:300},
-                duracion:{required: true,minlength: 1,maxlength:2,number: true},
-                FechaR:{required: true},
-                FechaL:{required: true},
-                Min:{extension: "txt|pdf|doc|docx"},
-                Requerimientos:{extension: "txt|pdf|doc|docx"}
-            };
+            title:{required: true,minlength: 6,maxlength:500},
+            estudiante1:{required: true,notEqualTo:'#estudiante2'},
+            estudiante2:{required: true,notEqualTo:'#estudiante1'},
+            Keywords:{required: true,minlength: 4,maxlength:300},
+            duracion:{required: true,minlength: 1,maxlength:2,number: true},
+            FechaR:{required: true},
+            FechaL:{required: true},
+            Min:{extension: "txt|pdf|doc|docx"},
+            Requerimientos:{extension: "txt|pdf|doc|docx"}
+        };
             
         var wizard =  $('#form_wizard_1');
             

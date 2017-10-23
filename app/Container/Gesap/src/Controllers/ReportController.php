@@ -4,6 +4,7 @@ namespace App\Container\gesap\src\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
+use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\Users\Src\User;
@@ -51,6 +53,55 @@ class ReportController extends Controller
         return view($this->path.'PDF.PrincipalView', [
             'docentes'=>$docentes
         ]);
+    }
+    
+    public function graficos()
+    {
+        return view('gesap.Coordinador.Graficos',['stats']);
+    }
+    
+    public function getPreliminary()
+    {
+        $stats = Anteproyecto::groupBy('Estado')
+        ->get([
+            DB::raw('NPRY_Estado as Estado'),
+            DB::raw('COUNT(*) as value')
+        ])
+        ->toJSON();
+        return $stats;    
+    }
+    
+    public function getProject()
+    {
+        $stats = Proyecto::groupBy('Estado')
+            
+        ->get([
+            DB::raw('PRYT_Estado as Estado'),
+            DB::raw('COUNT(*) as value')
+        ])
+        ->toJSON();
+        return $stats;    
+    }
+    
+    
+    
+    public function getJury()
+    {
+        $stats = Encargados::where(function ($query) {
+            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+        })
+        ->groupBy('FK_Developer_User_Id')    
+            ->with(['usuarios'=> function ($user) {
+                $user->select('id','name');
+            }])
+            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+            ;
+        return $stats;
+    }
+    public function getDirector()
+    {
+        
     }
     
     /*

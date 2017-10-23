@@ -1,108 +1,102 @@
 <div class="col-md-12">
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
-@slot('actions', [
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
+        @slot('actions', [
             'link_back' => [
-                'link' => '',
-                'icon' => 'fa fa-arrow-left',
+            'link' => '',
+            'icon' => 'fa fa-arrow-left',
             ],
         ])
-<div class="row">
+    <div class="row">
         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
-            <div class="form-wizard">
-                <div class="form-body">
-                    <ul class="nav nav-pills nav-justified steps">
-                        <li>
-                            <a href="#tab1" data-toggle="tab" class="step">
-                                <span class="number"> 1 </span>
-                                <span class="desc"><i class="fa fa-check"></i> Anteproyecto </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab2" data-toggle="tab" class="step">
-                                <span class="number"> 2 </span>
-                                <span class="desc"><i class="fa fa-check"></i> Estudiantes </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab3" data-toggle="tab" class="step">
-                                <span class="number"> 3 </span>
-                                <span class="desc"><i class="fa fa-check"></i> Tiempos </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab4" data-toggle="tab" class="step">
-                                <span class="number"> 4 </span>
-                                <span class="desc"><i class="fa fa-check"></i> Documentos </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab5" data-toggle="tab" class="step">
-                                <span class="number"> 5 </span>
-                                <span class="desc"><i class="fa fa-check"></i> Confirmar </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div id="bar" class="progress progress-striped" role="progressbar">
-                        <div class="progress-bar progress-bar-success"></div>
-                    </div>
-                    <div class="tab-content">
-                        <div class="alert alert-danger display-none">
-                            <button class="close" data-dismiss="alert"></button> Errores.Por favor revisar nuevamente  
-                        </div>
-                        <div class="alert alert-success display-none">
-                            <button class="close" data-dismiss="alert"></button> La asignacion ha sido satisfactoria    
-                        </div>
-                        <div class="tab-pane active" id="tab1">
-                            <h3 class="block">Datos del Proyecto</h3>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12 ">
-                                    <div class="form-group form-md-line-input">
-                                        <div class="input-icon">
-                                            {{ Form::textarea('title', null, 
-                                                ['required', 'auto' => 'off','rows' => '3','class'=>'form-control','id'=>'title'],
-                                                [ 'icon' => 'fa fa-user']) }}
-                                            <label for="title" class="control-label">Titulo del proyecto</label>
-                                            <span class="help-block"> Ingrese el titulo del proyecto </span>
-                                            <i class=" fa fa-user "></i>
-                                        </div>
+        <div class="form-wizard">
+            <div class="form-body">
+                <ul class="nav nav-pills nav-justified steps">
+                    <li>
+                        <a href="#tab1" data-toggle="tab" class="step">
+                            <span class="number"> 1 </span>
+                            <span class="desc"><i class="fa fa-check"></i> Anteproyecto </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab2" data-toggle="tab" class="step">
+                            <span class="number"> 2 </span>
+                            <span class="desc"><i class="fa fa-check"></i> Estudiantes </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab3" data-toggle="tab" class="step">
+                            <span class="number"> 3 </span>
+                            <span class="desc"><i class="fa fa-check"></i> Tiempos </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab4" data-toggle="tab" class="step">
+                            <span class="number"> 4 </span>
+                            <span class="desc"><i class="fa fa-check"></i> Documentos </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab5" data-toggle="tab" class="step">
+                            <span class="number"> 5 </span>
+                            <span class="desc"><i class="fa fa-check"></i> Confirmar </span>
+                        </a>
+                    </li>
+                </ul>
+                <div id="bar" class="progress progress-striped" role="progressbar">
+                    <div class="progress-bar progress-bar-success"></div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <h3 class="block">Datos del Proyecto</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-12 ">
+                                <div class="form-group form-md-line-input">
+                                    <div class="input-icon">
+                                        {{ Form::textarea('title', null, 
+                                        ['required', 'auto' => 'off','rows' => '3','class'=>'form-control','id'=>'title'],
+                                        [ 'icon' => 'fa fa-folder']) }}
+                                        <label for="title" class="control-label">Titulo del proyecto</label>
+                                        <span class="help-block"> Ingrese el titulo del proyecto </span>
+                                        <i class=" fa fa-user "></i>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    {!! Field::text('Keywords',
-                                        ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
-                                        ['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
-                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                {!! Field::text('Keywords',
+                                ['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
+                                ['help' => 'Ingrese las palabras claves de su proyecto', 'icon' => 'fa fa-key']) !!}
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab2">
-                            <h3 class="block">Estudiantes proponentes</h3>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-8 col-lg-6">
-                                    {!! Field::select('estudiante1',$estudiantes,null,
-                                        [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off']) !!}
-                                </div>
-                                <div class="col-xs-12 col-md-8 col-lg-6">
-                                    {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),0,
-                                     [ 'label' => 'Estudiante 2','required', 'auto' => 'off']) !!}
-                                </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <h3 class="block">Estudiantes proponentes</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-8 col-lg-6">
+                                {!! Field::select('estudiante1',$estudiantes,null,
+                                [ 'label' => 'Estudiante 1', 'required', 'auto' => 'off','class'=>'sel']) !!}
+                            </div>
+                            <div class="col-xs-12 col-md-8 col-lg-6">
+                                {!! Field::select('estudiante2',array_replace(["0"=>"No aplica"],$estudiantes),0,
+                                [ 'label' => 'Estudiante 2','required', 'auto' => 'off','class'=>'sel']) !!}
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab3">
-                            <h3 class="block">Tiempos del Proyecto</h3>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-4 col-lg-4">
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <h3 class="block">Tiempos del Proyecto</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4 col-lg-4">
                                     {!! Field::text('duracion',
-                                        ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) !!}
+                                        ['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-clock-o']) !!}
                                 </div>
                                 <div class="col-xs-12 col-md-4 col-lg-4">
                                     {!! Field::date('FechaR',
-                                        ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                        ['label' => 'Fecha de Radicacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => ""],
                                         ['help' => '', 'icon' => 'fa fa-calendar']) !!}
                                 </div>
                                 <div class="col-xs-12 col-md-4 col-lg-4">
                                     {!! Field::date('FechaL',
-                                        ['label' => 'Fecha Limite','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                        ['label' => 'Fecha limite de evaluacion','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                         ['help' => '', 'icon' => 'fa fa-calendar']) !!}
                                 </div>
                             </div>
@@ -149,11 +143,56 @@
                                 </div>
                             </div>
                         </div>
-                <div class="tab-pane" id="tab5"></div>
-                            </div>  
-                        </div>  
-                        <div class="form-actions">
+                        <div class="tab-pane" id="tab5">
+                            <h3 class="block">Confirmacion</h3>
                             <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Titulo:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="title"> </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Palabras Clave:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="Keywords"> </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Estudiantes:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="estudiante1"></p>
+                                            <p class="form-control-static" data-display="estudiante2"></p>
+                                        </div>
+                                    </div>    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Duracion del proyecto:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="duracion"></p>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Fecha de Radicacion:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="FechaR"></p>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Fecha Limite de Evaluacion:</label>
+                                        <div class="col-md-8">
+                                            <p class="form-control-static" data-display="FechaL"></p>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            
+                                                
+                    </div>
+                </div>  
+            </div>  
+            <div class="form-actions">
+                <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
                                     <a href="javascript:;" class="btn default button-previous">
                                         <i class="fa fa-angle-left"></i> Volver 
@@ -174,13 +213,14 @@
 </div>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
 </script>
-<script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/gesap/js/form-wizard-5.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     
     $('.portlet-form').attr("id","form_wizard_1");
 
     
     jQuery(document).ready(function() {
+           
         $('.select2-selection--single').addClass('form-control');
         var form = $('#form-register-min');
 
@@ -216,16 +256,14 @@
                 return m;
             }
         });
-    $('.pmd-select2', form).change(function () {
+        $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });        
-    
-           
             
-            var rules = {
+        var rules = {
                 title:{required: true,minlength: 6,maxlength:500},
-                estudiante1:{required: true},
-                estudiante2:{required: true},
+                estudiante1:{required: true,notEqualTo:'#estudiante2'},
+                estudiante2:{required: true,notEqualTo:'#estudiante1'},
                 Keywords:{required: true,minlength: 4,maxlength:300},
                 duracion:{required: true,minlength: 1,maxlength:2,number: true},
                 FechaR:{required: true},
@@ -264,8 +302,6 @@
                         formData.append('Requerimientos', FileReq.files[0]);    
                     };
                     
-                    
-
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -301,6 +337,12 @@
             var messages = {};
         
             FormWizard.init(wizard, form, rules, messages, createProject());
+        
+
+        
+        
+        
+        
         $('#link_back').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('min.index.ajax') }}';
@@ -308,6 +350,8 @@
         });    
     
     
+        
+        
     });
 
     

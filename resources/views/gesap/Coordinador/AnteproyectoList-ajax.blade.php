@@ -33,7 +33,8 @@
     @endcomponent
 </div>
 
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function () 
         {
@@ -88,7 +89,7 @@
                     {data: 'NPRY_Duracion',searchable: true},
                     {data: 'NPRY_FechaR', className:'none',searchable: true},
                     {data: 'NPRY_FechaL', className:'none',searchable: true},
-                    {data: 'NPRY_Estado',searchable: true},
+                    {data: 'NPRY_Estado',searchable: true, name: 'Estado'},
                     {data: 'radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) 
                         {
@@ -137,13 +138,30 @@
                             return "No hay asignado"
                     },className:'none',searchable: true},
                      
-                    {data:'action',className:'',searchable: false,
-                        name:'action',
-                        title:'Acciones',
-                        orderable: false,
-                        exportable: false,
-                        printable: false,
-                        defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                    {data:'action',
+                     className:'',
+                     searchable: false,
+                     name:'action',
+                     title:'Acciones',
+                     orderable: false,
+                     exportable: false,
+                     printable: false,
+                     responsivePriority:2,
+                     render: function ( data, type, full, meta ) {
+                         if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
+                             if(full.proyecto==null){
+                                 return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
+                             }else{
+                                 if (full.proyecto.PRYT_Estado=="TERMINADO") {
+                                     return '<span class="label label-sm label-success">Proyecto Terminado</span>';
+                                 } else {
+                                    return '<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><span class="label label-sm label-success">Proyecto en curso</span>'; 
+                                 } 
+                             }
+                         }else{
+                             return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
+                         }
+                     }, 
                     }
                 ],
                 buttons: [
@@ -254,8 +272,6 @@
                 });
 
         });
-
             
-            
-        });
-    </script>
+    });
+</script>

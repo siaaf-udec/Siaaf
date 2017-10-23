@@ -40,7 +40,17 @@ class StudentController extends Controller
      */
     public function proyecto()
     {
-        return view($this->path.'ProyectList');
+        return view($this->path.'ProponenteList');
+    }
+    
+    /*
+     * Listado de proyectos asignados como estudiantes
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function proyectoajax()
+    {
+        return view($this->path.'ProponenteList-ajax');
     }
     
     /*
@@ -119,7 +129,10 @@ class StudentController extends Controller
             }])
             ->get();
         
-        return Datatables::of($anteproyectos)->addColumn('NPRY_Estado', function ($users) {
+        return Datatables::of($anteproyectos)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->addColumn('NPRY_Estado', function ($users) {
             if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                 return "<span class='label label-sm label-warning'>"
                     .$users->anteproyecto->NPRY_Estado

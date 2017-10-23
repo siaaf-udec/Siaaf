@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
+use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\Users\Src\User;
@@ -34,7 +35,7 @@ class CoordinatorController extends Controller
     private $path='gesap.Coordinador.';
     
     /*
-     * Listado de todos los proyectos que se han registrado
+     * Listado de todos los anteproyectos que se han registrado
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,8 +44,8 @@ class CoordinatorController extends Controller
         return view($this->path.'AnteproyectoList');
     }
     
-    /**
-     * Listado de todos los proyectos que se han registrado con vista AJAX
+    /*
+     * Listado de todos los anteproyectos que se han registrado con vista AJAX
      *
      * @param  \Illuminate\Http\Request
      *
@@ -59,6 +60,16 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
+    }
+    
+    /*
+     * Listado de todos los proyectos avalados
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexProject()
+    {
+        return view($this->path.'ProyectoList');
     }
     
     /*
@@ -91,7 +102,7 @@ class CoordinatorController extends Controller
     }
   
     /*
-     * Función de almacenamiento en la base de datos de proyectos
+     * Función de almacenamiento en la base de datos de anteproyectos
      *
      * @param  \Illuminate\Http\Request 
      * 
@@ -142,8 +153,8 @@ class CoordinatorController extends Controller
                 
             }
             return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
+                '¡Registro Exitoso!',
+                'Anteproyecto creado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -153,7 +164,7 @@ class CoordinatorController extends Controller
         
     }
      
-     /**
+     /*
      * Formulario de editar un proyecto de grado ya registrado
      * Envia lista de usuarios estudiantes registrados
      * Envia datos correspondientes al proyecto a editar
@@ -175,12 +186,16 @@ class CoordinatorController extends Controller
             
             $anteproyecto=Anteproyecto::Project($id)->get();
                      
-            $estudiante12=Encargados::Search($id)
-                ->where(function ($query) {
-                    $query->where('NCRD_Cargo', 'ESTUDIANTE 1')  ;
+            $estudiante12=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
+                ->select('PK_NPRY_IdMinr008')
+                ->with([
+                    'encargados'=>function ($query) {
+                    $query->select('PK_NCRD_IdCargo','FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo');
+                    $query->where('NCRD_Cargo', 'ESTUDIANTE 1');
                     $query->orwhere('NCRD_Cargo', 'ESTUDIANTE 2');
-                })
+                    }])
                 ->get();
+            
             
             return view($this->path.'ModificarMin', [
                 "anteproyecto"=>$anteproyecto,
@@ -194,8 +209,8 @@ class CoordinatorController extends Controller
         );
     }
     
-    /**
-     * Función de actualizacion en la base de datos de proyectos
+    /*
+     * Función de actualizacion en la base de datos de anteproyectos
      *
      * @param  \Illuminate\Http\Request
      *
@@ -265,8 +280,8 @@ class CoordinatorController extends Controller
                 }
             }
             return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
+                '¡Actualizacion Existosa!',
+                'Anteproyecto modificado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -275,8 +290,8 @@ class CoordinatorController extends Controller
         );
     }
     
-    /**
-     * Funcion de eliminacion de proyectos de la base de datos
+    /*
+     * Funcion de eliminacion de anteproyectos de la base de datos
      *
      * @param  int  $id
      * @param  \Illuminate\Http\Request
@@ -290,8 +305,8 @@ class CoordinatorController extends Controller
             $anteproyecto = Anteproyecto::findOrFail($id);
             $anteproyecto->delete();
             return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
+                '¡Eliminacion Correcta!',
+                'Anteproyecto eliminado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -301,7 +316,7 @@ class CoordinatorController extends Controller
         
         
     }
-    
+
     /*
      * Formulario de asignacion de docentes a un proyecto de grado registrados previamente
      * Envia lista de usuarios docentes registrados
@@ -326,16 +341,21 @@ class CoordinatorController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
+            
         
-            $encargados=Encargados::Search($id)
-                ->where(function ($query) {
+        
+            $encargados=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
+                ->select('PK_NPRY_IdMinr008')
+                ->with([
+                    'encargados'=>function ($query) {
+                    $query->select('PK_NCRD_IdCargo','FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo');
                     $query->where('NCRD_Cargo', 'DIRECTOR')  ;
                     $query->orwhere('NCRD_Cargo', 'JURADO 1');
                     $query->orwhere('NCRD_Cargo', 'JURADO 2');
-                })
+                    }])
                 ->get();
                 
-            return view($this->path.'AsignarDocente', [
+        return view($this->path.'AsignarDocente', [
                 'anteproyectos'=>$anteproyectos,
                 'docentes'=>$docentes,
                 'encargados'=>$encargados]);
@@ -399,8 +419,8 @@ class CoordinatorController extends Controller
             }
               
             return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
+                '¡Asignacion Exitosa!',
+                'Docentes asignados correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -410,16 +430,18 @@ class CoordinatorController extends Controller
     }
     
     /*
-    * Consulta de todos proyectos con sus datos correspondientes
+    * Consulta de todos los anteproyectos con sus datos correspondientes
     *
     * @return Yajra\DataTables\DataTables
     */
-    public function projectList()
+    public function preliminaryList()
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2'])
+            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2','proyecto'])
             ->get();
         return Datatables::of($anteproyectos)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
             ->addColumn('NPRY_Estado', function ($users) {
                 if (!strcmp($users->NPRY_Estado, 'EN REVISION')) {
                         return "<span class='label label-sm label-warning'>"
@@ -461,8 +483,81 @@ class CoordinatorController extends Controller
                     }
                 }
             })
-                ->rawColumns(['NPRY_Estado'])
-                ->addIndexColumn()->make(true);
+            ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->"; 
+                $largo=50;
+                $titulo=$title->NPRY_Titulo;
+                if (strlen($titulo) > $largo) {         
+                    $titulo = wordwrap($title->NPRY_Titulo, $largo, $marca); 
+                    $titulo = explode($marca, $titulo); 
+                    $texto1 = $titulo[0];
+                    unset($titulo[0]);
+                    $texto2= implode(' ',$titulo);
+                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                } 
+                return '<p>'.$titulo.'</p>';
+            })
+            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+            ->addIndexColumn()->make(true);
         
+    }
+    
+    /*
+    * Consulta de todos proyectos con sus datos correspondientes
+    *
+    * @return Yajra\DataTables\DataTables
+    */
+    public function projectList()
+    {
+     $proyectos = Proyecto::from('TBL_Proyecto AS A')
+            ->with([
+                'anteproyecto' => function ($anteproyecto) {
+                    $anteproyecto->with(['radicacion',
+                                         'director',
+                                         'jurado1',
+                                         'jurado2',
+                                         'estudiante1',
+                                         'estudiante2',
+                                         'proyecto']);        
+                }
+                
+            ])
+            ->get();   
+        return Datatables::of($proyectos)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->addColumn('PRYT_Estado', function ($users) {
+                if (!strcmp($users->PRYT_Estado, 'EN CURSO')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->PRYT_Estado
+                            ."</span>";
+                } else {
+                    if (!strcmp($users->PRYT_Estado, 'TERMINADO')) {
+                        return "<span class='label label-sm label-success'>"
+                            .$users->PRYT_Estado
+                            ."</span>";
+                    } else {
+                        return "<span class='label label-sm label-info'>"
+                            .$users->PRYT_Estado
+                            ."</span>";
+                    }
+                }
+            })
+            ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->"; 
+                $largo=50;
+                $titulo=$title->anteproyecto->NPRY_Titulo;
+                if (strlen($titulo) > $largo) {         
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
+                    $titulo = explode($marca, $titulo); 
+                    $texto1 = $titulo[0];
+                    unset($titulo[0]);
+                    $texto2= implode(' ',$titulo);
+                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                } 
+                return '<p>'.$titulo.'</p>';
+            })
+            ->rawColumns(['PRYT_Estado','NPRY_Titulo'])
+            ->addIndexColumn()->make(true);
     }
 }

@@ -58,5 +58,38 @@ class PermissionGesapSeeder extends Seeder
              'module_id'=>'7']
         ]);
         
+        $permission = Permission::where('name', '=', 'Create_User_Gesap')->first();
+        $permission->roles()->sync(2);
+        
+        $permission = Permission::where('name', '=', 'Assing_permission_Gesap')->first();
+        $permission->roles()->sync(2);
+        $permission = Permission::where('name', '=', 'Create_Project_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'Assign_teacher_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'Modify_Project_Gesap')->first();
+        $permission->roles()->sync(3);  
+        $permission = Permission::where('name', '=', 'See_All_Project_Gesap')->first();
+        $permission->roles()->sync(3);
+            
+        $permission = Permission::where('name', '=', 'Report_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
+        $permission->roles()->sync(4);
+        $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
+        $permission->roles()->sync(4);
+        $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+        $permission->roles()->sync(3);
+        $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+        $permission->roles()->sync(4);
+        $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+        $permission->roles()->sync(5);
+        $permission = Permission::where('name', '=', 'Update_Final_Project_Gesap')->first();
+        $permission->roles()->sync(5);
+        
     }
 }
