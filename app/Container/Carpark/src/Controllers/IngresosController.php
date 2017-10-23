@@ -50,13 +50,14 @@ class IngresosController extends Controller
      * @param  \Illuminate\Http\Request
      * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaMotosDentro(Request $request){
+    public function tablaMotosDentro(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return Datatables::of(Ingresos::all())  
-                    ->removeColumn('created_at')
-                    ->removeColumn('updated_at')                  
-                    ->addIndexColumn()
-                    ->make(true);
+            return Datatables::of(Ingresos::all())
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -160,10 +161,9 @@ class IngresosController extends Controller
         if ($request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
 
-            if (is_null($infoMoto))
-            {
+            if (is_null($infoMoto)) {
                 return view('carpark.ingresos.tablaIngresos');
-            }            
+            }
 
             $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
@@ -245,11 +245,10 @@ class IngresosController extends Controller
     {
         if ($request->isMethod('GET')) {
             $infoMoto = Motos::where([['PK_CM_IdMoto', '=', $id], ['CM_Placa', '=', $placa]])->get();
-            
-            if ($infoMoto == '[]')
-            {
+
+            if ($infoMoto == '[]') {
                 return view('carpark.ingresos.tablaIngresos');
-            }            
+            }
             $infoMoto = Motos::find($id);
             $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
