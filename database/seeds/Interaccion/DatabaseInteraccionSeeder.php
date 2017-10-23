@@ -21,6 +21,8 @@ class DatabaseInteraccionSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UsersFinancialTableSeeder::class);
+       $this->call(RoleInteraccionSeeder::class);
+       $this->call(PermisosInteraccionSeeder::class);
+       $this->call(UsersInteraccionSeeder::class);
     }
 }
