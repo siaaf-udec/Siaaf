@@ -19,6 +19,7 @@ class DatabaseTalentoHumanoSeeder extends Seeder
     {
         $this->call(RoleHumTalentSeeder::class);
         $this->call(PermissionHumTalentSeeder::class);
+        $this->call(UserHumTalentSeeder::class);
 
     }
 }
