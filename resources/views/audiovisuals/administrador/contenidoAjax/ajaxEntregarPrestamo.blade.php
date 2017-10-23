@@ -127,7 +127,7 @@
                     @php ++$contador @endphp
                     <div class="row fila_articulo" data-id_articulo={{$articulos['id']}}>
                         <div class="col-md-3">
-                            {!! Field::text("textObser".$articulos['id'],$articulos['consultaTipoArticulo']['TPART_Nombre'],
+                            {!! Field::text("textObser".$articulos['id'],$articulos['consultaArticulos']['consultaTipoArticulo']['TPART_Nombre'],
                                  ['disabled','label' => 'Tipo Articulo', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
                                  ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
                             !!}

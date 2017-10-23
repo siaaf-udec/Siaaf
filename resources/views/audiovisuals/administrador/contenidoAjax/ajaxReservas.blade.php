@@ -44,6 +44,7 @@
                     'Nombre',
                     'Codigo',
                     'Fecha Solicitud',
+                    'Elementos' => ['style' => 'width:90px;'],
                     'Acciones' => ['style' => 'width:90px;']
                 ])
             @endcomponent
@@ -69,12 +70,10 @@
                             <div class="col-md-6" >
                                 <div id="kitArticulo">
                                 </div>
-
                                     {!! Field::text('KIT',
                                     ['disabled','label' => 'Elemento:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
                                     ['help' => '', 'icon' => 'fa fa-user'])
                                     !!}
-
                                 <br><br><br><br>
                                 <p>
                                     {!! Field::text(
@@ -83,13 +82,11 @@
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                     !!}
                                 </p>
-
                                 <p>
                                     {!! Field::textarea('PRT_Observacion_Entrega',
                                                     ['label' => 'Entrega Estado Elementos', 'required', 'auto' => 'off', 'max' => '255', "rows" => '6'],
                                                     ['help' => 'Descripcion del estado de los elementos.', 'icon' => 'fa fa-quote-right']) !!}
                                 </p>
-
                             </div>
                             <div class="col-md-6" >
                                 <div id = "texareaP">
@@ -191,6 +188,7 @@
                 },name:'Nombre'},
             {data: 'conultar_usuario_developer.email', name: 'Codigo'},
             {data: 'PRT_Fecha_Inicio', name: 'Fecha Solicitud'},
+            {data: 'Elementos', name: 'Elementos'},
             {data: 'Acciones', name: 'Acciones'},
 
         ];
@@ -198,6 +196,8 @@
         table = table.DataTable();
         table.on('click', '#1', function (e) {
             e.preventDefault();
+            $('#PRT_Observacion_Entrega').empty();
+            $('#PRT_Observacion_Recibe').empty();
             $('#modal-ver-reserva').modal('toggle');
             $text_area_Elementos_kit.empty();
             $tr = $(this).closest('tr');
@@ -219,12 +219,23 @@
                     });
                 });
             }else{
-                $('#KIT').val(dataTable.consulta_tipo_articulo.TPART_Nombre);
-                $('#texareaP').hide();
+                $('#KIT').val('Articulos');
+                route_ver = '{{ route('gestionVerReservaArticulosModal') }}'+ '/'+ dataTable.PRT_Num_Orden;
+                $('#texareaP').show();
+                $.get( route_ver, function( info ) {
+                    console.log(info);
+                    $(info.data).each(function (key,value) {
+                        $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
+                        $text_area_Elementos_kit.append('\n');
+                    });
+                });
             }
         });
         table.on('click', '#2', function (e) {
             e.preventDefault();
+            //$('#from_detalles_reserva')[0].reset();
+            $('#PRT_Observacion_Entrega').empty();
+            $('#PRT_Observacion_Recibe').empty();
             $('#modal-ver-reserva').modal('toggle');
             $text_area_Elementos_kit.empty();
             $tr = $(this).closest('tr');
@@ -249,15 +260,24 @@
                 });
             }
             else{
-                $('#KIT').val(dataTable.consulta_tipo_articulo.TPART_Nombre);
-                $('#texareaP').hide();
+
+                $('#KIT').val('Articulos');
+                route_ver = '{{ route('gestionVerReservaArticulosModal') }}'+ '/'+ dataTable.PRT_Num_Orden;
+                $('#texareaP').show();
+                $.get( route_ver, function( info ) {
+                    console.log(info);
+                    $(info.data).each(function (key,value) {
+                        $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
+                        $text_area_Elementos_kit.append('\n');
+                    });
+                });
             }
         });
         var realizar = function () {
             return{
                 init: function () {
                     var dataTable = table.row($tr).data();
-                    var route = '{{ route('realizarEntregaReserva') }}'+'/'+dataTable.id;
+                    var route = '{{ route('realizarEntregaReserva') }}'+'/'+dataTable.PRT_Num_Orden;
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();

@@ -10,11 +10,14 @@ use App\Container\Audiovisuals\src\Programas;
 use App\Container\Audiovisuals\src\Solicitudes;
 use App\Container\Audiovisuals\src\TipoArticulo;
 use App\Container\Audiovisuals\src\UsuarioAudiovisuales;
+use App\Container\Audiovisuals\src\Validaciones;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Users\Src\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Scalar\String_;
 use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\DataTables;
 
@@ -29,7 +32,16 @@ class FuncionarioController extends Controller
         $this->funcionarioRepository = $funcionarioRepository;
         $this->carrerasRepository    = $carrerasRepository;
     }
-	//datatable articulos
+    public function opcionReservaArticuloAjax(){
+        $validaciones = Validaciones::all();
+        $tipo = TipoArticulo::whereHas('consultarArticulos')->pluck('TPART_Nombre', 'id');
+        //dd($array);
+        return view('audiovisuals.funcionario.prestamoAjax.reservarArticuloAjax', [
+            'tipoArticulos' => $tipo->toArray(),
+            'validaciones' => $validaciones,
+        ]);
+    }
+	//datatable articulos1
     public function dataArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -38,10 +50,16 @@ class FuncionarioController extends Controller
             //solicitudes con el usuario autenticado
 			//consulta las reservas realizadas por el funcionario logueado
 			$solicitudes = Solicitudes::with(['consultaTipoArticulo' ])->where([
-					['PRT_FK_Funcionario_id','=',$userid]
+					['PRT_FK_Funcionario_id','=',$userid],
+                    ['PRT_FK_Tipo_Solicitud','=',1]//reservas
 				]
 			)->get();
-			return DataTables::of($solicitudes)
+            $solicitudes =($solicitudes)->groupBy('PRT_Num_Orden');
+            $array = array();
+            foreach ($solicitudes as $le) {
+                array_push($array, $le[0]);
+            }
+			return DataTables::of($array)
 			->addIndexColumn()
 			->make(true);
 			} else {
@@ -80,14 +98,27 @@ class FuncionarioController extends Controller
     {
 		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
     	$usario = $this->consultarUsuario();
+        //$validaciones = Validaciones::all();
 		//array de carreras disponibles para el funcionario
 		//$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
 		return view('audiovisuals.funcionario.reservarArticulo',[
 			'programas'=>$carreras->toArray(),
-			'numero'=>$usario //bandera para abrir el modal de registro del usuairo que esta logueado
+			'numero'=>$usario, //bandera para abrir el modal de registro del usuairo que esta logueado
+            //'validaciones'=>$validaciones
 		]);
 	}
+    public function reservaindexAjax(Request $request)
+    {
+        //consulta si el usuario logueado esxite en la tabla Audiovisuales User
+        $usario = $this->consultarUsuario();
+        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+        return view('audiovisuals.funcionario.prestamoAjax.reservarAjax',[
+            'programas'=>$carreras->toArray(),
+            'numero'=>$usario, //bandera para abrir el modal de registro del usuairo que esta logueado
+            //'validaciones'=>$validaciones
+        ]);
+    }
 	//indexkit
 	public function reservaKits(){
 		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
@@ -95,10 +126,12 @@ class FuncionarioController extends Controller
 		//array de carreras disponibles para el funcionario
 		//$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+        $validaciones= Validaciones::all();
     	return view('audiovisuals.funcionario.reservarKit',
 			[
-				'programas'=>$carreras->toArray(),
-				'numero'=>$usario
+			    'programas'=>$carreras->toArray(),
+				'numero'=>$usario,
+                'validaciones'=>$validaciones
 			]);
 	}
     public function almacenarArticulo(Request $request)
@@ -133,17 +166,50 @@ class FuncionarioController extends Controller
 			);
 		}
 	}
+    public function cargarVistaReservaArticulo(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $dtI=Carbon::parse($request['PRT_Fecha_Inicio']);
+            $dtF=Carbon::parse($request['PRT_Fecha_Inicio']);
+            $dtF->addDays(((int)$request['numDias']));
+            $dtF->addHours(((int)$request['numHoras']));
+            $dtF=$dtF->toDateTimeString();
+            $dtI=$dtI->toDateTimeString();
+            //$dt->format('l jS \\of F Y h:i:s A');
+            $array=array();
+            $array2=array();
+            $array = array_add($array,'fechaInicial',$dtI);
+            array_push($array2,$array);
+            $array = array_add($array,'fechaFinal',$dtF);
+            array_push($array2,$array);
+            //dd($data);
 
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Reserva registrada correctamente.',
+                $array
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
 	public function storeKit(Request $request)
 	{
 		if ($request->ajax() && $request->isMethod('POST')) {
 			$user=Auth::user();
 			$id=$user->id;
-			$valores=$this->consultarKit($request['PRT_FK_Kits_id']);
+            $numOrden = (Solicitudes::max('PRT_Num_Orden')) + 1;
+			//$valores=$this->consultarKit($request['PRT_FK_Kits_id']);
+            $dtI=Carbon::parse($request['PRT_Fecha_Inicio']);
+            $dtF=Carbon::parse($request['PRT_Fecha_Inicio']);
+            $dtF->addDays(((int)$request['numDias']));
+            $dtF->addHours(((int)$request['numHoras']));
 			Solicitudes::create([
 				'PRT_FK_Articulos_id'=> 1,
 				'PRT_Fecha_Inicio'  => $request['PRT_Fecha_Inicio'],
-				'PRT_Fecha_Fin'     => $request['PRT_Fecha_Fin'],
+				'PRT_Fecha_Fin'     => $dtF,
 				'PRT_FK_Funcionario_id'=> $id,
 				'PRT_FK_Kits_id'=> $request['PRT_FK_Kits_id'],
 				'PRT_Observacion_Entrega'=> '',
@@ -151,7 +217,9 @@ class FuncionarioController extends Controller
 				'PRT_FK_Estado'=> 1,
 				'PRT_FK_Tipo_Solicitud'=> 1,//reserva
 				'PRT_FK_Administrador_Entrega_id'=>0,
-				'PRT_FK_Administrador_Recibe_id'=>0
+				'PRT_FK_Administrador_Recibe_id'=>0,
+                'PRT_Num_Orden'=>$numOrden,
+                'PRT_Cantidad'=>1
 			]);
 //		}
 			return AjaxResponse::success(
@@ -185,6 +253,43 @@ class FuncionarioController extends Controller
 			);
 		}
 	}
+	public function reservaRepeatcrear(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $infoRepeat = json_decode($request->get('infoPrestamo'));
+            $numOrden = (Solicitudes::max('PRT_Num_Orden')) + 1;
+            $user = Auth::user();
+            $funcionarioId = $user->id;
+            foreach ($infoRepeat as $prestamo) {
+                $dtI = Carbon::parse($prestamo->fechaInicio);
+                $dtF = Carbon::parse($prestamo->fechaFin);
+                Solicitudes::create([
+                    'PRT_FK_Articulos_id' => $prestamo->tipoArticulosSelect,
+                    'PRT_Fecha_Inicio' => $dtI,
+                    'PRT_Fecha_Fin' => $dtF,
+                    'PRT_FK_Funcionario_id' => $funcionarioId,
+                    'PRT_FK_Kits_id' => 1,
+                    'PRT_Observacion_Entrega' => '',
+                    'PRT_Observacion_Recibe' => '',
+                    'PRT_FK_Estado' => 2,
+                    'PRT_FK_Tipo_Solicitud' => 1,//reserva
+                    'PRT_FK_Administrador_Entrega_id' => 0,
+                    'PRT_FK_Administrador_Recibe_id' => 0,
+                    'PRT_Num_Orden' => $numOrden,
+                    'PRT_Cantidad' => 1//verificar porque este campo
+                ]);
+            }
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Reserva registrada correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
 	//funcion la cual lista el textArea con los tipos de articulos que el kit tiene
 	public function consultarArticulosKit(Request $request,$idKit){
 
@@ -210,7 +315,7 @@ class FuncionarioController extends Controller
 
     public function consultarKitsDisposnibles(Request $request){
 		if($request->ajax() && $request->isMethod('GET')){
-			$kits = Kit::where('KIT_FK_Estado_id','=',1)->get();
+			$kits = Kit::all();
 			return AjaxResponse::success(
 				'¡Bien hecho!',
 				'Datos consultados correctamente.',

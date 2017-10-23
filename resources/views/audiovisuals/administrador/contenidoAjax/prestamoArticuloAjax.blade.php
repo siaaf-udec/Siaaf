@@ -23,18 +23,18 @@
         <br>
         <div class="row">
             <div class="col-md-12">
-
                 <div class="col-md-5">
-                    {!! Field::text('id_funcionario',
-                    ['label' => 'Ingrese Identificacion:'],
-                    ['help' => 'Ingrese Estado "Activo","Inactivo"', 'icon' => 'fa fa-credit-card'])
-                    !!}
+                    {!! Form::open(['id' => 'from_id_funcionario', 'class' => '', 'url' => '/forms']) !!}
+                        {!! Field::text('id_funcionario',
+                        ['label' => 'Ingrese Identificacion:'],
+                        ['help' => 'Ingrese Estado "Activo","Inactivo"', 'icon' => 'fa fa-credit-card'])
+                        !!}
                 </div>
                 <br>
                 <div class="col-md-3">
-                    {!! Form::button('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
+                        {!! Form::button('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
+                    {!! Form::close() !!}
                 </div>
-
             </div>
         </div>
             <div class="row">
@@ -73,7 +73,6 @@
                                         ['help' => 'Digita un número de teléfono.', 'icon' => 'fa fa-phone'])
                                         !!}
                                     </p>
-
                                 </div>
                                 <div class="col-md-6">
                                     <p>
@@ -82,7 +81,6 @@
                                         ['help' => 'Ingrese Apellidos', 'icon' => 'fa fa-user'])
                                         !!}
                                     </p>
-
                                     <p>
                                         {!! Field::select('FK_FUNCIONARIO_Programa',
                                             $carrerasUdec,
@@ -90,9 +88,9 @@
                                        !!}
                                     </p>
                                 </div>
-
                             </div>
                         </div>
+                    </div>
                         <div class="modal-footer">
                             {!! Form::submit('INGRESAR PRESTAMO', ['class' => 'btn blue']) !!}
                             {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -101,7 +99,6 @@
                     </div>
                     {{-- END HTML MODAL CREATE--}}
                 </div>
-
             </div>
         @endcomponent
         <div class="clearfix"></div>

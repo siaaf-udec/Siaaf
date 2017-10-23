@@ -84,11 +84,15 @@ Route::group(['prefix' => 'administradorGestionPrestamos'], function () {
         'uses' => $controller.'AdministradorGestionController@verReserva',
         'as' => 'gestionVerReservaModal'
     ]);
+    ///////
+    Route::get('infoReservaArticulos/{route_articulos?}',[
+    'uses' => $controller.'AdministradorGestionController@verReservaArticulos',
+        'as' => 'gestionVerReservaArticulosModal'
+    ]);
     Route::post('actualizarReserva/{idReserva?}', [
         'uses' => $controller . 'AdministradorGestionController@realizarEntregaReserva',
         'as'   => 'realizarEntregaReserva',
     ]);
-
 });
 // RUTAS FUNCIONARIO ************************
 Route::group(['prefix' => 'funcionario'], function () {
@@ -96,53 +100,72 @@ Route::group(['prefix' => 'funcionario'], function () {
     //ruta para vista reservar Articulos
     Route::get('reservasArticulos', [
         'uses' => $controller . 'FuncionarioController@reserva',//cambiar por indexArticulos
-        'as'   => 'audiovisuales.reservas.articulos.index',
+        'as' => 'audiovisuales.reservas.articulos.index',
+    ]);
+    //ruta ajax para vista reservar articulos
+    Route::get('reservasArticulosAjax', [
+        'uses' => $controller . 'FuncionarioController@reservaindexAjax',//cambiar por indexArticulos
+        'as' => 'audiovisuales.reservaArticulo.indexAjax',
     ]);
     //ruta para crear reserva articulos
     Route::post('guardarArticulos', [
         'uses' => $controller . 'FuncionarioController@almacenarArticulo',
-        'as'   => 'reservaArticulo.store',
+        'as' => 'reservaArticulo.store',
+    ]);
+    Route::post('VistaReservaArticulo', [
+        'uses' => $controller . 'FuncionarioController@cargarVistaReservaArticulo',
+        'as' => 'cargarVistaReservaArticulos',
     ]);
     //ruta para crear la reserva kit
     Route::post('guardarKits', [
         'uses' => $controller . 'FuncionarioController@storeKit',
-        'as'   => 'reservaKit.store',
+        'as' => 'reservaKit.store',
     ]);
     //ruta para vista reservasKits
     Route::get('reservasKits', [
         'uses' => $controller . 'FuncionarioController@reservaKits',//cambiar por indexkit
-        'as'   => 'audiovisuales.reservas.kits.index',
+        'as' => 'audiovisuales.reservas.kits.index',
     ]);
     //ruta para almacenar los datos del selec tipo articulo dispobibles
     Route::get('ListarSelectTipoArticulo', [
         'uses' => $controller . 'FuncionarioController@consultarTiposArticulosDisposnibles',
-        'as'   => 'cargar.tipoArticulosDisponibles.select',
+        'as' => 'cargar.tipoArticulosDisponibles.select',
     ]);
     //ruta para almacenar los datos del selec kits dispobibles
     Route::get('ListarSelectKits', [
         'uses' => $controller . 'FuncionarioController@consultarKitsDisposnibles',
-        'as'   => 'cargar.kitsDisponibles.select',
+        'as' => 'cargar.kitsDisponibles.select',
     ]);
     //ruta para almacenar los datos del selec kits dispobibles
     Route::get('ListarTextAreaArticulos/{kit?}', [
         'uses' => $controller . 'FuncionarioController@consultarArticulosKit',
-        'as'   => 'listarArticulosKit',
+        'as' => 'listarArticulosKit',
     ]);
     //ruta para crear funcionario
     Route::post('CrearFuncionario', [
         'uses' => $controller . 'FuncionarioController@storePrograma',
-        'as'   => 'crearFuncionarioPrograma.storePrograma',
+        'as' => 'crearFuncionarioPrograma.storePrograma',
     ]);
     //ruta datatable articulos
     Route::get('dataArticulos', [
         'uses' => $controller . 'FuncionarioController@dataArticulo',
-        'as'   => 'funcionarioReservas.dataArticulo',
+        'as' => 'funcionarioReservas.dataArticulo',
     ]);
     //ruta datatable kits
     Route::get('dataKits', [
         'uses' => $controller . 'FuncionarioController@dataKit',
-        'as'   => 'funcionarioReservas.dataKit',
+        'as' => 'funcionarioReservas.dataKit',
     ]);
+
+    Route::get('opcionReservaArticuloFuncionario', [
+        'uses' => $controller . 'FuncionarioController@opcionReservaArticuloAjax',
+        'as'   => 'opcionReservaArticuloAjax',
+    ]);
+    Route::post('reservaFormRepeat',[
+        'uses' => $controller . 'FuncionarioController@reservaRepeatcrear',
+        'as'   => 'reservaRepeat.crear',
+    ]);
+
 });
 // RUTAS SUPERADMIN **************************
 Route::group(['prefix' => 'superAdmin'], function () {

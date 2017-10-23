@@ -183,7 +183,6 @@ de la plantilla
                                     {!! Form::open(['id' => 'from_kit_create', 'class' => '', 'url' => '/forms']) !!}
                                     <div class="row">
                                         <div class="col-md-12">
-
                                             <p>
                                                 {!! Field::select('PRT_FK_Kits_id',
                                                     null,
@@ -196,25 +195,31 @@ de la plantilla
                                                                 ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
                                                 !!}
                                             </p>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    {!! Field::text(
-                                                        'PRT_Fecha_Inicio',
-                                                        ['label'=>'Fecha Recibir Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
-                                                        ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
-                                                    !!}
-                                                </p>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p>
+                                                        {!! Field::text(
+                                                            'PRT_Fecha_Inicio',
+                                                            ['label'=>'Fecha Recibir Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                                            ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
+                                                        !!}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <p>
-                                                    {!! Field::text(
-                                                        'PRT_Fecha_Fin',
-                                                        ['label'=>'Fecha Entregar Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
-                                                        ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
+                                            <div class="row">
+                                                <div class="col-md-6" >
+                                                    {!! Field::select('numDias',
+                                                        null,
+                                                        ['label' => 'Seleccione numero de dias'])
                                                     !!}
-                                                </p>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    {!! Field::select('numHoras',
+                                                         null,
+                                                         ['label' => 'Seleccione numero de Horas'])
+                                                     !!}
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -325,6 +330,12 @@ de la plantilla
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
 </script>
 <script type="text/javascript">
+    var numReserva = JSON.stringify({{$validaciones[1]['VAL_PRE_Valor']}});//nUMrESERVAS
+    var numHoras = JSON.stringify({{$validaciones[4]['VAL_PRE_Valor']}});//numHoras
+    var numDias = JSON.stringify({{$validaciones[5]['VAL_PRE_Valor']}});//numDias
+    var numhorasCancelar = JSON.stringify({{$validaciones[7]['VAL_PRE_Valor']}});
+    var numDiasHabiles = parseInt(JSON.stringify({{$validaciones[12]['VAL_PRE_Valor']}}));//
+    //console.log(numDiasHabiles);
     $( document ).scroll(function(){
         $('#modal-create-reserva .timepicker').datetimepicker('place'); //#modal is the id of the modal
     });
@@ -333,11 +344,11 @@ de la plantilla
             if (!jQuery().datetimepicker) {
                 return;
             }
-            var tres=3;
+            //var tres=3;
             var fecha = new Date();
-            fecha.setDate(fecha.getDate() + 1);
+            fecha.setDate( fecha.getDate() + 1 );
             var fecha2 = new Date();
-            fecha2.setDate(fecha2.getDate() + tres);
+            fecha2.setDate( fecha2.getDate() + numDiasHabiles );
 
             $(".date-time-picker").datetimepicker({
                 autoclose: true,
@@ -360,9 +371,7 @@ de la plantilla
             }
         };
     }();
-
     var ComponentsSelect2 = function() {
-
         var handleSelect = function() {
 
             $.fn.select2.defaults.set("theme", "bootstrap");
@@ -384,7 +393,6 @@ de la plantilla
         };
 
     }();
-
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
             $("input[maxlength], textarea[maxlength]").maxlength({
@@ -406,9 +414,33 @@ de la plantilla
         //console.log('abrir modal');
         $('#static').modal('toggle');
     }
-   // document.getElementById("PRT_Informacion_Kit").rows = "10";
-    jQuery(document).ready(function() {
+    for(i=0;i<=numDias;i++){
+        var nombreDia;
+        if( i == 0 )
+            $('select[name="numDias"]').append(new Option('Ninguno',0));
+        if( i == 1 ){
+            nombreDia=' dia';
+            $('select[name="numDias"]').append(new Option(i+nombreDia,i));
+        }
+        if( i != 0 && i != 1){
+            nombreDia=' dias';
+            $('select[name="numDias"]').append(new Option(i+nombreDia,i));
+        }
 
+
+    }
+    for(i=1;i<=numHoras;i++){
+        var nombreHoras;
+        if(i==1){
+            nombreHoras=' hora';
+        }else{
+            nombreHoras=' horas';
+        }
+        $('select[name="numHoras"]').append(new Option(i+nombreHoras,i));
+    }
+    $('select[name="numDias"]').val([]);
+    $('select[name="numHoras"]').val([]);
+    jQuery(document).ready(function() {
         var $seleccione_un_tipoArticulo = $('select[name="PRT_FK_Kits_id"]');
         var $text_area_kits = $('#PRT_Informacion_Kit');
         ComponentsDateTimePickers.init();
@@ -445,7 +477,6 @@ de la plantilla
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             ////////cancelar
-
         });
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
@@ -476,25 +507,32 @@ de la plantilla
             kit = $(this).val();
             var routeArticulos = '{{ route('listarArticulosKit') }}' +'/' + kit ;
             $text_area_kits.empty();
-            $.ajax({
-                url: routeArticulos,
-                type: 'GET',
-                beforeSend: function () {
-                    App.blockUI({target: '.portlet-form', animate: true});
-                },
-                success: function (response, xhr, request) {
-                    if (request.status === 200 && xhr === 'success') {
-                        App.unblockUI('.portlet-form');
-                       console.log(response.data);
-                        $(response.data).each(function (key,value) {
-                            $text_area_kits.append(value.consulta_tipo_articulo.TPART_Nombre);
-                            $text_area_kits.append('\n');
-                        });
+            if(kit!=1){
+                $.ajax({
+                    url: routeArticulos,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+                            console.log(response.data);
+                            $(response.data).each(function (key,value) {
+                                $text_area_kits.append(value.consulta_tipo_articulo.TPART_Nombre);
+                                $text_area_kits.append('\n');
+                            });
 
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $text_area_kits.empty();
+            }
+
         });
+
+
         //inicio de registrar funcionario audivisuales con programa
         /*Registrar Reserva kit*/
         var createKit = function () {
@@ -505,8 +543,11 @@ de la plantilla
                     var async = async || false;
                     var formData = new FormData();
                     formData.append('PRT_FK_Kits_id', $('select[name="PRT_FK_Kits_id"]').val());
+                    console.log('este es el valor del select');
+                    console.log($('select[name="PRT_FK_Kits_id"]').val())
                     formData.append('PRT_Fecha_Inicio', $('#PRT_Fecha_Inicio').val());
-                    formData.append('PRT_Fecha_Fin', $('#PRT_Fecha_Fin').val());
+                    formData.append('numDias', $('select[name="numDias"]').val());
+                    formData.append('numHoras', $('select[name="numHoras"]').val());
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -521,7 +562,6 @@ de la plantilla
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-
                                 $('#modal-create-reserva').modal('hide');
                                 $('#from_kit_create')[0].reset(); //Limpia formulario
                                 table.ajax.reload();
@@ -543,7 +583,7 @@ de la plantilla
             PRT_FK_Kits_id:{required: true},
             //validaciones campos fechas
             PRT_Fecha_Inicio:{required: true},
-            PRT_Fecha_Fin:{ required: true},
+            //PRT_Fecha_Fin:{ required: true},
 
         };
         FormValidationMd.init(form_create_kit,rules_create_kit,false,createKit());

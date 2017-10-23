@@ -20,6 +20,10 @@ class Solicitudes extends Model
 	//crear metodo para consultar administradores
 
 	//metodo de relacion con la tabla tipo articulos
+    public function consultaArticulos()
+    {
+        return $this->belongsTo(Articulo::class,'PRT_FK_Articulos_id');
+    }
 	public function consultaUsuarioAudiovisuales()
 	{
 		return $this->belongsTo(UsuarioAudiovisuales::class,'PRT_FK_Funcionario_id','USER_FK_User');
@@ -37,6 +41,12 @@ class Solicitudes extends Model
 			TipoArticulo::class,'PRT_FK_Articulos_id','id'
 		);
 	}
+    /*public function consultaTipoArticulo()
+    {
+        return $this->belongsTo(
+            TipoArticulo::class,'PRT_FK_Articulos_id','id'
+        );
+    }*/
 	public function consultaUsuario()
 	{
 		return $this->belongsTo(

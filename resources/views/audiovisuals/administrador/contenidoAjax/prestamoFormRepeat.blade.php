@@ -125,9 +125,14 @@
                 success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         App.unblockUI('.portlet-form');
-                        var tiempo=parseInt(response.data[0]['VAL_PRE_Valor']);
-                        for(var i=1;i<=tiempo;i++){
-                            var nombreTiempo=i+' Hora'
+                        var tiempo = parseInt(response.data[0]['VAL_PRE_Valor']);
+                        var nombreTiempo;
+                        for(var i = 1;i <= tiempo;i++){
+                            if(i == 1){
+                                nombreTiempo=i+' Hora';
+                            }else{
+                                nombreTiempo=i+' Horas';
+                            }
                             $('#tiempoArticulo').append(new Option(nombreTiempo,i));
                         }
                     }
