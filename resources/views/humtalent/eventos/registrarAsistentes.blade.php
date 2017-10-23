@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
 
     $( ".back" ).on('click', function (e) {
         e.preventDefault();
-        var route = '{{ route('talento.humano.evento.index.ajax') }}';
+        var route = '{{ route('talento.humano.evento.asistentes') }}'+'/'+document.getElementById("idEvent").value;
         $(".content-ajax").load(route);
     });
 

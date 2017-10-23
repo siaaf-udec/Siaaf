@@ -17,10 +17,8 @@ class DatabaseTalentoHumanoSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UsersFinancialTableSeeder::class);
         $this->call(RoleHumTalentSeeder::class);
         $this->call(PermissionHumTalentSeeder::class);
-
 
     }
 }

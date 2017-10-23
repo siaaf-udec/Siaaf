@@ -12,7 +12,7 @@
 
                 <div class="form-body">
 
-                    {!! Field::select('PRSN_Rol',['Docente'=>'Docente', 'Administrativo'=>'Administrativo'], null,['label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user','help' => 'Digite el nombre del empleado.']) !!}
+                    {!! Field::select('PRSN_Rol',['DOCENTE'=>'DOCENTE', 'ADMINISTRATIVO'=>'ADMINISTRATIVO'], null,['label'=>'Rol del empleado: Selecciona una opción', 'icon'=>'fa fa-user','help' => 'Digite el nombre del empleado.']) !!}
 
 
                     {!! Field:: text('PRSN_Nombres',null,['label'=>'Nombre(s)','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
@@ -52,7 +52,7 @@
                     {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensación:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                      ['help' => 'Caja de compensacion (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
-                    {!! Field::select('PRSN_Estado_Persona',['Nuevo'=>'Nuevo', 'Antiguo'=>'Antiguo'],null,['label'=>'Estado del empleado: Selecciona una opción']) !!}
+                    {!! Field::select('PRSN_Estado_Persona',['NUEVO'=>'NUEVO', 'ANTIGUO'=>'ANTIGUO'],null,['label'=>'Estado del empleado: Selecciona una opción']) !!}
 
                     <div class="form-actions">
                         <div class="row">

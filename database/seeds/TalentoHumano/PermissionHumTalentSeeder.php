@@ -11,6 +11,7 @@ use Illuminate\Database\Seeder;
  * Modelos
  */
 use App\Container\Permissions\Src\Permission;
+use App\Container\Permissions\Src\Role;
 
 class PermissionHumTalentSeeder extends Seeder
 {
@@ -24,5 +25,9 @@ class PermissionHumTalentSeeder extends Seeder
         $permission->description = 'Acceso completo a la modulo de recursos humanos.';
         $permission->module_id = 6;
         $permission ->save();
+
+        $role = Role:: where('name' , 'RRHH')->get(['id'])->first();
+        $permiso = Permission::where('name', 'FUNC_RRHH')->first();
+        $permiso->roles()->sync($role);
     }
 }

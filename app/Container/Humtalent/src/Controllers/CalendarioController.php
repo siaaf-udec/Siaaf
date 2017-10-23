@@ -53,7 +53,7 @@ class CalendarioController extends Controller
                 $e['notif'] = $evento['EVNT_Fecha_Notificacion'];
                 array_push($events, $e);        //se mezclan los arreglos por cada registro de la BD
             }                               //una vez se guarden todos los eventos consultados
-            $recordatorios = Notification::all();   //se realiza la consulta ahora a la tabla de notificaciones que almacena los recordatorios
+            $recordatorios = Notification::where('NOTIF_Estado_Notificacion', 'Activa')->get();   //se realiza la consulta ahora a la tabla de notificaciones que almacena los recordatorios
             foreach ($recordatorios as $recordatorio)//se recorre la consulta
             {
                 $e = array();
@@ -71,7 +71,7 @@ class CalendarioController extends Controller
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Mensaje enviado correctamente.',
-                json_encode($events)
+                $events
             );
         }
         return AjaxResponse::fail(

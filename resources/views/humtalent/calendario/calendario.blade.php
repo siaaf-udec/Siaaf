@@ -334,7 +334,7 @@
                     },
                     success: function (response, xhr, request) {//se reciben los eventos enviados desde el controlador //eventos
                         if (request.status === 200 && xhr === 'success') {
-                            var events = JSON.parse(response.data); //se realiza la conversíon para poder ser implementados por la libreria
+                            var events = response.data; //se realiza la conversíon para poder ser implementados por la libreria
                             callback(events);//se cargan los datos recibidos en el calendario
                         }
                     }
