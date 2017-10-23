@@ -12,7 +12,8 @@ class CreateTBLNotificacionesTbl extends Migration
             
             $table->increments('PK_Notificacion');
             $table->string('Titulo',120);       
-            $table->string('Mensagte',120);
+            $table->string('Mensaje',300);
+            $table->string('Bandera',11);
             $table->integer('FK_TBL_Usuarios')->unsigned();
             
             

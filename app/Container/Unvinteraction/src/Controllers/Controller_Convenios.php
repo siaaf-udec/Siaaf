@@ -154,7 +154,7 @@ class Controller_Convenios extends Controller
     */
     public function Listar_Documentos_Convenios($id)
     {
-        $documento = TBL_Documentacion::select('PK_Documentacion', 'Entidad', 'Ubicacion', 'Tipo', 'Descripcion')
+        $documento = TBL_Documentacion::select('PK_Documentacion', 'Entidad', 'Ubicacion')
             ->where('FK_TBL_Convenios', $id)->get();
         return Datatables::of($documento)->addIndexColumn()->make(true);
     }

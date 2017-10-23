@@ -42,7 +42,7 @@ class Controller_Documentos extends Controller
         $Ubicacion="unvinteraction/convenios/".$id;
         $files = $request->file('file');
         foreach ($files as $file) {
-            url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $file->getClientOriginalName());
+            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $file->getClientOriginalName());
         }
         $Estado = new TBL_Documentacion();
         $Estado->Entidad =$file->getClientOriginalName();

@@ -207,23 +207,23 @@ class Controller_Evaluaciones extends Controller
      public function Realizar_Evaluacion(Request $request,$id,$convenio)
     {
          $tipo=0;
-         $id2=$request->user()->identity_no;
-         $decicion=7;
+         $decicion=1;
+         $decicion2=1;
          $rol= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
              ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id)->get();
          $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-             ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id2)->get();
+             ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$request->user()->identity_no)->get();
          
          foreach($rol as $Rol){
              switch($Rol->name){
                  case 'Pasante_uni': 
-                     $decision=1;
+                     $decicion=1;
                      break;
                  case 'Empresario_uni':
-                      $decision=2;
+                      $decicion=2;
                      break;
                 case 'Coordinador_uni':
-                      $decision=1;
+                      $decicion=1;
                 break;
 
              }
@@ -231,29 +231,27 @@ class Controller_Evaluaciones extends Controller
          foreach($rol2 as $Rol2){
               switch($Rol2->name){
                  case 'Coordinador_uni': 
-                     $decision2=1;
+                     $decicion2=1;
                      break;
                  case 'Empresario_uni':
-                      $decision2=2;
+                      $decicion2=2;
                      break;
 
              }
         }
-         
-         
-         if( $decision2==1  and  $decision==1){
+        if( $decicion2==1  and  $decicion==1){
              $tipo=1;
           
          }
-        if( $decision2==2 and  $decision==1){
+        if( $decicion2==2 and  $decicion==1){
              $tipo=4;
             
          }
-         if( $decision2==1 and  $decision==2){
+         if( $decicion2==1 and  $decicion==2){
               $tipo=2;
            
           }
-        if( $decision2==2 and  $decision==2){
+        if( $decicion2==2 and  $decicion==2){
                          $tipo=4;
                
              }
@@ -265,6 +263,7 @@ class Controller_Evaluaciones extends Controller
     }
     public function Registrar_Evaluacion(Request $request,$n,$id,$convenio)
     {
+        $carbon = new \Carbon\Carbon();
        try{
             $Evaluacion = new TBL_Evaluacion();
             $Evaluacion->Evaluador = $request->user()->identity_no;
@@ -272,6 +271,7 @@ class Controller_Evaluaciones extends Controller
             $Evaluacion->FK_TBL_Convenios= $convenio;
             $Evaluacion->Tipo_Evaluacion= 2;
             $Evaluacion->Nota_Final= 0;
+            $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
         //saber que evaluacion es    
            $id_Evaluacion=$Evaluacion->PK_Evaluacion;
@@ -320,31 +320,24 @@ class Controller_Evaluaciones extends Controller
                  case 'Pasante_uni':
                       $decision2=2;
                      break;
-                     
-    
-
              }
         }
          
-         
          if( $decision2==1){
              $tipo=2;
-          
          }
         if( $decision2==2){
              $tipo=3;
-            
-         }
-        
-             
-         $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
-         $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
+        }
+        $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
+        $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
         return view($this->path.'.Realizar_Evaluacion_Empresa',compact('Pregunta','id','N','convenio'));
       
     }
     
     public function Registrar_Evaluacion_Empresa(Request $request,$n,$id,$convenio)
     {
+        $carbon = new \Carbon\Carbon();
        try{
             $Evaluacion = new TBL_Evaluacion();
             $Evaluacion->Evaluador = $request->user()->identity_no;
@@ -352,6 +345,7 @@ class Controller_Evaluaciones extends Controller
             $Evaluacion->FK_TBL_Convenios= $convenio;
             $Evaluacion->Tipo_Evaluacion= 1;
             $Evaluacion->Nota_Final= 0;
+            $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
         //saber que evaluacion es    
            $id_Evaluacion=$Evaluacion->PK_Evaluacion;

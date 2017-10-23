@@ -17,13 +17,13 @@ class CreateTBLEvaluacionTbl extends Migration
          Schema::connection('unvinteraction')->create('TBL_Evaluacion', function (Blueprint $table) {
              
             $table->increments('PK_Evaluacion');
-            $table->integer('Evaluador');
-            $table->integer('Evaluado');
+            $table->bigInteger('Evaluador');
+            $table->bigInteger('Evaluado');
             $table->date('Fecha'); 
             $table->integer('FK_TBL_Convenios')->unsigned();
             $table->foreign('FK_TBL_Convenios')->references('PK_Convenios')->on('TBL_Convenios');
             $table->float('Nota_Final');
-            
+            $table->integer('Tipo_Evaluacion')->unsigned();
 
         }); 
     }

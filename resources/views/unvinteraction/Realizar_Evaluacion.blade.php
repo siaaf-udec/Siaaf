@@ -37,6 +37,5 @@ echo $N.")";
 
     @endcomponent
 
-    
-
+   
 

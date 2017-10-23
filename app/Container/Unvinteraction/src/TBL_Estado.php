@@ -11,7 +11,7 @@ class TBL_Estado extends Model
     protected $table      = 'TBL_Estado';
     protected $primaryKey = 'PK_Estado';
     protected $fillable   = ['Estado'];
-    public function convenios_Estados()
+   
     
     public function convenios_Estados()
     {

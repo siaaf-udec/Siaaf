@@ -1,4 +1,12 @@
 {{-- MENÚ DE EJEMPLO --}}
+@role(['Admin_uni','Funcionario_uni','Empresario_uni','Coordinador_uni','Pasante_uni'])
+            <li class="nav-item {{ active(['Alerta.Alerta'], 'start active open') }}">
+                <a href="{{ route('Alerta.Alerta') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">BANDEJA DE ENTRADA</span>
+                    </a>
+                </li>
+@endrole
 @role(['Admin_uni','Funcionario_uni'])
             <li class="nav-item {{ active(['Convenios.Convenios'], 'start active open') }}">
                 <a href="{{ route('Convenios.Convenios') }}" class="nav-link nav-toggle">
@@ -50,11 +58,19 @@
                     </a>
                 </li>
 @endrole
-@role(['Admin_uni','Funcionario_uni','Empresario_uni','Coordinador_uni','Pasante_uni'])
+@role(['Admin_uni','Funcionario_uni'])
             <li class="nav-item {{ active(['Evaluaciones.Evaluaciones'], 'start active open') }}">
                 <a href="{{ route('Evaluaciones.Evaluaciones') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">EVALUACIONES</span>
+                    </a>
+                </li>
+@endrole
+@role(['Admin_uni','Funcionario_uni'])
+            <li class="nav-item {{ active(['Evaluaciones.Evaluaciones'], 'start active open') }}">
+                <a href="{{ route('Evaluaciones.Evaluaciones') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">MEJORES EMPRESAS</span>
                     </a>
                 </li>
 @endrole

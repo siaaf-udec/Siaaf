@@ -19,16 +19,19 @@ use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
 use App\Container\Unvinteraction\src\TBL_Empresa;
 use App\Container\Unvinteraction\src\TBL_Participantes;
 use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
+use App\Container\Unvinteraction\src\TBL_Notificaciones;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+
 
 class Controller_Alertas extends Controller
 {
@@ -37,93 +40,71 @@ class Controller_Alertas extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $path='unvinteraction.pasante';
-    public function index()
+    private $path='unvinteraction';
+    
+    public function Alerta(Request $request)
     {
-        //
+        $estado=1;
+        $Convenio = TBL_Convenios::join('TBL_Participantes', 'TBL_Convenios.PK_Convenios', '=', 'TBL_Participantes.FK_TBL_Convenios')
+            ->join('TBL_Estado', 'TBL_Convenios.FK_TBL_Estado', '=', 'TBL_Estado.PK_Estado')
+            ->join('TBL_Sede', 'TBL_Convenios.FK_TBL_Sede', '=', 'TBL_Sede.PK_Sede')
+            ->select('TBL_Convenios.PK_Convenios', 'TBL_Convenios.Nombre', 'TBL_Convenios.Fecha_Inicio', 'TBL_Convenios.Fecha_Fin', 'TBL_Estado.Estado', 'TBL_Sede.Sede')
+            ->where('TBL_Participantes.FK_TBL_Usuarios', '=', $request->user()->identity_no)
+            ->get();
+        $carbon = new \Carbon\Carbon();
+        foreach ($Convenio as $row) {
+            $dtVancouver = $carbon->now();
+            $fecha = $carbon->createFromFormat('Y-m-d H',  $row->Fecha_Fin.' 00');
+            $diferencia = $fecha->diffInDays($dtVancouver,false);
+            $diferencia;
+            if($estado == 1 && $diferencia >= 0  ){
+                
+            } else {
+                if($estado == 1 && $diferencia >= -60 ){
+                   $notificacion = new TBL_Notificaciones();
+                    $notificacion->Titulo='Finalizacion convenio '.$row->Nombre;
+                    $notificacion->Mensaje='El siguiente mensaje es para avisar que el convenio '.$row->Nombre.' en el cual se encuentra como participante esta a punto de finalizar, porfavor realizar las respectivas evaluaciones';
+                    $notificacion->Bandera = 'NO VISTO';
+                    $notificacion->FK_TBL_Usuarios = $request->user()->identity_no;
+                    $notificacion->save();
+                }
+            } 
+        }
+        return view($this->path.'.Listar_Notificaciones');
+        
     }
-    public function Pasante()
+    public function Alerta_Ajax(Request $request)
     {
-        return view($this->path.'.Subida_archivos');
+        
+        return view($this->path.'.Listar_Notificaciones_Ajax');
+        
     }
-    public function Listar_Pasante()
+     public function Listar_Alerta(Request $request)
     {
-        $pasante=User::select('users.name')->get() ;
-        return view($this->path.'.Listar_Pasante', compact('pasante'));
+          $Notificaciones = TBL_Notificaciones::select('PK_Notificacion','Titulo', 'Bandera')
+              ->where('bandera','NO VISTO')
+              ->where('FK_TBL_Usuarios',$request->user()->identity_no)
+              ->get();
+        return Datatables::of($Notificaciones)->addIndexColumn()->make(true);
+         //return $Notificaciones;
     }
-    public function Perfil(Request $request)
+    public function Ver_Alerta($id)
     {
-        $Usuario= User::findOrFail($request->user()->id);
-       $id=$request->user()->id;
-        $Estado_Usuario = TBL_Estado_Usuario::join('TBL_Usuarios','TBL_Estado_Usuario.PK_Estado_Usuario','=','TBL_Usuarios.FK_TBL_Estado_Usuario')->select('TBL_Estado_Usuario.Estado')
-        ->where('TBL_Usuarios.PK_usuario',$request->user()->id)->get();
-        $Carrera = TBL_Carrera::join('TBL_Usuarios','TBL_Carrera.PK_Carrera','=','TBL_Usuarios.FK_TBL_Carrera')->select('TBL_Carrera.Carrera')
-        ->where('TBL_Usuarios.PK_usuario',$request->user()->id)->get();
-        return view($this->path.'.Editar_Usuarios', compact('Usuario','Estado_Usuario','Carrera','id'));
+        $Bandera = TBL_Notificaciones::findOrFail($id);
+        $Bandera->Bandera = 'VISTO';
+        $Bandera->save();
+        $Notificacion = TBL_Notificaciones::findOrFail($id);
+        return view($this->path.'.Ver_Notificacion', compact('Notificacion'));
+    }
+    public function Reporte()
+    {
+      
+        return view($this->path.'.Ver_Reporte');
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+   
 }

@@ -301,3 +301,25 @@ Route::get('Listar_Pregunta_Individual/{id}', [
     'uses' => $controller.'Controller_Evaluaciones@Listar_Pregunta_Individual'
 ]);
 //_____________________________END_RUTAS_FUNCIONARIOS
+//______________________________ALERTAS____________________
+Route::get('Alerta', [    
+    'as' => 'Alerta.Alerta',
+    'uses' => $controller.'Controller_Alertas@Alerta'
+]);
+Route::get('Alerta_Ajax', [    
+    'as' => 'Alerta_Ajax.Alerta_Ajax',
+    'uses' => $controller.'Controller_Alertas@Alerta_Ajax'
+]);
+Route::get('Listar_Alerta', [    
+    'as' => 'Listar_Alerta.Listar_Alerta',
+    'uses' => $controller.'Controller_Alertas@Listar_Alerta'
+]);
+Route::get('Ver_Alerta/{id}', [    
+    'as' => 'Ver_Alerta.Ver_Alerta',
+    'uses' => $controller.'Controller_Alertas@Ver_Alerta'
+]);
+//__________________________END_ALERTAS____________________
+Route::get('Reporte', [    
+    'as' => 'Reporte.Reporte',
+    'uses' => $controller.'Controller_Alertas@Reporte'
+]);

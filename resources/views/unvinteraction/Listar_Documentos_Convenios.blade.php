@@ -39,8 +39,6 @@
                                                 '#' => ['style' => 'width:20px;'],
                                                 'ID',
                                                 'Entidad',
-                                                'Descripcion',
-                                                'Tipo',
                                                 'Acciones' => ['style' => 'width:160px;']
                                             ])
                                         @endcomponent
@@ -281,8 +279,6 @@
            {data: 'DT_Row_Index'},
            {data: 'PK_Documentacion', "visible": true, name:"documento",className:'none' },
            {data: 'Entidad', searchable: true},
-           {data: 'Descripcion', searchable: true},
-           {data: 'Tipo',searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -495,7 +491,11 @@ echo $id;
         
     FormValidationMd.init( form, rules, messages , agregarParticipante());
    
+});
+    </script>  
+<script type="text/javascript">
 
+    jQuery(document).ready(function() {
     var table, url,id;
    
     table = $('#Listar_Empresas_Paticipantes');

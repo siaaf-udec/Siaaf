@@ -1,33 +1,33 @@
 
- 
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR NOTIFICACIONES'])
 
 <br><br>
     <div class="row">
         <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Pasante'])
+            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Notificaciones'])
             
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
-                    'Enunciado',
-                    'Nota',
-                    
+                    'ID',
+                    'Titulo',
+                    'Visto',       
+                    'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
         </div>
     </div>
-
     @endcomponent
-
+ 
 
 
 <script>
 jQuery(document).ready(function () {
+    
+   
     var table, url;
-    table = $('#Listar_Pasante');
-    url = "{{ route('Listar_Pregunta_Individual.Listar_Pregunta_Individual',[$id]) }}";
+    table = $('#Listar_Notificaciones');
+    url = "{{ route('Listar_Alerta.Listar_Alerta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -65,10 +65,19 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'Enunciado', "visible": true, name:"documento" },
-           {data: 'Puntuacion', searchable: true},
-          
-           
+           {data: 'PK_Notificacion',className:'none', "visible": false, name:"documento" },
+           {data: 'Titulo', searchable: true},
+           {data: 'Bandera', searchable: true},
+           {data:'action',className:'',searchable: false,
+            name:'action',
+            title:'Acciones',
+            orderable: false,
+            exportable: false,
+            printable: false,
+            defaultContent: '<a href="#" id="editar" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon ver"><i class="icon-eye"></i></a>'
+
+            
+        }
            
        ],
        buttons: [
@@ -87,11 +96,18 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
-    
-    
-   
    
     
-  
+     table = table.DataTable();
+     table.on('click', '.ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Ver_Alerta/'+dataTable.PK_Notificacion;
+
+            $(".content-ajax").load(route_edit);
+        });
+   
+      
 });
 </script>

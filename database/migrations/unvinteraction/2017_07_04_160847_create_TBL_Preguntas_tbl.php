@@ -17,9 +17,8 @@ class CreateTBLPreguntasTbl extends Migration
          Schema::connection('unvinteraction')->create('TBL_Preguntas', function (Blueprint $table) {
              
             $table->increments('PK_Preguntas');
-            $table->string('Enunciado',120); 
-            $table->string('Puntuacion',10); 
-             $table->integer('FK_TBL_Tipo_Pregunta')->unsigned();
+            $table->string('Enunciado',120);
+            $table->integer('FK_TBL_Tipo_Pregunta')->unsigned();
             $table->foreign('FK_TBL_Tipo_Pregunta')->references('PK_Tipo_Pregunta')->on('TBL_Tipo_Pregunta');
             
         }); 
