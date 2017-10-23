@@ -15,7 +15,7 @@
         <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
-                <span class="title">Formatos Academicos</span>
+                <span class="title">Formatos Académicos</span>
             </a>
         </li>
         @endpermission
@@ -23,7 +23,7 @@
         <li class="nav-item {{ active(['espacios.academicos.formacad.listSol'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.listSol') }}" class="nav-link nav-toggle">
                 <i class="fa fa-file-pdf-o"></i>
-                <span class="title">Formatos Academicos</span>
+                <span class="title">Formatos Académicos</span>
             </a>
         </li>
         @endpermission
