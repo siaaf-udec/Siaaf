@@ -11,17 +11,7 @@ use Illuminate\Http\Request;
 use App\Container\Users\Src\User;
 
 
-Route::get('/', [
-    'as' => 'talento.humano.index',
-    'uses' => function(){
-        return view('humtalent.example');
-    }
-]);
-
-
 Route::group(['middleware' => ['auth']], function () {
-    $controller = "\\App\\Container\\Humtalent\\Src\\Controllers\\";
-
 
 //Rutas para el manejo de los empleados
     Route::group(['prefix' => 'empleado', 'middleware' => ['permission:FUNC_RRHH']], function () {
@@ -108,19 +98,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::get('tablaEmpleados', [   //ruta que realiza la consulta de los empleados registrados
             'as' => 'talento.humano.tablaEmpleados',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Persona::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
-
+            'uses' =>$controller.'EmpleadoController@tablaEmpleados'
         ]);
         Route::get('tablaEmpleadosRetirados', [      //ruta que retorna la vista con el datatable para listar los empleados con estado retirado
             'as' => 'talento.humano.empleado.tablaEmpleadosRetirados',
@@ -150,18 +128,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::get('empleadosRetirados', [ //ruta que realiza el datatable para consultar los empleados con estado de retirado
             'as' => 'talento.humano.empleado.empleadosRetirados',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(Persona::where('PRSN_Estado_Persona', 'Retirado')->get())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
+            'uses' => $controller . 'EmpleadoController@empleadosRetirados'
+
         ]);
         Route::get('email', [
             'as' => 'talento.humano.empleado.email',
@@ -225,18 +193,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::get('tablaDocumentos', [   //ruta que realiza la consulta de los documentos registrados
             'as' => 'talento.humano.tablaDocumentos',
-            'uses' => function (Request $request) {
-                if ($request->ajax()) {
-                    return Datatables::of(DocumentacionPersona::all())
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
+            'uses' => $controller . 'DocumentController@tablaDocumentos'
         ]);
         Route::get('buscarRadicar', [    //ruta para buscar los empleados  para hacer la radicación de documentos
             'as' => 'talento.humano.buscarRadicar', //Este es el alias de la ruta
@@ -483,45 +440,18 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('listaEmpleadosDocumentosCompletos', [  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos
             'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosCompletos',
-            'uses' => function (Request $request) {
-                $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación completa EPS")
-                    ->orWhere('EDCMT_Proceso_Documentacion', "Documentación completa Caja de compensación")
-                    ->distinct()->get(['FK_TBL_Persona_Cedula']);
-                if ($request->ajax()) {
-                    return Datatables::of($empleados)
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
+            'uses' => $controller . 'EmpleadoController@listaEmpleadosDocumentosCompletos'
         ]);
+
         Route::get('listaEmpleadosDocumentosIncompletos', [   //ruta que realiza la consulta para cargar la tabla de los empleados con documentos incompletos
             'as' => 'talento.humano.notificaciones.listaEmpleadosDocumentosIncompletos',
-            'uses' => function (Request $request) {
-                $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación incompleta EPS")
-                    ->orWhere('EDCMT_Proceso_Documentacion', "Documentación incompleta Caja de compensación")
-                    ->distinct()->get(['FK_TBL_Persona_Cedula']);
-                if ($request->ajax()) {
-                    return Datatables::of($empleados)
-                        ->addIndexColumn()
-                        ->make(true);
-                } else {
-                    return response()->json([
-                        'message' => 'Incorrect request',
-                        'code' => 412
-                    ], 412);
-                }
-            }
+            'uses' => $controller . 'EmpleadoController@listaEmpleadosDocumentosIncompletos'
         ]);
+
         Route::get('consultarDocsRadicados/{id?}/{tipoRad?}', [   //ruta para consultar los documentos registrados
             'uses' => $controller . 'DocumentController@consultaDocsRadicados',
             'as' => 'talento.humano.notificaciones.consultarDocsRadicados'
         ]);
-
 
         Route::get('empleadosDocumentosCompletos', [  //ruta que dirige al blade para mostrar la tabla de los empleados con documentos completos generadas por las notificaciones
             'as' => 'humtalent.empleado.notificaciones.empleadosDocumentosCompletos',

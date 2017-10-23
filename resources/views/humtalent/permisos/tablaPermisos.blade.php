@@ -308,21 +308,26 @@
                 }
             }
         };
-
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+        });
         var form_create = $('#form_permission_create');
+        var formMessage = {
+            PERM_Descripcion: {letters: 'Existen caracteres que no están permitidos'},
+        };
         var rules_create = {
-            PERM_Descripcion: { maxlength: 300, required: true },
+            PERM_Descripcion: { maxlength: 300, required: true, letters:true },
             PERM_Fecha: { required: true },
         };
-        FormValidationMd.init(form_create,rules_create,false,createPermision());
+        FormValidationMd.init(form_create,rules_create,formMessage,createPermision());
 
         var form_update = $('#form_permission_update');
         var rules_update = {
-            PERM_Descripcion: { maxlength: '300', required: true },
+            PERM_Descripcion: { maxlength: 300, required: true, letters:true },
             PERM_Fecha: { required: true },
         };
 
-        FormValidationMd.init(form_update,rules_update,false,updatePermision());
+        FormValidationMd.init(form_update,rules_update,formMessage,updatePermision());
 
         $( "#link_cancel" ).on('click', function (e) {
             e.preventDefault();

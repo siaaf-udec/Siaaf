@@ -38,40 +38,43 @@
 @section('content')
     <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Envío de mensajes'])
-
-    {!! Form::open(['id' => 'form_email', 'url'=> ['/forms'], 'enctype'=>'multipart/form-data']) !!}
-        <div class="inbox-form-group">
-            <div class="controls">
-                {!! Field:: text('Asunto',null,['label'=>'Asunto','class'=> 'form-control','id'=>'Asunto', 'autofocus','autocomplete'=>'off'] ) !!}
-            </div>
-        </div>
-        <div class="inbox-form-group">
-            {!! Field::textarea('Descripcion',null,
-                                    ['id'=>'Descripcion','label' => 'Mensaje','auto' => 'off']) !!}
-        </div>
-        <div class="fileinput fileinput-new" data-provides="fileinput"  >
-            <div class="input-group input-large" >
-                <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput" >
-                    <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                    <span class="fileinput-filename"> </span>
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1">
+                    {!! Form::open(['id' => 'form_email', 'url'=> ['/forms'], 'enctype'=>'multipart/form-data']) !!}
+                    <div class="inbox-form-group">
+                        <div class="controls">
+                            {!! Field:: text('Asunto',null,['label'=>'Asunto','class'=> 'form-control','id'=>'Asunto', 'autofocus','autocomplete'=>'off'] ) !!}
+                        </div>
+                    </div>
+                    <div class="inbox-form-group">
+                        {!! Field::textarea('Descripcion',null,
+                                                        ['id'=>'Descripcion','label' => 'Mensaje','auto' => 'off']) !!}
+                    </div>
+                    <div class="fileinput fileinput-new" data-provides="fileinput"  >
+                        <div class="input-group input-large" >
+                            <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput" >
+                                <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                <span class="fileinput-filename"> </span>
+                            </div>
+                            <span class="input-group-addon btn default btn-file">
+                                <span class="fileinput-new">Agregar archivos </span>
+                                <span class="fileinput-exists"> Cambiar </span>
+                                <input type="file"  name="file" multiple id="import_file"> </span>
+                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
+                        </div>
+                    </div>
+                    <br>
+                    <label> Solo archivos con extensión pdf,csv, xlsx, docx, doc.<br> Tamaño máximo: 10 MB</label>
+                    <br><br><br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="actions">
+                                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-users"></i>Buscar destinatarios</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span class="input-group-addon btn default btn-file">
-                                                                    <span class="fileinput-new">Agregar archivos </span>
-                                                                    <span class="fileinput-exists"> Cambiar </span>
-                                                                    <input type="file"  name="file" multiple id="import_file"> </span>
-                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
             </div>
-        </div>
-        <br>
-        <label> Solo archivos con extensión pdf,csv, xlsx, docx, doc.<br> Tamaño máximo: 10 MB</label>
-        <br><br><br><br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="actions">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-users"></i>Buscar destinatarios</a>
-                </div>
-            </div>
-        </div>
         <!-- Modal -->
         <div class="modal fade" id="modal-to" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
@@ -248,13 +251,21 @@
                 }
             }
         };
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();?¿_]+$/i.test(value);
+        });
         var form = $('#form_email');
         var formRules = {
-            Asunto: { required: true},
-            file: {extension: "pdf|csv|xlsx|docx|doc"}
+            Asunto: { required: true, letters:true},
+            file: {extension: "pdf|csv|xlsx|docx|doc"},
+            Descripcion:{ letters:true},
+        };
+        var formMessage = {
+            Asunto: {letters: 'Existen caracteres que no están permitidos'},
+            Descripcion: {letters: 'Existen caracteres que no están permitidos'},
         };
 
-        FormValidationMd.init(form,formRules,false,email());
+        FormValidationMd.init(form,formRules,formMessage,email());
     });
 </script>
 @endpush

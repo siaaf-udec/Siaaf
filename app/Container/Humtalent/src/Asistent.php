@@ -12,7 +12,7 @@ class Asistent extends Model
 
 
     protected $fillable = [
-        'ASIST_Informe', 'FK_TBL_Eventos_IdEvento', 'FK_TBL_Persona_Cedula',
+         'FK_TBL_Eventos_IdEvento', 'FK_TBL_Persona_Cedula',
     ];
 
 

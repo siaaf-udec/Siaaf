@@ -56,6 +56,9 @@
         $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",0-9]+$/i.test(value);
+        });
 
         var createDoc = function () {
             return {
@@ -100,10 +103,13 @@
         };
         var form = $('#form-document_update');
         var formRules = {
-            DCMTP_Nombre_Documento: {required: true},
+            DCMTP_Nombre_Documento: {required: true, letters:true},
             DCMTP_Tipo_Documento: {required: true},
         };
-        FormValidationMd.init(form, formRules, false, createDoc());
+        var formMessage = {
+            DCMTP_Nombre_Documento: {letters: 'Solo se pueden ingresar letras y números'},
+        };
+        FormValidationMd.init(form, formRules, formMessage, createDoc());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

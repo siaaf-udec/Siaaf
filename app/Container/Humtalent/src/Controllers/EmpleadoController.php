@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Storage;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 
 class EmpleadoController extends Controller
@@ -37,6 +38,130 @@ class EmpleadoController extends Controller
     public function index()
     {
         return view('humtalent.empleado.tablasEmpleados');
+    }
+
+    /**
+     * Función que consulta los empleados registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaEmpleados(Request $request){
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $empleados = Persona::all();
+            return Datatables::of($empleados)
+                    ->removeColumn('PRSN_Direccion')
+                    ->removeColumn('PRSN_Ciudad')
+                    ->removeColumn('PRSN_Eps')
+                    ->removeColumn('PRSN_Fpensiones')
+                    ->removeColumn('PRSN_Caja_Compensacion')
+                    ->removeColumn('PRSN_Estado_Persona')
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que consulta los empleados retirados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function empleadosRetirados(Request $request){
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $empleados = Persona::where('PRSN_Estado_Persona', 'Retirado')->get();
+            return Datatables::of($empleados)
+                ->removeColumn('PRSN_Direccion')
+                ->removeColumn('PRSN_Ciudad')
+                ->removeColumn('PRSN_Eps')
+                ->removeColumn('PRSN_Fpensiones')
+                ->removeColumn('PRSN_Caja_Compensacion')
+                ->removeColumn('PRSN_Telefono')
+                ->removeColumn('PRSN_Salario')
+                ->removeColumn('PRSN_Area')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que consulta los empleados que tienen la documentación completa y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function listaEmpleadosDocumentosCompletos(Request $request){
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación completa EPS")
+                            ->orWhere('EDCMT_Proceso_Documentacion', "Documentación completa Caja de compensación")
+                            ->distinct()->get(['FK_TBL_Persona_Cedula']);
+            return Datatables::of($empleados)
+                ->removeColumn('PRSN_Direccion')
+                ->removeColumn('PRSN_Ciudad')
+                ->removeColumn('PRSN_Eps')
+                ->removeColumn('PRSN_Fpensiones')
+                ->removeColumn('PRSN_Caja_Compensacion')
+                ->removeColumn('PRSN_Estado_Persona')
+                ->removeColumn('PRSN_Salario')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Función que consulta los empleados que tienen la documentación incompleta y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function listaEmpleadosDocumentosIncompletos(Request $request){
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación incompleta EPS")
+                ->orWhere('EDCMT_Proceso_Documentacion', "Documentación incompleta Caja de compensación")
+                ->distinct()->get(['FK_TBL_Persona_Cedula']);
+            return Datatables::of($empleados)
+                ->removeColumn('PRSN_Direccion')
+                ->removeColumn('PRSN_Ciudad')
+                ->removeColumn('PRSN_Eps')
+                ->removeColumn('PRSN_Fpensiones')
+                ->removeColumn('PRSN_Caja_Compensacion')
+                ->removeColumn('PRSN_Estado_Persona')
+                ->removeColumn('PRSN_Salario')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
@@ -165,44 +290,44 @@ class EmpleadoController extends Controller
     public function importUsers(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $cont = 0;
-            $path = Input::file('import_file')->getRealPath();
-            $data = Excel::load($path, function ($reader) {
-            })->get();
-            foreach ($data as $datum) {
-                $empleado = Persona::where('PK_PRSN_Cedula', $datum['cedula'])->get();
-                if (count($empleado) > 0) {
-                    $cont++;
-                } else {
-                    Persona::create([
-                        'PK_PRSN_Cedula' => $datum['cedula'],
-                        'PRSN_Rol' => mb_strtoupper($datum['rol'], 'UTF-8'),
-                        'PRSN_Nombres' => mb_strtoupper($datum['nombres'], 'UTF-8'),
-                        'PRSN_Apellidos' => mb_strtoupper($datum['apellidos'], 'UTF-8'),
-                        'PRSN_Telefono' => mb_strtoupper($datum['telefono'], 'UTF-8'),
-                        'PRSN_Correo' => mb_strtoupper($datum['correo'], 'UTF-8'),
-                        'PRSN_Direccion' => mb_strtoupper($datum['direccion'], 'UTF-8'),
-                        'PRSN_Ciudad' => mb_strtoupper($datum['ciudad'], 'UTF-8'),
-                        'PRSN_Salario' => mb_strtoupper($datum['salario'], 'UTF-8'),
-                        'PRSN_Eps' => mb_strtoupper($datum['eps'], 'UTF-8'),
-                        'PRSN_Fpensiones' => mb_strtoupper($datum['fpensiones'], 'UTF-8'),
-                        'PRSN_Area' => mb_strtoupper($datum['area'], 'UTF-8'),
-                        'PRSN_Caja_Compensacion' => mb_strtoupper($datum['cajacompensacion'], 'UTF-8'),
-                        'PRSN_Estado_Persona' => mb_strtoupper($datum['estado'], 'UTF-8'),
-                    ]);
+                $cont = 0;
+                $path = Input::file('import_file')->getRealPath();
+                $data = Excel::load($path, function ($reader) {
+                })->get();
+                foreach ($data as $datum) {
+                    $empleado = Persona::where('PK_PRSN_Cedula', $datum['cedula'])->get();
+                    if (count($empleado) > 0) {
+                        $cont++;
+                    } else {
+                        Persona::create([
+                            'PK_PRSN_Cedula' => $datum['cedula'],
+                            'PRSN_Rol' => mb_strtoupper($datum['rol'], 'UTF-8'),
+                            'PRSN_Nombres' => mb_strtoupper($datum['nombres'], 'UTF-8'),
+                            'PRSN_Apellidos' => mb_strtoupper($datum['apellidos'], 'UTF-8'),
+                            'PRSN_Telefono' => mb_strtoupper($datum['telefono'], 'UTF-8'),
+                            'PRSN_Correo' => mb_strtoupper($datum['correo'], 'UTF-8'),
+                            'PRSN_Direccion' => mb_strtoupper($datum['direccion'], 'UTF-8'),
+                            'PRSN_Ciudad' => mb_strtoupper($datum['ciudad'], 'UTF-8'),
+                            'PRSN_Salario' => mb_strtoupper($datum['salario'], 'UTF-8'),
+                            'PRSN_Eps' => mb_strtoupper($datum['eps'], 'UTF-8'),
+                            'PRSN_Fpensiones' => mb_strtoupper($datum['fpensiones'], 'UTF-8'),
+                            'PRSN_Area' => mb_strtoupper($datum['area'], 'UTF-8'),
+                            'PRSN_Caja_Compensacion' => mb_strtoupper($datum['cajacompensacion'], 'UTF-8'),
+                            'PRSN_Estado_Persona' => mb_strtoupper($datum['estado'], 'UTF-8'),
+                        ]);
+                    }
                 }
-            }
-            if ($cont > 0) {
+                if ($cont > 0) {
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'El archivo contenia ' . $cont . ' registros que ya estaban almacenados en la base de datos, los nuevos fueron registrados exitosamente.'
+                    );
+                }
+
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'El archivo contenia ' . $cont . ' registros que ya estaban almacenados en la base de datos, los nuevos fueron registrados exitosamente.'
+                    'La información del archivo fue almacenada correctamente.'
                 );
-            }
-
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'La información del archivo fue almacenada correctamente.'
-            );
         }
 
         return AjaxResponse::fail(
@@ -342,222 +467,306 @@ class EmpleadoController extends Controller
     /**
      * Muestra la vista del reporte de datos de contacto de los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteContactoEmpleados()
+    public function reporteContactoEmpleados(Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteContactoEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteContactoEmpleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
     }
 
     /**
      * Permite descargar el reporte de datos de contacto de los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadContactoReporte()
+    public function downloadContactoReporte(Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Nombres', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteContactoEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteContacto.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)
+                    ->orderBy('PRSN_Nombres', 'asc')
+                    ->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteContactoEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteContacto.pdf');
+
+            } catch ( Exception $e ){
+
+                return view('humtalent.reportes.ReporteContactoEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+            }
+        }
     }
 
     /**
      * Muestra la vista del reporte de datos de dirección de los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteDireccionEmpleados()
+    public function reporteDireccionEmpleados(Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Nombres', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteDireccionEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)
+                ->orderBy('PRSN_Nombres', 'asc')
+                ->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteDireccionEmpleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
     }
 
     /**
      * Permite descargar el reporte de datos de dirección de los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadDireccionReporte()
+    public function downloadDireccionReporte(Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteDireccionEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteDireccion.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Nombres', 'asc')->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteDireccionEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteDireccion.pdf');
+            }
+            catch ( Exception $e ){
+                return view('humtalent.reportes.ReporteDireccionEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+            }
+        }
     }
 
     /**
      * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por programa.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteSalario1Empleados()
+    public function reporteSalario1Empleados( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Area', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteSalario1Empleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)
+                ->orderBy('PRSN_Area', 'asc')
+                ->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteSalario1Empleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
     }
 
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por programa.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadSalario1Reporte()
+    public function downloadSalario1Reporte( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Area', 'asc')->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteSalario1Empleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteSalarioArea.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Area', 'asc')->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteSalario1Empleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteSalarioArea.pdf');
+
+            }
+            catch (Exception $e){
+
+                return view('humtalent.reportes.ReporteSalario1Empleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+
+            }
+        }
     }
 
     /**
      * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por rol.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteSalario2Empleados()
+    public function reporteSalario2Empleados( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Rol', 'asc')->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteSalario2Empleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)->orderBy('PRSN_Rol', 'asc')->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteSalario2Empleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
     }
 
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por rol.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadSalario2Reporte()
+    public function downloadSalario2Reporte( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Rol', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteSalario2Empleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteSalarioRol.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)
+                    ->orderBy('PRSN_Rol', 'asc')
+                    ->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteSalario2Empleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteSalarioRol.pdf');
+            }
+            catch ( Exception $e){
+                return view('humtalent.reportes.ReporteSalario2Empleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+            }
+        }
     }
 
     /**
      * Muestra la vista del reporte correspondiente a las afiliaciones que tienen los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteAfiliacionesEmpleados()
+    public function reporteAfiliacionesEmpleados( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Nombres', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteAfiliacionesEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)
+                ->orderBy('PRSN_Nombres', 'asc')
+                ->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteAfiliacionesEmpleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
 
     }
 
     /**
      * Permite descargar el reporte correspondiente a las afiliaciones que tienen los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadAfiliacionesReporte()
+    public function downloadAfiliacionesReporte( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Nombres', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteAfiliacionesEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteAfiliaciones.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)
+                    ->orderBy('PRSN_Nombres', 'asc')
+                    ->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteAfiliacionesEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteAfiliaciones.pdf');
+            }
+            catch ( Exception $e ){
+                return view('humtalent.reportes.ReporteAfiliacionesEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+            }
+        }
     }
 
     /**
      * Muestra la vista del reporte correspondiente al estado que tienen los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteEstadoEmpleados()
+    public function reporteEstadoEmpleados( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Estado_Persona', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return view('humtalent.reportes.ReporteEstadoEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        );
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::whereNotNull('created_at', null)
+                ->orderBy('PRSN_Estado_Persona', 'asc')
+                ->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('humtalent.reportes.ReporteEstadoEmpleados',
+                compact('empleados', 'date', 'time', 'total', 'cont')
+            );
+        }
     }
 
     /**
      * Permite descargar el reporte correspondiente al estado que tienen los empleados.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadEstadoReporte()
+    public function downloadEstadoReporte( Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::whereNotNull('created_at', null)
-            ->orderBy('PRSN_Estado_Persona', 'asc')
-            ->get();
-        $total = count($empleados);
-        $cont = 1;
-        return SnappyPdf::loadView('humtalent.reportes.ReporteEstadoEmpleados',
-            compact('empleados', 'date', 'time', 'total', 'cont')
-        )->download('ReporteEstado.pdf');
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::whereNotNull('created_at', null)
+                    ->orderBy('PRSN_Estado_Persona', 'asc')
+                    ->get();
+                $total = count($empleados);
+                $cont = 1;
+                return SnappyPdf::loadView('humtalent.reportes.ReporteEstadoEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                )->download('ReporteEstado.pdf');
+            }
+            catch ( Exception $e ){
+                return view('humtalent.reportes.ReporteEstadoEmpleados',
+                    compact('empleados', 'date', 'time', 'total', 'cont')
+                );
+            }
+        }
     }
-
 }

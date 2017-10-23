@@ -99,7 +99,6 @@ class EventoController extends Controller
     public function registrarAsistentes(Request $request,$id, $ced){
         if($request->ajax() && $request->isMethod('GET')) {
             Asistent::create([
-                'ASIST_Informe' => 'No',
                 'FK_TBL_Eventos_IdEvento' => $id,
                 'FK_TBL_Persona_Cedula' => $ced,
             ]);
@@ -167,7 +166,6 @@ class EventoController extends Controller
         if($request->ajax() && $request->isMethod('POST')){
             for ($i=0; $i< count($datos)-1; $i++){
                 Asistent::create([
-                    'ASIST_Informe' => 'No',
                     'FK_TBL_Eventos_IdEvento' => $id,
                     'FK_TBL_Persona_Cedula'   => $datos[$i],
                 ]);

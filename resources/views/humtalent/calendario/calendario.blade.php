@@ -1,6 +1,6 @@
 @extends('material.layouts.dashboard')
 
-@section('page-title', 'Documentos Requeridos:')
+@section('page-title', 'Calendario')
 @push('styles')
 <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet"
       type="text/css"/>
@@ -23,7 +23,7 @@
 
                     {!! Field::text(
                         'NOTIF_Descripcion',null,
-                        ['label'=>'Crear un recordatorio:','class'=> 'form-control','required','placeholder'=>'Nombre del recordatorio...', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                        ['label'=>'Crear un recordatorio:','class'=> 'form-control','required','placeholder'=>'Nombre del recordatorio...', 'auto' => 'off'],
                         ['help' => 'Digite el nombre del evento', 'icon' => 'fa fa-calendar']) !!}
 
                     <a href="javascript:;" id="event_add" class="btn green"> Añadir </a>
@@ -275,7 +275,7 @@
 
         });
         var currentMousePos =
-            {   //variable que guarda la posición del puntero del mause
+            {   //variable que guarda la posición del puntero del mouse
                 x: -1,
                 y: -1
             };
@@ -300,7 +300,9 @@
                 revertDuration: 0 //  original position after the drag
             });
         };
-
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+        });
         var addEvent = function (title) {   //cuando se añade una nueva notificación es llamada esta función para agregar el codigo html correspondiente
             title = title.length === 0 ? "Evento sin titulo" : title; //con el respectivo titulo creado o sin titulo en caso de que no se digite nada
             var html = $('<div class="external-event label label-default ui-draggable ui-draggable-handle"  >' + title + '</div>');
@@ -585,6 +587,7 @@
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-update-Event ').modal('hide');
                                 $('#form_calendar_event')[0].reset(); //Limpia formulario
+                                $('#calendar').fullCalendar('refetchEvents');
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         },
@@ -646,11 +649,14 @@
         };
         var formTitle = $('#form_calendar_Updatenotify');
         var formRulesTitle = {
-            NOTIF_Descripcion: {required: true},
+            NOTIF_Descripcion: {required: true, letters:true},
             NOTIF_Fecha_Notificacion: {required: true}
         };
+        var formMessage = {
+            NOTIF_Descripcion: {letters: 'Existen caracteres que no están permitidos'},
+        };
 
-        FormValidationMd.init(formTitle, formRulesTitle, false, updateTitleNotify());
+        FormValidationMd.init(formTitle, formRulesTitle, formMessage, updateTitleNotify());
 
         var updateTitleEvent = function () {
             return {
@@ -695,12 +701,14 @@
         };
         var formTitleEvent = $('#form_calendar_UpdateEvent');
         var rulesEvent = {
-            EVNT_Descripcion: {required: true},
+            EVNT_Descripcion: {required: true, letters:true},
             EVNT_Hora: {required: true},
             EVNT_Fecha_Notificacion: {required: true}
         };
-
-        FormValidationMd.init(formTitleEvent, rulesEvent, false, updateTitleEvent());
+        var formMessage = {
+            EVNT_Descripcion: {letters: 'Existen caracteres que no están permitidos'},
+        };
+        FormValidationMd.init(formTitleEvent, rulesEvent, formMessage, updateTitleEvent());
 
     });
 

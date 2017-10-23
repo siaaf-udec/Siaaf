@@ -91,6 +91,12 @@ jQuery(document).ready(function() {
     $('.pmd-select2', form).change(function () {
         form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
     });
+    jQuery.validator.addMethod("letters", function(value, element) {
+        return this.optional(element) || /^[a-z," "]+$/i.test(value);
+    });
+    jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+        return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+    });
 
     var createUsers = function () {
         return{
@@ -146,18 +152,34 @@ jQuery(document).ready(function() {
     };
     var form = $('#form_empleado_update');
     var formRules = {
-        PRSN_Nombres: {required: true},
-        PRSN_Apellidos: {required: true},
-        PRSN_Correo: {required: true,email: true},
-        PK_PRSN_Cedula: {required: true,number: true},
-        PRSN_Telefono: {required: true},
-        PRSN_Ciudad: {required: true},
-        PRSN_Area: { required: true},
-        PRSN_Salario: { required: true},
+        PRSN_Nombres: {required: true, letters: true},
+        PRSN_Apellidos: {required: true ,letters: true},
+        PRSN_Correo: {required: true, email: true},
+        PK_PRSN_Cedula: {required: true, number: true},
+        PRSN_Telefono: {required: true, noSpecialCharacters:true},
+        PRSN_Ciudad: {required: true, letters: true},
+        PRSN_Area: {required: true, letters: true},
+        PRSN_Salario: {required: true , noSpecialCharacters:true},
         PRSN_Rol: {required: true},
         PRSN_Estado_Persona: {required: true},
+        PRSN_Eps: {letters: true},
+        PRSN_Fpensiones: {letters: true},
+        PRSN_Caja_Compensacion: {letters: true},
+        PRSN_Direccion: {noSpecialCharacters: true}
     };
-    FormValidationMd.init(form,formRules,false,createUsers());
+    var formMessage = {
+        PRSN_Nombres: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Apellidos: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Ciudad: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Area: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Eps: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Fpensiones: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Caja_Compensacion: {letters: 'Solo se pueden ingresar letras'},
+        PRSN_Salario: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+        PRSN_Telefono: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+        PRSN_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'}
+    };
+    FormValidationMd.init(form,formRules,formMessage,createUsers());
 
     $('.button-cancel').on('click', function (e) {
         e.preventDefault();

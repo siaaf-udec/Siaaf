@@ -122,16 +122,22 @@
                     $('#form_modal4 .timepicker-default, #form_modal4 .timepicker-no-seconds, #form_modal4 .timepicker-24').timepicker('place'); //#modal is the id of the modal
              });
          }
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+        });
 
         var form = $('#form_event_create');
         var formRules = {
-            EVNT_Descripcion: {required: true},
+            EVNT_Descripcion: {required: true, letters:true},
             EVNT_Fecha_Inicio: {required: true},
             EVNT_Fecha_Fin: {required: true},
             EVNT_Hora: {required: true},
             EVNT_Fecha_Notificacion: {required: true},
         };
-        FormValidationMd.init(form,formRules,false,createEvent());
+        var formMessage = {
+            EVNT_Descripcion: {letters: 'Existen caracteres que no están permitidos'},
+        };
+        FormValidationMd.init(form,formRules,formMessage,createEvent());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

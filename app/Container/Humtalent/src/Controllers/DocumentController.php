@@ -168,6 +168,30 @@ class DocumentController extends Controller
     }
 
     /**
+     * Función que consulta los documentos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaDocumentos(Request $request){
+
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $documentos = DocumentacionPersona::all();
+            return Datatables::of($documentos)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+
+    /**
      * Funcion que almacena las radicación de los documentos
      *
      * @param  \Illuminate\Http\Request $request
@@ -534,186 +558,215 @@ class DocumentController extends Controller
     /**
      * Presenta el reporte de la radicación de los documentos
      *
+     * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function reporteRadicacionEmpleados($id)
+    public function reporteRadicacionEmpleados(Request $request, $id)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
 
-        $empleado = Persona::where('PK_PRSN_Cedula', $id)
-            ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
-                'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])
-            ->first();
+            $empleado = Persona::where('PK_PRSN_Cedula', $id)
+                ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
+                    'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])
+                ->first();
 
-        $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-            ->get(['FK_Personal_Documento']);
+            $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
+                ->get(['FK_Personal_Documento']);
 
-        $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
-            ->get(['PK_DCMTP_Id_Documento']);
+            $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
+                ->get(['PK_DCMTP_Id_Documento']);
 
-        $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
-            ->get(['PK_DCMTP_Id_Documento']);
+            $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
+                ->get(['PK_DCMTP_Id_Documento']);
 
-        $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
-            ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
-            ->get(['DCMTP_Nombre_Documento']);
+            $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
+                ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
+                ->get(['DCMTP_Nombre_Documento']);
 
-        $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
-            $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
-        }])
-            ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
-            ->get();
+            $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
+                $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
+            }])
+                ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
+                ->get();
 
-        $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
-            $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')->get(['DCMTP_Nombre_Documento']);
-        }])
-            ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
-            ->get();
+            $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
+                $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')->get(['DCMTP_Nombre_Documento']);
+            }])
+                ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
+                ->get();
 
-        $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
-            ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
-            ->get(['DCMTP_Nombre_Documento']);
+            $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
+                ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
+                ->get(['DCMTP_Nombre_Documento']);
 
-        return view('humtalent.reportes.ReporteRadicacionEmpleados',
-            compact('empleado', 'date', 'time', 'noEPS',
-                'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
-        );
+            return view('humtalent.reportes.ReporteRadicacionEmpleados',
+                compact('empleado', 'date', 'time', 'noEPS',
+                    'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
+            );
+        }
     }
 
     /**
      * Presenta el reporte de la radicación de los documentos para descargar
      *
+     * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadReporteRadicacionEmpleados($id)
+    public function downloadReporteRadicacionEmpleados( Request $request, $id)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");
+                $time = date("h:i A");
 
-        $empleado = Persona::where('PK_PRSN_Cedula', $id)
-            ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
-                'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])->first();
+                $empleado = Persona::where('PK_PRSN_Cedula', $id)
+                    ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
+                        'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])->first();
 
-        $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
-            ->get(['FK_Personal_Documento']);
+                $radicados = StatusOfDocument::where('FK_TBL_Persona_Cedula', $id)
+                    ->get(['FK_Personal_Documento']);
 
-        $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
-            ->get(['PK_DCMTP_Id_Documento']);
+                $primariaEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
+                    ->get(['PK_DCMTP_Id_Documento']);
 
-        $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
-            ->get(['PK_DCMTP_Id_Documento']);
+                $primariaCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
+                    ->get(['PK_DCMTP_Id_Documento']);
 
-        $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
-            ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
-            ->get(['DCMTP_Nombre_Documento']);
+                $noEPS = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'EPS')
+                    ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
+                    ->get(['DCMTP_Nombre_Documento']);
 
-        $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
-            $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
-        }])
-            ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
-            ->get();
+                $radicadosEPS = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
+                    $query->where('DCMTP_Tipo_Documento', 'EPS')->get(['DCMTP_Nombre_Documento']);
+                }])
+                    ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaEPS)
+                    ->get();
 
-        $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
-            $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')
-                ->get(['DCMTP_Nombre_Documento']);
-        }])
-            ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
-            ->get();
+                $radicadosCaja = StatusOfDocument::with(['documentacionPersonas' => function ($query) {
+                    $query->where('DCMTP_Tipo_Documento', 'Caja de compensación')
+                        ->get(['DCMTP_Nombre_Documento']);
+                }])
+                    ->where('FK_TBL_Persona_Cedula', $id)->whereIn('FK_Personal_Documento', $primariaCaja)
+                    ->get();
 
-        $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
-            ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
-            ->get(['DCMTP_Nombre_Documento']);
+                $PendientesCaja = DocumentacionPersona::where('DCMTP_Tipo_Documento', 'Caja de compensación')
+                    ->whereNotIn('PK_DCMTP_Id_Documento', $radicados)
+                    ->get(['DCMTP_Nombre_Documento']);
 
-        return SnappyPdf::loadView('humtalent.reportes.ReporteRadicacionEmpleados',
-            compact('empleado', 'date', 'time', 'noEPS', 'PendientesCaja',
-                'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
+                return SnappyPdf::loadView('humtalent.reportes.ReporteRadicacionEmpleados',
+                    compact('empleado', 'date', 'time', 'noEPS', 'PendientesCaja',
+                        'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
+            }
+            catch ( Exception $e){
+
+                return view('humtalent.reportes.ReporteRadicacionEmpleados',
+                    compact('empleado', 'date', 'time', 'noEPS',
+                        'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
+                );
+
+            }
+        }
     }
 
     /**
      * Presenta el reporte de la radicación de los documentos para todos los empleados
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function reporteConsolidadoEmpleados()
+    public function reporteConsolidadoEmpleados( Request $request)
     {
-        $cont = 1;
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::all();
-        foreach ($empleados as $empleado) {
-            $estadoCaja = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
-                ->whereIn('EDCMT_Proceso_Documentacion',
-                    [
-                        "Documentación incompleta Caja de compensación",
-                        "Documentación completa Caja de compensación",
-                        "Afiliado Caja de compensación"
-                    ])->get(['EDCMT_Proceso_Documentacion'])->first();
-            if (count($estadoCaja) > 0) {
-                $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
-            } else {
-                $empleado->offsetSet('estadoCaja', "Sin documentación");
-            }
+        if ($request->isMethod('GET')) {
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Persona::all();
+            foreach ($empleados as $empleado) {
+                $estadoCaja = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
+                    ->whereIn('EDCMT_Proceso_Documentacion',
+                        [
+                            "Documentación incompleta Caja de compensación",
+                            "Documentación completa Caja de compensación",
+                            "Afiliado Caja de compensación"
+                        ])->get(['EDCMT_Proceso_Documentacion'])->first();
+                if (count($estadoCaja) > 0) {
+                    $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
+                } else {
+                    $empleado->offsetSet('estadoCaja', "Sin documentación");
+                }
 
-            $estadoEPS = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
-                ->whereIn('EDCMT_Proceso_Documentacion',
-                    [
-                        "Documentación incompleta EPS",
-                        "Documentación completa EPS",
-                        "Afiliado EPS"
-                    ])->get(['EDCMT_Proceso_Documentacion'])->first();
-            if (count($estadoEPS) > 0) {
-                $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
-            } else {
-                $empleado->offsetSet('estadoEPS', "Sin documentación");
+                $estadoEPS = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
+                    ->whereIn('EDCMT_Proceso_Documentacion',
+                        [
+                            "Documentación incompleta EPS",
+                            "Documentación completa EPS",
+                            "Afiliado EPS"
+                        ])->get(['EDCMT_Proceso_Documentacion'])->first();
+                if (count($estadoEPS) > 0) {
+                    $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
+                } else {
+                    $empleado->offsetSet('estadoEPS', "Sin documentación");
+                }
             }
+            return view('humtalent.reportes.ReporteConsolidadoEmpleados',
+                compact('empleados', 'date', 'time', 'cont'));
         }
-        return view('humtalent.reportes.ReporteConsolidadoEmpleados',
-            compact('empleados', 'date', 'time', 'cont'));
 
     }
 
     /**
      *  Presenta el reporte de la radicación de los documentos para todos los empleados para descargar
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Barryvdh\Snappy\Facades\SnappyPdf
      */
-    public function downloadReporteConsolidadoEmpleados()
+    public function downloadReporteConsolidadoEmpleados( Request $request)
     {
-        $cont = 1;
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $empleados = Persona::all();
-        foreach ($empleados as $empleado) {
-            $estadoCaja = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
-                ->whereIn('EDCMT_Proceso_Documentacion',
-                    [
-                        "Documentación incompleta Caja de compensación",
-                        "Documentación completa Caja de compensación",
-                        "Afiliado Caja de compensación"
-                    ])->get(['EDCMT_Proceso_Documentacion'])->first();
-            if (count($estadoCaja) > 0) {
-                $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
-            } else {
-                $empleado->offsetSet('estadoCaja', "Sin documentación");
-            }
+        if ($request->isMethod('GET')) {
+            try {
+                $cont = 1;
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $empleados = Persona::all();
+                foreach ($empleados as $empleado) {
+                    $estadoCaja = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
+                        ->whereIn('EDCMT_Proceso_Documentacion',
+                            [
+                                "Documentación incompleta Caja de compensación",
+                                "Documentación completa Caja de compensación",
+                                "Afiliado Caja de compensación"
+                            ])->get(['EDCMT_Proceso_Documentacion'])->first();
+                    if (count($estadoCaja) > 0) {
+                        $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
+                    } else {
+                        $empleado->offsetSet('estadoCaja', "Sin documentación");
+                    }
 
-            $estadoEPS = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
-                ->whereIn('EDCMT_Proceso_Documentacion',
-                    [
-                        "Documentación incompleta EPS",
-                        "Documentación completa EPS",
-                        "Afiliado EPS"
-                    ])->get(['EDCMT_Proceso_Documentacion'])->first();
-            if (count($estadoEPS) > 0) {
-                $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
-            } else {
-                $empleado->offsetSet('estadoEPS', "Sin documentación");
+                    $estadoEPS = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
+                        ->whereIn('EDCMT_Proceso_Documentacion',
+                            [
+                                "Documentación incompleta EPS",
+                                "Documentación completa EPS",
+                                "Afiliado EPS"
+                            ])->get(['EDCMT_Proceso_Documentacion'])->first();
+                    if (count($estadoEPS) > 0) {
+                        $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
+                    } else {
+                        $empleado->offsetSet('estadoEPS', "Sin documentación");
+                    }
+                }
+                return SnappyPdf::loadView('humtalent.reportes.ReporteConsolidadoEmpleados',
+                    compact('empleados', 'date', 'time', 'cont'))->download('ReporteConsolidado.pdf');
+            }
+            catch ( Exception $e ){
+
+                return view('humtalent.reportes.ReporteConsolidadoEmpleados',
+                    compact('empleados', 'date', 'time', 'cont'));
             }
         }
-        return SnappyPdf::loadView('humtalent.reportes.ReporteConsolidadoEmpleados',
-            compact('empleados', 'date', 'time', 'cont'))->download('ReporteConsolidado.pdf');
     }
 }
