@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Container\Unvinteraction\src\Controllers;
-
-
-
 use App\Container\Unvinteraction\src\TBL_Usuarios;
 use App\Container\Unvinteraction\src\TBL_Tipo_Pregunta;
 use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
@@ -35,17 +32,27 @@ class Controller_Evaluaciones extends Controller
 {
      private $path='unvinteraction';
     //__________________EVALUACIONES___________
+    /*funcion para mostrar la vista principal de los tipos de pregunta
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function Tipo_Pregunta()
     {
-        
-       return view($this->path.'.listar_Tipo_Pregunta');
+        return view($this->path.'.listar_Tipo_Pregunta');
     }
+    /*funcion para mostrar la vista principal de los tipos de pregunta ajax
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    *
+    */
     public function Tipo_Pregunta_Ajax()
     {
-        
-       return view($this->path.'.listar_Tipo_Pregunta_Ajax');
+        return view($this->path.'.listar_Tipo_Pregunta_Ajax');
     }
-     public function Agregar_Tipo_Pregunta(Request $request)
+    /*funcion para registrar un nuevo tipo de pregunta
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function Agregar_Tipo_Pregunta(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -65,18 +72,29 @@ class Controller_Evaluaciones extends Controller
             );
         }
     }
-     public function Listar_Tipo_Pregunta()
+    /*funcion para envio de los datos para la tabla de datos
+    *
+    *@return Yajra\DataTables\DataTable
+    */
+    public function Listar_Tipo_Pregunta()
     {
-      $Pregunta = TBL_Tipo_Pregunta::all(); 
-         return Datatables::of( $Pregunta)->addIndexColumn()->make(true); 
-       
+         $Pregunta = TBL_Tipo_Pregunta::all();
+         return Datatables::of($Pregunta)->addIndexColumn()->make(true);
     }
+    /*funcion para buscar un Tipo de pregunta y enviar la informacion de un Tipo de pregunta
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function Editar_Tipo_Pregunta($id)
     {
-      $Pregunta = TBL_Tipo_Pregunta::findOrFail($id);; 
+        $Pregunta = TBL_Tipo_Pregunta::findOrFail($id);
         return view($this->path.'.Editar_Tipo_Pregunta', compact('Pregunta'));
-       
     }
+    /*funcion para registrar los nuevo datos de tipo de pregunta
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function Modificar_Tipo_Pregunta(Request $request,$id)
     {
       if($request->ajax() && $request->isMethod('POST'))
@@ -100,6 +118,10 @@ class Controller_Evaluaciones extends Controller
         }
        
     }
+    /*funcion para mostrar la vista principal de las preguntas
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function Pregunta()
     {
         $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
@@ -107,7 +129,12 @@ class Controller_Evaluaciones extends Controller
        
        return view($this->path.'.listar_Pregunta',compact('Pregunta'));
       
-    }public function Pregunta_Ajax()
+    }
+    /*funcion para mostrar la vista principal de las preguntas ajax
+    *@return \Illuminate\Http\Response
+    *
+    */
+    public function Pregunta_Ajax()
     {
        $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
                 ->toArray();  
@@ -136,6 +163,10 @@ class Controller_Evaluaciones extends Controller
             );
         }
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *
+    *@return Yajra\DataTables\DataTable
+    */
      public function Listar_Pregunta()
     {
       $Pregunta = TBL_Preguntas::join('TBL_Tipo_Pregunta','TBL_Tipo_Pregunta.PK_Tipo_Pregunta','=','TBL_Preguntas.FK_TBL_Tipo_Pregunta')
@@ -145,6 +176,10 @@ class Controller_Evaluaciones extends Controller
         
        
     }
+    /*funcion para buscar una pregunta y enviar la informacion de una pregunta
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function Editar_Pregunta($id)
     {
         $Pregunta = TBL_Preguntas::findOrFail($id);
@@ -153,6 +188,11 @@ class Controller_Evaluaciones extends Controller
         return view($this->path.'.Editar_Pregunta', compact('Pregunta','Pregunta1'));
        
     }
+    /*funcion para registrar los nuevo datos de pregunta
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function Modificar_Pregunta(Request $request,$id)
     {
          if($request->ajax() && $request->isMethod('POST'))
@@ -176,12 +216,20 @@ class Controller_Evaluaciones extends Controller
         }
        
     }
-     public function Evaluaciones()
+    /*funcion para mostrar la vista principal de las evaluaciones
+    *@return \Illuminate\Http\Response
+    *
+    */
+    public function Evaluaciones()
     {
         
          return view($this->path.'.listar_Evaluaciones');
        
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *
+    *@return Yajra\DataTables\DataTable
+    */
     public function Listar_Evaluaciones_Empresas()
     {
        $Evaluacion=TBL_Evaluacion::join('TBL_Empresa','TBL_Empresa.PK_Empresa','=','TBL_Evaluacion.Evaluado')
@@ -193,6 +241,10 @@ class Controller_Evaluaciones extends Controller
        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
         
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *
+    *@return Yajra\DataTables\DataTable
+    */
      public function Listar_Evaluaciones_Usuarios()
     {
        $Evaluacion=TBL_Evaluacion::join('developer.users','users.identity_no','=','TBL_Evaluacion.Evaluado')
@@ -204,67 +256,72 @@ class Controller_Evaluaciones extends Controller
        return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
         
     }
-     public function Realizar_Evaluacion(Request $request,$id,$convenio)
+    /*funcion para mostrar las preguntas de la evaluacion
+    *@param int id
+    *@param int convenio
+    *@param \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response
+    */
+    public function Realizar_Evaluacion(Request $request,$id,$convenio)
     {
-         $tipo=0;
-         $decicion=1;
-         $decicion2=1;
-         $rol= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-             ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id)->get();
-         $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-             ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$request->user()->identity_no)->get();
-         
-         foreach($rol as $Rol){
-             switch($Rol->name){
-                 case 'Pasante_uni': 
-                     $decicion=1;
-                     break;
-                 case 'Empresario_uni':
-                      $decicion=2;
-                     break;
+        $tipo=0;
+        $decicion=1;
+        $decicion2=1;
+        $rol= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
+            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id)->get();
+        $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
+            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$request->user()->identity_no)->get();
+        //toma la decision de que preguntas debe mostrar segun el rol del evaluador y el evaluado
+        foreach($rol as $Rol){
+            switch($Rol->name){
+                case 'Pasante_uni':
+                    $decicion=1;
+                    break;
+                case 'Empresario_uni':
+                    $decicion=2;
+                    break;
                 case 'Coordinador_uni':
-                      $decicion=1;
-                break;
-
-             }
+                    $decicion=1;
+                    break;
+            }
         }
-         foreach($rol2 as $Rol2){
-              switch($Rol2->name){
-                 case 'Coordinador_uni': 
-                     $decicion2=1;
-                     break;
-                 case 'Empresario_uni':
-                      $decicion2=2;
-                     break;
-
-             }
+        foreach($rol2 as $Rol2){
+            switch($Rol2->name){
+                case 'Coordinador_uni':
+                    $decicion2=1;
+                    break;
+                case 'Empresario_uni':
+                    $decicion2=2;
+                    break;
+            }
         }
         if( $decicion2==1  and  $decicion==1){
-             $tipo=1;
-          
-         }
+            $tipo=1;
+        }
         if( $decicion2==2 and  $decicion==1){
-             $tipo=4;
-            
-         }
-         if( $decicion2==1 and  $decicion==2){
-              $tipo=2;
-           
-          }
+            $tipo=4;
+        }
+        if( $decicion2==1 and  $decicion==2){
+            $tipo=2;
+        }
         if( $decicion2==2 and  $decicion==2){
-                         $tipo=4;
-               
-             }
-             
-         $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
-         $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
+            $tipo=4;
+        }
+        $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
+        $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
         return view($this->path.'.Realizar_Evaluacion',compact('Pregunta','id','N','convenio'));
-      
     }
+    /*funcion para guardar las preguntas de la evaluacion y los datos correspondientes a esta misma para un usuario
+    *@param int n
+    *@param int id
+    *@param int convenio
+    *@param \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response
+    */
     public function Registrar_Evaluacion(Request $request,$n,$id,$convenio)
     {
         $carbon = new \Carbon\Carbon();
-       try{
+        try{
             $Evaluacion = new TBL_Evaluacion();
             $Evaluacion->Evaluador = $request->user()->identity_no;
             $Evaluacion->Evaluado = $id;
@@ -273,11 +330,10 @@ class Controller_Evaluaciones extends Controller
             $Evaluacion->Nota_Final= 0;
             $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
-        //saber que evaluacion es    
-           $id_Evaluacion=$Evaluacion->PK_Evaluacion;
+            //saber que evaluacion es 
+            $id_Evaluacion=$Evaluacion->PK_Evaluacion;
             $Nota_Final=0.000;
             for($i=1;$i<=$n;$i++){
-               
                 $IDpregunta="Pregunta_".$i;
                 $IDrespuesta='Respuesta_'.$request->$IDpregunta;
                 $resultado= new TBL_Evaluacion_Preguntas();
@@ -286,59 +342,60 @@ class Controller_Evaluaciones extends Controller
                 $resultado->FK_TBL_Preguntas=$request->$IDpregunta;
                 $resultado->save();
                 $Nota_Final= $Nota_Final + $request->$IDrespuesta;
-          
-           }
-           $Nota_Final=$Nota_Final / $n;
-           
-        $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
-        $evaluacion->Nota_Final =$Nota_Final;
-        $evaluacion->save();
-           
-            
-             return view('unvinteraction.listar_Mis_Convenios');
-            
+            }
+            //promedio entre el resultado de las preguntas para sacar una nota promedio final
+            $Nota_Final=$Nota_Final / $n;
+            $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
+            $evaluacion->Nota_Final =$Nota_Final;
+            $evaluacion->save();
+            return view('unvinteraction.listar_Mis_Convenios');
         }catch(Exception $e){
             return "Fatal error - ".$e->getMessage();
         }
-       
     }
-    
+    /*funcion para mostrar las preguntas de la evaluacion para una empresa
+    *@param int id
+    *@param int convenio
+    *@param \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response
+    */
     public function Realizar_Evaluacion_Empresa(Request $request,$id,$convenio)
     {
-         $tipo=0;
-         $id2=$request->user()->identity_no;
-         
-         
-         $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-             ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id2)->get();
-        
-         foreach($rol2 as $Rol2){
-              switch($Rol2->name){
-                 case 'Coordinador_uni': 
-                     $decision2=1;
-                     break;
-                 case 'Pasante_uni':
-                      $decision2=2;
-                     break;
-             }
+        $tipo=0;
+        $id2=$request->user()->identity_no;
+        $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
+            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id2)->get();
+        foreach($rol2 as $Rol2) {
+            switch($Rol2->name) {
+                case 'Coordinador_uni':
+                    $decision2=1;
+                    break;
+                case 'Pasante_uni':
+                    $decision2=2;
+                    break;
+            }
         }
-         
-         if( $decision2==1){
-             $tipo=2;
-         }
-        if( $decision2==2){
-             $tipo=3;
+        if( $decision2==1) {
+            $tipo=2;
+        }
+        if( $decision2==2) {
+            $tipo=3;
         }
         $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
         $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
         return view($this->path.'.Realizar_Evaluacion_Empresa',compact('Pregunta','id','N','convenio'));
-      
     }
-    
+    /*funcion para guardar las preguntas de la evaluacion y los datos correspondientes a esta misma para una empresa
+    *@param int n
+    *@param int id
+    *@param int convenio
+    *@param \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response
+    */
     public function Registrar_Evaluacion_Empresa(Request $request,$n,$id,$convenio)
     {
         $carbon = new \Carbon\Carbon();
-       try{
+        try{
             $Evaluacion = new TBL_Evaluacion();
             $Evaluacion->Evaluador = $request->user()->identity_no;
             $Evaluacion->Evaluado = $id;
@@ -347,11 +404,10 @@ class Controller_Evaluaciones extends Controller
             $Evaluacion->Nota_Final= 0;
             $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
-        //saber que evaluacion es    
-           $id_Evaluacion=$Evaluacion->PK_Evaluacion;
+            //saber que evaluacion es
+            $id_Evaluacion=$Evaluacion->PK_Evaluacion;
             $Nota_Final=0.000;
             for($i=1;$i<=$n;$i++){
-               
                 $IDpregunta="Pregunta_".$i;
                 $IDrespuesta='Respuesta_'.$request->$IDpregunta;
                 $resultado= new TBL_Evaluacion_Preguntas();
@@ -360,27 +416,30 @@ class Controller_Evaluaciones extends Controller
                 $resultado->FK_TBL_Preguntas=$request->$IDpregunta;
                 $resultado->save();
                 $Nota_Final= $Nota_Final + $request->$IDrespuesta;
-          
-           }
-           $Nota_Final=$Nota_Final / $n;
-           
-        $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
-        $evaluacion->Nota_Final =$Nota_Final;
-        $evaluacion->save();
-           
-            
-             return view('unvinteraction.listar_Mis_Convenios');
-            
+            }
+            //promedio entre el resultado de las preguntas para sacar una nota promedio final
+            $Nota_Final=$Nota_Final / $n;
+            $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
+            $evaluacion->Nota_Final =$Nota_Final;
+            $evaluacion->save();
+            return view('unvinteraction.listar_Mis_Convenios');
         }catch(Exception $e){
             return "Fatal error - ".$e->getMessage();
         }
-       
     }
-    
+    /*funcion para mostrar la vista principal de las evaluaciones de las empresas
+    *@param int id
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function Listar_Evaluacion_Empresa($id)
     {
         return view($this->path.'.listar_Evaluaciones_Individuales',compact('id'));
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *@param int id
+    *@return Yajra\DataTables\DataTable
+    */
     public function Listar_Evaluacion_Individual($id)
     {
         $Evaluacion=TBL_Evaluacion::join('developer.users','users.identity_no','=','TBL_Evaluacion.Evaluador')->join('TBL_Convenios','TBL_Convenios.PK_Convenios','=','TBL_Evaluacion.FK_TBL_Convenios')
@@ -388,14 +447,19 @@ class Controller_Evaluaciones extends Controller
              ->get();  
          
        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
-       // return $Evaluacion;
-        
     }
+    /*funcion para mostrar la vista principal de las preguntas de las evaluaciones 
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function Listar_Pregunta_Evaluacion($id)
     {
-        //return "hola";
         return view($this->path.'.listar_Preguntas_Individuales',compact('id'));
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *@param int id
+    *@return Yajra\DataTables\DataTable
+    */
     public function Listar_Pregunta_Individual($id)
     {
         $Evaluacion=TBL_Evaluacion_Preguntas::join('TBL_Preguntas','TBL_Preguntas.PK_Preguntas','=','TBL_Evaluacion_Preguntas.FK_TBL_Preguntas')
@@ -406,11 +470,4 @@ class Controller_Evaluaciones extends Controller
         
     }
 //_____________________END__EVALUACIONE_______
-    
-    public function create()
-    {
-        //
-    }
-
- 
 }
