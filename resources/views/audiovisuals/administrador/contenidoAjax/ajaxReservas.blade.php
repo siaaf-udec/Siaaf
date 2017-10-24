@@ -140,7 +140,7 @@
             $(".date-time-picker").datetimepicker({
                 autoclose: true,
                 isRTL: App.isRTL(),
-                format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO
+                format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO AÑO/MES/DIA
                 //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
                 fontAwesome: true,
                 //todayBtn: true,//BOTON DE HOY

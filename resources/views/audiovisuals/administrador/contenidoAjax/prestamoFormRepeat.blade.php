@@ -1,5 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Asignar Prestamo'])
+        @slot('actions', [
+                'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+               ],
+        ])
         <div class="row">
             <div class="col-md-12">
                     <div class="col-md-3">
@@ -70,6 +76,11 @@
         }
     }();
     jQuery(document).ready(function () {
+        $('#link_cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('audiovisuales.gestionPrestamos.indexAjax') }}';
+            $(".content-ajax").load(route);
+        });
         FormSelect2.init();
         var identificador = 0;
         $('#agregar').on('click',function (e){

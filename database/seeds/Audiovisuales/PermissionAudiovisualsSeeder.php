@@ -8,11 +8,21 @@ class PermissionAudiovisualsSeeder extends Seeder
 
     public function run()
     {
-        /*Permission::insert([
-            ['name'=>'Create_Project_Gesap','display_name'=>'Crear Anteproyecto','description'=>'--','module_id'=>'2'],
-            ['name'=>'See_Observations_Gesap','display_name'=>'Ver Observaciones','description'=>'--','module_id'=>'2'],
-            ['name'=>'Jury_List_Gesap','display_name'=>'Proyectos de Jurado','description'=>'--','module_id'=>'2'],
-            ['name'=>'Director_List_Gesap','display_name'=>'Proyectos de Director','description'=>'--','module_id'=>'2']
-        ]);*/
+        $permisos = [
+            ['name'=>'SUPER_ADMIN_AUDIOVISUALES','display_name'=>'Super Administrador de Audiovisuales','description'=>'Acceso de super administrador a el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'ADMIN_AUDIOVISUALES','display_name'=>'Administrador de Audiovisuales','description'=>'Acceso de administrador a el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'FUNC_AUDIOVISUALES','display_name'=>'Funcionario de Audiovisuales','description'=>'Acceso de funcionario a el modulo de audiovisuales.','module_id'=>'2']
+
+        ];
+
+        foreach ($permisos as $permiso ) {
+            $aux = new Permission;
+            $aux->name = $permiso['name'];
+            $aux->display_name = $permiso['display_name'];
+            $aux->description = $permiso['description'];
+            $aux->module_id = $permiso['module_id']; //2
+
+            $aux->save();
+        }
     }
 }

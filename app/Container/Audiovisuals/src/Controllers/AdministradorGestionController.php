@@ -10,7 +10,9 @@ use App\Container\Audiovisuals\src\Solicitudes;
 use App\Container\Audiovisuals\src\TipoArticulo;
 use App\Container\Audiovisuals\src\UsuarioAudiovisuales;
 use App\Container\Audiovisuals\src\Validaciones;
+
 use App\Container\Users\Src\User;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,6 +45,165 @@ class AdministradorGestionController extends Controller
             ]
         );
 
+    }
+    public function reportes()
+    {
+
+        return view('audiovisuals.reporte.gestionReportes'
+
+        );
+
+    }
+
+    public function getUltimoDiaMes($elAnio,$elMes) {
+        return date("d",(mktime(0,0,0,$elMes+1,1,$elAnio)-1));
+    }
+    public function registros_mes($anio,$mes)
+    {
+        $primer_dia=1;
+        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
+        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
+        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
+        $usuarios=User::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
+        $ct=count($usuarios);
+
+        for($d=1;$d<=$ultimo_dia;$d++){
+            $registros[$d]=0;
+        }
+
+        foreach($usuarios as $usuario){
+            $diasel=intval(date("d",strtotime($usuario->created_at) ) );
+            $registros[$diasel]++;
+        }
+
+        $data=array("totaldias"=>$ultimo_dia, "registrosdia" =>$registros);
+        return   json_encode($data);
+    }
+    public function reporteCarreras(Request $request,$anio,$mes)   {
+        //$anio=date("Y");
+        //$mes=date("m");
+        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
+        $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $carreras = Programas::all()->pluck('PRO_Nombre');
+        $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+        $total = count($empleados);
+        $cont = 1;
+
+            return view('audiovisuals.reporte.ReporteCarreras',
+                [
+                    'empleados'=>$empleados->toArray(),
+                    'date'=>$date ,
+                    'time'=>$time   ,
+                    'total'=>$total   ,
+                    'cont'=>$cont,
+                    'anio'=>$anio,
+                    'mes'=>$mes,
+                    'nombremes'=>$nombremes,
+                    'pruba'=>1,
+                    'carreras'=>$carreras->toArray(),
+                    'tipoArticulo'=>$tipoArticulo->toArray(),
+
+                ]
+            );
+
+
+/*
+        $mensaje=
+        dd($mensaje);
+        $anio=date("Y");
+        $mes=date("m");
+        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
+        $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+        $total = count($empleados);
+        $cont = 1;
+        return view('audiovisuals.reporte.ReporteCarreras',
+            [
+                'empleados'=>$empleados->toArray(),
+                'date'=>$date ,
+                'time'=>$time   ,
+                'total'=>$total   ,
+                'cont'=>$cont,
+                'anio'=>$anio,
+                'mes'=>$mes,
+                'nombremes'=>$nombremes,
+                'pruba'=>1,
+                'mensaje'=>$mensaje,
+            ]
+        );*/
+    }
+    public function downloadCarreras($anio,$mes)
+    {
+        //$anio=date("Y");
+        //$mes=date("m");
+        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
+        $nombremes= array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+        $total = count($empleados);
+        $cont = 1;
+        $pdf = SnappyPdf::loadView('audiovisuals.reporte.ReporteCarreras',
+
+            [
+                'empleados'=>$empleados->toArray(),
+                'date'=>$date ,
+                'time'=>$time   ,
+                'total'=>$total   ,
+                'cont'=>$cont,
+                'anio'=>$anio,
+                'mes'=>$mes,
+                'nombremes'=>$nombremes,
+                'pruba'=>1,
+            ]
+        );
+        $pdf->setOption('javascript-delay', 13000);
+        return $pdf->download('ReporteCarreras.pdf');
+    }
+    public function reporteTiempoUso()
+    {
+        $anio=date("Y");
+        $mes=date("m");
+        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
+        $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+        $total = count($empleados);
+        $cont = 1;
+        return view('audiovisuals.reporte.TiempoUsoArticulos',
+            compact('empleados', 'date', 'time', 'cont'),
+            [
+
+                'total'=>$total   ,
+
+            ]
+        );
+    }
+    public function downloadTiempoUso()
+    {
+        $anio=date("Y");
+        $mes=date("m");
+        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
+        $nombremes= array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+        $total = count($empleados);
+        $cont = 1;
+        return SnappyPdf::loadView('audiovisuals.reporte.TiempoUsoArticulos',
+            compact('empleados', 'date', 'time', 'cont'),
+            [
+
+                'total'=>$total   ,
+
+            ]
+        )->download('ReporteCarreras.pdf');
     }
     public function indexjax(){
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
@@ -765,5 +926,12 @@ class AdministradorGestionController extends Controller
         }
 
     }
-
+    public function ajaxUniqueIdentificacion(Request $request)
+    {
+        if (User::where('identity_no', $request->get('id_funcionario'))->exists()) {
+            return \Response::json(true);
+        } else {
+            return \Response::json(false);
+        }
+    }
 }

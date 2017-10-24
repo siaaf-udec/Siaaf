@@ -4,7 +4,7 @@
  */
 
 //RUTAS GESTION ADMINISTRADOR**************
-Route::group(['prefix' => 'administradorGestionPrestamos'], function () {
+Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['permission:ADMIN_AUDIOVISUALES']], function () {
 	$controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
 	//RUTA VISTA PRINCIPAL GESTION PRESTAMOS
 	Route::get('index', [
@@ -93,9 +93,38 @@ Route::group(['prefix' => 'administradorGestionPrestamos'], function () {
         'uses' => $controller . 'AdministradorGestionController@realizarEntregaReserva',
         'as'   => 'realizarEntregaReserva',
     ]);
+
+    Route::get('reportes', [
+        'uses' => $controller . 'AdministradorGestionController@reportes',
+        'as'   => 'audiovisuales.reportes.index',
+    ]);
+
+    Route::get('pdfCarreras/{anio?}/{mes?}', [
+        'uses' => $controller . 'AdministradorGestionController@reporteCarreras',
+        'as' => 'audiovisuales.pdfCarreras'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
+    ]);
+    Route::get('DownloadPdfCarreras/{anio?}/{mes?}', [
+        'uses' => $controller . 'AdministradorGestionController@downloadCarreras',
+        'as' => 'audiovisuales.DownloadPdfCarreras'             //ruta que conduce al controlador para descargar el reporte de contacto
+    ]);
+    Route::get('pdfTiempoUso', [
+        'uses' => $controller . 'AdministradorGestionController@reporteTiempoUso',
+        'as' => 'audiovisuales.pdfTiempoUso'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
+    ]);
+    Route::get('DownloadPdfTiempoUso', [
+        'uses' => $controller . 'AdministradorGestionController@downloadTiempoUso',
+        'as' => 'audiovisuales.DownloadTiempoUso'             //ruta que conduce al controlador para descargar el reporte de contacto
+    ]);
+    Route::post('identificacion/check_unique', [
+        'uses' => $controller . 'AdministradorGestionController@ajaxUniqueIdentificacion',
+        'as'   => 'identificacion.validar',
+    ]);
+
+
+
 });
 // RUTAS FUNCIONARIO ************************
-Route::group(['prefix' => 'funcionario'], function () {
+Route::group(['prefix' => 'funcionario', 'middleware' => ['permission:FUNC_AUDIOVISUALES']], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
     //ruta para vista reservar Articulos
     Route::get('reservasArticulos', [
@@ -168,7 +197,7 @@ Route::group(['prefix' => 'funcionario'], function () {
 
 });
 // RUTAS SUPERADMIN **************************
-Route::group(['prefix' => 'superAdmin'], function () {
+Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN_AUDIOVISUALES']], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
     //GESTION VALIDACIONES
     Route::get('validaciones', [

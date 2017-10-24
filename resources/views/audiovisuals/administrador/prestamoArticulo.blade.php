@@ -104,38 +104,26 @@
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Reservas'])
-            @slot('actions', [
 
-                        'link_upload' => [
-                            'link' => '',
-                            'icon' => 'icon-cloud-upload',
-                        ],
-                        'link_wrench' => [
-                            'link' => '',
-                            'icon' => 'icon-wrench',
-                        ],
-                        'link_trash' => [
-                            'link' => '',
-                            'icon' => 'icon-trash',
-                        ],
-
-                    ])
         <br>
         <br>
         <div class="row">
             <div class="col-md-12">
+                {!! Form::open(['id' => 'form_identificacion', 'class' => '', 'url' => '/forms']) !!}
+                    <div class="col-md-5">
 
-                <div class="col-md-5">
-                    {!! Field::text('id_funcionario',
-                    ['label' => 'Ingrese Identificacion:'],
-                    ['help' => 'Ingrese Estado "Activo","Inactivo"', 'icon' => 'fa fa-credit-card'])
-                    !!}
-                </div>
-                <br>
-                <div class="col-md-3">
-                    {!! Form::button('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
-                </div>
+                        {!! Field::text('id_funcionario',
+                        ['label' => 'Ingrese Identificacion:'],
+                        ['help' => 'Digite Numero de identificación valido', 'icon' => 'fa fa-credit-card'])
+                        !!}
+                    </div>
+                    <br>
 
+                    <div class="col-md-3">
+                        {!! Form::submit('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
+
+                    </div>
+                {!! Form::close() !!}
             </div>
         </div>
             <div class="row">
@@ -295,6 +283,7 @@
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
     <script type="text/javascript">
+
         var FormSelect2 = function () {
             return {
                 init: function () {
@@ -312,51 +301,56 @@
         }();
         var guardarPrograma=false,idFuncionarioD=null;
         jQuery(document).ready(function () {
+
+
             FormSelect2.init();
-            $( "#btn_ingresar_identificacion" ).on('click', function (e) {
-                e.preventDefault();
-                guardarPrograma=false;
-                var route = '{{ route('opcionPrestamoAjax') }}';
-                idfuncionarioD =$('#id_funcionario').val();
-                var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;
-                $.get( route_edit, function( info ) {
-                    var datas=info.data;
-                    idFuncionarioD=datas.id;
-                    if(datas.audiovisual!=null){
-                        $('#FK_FUNCIONARIO_Programa').empty();
-                        $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
-                        $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
-                    }
-                    else{
-                        $('#FK_FUNCIONARIO_Programa').empty();
-                        $('#FK_FUNCIONARIO_Programa').attr('disabled',false);
-                        var listarProgramas= '{{ route('listarProgramas') }}';
-                        $.ajax({
-                            url: listarProgramas,
-                            type: 'GET',
-                            beforeSend: function () {
-                                App.blockUI({target: '.portlet-form', animate: true});
-                            },
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    App.unblockUI('.portlet-form');
-                                    console.log(response.data);
-                                    $(response.data).each(function (key,value) {
-                                        $('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));
-                                    });
-                                    $('#FK_FUNCIONARIO_Programa').val([])
-                                }
-                            }
-                        });
-                        guardarPrograma=true;//funcionario no tiene asignado un programa
-                    }
-                    $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
-                    $('#FUCNIONARIO_Correo').val(datas.email);
-                    $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
-                    $('#FUCNIONARIO_Telefono').val(datas.phone);
-                    $('#modal-info-funcionario').modal('toggle');
-                });
-            });
+
+
+
+            {{--$( "#btn_ingresar_identificacion" ).on('click', function (e) {--}}
+                {{--e.preventDefault();--}}
+                {{--guardarPrograma=false;--}}
+                {{--var route = '{{ route('opcionPrestamoAjax') }}';--}}
+                {{--idfuncionarioD =$('#id_funcionario').val();--}}
+                {{--var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;--}}
+                {{--$.get( route_edit, function( info ) {--}}
+                    {{--var datas=info.data;--}}
+                    {{--idFuncionarioD=datas.id;--}}
+                    {{--if(datas.audiovisual!=null){--}}
+                        {{--$('#FK_FUNCIONARIO_Programa').empty();--}}
+                        {{--$('#FK_FUNCIONARIO_Programa').attr('disabled',true);--}}
+                        {{--$('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));--}}
+                    {{--}--}}
+                    {{--else{--}}
+                        {{--$('#FK_FUNCIONARIO_Programa').empty();--}}
+                        {{--$('#FK_FUNCIONARIO_Programa').attr('disabled',false);--}}
+                        {{--var listarProgramas= '{{ route('listarProgramas') }}';--}}
+                        {{--$.ajax({--}}
+                            {{--url: listarProgramas,--}}
+                            {{--type: 'GET',--}}
+                            {{--beforeSend: function () {--}}
+                                {{--App.blockUI({target: '.portlet-form', animate: true});--}}
+                            {{--},--}}
+                            {{--success: function (response, xhr, request) {--}}
+                                {{--if (request.status === 200 && xhr === 'success') {--}}
+                                    {{--App.unblockUI('.portlet-form');--}}
+                                    {{--console.log(response.data);--}}
+                                    {{--$(response.data).each(function (key,value) {--}}
+                                        {{--$('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));--}}
+                                    {{--});--}}
+                                    {{--$('#FK_FUNCIONARIO_Programa').val([])--}}
+                                {{--}--}}
+                            {{--}--}}
+                        {{--});--}}
+                        {{--guardarPrograma=true;//funcionario no tiene asignado un programa--}}
+                    {{--}--}}
+                    {{--$('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);--}}
+                    {{--$('#FUCNIONARIO_Correo').val(datas.email);--}}
+                    {{--$('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);--}}
+                    {{--$('#FUCNIONARIO_Telefono').val(datas.phone);--}}
+                    {{--$('#modal-info-funcionario').modal('toggle');--}}
+                {{--});--}}
+            {{--});--}}
             var createPrograma = function () {
                 return{
                     init: function () {
@@ -410,6 +404,79 @@
                 FK_FUNCIONARIO_Programa:{required: true}
             };
             FormValidationMd.init(form_create,rules_create,false,createPrograma());
+            var createIngreso = function () {
+                return{
+                    init: function () {
+                        guardarPrograma=false;
+                        var route = '{{ route('opcionPrestamoAjax') }}';
+                        idfuncionarioD =$('#id_funcionario').val();
+                        var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;
+                        $.get( route_edit, function( info ) {
+                            var datas=info.data;
+                            idFuncionarioD=datas.id;
+                            if(datas.audiovisual!=null){
+                                $('#FK_FUNCIONARIO_Programa').empty();
+                                $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
+                                $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
+                            }
+                            else{
+                                $('#FK_FUNCIONARIO_Programa').empty();
+                                $('#FK_FUNCIONARIO_Programa').attr('disabled',false);
+                                var listarProgramas= '{{ route('listarProgramas') }}';
+                                $.ajax({
+                                    url: listarProgramas,
+                                    type: 'GET',
+                                    beforeSend: function () {
+                                        App.blockUI({target: '.portlet-form', animate: true});
+                                    },
+                                    success: function (response, xhr, request) {
+                                        if (request.status === 200 && xhr === 'success') {
+                                            App.unblockUI('.portlet-form');
+                                            console.log(response.data);
+                                            $(response.data).each(function (key,value) {
+                                                $('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));
+                                            });
+                                            $('#FK_FUNCIONARIO_Programa').val([])
+                                        }
+                                    }
+                                });
+                                guardarPrograma=true;//funcionario no tiene asignado un programa
+                            }
+                            $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
+                            $('#FUCNIONARIO_Correo').val(datas.email);
+                            $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
+                            $('#FUCNIONARIO_Telefono').val(datas.phone);
+                            $('#modal-info-funcionario').modal('toggle');
+                        });
+                    }
+                }
+            };
+            $.ajaxSetup({
+                headers:
+                    {
+                        'X-CSRF-Token': $('input[name="_token"]').val()
+                    }
+            });
+            var from_identificacion = $('#form_identificacion');
+            var rules_identificacion = {
+                id_funcionario: {
+                    required: true,
+                    remote: {
+                        url: "{{ route('identificacion.validar') }}",
+                        type: "post"
+                    }
+                },
+            };
+            var messages= {
+                id_funcionario: {
+                    remote: 'El funcionario no existe'
+                },
+            };
+            FormValidationMd.init(from_identificacion,rules_identificacion,messages,createIngreso());
+
+            $("#form_identificacion").validate({
+                onkeyup: false //turn off auto validate while typing-pausa  validacion despues de escribir
+            });
         });
     </script>
 

@@ -114,6 +114,8 @@ class ArticuloController extends Controller
             return \Response::json(true);
         }
     }
+
+
 	public function ajaxUniqueKit(Request $request)
 	{
 		if (Kit::where('KIT_Nombre', $request->get('KIT_Nombre'))->exists()) {
