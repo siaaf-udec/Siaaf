@@ -22,6 +22,7 @@ class DatabaseParkingSeeder extends Seeder
     public function run()
     {
         $this->call(EstadosTableSeeder::class);
+        $this->call(DependenciasTableSeeder::class);
         $this->call(RoleParqueaderoSeeder::class);
         $this->call(PermissionParqueaderosSeeder::class);        
     }

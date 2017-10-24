@@ -51,22 +51,21 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request
      * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaUsuarios(Request $request)
-    {
+    public function tablaUsuarios(Request $request){
         if ($request->ajax() && $request->isMethod('GET')) {
             return Datatables::of(Usuarios::all())
-                ->removeColumn('CU_Cedula')
-                ->removeColumn('CU_Nombre2')
-                ->removeColumn('CU_Apellido2')
-                ->removeColumn('CU_Telefono')
-                ->removeColumn('CU_Direccion')
-                ->removeColumn('CU_UrlFoto')
-                ->removeColumn('FK_CU_IdEstado')
-                ->removeColumn('FK_CU_IdDependencia')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addIndexColumn()
-                ->make(true);
+                    ->removeColumn('CU_Cedula')
+                    ->removeColumn('CU_Nombre2')
+                    ->removeColumn('CU_Apellido2')
+                    ->removeColumn('CU_Telefono')
+                    ->removeColumn('CU_Direccion')
+                    ->removeColumn('CU_UrlFoto')
+                    ->removeColumn('FK_CU_IdEstado')
+                    ->removeColumn('FK_CU_IdDependencia')
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

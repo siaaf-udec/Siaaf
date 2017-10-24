@@ -170,14 +170,14 @@
         };
         var form = $('#form_moto_create');
         var formRules = {
-            CM_UrlFoto: {required: true},
+            CM_UrlFoto: {required: true, extension: "jpg|png"},
             CM_Placa: {minlength: 5, maxlength: 6, required: true},
             CM_Marca: {required: true, minlength: 5, maxlength: 50},
             CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20},
             CM_NuSoat: {required: true, minlength: 5, maxlength: 20},
             CM_FechaSoat: {required: true},
-            CM_UrlPropiedad: {required: true},
-            CM_UrlSoat: {required: true},
+            CM_UrlPropiedad: {required: true, extension: "jpg|png"},
+            CM_UrlSoat: {required: true, extension: "jpg|png"},
         };
         FormValidationMd.init(form, formRules, false, createMoto());
 

@@ -3,20 +3,11 @@
 namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
-use App\Container\Carpark\src\Dependencias;
-use App\Container\Carpark\src\Estados;
-use App\Container\Carpark\src\Usuarios;
-use App\Container\Carpark\src\Motos;
+use App\Container\CArpark\src\Mail\EmailCarpark;
+use Illuminate\Support\Facades\Mail;
 use App\Container\Carpark\src\Ingresos;
-use App\Container\Carpark\src\Historiales;
-use Illuminate\Support\Facades\Storage;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
-use Mail;
-use Session;
 
 class CorreosController extends Controller
 {
@@ -32,7 +23,7 @@ class CorreosController extends Controller
     }
 
     /**
-     * Función que envia los correos de advertencia.
+     * Función que envia los emails de advertencia.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
@@ -40,20 +31,18 @@ class CorreosController extends Controller
     public function enviarMail(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
-            for ($i = 0; $i < sizeof($infoEntradas); $i++) {
-                $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
 
-                Mail::send('carpark.correos.plantilla', ['user' => $infoCorreo], function ($msj) use ($infoCorreo) {
-                    $msj->subject('Advertencia De Cierre Del Parqueadero');
-                    $msj->to($infoCorreo['CU_Correo']);
-                    Session::flash('message', 'mensaje enviado correctamente');
-                });
+            $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
+            for ($i = 0; $i < sizeof($infoEntradas); $i++) 
+            {
+                $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
+                $subject = $infoCorreo['CU_Nombre1'].' '.$infoCorreo['CU_Apellido1']; 
+                Mail::to($infoCorreo['CU_Correo'], 'P1')->send(new EmailCarpark($subject));
             }
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Correos Enviados Correctamente.'
+                'Mensaje enviado correctamente.'
             );
         }
 
@@ -61,8 +50,6 @@ class CorreosController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
-
 
 }

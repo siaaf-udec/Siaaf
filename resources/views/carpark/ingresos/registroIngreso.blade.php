@@ -68,12 +68,13 @@
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 if (response.data == 422) {
+                                    xhr = "warning"
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
                                     $(".content-ajax").load(route);
                                 } else {
-                                    $('#form_ingreso_create')[0].reset(); //Limpia formulario
+                                    $('#form_ingreso_create')[0].reset(); //Limpia formulario                                    
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('parqueadero.ingresosCarpark.confirmar') }}' + '/' + response.data;

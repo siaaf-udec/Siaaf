@@ -47,21 +47,20 @@ class MotosController extends Controller
      * @param  \Illuminate\Http\Request
      * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaMotos(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
+    public function tablaMotos(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {            
             return Datatables::of(Motos::all())
-                ->removeColumn('CM_NuPropiedad')
-                ->removeColumn('CM_NuSoat')
-                ->removeColumn('CM_FechaSoat')
-                ->removeColumn('CM_UrlFoto')
-                ->removeColumn('CU_Direccion')
-                ->removeColumn('CU_UrlFoto')
-                ->removeColumn('CM_UrlSoat')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addIndexColumn()
-                ->make(true);
+                    ->removeColumn('CM_NuPropiedad')
+                    ->removeColumn('CM_NuSoat')
+                    ->removeColumn('CM_FechaSoat')
+                    ->removeColumn('CM_UrlFoto')
+                    ->removeColumn('CU_Direccion')
+                    ->removeColumn('CU_UrlFoto')
+                    ->removeColumn('CM_UrlSoat')                    
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')
+                    ->addIndexColumn()
+                    ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

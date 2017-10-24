@@ -13,12 +13,13 @@ class EstadosTableSeeder extends Seeder
     public function run()
     {
         $estados = [
-            [ 'CE_Estados' => 'Activo' ],
-            [ 'CE_Estados' => 'Inactivo' ],          
+            [ 'PK_CE_IdEstados'=>'1','CE_Estados' => 'Activo' ],
+            [ 'PK_CE_IdEstados'=>'2','CE_Estados' => 'Inactivo' ],          
         ];
 
         foreach ($estados as $estado ) {
             $aux = new Estados();
+            $aux->PK_CE_IdEstados = $estado['PK_CE_IdEstados'];
             $aux->CE_Estados = $estado['CE_Estados'];
             $aux->save();
         }

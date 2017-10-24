@@ -76,7 +76,6 @@
     @endcomponent
 </div>
 
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
 

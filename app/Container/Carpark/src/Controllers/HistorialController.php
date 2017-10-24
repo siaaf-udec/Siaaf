@@ -45,15 +45,14 @@ class HistorialController extends Controller
      * @param  \Illuminate\Http\Request
      * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaHistoriales(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
+    public function tablaHistoriales(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {            
             return Datatables::of(Historiales::all())
-                ->removeColumn('CH_CodigoMoto')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addIndexColumn()
-                ->make(true);
+                    ->removeColumn('CH_CodigoMoto') 
+                    ->removeColumn('created_at')
+                    ->removeColumn('updated_at')                   
+                    ->addIndexColumn()
+                    ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

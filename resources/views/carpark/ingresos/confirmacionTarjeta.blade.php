@@ -3,8 +3,7 @@
 @push('styles')
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
-      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <!-- toastr Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
@@ -73,7 +72,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-5">
                                     @permission('CREATE_INGRESO_CARPARK')<a href="javascript:;"
-                                                                            class="btn btn-outline red button-cancel"><i
+                                                                  class="btn btn-outline red button-cancel"><i
                                                 class="fa fa-angle-left"></i>
                                         Volver
                                     </a>@endpermission
@@ -92,10 +91,6 @@
 
 @push('plugins')
 <!-- Datatables Scripts -->
-
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
-        type="text/javascript"></script>
 
 @endpush
 @push('functions')

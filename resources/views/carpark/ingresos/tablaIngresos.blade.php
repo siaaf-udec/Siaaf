@@ -3,8 +3,7 @@
 @push('styles')
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
-      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <!-- toastr Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
@@ -24,14 +23,13 @@
                 <div class="col-md-12">
                     <div class="actions">
                         @permission('CREATE_INGRESO_CARPARK') <a href="javascript:;"
-                                                                 class="btn btn-simple btn-success btn-icon create">
+                                                       class="btn btn-simple btn-success btn-icon create">
                             <i class="fa fa-plus">
                             </i>Acción
                         </a>@endpermission
                         @permission('REPORT_INGRESO_CARPARK')<a href="javascript:;"
-                                                                class="btn btn-simple btn-success btn-icon reports"
-                                                                title="Reporte"><i
-                                    class="glyphicon glyphicon-list-alt"></i>Reporte
+                                                       class="btn btn-simple btn-success btn-icon reports"
+                                                       title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Ingresos</a><br>@endpermission
                     </div>
                 </div>
@@ -59,22 +57,13 @@
 <!-- Datatables Scripts -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"
-        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
-        type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
-        type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
-        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
-        type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
-        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
 @endpush
 @push('functions')
