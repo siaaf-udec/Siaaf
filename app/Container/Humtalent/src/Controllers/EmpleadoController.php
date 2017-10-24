@@ -291,6 +291,7 @@ class EmpleadoController extends Controller
     public function importUsers(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+            try {
                 $cont = 0;
                 $path = Input::file('import_file')->getRealPath();
                 $data = Excel::load($path, function ($reader) {
@@ -329,6 +330,12 @@ class EmpleadoController extends Controller
                     '¡Bien hecho!',
                     'La información del archivo fue almacenada correctamente.'
                 );
+            }catch(Exception $e){
+                return AjaxResponse::success(
+                    'Ocurrió un problema',
+                    'El archivo adjunto no cumple con las especificaciones'
+                );
+            }
         }
 
         return AjaxResponse::fail(
