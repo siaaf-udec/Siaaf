@@ -430,7 +430,6 @@ class EvaluatorController extends Controller
                 'respuesta'])
                 ->get();
         return Datatables::of($observaciones)
-            ->removeColumn('PK_BVCS_IdObservacion')
             ->removeColumn('FK_TBL_Encargado_Id')
             ->removeColumn('created_at')
             ->removeColumn('updated_at')

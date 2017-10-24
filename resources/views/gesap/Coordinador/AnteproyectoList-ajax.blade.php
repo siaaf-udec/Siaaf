@@ -32,7 +32,6 @@
         </div>
     @endcomponent
 </div>
-
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script>
@@ -100,7 +99,7 @@
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
-                                return "NO FILE";    
+                                return "NO APLICA";    
                             }else{
                                 return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                             }  
@@ -110,32 +109,32 @@
                         if(data.director[0]!=null)
                             return data.director[0].usuarios.name + " " + data.director[0].usuarios.lastname;
                         else
-                            return "No hay asignado"
+                            return "SIN ASIGNAR"
                     },className:'none',searchable: true},
 
                     {data: function (data, type, dataToSet) {
                         if(data.estudiante1[0]!=null)
                             return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
                         else
-                            return "No hay asignado"
+                            return "SIN ASIGNAR"
                     },className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
                         if(data.estudiante2[0]!=null)
                         return data.estudiante2[0].usuarios.name + " " + data.estudiante2[0].usuarios.lastname;
                         else
-                            return "No hay asignado"
+                            return "SIN ASIGNAR"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
                         if(data.jurado1[0]!=null)
                         return data.jurado1[0].usuarios.name + " " + data.jurado1[0].usuarios.lastname;
                         else
-                            return "No hay asignado"
+                            return "SIN ASIGNAR"
                     }, className:'none',searchable: true},
                     {data: function (data, type, dataToSet) {
                         if(data.jurado2[0]!=null)
                         return data.jurado2[0].usuarios.name + " " + data.jurado2[0].usuarios.lastname;
                         else
-                            return "No hay asignado"
+                            return "SIN ASIGNAR"
                     },className:'none',searchable: true},
                      
                     {data:'action',
@@ -187,6 +186,8 @@
                 var route = '{{ route('min.create') }}';
                 $(".content-ajax").load(route);
             });
+            
+
             
             
             table = table.DataTable();
@@ -273,5 +274,18 @@
 
         });
             
-    });
-</script>
+            table.on('click','.boton_mas_info',function(){
+ 
+                if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
+                    $(this).parent().find('.texto-ocultado').css('display','inline');
+                    $(this).parent().find('.puntos').html(' ');
+                    $(this).text('Ver menos');
+                } else {
+                    $(this).parent().find('.texto-ocultado').css('display','none');
+                    $(this).parent().find('.puntos').html('...');
+                    $(this).html('Ver más');
+                };
+            }); 
+        });
+        
+    </script>

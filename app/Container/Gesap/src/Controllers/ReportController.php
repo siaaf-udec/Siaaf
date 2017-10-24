@@ -237,13 +237,25 @@ class ReportController extends Controller
         $anteproyectos=Anteproyecto::all()->count();
         
         $anteproyectosR=Anteproyecto::where('NPRY_Estado','=','RECHAZADO')->count();
-        $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
-        
+        if($anteproyectos==0){
+            $anteproyectosRP=$anteproyectosR*100/1;    
+        }else{
+            $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+        }
         $proyectos=Proyecto::all()->count();
-        $proyectosP=$proyectos*100/$anteproyectos;
+        if($anteproyectos==0){
+            $proyectosP=$proyectos*100/1;    
+        }else{
+            $proyectosP=$proyectos*100/$anteproyectos;
+        }
         
         $proyectosT=Proyecto::where('PRYT_Estado','=','TERMINADO')->count();
-        $proyectosTP=$proyectosT*100/$proyectos;
+        if($proyectos==0){
+            $proyectosTP=$proyectosT*100/1;
+        }else{
+            $proyectosTP=$proyectosT*100/$proyectos;
+        }
+        
         return view('gesap.Coordinador.Graficos',[
             'anteproyectos'=>$anteproyectos,
             'anteproyectosR'=>$anteproyectosR,

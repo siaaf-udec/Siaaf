@@ -76,17 +76,13 @@ class PermissionGesapSeeder extends Seeder
         $permission->roles()->sync(3);
         $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
         $permission->roles()->sync(3);
-        $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
         $permission->roles()->sync(4);
         $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
         $permission->roles()->sync(3);
-        $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
         $permission->roles()->sync(4);
         $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
         $permission->roles()->sync(3);
-        $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
         $permission->roles()->sync(4);
-        $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
         $permission->roles()->sync(5);
         $permission = Permission::where('name', '=', 'Update_Final_Project_Gesap')->first();
         $permission->roles()->sync(5);
