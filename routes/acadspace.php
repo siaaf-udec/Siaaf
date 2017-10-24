@@ -200,6 +200,31 @@ Route::group(['prefix' => 'formacad'], function () {
 
 });
 
+/*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
+Route::group(['prefix' => 'report'], function () {
+    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    Route::get('index', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@index',
+        'as' => 'espacios.academicos.report.index'
+    ]);
+    Route::get('cargarSalasReportes/{sala?}', [ //CARGAR SALAS
+        'uses' => $controller . 'ReporteController@cargarSalasReportes',
+        'as' => 'espacios.academicos.report.cargarSalasReportes'
+    ]);
+    Route::post('repDoc', [ //CREAR REPORTE DOCENTE
+        'uses' => $controller . 'ReporteController@reporDocente',
+        'as' => 'espacios.academicos.report.repDoc',
+    ]);
+    Route::get('repEst', [ //Pagina inicial y captura de rango de fechas
+        'uses' => $controller . 'ReporteController@repIndexEst',
+        'as' => 'espacios.academicos.report.indexPrueba'
+    ]);
+    Route::post('cargarRepEst', [ //CREAR REPORTE
+        'uses' => $controller . 'ReporteController@cargarRepEst',
+        'as' => 'espacios.academicos.report.cargarRepEst',
+    ]);
+
+});
 
 /*RUTAS PARA FUNCIONALIDAD AULAS*/
 Route::group(['prefix' => 'aulas'], function () {
