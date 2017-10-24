@@ -55,55 +55,6 @@ class ReportController extends Controller
         ]);
     }
     
-    public function graficos()
-    {
-        return view('gesap.Coordinador.Graficos',['stats']);
-    }
-    
-    public function getPreliminary()
-    {
-        $stats = Anteproyecto::groupBy('Estado')
-        ->get([
-            DB::raw('NPRY_Estado as Estado'),
-            DB::raw('COUNT(*) as value')
-        ])
-        ->toJSON();
-        return $stats;    
-    }
-    
-    public function getProject()
-    {
-        $stats = Proyecto::groupBy('Estado')
-            
-        ->get([
-            DB::raw('PRYT_Estado as Estado'),
-            DB::raw('COUNT(*) as value')
-        ])
-        ->toJSON();
-        return $stats;    
-    }
-    
-    
-    
-    public function getJury()
-    {
-        $stats = Encargados::where(function ($query) {
-            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-        })
-        ->groupBy('FK_Developer_User_Id')    
-            ->with(['usuarios'=> function ($user) {
-                $user->select('id','name');
-            }])
-            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
-            ;
-        return $stats;
-    }
-    public function getDirector()
-    {
-        
-    }
-    
     /*
      * Reporte con todos los proyectos
      *
@@ -142,25 +93,69 @@ class ReportController extends Controller
      */
     public function juryProject($jury)
     {
-        $proyectos = Anteproyecto::from('TBL_Anteproyecto AS A')->distinct()
-            ->with(['radicacion',
-                    'director',
-                    'jurado1',
-                    'jurado2',
-                    'estudiante1',
-                    'estudiante2',
-                    'conceptofinal',
-                    'encargados' => function ($encargados) use ($jury) {
-                        $encargados->where(function ($query) {
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $proyectos = Encargados::where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-                        });
-                        $encargados->where('FK_developer_user_id', '=', $jury);
-                    }])
+        })
+            ->where('FK_Developer_User_Id', '=', $jury)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'proyecto',
+                                 'conceptoFinal']);
+            }])
             ->get();
-        return view($this->path.'PDF.AnteproyectosPDF', [
-            'proyectos'=>$proyectos
+        $docente = User::find($jury);
+        return view($this->path.'PDF.ProyectoDocentePDF', [
+            'proyectos'=>$proyectos,
+            'docente'=>$docente,
+            'date'=>$date,
+            'time'=>$time,
+            'cargo'=>"JURADO"
         ]);
+    } 
+    
+    /*
+     * Descarga de reporte con los proyectos de un jurado seleccionado
+     *
+     * @param int $jury
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadJuryProject($jury)
+    {
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+         $proyectos = Encargados::where(function ($query) {
+                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+        })
+            ->where('FK_Developer_User_Id', '=', $jury)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'proyecto',
+                                 'conceptoFinal']);
+            }])
+            ->get();
+        $docente = User::find($jury);
+        return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
+            'proyectos'=>$proyectos,
+            'docente'=>$docente,
+            'date'=>$date,
+            'time'=>$time,
+            'cargo'=>"JURADO"
+        ])->download('ReporteGesapJurado.pdf');
     }
     
     /*
@@ -170,22 +165,164 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function directorProject(Resquest $request)
+    public function directorProject($director)
     {
-        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->with(['radicacion',
-                    'director',
-                    'jurado1',
-                    'jurado2',
-                    'estudiante1',
-                    'estudiante2',
-                    'encargados' => function ($encargados) use ($request) {
-                        $encargados->where('E.NCRD_Cargo', '=', "Director");
-                        $encargados->where('FK_developer_user_id', '=', $request->user()->id);
-                    }])
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+        $proyectos = Encargados::where('NCRD_Cargo', '=', "Director")
+            ->where('FK_Developer_User_Id', '=', $director)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'proyecto',
+                                 'conceptoFinal']);
+            }])
             ->get();
-        return view($this->path.'PDF.AnteproyectosPDF', [
-            'proyectos'=>$proyectos
+        $docente = User::find($director);
+        return view($this->path.'PDF.ProyectoDocentePDF', [
+            'proyectos'=>$proyectos,
+            'docente'=>$docente,
+            'date'=>$date,
+            'time'=>$time,
+            'cargo'=>"DIRECTOR"
+        ]);
+        
+    }
+    
+        /*
+     * Descarga de reporte con los proyectos de un director seleccionado
+     *
+     * @param int $jury
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadDirectorProject($director)
+    {
+        $date = date("d/m/Y");
+        $time = date("h:i A");
+         $proyectos = Encargados::where(function ($query) {
+                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+        })
+            ->where('FK_Developer_User_Id', '=', $director)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'proyecto',
+                                 'conceptoFinal']);
+            }])
+            ->get();
+        $docente = User::find($director);
+        return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
+            'proyectos'=>$proyectos,
+            'docente'=>$docente,
+            'date'=>$date,
+            'time'=>$time,
+            'cargo'=>"JURADO"
+        ])->download('ReporteGesapDirector.pdf');
+    }
+    
+    
+    
+    public function graficos()
+    {
+        $anteproyectos=Anteproyecto::all()->count();
+        
+        $anteproyectosR=Anteproyecto::where('NPRY_Estado','=','RECHAZADO')->count();
+        $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+        
+        $proyectos=Proyecto::all()->count();
+        $proyectosP=$proyectos*100/$anteproyectos;
+        
+        $proyectosT=Proyecto::where('PRYT_Estado','=','TERMINADO')->count();
+        $proyectosTP=$proyectosT*100/$proyectos;
+        return view('gesap.Coordinador.Graficos',[
+            'anteproyectos'=>$anteproyectos,
+            'anteproyectosR'=>$anteproyectosR,
+            'anteproyectosRP'=>$anteproyectosRP,
+            'proyectos'=>$proyectos,
+            'proyectosP'=>$proyectosP,
+            'proyectosT'=>$proyectosT,
+            'proyectosTP'=>$proyectosTP
         ]);
     }
+    
+    public function getPreliminary()
+    {
+        $stats = Anteproyecto::groupBy('Estado')
+        ->get([
+            DB::raw('NPRY_Estado as Estado'),
+            DB::raw('COUNT(*) as value')
+        ])
+        ->toJSON();
+        return $stats;    
+    }
+    
+    public function getProject()
+    {
+        $stats = Proyecto::groupBy('Estado')
+            
+        ->get([
+            DB::raw('PRYT_Estado as Estado'),
+            DB::raw('COUNT(*) as value')
+        ])
+        ->toJSON();
+        return $stats;    
+    }
+    
+    
+    
+    public function getJury()
+    {
+        $stats = Encargados::where(function ($query) {
+            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+        })
+        ->groupBy('FK_Developer_User_Id')    
+            ->with(['usuarios'=> function ($user) {
+                $user->select('id','name','lastname');
+            }])
+            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+            ;
+        
+        foreach($stats as $row){
+            $row['Nombre']=$row->usuarios->name;
+            $row['Apellido']=$row->usuarios->lastname;
+            unset($row['FK_Developer_User_Id']);
+            unset($row['usuarios']);
+        }
+        
+        return $stats->toJSON();
+    }
+    public function getDirector()
+    {
+        $stats = Encargados::where('NCRD_Cargo', '=', "Director") 
+        ->groupBy('FK_Developer_User_Id')    
+            ->with(['usuarios'=> function ($user) {
+                $user->select('id','name','lastname');
+            }])
+            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+            ;
+        
+        foreach($stats as $row){
+            $row['Nombre']=$row->usuarios->name;
+            $row['Apellido']=$row->usuarios->lastname;
+            unset($row['FK_Developer_User_Id']);
+            unset($row['usuarios']);
+        }
+        
+        return $stats->toJSON();
+    }
+    
+    
+    
+    
 }

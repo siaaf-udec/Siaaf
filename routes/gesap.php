@@ -249,7 +249,12 @@ Route::get('download/proyecto/{actividad}/{archivo}', function ($actividad, $arc
 
 Route::get('Reporte', $controller.'ReportController@index')->name('report.index');
 Route::get('ReportAnteproyect', $controller.'ReportController@allProject')->name('report.all.project');
+
 Route::get('ReportJury/{jury}', $controller.'ReportController@juryProject')->name('report.jury.project');
+Route::get('ReportJury/{jury}/download', $controller.'ReportController@downloadJuryProject')->name('report.jury.project.download');
+
 Route::get('ReportDirector/{director}', $controller.'ReportController@directorProject')->name('report.director.project');
+Route::get('ReportDirector/{jury}/download', $controller.'ReportController@downloadDirectorProject')->name('report.director.project.download');
+
 Route::get('downloadPDF', $controller.'ReportController@allProjectPrint')
     ->name('ReporteAnteproyectosGesap.pdf');

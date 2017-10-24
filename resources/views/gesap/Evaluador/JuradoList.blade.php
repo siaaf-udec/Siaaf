@@ -32,6 +32,7 @@
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id',
+                    'Tipo',        
                     'Titulo',
                     'Palabras Clave',
                     'Duracion',
@@ -46,7 +47,7 @@
                     'Jurado 2',
                     'Concepto',
                     'Estado',
-                    'Acciones' => ['style' => 'width:160px;']
+                    'Acciones' => ['style' => 'width:100px;']
                 ])
             @endcomponent
             </div>
@@ -254,6 +255,13 @@ jQuery(document).ready(function () {
        columns:[
            {data: 'DT_Row_Index'},
            {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+           {data: function (data, type, dataToSet) {
+                if(data.anteproyecto.proyecto!=null){
+                    return "PROYECTO"
+                }else{
+                    return "ANTEPROYECTO"
+                }
+                   },searchable: true},
            {data: 'anteproyecto.NPRY_Titulo', searchable: true},
            {data: 'anteproyecto.NPRY_Keywords', className:'none',searchable: true},
            {data: 'anteproyecto.NPRY_Duracion',className:'none',searchable: true},
@@ -263,46 +271,43 @@ jQuery(document).ready(function () {
                         render: function (data, type, full, meta) 
                         {
                             return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
-                        }
+                        }, className:'none'
                     },
-                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
+           {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
                         render: function (data, type, full, meta) 
                         {
                             if(data=="NO FILE"){
-                                return "NO FILE";    
+                                return "NO APLICA";    
                             }else{
                                 return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                             }  
-                        }
+                        }, className:'none'
                     }, 
-           
-           
            {data:  function (data, type, dataToSet) {
                         if(data.anteproyecto.director[0]!=null)
                             return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
                         else
                             return "No hay asignado"
                     },className:'none',searchable: true},
-
-                    {data: function (data, type, dataToSet) {
+           {data: function (data, type, dataToSet) {
                         if(data.anteproyecto.estudiante1[0]!=null)
                             return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
                         else
                             return "No hay asignado"
                     },className:'none',searchable: true},
-                    {data: function (data, type, dataToSet) {
+           {data: function (data, type, dataToSet) {
                         if(data.anteproyecto.estudiante2[0]!=null)
                         return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
                         else
                             return "No hay asignado"
                     }, className:'none',searchable: true},
-                    {data: function (data, type, dataToSet) {
+           {data: function (data, type, dataToSet) {
                         if(data.anteproyecto.jurado1[0]!=null)
                         return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
                         else
                             return "No hay asignado"
                     }, className:'none',searchable: true},
-                    {data: function (data, type, dataToSet) {
+           {data: function (data, type, dataToSet) {
                         if(data.anteproyecto.jurado2[0]!=null)
                         return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
                         else
@@ -320,7 +325,13 @@ jQuery(document).ready(function () {
             responsivePriority:2,
                className: '',   
                render: function ( data, type, full, meta ) {
-                 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> Observaciones</i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i>Concepto Final</a>';
+                   if(full.anteproyecto.proyecto!=null){
+                       if(full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO"){
+                           return '<span class="label label-sm label-success">Proyecto Terminado</span>';
+                       }
+                   }
+                 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>';
+                   
                 }
                
            }

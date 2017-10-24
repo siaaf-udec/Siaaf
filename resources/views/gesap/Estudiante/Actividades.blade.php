@@ -66,17 +66,20 @@
                                                                 <a class="task-trash delete" id=""  href="javascript:;">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
-                                                            </div>
-                                                            @endpermission
-                                                             @permission('Update_Final_Project_Gesap')
-                                                            <div class="list-datetime"> 
-                                                                <a class="task-trash upload" id=""  href="javascript:;">
-                                                                    <i class="fa fa-upload"></i>
-                                                                </a>    
                                                                 <a class="task-trash download" id=""  href="/gesap/download/proyecto/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
                                                                     <i class="fa fa-download"></i> 
                                                                 </a> 
                                                             </div>
+                                                            @endpermission
+                                                            @permission('Update_Final_Project_Gesap')
+                                                                @if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
+                                                                    <div class="list-datetime"> 
+                                                                        <a class="task-trash upload" id=""  href="javascript:;">
+                                                                        <i class="fa fa-upload"></i>
+                                                                    </a>    
+                                                                
+                                                            </div>
+                                                            @endif
                                                             @endpermission
                                                             
                                                             <div class="list-datetime"> 
@@ -118,11 +121,13 @@
                                                             </div>
                                                             @endpermission
                                                             @permission('Update_Final_Project_Gesap')
-                                                            <div class="list-datetime"> 
+                                                            @if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
+                                                                <div class="list-datetime"> 
                                                                 <a class="task-trash upload" id=""  href="javascript:;">
                                                                     <i class="fa fa-upload"></i>
                                                                 </a>
                                                             </div>
+                                                            @endif
                                                             @endpermission
                                                             <div class="list-datetime" style="width:70px">
                                                                 {{ date('h A', strtotime($documento->updated_at)) }}
@@ -222,18 +227,9 @@
                                 </div>
                                 <div class="modal-body">
                                                                       
-                                    {!! Form::open(['id' => 'form_upload_activity', 'class' => '', 'url'=>'/form']) !!}
+                                    {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
                                     {!! Field::hidden('PK_actividad') !!}
-                                    
-                                    <div class="form-group">
-                                                <div class="dropzone dropzone-file-area data-dz-size"
-                                                     id="my_dropzone">
-                                                    <h3 class="sbold">Arrastra o da click aquí para cargar
-                                                        archivos</h3>
-                                                    <p> Por favor sube el formato académico en un formato
-                                                        pdf. </p>
-                                                </div>
-                                            </div>
+                                    <h3 class="sbold">Arrastra o da click aquí para cargar el archivo</h3> 
                                     {!! Form::close() !!}
                                     <br>
                                     {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
@@ -256,11 +252,12 @@
     
     @endcomponent
        </div>
-
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script> 
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script> 
-<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script> 
+    
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
 <script>
@@ -379,24 +376,19 @@ jQuery(document).ready(function () {
             });
         });
     
-    var $form = $('#form_upload_activity');
-    var rules = {};
-    var messages = {};
-    FormValidationMd.init(form, rules, messages, false);
-
-            /*Prueba*/
-    var method = function () {
-        return {
-            init: function () {
-                return alert('SEGURO?');
-            }
-        };
-    };
-    var type_crud = 'CREATE',
-        route_store = "{{route('proyecto.actividades.upload')}}",
-        formatfile = '.pdf',
-        numfile = 1;
-    FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
+        var documento = function () { 
+            return { 
+                init:function(){
+                    alert('SEGURO?');
+                }
+          }; 
+        }
+        var route = '{{ route("proyecto.actividades.upload") }}'; 
+        var data="{{$id}}";
+        var formatfile = '.jpeg,.pdf,.jpg,.png,.gif'; 
+        var numfile = 1; 
+         console.log("1:{{$id}}");
+       $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,data)); 
     
 });
     

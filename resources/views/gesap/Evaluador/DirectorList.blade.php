@@ -24,6 +24,7 @@
                         @slot('columns', [
                             '#' => ['style' => 'width:20px;'],
                             'id',
+                            'Tipo',        
                             'Titulo',
                             'Palabras Clave',
                             'Duracion',
@@ -107,8 +108,15 @@
                 columns: [
                    {data: 'DT_Row_Index'},
                    {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+                   {data: function (data, type, dataToSet) {
+                       if(data.anteproyecto.proyecto!=null){
+                           return "PROYECTO"
+                       }else{
+                           return "ANTEPROYECTO"
+                       }
+                   },searchable: true},
                    {data: 'anteproyecto.NPRY_Titulo', searchable: true},
-                   {data: 'anteproyecto.NPRY_Keywords', searchable: true},
+                   {data: 'anteproyecto.NPRY_Keywords', className:'none', searchable: true},
                    {data: 'anteproyecto.NPRY_Duracion',searchable: true},
                    {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
                    {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
@@ -179,7 +187,7 @@
                                 return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>';
                             }else{
                                 if (full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO") {
-                                     return '<center><span class="label label-sm label-success">Proyecto Terminado</span></center><br><center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
+                                     return '<center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
                                  } else {
                                     return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>';
                                  } 

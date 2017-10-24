@@ -475,9 +475,27 @@ class EvaluatorController extends Controller
                             ."</span>";
                     } else {
                         if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                            return "<span class='label label-sm label-success'>"
+                            if($users->anteproyecto->proyecto != null){
+                                if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'EN CURSO')) {
+                                    return "<span class='label label-sm label-warning'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                } else {
+                                    if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'TERMINADO')) {
+                                        return "<span class='label label-sm label-success'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                    } else {
+                                        return "<span class='label label-sm label-info'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                    }
+                                }
+                            }else{
+                                return "<span class='label label-sm label-success'>"
                                 .$users->anteproyecto->NPRY_Estado
-                                ."</span>";
+                                ."</span>";    
+                            }
                         } else {
                             if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
                                 return "<span class='label label-sm label-danger'>"
@@ -528,6 +546,7 @@ class EvaluatorController extends Controller
                                  'jurado2',
                                  'estudiante1',
                                  'estudiante2',
+                                 'proyecto',
                                  'conceptoFinal']);
             }])
             ->get();
@@ -548,9 +567,27 @@ class EvaluatorController extends Controller
                             ."</span>";
                     } else {
                         if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                            return "<span class='label label-sm label-success'>"
+                            if($users->anteproyecto->proyecto != null){
+                                if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'EN CURSO')) {
+                                    return "<span class='label label-sm label-warning'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                } else {
+                                    if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'TERMINADO')) {
+                                        return "<span class='label label-sm label-success'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                    } else {
+                                        return "<span class='label label-sm label-info'>"
+                                        .$users->anteproyecto->proyecto->PRYT_Estado
+                                        ."</span>";
+                                    }
+                                }
+                            }else{
+                                return "<span class='label label-sm label-success'>"
                                 .$users->anteproyecto->NPRY_Estado
-                                ."</span>";
+                                ."</span>";    
+                            }
                         } else {
                             if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
                                 return "<span class='label label-sm label-danger'>"

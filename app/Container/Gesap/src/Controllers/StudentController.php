@@ -98,7 +98,7 @@ class StudentController extends Controller
             $documento->DMNT_Archivo =$nombre;
             $documento->save();
         }
-        return $request;
+        return $request->get('PK_actividad');
     }
     
    

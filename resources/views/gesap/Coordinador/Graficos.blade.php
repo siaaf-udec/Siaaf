@@ -21,239 +21,143 @@
 
 @section('title', '| Dashboard')
 
-@section('page-title', 'PROYECTOS REGISTRADOS')
-
-@section('page-description', 'Listado de anteproyectos y proyectos registrados')
+@section('page-title', 'REPORTES POR GRAFICOS')
 
 @section('content')
 <div class="col-md-12">    
     <div class="row">
-         
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="dashboard-stat2 ">
-                    <div class="display">
-                        <div class="number">
-                            <h3 class="font-green-sharp">
-                                <span data-counter="counterup" data-value="7800">0</span>
-                                <small class="font-green-sharp">$</small>
-                            </h3>
-                            <small>TOTAL PROFIT</small>
-                        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <a target="_blank"  href="{{route('report.all.project')}}">
+            <div class="dashboard-stat2 ">
+                <div class="display">
+                    <div class="number">
                         <div class="icon">
-                            <i class="icon-pie-chart"></i>
+                            <i class="icon-book-open"></i>
                         </div>
+                        <h3 class="font-green-sharp">
+                            <span data-counter="counterup" data-value="{{$anteproyectos}}">0</span>
+                            <small class="font-green-sharp"></small>
+                        </h3>
+                        <small>ANTEPROYECTOS REGISTRADOS</small>
                     </div>
-                    <div class="progress-info">
+                </div>
+                <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-success green-sharp">
+                            <span class="sr-only">100% Registros</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>  
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                <div class="icon">
+                    <i class="icon-dislike"></i>
+                </div>
+                    <h3 class="font-red-haze">
+                        <span data-counter="counterup" data-value="{{$anteproyectosR}}">0</span>
+                    </h3>
+                    <small>PROYECTOS RECHAZADOS</small>
+                </div>
+                
+            </div>
+            <div class="progress-info">
                 <div class="progress">
-                    <span style="width: 76%;" class="progress-bar progress-bar-success green-sharp">
-                        <span class="sr-only">76% progress</span>
+                    <span style="width: {{$anteproyectosRP}}%;" class="progress-bar progress-bar-success red-haze">
+                        <span class="sr-only">{{$anteproyectosRP}}% change</span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> progress </div>
-                    <div class="status-number"> 76% </div>
+                    <div class="status-title"> RECHAZADO </div>
+                    <div class="status-number"> {{$anteproyectosRP}}% </div>
                 </div>
             </div>
         </div>
     </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="dashboard-stat2 ">
             <div class="display">
                 <div class="number">
-                    <h3 class="font-red-haze">
-                        <span data-counter="counterup" data-value="1349">0</span>
-                    </h3>
-                    <small>NEW FEEDBACKS</small>
-                </div>
-                <div class="icon">
+                    <div class="icon">
                     <i class="icon-like"></i>
                 </div>
-            </div>
-            <div class="progress-info">
-                <div class="progress">
-                    <span style="width: 85%;" class="progress-bar progress-bar-success red-haze">
-                        <span class="sr-only">85% change</span>
-                    </span>
-                </div>
-                <div class="status">
-                    <div class="status-title"> change </div>
-                    <div class="status-number"> 85% </div>
-                </div>
-            </div>
-        </div>
-    </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="dashboard-stat2 ">
-            <div class="display">
-                <div class="number">
                     <h3 class="font-blue-sharp">
-                        <span data-counter="counterup" data-value="567"></span>
+                        <span data-counter="counterup" data-value="{{$proyectos}}"></span>
                     </h3>
-                    <small>NEW ORDERS</small>
+                    <small>PROYECTOS APROBADOS</small>
                 </div>
-                <div class="icon">
-                    <i class="icon-basket"></i>
-                </div>
+                
             </div>
             <div class="progress-info">
                 <div class="progress">
-                    <span style="width: 45%;" class="progress-bar progress-bar-success blue-sharp">
-                        <span class="sr-only">45% grow</span>
+                    <span style="width: {{$proyectosP}}%;" class="progress-bar progress-bar-success blue-sharp">
+                        <span class="sr-only">{{$proyectosP}}%</span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> grow </div>
-                    <div class="status-number"> 45% </div>
+                    <div class="status-title"> Aprobado </div>
+                    <div class="status-number"> {{$proyectosP}}% </div>
                 </div>
             </div>
         </div>
     </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="dashboard-stat2 ">
             <div class="display">
                 <div class="number">
+                    <div class="icon">
+                    <i class="icon-check"></i>
+                </div>
                     <h3 class="font-purple-soft">
-                        <span data-counter="counterup" data-value="276"></span>
+                        <span data-counter="counterup" data-value="{{$proyectosT}}"></span>
                     </h3>
-                    <small>NEW USERS</small>
+                    <small>PROYECTOS TERMINADOS</small>
                 </div>
-                <div class="icon">
-                    <i class="icon-user"></i>
-                </div>
+                
             </div>
             <div class="progress-info">
                 <div class="progress">
-                    <span style="width: 57%;" class="progress-bar progress-bar-success purple-soft">
-                        <span class="sr-only">56% change</span>
+                    <span style="width: {{$proyectosTP}}%;" class="progress-bar progress-bar-success purple-soft">
+                        <span class="sr-only">{{$proyectosTP}}% change</span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> change </div>
-                    <div class="status-number"> 57% </div>
+                    <div class="status-title"> Terminados </div>
+                    <div class="status-number"> {{$proyectosTP}}% </div>
                 </div>
             </div>
         </div>
     </div>
-        </div>
+    </div>
     <div class="row">
         <div class="col-lg-6 col-xs-12 col-sm-12">
-            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Estado de Anteproyectos'])
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-bar-chart', 'title' => 'Estado de Anteproyectos'])
                 <div id="anteproyecto-state"  class="CSSAnimationChart"></div>                                
             @endcomponent
         </div>
         <div class="col-lg-6 col-xs-12 col-sm-12">
-            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Estado de Proyectos'])
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-bar-chart', 'title' => 'Estado de Proyectos'])
                 <div id="proyecto-state"  class="CSSAnimationChart"></div>                                
             @endcomponent
     </div>
 
-</div>
-        <div class="row">
         <div class="col-lg-12 col-xs-12 col-sm-12">
-            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'proyectos por jurados'])
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-bar-chart', 'title' => 'proyectos por jurados'])
                 <div id="jurado-state"  class="CSSAnimationChart"></div>                                
             @endcomponent
         </div>
-</div>
-    
-    
-    
-    <div class="row">
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="icon-cursor font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">General Stats</span>
-                                    </div>
-                                    <div class="actions">
-                                        <a href="javascript:;" class="btn btn-sm btn-circle red easy-pie-chart-reload">
-                                            <i class="fa fa-repeat"></i> Reload </a>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="easy-pie-chart">
-                                                <div class="number transactions" data-percent="55">
-                                                    <span>+55</span>% </div>
-                                                <a class="title" href="javascript:;"> Transactions
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="margin-bottom-10 visible-sm"> </div>
-                                        <div class="col-md-4">
-                                            <div class="easy-pie-chart">
-                                                <div class="number visits" data-percent="85">
-                                                    <span>+85</span>% </div>
-                                                <a class="title" href="javascript:;"> New Visits
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="margin-bottom-10 visible-sm"> </div>
-                                        <div class="col-md-4">
-                                            <div class="easy-pie-chart">
-                                                <div class="number bounce" data-percent="46">
-                                                    <span>-46</span>% </div>
-                                                <a class="title" href="javascript:;"> Bounce
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="icon-equalizer font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Server Stats</span>
-                                        <span class="caption-helper">monthly stats...</span>
-                                    </div>
-                                    <div class="tools">
-                                        <a href="" class="collapse"> </a>
-                                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
-                                        <a href="" class="reload"> </a>
-                                        <a href="" class="remove"> </a>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="sparkline-chart">
-                                                <div class="number" id="sparkline_bar5"></div>
-                                                <a class="title" href="javascript:;"> Network
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="margin-bottom-10 visible-sm"> </div>
-                                        <div class="col-md-4">
-                                            <div class="sparkline-chart">
-                                                <div class="number" id="sparkline_bar6"></div>
-                                                <a class="title" href="javascript:;"> CPU Load
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="margin-bottom-10 visible-sm"> </div>
-                                        <div class="col-md-4">
-                                            <div class="sparkline-chart">
-                                                <div class="number" id="sparkline_line"></div>
-                                                <a class="title" href="javascript:;"> Load Rate
-                                                    <i class="icon-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-bar-chart', 'title' => 'proyectos por directores'])
+                <div id="director-state"  class="CSSAnimationChart"></div>                                
+            @endcomponent
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -266,7 +170,6 @@
                 url:route , 
             })
             .done(function( data ) {
-                console.log(JSON.parse(data));
                 chart.setData(JSON.parse(data));
             })
             .fail(function() {
@@ -294,11 +197,22 @@
         var jurados = Morris.Bar({
             element: 'jurado-state',
             data: [0,0],
-            xkey: 'FK_Developer_User_Id',
+            xkey: 'Nombre',
             ykeys: ['value'],
             labels: ['#']
         });
         requestData("{{route('data.chart.jury')}}",jurados);
+        
+        var directores = Morris.Bar({
+            element: 'director-state',
+            data: [0,0],
+            xkey: 'Nombre',
+            ykeys: ['value'],
+            labels: ['#']
+        });
+        requestData("{{route('data.chart.director')}}",directores);
+        
+        
     });
 </script>
 
