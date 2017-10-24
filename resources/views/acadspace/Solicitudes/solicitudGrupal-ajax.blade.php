@@ -25,11 +25,11 @@
     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
         @slot('columns', [
         '#' => ['style' => 'width:20px;'],
+        ' ',
         'Núcleo temático',
         'Estudiantes' => ['class' => 'min-phone-l'],
         'Estado' => ['class' => 'min-phone-l'],
-        'Práctica' => ['class' => 'min-phone-l'],
-        ' '
+        'Práctica' => ['class' => 'min-phone-l']
         ])
     @endcomponent
 </div>
@@ -70,19 +70,18 @@
         table = $('#art-table-ajax');
         url = "{{ route('espacios.academicos.solacad.data') }}";
         columns = [
-
-            {data: 'DT_Row_Index'},
-            {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
-            {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
-            {data: 'estado', name: 'Estado'},
-            {data: 'tipo_prac', name: 'Práctica'},
+            {data: 'DT_Row_Index', "visible": false},
             {
                 "className": 'details-control',
                 "orderable": false,
                 "searchable": false,
                 "data": null,
-                "defaultContent": '<a href="javascript:;" class="btn blue" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
-            }
+                "defaultContent": ''
+            },
+            {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
+            {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
+            {data: 'estado', name: 'Estado'},
+            {data: 'tipo_prac', name: 'Práctica'}
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
@@ -94,12 +93,12 @@
             if (row.child.isShown()) {
                 // This row is already open - close it
                 row.child.hide();
-                tr.removeClass('shown');
+                tr.removeClass('details');
             }
             else {
                 // Open this row
                 row.child(template(row.data())).show();
-                tr.addClass('shown');
+                tr.addClass('details');
             }
         });
 

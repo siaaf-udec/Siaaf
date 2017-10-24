@@ -91,14 +91,11 @@
                 <td class="desc">{{$docente->created_at}}</td>
                 <td class="desc">{{$docente->ASIS_Nombre_Materia}}</td>
                 <td class="desc">{{$docente->ASIS_Cant_Estudiantes}}</td>
-
             </tr>
             @endforeach
             </tbody>
-
     </table>
     <div id="thanks">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
-
 </main>
 </body>
 </html>

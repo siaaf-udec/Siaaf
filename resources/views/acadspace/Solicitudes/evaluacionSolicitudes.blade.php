@@ -17,12 +17,15 @@
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
+    {{--TOAST--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    {{--JQuery datatable and row details--}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
+
 @endpush
 
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
-
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-edit', 'title' => 'Gestión Solicitudes'])
         <div class="col-md-12">
             <div class="clearfix">
@@ -54,10 +57,10 @@
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
+                                    ' ' => ['style' => 'width:20px;'],
                                     'Núcleo temático',
                                     'Estudiantes',
-                                    'Practica',
-                                    ' ' => ['style' => 'width:20px;'],
+                                    'Práctica',
                                     'Acciones'
                                     ])
                                 @endcomponent
@@ -72,10 +75,10 @@
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
+                                    ' ' => ['style' => 'width:20px;'],
                                     'Núcleo temático',
                                     'Estudiantes',
-                                    'Practica',
-                                    ' ' => ['style' => 'width:20px;'],
+                                    'Práctica',
                                     'Acciones'
                                     ])
                                 @endcomponent
@@ -235,13 +238,10 @@
             </div>
         </div>
     @endcomponent
-
 @endsection
 
 
-
 @push('plugins')
-
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -267,7 +267,6 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     {{--Selects--}}
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-
 @endpush
 
 @push('functions')
@@ -303,7 +302,7 @@
                 <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
-                <td>Guia de practica:</td>
+                <td>Guia de práctica:</td>
                 <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>
@@ -341,7 +340,7 @@
                 <td>Hora fin: @{{SOL_Hora_Fin}}</td>
             </tr>
             <tr>
-                <td>Guia de practica:</td>
+                <td>Guia de práctica:</td>
                 <td>@{{SOL_Guia_Practica}}</td>
             </tr>
             <tr>
@@ -375,17 +374,17 @@
             url = "{{ route('espacios.academicos.evalsol.data') }}" + '/' + select;
             columns = [
 
-                {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
-                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
-                {data: 'tipo_prac', name: 'Practica'},
+                {data: 'DT_Row_Index', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
                     "searchable": false,
                     "data": null,
-                    "defaultContent": '<a href="javascript:;" class="btn btn-simple btn-info" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
+                    "defaultContent": ''
                 },
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
+                {data: 'tipo_prac', name: 'Práctica'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>',
                     data: 'action',
@@ -409,17 +408,17 @@
             urlLibre = "{{ route('espacios.academicos.evalsol.cargarDataLibre') }}" + '/' + select;
             columnsLibre = [
 
-                {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
-                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
-                {data: 'tipo_prac', name: 'Practica'},
+                {data: 'DT_Row_Index', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
                     "searchable": false,
                     "data": null,
-                    "defaultContent": '<a href="javascript:;" class="btn btn-simple btn-info" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
+                    "defaultContent": ''
                 },
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo tematico'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
+                {data: 'tipo_prac', name: 'Practica'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>',
                     data: 'action',
@@ -478,12 +477,12 @@
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
-                    tr.removeClass('shown');
+                    tr.removeClass('details');
                 }
                 else {
                     // Open this row
                     row.child(template(row.data())).show();
-                    tr.addClass('shown');
+                    tr.addClass('details');
                 }
             });
             /*Fin detalles de solicitud*/
@@ -495,12 +494,12 @@
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
-                    tr.removeClass('shown');
+                    tr.removeClass('details');
                 }
                 else {
                     // Open this row
                     row.child(templateLibre(row.data())).show();
-                    tr.addClass('shown');
+                    tr.addClass('details');
                 }
             });
             /*Fin detalles de solicitud*/

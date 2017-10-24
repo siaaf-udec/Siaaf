@@ -12,7 +12,6 @@ use App\Container\Acadspace\src\Formatos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
@@ -57,13 +56,11 @@ class formatosController extends Controller
 
     /**
      * Funcion para registrar un nuevo formato academico mediante ajax
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function store(Request $request)
     {
-        /* $path = public_path()."storage.app.public.Acadspace.Formatos.";
-         $files = $request->file('file');*/
         $id = Auth::id();
         if ($request->ajax() && $request->isMethod('POST')) {
             $model = new formatos();//Crea nuevo modelo
@@ -78,6 +75,9 @@ class formatosController extends Controller
             $model->FAC_Estado = 0;
             $model->FK_FAC_Id_Secretaria = $id;
             $model->save();
+            //Envio de correo
+            Mail::to($request['email'])->send(new EmailAcadspace("Nuevo formato academico", "Ha recibido un nuevo formato academico"));
+
             return AjaxResponse::success(
             //Envia notificacion de registro satisfactorio
                 '¡Bien hecho!',
@@ -94,9 +94,9 @@ class formatosController extends Controller
 
     /**
      * Funcion para editar el estado de la solicitud, 0 => sin revisar; 1=> editada
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)
     {
@@ -119,9 +119,9 @@ class formatosController extends Controller
 
     /**
      * Funcion para descargar el archivo que se ha cargado en la solicitud
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function descargar_publicacion(Request $request, $id)
     {
@@ -136,17 +136,15 @@ class formatosController extends Controller
 
     /**
      * funcion para cargar las solicitudes realizadas y saber el estado actual en el que esta
-     * @param \Illuminate\Http\Request $request
-     * @return \Yajra\DataTables\DataTables | \Illuminate\Http\Response
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Yajra\DataTables\
      */
     public function data(Request $request)
     {
         //Recibe peticion Ajax
         if ($request->ajax() && $request->isMethod('GET')) {
-            //$solic = formatos::all();
             $id = Auth::id();//Trae ID usuario
             $solic = formatos::where('FK_FAC_Id_Secretaria', $id)->get();//Trae solicitudes por id_secretaria
-
             return DataTables::of($solic)
                 //Realiza consulta ide de estado y carga con nombre
                 ->addColumn('estado', function ($solic) {
@@ -175,9 +173,9 @@ class formatosController extends Controller
     }
 
     /**
-     * funcion para cargar las solicitudes existentes sin editar en la tabla
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
+     * Funcion para cargar las solicitudes existentes sin editar en la tabla
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Yajra\DataTables\
      */
     public function dataListSol(Request $request)
     {
@@ -194,7 +192,6 @@ class formatosController extends Controller
             return DataTables::of($solic)
                 ->addIndexColumn()
                 ->make(true);//Retorna tabla creada
-
         }
         //Envia notificacion de no recibir peticion ajax
         return AjaxResponse::fail(

@@ -25,12 +25,12 @@
 
                     <div class="form-body">
                         {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
-                                                        ['help' => 'Digite el codigo','icon'=>'fa fa-credit-card'] ) !!}
+                                                        ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
 
                         {!! Field::select('SOL_carrera',
                                           ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
                                           '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
-                                          '5' => 'Psicología', '6' => 'Contaduría'],
+                                          '5' => 'Psicología', '6' => 'Contaduría','7' => 'Otro'],
                                           null,
                                           [ 'label' => 'Programa :']) !!}
 
@@ -39,7 +39,7 @@
                                           ['Aulas de computo' => 'Aulas de computo',
                                             'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
                                             'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                             null,
+                                          null,
                                           [ 'label' => 'Espacio academico:']) !!}
 
                         {!! Field::select(

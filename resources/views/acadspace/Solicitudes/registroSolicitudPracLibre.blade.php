@@ -25,15 +25,15 @@
                                                         'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
                                                         'Laboratorio psicologia' => 'Laboratorio psicología'],
                                                         null,
-                                                        ['label' => 'Seleccione el espacio academico que requiere:']) !!}
+                                                        ['label' => 'Seleccione el espacio académico que requiere:']) !!}
 
                                 {!! Field::select('SOL_programa',
                                                     ['Ingenieria de sistemas' => 'Ingeniería de sistemas',
                                                      'Ingenieria Ambiental' => 'Ingeniería Ambiental',
                                                      'Ingenieria agronomica' => 'Ingeniería agronomica',
                                                      'Psicologia' => 'Psicología',
-                                                      'Administracion de empresas' => 'Administraciín de empresas',
-                                                      'Contaduria' => 'Contaduría'],
+                                                      'Administracion de empresas' => 'Administración de empresas',
+                                                      'Contaduria' => 'Contaduría',],
                                                     null,
                                                     [ 'label' => 'Programa al que pertenece:']) !!}
 
@@ -52,7 +52,7 @@
                                 {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_soft">
-                                    {!! Field::select('Seleccione software entre los disponibles actualmente:',$software,
+                                    {!! Field::select('Seleccione software entre los disponiles actualmente:',$software,
                                     ['name' => 'SOL_NombSoft'])
                                     !!}
                                 </div>
@@ -65,8 +65,8 @@
 
 
                                 {!! Field::date('SOL_fecha_inicial',
-                                ['label' => 'Fecha inicial', 'required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
-                                ['icon' => 'fa fa-calendar', 'label' => 'Seleccione la fecha en la que requiere el espacio:']) !!}
+                                ['label' => 'Fecha:', 'required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                ['icon' => 'fa fa-calendar']) !!}
 
                                 {!! Field::text(
                                 'SOL_Hora_Inicio',

@@ -45,7 +45,7 @@
     <div id="details" class="clearfix">
         <div id="client">
             <div class="to">REPORTE GENERADO POR:</div>
-            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Auxliar de Apoyo Academico' }}</h2>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Auxliar de Apoyo Académico' }}</h2>
             <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
             <div class="email"><a
                         href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a>

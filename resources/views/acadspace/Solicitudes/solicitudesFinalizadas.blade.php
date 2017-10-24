@@ -21,6 +21,8 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    {{--JQuery datatable and row details--}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('content')
@@ -45,10 +47,10 @@
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
+                    ' ' => ['style' => 'width:20px;'],
                     'Núcleo temático',
                     'Sala',
                     'Práctica',
-                    ' ' => ['style' => 'width:20px;'],
                     'Acciones'
                     ])
                 @endcomponent
@@ -59,24 +61,6 @@
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 
 @push('plugins')
     <!-- SCRIPT Confirmacion Sweetalert -->
@@ -97,24 +81,7 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-@push('functions')
+{@push('functions')
     {{--Selects--}}
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!--HANDLEBAR-->
@@ -173,17 +140,17 @@
             url = "{{ route('espacios.academicos.evalsol.mostrarFinalizados') }}" + '/' + select;
             columns = [
 
-                {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
-                {data: 'FK_SOL_Id_Sala', name: 'Sala'},
-                {data: 'tipo_prac', name: 'Práctica'},
+                {data: 'DT_Row_Index', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
                     "searchable": false,
                     "data": null,
-                    "defaultContent": '<a href="javascript:;" class="btn btn-simple btn-info" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
+                    "defaultContent": ''
                 },
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
+                {data: 'FK_SOL_Id_Sala', name: 'Sala'},
+                {data: 'tipo_prac', name: 'Práctica'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
                     data: 'action',
@@ -288,14 +255,8 @@
                             swal("Oops", "Ha ocurrido un error", "error");
                         });
                 });
-
-
             });
-
-
         });
-
-
     </script>
 @endpush
 @endpermission

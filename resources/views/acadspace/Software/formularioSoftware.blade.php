@@ -12,13 +12,14 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    {{--Row details --}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th', 'title' => 'Gestión Software'])
-
             <div class="clearfix">
             </div>
             <br>
@@ -103,12 +104,10 @@
             </div>
         @endcomponent
     </div>
-
     {{-- END HTML SAMPLE --}}
 @endsection
 
 @push('plugins')
-
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -135,16 +134,16 @@
 @endpush
 
 @push('functions')
+    {{--Validation--}}
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-    <script>
 
+    <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
 
@@ -153,7 +152,6 @@
             table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.soft.data') }}";
             columns = [
-
                 {data: 'DT_Row_Index'},
                 {data: 'SOF_Nombre_Soft', name: 'Nombre'},
                 {data: 'SOF_Version', name: 'Versión'},
@@ -174,6 +172,7 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
             /*ELIMINAR REGISTROS*/
             table.on('click', '.remove', function (e) {
                 e.preventDefault();

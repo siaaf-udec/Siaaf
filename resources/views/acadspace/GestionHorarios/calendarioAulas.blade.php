@@ -6,7 +6,6 @@
  */-->
 @permission('auxapoyo')
 @extends('material.layouts.dashboard')
-
 @push('styles')
     {{--Fullcalendar--}}
     <link href="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
@@ -27,23 +26,22 @@
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
-
     {{--Estilo agregado para drag and drop zone--}}
     <link href="{{asset('assets/main/acadspace/css/componentsacadspace.css')}}" rel="stylesheet"
           type="text/css"/>
-
-
+    {{--JQuery datatable and row details--}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
+
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-calendar', 'title' => 'Gestión espacios académicos'])
-
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
             <div class="panel-body">
                 <!-- Main content -->
                 <section class="content">
                     <div class="col-md-12">
-                        <div class="row">
+                        <div class="note">
                             {!! Field::select('SOL_laboratorios',
                                                             ['Aulas de computo' => 'Aulas de computo',
                                                             'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
@@ -57,140 +55,153 @@
                             <br>
                             <br>
                             <br>
-
                             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                                 @slot('columns', [
                                 '#' => ['style' => 'width:20px;'],
+                                '',
                                 'Nucleo',
                                 'Estudiantes',
                                 'Practica',
-                                '',
                                 'Acciones'
                                 ])
                             @endcomponent
                         </div>
                     </div>
-
-                    {{--PRUEBA--}}
-
-
+                    {{--Calendar--}}
                     <div class="col-md-12">
-                        <br>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="portlet light portlet-fit  calendar">
-                                <div class="portlet-body">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12">
-                                            <!-- BEGIN DRAGGABLE EVENTS PORTLET-->
-                                            <div class="box-header with-border">
-                                                <h4 class="box-title">Eventos</h4>
-                                            </div>
+                        <div class="note">
+                            <br>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="portlet light portlet-fit  calendar">
+                                    <div class="portlet-body">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-12">
+                                                <!-- BEGIN DRAGGABLE EVENTS PORTLET-->
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title">Eventos</h4>
+                                                </div>
 
-                                            <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                                                <ul class="fc-color-picker" id="color-chooser">
-                                                    <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-green" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-red" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-fuchsia" href="#"><i
-                                                                    class="fa fa-square"></i></a></li>
-                                                    <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                    <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <form class="inline-form">
-                                                <div class="input-group">
-                                                    <input id="new-event" type="text" class="form-control"
-                                                           placeholder="Titulo del evento">
+                                                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                                                    <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                                                    <ul class="fc-color-picker" id="color-chooser">
+                                                        <li><a class="text-aqua" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-blue" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-light-blue" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-teal" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-yellow" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-orange" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-green" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-lime" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-red" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-purple" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-fuchsia" href="#"><i
+                                                                        class="fa fa-square"></i></a></li>
+                                                        <li><a class="text-muted" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                        <li><a class="text-navy" href="#"><i
+                                                                        class="fa fa-square"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <form class="inline-form">
+                                                    <div class="input-group">
+                                                        <input id="new-event" type="text" class="form-control"
+                                                               placeholder="Titulo del evento">
 
-                                                    <div class="input-group-btn">
-                                                        <button id="add-new-event" type="button"
-                                                                class="btn btn-primary btn-flat">
-                                                            Agregar
-                                                        </button>
+                                                        <div class="input-group-btn">
+                                                            <button id="add-new-event" type="button"
+                                                                    class="btn btn-primary btn-flat">
+                                                                Agregar
+                                                            </button>
+                                                        </div>
+                                                        <!-- /btn-group -->
                                                     </div>
-                                                    <!-- /btn-group -->
-                                                </div>
 
 
-                                                <hr/>
-                                                <div class="box-body">
-                                                    <div id="external-events">
+                                                    <hr/>
+                                                    <div class="box-body">
+                                                        <div id="external-events">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="box-body">
-                                                    <!-- the events -->
+                                                    <div class="box-body">
+                                                        <!-- the events -->
 
-                                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"
-                                                           for="drop-remove">
-                                                        Remover al asignar
-                                                        <input type="checkbox" class="group-checkable"
-                                                               id="drop-remove"/>
-                                                        <span></span>
-                                                    </label>
+                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"
+                                                               for="drop-remove">
+                                                            Remover al asignar
+                                                            <input type="checkbox" class="group-checkable"
+                                                                   id="drop-remove"/>
+                                                            <span></span>
+                                                        </label>
 
-                                                </div>
-                                            </form>
-                                            <!-- /.box-body -->
-                                            <div id="event_box" class="margin-bottom-10"></div>
-                                            <hr class="visible-xs"/>
-                                            <span id="AE_btn_pdf" class="btn blue"><input type="hidden" id="zz_pdf"
-                                                                                          value=""/>Generar PDF</span>
+                                                    </div>
+                                                </form>
+                                                <!-- /.box-body -->
+                                                <div id="event_box" class="margin-bottom-10"></div>
+                                                <hr class="visible-xs"/>
+                                                <span id="AE_btn_pdf" class="btn blue"><input type="hidden"
+                                                                                              id="zz_pdf"
+                                                                                              value=""/>Generar PDF</span>
+                                            </div>
+                                            <!-- END DRAGGABLE EVENTS PORTLET-->
+                                            <div class="col-md-9 col-sm-12">
+                                                <div id="calendar" class="has-toolbar"></div>
+                                            </div>
                                         </div>
-                                        <!-- END DRAGGABLE EVENTS PORTLET-->
-                                        <div class="col-md-9 col-sm-12">
-                                            <div id="calendar" class="has-toolbar"></div>
-                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- /.content -->
+                </section>    <!-- /.content -->
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->
     @endcomponent
-
 @endsection
+
 @push('plugins')
+    {{--Fullcalendar--}}
     <script src="{{ asset('assets/global/plugins/fullcalendar/lib/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/fullcalendar.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/fullcalendar/lang-all.js') }}" type="text/javascript"></script>
+    {{--Jquery--}}
     <script src="{{asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
-
+    {{--DatePicker--}}
     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"
             type="text/javascript"></script>
+    {{--Validations--}}
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
             type="text/javascript"></script>
+    {{--Datatable--}}
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-    <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"
@@ -206,9 +217,11 @@
 @endpush
 
 @push('functions')
+    {{--Handlebars--}}
     <script src="{{ asset('assets/main/acadspace/js/handlebars.js') }}"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    {{--Row Details--}}
     <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
@@ -236,8 +249,6 @@
     <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
-
-
             $.fn.select2.defaults.set("theme", "bootstrap");
             $(".pmd-select2").select2({
                 allowClear: true,
@@ -255,17 +266,17 @@
 
             url = "{{ route('espacios.academicos.acadcalendar.data' ) }}" + '/' + 0;
             columns = [
-                {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo'},
-                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
-                {data: 'tipo_prac', name: 'Practica'},
+                {data: 'DT_Row_Index', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
                     "searchable": false,
                     "data": null,
-                    "defaultContent": '<a href="javascript:;" class="btn btn-simple btn-info" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
+                    "defaultContent": ''
                 },
+                {data: 'SOL_Nucleo_Tematico', name: 'Nucleo'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
+                {data: 'tipo_prac', name: 'Practica'},
                 {
                     defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>',
                     data: 'action',
@@ -328,12 +339,12 @@
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
-                    tr.removeClass('shown');
+                    tr.removeClass('details');
                 }
                 else {
                     // Open this row
                     row.child(template(row.data())).show();
-                    tr.addClass('shown');
+                    tr.addClass('details');
                 }
             });
             /*Fin detalles de solicitud*/
@@ -375,7 +386,6 @@
 
             });
             /*fin terminar proceso datatable*/
-
 
             $(function () {
                 /* initialize the external events

@@ -22,6 +22,8 @@
           rel="stylesheet" type="text/css"/>
     {{--Toast--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    {{--JQuery datatable and row details--}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('content')
@@ -37,9 +39,9 @@
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
-                                    class="fa fa-plus"></i>Practica Grupal</a> <a href="javascript:;"
+                                    class="fa fa-plus"></i>Práctica Grupal</a> <a href="javascript:;"
                                                                                   class="btn btn-simple btn-success btn-icon createLib"><i
-                                    class="fa fa-plus"></i>Practica Libre</a></div>
+                                    class="fa fa-plus"></i>Práctica Libre</a></div>
 
                 </div>
             </div>
@@ -51,11 +53,11 @@
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
             @slot('columns', [
             '#' => ['style' => 'width:20px;'],
+            ' ' => ['style' => 'width:20px;'],
             'Núcleo temático',
             'Estudiantes' => ['class' => 'min-phone-l'],
             'Estado' => ['class' => 'min-phone-l'],
-            'Práctica' => ['class' => 'min-phone-l'],
-            ' '
+            'Práctica' => ['class' => 'min-phone-l']
             ])
         @endcomponent
     </div>
@@ -145,18 +147,18 @@
             url = "{{ route('espacios.academicos.solacad.data') }}";
             columns = [
 
-                {data: 'DT_Row_Index'},
-                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
-                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
-                {data: 'estado', name: 'Estado'},
-                {data: 'tipo_prac', name: 'Práctica'},
+                {data: 'DT_Row_Index', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
                     "searchable": false,
                     "data": null,
-                    "defaultContent": '<a href="javascript:;" class="btn blue" data-toggle="confirmation"><i class="glyphicon glyphicon-zoom-in"></i></a>'
-                }
+                    "defaultContent": ''
+                },
+                {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
+                {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
+                {data: 'estado', name: 'Estado'},
+                {data: 'tipo_prac', name: 'Práctica'}
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
@@ -168,12 +170,12 @@
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
-                    tr.removeClass('shown');
+                    tr.removeClass('details');
                 }
                 else {
                     // Open this row
                     row.child(template(row.data())).show();
-                    tr.addClass('shown');
+                    tr.addClass('details');
                 }
             });
             $(".create").on('click', function (e) {

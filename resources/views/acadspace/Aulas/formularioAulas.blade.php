@@ -101,7 +101,6 @@
             </div>
     </div>
     @endcomponent
-
 @endsection
 
 
@@ -134,6 +133,7 @@
 @endpush
 
 @push('functions')
+    {{--Validacion--}}
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
@@ -141,8 +141,8 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-    <script>
 
+    <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
             //Aplicando style a select

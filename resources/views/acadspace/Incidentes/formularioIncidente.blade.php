@@ -21,9 +21,8 @@
           rel="stylesheet" type="text/css"/>
     {{--toast--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/main/acadspace/css/jquery.dataTables.css') }}" rel="stylesheet" type="text/css"/>
+    {{--JQuery datatable and row details--}}
     <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
-
 @endpush
 
 @section('content')
@@ -211,8 +210,6 @@
                     render: null,
                     responsivePriority: 2
                 }
-
-
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();

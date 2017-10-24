@@ -121,8 +121,8 @@
                         <span class="title">Docentes</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['espacios.academicos.report.indexEst'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.report.indexEst') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['espacios.academicos.report.indexPrueba'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.report.indexPrueba') }}" class="nav-link nav-toggle">
                         <i class="fa fa-users"></i>
                         <span class="title">Estudiantes</span>
                     </a>

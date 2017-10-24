@@ -28,8 +28,8 @@ class IncidentesController extends Controller
 
     /**
      * Funcion registrar incidente retorna un mensaje Ajax
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function regisIncidente(Request $request)
     {
@@ -55,8 +55,8 @@ class IncidentesController extends Controller
 
     /**
      * Funcion cargar datatable con incidentes registrados
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \Yajra\DataTables\DataTables
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function data(Request $request)
     {
@@ -77,9 +77,9 @@ class IncidentesController extends Controller
 
     /**
      * Funcion eliminar incidentes registrados
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {

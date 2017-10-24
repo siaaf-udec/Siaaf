@@ -52,7 +52,7 @@ var FormDropzone = function () {
                                 }
                             }
                             if (myDropzone.files.length < 1) {
-                                UIToastr.init('error', 'Campo Requerido', 'El archivo de formato es obligatorio.');
+                                UIToastr.init('error', 'Campos Requerido', 'Verifique los campos.');
                             }
                         }
                         if (type_crud == 'UPDATE') {

@@ -2,18 +2,13 @@
 @permission('auxapoyo')
 @section('page-title', 'Reportes:')
 @push('styles')
-    <!-- toastr Styles -->
-    <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"
-          rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}"
-          rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
-
-    <link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet"
+    {{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
           type="text/css"/>
-    <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet"
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
           type="text/css"/>
-
+    {{--Date--}}
     <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet"
           type="text/css"/>
 @endpush
@@ -23,14 +18,14 @@
             <div class="row">
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'target'=>'_blank', 'url' => '/forms']) !!}
+                    {!! Form::open (['id'=>'form-reporte', 'method'=>'POST', 'route'=> ['espacios.academicos.report.repCarr'], 'target'=>'_blank']) !!}
                     <div class="form-body">
                         {!! Field::select('SOL_carrera',
                                       ['1' => 'Ingeniería de Sistemas', '2' => 'Ingeniería Ambiental',
-                                      '3' => 'Ingeniería Agronomica', '4' => 'Administración',
+                                      '3' => 'Ingeniería Agronomica', '4' => 'Administración de empresas',
                                       '5' => 'Psicología', '6' => 'Contaduría'],
                                       null,
-                                      [ 'label' => 'Seleccione la carrera :']) !!}
+                                      [ 'label' => 'Carrera:']) !!}
 
                         {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
                         ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
@@ -55,68 +50,58 @@
 @endsection
 
 @push('plugins')
+    {{--Select 2--}}
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    {{--Moment--}}
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    {{--Daterange--}}
     <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
             type="text/javascript"></script>
+    {{-- wizard Scripts --}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"
+            type="text/javascript"></script>
+    {{--MaxLength--}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
+            type="text/javascript"></script>
+    {{--Validation--}}
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
             type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}"
-            type="text/javascript"></script>@endpush
+@endpush
 
 @push('functions')
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
-    </script>
-
+    {{--Validation--}}
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-    <!-- Estandar Mensajes -->
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <!-- Estandar Datatable -->
-    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+    {{--Form wizard--}}
+    <script src="{{ asset('assets/main/acadspace/js/form-wizard.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('input[name="date_range"]').daterangepicker();
-
-            var createUsers = function () {
-                return {
-                    init: function () {
-
-                        var route = '{{ route('espacios.academicos.report.repCarr') }}';
-                        var type = 'POST';
-                        var async = async || false;
-
-                        var formData = new FormData();
-                        formData.append('SOL_carrera', $('select[name="SOL_carrera"]').val());
-                        formData.append('date_range', $('input:text[name="date_range"]').val());
-
-                        $.ajax({
-                            url: route,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            data: formData,
-                            processData: false,
-                            async: false
-                        });
-                    }
+            /*Select*/
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
                 }
+            });
+            /*Daterange*/
+            moment.locale('es');
+            $('input[name="date_range"]').daterangepicker();
+            /*Wizard*/
+            var createUsers = function () {
             };
-            var form_edit = $('#form_sol_create');
+            var form_edit = $('#form-reporte');
             var rules_edit = {
-                SOL_carrera: {required: true},
-                date_range: {required: true}
-
+                SOL_carrera: {required: true}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createUsers());
         });
-
-
     </script>
 @endpush
 @endpermission

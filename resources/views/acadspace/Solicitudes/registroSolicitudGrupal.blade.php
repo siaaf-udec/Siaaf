@@ -9,6 +9,7 @@
             ]
 
         ])
+
         <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}"
               rel="stylesheet" type="text/css"/>
         <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}"
@@ -33,7 +34,7 @@
                                                      'Ingenieria Ambiental' => 'Ingeniería Ambiental',
                                                      'Ingenieria agronomica' => 'Ingeniería agronomica',
                                                      'Psicologia' => 'Psicología',
-                                                      'Administracion de empresas' => 'Administraciín de empresas',
+                                                      'Administracion de empresas' => 'Administración de empresas',
                                                       'Contaduria' => 'Contaduría',
                                                       'Otro' => 'Otro'],
                                                     null,
@@ -47,12 +48,12 @@
                                 </div>
 
                                 {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                ['help' => 'Digite el nucleo tematico.','icon'=>'fa fa-building-o'] ) !!}
+                                ['help' => 'Digite el núcleo temático.','icon'=>'fa fa-building-o'] ) !!}
 
                                 {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_soft">
-                                    {!! Field::select('Seleccione software entre los disponibles actualmente:',$software,
+                                    {!! Field::select('Seleccione software entre los disponiles actualmente:',$software,
                                     ['name' => 'SOL_NombSoft'])
                                     !!}
                                 </div>
@@ -64,7 +65,7 @@
                                 ['icon'=>'fa fa-group'] ) !!}
 
                                 {!! Field::checkboxes('SOL_Dias',
-                                ['Lunes' => 'Lunes', 'Martes' => 'Martes', 'Miercoles' => 'Miércoles', 'Jueves' => 'Jueves', 'Viernes' => 'Viernes','Sabado' => 'Sábado'],null,
+                                ['Lunes' => 'Lunes', 'Martes' => 'Martes', 'Miercoles' => 'Miercoles', 'Jueves' => 'Jueves', 'Viernes' => 'Viernes','Sabado' => 'Sabado'],null,
                                 ['inline', 'label' => 'Seleccione los días que requiere el espacio:']) !!}
 
                                 {!! Field::text(
@@ -104,10 +105,12 @@
 </div>
 {{-- END HTML SAMPLE --}}
 
-
+{{--Timepicker--}}
 <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"
         type="text/javascript"></script>
+{{--Wizard--}}
 <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
+{{--Date Range--}}
 <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
         type="text/javascript"></script>
 
@@ -167,7 +170,7 @@
                     if (horaInicio >= horaFin) {
                         UIToastr.init('error', '¡Error!', 'Verifique los campos de hora.');
                     } else if (selected == null) {
-                        UIToastr.init('error', '¡Error!', 'Verifique los dias seleccionados.');
+                        UIToastr.init('error', '¡Error!', 'Verifique los días seleccionados.');
                     } else {
                         var route = '{{ route('espacios.academicos.solacad.registroSolicitud') }}';
                         var type = 'POST';

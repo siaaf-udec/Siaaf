@@ -1,5 +1,4 @@
 @extends('material.layouts.dashboard')
-
 @section('page-title', 'Control Docente:')
 @push('styles')
     {{--TOAST--}}
@@ -25,8 +24,8 @@
 
                     <div class="form-body">
 
-                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'11','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la identificación del docente','icon'=>'fa fa-credit-card'] ) !!}
+                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la identificación','icon'=>'fa fa-credit-card'] ) !!}
 
 
                         {!! Field::select('SOL_carrera',
@@ -44,14 +43,14 @@
                                 ['Aulas de computo' => 'Aulas de computo',
                                     'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
                                     'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                    null,
+                                null,
                                 [ 'label' => 'Espacio académico:']) !!}
 
                         {!! Field::select(
                                                           'aula', null,
                                                           ['name' => 'aula']) !!}
 
-                        {!! Field::text('SOL_cant_estudiantes',null,['label'=>'Cantidad de estudiantes:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field::text('SOL_cant_estudiantes',null,['label'=>'Cantidad de estudiantes:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'2','autocomplete'=>'off'],
                         ['icon'=>'fa fa-group'] ) !!}
 
                         <div class="form-actions">
@@ -186,7 +185,7 @@
                 materia: {required: true, minlength: 3},
                 SOL_carrera: {required: true},
                 SOL_cant_estudiantes: {required: true, number: true, maxlength: 2},
-                aulas: {required: true}
+                aula: {required: true}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createUsers());
 

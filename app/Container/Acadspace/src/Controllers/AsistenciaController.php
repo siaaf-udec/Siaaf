@@ -40,7 +40,7 @@ class AsistenciaController extends Controller
      * disponibles de acuerdo al espacio
      * @param \Illuminate\Http\Request $request
      * @param varchar $espacio
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarSalasAsitencia(Request $request, $espacio)
     {
@@ -49,13 +49,17 @@ class AsistenciaController extends Controller
                 ->get();
             return response()->json($aula);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
     /**
      * Registra ingreso del estudiante
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function regisAsistenciaEst(Request $request)
     {
@@ -87,8 +91,8 @@ class AsistenciaController extends Controller
 
     /**
      * Registra ingreso del docente
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function regisAsistenciaDoc(Request $request)
     {

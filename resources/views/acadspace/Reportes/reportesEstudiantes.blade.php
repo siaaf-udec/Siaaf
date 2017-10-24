@@ -99,7 +99,7 @@
         </tr>
         <tr>
             <td class="no">{{$cont++}}</td>
-            <td class="unit">{{'ADMINISTRACIÓN'}}</td>
+            <td class="unit">{{'ADMINISTRACIÓN DE EMPRESAS'}}</td>
             <td class="unit">{{$totAdminGrup}}</td>
             <td class="unit">{{$totAdminLibre}}</td>
             <td class="unit">{{$totAdminLibre+$totAdminGrup}}</td>

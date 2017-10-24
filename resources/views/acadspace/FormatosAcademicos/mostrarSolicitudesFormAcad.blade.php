@@ -1,6 +1,5 @@
 @permission('administ')
 @extends('material.layouts.dashboard')
-
 @push('styles')
     <!-- MODAL -->
     {{--Estilos a usar en el formulario--}}
@@ -12,6 +11,7 @@
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
+    {{--Toast--}}
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
 
@@ -48,38 +48,12 @@
             </div>
             <div class="clearfix">
             </div>
-
-    </div>
-    @endcomponent
-    </br>
-    </br>
-    </br>
-    </br>
-
+        @endcomponent
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection
 
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
-
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -94,8 +68,8 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-    <script>
 
+    <script>
         /*PINTAR TABLA*/
         $(document).ready(function () {
             var table, url, columns;
@@ -106,11 +80,11 @@
                 //Carga los datos que ha traido el control
                 {data: 'DT_Row_Index'},
                 {data: 'PK_FAC_Id_Formato', name: 'id_documento', "visible": false},
-                {data: 'FAC_Titulo_Doc', name: 'Formato Academico'},
+                {data: 'FAC_Titulo_Doc', name: 'Formato Académico'},
                 {data: 'created_at', name: 'Fecha'},
                 {
                     data: function (data, type, dataToSet) {
-                        return data.name + " " + data.lastname;
+                        return data.user.name + " " + data.user.lastname;
                     }, name: 'Secretaria'
                 },
                 {
@@ -173,12 +147,8 @@
                         }
                     }
                 });
-
-
             });
         });
-
-
     </script>
 @endpush
 @endpermission
