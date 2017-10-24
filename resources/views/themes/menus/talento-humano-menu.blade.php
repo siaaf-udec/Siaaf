@@ -6,11 +6,11 @@
     </a>
     <ul class="sub-menu">
         @permission('FUNC_RRHH')
-        <li class="nav-item {{ active(['talento.humano.empleado.*'], 'start active open') }}">
+        <li class="nav-item {{ active(['talento.humano.empleado.*', 'talento.humano.*'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-group"></i>
                 <span class="title">Personal</span>
-                <span class="arrow {{ active(['talento.humano.empleado.*'], 'open') }}"></span>
+                <span class="arrow {{ active(['talento.humano.empleado.*', 'talento.humano.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.empleado.index'], 'start active open') }} ">
@@ -70,7 +70,7 @@
         </li>
         <li class="nav-item">
             <li class="nav-item {{ active(['talento.humano.evento.index'], 'start active open') }}">
-                <a href="{{ route('talento.humano.evento.index') }}" class="nav-link nav-toggle">
+                <a href="{{ route('talento.humano.evento.index') }}" class="nav-link">
                     <i class="fa fa-book"></i>
                     <span class="title">Eventos</span>
                 </a>
@@ -90,7 +90,7 @@
                         <span class="title">Historial de la documentación</span>
                     </a>
                 </li>
-                <li class="nav-item" {{ active(['talento.humano.empleado.tablaEmpleadosRetirados'], 'start active open') }}>
+                <li class="nav-item {{ active(['talento.humano.empleado.tablaEmpleadosRetirados'], 'start active open') }}">
                     <a href="{{ route('talento.humano.empleado.tablaEmpleadosRetirados') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
                         <span class="title">Historial Empleados</span>
@@ -100,27 +100,27 @@
         </li>
 
         <li class="nav-item {{ active(['talento.humano.Tinduccion'], 'start active open') }}">
-            <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link nav-toggle">
+            <a href="{{ route('talento.humano.Tinduccion') }}" class="nav-link">
                 <i class="fa fa-newspaper-o"></i>
                 <span class="title">Inducción</span>
             </a>
         </li>
         <li class="nav-item {{ active(['talento.humano.permisos.listaEmpleados'], 'start active open') }}">
-            <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link nav-toggle">
+            <a href="{{ route('talento.humano.permisos.listaEmpleados') }}" class="nav-link">
                 <i class="fa fa-file-o"></i>
                 <span class="title">Permisos</span>
             </a>
         </li>
 
         <li class="nav-item {{ active(['talento.humano.calendario.index'], 'start active open') }}">
-            <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link nav-toggle">
+            <a href="{{ route( 'talento.humano.calendario.index') }}" class="nav-link">
                 <i class="fa fa-calendar"></i>
                 <span class="title">Calendario</span>
 
             </a>
         </li>
         <li class="nav-item {{ active(['talento.humano.empleado.Reportes'], 'start active open') }}">
-            <a href="{{ route( 'talento.humano.empleado.Reportes') }}" class="nav-link nav-toggle">
+            <a href="{{ route( 'talento.humano.empleado.Reportes') }}" class="nav-link">
                 <i class="fa fa-bar-chart"></i>
                 <span class="title">Reportes</span>
             </a>
