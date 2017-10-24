@@ -42,6 +42,13 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+        });
+        
         var createAccion = function () {
             return {
                 init: function () {
@@ -99,11 +106,15 @@
         var form = $('#form_ingreso_create');
 
         var formRules = {
-            CodigoUsuario: {required: true, maxlength: 9, minlength: 9, number: true},
-            PlacaMoto: {required: true, maxlength: 6, minlength: 5},
+            CodigoUsuario: {required: true, maxlength: 9, minlength: 9, number: true, noSpecialCharacters:true},
+            PlacaMoto: {required: true, maxlength: 6, minlength: 5, noSpecialCharacters:true},
 
         };
-        FormValidationMd.init(form, formRules, false, createAccion());
+        var formMessage = {
+            CodigoUsuario: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            PlacaMoto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+        };
+        FormValidationMd.init(form, formRules, formMessage, createAccion());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

@@ -164,7 +164,13 @@
             }
         });
 
-
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+        });
+        
         //////////////////////FUNCION DE EDITAR//////////////////////////////////////
 
         var editarUsers = function () {
@@ -222,16 +228,29 @@
 
         var form = $('#form_update_usuario');
         var formRules = {
-            CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true},
+            CU_UrlFoto: {required: true, extension: "jpg|png"},
+            CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
             PK_CU_Codigo: {required: true, minlength: 9, maxlength: 9, number: true},
-            CU_Nombre1: {required: true},
-            CU_Apellido1: {required: true},
+            CU_Nombre1: {required: true, letters: true},
+            CU_Nombre2: {letters: true},
+            CU_Apellido1: {required: true, letters: true},
+            CU_Apellido2: {letters: true},
+            CU_Telefono: {required: true, noSpecialCharacters:true},
             CU_Correo: {required: true, email: true},
-            CU_Direccion: {required: true},
+            CU_Direccion: {required: true, noSpecialCharacters:true},
             FK_CU_IdDependencia: {required: true},
             FK_CU_IdEstado: {required: true},
+            acceptTeminos: {required: true},
         };
-        FormValidationMd.init(form, formRules, false, editarUsers());
+        var formMessage = {
+            CU_Nombre1: {letters: 'Solo se pueden ingresar letras'},
+            CU_Nombre2: {letters: 'Solo se pueden ingresar letras'},
+            CU_Apellido1: {letters: 'Solo se pueden ingresar letras'},
+            CU_Apellido2: {letters: 'Solo se pueden ingresar letras'},
+            CU_Telefono: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CU_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+        };
+        FormValidationMd.init(form, formRules, formMessage, editarUsers());
 
         /////////////////////FIN FUNCION EDITAR ////////////////////////////////////////////
 

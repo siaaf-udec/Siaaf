@@ -213,7 +213,12 @@
             yearSuffix: ''
         });
         /*FIN Configuracion de input tipo fecha*/
-
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+        });
 
         var updateMoto = function () {
             return {
@@ -265,14 +270,21 @@
         var form = $('#form_moto_update');
         var formRules = {
             CM_UrlFoto: {required: true},
-            CM_Placa: {minlength: 5, maxlength: 6, required: true},
-            CM_Marca: {required: true, minlength: 5, maxlength: 50},
-            CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20},
-            CM_NuSoat: {required: true, minlength: 5, maxlength: 20},
+            CM_Placa: {minlength: 5, maxlength: 6, required: true, noSpecialCharacters:true},
+            CM_Marca: {required: true, minlength: 5, maxlength: 50, noSpecialCharacters:true},
+            CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
+            CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
             CM_UrlPropiedad: {required: true},
             CM_UrlSoat: {required: true},
         };
-        FormValidationMd.init(form, formRules, false, updateMoto());
+
+        var formMessage = {
+            CM_Placa: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CM_Marca: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CM_NuPropiedad: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CM_NuSoat: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+        };                                                              
+        FormValidationMd.init(form, formRules, formMessage, updateMoto());
 
         ////////////////////////////////////////////////////////////////////////
         /////////////////////Función Editar Foto Moto ///////////////////////////////////

@@ -40,6 +40,13 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+        });
+
         var createDependencia = function () {
             return {
                 init: function () {
@@ -85,10 +92,14 @@
         var form = $('#form_dependencia_create');
 
         var formRules = {
-            CD_Dependencia: {required: true, maxlength: 50, minlength: 5},
-
+            CD_Dependencia: {required: true, maxlength: 50, minlength: 5, letters: true},
         };
-        FormValidationMd.init(form, formRules, false, createDependencia());
+
+        var formMessage = {
+            CD_Dependencia: {letters: 'Solo se pueden ingresar letras'},            
+        };
+
+        FormValidationMd.init(form, formRules, formMessage, createDependencia());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
