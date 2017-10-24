@@ -25,7 +25,6 @@ use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\gesap\src;
 use App\Container\gesap\src\Observaciones;
-use App\Container\gesap\src\CheckObservaciones;
 use App\Container\gesap\src\Respuesta;
 use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Documentos;
@@ -93,7 +92,6 @@ class EvaluatorController extends Controller
                     $nombre = $date."_".$request['Requerimientos']->getClientOriginalName();
                     $respuesta->RPST_Requerimientos=$nombre;
                     \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
-                    
                 }
                 $respuesta->FK_TBL_Observaciones_Id=$observacion->PK_BVCS_IdObservacion;
                 $respuesta->save();
@@ -119,7 +117,8 @@ class EvaluatorController extends Controller
      */
     public function storeConcepts(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {//Busco el ID del Encargado(Usuario respecto al proyecto)
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //Busco el ID del Encargado(Usuario respecto al proyecto)
             $jurado = Encargados::select('PK_NCRD_IdCargo', 'NCRD_Cargo')
                 ->where('FK_TBL_Anteproyecto_Id', '=', $request->get('PK_anteproyecto'))
                 ->where('FK_Developer_User_Id', '=', $request->user()->id)
@@ -299,7 +298,7 @@ class EvaluatorController extends Controller
     }
     
     /*
-     * Listado de proyectos asignados como director
+     * Listado de proyectos y anteproyectos asignados como director
      *
      * @return \Illuminate\Http\Response
      */
@@ -309,7 +308,7 @@ class EvaluatorController extends Controller
     }
     
     /*
-     * Listado de proyectos asignados como director con vista AJAX
+     * Listado de proyectos y anteproyectos asignados como director con vista AJAX
      *
      * @param  \Illuminate\Http\Request
      *
@@ -348,6 +347,16 @@ class EvaluatorController extends Controller
         );
     }
     
+    
+    /*
+     * Funcion de aprobacion de anteproyecto por un director cuando este en estado aprobado
+     * Se crean unas actividades por defecto segun el proyecto aprobado
+     *
+     * @param  int $id 
+     * @param  \Illuminate\Http\Request 
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function approved($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -391,6 +400,15 @@ class EvaluatorController extends Controller
         
     }
     
+    /*
+     * Funcion de cierre o terminacion de proyecto por un director,
+     * ya evitando mas cambios de los demas datos
+     *
+     * @param  int $id 
+     * @param  \Illuminate\Http\Request 
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function closeProject($id, Request $request){
          if ($request->ajax() && $request->isMethod('GET')) {
             $proyecto=Proyecto::where('FK_TBL_Anteproyecto_Id','=',$id)->first();
@@ -521,7 +539,22 @@ class EvaluatorController extends Controller
                     }
                 }
             })
-            ->rawColumns(['NPRY_Estado'])->addIndexColumn()->make(true);
+            ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->"; 
+                $largo=50;
+                $titulo=$title->anteproyecto->NPRY_Titulo;
+                if (strlen($titulo) > $largo) {         
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
+                    $titulo = explode($marca, $titulo); 
+                    $texto1 = $titulo[0];
+                    unset($titulo[0]);
+                    $texto2= implode(' ',$titulo);
+                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                } 
+                return '<p>'.$titulo.'</p>';
+            })
+            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+            ->addIndexColumn()->make(true);
     }
     
     /*
@@ -613,7 +646,49 @@ class EvaluatorController extends Controller
                     }
                 }
             })
-                ->rawColumns(['NPRY_Estado'])
-                ->addIndexColumn()->make(true);
+            ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->"; 
+                $largo=50;
+                $titulo=$title->anteproyecto->NPRY_Titulo;
+                if (strlen($titulo) > $largo) {         
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
+                    $titulo = explode($marca, $titulo); 
+                    $texto1 = $titulo[0];
+                    unset($titulo[0]);
+                    $texto2= implode(' ',$titulo);
+                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                } 
+                return '<p>'.$titulo.'</p>';
+            })
+            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+            ->addIndexColumn()->make(true);
     }
+    
+    
+    public function downloadActivity($actividad, $archivo){
+        $public_path = public_path(); 
+        $url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo; 
+        if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) 
+            return response()->download($url); 
+        abort(404);  
+    }
+    
+    public function downloadDocument($archivo){
+        $public_path = public_path();
+        $url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
+        if (Storage::exists($archivo))
+            return response()->download($url);
+        abort(404);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

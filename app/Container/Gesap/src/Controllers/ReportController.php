@@ -36,7 +36,7 @@ class ReportController extends Controller
     private $path='gesap.Reportes';
 
     /*
-     * Vista principal de generacion de reportes
+     * Vista principal de generacion de reportes en PDF
      *
      * @return \Illuminate\Http\Response
      */
@@ -58,30 +58,42 @@ class ReportController extends Controller
     /*
      * Reporte con todos los proyectos
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function allProject()
+    public function allProject(Request $request)
     {
-        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
-            ->get();
-        return view($this->path.'PDF.AnteproyectosPDF', [
-            'proyectos'=>$proyectos
-        ]);
+        if ($request->isMethod('GET')) {
+            $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
+                ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+                ->get();
+            return view($this->path.'PDF.AnteproyectosPDF', [
+                'proyectos'=>$proyectos
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*
      * Descarga de reporte de todos los proyectos
      *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function allProjectPrint()
+    public function allProjectPrint(Request $request)
     {
-        $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
-        
-        return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
-            'proyectos'=>$proyectos
-        ])->download('ReporteAnteproyectosGesap.pdf');
+        if ($request->isMethod('GET')) {
+            $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
+
+            return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
+                'proyectos'=>$proyectos
+            ])->download('ReporteAnteproyectosGesap.pdf');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*
@@ -89,36 +101,42 @@ class ReportController extends Controller
      *
      * @param int $jury
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function juryProject($jury)
+    public function juryProject($jury,Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $proyectos = Encargados::where(function ($query) {
-                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-        })
-            ->where('FK_Developer_User_Id', '=', $jury)
-            ->with(['anteproyecto' => function ($proyecto) {
-                $proyecto->with(['radicacion',
-                                 'director',
-                                 'jurado1',
-                                 'jurado2',
-                                 'estudiante1',
-                                 'estudiante2',
-                                 'proyecto',
-                                 'conceptoFinal']);
-            }])
-            ->get();
-        $docente = User::find($jury);
-        return view($this->path.'PDF.ProyectoDocentePDF', [
-            'proyectos'=>$proyectos,
-            'docente'=>$docente,
-            'date'=>$date,
-            'time'=>$time,
-            'cargo'=>"JURADO"
-        ]);
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $proyectos = Encargados::where(function ($query) {
+                                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+            })
+                ->where('FK_Developer_User_Id', '=', $jury)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($jury);
+            return view($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"JURADO"
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     } 
     
     /*
@@ -126,215 +144,277 @@ class ReportController extends Controller
      *
      * @param int $jury
      *
-     * @return \Illuminate\Http\Response
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadJuryProject($jury)
+    public function downloadJuryProject($jury,Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-         $proyectos = Encargados::where(function ($query) {
-                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-        })
-            ->where('FK_Developer_User_Id', '=', $jury)
-            ->with(['anteproyecto' => function ($proyecto) {
-                $proyecto->with(['radicacion',
-                                 'director',
-                                 'jurado1',
-                                 'jurado2',
-                                 'estudiante1',
-                                 'estudiante2',
-                                 'proyecto',
-                                 'conceptoFinal']);
-            }])
-            ->get();
-        $docente = User::find($jury);
-        return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
-            'proyectos'=>$proyectos,
-            'docente'=>$docente,
-            'date'=>$date,
-            'time'=>$time,
-            'cargo'=>"JURADO"
-        ])->download('ReporteGesapJurado.pdf');
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+             $proyectos = Encargados::where(function ($query) {
+                                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+            })
+                ->where('FK_Developer_User_Id', '=', $jury)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($jury);
+            return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"JURADO"
+            ])->download('ReporteGesapJurado.pdf');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
+    
     
     /*
      * Reporte con los proyectos de un director seleccionado
      *
      * @param int $director
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function directorProject($director)
+    public function directorProject($director,Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-        $proyectos = Encargados::where('NCRD_Cargo', '=', "Director")
-            ->where('FK_Developer_User_Id', '=', $director)
-            ->with(['anteproyecto' => function ($proyecto) {
-                $proyecto->with(['radicacion',
-                                 'director',
-                                 'jurado1',
-                                 'jurado2',
-                                 'estudiante1',
-                                 'estudiante2',
-                                 'proyecto',
-                                 'conceptoFinal']);
-            }])
-            ->get();
-        $docente = User::find($director);
-        return view($this->path.'PDF.ProyectoDocentePDF', [
-            'proyectos'=>$proyectos,
-            'docente'=>$docente,
-            'date'=>$date,
-            'time'=>$time,
-            'cargo'=>"DIRECTOR"
-        ]);
-        
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $proyectos = Encargados::where('NCRD_Cargo', '=', "Director")
+                ->where('FK_Developer_User_Id', '=', $director)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($director);
+            return view($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"DIRECTOR"
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
-        /*
+    /*
      * Descarga de reporte con los proyectos de un director seleccionado
      *
-     * @param int $jury
+     * @param int $director
      *
-     * @return \Illuminate\Http\Response
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadDirectorProject($director)
+    public function downloadDirectorProject($director,Request $request)
     {
-        $date = date("d/m/Y");
-        $time = date("h:i A");
-         $proyectos = Encargados::where(function ($query) {
-                            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-                            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-        })
-            ->where('FK_Developer_User_Id', '=', $director)
-            ->with(['anteproyecto' => function ($proyecto) {
-                $proyecto->with(['radicacion',
-                                 'director',
-                                 'jurado1',
-                                 'jurado2',
-                                 'estudiante1',
-                                 'estudiante2',
-                                 'proyecto',
-                                 'conceptoFinal']);
-            }])
-            ->get();
-        $docente = User::find($director);
-        return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
-            'proyectos'=>$proyectos,
-            'docente'=>$docente,
-            'date'=>$date,
-            'time'=>$time,
-            'cargo'=>"JURADO"
-        ])->download('ReporteGesapDirector.pdf');
-    }
-    
-    
-    
-    public function graficos()
-    {
-        $anteproyectos=Anteproyecto::all()->count();
-        
-        $anteproyectosR=Anteproyecto::where('NPRY_Estado','=','RECHAZADO')->count();
-        if($anteproyectos==0){
-            $anteproyectosRP=$anteproyectosR*100/1;    
-        }else{
-            $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+        if ($request->isMethod('GET')) {
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+             $proyectos = Encargados::where(function ($query) {
+                                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+            })
+                ->where('FK_Developer_User_Id', '=', $director)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($director);
+            return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"JURADO"
+            ])->download('ReporteGesapDirector.pdf');
         }
-        $proyectos=Proyecto::all()->count();
-        if($anteproyectos==0){
-            $proyectosP=$proyectos*100/1;    
-        }else{
-            $proyectosP=$proyectos*100/$anteproyectos;
-        }
-        
-        $proyectosT=Proyecto::where('PRYT_Estado','=','TERMINADO')->count();
-        if($proyectos==0){
-            $proyectosTP=$proyectosT*100/1;
-        }else{
-            $proyectosTP=$proyectosT*100/$proyectos;
-        }
-        
-        return view('gesap.Coordinador.Graficos',[
-            'anteproyectos'=>$anteproyectos,
-            'anteproyectosR'=>$anteproyectosR,
-            'anteproyectosRP'=>$anteproyectosRP,
-            'proyectos'=>$proyectos,
-            'proyectosP'=>$proyectosP,
-            'proyectosT'=>$proyectosT,
-            'proyectosTP'=>$proyectosTP
-        ]);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
-    public function getPreliminary()
+    /*
+     * Vista con graficos
+     *
+     * @return \Illuminate\Http\Response 
+     */
+    public function graficos(Request $request)
     {
-        $stats = Anteproyecto::groupBy('Estado')
-        ->get([
-            DB::raw('NPRY_Estado as Estado'),
-            DB::raw('COUNT(*) as value')
-        ])
-        ->toJSON();
-        return $stats;    
+            $anteproyectos=Anteproyecto::all()->count();
+
+            $anteproyectosR=Anteproyecto::where('NPRY_Estado','=','RECHAZADO')->count();
+            if($anteproyectos==0){
+                $anteproyectosRP=$anteproyectosR*100/1;    
+            }else{
+                $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+            }
+            $proyectos=Proyecto::all()->count();
+            if($anteproyectos==0){
+                $proyectosP=$proyectos*100/1;    
+            }else{
+                $proyectosP=$proyectos*100/$anteproyectos;
+            }
+
+            $proyectosT=Proyecto::where('PRYT_Estado','=','TERMINADO')->count();
+            if($proyectos==0){
+                $proyectosTP=$proyectosT*100/1;
+            }else{
+                $proyectosTP=$proyectosT*100/$proyectos;
+            }
+
+            return view('gesap.Coordinador.Graficos',[
+                'anteproyectos'=>$anteproyectos,
+                'anteproyectosR'=>$anteproyectosR,
+                'anteproyectosRP'=>$anteproyectosRP,
+                'proyectos'=>$proyectos,
+                'proyectosP'=>$proyectosP,
+                'proyectosT'=>$proyectosT,
+                'proyectosTP'=>$proyectosTP
+            ]);
     }
     
-    public function getProject()
+    /*
+     * Datos de grafico de estado de anteproyectos
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function getPreliminary(Request $request)
     {
-        $stats = Proyecto::groupBy('Estado')
-            
-        ->get([
-            DB::raw('PRYT_Estado as Estado'),
-            DB::raw('COUNT(*) as value')
-        ])
-        ->toJSON();
-        return $stats;    
-    }
-    
-    
-    
-    public function getJury()
-    {
-        $stats = Encargados::where(function ($query) {
-            $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-            $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-        })
-        ->groupBy('FK_Developer_User_Id')    
-            ->with(['usuarios'=> function ($user) {
-                $user->select('id','name','lastname');
-            }])
-            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
-            ;
-        
-        foreach($stats as $row){
-            $row['Nombre']=$row->usuarios->name;
-            $row['Apellido']=$row->usuarios->lastname;
-            unset($row['FK_Developer_User_Id']);
-            unset($row['usuarios']);
+         if ($request->isMethod('GET')) {   
+            $stats = Anteproyecto::groupBy('Estado')
+            ->get([
+                DB::raw('NPRY_Estado as Estado'),
+                DB::raw('COUNT(*) as value')
+            ])
+            ->toJSON();
+            return $stats;  
         }
-        
-        return $stats->toJSON();
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
-    public function getDirector()
+    
+    /*
+     * Datos de grafico de estado de proyectos
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function getProject(Request $request)
     {
-        $stats = Encargados::where('NCRD_Cargo', '=', "Director") 
-        ->groupBy('FK_Developer_User_Id')    
-            ->with(['usuarios'=> function ($user) {
-                $user->select('id','name','lastname');
-            }])
-            ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
-            ;
-        
-        foreach($stats as $row){
-            $row['Nombre']=$row->usuarios->name;
-            $row['Apellido']=$row->usuarios->lastname;
-            unset($row['FK_Developer_User_Id']);
-            unset($row['usuarios']);
-        }
-        
-        return $stats->toJSON();
+        if ($request->isMethod('GET')) {
+            $stats = Proyecto::groupBy('Estado')
+
+            ->get([
+                DB::raw('PRYT_Estado as Estado'),
+                DB::raw('COUNT(*) as value')
+            ])
+            ->toJSON();
+            return $stats; 
+         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     
+    /*
+     * Datos de grafico de proyectos y anteproyectos por jurado
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function getJury(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            $stats = Encargados::where(function ($query) {
+                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+            })
+            ->groupBy('FK_Developer_User_Id')    
+                ->with(['usuarios'=> function ($user) {
+                    $user->select('id','name','lastname');
+                }])
+                ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+                ;
+
+            foreach($stats as $row){
+                $row['Nombre']=$row->usuarios->name;
+                $row['Apellido']=$row->usuarios->lastname;
+                unset($row['FK_Developer_User_Id']);
+                unset($row['usuarios']);
+            }
+
+            return $stats->toJSON();
+        
+         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
     
-    
+    /*
+     * Datos de grafico de proyectos y anteproyectos por director
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function getDirector(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            $stats = Encargados::where('NCRD_Cargo', '=', "Director") 
+            ->groupBy('FK_Developer_User_Id')    
+                ->with(['usuarios'=> function ($user) {
+                    $user->select('id','name','lastname');
+                }])
+                ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+                ;
+
+            foreach($stats as $row){
+                $row['Nombre']=$row->usuarios->name;
+                $row['Apellido']=$row->usuarios->lastname;
+                unset($row['FK_Developer_User_Id']);
+                unset($row['usuarios']);
+            }
+
+            return $stats->toJSON();
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 }

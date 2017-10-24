@@ -83,22 +83,33 @@ class StudentController extends Controller
         );
     }
     
-    
+    /*
+     * Subida de archivo por actividad
+     *
+     * @param  \Illuminate\Http\Request 
+     *
+     * @return \Illuminate\Http\Request  | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function uploadActividad(Request $request)
-    {
-        
-        $date = Carbon::now();
-        $date= $date->format('his');
-        $files = $request->file('file');
-        $Ubicacion="gesap/proyecto/".$request->get('PK_actividad');
-        foreach ($files as $file) {
-            $nombre=$date."_".$file->getClientOriginalName();
-            \Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
-            $documento = Documentos::findOrFail($request->get('PK_actividad'));
-            $documento->DMNT_Archivo =$nombre;
-            $documento->save();
+    {   
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $date = Carbon::now();
+            $date= $date->format('his');
+            $files = $request->file('file');
+            $Ubicacion="gesap/proyecto/".$request->get('PK_actividad');
+            foreach ($files as $file) {
+                $nombre=$date."_".$file->getClientOriginalName();
+                \Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
+                $documento = Documentos::findOrFail($request->get('PK_actividad'));
+                $documento->DMNT_Archivo =$nombre;
+                $documento->save();
+            }
+            return $request->get('PK_actividad');
         }
-        return $request->get('PK_actividad');
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
    

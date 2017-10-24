@@ -1,4 +1,4 @@
-<div class="col-md-12">
+    <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Director'])
             <div class="row">
                 <div class="col-md-12">
@@ -6,6 +6,7 @@
                         @slot('columns', [
                             '#' => ['style' => 'width:20px;'],
                             'id',
+                            'Tipo',        
                             'Titulo',
                             'Palabras Clave',
                             'Duracion',
@@ -26,6 +27,7 @@
             </div>
         @endcomponent
     </div>    
+
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script>
         jQuery(document).ready(function () {
@@ -71,8 +73,15 @@
                 columns: [
                    {data: 'DT_Row_Index'},
                    {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
-                   {data: 'anteproyecto.NPRY_Titulo', searchable: true},
-                   {data: 'anteproyecto.NPRY_Keywords', searchable: true},
+                   {data: function (data, type, dataToSet) {
+                       if(data.anteproyecto.proyecto!=null){
+                           return "PROYECTO"
+                       }else{
+                           return "ANTEPROYECTO"
+                       }
+                   },searchable: true},
+                   {data: 'NPRY_Titulo', searchable: true},
+                   {data: 'anteproyecto.NPRY_Keywords', className:'none', searchable: true},
                    {data: 'anteproyecto.NPRY_Duracion',searchable: true},
                    {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
                    {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
@@ -143,7 +152,7 @@
                                 return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>';
                             }else{
                                 if (full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO") {
-                                     return '<center><span class="label label-sm label-success">Proyecto Terminado</span></center><br><center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
+                                     return '<center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
                                  } else {
                                     return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>';
                                  } 
@@ -298,6 +307,20 @@
                     $(".content-ajax").load(route);
                 });
             });
+            
+            
+            table.on('click','.boton_mas_info',function(){
+ 
+                if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
+                    $(this).parent().find('.texto-ocultado').css('display','inline');
+                    $(this).parent().find('.puntos').html(' ');
+                    $(this).text('Ver menos');
+                } else {
+                    $(this).parent().find('.texto-ocultado').css('display','none');
+                    $(this).parent().find('.puntos').html('...');
+                    $(this).html('Ver más');
+                };
+            });            
             
         });
 </script>

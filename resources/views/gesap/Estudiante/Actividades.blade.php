@@ -379,7 +379,6 @@ jQuery(document).ready(function () {
         var documento = function () { 
             return { 
                 init:function(){
-                    alert('SEGURO?');
                 }
           }; 
         }
@@ -387,7 +386,6 @@ jQuery(document).ready(function () {
         var data="{{$id}}";
         var formatfile = '.jpeg,.pdf,.jpg,.png,.gif'; 
         var numfile = 1; 
-         console.log("1:{{$id}}");
        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,data)); 
     
 });
