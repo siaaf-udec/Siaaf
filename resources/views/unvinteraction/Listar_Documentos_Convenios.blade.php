@@ -231,12 +231,7 @@
         var numfile = 1;
         
        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, x(), name));
-
-      
-    
-     
-   
-    var table, url,id;
+var table, url,id;
    
     table = $('#Listar_Documentos');
     url = "{{ route('Listar_Documentos_Convenios.Listar_Documentos_Convenios',[$id]) }}";
@@ -329,9 +324,9 @@ echo $id;
     });
         
 });
-    </script>  
+</script>
+    
 <script type="text/javascript">
-
     jQuery(document).ready(function() {
     var table, url,id;
     table = $('#Listar_Paticipantes');
@@ -374,8 +369,8 @@ echo $id;
        columns:[
            {data: 'DT_Row_Index'},
            {data: 'FK_TBL_Usuarios',className:'none', "visible": true, name:"participante" },
-           {data: 'name', searchable: true},
-           {data: 'lastname', searchable: true},
+           {data: 'usuarios__participantes.name', searchable: true},
+           {data: 'usuarios__participantes.lastname', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -538,8 +533,8 @@ echo $id;
        columns:[
            {data: 'DT_Row_Index'},
            {data: 'PK_Empresas_Participantes', className:'none',"visible": true, name:"participante" },
-           {data: 'PK_Empresa', searchable: true},
-           {data: 'Nombre_Empresa', searchable: true},
+           {data: 'patricipantes__empresas.PK_Empresa', searchable: true},
+           {data: 'patricipantes__empresas.Nombre_Empresa', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -574,7 +569,7 @@ echo $id;
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion_Empresa/'+dataTable.PK_Empresa+'/<?php
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion_Empresa/'+dataTable.patricipantes__empresas.PK_Empresa+'/<?php
 echo $id;
 ?>';
 
@@ -585,7 +580,7 @@ echo $id;
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluacion_Empresa/'+dataTable.PK_Empresa;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluacion_Empresa/'+dataTable.patricipantes__empresas.PK_Empresa;
 
             $(".content-ajax").load(route_edit);
         });
@@ -600,17 +595,15 @@ echo $id;
         
             };  
     var form=$('#form-Empresas');
-     var wizard =  $('#form_wizard_1');
+    var wizard =  $('#form_wizard_1');
     var agregarEmpresa = function () {
             return{
                 init: function () {
                     var route = '{{ route('Empresa_Convenio.Empresa_Convenio',[$id]) }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
                     formData.append('FK_TBL_Empresa', $('#FK_TBL_Empresa').val());
-                   
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -620,8 +613,6 @@ echo $id;
                         data: formData,
                         processData: false,
                         async: async,
-                        
-                     
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         $('#empresa').modal('hide');
@@ -637,12 +628,8 @@ echo $id;
                     });
                 }
             }
-        };    
-    
-    var messages = {};
-        
-    FormValidationMd.init( form, rules, messages , agregarEmpresa());
-    
-   
-});
+        };
+        var messages = {};
+        FormValidationMd.init( form, rules, messages , agregarEmpresa());
+    });
 </script>

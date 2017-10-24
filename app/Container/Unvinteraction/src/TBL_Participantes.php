@@ -18,6 +18,6 @@ class TBL_Participantes extends Model
     }
     public function usuarios_Participantes()
     {
-        return $this->belongsto('App\Container\Users\Src\User', 'FK_TBL_Usuarios', 'id');
+        return $this->belongsto('App\Container\Users\Src\User', 'FK_TBL_Usuarios', 'identity_no');
     }
 }

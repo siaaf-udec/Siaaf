@@ -70,12 +70,21 @@ class Controller_Convenios extends Controller
     */
     public function Listar_Mis_Convenios(Request $request)
     {
-        $Convenio = TBL_Convenios::join('TBL_Participantes', 'TBL_Convenios.PK_Convenios', '=', 'TBL_Participantes.FK_TBL_Convenios')
-            ->join('TBL_Estado', 'TBL_Convenios.FK_TBL_Estado', '=', 'TBL_Estado.PK_Estado')
-            ->join('TBL_Sede', 'TBL_Convenios.FK_TBL_Sede', '=', 'TBL_Sede.PK_Sede')
-            ->select('TBL_Convenios.PK_Convenios', 'TBL_Convenios.Nombre', 'TBL_Convenios.Fecha_Inicio', 'TBL_Convenios.Fecha_Fin', 'TBL_Estado.Estado', 'TBL_Sede.Sede')
-            ->where('TBL_Participantes.FK_TBL_Usuarios', '=', $request->user()->identity_no)
-            ->get();
+        $Convenio= TBL_Participantes::where('FK_TBL_Usuarios', '=', $request->user()->identity_no)->select('FK_TBL_Convenios')
+            ->with([
+                    'convenios_Participantes'=>function ($query) {
+                    $query->select('PK_Convenios','Nombre','Fecha_Inicio','Fecha_Fin','FK_TBL_Estado','FK_TBL_Sede');
+                    $query->with([
+                        'convenios_Estados'=>function ($query) {
+                            $query->select('PK_Estado','Estado');
+                        },
+                        'convenios_Sedes'=>function ($query) {
+                            $query->select('PK_Sede','Sede');
+                        }    
+                    ]);
+                }
+            ])
+            ->get();;
         return Datatables::of($Convenio)->addIndexColumn()->make(true);
     }
     /*funcion para envio de los datos para la tabla de datos
@@ -84,10 +93,17 @@ class Controller_Convenios extends Controller
     */
     public function Listar_Convenios()
     {
-        $Convenio = TBL_Convenios::join('TBL_Estado', 'TBL_Convenios.FK_TBL_Estado', '=', 'TBL_Estado.PK_Estado')
-            ->join('TBL_Sede', 'TBL_Convenios.FK_TBL_Sede', '=', 'TBL_Sede.PK_Sede')
-            ->select('TBL_Convenios.PK_Convenios', 'TBL_Convenios.Nombre', 'TBL_Convenios.Fecha_Inicio', 'TBL_Convenios.Fecha_Fin', 'TBL_Estado.Estado', 'TBL_Sede.Sede')
-            ->get();
+        $Convenio= TBL_Convenios::select('PK_Convenios','Nombre','Fecha_Inicio', 'Fecha_Fin','FK_TBL_Sede','FK_TBL_Estado')
+            ->with([
+                    'convenios_Sedes'=>function ($query) {
+                    $query->select('PK_Sede','Sede');
+                    
+                    },
+                    'convenios_Estados'=>function ($query) {
+                    $query->select('PK_Estado','Estado');
+                    
+                    }
+            ])->get();
         return Datatables::of($Convenio)->addIndexColumn()->make(true);
     }
     /*funcion para registrar un nuevo convenio
@@ -164,10 +180,13 @@ class Controller_Convenios extends Controller
     */
     public function Listar_Participantes_Convenios($id)
     {
-        $participante = TBL_Participantes::join('developer.users', 'TBL_Participantes.FK_TBL_Usuarios', '=', 'users.identity_no')
-            ->join('TBL_Convenios', 'TBL_Participantes.FK_TBL_Convenios', '=', 'TBL_Convenios.PK_Convenios')
-            ->select('TBL_Participantes.PK_Participantes', 'TBL_Participantes.FK_TBL_Usuarios', 'users.name', 'users.lastname', 'users.identity_no')
-            ->where('FK_TBL_Convenios', $id)->get();
+        $participante = TBL_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Participantes', 'FK_TBL_Usuarios')
+            ->with([
+                    'usuarios_Participantes'=>function ($query) {
+                    $query->select('name', 'lastname', 'identity_no');
+                    }
+            ])
+            ->get();
         return Datatables::of($participante)->addIndexColumn()->make(true);
     }
     /*funcion para el envio de datos para la tabla listar empresas particioantes del convenio
@@ -176,9 +195,13 @@ class Controller_Convenios extends Controller
     */
     public function Listar_Empresas_Participantes_Convenios($id)
     {
-        $EM_participante = TBL_Empresas_Participantes::join('TBL_Empresa', 'TBL_Empresas_Participantes.FK_TBL_Empresa', '=', 'TBL_Empresa.PK_Empresa')
-            ->select('TBL_Empresas_Participantes.PK_Empresas_Participantes', 'TBL_Empresa.PK_Empresa', 'TBL_Empresa.Nombre_Empresa')
-            ->where('FK_TBL_Convenios', $id)->get();
+        $EM_participante =  TBL_Empresas_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Empresas_Participantes','FK_TBL_Empresa')
+            ->with([
+                    'patricipantes_Empresas'=>function ($query) {
+                    $query->select('PK_Empresa','Nombre_Empresa');
+                    }
+            ])
+            ->get();
         return Datatables::of($EM_participante)->addIndexColumn()->make(true);
     }
     /*funcion para agregar empresas particioantes del convenio
@@ -215,16 +238,7 @@ class Controller_Convenios extends Controller
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
     }
-    public function Reporte()
-    {
-        $convenio= TBL_Convenios::where('PK_Convenios','=',1)->select('PK_Convenios','Nombre')
-            ->with([
-                    'convenios_Sedes'=>function ($query) {
-                    $query->select('PK_Sede','Sede');
-                    $query->where('FK_TBL_Sede','=','PK_Sede');
-                    }])->get();
-        return $convenio;
-    }
+    
     
     //______________________END___CONVENIOS____________________________
 }

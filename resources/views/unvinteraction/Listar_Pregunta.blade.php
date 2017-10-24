@@ -148,7 +148,7 @@ jQuery(document).ready(function () {
            {data: 'DT_Row_Index'},
            {data: 'PK_Preguntas', "visible": true, name:"documento" },
            {data: 'Enunciado', searchable: true},
-           {data: 'Tipo', searchable: true},
+           {data: 'preguntas_tipos_preguntas.Tipo', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -209,6 +209,7 @@ jQuery(document).ready(function () {
                     var formData = new FormData();
                     formData.append('Enunciado', $('#Enunciado').val());
                     formData.append('FK_TBL_Tipo_Pregunta', $('select[name="FK_TBL_Tipo_Pregunta"]').val());
+                    
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },

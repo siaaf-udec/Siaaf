@@ -149,6 +149,7 @@ class Controller_Evaluaciones extends Controller
             $Tipo = new TBL_Preguntas();
             $Tipo->Enunciado= $request->Enunciado;
             $Tipo->FK_TBL_Tipo_Pregunta= $request->FK_TBL_Tipo_Pregunta;
+            
             $Tipo->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -169,9 +170,13 @@ class Controller_Evaluaciones extends Controller
     */
      public function Listar_Pregunta()
     {
-      $Pregunta = TBL_Preguntas::join('TBL_Tipo_Pregunta','TBL_Tipo_Pregunta.PK_Tipo_Pregunta','=','TBL_Preguntas.FK_TBL_Tipo_Pregunta')
-             ->select('TBL_Preguntas.PK_Preguntas','TBL_Preguntas.Enunciado','TBL_Tipo_pregunta.Tipo')
-             ->get();  
+      $Pregunta = TBL_Preguntas::select('PK_Preguntas','Enunciado','FK_TBL_Tipo_pregunta')
+            ->with([
+                    'preguntas_tiposPreguntas'=>function ($query) {
+                    $query->select('PK_Tipo_Pregunta','Tipo');
+                    }
+            ])
+            ->get();
          return Datatables::of( $Pregunta)->addIndexColumn()->make(true);
         
        
@@ -470,4 +475,17 @@ class Controller_Evaluaciones extends Controller
         
     }
 //_____________________END__EVALUACIONE_______
+      public function Reporte(Request $request)
+    {
+        $id=2;
+        $convenio=  TBL_Preguntas::select('PK_Preguntas','Enunciado','FK_TBL_Tipo_pregunta')
+            ->with([
+                    'preguntas_tiposPreguntas'=>function ($query) {
+                    $query->select('PK_Tipo_Pregunta','Tipo');
+                    }
+            ])
+            ->get();
+        return $convenio;
+       // return "hyola";
+    }
 }

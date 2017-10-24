@@ -108,12 +108,12 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Convenios', "visible": true, name:"documento" },
-           {data: 'Nombre', searchable: true},
-           {data: 'Fecha_Inicio', searchable: true},
-           {data: 'Fecha_Fin',searchable: true},
-           {data: 'Estado', searchable: true},
-           {data: 'Sede',searchable: true},
+           {data: 'convenios__participantes.PK_Convenios', "visible": true, name:"documento" },
+           {data: 'convenios__participantes.Nombre', searchable: true},
+           {data: 'convenios__participantes.Fecha_Inicio', searchable: true},
+           {data: 'convenios__participantes.Fecha_Fin',searchable: true},
+           {data: 'convenios__participantes.convenios__estados.Estado', searchable: true},
+           {data: 'convenios__participantes.convenios__sedes.Sede',searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -148,7 +148,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Documentos_Convenios/'+dataTable.PK_Convenios;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Documentos_Convenios/'+dataTable.convenios__participantes.PK_Convenios;
 
             $(".content-ajax").load(route_edit);
         });
