@@ -264,7 +264,7 @@ class AdministradorGestionController extends Controller
             ])->get();
         $array2 = array();
         foreach ($prestamos as $player) {
-            $dtF= new Carbon();
+            $dtF= new Carbon();//esto de carbon para que lo est ausando
             $dtF=Carbon::parse($player['PRT_Fecha_Fin']);
             $dtI = new Carbon();
             $dtI = Carbon::now();
@@ -393,9 +393,17 @@ class AdministradorGestionController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
                 $query->where('FK_ART_Estado_id', '=', 1);
-            })->pluck('TPART_Nombre', 'id');;
+            })->pluck('TPART_Nombre', 'id');
+            $kits = Kit::select('id','KIT_Nombre')->where([
+                ['KIT_Nombre','!=','Ninguno'],
+                ['KIT_FK_Estado_id','=','1']
+                ]
+            )->pluck('KIT_Nombre', 'id');
+            $validaciones= Validaciones::all();
             return view('audiovisuals.administrador.contenidoAjax.prestamoFormRepeat', [
                 'tipoArticulos' => $tipo->toArray(),
+                'kits' => $kits->toArray(),
+                'validaciones' =>$validaciones
             ]);
         } else {
             return AjaxResponse::fail(
@@ -793,22 +801,38 @@ class AdministradorGestionController extends Controller
     public function crearPrestamoRepeat(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $fechaInicial = Carbon::now();
-            $fechaFinal = Carbon::now();
             $infoRepeat = json_decode($request->get('infoPrestamo'));
             $numOrden = (Solicitudes::max('PRT_Num_Orden')) + 1;
             $user = Auth::user();
             $adminId = $user->id;
             foreach ($infoRepeat as $prestamo) {
-                $idArticuloConsultado = $this->consultarArticulo($prestamo->tipoArticulosSelect);
-                $idArticulo = $idArticuloConsultado['id'];
-                if($idArticulo!=null){
+                $bandera=false;
+                if($prestamo->kit == true){
+                    $kitSolicitado = $prestamo->tipoArticulosSelect;
+                    $idKitConsultado = $this->consultarKit($prestamo->tipoArticulosSelect);
+                    if($idKitConsultado != null ){
+                        $bandera = true;
+                        $idArticulo = 0;
+                    }
+                }else{
+                    $idArticuloConsultado = $this->consultarArticulo($prestamo->tipoArticulosSelect);
+                    if($idArticuloConsultado != null){
+                        $bandera =true;
+                        $idArticulo = $idArticuloConsultado['id'];
+                        $kitSolicitado = 1;
+                    }
+                }
+                if($bandera == true){
+                    $fechaInicial = new Carbon;
+                    $fechaFinal = new Carbon();
+                    $fechaInicial = Carbon::now();
+                    $fechaFinal = Carbon::now();
                     Solicitudes::create([
                         'PRT_FK_Articulos_id' => $idArticulo,
                         'PRT_Fecha_Inicio' => $fechaInicial,
                         'PRT_Fecha_Fin' => $fechaFinal->addHour((int)($prestamo->tiempo)),
                         'PRT_FK_Funcionario_id' => $request->get('idFuncionario'),
-                        'PRT_FK_Kits_id' => 1,
+                        'PRT_FK_Kits_id' => $kitSolicitado,
                         'PRT_Observacion_Entrega' => $prestamo->observacionEntrega,
                         'PRT_Observacion_Recibe' => '',
                         'PRT_FK_Estado' => 2,
@@ -817,7 +841,6 @@ class AdministradorGestionController extends Controller
                         'PRT_FK_Administrador_Recibe_id' => 0,
                         'PRT_Num_Orden' => $numOrden,
                         'PRT_Cantidad' => $prestamo->tiempo
-
                     ]);
                 }
             }
@@ -864,7 +887,6 @@ class AdministradorGestionController extends Controller
     }
     public function consultarArticulo($idTipoArticulo)
     {
-
         $query = Articulo::where([
             ['FK_ART_Tipo_id', '=', $idTipoArticulo],
             ['FK_ART_Estado_id', '=', 1]
@@ -875,19 +897,14 @@ class AdministradorGestionController extends Controller
         /// el kit ya no estara completo para ser reservado
         /// // /////////////
         if ($query['FK_ART_Kit_id'] != 1) {
-
             Articulo::where([
                 ['id', '=', $query['id']],
 
             ])->update(['FK_ART_Estado_id' => 3]);
-
             Kit::where([
                 ['id', '=', $query['FK_ART_Kit_id']],
-
             ])->update(['KIT_FK_Estado_id' => 3]);
-
         } else {
-
             Articulo::where([
                 ['id', '=', $query['id']],
             ])->update(['FK_ART_Estado_id' => 3]);
@@ -899,11 +916,19 @@ class AdministradorGestionController extends Controller
     {
         $query = Kit::where([
             ['id', '=', $PRT_FK_Kits_id],
-        ])->update(['KIT_FK_Estado_id' => 3]);
-        $query = Articulo::where([
-            ['FK_ART_Kit_id', '=', $PRT_FK_Kits_id],
-        ])->update(['FK_ART_Estado_id' => 3]);
+            ['KIT_FK_Estado_id', '=', 1]
 
+        ])->first();
+        if($query != null){
+            $query = Kit::where([
+                ['id', '=', $PRT_FK_Kits_id],
+            ])->update(['KIT_FK_Estado_id' => 3]);
+            $query = Articulo::where([
+                ['FK_ART_Kit_id', '=', $PRT_FK_Kits_id],
+            ])->update(['FK_ART_Estado_id' => 3]);
+
+        }
+        return $query;
     }
     /////////////////////////////////////////////////////////
     /// actualizar estado articulos Kits
