@@ -63,11 +63,15 @@ class ReportController extends Controller
     public function allProject(Request $request)
     {
         if ($request->isMethod('GET')) {
+			$date = date("d/m/Y");
+            $time = date("h:i A");
             $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
                 ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 ->get();
             return view($this->path.'PDF.AnteproyectosPDF', [
-                'proyectos'=>$proyectos
+                'proyectos'=>$proyectos,
+                'date'=>$date,
+                'time'=>$time,
             ]);
         }
         return AjaxResponse::fail(
@@ -84,11 +88,22 @@ class ReportController extends Controller
     public function allProjectPrint(Request $request)
     {
         if ($request->isMethod('GET')) {
-            $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
+			try{
+				$date = date("d/m/Y");
+            $time = date("h:i A");
+				$proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
 
-            return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
-                'proyectos'=>$proyectos
-            ])->download('ReporteAnteproyectosGesap.pdf');
+				return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
+					'proyectos'=>$proyectos,
+                'date'=>$date,
+                'time'=>$time,
+				])->download('ReporteAnteproyectosGesap.pdf');
+			}
+            catch ( Exception $e ){
+                return view('report.index');
+            }
+			
+			
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -149,32 +164,38 @@ class ReportController extends Controller
     public function downloadJuryProject($jury,Request $request)
     {
         if ($request->isMethod('GET')) {
-            $date = date("d/m/Y");
-            $time = date("h:i A");
-             $proyectos = Encargados::where(function ($query) {
-                                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
-                                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
-            })
-                ->where('FK_Developer_User_Id', '=', $jury)
-                ->with(['anteproyecto' => function ($proyecto) {
-                    $proyecto->with(['radicacion',
-                                     'director',
-                                     'jurado1',
-                                     'jurado2',
-                                     'estudiante1',
-                                     'estudiante2',
-                                     'proyecto',
-                                     'conceptoFinal']);
-                }])
-                ->get();
-            $docente = User::find($jury);
-            return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
-                'proyectos'=>$proyectos,
-                'docente'=>$docente,
-                'date'=>$date,
-                'time'=>$time,
-                'cargo'=>"JURADO"
-            ])->download('ReporteGesapJurado.pdf');
+			
+			try{
+				$date = date("d/m/Y");
+				$time = date("h:i A");
+				 $proyectos = Encargados::where(function ($query) {
+									$query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+									$query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+				})
+					->where('FK_Developer_User_Id', '=', $jury)
+					->with(['anteproyecto' => function ($proyecto) {
+						$proyecto->with(['radicacion',
+										 'director',
+										 'jurado1',
+										 'jurado2',
+										 'estudiante1',
+										 'estudiante2',
+										 'proyecto',
+										 'conceptoFinal']);
+					}])
+					->get();
+				$docente = User::find($jury);
+				return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
+					'proyectos'=>$proyectos,
+					'docente'=>$docente,
+					'date'=>$date,
+					'time'=>$time,
+					'cargo'=>"JURADO"
+				])->download('ReporteGesapJurado.pdf');
+			}
+            catch ( Exception $e ){
+                return view('report.index');
+            }
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -233,6 +254,9 @@ class ReportController extends Controller
     public function downloadDirectorProject($director,Request $request)
     {
         if ($request->isMethod('GET')) {
+			
+			
+			try{
             $date = date("d/m/Y");
             $time = date("h:i A");
              $proyectos = Encargados::where(function ($query) {
@@ -259,6 +283,11 @@ class ReportController extends Controller
                 'time'=>$time,
                 'cargo'=>"JURADO"
             ])->download('ReporteGesapDirector.pdf');
+		}
+            catch ( Exception $e ){
+                return view('report.index');
+            }
+			
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

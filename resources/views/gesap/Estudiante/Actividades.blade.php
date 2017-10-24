@@ -38,11 +38,13 @@
                                         <div class="mt-list-container list-default ext-1 group">
                                             <div class="mt-list-title uppercase">Lista de actividades
                                                 @permission('Director_List_Gesap')
+												@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
                                                 <span class="badge badge-default pull-right bg-hover-green-jungle">
                                                     <a class="font-white" href="javascript:;" id="create">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </span>
+												@endif
                                                 @endpermission
                                             </div>
                                             <a class="list-toggle-container" data-toggle="collapse" href="#completed" aria-expanded="true">
@@ -63,12 +65,16 @@
                                                             </div>
                                                              @permission('Director_List_Gesap')
                                                             <div class="list-datetime"> 
+																@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
                                                                 <a class="task-trash delete" id=""  href="javascript:;">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
+																@endif
+																
                                                                 <a class="task-trash download" id=""  href="/gesap/download/proyecto/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
                                                                     <i class="fa fa-download"></i> 
                                                                 </a> 
+																
                                                             </div>
                                                             @endpermission
                                                             @permission('Update_Final_Project_Gesap')
@@ -113,12 +119,14 @@
                                                                 </a>
                                                             </div>
                                                             @permission('Director_List_Gesap')
+															@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
                                                             <div class="list-datetime"> 
                                                                 <a class="task-trash delete" id=""  href="javascript:;">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                                 
                                                             </div>
+															@endif
                                                             @endpermission
                                                             @permission('Update_Final_Project_Gesap')
                                                             @if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
@@ -167,7 +175,7 @@
                             
                             <div class="modal-header modal-header-success">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h1><i class="glyphicon glyphicon-thumbs-up"></i> Añadir Actividad</h1>
+                                <h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row">

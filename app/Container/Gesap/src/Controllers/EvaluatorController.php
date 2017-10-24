@@ -664,21 +664,58 @@ class EvaluatorController extends Controller
             ->addIndexColumn()->make(true);
     }
     
-    
-    public function downloadActivity($actividad, $archivo){
-        $public_path = public_path(); 
-        $url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo; 
-        if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) 
-            return response()->download($url); 
-        abort(404);  
+     /**
+     * Permite descargar el documento correspondiente de una actividad segun el proyecto
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Id $actividad
+     * @param  String $archivo
+	 *
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     */
+    public function downloadActivity($actividad, $archivo,Request $request){
+		
+		if ($request->isMethod('GET')) {
+			try{
+				$public_path = public_path(); 
+				$url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo; 
+				if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) 
+					return response()->download($url); 
+			} catch ( Exception $e ){
+                abort(404);
+            }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+		
     }
     
-    public function downloadDocument($archivo){
-        $public_path = public_path();
-        $url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
-        if (Storage::exists($archivo))
-            return response()->download($url);
-        abort(404);
+	/**
+     * Permite descargar los documentes correspondientes de los proyectos
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  String $archivo
+	 *
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     */
+    public function downloadDocument($archivo,Request $request){
+		if ($request->isMethod('GET')) {
+			try{
+				$public_path = public_path();
+				$url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
+				if (Storage::exists($archivo))
+					return response()->download($url);
+				abort(404);
+			} catch ( Exception $e ){
+                abort(404);
+            }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     

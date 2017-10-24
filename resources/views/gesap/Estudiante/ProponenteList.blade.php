@@ -109,7 +109,7 @@ jQuery(document).ready(function () {
       columns:[
           {data: 'DT_Row_Index'},
            {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
-           {data: 'anteproyecto.NPRY_Titulo', searchable: true},
+           {data: 'NPRY_Titulo', searchable: true},
            {data: 'anteproyecto.NPRY_Keywords', searchable: true},
            {data: 'anteproyecto.NPRY_Duracion',searchable: true},
            {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
@@ -225,7 +225,18 @@ table = table.DataTable();
         });
     });
     
-    
+                           table.on('click','.boton_mas_info',function(){
+ 
+                if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
+                    $(this).parent().find('.texto-ocultado').css('display','inline');
+                    $(this).parent().find('.puntos').html(' ');
+                    $(this).text('Ver menos');
+                } else {
+                    $(this).parent().find('.texto-ocultado').css('display','none');
+                    $(this).parent().find('.puntos').html('...');
+                    $(this).html('Ver más');
+                };
+            });  
 });
 </script>
 @endpush

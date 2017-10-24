@@ -207,7 +207,7 @@ Route::group(['middleware' => ['permission:Report_Gesap']], function () use ($co
         'uses' => $controller.'ReportController@allProject'
     ]);
     Route::get('downloadPDF', [
-        'as' => 'ReporteAnteproyectosGesap.pdf',
+        'as' => 'report.all.project.download',
         'uses' => $controller.'ReportController@allProjectPrint'
     ]);
     Route::get('ReportJury/{jury}', [

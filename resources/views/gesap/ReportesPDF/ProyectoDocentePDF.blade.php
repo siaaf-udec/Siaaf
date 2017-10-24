@@ -92,7 +92,7 @@
                 @endif
                 <i class="fa fa-download">
                 </i>Descargar reporte
-            </a>
+            	</a>
             </div>
         </div>
     </div>

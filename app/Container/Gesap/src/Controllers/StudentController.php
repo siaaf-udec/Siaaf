@@ -184,7 +184,21 @@ class StudentController extends Controller
                 }
             }
         })
-            ->rawColumns(['NPRY_Estado'])
+		 ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->"; 
+                $largo=50;
+                $titulo=$title->anteproyecto->NPRY_Titulo;
+                if (strlen($titulo) > $largo) {         
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
+                    $titulo = explode($marca, $titulo); 
+                    $texto1 = $titulo[0];
+                    unset($titulo[0]);
+                    $texto2= implode(' ',$titulo);
+                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                } 
+                return '<p>'.$titulo.'</p>';
+            })
+            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
             ->addIndexColumn()->make(true);
     }
 }

@@ -70,6 +70,27 @@
     </div>
 </header>
 <main>
+	    <div id="details" class="clearfix">
+        <div id="client">
+            <div class="to">REPORTE GENERADO POR:</div>
+            <h2 class="name">{{ (isset( auth()->user()->full_name )) ? auth()->user()->full_name : 'Funcionario Recursos Humanos' }}</h2>
+            <div class="address">{{ (isset( auth()->user()->address )) ? auth()->user()->address : 'Calle 14 con Avenida 15' }}</div>
+            <div class="email"><a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
+        </div>
+        <div id="invoice">
+            <h1>DATOS DE REPORTE:</h1>
+            <div class="date">Total de proyectos: {{sizeof($proyectos)}} proyectos</div>
+            <div class="date">Fecha del reporte: {{$date}}</div>
+            <div class="date">Hora del reporte: {{$time}}</div>
+            <div>
+				<a class="noPrint" href="{{ route('report.all.project.download')}}">
+                <i class="fa fa-download">
+                </i>Descargar reporte
+            	</a>
+            </div>
+        </div>
+    </div>
+	
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
@@ -81,41 +102,68 @@
         </thead>
         <tbody>
          
+                @if(!empty($proyectos[0]))
         @foreach ($proyectos as  $index => $anteproyecto)  
             <tr>
-            <td class="no" rowspan="2">{{$index+1}}</td>
-            <td class="desc" rowspan="2"><h3>{{ $anteproyecto->NPRY_Titulo }}</h3></td>
-            <td class="unit" >
-                @foreach ($anteproyecto->director as  $director)  
-                    Director:
-                    <br>
-                    {{$director->usuarios->full_name}}
-                @endforeach
-                <br>    
-                
-                @foreach ($anteproyecto->estudiante1 as  $estudiante1)  
-                    Estudiantes:
-                    <br>
-                    {{$estudiante1->usuarios->full_name}}
-                @endforeach
-                <br> 
-                @foreach ($anteproyecto->estudiante2 as  $estudiante2)  
-                    {{$estudiante2->usuarios->full_name}}
-                @endforeach
-                  
-                
-            </td> 
-            <td class="qty" rowspan="2">
+                <td class="no" rowspan="5">{{$index+1}}</td>
+                <td class="desc" rowspan="5"><h3>{{ $anteproyecto->NPRY_Titulo }}</h3></td>
+                <td class="unit"rowspan="3" >
+                    @foreach ($anteproyecto->director as  $director)  
+                        Director:
+                        <br>
+                        *{{$director->usuarios->full_name}}
+                    @endforeach
+                    <br>    
+
+                    @foreach ($anteproyecto->estudiante1 as  $estudiante1)  
+                        Estudiantes:
+                        <br>
+                        *{{$estudiante1->usuarios->full_name}}
+                    @endforeach
+                    <br> 
+                    @foreach ($anteproyecto->estudiante2 as  $estudiante2)  
+                        *{{$estudiante2->usuarios->full_name}}
+                    @endforeach
+
+
+                </td> 
+                <td class="qty" rowspan="4">
                     <?php $Keywords = explode(',', $anteproyecto->NPRY_Keywords);?>
                     @foreach($Keywords as $element)
-                        {{$element}}<br>
+                        *{{$element}}<br>
                     @endforeach
+                     
+                    </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td class="qty" rowspan="2">
+                Jurados:
+                    <br>
+                @foreach ($anteproyecto->jurado1 as  $jurado1)  
+                    *{{$jurado1->usuarios->full_name}}
+                @endforeach
+                <br> 
+                @foreach ($anteproyecto->jurado2 as  $jurado2)  
+                    *{{$jurado2->usuarios->full_name}}
+                @endforeach
                 </td>
             </tr>
             <tr>
-                <td class="unit">Duración: {{ $anteproyecto->NPRY_Duracion }} meses</td>
+                <td class="unit" >
+                    Duración: {{ $anteproyecto->NPRY_Duracion }} meses
+
+                </td>
+                    
+                    
             </tr>
         @endforeach
+        @else
+            <tr>
+            <td colspan="4"><center>SIN REGISTROS</center></td>
+            </tr>
+        @endif
         </tbody>
         <tfoot>
         </tfoot>

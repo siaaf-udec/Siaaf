@@ -64,7 +64,7 @@
                             {!! Form::open(['id' => 'from_concept_create', 'class' => '', 'url' => '/forms']) !!}
                             <div class="modal-header modal-header-success">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h1><i class="glyphicon glyphicon-thumbs-up"></i> Concepto Final</h1>
+                                <h1><i class="glyphicon glyphicon-ok"></i> Concepto Final</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -99,7 +99,7 @@
                                 {!! Field::hidden('user', Auth::user()->id) !!}
                                 <div class="modal-header modal-header-success">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> Observaciones</h1>
+                                    <h1><i class="glyphicon glyphicon-eye-open"></i> Observaciones</h1>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
