@@ -1,5 +1,6 @@
 <?php
 
+use App\Container\Users\Src\User;
 use Illuminate\Database\Seeder;
 
 class UsersInteraccionSeeder extends Seeder
