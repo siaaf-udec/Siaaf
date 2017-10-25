@@ -68,7 +68,8 @@
 											</a>
 											@endif
 																	
-											<a class="task-trash download" id=""  href="/gesap/download/proyecto/{{$documento-	>PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
+											<a class="task-trash download" id=""  
+											   href="/gesap/download/proyecto/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
 												<i class="fa fa-download"></i> 
 											</a> 
 																	
@@ -244,7 +245,6 @@
 	@endcomponent
 </div>
 
-@push('functions')
 	<!--Local Scripts-->
 	<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script> 
 
