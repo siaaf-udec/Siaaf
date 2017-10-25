@@ -58,7 +58,7 @@
         $(".enviarCorreos").on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            var route = '{{ route('parqueaderos.correosCarpark.enviarMail') }}';
+            var route = '{{ route('parqueadero.correosCarpark.enviarMail') }}';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
@@ -87,7 +87,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }

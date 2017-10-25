@@ -48,8 +48,8 @@
         </li>
         @endpermission
         @permission('FUNC_CARPARK')
-        <li class="nav-item {{ active(['parqueaderos.correosCarpark.*'], 'start active open') }}">        
-            <a href="{{ route('parqueaderos.correosCarpark.cerrarParqueadero') }}" class="nav-link nav-toggle">
+        <li class="nav-item {{ active(['parqueadero.correosCarpark.*'], 'start active open') }}">        
+            <a href="{{ route('parqueadero.correosCarpark.cerrarParqueadero') }}" class="nav-link nav-toggle">
                 <i class="fa fa-window-close-o"></i>
                 <span class="title">Cerrar Parqueadero</span>
             </a>        

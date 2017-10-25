@@ -173,7 +173,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -190,7 +190,7 @@
             CU_Nombre2: {letters: true},
             CU_Apellido1: {required: true, letters: true},
             CU_Apellido2: {letters: true},
-            CU_Telefono: {required: true, noSpecialCharacters:true},
+            CU_Telefono: {noSpecialCharacters:true},
             CU_Correo: {required: true, email: true},
             CU_Direccion: {required: true, noSpecialCharacters:true},
             FK_CU_IdDependencia: {required: true},

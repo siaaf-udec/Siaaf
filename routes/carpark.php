@@ -5,13 +5,6 @@ use Illuminate\Http\Request;
 /**
  * Parqueadero
  */
-//RUTA DE EJEMPLO
-Route::get('/', [
-    'as'   => 'parqueaderos.index',
-    'uses' => function () {
-        return view('carpark.example');
-    },
-]);
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -483,13 +476,13 @@ Route::group(['middleware' => ['auth']], function () {
         //ruta que conduce al controlador para mostrar el botón de envio de correos de advertencia
         Route::get('cerrarParqueadero', [
             'uses' => $controller . 'CorreosController@cerrarParqueadero',
-            'as' => 'parqueaderos.correosCarpark.cerrarParqueadero',
+            'as' => 'parqueadero.correosCarpark.cerrarParqueadero',
         ]);
 
         //ruta que conduce al controlador para enviar los correos de advertencia
         Route::post('enviarMail', [
             'uses' => $controller . 'CorreosController@enviarMail',
-            'as' => 'parqueaderos.correosCarpark.enviarMail',
+            'as' => 'parqueadero.correosCarpark.enviarMail',
         ]);
 
     });
