@@ -471,7 +471,7 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Evaluacion_Individual($id)
     {
-        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
                     'convenios_Evaluacion'=>function ($query) {
                         $query->select('PK_Convenios','Nombre');
@@ -515,6 +515,60 @@ class Controller_Evaluaciones extends Controller
          
        return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
         
+    }
+    /*funcion para verificar el envio exitoso del filtro para el reporte
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function Vista_Reporte(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.'.$id);
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+        }
+      
+    }
+    /*funcion para envio de la vista de filtro de reporte
+    *@param \Illuminate\Http\Request
+    *@param int id
+    *@param Date fecha_primera
+    *@param Date fecha_segunda
+    *@return \Illuminate\Http\Response
+    */
+    public function Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    {
+        return view($this->path.'.Ver_Reporte',compact('id','fecha_primera','fecha_segunda','lava'));
+    }
+    /*funcion para envio de los datos para la tabla de datos
+    *@param \Illuminate\Http\Request
+    *@param int id
+    *@param Date fecha_primera
+    *@param Date fecha_segunda
+    *@return Yajra\DataTables\DataTable
+    */
+    public function Listar_Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    {
+        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+            ->with([
+                    'convenios_Evaluacion'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre');
+                    }
+            ])
+            ->with([
+                'evaluado_U'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->get();
+        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
+      
     }
 //_____________________END__EVALUACIONE_______
 }

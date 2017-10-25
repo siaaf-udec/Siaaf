@@ -23,7 +23,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane fade active in" id="tab_1_1">
                                           <div class="actions">
-                                            @permission(['Add_Convenio'])
+                                            @permission(['Des_Doc_Con'])
                                                 <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                                             @endpermission
                                         </div>
@@ -65,7 +65,7 @@
                                              '#' => ['style' => 'width:20px;'],
                                              'Documentacion',
                                              'Nombres',
-                                              'Apellidos',
+                                             'Apellidos',
                                              'Acciones' => ['style' => 'width:160px;']
                                             ])
                                         @endcomponent
@@ -214,39 +214,34 @@
 <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script> 
 
 <script type="text/javascript">
-
     jQuery(document).ready(function() {
-     
         var x = function () {
           return {
               init: function () {
-                    alert('Seguro que desea subir este archivo');
-                   // $('#documento').modal('hide');
-                    //$('#Listar_Documentos').ajax.reload();;
-              }
+                    alert('Seguro que desea subir este archivo, recuerda dar clic en la tabla para actualizarla');
+                   }
           };
         };
         var route = '{{route('Subir_Documento_Convenio.Subir_Documento_Convenio',[$id])}}';
         var formatfile = 'image/*,.jpeg,.pdf,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.PDF';
         var numfile = 1;
         
-       $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, x(), name));
+$("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, x(), name));
 var table, url,id;
-   
-    table = $('#Listar_Documentos');
-    url = "{{ route('Listar_Documentos_Convenios.Listar_Documentos_Convenios',[$id]) }}";
-    table.DataTable({
-       lengthMenu: [
-           [5, 10, 25, 50, -1],
-           [5, 10, 25, 50, "Todo"]
-       ],
-       responsive: true,
-       colReorder: true,
-       processing: true,
-       serverSide: true,
-       ajax: url,
-       searching: true,
-       language: {
+        table = $('#Listar_Documentos');
+        url = "{{ route('Listar_Documentos_Convenios.Listar_Documentos_Convenios',[$id]) }}";
+        table.DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "Todo"]
+        ],
+            responsive: true,
+            colReorder: true,
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            searching: true,
+            language: {
            "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
            "sLengthMenu": "Mostrar _MENU_ registros",
            "sZeroRecords": "No se encontraron resultados",
@@ -443,7 +438,6 @@ echo $id;
           
     var form=$('#form-Participante');
     var wizard =  $('#form_wizard_1');
-            
     var agregarParticipante = function () {
             return{
                 init: function () {
@@ -487,7 +481,7 @@ echo $id;
     FormValidationMd.init( form, rules, messages , agregarParticipante());
    
 });
-    </script>  
+</script>  
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
@@ -532,7 +526,7 @@ echo $id;
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Empresas_Participantes', className:'none',"visible": true, name:"participante" },
+           {data: 'PK_Empresas_Participantes', className:'none',"visible": true, name:"empresa" },
            {data: 'patricipantes__empresas.PK_Empresa', searchable: true},
            {data: 'patricipantes__empresas.Nombre_Empresa', searchable: true},
            {data:'action',className:'',searchable: false,

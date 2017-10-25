@@ -319,7 +319,15 @@ Route::get('Ver_Alerta/{id}', [
     'uses' => $controller.'Controller_Alertas@Ver_Alerta'
 ]);
 //__________________________END_ALERTAS____________________
-Route::get('Reporte', [    
+Route::get('Reporte/{id}/{fecha_primera}/{fecha_segunda}', [    
     'as' => 'Reporte.Reporte',
-    'uses' => $controller.'Controller_Alertas@Reporte'
+    'uses' => $controller.'Controller_Evaluaciones@Reporte'
+]);
+Route::get('Listar_Reporte/{id}/{fecha_primera}/{fecha_segunda}', [    
+    'as' => 'Listar_Reporte.Listar_Reporte',
+    'uses' => $controller.'Controller_Evaluaciones@Listar_Reporte'
+]);
+Route::post('Vista_Reporte/{id}', [    
+    'as' => 'Vista_Reporte.Vista_Reporte',
+    'uses' => $controller.'Controller_Evaluaciones@Vista_Reporte'
 ]);

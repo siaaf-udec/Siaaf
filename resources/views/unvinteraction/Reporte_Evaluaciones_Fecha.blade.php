@@ -1,8 +1,7 @@
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
 
-
-<div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DEL CONVENIO'])
-        <div class="row">
+<br><br>
+    <div class="row">
         <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Pasante'])
@@ -23,19 +22,16 @@
         </div>
     </div>
     @endcomponent
-</div>
 
-<script >
+
+
+
+
+<script>
 jQuery(document).ready(function () {
-    
-    $('.atras').on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('Alerta_Ajax.Alerta_Ajax') }}';
-            $(".content-ajax").load(route);
-        });
     var table, url;
     table = $('#Listar_Pasante');
-    url = "{{ route('Listar_Reporte.Listar_Reporte',[$id,$fecha_primera,$fecha_segunda]) }}";
+    url = "{{ route('Listar_Evaluacion_Individual.Listar_Evaluacion_Individual',[$id]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -120,5 +116,8 @@ jQuery(document).ready(function () {
      $(".content-ajax").load(route_edit);
         });
     
-  });   
+   
+    
+  
+});
 </script>
