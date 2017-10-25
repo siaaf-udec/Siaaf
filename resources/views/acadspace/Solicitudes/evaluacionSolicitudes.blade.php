@@ -398,7 +398,7 @@
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
                     defaultContent: ' @permission('aprobarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
-                '@permission('rechazarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
+                    '@permission('rechazarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -432,9 +432,8 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '@permission('
-                    aprobarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission @permission('
-                    rechazarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>@endpermission',
+                    defaultContent: '@permission('aprobarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
+                    '@permission('rechazarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
