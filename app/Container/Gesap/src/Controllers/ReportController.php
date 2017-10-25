@@ -58,6 +58,8 @@ class ReportController extends Controller
     /*
      * Reporte con todos los proyectos
      *
+	 * @param  \Illuminate\Http\Request 
+	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function allProject(Request $request)
@@ -83,6 +85,8 @@ class ReportController extends Controller
 
     /*
      * Descarga de reporte de todos los proyectos
+     *
+	 * @param  \Illuminate\Http\Request 
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -113,6 +117,7 @@ class ReportController extends Controller
      * Reporte con los proyectos de un jurado seleccionado
      *
      * @param int $jury
+	 * @param  \Illuminate\Http\Request 
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -156,6 +161,7 @@ class ReportController extends Controller
      * Descarga de reporte con los proyectos de un jurado seleccionado
      *
      * @param int $jury
+	 * @param  \Illuminate\Http\Request 
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -204,6 +210,7 @@ class ReportController extends Controller
      * Reporte con los proyectos de un director seleccionado
      *
      * @param int $director
+	 * @param  \Illuminate\Http\Request 
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -244,6 +251,7 @@ class ReportController extends Controller
      * Descarga de reporte con los proyectos de un director seleccionado
      *
      * @param int $director
+	 * @param  \Illuminate\Http\Request 
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -330,6 +338,8 @@ class ReportController extends Controller
     /*
      * Datos de grafico de estado de anteproyectos
      *
+	 * @param  \Illuminate\Http\Request 
+	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getPreliminary(Request $request)
@@ -351,6 +361,8 @@ class ReportController extends Controller
     
     /*
      * Datos de grafico de estado de proyectos
+     *
+	 * @param  \Illuminate\Http\Request
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -376,6 +388,8 @@ class ReportController extends Controller
     /*
      * Datos de grafico de proyectos y anteproyectos por jurado
      *
+	 * @param  \Illuminate\Http\Request
+	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getJury(Request $request)
@@ -411,6 +425,8 @@ class ReportController extends Controller
     /*
      * Datos de grafico de proyectos y anteproyectos por director
      *
+	 * @param  \Illuminate\Http\Request
+	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getDirector(Request $request)
