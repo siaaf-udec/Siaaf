@@ -12,14 +12,17 @@ class EspaciosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory( Espacios::class, 1 )->create([
-            'ESP_Nombre_Espacio' => 'Ciencias agropecuarias y ambientales',
-        ]);
-        factory( Espacios::class, 2 )->create([
-            'ESP_Nombre_Espacio' => 'Aulas de computo',
-        ]);
-        factory( Espacios::class, 3 )->create([
-            'ESP_Nombre_Espacio' => 'Laboratorios Psicologia',
-        ]);
+        $aux = new Espacios();
+        $aux->ESP_Nombre_Espacio = 'Ciencias agropecuarias y ambientales';
+        $aux->save();
+
+        $aux = new Espacios();
+        $aux->ESP_Nombre_Espacio = 'Aulas de computo';
+        $aux->save();
+
+        $aux = new Espacios();
+        $aux->ESP_Nombre_Espacio = 'Laboratorios Psicologia';
+        $aux->save();
+
     }
 }

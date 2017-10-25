@@ -12,10 +12,10 @@ class SoftwareTableSeeder extends Seeder
      */
     public function run()
     {
-        factory( Software::class, 1 )->create([
-            'SOF_Nombre_Soft' => 'NInguno',
-            'SOF_Version' => '0',
-            'SOF_Licencias' => '0',
-        ]);
+        $aux = new Software;
+        $aux->SOF_Nombre_Soft = 'Ninguno';
+        $aux->SOF_Version = 0;
+        $aux->SOF_Licencias = 0;
+        $aux->save();
     }
 }
