@@ -14,8 +14,4 @@ class Conceptos extends Model
 
     protected $fillable = ['CNPT_Concepto','CNPT_Tipo','FK_TBL_Encargado_Id'];
     
-    public function conceptos()
-    {
-        return $this->belongsTo(Conceptos::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo');
-    }
 }

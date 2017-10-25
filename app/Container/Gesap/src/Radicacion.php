@@ -15,8 +15,4 @@ class Radicacion extends Model
 
     protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_Id'];
     
-    public function anteproyectos()
-    {
-        return $this->hasOne(Radicacion::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
-    }
 }
