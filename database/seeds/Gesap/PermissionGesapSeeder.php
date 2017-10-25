@@ -2,6 +2,7 @@
 
 use App\Container\Permissions\Src\Permission;
 use \Illuminate\Database\Seeder;
+use App\Container\Permissions\Src\Role;
 
 class PermissionGesapSeeder extends Seeder
 {
@@ -58,34 +59,47 @@ class PermissionGesapSeeder extends Seeder
              'module_id'=>'7']
         ]);
         
+		$role1 = Role::where('name' , 'Administrator_Gesap')->get(['id'])->first();
+		$role2 = Role::where('name' , 'Coordinator_Gesap')->get(['id'])->first();
+		$role3 = Role::where('name' , 'Evaluator_Gesap')->get(['id'])->first();
+		$role4 = Role::where('name' , 'Student_Gesap')->get(['id'])->first();
+		
+		
         $permission = Permission::where('name', '=', 'Create_User_Gesap')->first();
-        $permission->roles()->sync(2);
+        $permission->roles()->sync($role1);
         
         $permission = Permission::where('name', '=', 'Assing_permission_Gesap')->first();
-        $permission->roles()->sync(2);
+        $permission->roles()->sync($role1);
         $permission = Permission::where('name', '=', 'Create_Project_Gesap')->first();
-        $permission->roles()->sync(3);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'Assign_teacher_Gesap')->first();
-        $permission->roles()->sync(3);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'Modify_Project_Gesap')->first();
-        $permission->roles()->sync(3);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'See_All_Project_Gesap')->first();
-        $permission->roles()->sync(3);
+        $permission->roles()->sync($role2);
             
         $permission = Permission::where('name', '=', 'Report_Gesap')->first();
-        $permission->roles()->sync(3);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
-        $permission->roles()->sync(3);
-        $permission->roles()->sync(4);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
-        $permission->roles()->sync(3);
-        $permission->roles()->sync(4);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
-        $permission->roles()->sync(3);
-        $permission->roles()->sync(4);
-        $permission->roles()->sync(5);
+        $permission->roles()->sync($role2);
         $permission = Permission::where('name', '=', 'Update_Final_Project_Gesap')->first();
-        $permission->roles()->sync(5);
+        $permission->roles()->sync($role4);
         
+		$permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
+		$permission->roles()->sync($role3);
+		
+		$permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
+		$permission->roles()->sync($role3);
+		
+		$permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+		$permission->roles()->sync($role3);
+		
+		$permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+        $permission->roles()->sync($role4);
     }
 }
