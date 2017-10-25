@@ -52,7 +52,7 @@ class AsistenciaController extends Controller
      * disponibles de acuerdo al espacio
      * @param \Illuminate\Http\Request $request
      * @param varchar $espacio
-     * @return \Illuminate\Http\JsonResponse|\App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarSalasAsitencia(Request $request, $espacio)
     {
