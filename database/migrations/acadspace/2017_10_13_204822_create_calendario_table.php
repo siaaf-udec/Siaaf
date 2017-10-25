@@ -19,7 +19,7 @@ class CreateCalendarioTable extends Migration
             $table->datetime('CAL_Fecha_Fin')->nullable();
             $table->string('CAL_Color',30)->nullable();
             $table->mediumText('CAL_Titulo')->nullable();
-            $table->string('CAL_Sala',11)->nullable();
+            $table->integer('FK_CAL_Id_Sala')->unsigned();
             $table->timestamps();
         });
     }

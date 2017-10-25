@@ -14,9 +14,9 @@ class CreateIncidentesTable extends Migration
     public function up()
     {
         Schema::connection('acadspace')->create('TBL_Incidentes', function (Blueprint $table) {
-            $table->increments('PK_INC_Id_Incidente')->unsigned()->unique();
+            $table->increments('PK_INC_Id_Incidente')->unique();
             $table->integer('FK_INC_Id_User')->unsigned();
-            $table->string('INC_Nombre_Espacio',50);
+            $table->integer('FK_INC_Id_Espacio')->unsigned();
             $table->string('INC_Descripcion',255);
             $table->timestamps();
         });

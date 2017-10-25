@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAulasTable extends Migration
+class CreateEspaciosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateAulasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('TBL_Aulas', function (Blueprint $table) {
-            $table->increments('PK_SAL_Id_Sala')->unsigned()->unique();
-            $table->string('SAL_Nombre_Sala',20);
-            $table->integer('FK_SAL_Id_Espacio')->unsigned();
+        Schema::connection('acadspace')->create('TBL_Espacios', function (Blueprint $table) {
+            $table->increments('PK_ESP_Id_Espacio')->unsigned()->unique();
+            $table->string('ESP_Nombre_Espacio',50);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateAulasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Aulas');
+        Schema::dropIfExists('TBL_Espacios');
     }
 }
