@@ -179,7 +179,7 @@ Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], functi
 
 Route::group(['middleware' => ['permission:Report_Gesap']], function () use ($controller) {
     Route::get('graficos/', [
-        'as' => 'graficos',
+        'as' => 'graficos.index',
         'uses' => $controller.'ReportController@graficos'
     ]);
     Route::get('graficos/data/preliminary', [

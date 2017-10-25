@@ -1,24 +1,24 @@
 {{-- MENÚ DE EJEMPLO --}}
-<li class="nav-item {{ active(['gesap.*'], 'start active open') }}">
+<li class="nav-item {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'start active open') }}">
     <a class="nav-link nav-toggle" href="javascript:;">
         <i class="fa fa-cube">
         </i>
         <span class="title">
             Gesap
         </span>
-        <span class="arrow {{ active(['gesap.*'], 'open') }}">
+        <span class="arrow {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
         </span>
     </a>
     <ul class="sub-menu">
         @permission('See_All_Project_Gesap')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
-                <a href="{{ route('min.index') }}" class="nav-link ">
+                <a href="{{ route('min.index') }}" class="nav-link nav-toggle">
                     <i class="fa fa-list-alt"></i>
                     <span class="title">Listar Anteproyectos</span>
                 </a>
             </li>
             <li class="nav-item {{ active(['project.index'], 'start active open') }}">
-                <a href="{{ route('project.index') }}" class="nav-link ">
+                <a href="{{ route('project.index') }}" class="nav-link nav-toggle">
                     <i class="fa fa-list-alt"></i>
                     <span class="title">Listar Proyectos</span>
                 </a>
@@ -26,7 +26,7 @@
         @endpermission
         @permission('Director_List_Gesap')
             <li class="nav-item {{ active(['anteproyecto.index.directorList'], 'start active open') }}">
-                <a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link ">
+                <a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
                     <i class="fa fa-user"></i>
                     <span class="title">Director de Proyecto</span>
                 </a>
@@ -34,7 +34,7 @@
         @endpermission
         @permission('Jury_List_Gesap')
             <li class="nav-item {{ active(['anteproyecto.index.juryList'], 'start active open') }}">
-                <a class="nav-link " href="{{ route('anteproyecto.index.juryList') }}">
+                <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }} ">
                     <i class="fa fa-user"></i>
                     <span class="title">Jurado de Proyecto</span>
                 </a>
@@ -49,8 +49,8 @@
                     <span class="title">Reportes</span>
                 </a>
             </li>
-            <li class="nav-item {{ active(['graficos'], 'start active open') }}">
-                <a class="nav-link " href="{{ route('graficos') }}">
+            <li class="nav-item {{ active(['graficos.index'], 'start active open') }}">
+                <a class="nav-link " href="{{ route('graficos.index') }}">
                     <i class="fa fa-bar-chart"></i>
                     <span class="title">Graficos</span>
                 </a>
