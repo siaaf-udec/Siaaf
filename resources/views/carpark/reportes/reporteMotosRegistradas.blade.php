@@ -44,6 +44,7 @@
 <main>
     <div id="details" class="clearfix">
         <div id="client">
+            <h2 class="name">Motocicletas Registradas En El Sistema</h2>
             <div class="to">REPORTE GENERADO POR:</div>
             <h2 class="name">Parqueadero Universidad De Cundinamarca Extensión Facatativá</h2>
             <div class="address">Calle 14 con Avenida 15</div>
@@ -51,7 +52,6 @@
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
-            <div class="date">Total Motos Registradas: {{$cont}}</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div><a class="noPrint" href="{{ route('parqueadero.reportesCarpark.DescargarreporteMotosRegistradas') }}">

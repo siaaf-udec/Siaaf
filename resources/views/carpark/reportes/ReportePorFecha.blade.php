@@ -44,14 +44,14 @@
 <main>
     <div id="details" class="clearfix">
         <div id="client">
+            <h2 class="name">Historial Del {{date('d-m-Y', strtotime($FechaMinDescarga))}} al {{date('d-m-Y', strtotime($FechaMaxDescarga))}}</h2>
             <div class="to">REPORTE GENERADO POR:</div>
             <h2 class="name">Parqueadero Universidad De Cundinamarca Extensión Facatativá</h2>
             <div class="address">Calle 14 con Avenida 15</div>
             <div class="email"><a href="#">correoFalso123@mail.com</a></div>
         </div>
         <div id="invoice">
-            <h1>DATOS DE CONTACTO:</h1>
-            <div class="date">Total Historico: {{$total}}</div>
+            <h1>DATOS DE CONTACTO:</h1>            
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div><a class="noPrint"
