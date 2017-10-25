@@ -1,4 +1,4 @@
-@permission('auxapoyo')
+@permission('incidentes')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -37,11 +37,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('registrarIncidente')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -49,6 +51,7 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('consultarIncidente')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
                     @slot('columns', [
                     'id_incidente',
@@ -59,6 +62,7 @@
                     'Acciones' => ['style' => 'width:45px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -85,10 +89,9 @@
                                     ['label'=>'Código:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                     ['help' => 'Digite el código o identificación de la persona','icon'=>'fa fa-user'] ) !!}
 
-                                    {!! Field::select('espacios',
-                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicologia', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                        null,
-                                        [ 'label' => 'Seleccionar un espacio']) !!}
+                                    {!! Field::select('Espacio académico:',$espacios,
+                                        ['id' => 'espacios', 'name' => 'espacios'])
+                                        !!}
 
                                     {!! Field:: textarea('descripcion',null,
                                          ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
@@ -99,7 +102,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('registrarIncidente')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -196,9 +201,10 @@
                 },
                 {data: 'DT_Row_Index'},
                 {data: 'FK_INC_Id_User', name: 'Código'},
-                {data: 'INC_Nombre_Espacio', name: 'Nombre Espacio'},
+                {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission('
+                    eliminarIncidente')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

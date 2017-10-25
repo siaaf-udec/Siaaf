@@ -67,7 +67,7 @@
         </div>
     </div>
     <div align="center">
-        <h1>Docentes que ingresaron a {{$nombreAula}} - {{$lab}}
+        <h1>Docentes que ingresaron a {{$nombreAula}} - {{$nomEspacio}}
             entre {{$fech1}} y {{$fech2}}</h1>
 
     </div>

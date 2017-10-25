@@ -1,4 +1,4 @@
-@permission('auxapoyo')
+@permission('gestionSolicitudes')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -30,21 +30,20 @@
         <div class="col-md-12">
             <div class="clearfix">
                 <br>
-                {!! Field::select('SOL_laboratorio',
-                                                        ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                                        null,
-                                                        [ 'label' => 'Espacio académico a gestionar:']) !!}
+                {!! Field::select('Espacio académico:',$espacios,
+                                    ['id' => 'SOL_laboratorio', 'name' => 'SOL_laboratorio'])
+                                    !!}
                 {{--DIVISION NAV--}}
                 <div class="portlet-body" id="vista-tabla">
                     <ul class="nav nav-pills">
+                        @permission('gestionSolicitudes')
                         <li class="active">
                             <a href="#tab_2_1" data-toggle="tab"> Solicitudes grupales </a>
                         </li>
                         <li>
                             <a href="#tab_2_2" data-toggle="tab"> Solicitudes libres </a>
                         </li>
+                        @endpermission
                     </ul>
 
                     <div class="tab-content">
@@ -54,6 +53,7 @@
                                 <br>
                                 <br>
                                 <br>
+                                @permission('consultarSolicitudes')
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
@@ -64,6 +64,7 @@
                                     'Acciones'
                                     ])
                                 @endcomponent
+                                @endpermission
                             </p>
                         </div>
                         <div class="tab-pane fade" id="tab_2_2">
@@ -72,6 +73,7 @@
                                 <br>
                                 <br>
                                 <br>
+                                @permission('consultarSolicitudes')
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
@@ -82,6 +84,7 @@
                                     'Acciones'
                                     ])
                                 @endcomponent
+                                @endpermission
                             </p>
                         </div>
                     </div>
@@ -127,7 +130,9 @@
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        @permission('aprobarSolicitudes')
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        @endpermission
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -160,7 +165,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        @permission('rechazarSolicitudes')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                     {!! Form::close() !!}
@@ -196,7 +203,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        @permission('aprobarSolicitudes')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                     {!! Form::close() !!}
@@ -229,7 +238,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        @permission('rechazarSolicitudes')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                        @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                     {!! Form::close() !!}
@@ -307,7 +318,7 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_Software}}</td>
+                <td>@{{software.SOF_Nombre_Soft}}</td>
             </tr>
             <tr>
                 <td>Fechas:</td>
@@ -333,7 +344,7 @@
             </tr>
             <tr>
                 <td>Fecha seleccionada:</td>
-                <td>@{{SOL_Rango_Fechas}}</td>
+                <td>@{{SOL_Fecha_Inicial}}</td>
             </tr>
             <tr>
                 <td>Hora inicio: @{{SOL_Hora_Inicio}}</td>
@@ -345,7 +356,7 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_Software}}</td>
+                <td>@{{software.SOF_Nombre_Soft}}</td>
             </tr>
         </table>
     </script>
@@ -386,7 +397,9 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>',
+                    defaultContent: '@permission('
+                    aprobarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission @permission('
+                    rechazarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -420,7 +433,9 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>',
+                    defaultContent: '@permission('
+                    aprobarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission @permission('
+                    rechazarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -441,17 +456,14 @@
                 var select = $('#SOL_laboratorio option:selected').val();
                 /*Cargar select de aulas*/
                 $.get("cargarSalas/" + select + "", function (response) {
-                    $('#aula').empty();
-                    $("#aula").append("<option value=''></option>");
-                    for (i = 0; i < response.length; i++) {
-                        $('#aula').append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
-                    }
-                    $('#aulas').empty();
-                    $("#aulas").append("<option value=''></option>");
-                    for (i = 0; i < response.length; i++) {
-                        $('#aulas').append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
-                    }
-
+                    $(response.data).each(function (key, value) {
+                        $("#aula").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
+                    });
+                    $("#aula").val([]);
+                    $(response.data).each(function (key, value) {
+                        $("#aulas").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
+                    });
+                    $("#aulas").val([]);
                 });
                 //tabla sol grupal
                 table = $('#art-table-ajax');

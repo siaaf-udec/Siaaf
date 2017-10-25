@@ -1,4 +1,4 @@
-@permission('auxapoyo')
+@permission('software')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -28,13 +28,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('registrarSoftware')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar
                         </a>
-
-
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -42,6 +42,7 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('consultarSoftware')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -51,6 +52,7 @@
                     'Acciones' => ['style' => 'width:45px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -91,14 +93,15 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('registrarSoftware')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>
                     {{-- END HTML MODAL CREATE--}}
                 </div>
-
 
                 {{-- END HTML MODAL CREATE--}}
             </div>
@@ -157,7 +160,8 @@
                 {data: 'SOF_Version', name: 'Versión'},
                 {data: 'SOF_Licencias', name: 'Licencias'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission('
+                    eliminarSoftware')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

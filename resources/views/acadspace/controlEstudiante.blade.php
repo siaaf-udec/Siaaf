@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-
+@permission('publico')
 @section('page-title', 'Control Estudiante:')
 @push('styles')
     {{--Select2--}}
@@ -34,13 +34,9 @@
                                           null,
                                           [ 'label' => 'Programa :']) !!}
 
-
-                        {!! Field::select('SOL_laboratorios',
-                                          ['Aulas de computo' => 'Aulas de computo',
-                                            'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                            'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                          null,
-                                          [ 'label' => 'Espacio academico:']) !!}
+                        {!! Field::select('Espacio académico:',$espacios,
+                                        ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                        !!}
 
                         {!! Field::select(
                                                            'aula', null,
@@ -50,7 +46,9 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
+                                    @permission('registrarAsistencia')
                                     {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    @endpermission
                                 </div>
                             </div>
                         </div>
@@ -113,12 +111,12 @@
             moment.locale('es');
             $("#SOL_laboratorios").change(function (event) {
                 /*Cargar select de aulas*/
+                $('#aula').empty();
                 $.get("cargarSalasAsitencia/" + event.target.value + "", function (response) {
-                    $("#aula").empty();
-                    $("#aula").append("<option value=''></option>");
-                    for (i = 0; i < response.length; i++) {
-                        $("#aula").append("<option value='" + response[i].PK_SAL_Id_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>")
-                    }
+                    $(response.data).each(function (key, value) {
+                        $("#aula").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
+                    });
+                    $("#aula").val([]);
                 });
             });
             /*VALIDACIONES*/
@@ -182,4 +180,4 @@
 
     </script>
 @endpush
-
+@endpermission

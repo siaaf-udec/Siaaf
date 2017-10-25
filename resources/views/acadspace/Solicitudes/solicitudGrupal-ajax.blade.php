@@ -1,5 +1,5 @@
 {{-- BEGIN HTML SAMPLE --}}
-@permission('docentes')
+@permission('realizarSolicitudes')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th-list', 'title' => 'Mis Solicitudes'])
         <div class="clearfix">
@@ -10,11 +10,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
+                    @permission('realizarSolicitudes')
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Práctica
                         Grupal</a>
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon createLib"><i
                                 class="fa fa-plus"></i>Práctica Libre</a></div>
-
+                @endpermission
             </div>
         </div>
 </div>
@@ -22,6 +23,7 @@
 </div>
 <br>
 <div class="col-md-12">
+    @permission('consultarSolicitudes')
     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
         @slot('columns', [
         '#' => ['style' => 'width:20px;'],
@@ -32,6 +34,7 @@
         'Práctica' => ['class' => 'min-phone-l']
         ])
     @endcomponent
+    @endpermission
 </div>
 <div class="clearfix">
 </div>
@@ -46,11 +49,11 @@
         </tr>
         <tr>
             <td>Software:</td>
-            <td>@{{SOL_Software}}</td>
+            <td>@{{software.SOF_Nombre_Soft}}</td>
         </tr>
         <tr>
             <td>Sala asignada:</td>
-            <td>@{{FK_SOL_Id_Sala}}</td>
+            <td>@{{aula.SAL_Nombre_Sala}}</td>
         </tr>
         <tr>
             <td>Observación:</td>

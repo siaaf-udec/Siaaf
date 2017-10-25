@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-@permission('auxapoyo')
+@permission('reportes')
 @section('page-title', 'Reportes:')
 @push('styles')
     {{--Select2--}}
@@ -18,21 +18,21 @@
             <div class="row">
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form-reporte', 'method'=>'POST', 'route'=> ['espacios.academicos.report.cargarRepEst'], 'target'=>'_blank']) !!}
+                    {!! Form::open (['id'=>'form-reporte', 'method'=>'POST', 'route'=> ['espacios.academicos.report.repEst'], 'target'=>'_blank']) !!}
                     <div class="form-body">
-                        {!! Field::select('SOL_laboratorios',
-                            ['Aulas de Computo' => 'Aulas de Computo',
-                            'Laboratorio psicologia' => 'Laboratorio psicología',
-                            'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                            null,
-                            [ 'label' => 'Espacio academico:']) !!}
+
+                        {!! Field::select('Espacio académico:',$espacios,
+                                        ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                        !!}
 
                         {!! Field::text('date_range',['required', 'readonly', 'auto' => 'off', 'class' => 'range-date-time-picker'],
                         ['help' => 'Seleccione un rango de fechas.', 'icon' => 'fa fa-calendar'])       !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">
+                                    @permission('realizarReporte')
                                     {{ Form::submit('Reporte Estudiantes', ['class' => 'btn blue']) }}
+                                    @endpermission
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-@permission('auxapoyo')
+@permission('gestionSolicitudes')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -33,17 +33,17 @@
             </div>
             <br>
             <br>
-            {!! Field::select('laboratorioSeleccionado',
-                                                        ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                                        null,
-                                                        [ 'label' => 'Espacio academico:']) !!}
+
+            {!! Field::select('Espacio académico:',$espacios,
+                                        ['id' => 'laboratorioSeleccionado', 'name' => 'laboratorioSeleccionado'])
+                                        !!}
+
             <br>
             <br>
             <br>
 
             <div class="col-md-12">
+                @permission('consultarSolicitudes')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -54,6 +54,7 @@
                     'Acciones'
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -114,7 +115,7 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_Software}}</td>
+                <td>@{{software.SOF_Nombre_Soft}}</td>
             </tr>
         </table>
     </script>
@@ -149,10 +150,11 @@
                     "defaultContent": ''
                 },
                 {data: 'SOL_Nucleo_Tematico', name: 'Núcleo temático'},
-                {data: 'FK_SOL_Id_Sala', name: 'Sala'},
+                {data: 'aula.SAL_Nombre_Sala', name: 'Sala'},
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission('
+                    eliminarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

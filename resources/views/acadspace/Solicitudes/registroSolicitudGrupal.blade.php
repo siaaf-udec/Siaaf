@@ -1,4 +1,4 @@
-@permission('docentes')
+@permission('realizarSolicitudes')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-pencil', 'title' => 'Crear Solicitud grupal'])
         @slot('actions', [
@@ -22,12 +22,10 @@
                         {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url' => '/forms']) !!}
                         <div class="form-body">
                             <div class="col-md-10 col-md-offset-1">
-                                {!! Field::select('SOL_laboratorios',
-                                                        ['Aulas de computo' => 'Aulas de computo',
-                                                        'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                        'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                                        null,
-                                                        [ 'label' => 'Espacio académico que requiere:']) !!}
+
+                                {!! Field::select('Espacio académico:',$espacios,
+                                    ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                    !!}
 
                                 {!! Field::select('SOL_programa',
                                                     ['Ingenieria de sistemas' => 'Ingeniería de sistemas',
@@ -50,7 +48,7 @@
                                 {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                 ['help' => 'Digite el núcleo temático.','icon'=>'fa fa-building-o'] ) !!}
 
-                                {!! Field::radios('SOL_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
+                                {!! Field::radios('FK_SOL_Id_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_soft">
                                     {!! Field::select('Seleccione software entre los disponiles actualmente:',$software,
@@ -91,7 +89,9 @@
                                         <a href="javascript:;" class="btn red button-cancel">
                                             Cancelar
                                         </a>
+                                        @permission('realizarSolicitudes')
                                         {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                                        @endpermission
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +141,8 @@
             }
         });
         $("#req_soft").css("display", "none");
-        $("input[name=SOL_Software]").click(function () {
-            if ($('input:radio[name=SOL_Software]:checked').val() == "Si") {
+        $("input[name=FK_SOL_Id_Software]").click(function () {
+            if ($('input:radio[name=FK_SOL_Id_Software]:checked').val() == "Si") {
                 $("#req_soft").css("display", "block");
             } else {
                 $("#req_soft").css("display", "none");
@@ -183,8 +183,8 @@
                             guia = $("#SOL_nombreGuia").val();
                         }
                         //Validacion de si solicitan software o no
-                        if ($('select[name="SOL_NombSoft"]').val() == "") {
-                            soft = "Ninguno";
+                        if ($('select[name="SOL_NombSoft"]').val() == null || $('select[name="SOL_NombSoft"]').val() == "") {
+                            soft = 1;
                         } else {
                             soft = $('select[name="SOL_NombSoft"]').val();
                         }
@@ -240,7 +240,7 @@
         var rules_edit = {
             SOL_programa: {required: true},
             SOL_ReqGuia: {required: true},
-            SOL_Software: {required: true},
+            FK_SOL_Id_Software: {required: true},
             SOL_Nucleo_Tematico: {required: true, minlength: 3, maxlength: 20},
             SOL_Grupo: {required: true, number: true},
             SOL_Cant_Estudiantes: {required: true, number: true, maxlength: 2},

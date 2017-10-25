@@ -1,4 +1,4 @@
-@permission('auxapoyo')
+@permission('aulas')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -32,11 +32,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('registrarAula')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -44,16 +46,18 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('consultarAula')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'id_documento',
                     'Nombre Sala',
-                    'Nombre Espacio',
+                    'Espacios',
                     'Acciones' => ['style' => 'width:45px;']
 
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -80,17 +84,18 @@
                                     ['label'=>'Nombre Sala:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre','icon'=>'fa fa-desktop'] ) !!}
 
-                                    {!! Field::select('espacios',
-                                        ['Aulas de Computo' => 'Aulas de Computo', 'Laboratorio psicologia' => 'Laboratorio psicología', 'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales'],
-                                        null,
-                                        [ 'label' => 'Seleccionar un espacio']) !!}
+                                    {!! Field::select('Espacio académico:',$espacios,
+                                    ['name' => 'espacios', 'id' => 'espacios'])
+                                    !!}
 
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('registrarAula')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -164,10 +169,9 @@
                 {data: 'DT_Row_Index'},
                 {data: 'PK_SAL_Id_Sala', name: 'id_documento', "visible": false},
                 {data: 'SAL_Nombre_Sala', name: 'Nombre Sala'},
-                {data: 'SAL_Nombre_Espacio', name: 'Nombre Espacio'},
-
-                {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>',
+                {data: 'espacio.N_espacio', name: 'Nombre Espacio'}, {
+                    defaultContent: '@permission('
+                    eliminarAula')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -234,7 +238,7 @@
 
                         var formData = new FormData();
                         formData.append('SAL_Nombre_Sala', $('input:text[name="nomb_sala"]').val());
-                        formData.append('SAL_Nombre_Espacio', $('select[name="espacios"]').val());
+                        formData.append('FK_SAL_Id_Espacio', $('select[name="espacios"]').val());
 
                         $.ajax({
                             url: route,
@@ -250,6 +254,7 @@
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
+                                    $('#espacios').val('').trigger('change');
                                     table.ajax.reload();
                                     $('#modal-create-soft').modal('hide');
                                     $('#form_soft')[0].reset(); //Limpia formulario

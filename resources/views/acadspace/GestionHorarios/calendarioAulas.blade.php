@@ -4,7 +4,7 @@
  * Date: 4/09/17
  * Time: 12:51 PM
  */-->
-@permission('auxapoyo')
+@permission('eventos')
 @extends('material.layouts.dashboard')
 @push('styles')
     {{--Fullcalendar--}}
@@ -42,12 +42,10 @@
                 <section class="content">
                     <div class="col-md-12">
                         <div class="note">
-                            {!! Field::select('SOL_laboratorios',
-                                                            ['Aulas de computo' => 'Aulas de computo',
-                                                            'Ciencias agropecuarias y ambientales' => 'Ciencias agropecuarias y ambientales',
-                                                            'Laboratorio psicologia' => 'Laboratorio psicología'],
-                                                            null,
-                                                            [ 'label' => 'Espacio académico:']) !!}
+                            @permission('consultarAula')
+                            {!! Field::select('Espacio académico:',$espacios,
+                                    ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                    !!}
 
                             {!! Field::select(
                                                             'aula', null,
@@ -65,6 +63,7 @@
                                 'Acciones'
                                 ])
                             @endcomponent
+                            @endpermission
                         </div>
                     </div>
                     {{--Calendar--}}
@@ -132,10 +131,12 @@
                                                                placeholder="Titulo del evento">
 
                                                         <div class="input-group-btn">
+                                                            @permission('registrarEvento')
                                                             <button id="add-new-event" type="button"
                                                                     class="btn btn-primary btn-flat">
                                                                 Agregar
                                                             </button>
+                                                            @endpermission
                                                         </div>
                                                         <!-- /btn-group -->
                                                     </div>
@@ -162,9 +163,11 @@
                                                 <!-- /.box-body -->
                                                 <div id="event_box" class="margin-bottom-10"></div>
                                                 <hr class="visible-xs"/>
+                                                @permission('imprimirPdf')
                                                 <span id="AE_btn_pdf" class="btn blue"><input type="hidden"
                                                                                               id="zz_pdf"
                                                                                               value=""/>Generar PDF</span>
+                                                @endpermission
                                             </div>
                                             <!-- END DRAGGABLE EVENTS PORTLET-->
                                             <div class="col-md-9 col-sm-12">
@@ -242,7 +245,7 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{SOL_Software}}</td>
+                <td>@{{FK_SOL_Id_Software}}</td>
             </tr>
         </table>
     </script>
@@ -278,7 +281,8 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>',
+                    defaultContent: '@permission('
+                    verMasEvento')<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -298,15 +302,16 @@
                 /*Limpiar los eventos drag and drop creados dinamicamente*/
                 $("#external-events").empty();
                 /*Cargar select de aulas*/
+                $('#aula').empty();
                 $.get("cargarSalasCalendario/" + event.target.value + "", function (response) {
-                    $("#aula").empty();
-                    $("#aula").append("<option value=''></option>");
-                    for (i = 0; i < response.length; i++) {
-                        $("#aula").append("<option value='" + response[i].SAL_Nombre_Sala + "'>" + response[i].SAL_Nombre_Sala + "</option>");
-                    }
+                    $(response.data).each(function (key, value) {
+                        $("#aula").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
+                    });
+                    $("#aula").val([]);
                 });
                 //RECARGAR DATATABLE CON BASE AL EVENTO DEL SELECT
                 $("#aula").change(function (event) {
+                    $("#external-events").empty();
                     App.unblockUI('.portlet-form');
                     table = $('#art-table-ajax');
                     var select = $('#aula option:selected').val();
@@ -449,7 +454,7 @@
                         url: 'cargaEventos',
                         type: 'POST',
                         data: {
-                            sala: $('#aula option:selected').val()
+                            sala: $('select[name="aula"]').val()
                         }
                     },
 
@@ -481,15 +486,16 @@
                         var title = copiedEventObject.title;
                         var start = copiedEventObject.start.format("YYYY-MM-DD HH:mm");
                         var back = copiedEventObject.backgroundColor;
-
                         var sala = document.getElementById("aula").value;
+                        var espacio = $('select[name="SOL_laboratorios"]').val();
+
                         if ($('select[name="aula"]').val() == null) {
                             UIToastr.init('error', '¡Error!', 'Antes de registrar eventos seleccione el espacio academico y aula que gestionara');
                         } else {
                             crsfToken = document.getElementsByName("_token")[0].value;
                             $.ajax({
                                 url: 'guardaEventos',
-                                data: 'title=' + title + '&start=' + start + '&allday=' + allDay + '&background=' + back + '&salaSeleccionada=' + sala,
+                                data: 'title=' + title + '&start=' + start + '&allday=' + allDay + '&background=' + back + '&salaSeleccionada=' + sala + '&espacio=' + espacio,
                                 type: "POST",
                                 headers: {
                                     "X-CSRF-TOKEN": crsfToken
@@ -497,13 +503,17 @@
                                 beforeSend: function () {
                                     App.blockUI({target: '.portlet-form', animate: true});
                                 },
-                                success: function (events) {
-                                    UIToastr.init('success', '¡Bien hecho!', 'Evento creado correctamente');
-                                    App.unblockUI('.portlet-form');
-                                    $('#calendar').fullCalendar('refetchEvents');
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        $('#calendar').fullCalendar('refetchEvents');
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 },
-                                error: function (json) {
-                                    UIToastr.init('error', '¡Error!', 'Error al crear el evento');
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
                                 }
                             });
                         }
@@ -525,11 +535,20 @@
                             headers: {
                                 "X-CSRF-TOKEN": crsfToken
                             },
-                            success: function (json) {
-                                UIToastr.init('success', '¡Bien hecho!', 'Evento modificado correctamente');
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
-                            error: function (json) {
-                                UIToastr.init('error', '¡Error!', 'Error al modificar el evento');
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                    App.unblockUI('.portlet-form');
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
                             }
                         });
                     },
@@ -551,11 +570,20 @@
                             headers: {
                                 "X-CSRF-TOKEN": crsfToken
                             },
-                            success: function (json) {
-                                UIToastr.init('success', '¡Bien hecho!', 'Evento modificado correctamente');
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
-                            error: function (json) {
-                                UIToastr.init('error', '¡Error!', 'Error al modificar el evento');
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                    App.unblockUI('.portlet-form');
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
                             }
                         });
                     },
@@ -582,9 +610,16 @@
                                     "X-CSRF-TOKEN": crsfToken
                                 },
                                 type: "POST",
-                                success: function () {
-                                    $('#calendar').fullCalendar('removeEvents', event._id);
-
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        $('#calendar').fullCalendar('removeEvents', event._id);
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
                                 }
                             })
                                 .done(function (data) {

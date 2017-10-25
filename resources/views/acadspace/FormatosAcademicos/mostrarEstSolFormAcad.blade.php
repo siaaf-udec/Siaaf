@@ -1,4 +1,4 @@
-@permission('secret')
+@permission('registrarFormatos')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -29,11 +29,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('registrarFormatos')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -41,6 +43,7 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('consultarFormatos')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -51,6 +54,7 @@
                     'Acciones' => ['style' => 'width:45px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -96,7 +100,9 @@
                                     </div>
                                     <div class="form-actions">
                                         <div class="modal-footer">
+                                            @permission('registrarFormatos')
                                             {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                                            @endpermission
                                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                                         </div>
                                     </div>
@@ -208,7 +214,8 @@
                 {data: 'estado', name: 'Estado'},
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>',
+                    defaultContent: '@permission('
+                    descargFormato')<a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
