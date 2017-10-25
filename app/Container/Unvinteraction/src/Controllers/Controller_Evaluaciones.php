@@ -237,11 +237,23 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Evaluaciones_Empresas()
     {
-       $Evaluacion=TBL_Evaluacion::join('TBL_Empresa','TBL_Empresa.PK_Empresa','=','TBL_Evaluacion.Evaluado')
-           ->join('developer.users','users.identity_no','=','TBL_Evaluacion.Evaluador')
-           ->join('TBL_Convenios','TBL_Convenios.PK_Convenios','=','TBL_Evaluacion.FK_TBL_Convenios')
-             ->select('users.name','users.lastname','TBL_Evaluacion.PK_Evaluacion','TBL_Empresa.Nombre_Empresa','TBL_Evaluacion.Nota_Final','TBL_Convenios.Nombre')->where('TBL_Evaluacion.Tipo_Evaluacion',1)
-             ->get();  
+       $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',1)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+            ->with([
+                    'convenios_Evaluacion'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre');
+                    }
+            ])
+            ->with([
+                'evaluado_E'=>function ($query) {
+                    $query->select('PK_Empresa','Nombre_Empresa');
+                }
+            ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->get();  
          
        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
         
@@ -252,11 +264,23 @@ class Controller_Evaluaciones extends Controller
     */
      public function Listar_Evaluaciones_Usuarios()
     {
-       $Evaluacion=TBL_Evaluacion::join('developer.users','users.identity_no','=','TBL_Evaluacion.Evaluado')
-         
-           ->join('TBL_Convenios','TBL_Convenios.PK_Convenios','=','TBL_Evaluacion.FK_TBL_Convenios')
-             ->select('users.name','users.lastname','TBL_Evaluacion.PK_Evaluacion','TBL_Evaluacion.Nota_Final','TBL_Convenios.Nombre')->where('TBL_Evaluacion.Tipo_Evaluacion',2)
-             ->get();  
+       $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+            ->with([
+                    'convenios_Evaluacion'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre');
+                    }
+            ])
+            ->with([
+                'evaluado_U'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->get();  
          
        return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
         
@@ -447,9 +471,23 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Evaluacion_Individual($id)
     {
-        $Evaluacion=TBL_Evaluacion::join('developer.users','users.identity_no','=','TBL_Evaluacion.Evaluador')->join('TBL_Convenios','TBL_Convenios.PK_Convenios','=','TBL_Evaluacion.FK_TBL_Convenios')
-             ->select('users.name','users.lastname','TBL_Evaluacion.PK_Evaluacion','TBL_Evaluacion.Nota_Final','TBL_Convenios.Nombre')->where('TBL_Evaluacion.Evaluado',$id)
-             ->get();  
+        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+            ->with([
+                    'convenios_Evaluacion'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre');
+                    }
+            ])
+            ->with([
+                'evaluado_U'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->get();  
          
        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
     }
@@ -467,25 +505,16 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Pregunta_Individual($id)
     {
-        $Evaluacion=TBL_Evaluacion_Preguntas::join('TBL_Preguntas','TBL_Preguntas.PK_Preguntas','=','TBL_Evaluacion_Preguntas.FK_TBL_Preguntas')
-             ->select('TBL_Evaluacion_Preguntas.Puntuacion','TBL_Preguntas.Enunciado')->where('TBL_Evaluacion_Preguntas.FK_TBL_Evaluacion',$id)
-             ->get();  
+        $Evaluacion=TBL_Evaluacion_Preguntas::where('FK_TBL_Evaluacion',$id)->select('Puntuacion','FK_TBL_Preguntas')
+            ->with([
+                    'preguntas_Preguntas'=>function ($query) {
+                        $query->select('PK_Preguntas','Enunciado');
+                    }
+            ])
+            ->get();  
          
        return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
         
     }
 //_____________________END__EVALUACIONE_______
-      public function Reporte(Request $request)
-    {
-        $id=2;
-        $convenio=  TBL_Preguntas::select('PK_Preguntas','Enunciado','FK_TBL_Tipo_pregunta')
-            ->with([
-                    'preguntas_tiposPreguntas'=>function ($query) {
-                    $query->select('PK_Tipo_Pregunta','Tipo');
-                    }
-            ])
-            ->get();
-        return $convenio;
-       // return "hyola";
-    }
 }

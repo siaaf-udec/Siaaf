@@ -22,7 +22,7 @@
  
     @endforeach
 @endif
-{{ Form::submit('Registrar', ['class' => 'btn blue atras']) }}
+{{ Form::submit('Registrar', ['class' => 'btn blue ']) }}
 {{ Form::reset('Cancelar', ['class' => 'btn btn-danger atras']) }}
 {!! Form::close() !!}
 @endcomponent

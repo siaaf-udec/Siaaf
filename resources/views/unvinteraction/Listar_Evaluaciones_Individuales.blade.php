@@ -1,8 +1,4 @@
-
-
- 
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
 
 <br><br>
     <div class="row">
@@ -14,6 +10,8 @@
                     '#' => ['style' => 'width:20px;'],
                     'Codigo Evaluacion',
                     'Evaluado',
+                    'Nombre Evaluado',
+                    'Apellido Evaluado',
                     'Nombre Evaluador',
                     'Apellido Evaluador',
                     'Convenio',
@@ -71,11 +69,13 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Evaluacion', "visible": true, name:"documento" },
-           {data: 'name', searchable: true},
-           {data: 'name',className:'none', searchable: true},
-           {data: 'lastname', className:'none',searchable: true},
-           {data: 'Nombre', searchable: true},
+           {data: 'PK_Evaluacion', className:'none', "visible": true, name:"documento" },
+           {data: 'evaluado__u.name', searchable: true},
+           {data: 'evaluado__u.name',className:'none', searchable: true},
+           {data: 'evaluado__u.lastname', className:'none',searchable: true},
+           {data: 'evaluador.name',className:'none', searchable: true},
+           {data: 'evaluador.lastname', className:'none',searchable: true},
+           {data: 'convenios__evaluacion.Nombre', searchable: true},
            {data: 'Nota_Final', searchable: true},
            {data:'action',searchable: false,
             name:'action',

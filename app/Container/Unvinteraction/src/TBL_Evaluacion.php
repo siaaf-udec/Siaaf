@@ -21,4 +21,16 @@ class TBL_Evaluacion extends Model
     {
         return $this->hasMany(TBL_Evaluacion_Preguntas::class, 'FK_TBL_E<valuacion', 'PK_Evaluacion');
     }
+    public function evaluado_E()
+    {
+        return $this->hasOne(TBL_Empresa::class ,'PK_Empresa','Evaluado' );
+    }
+    public function evaluado_U()
+    {
+        return $this->hasOne('App\Container\Users\Src\User', 'identity_no' ,'Evaluado');
+    }
+    public function evaluador()
+    {
+        return $this->hasOne('App\Container\Users\Src\User', 'identity_no' ,'Evaluador')->select('name','lastname');
+    }
 }

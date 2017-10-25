@@ -11,7 +11,7 @@ class TBL_Participantes extends Model
     protected $connection ='unvinteraction';
     protected $table = 'TBL_Participantes';
     protected $primaryKey = 'PK_Participantes';
-    protected $fillable = ['FK_TBL_Convenios','FK_TBL_Usiarios'];
+    protected $fillable = ['FK_TBL_Convenios','FK_TBL_Usuarios'];
     public function convenios_Participantes()
     {
         return $this->belongsto(TBL_Convenios::class, 'FK_TBL_Convenios', 'PK_Convenios');

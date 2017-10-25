@@ -1,8 +1,4 @@
-
- 
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
-
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTA PREGUNTAS REALIZADAS '])
 <br><br>
     <div class="row">
         <div class="clearfix"> </div><br><br>
@@ -20,9 +16,6 @@
     </div>
 
     @endcomponent
-
-
-
 <script>
 jQuery(document).ready(function () {
     var table, url;
@@ -65,7 +58,7 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'Enunciado', "visible": true, name:"documento" },
+           {data: 'preguntas__preguntas.Enunciado', "visible": true, name:"documento" },
            {data: 'Puntuacion', searchable: true},
           
            

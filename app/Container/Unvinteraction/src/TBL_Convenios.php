@@ -29,6 +29,7 @@ class TBL_Convenios extends Model
     {
         return $this->hasMany(TBL_Evaluacion::class, 'FK_TBL_Convenios', 'PK_Convenios');
     }
+    
     public function convenios_Empresas()
     {
         return $this->hasMany(TBL_Empresas_Participantes::class, 'FK_TBL_Convenios', 'PK_Convenios');
