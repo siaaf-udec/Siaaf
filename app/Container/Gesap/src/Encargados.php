@@ -33,14 +33,4 @@ class Encargados extends Model
     {
         return $this->belongsTo('App\container\Users\src\User', 'FK_Developer_User_Id', 'id');
     }
-        
-    public function scopeSearch($query, $id)
-    {
-        $query->join('developer.users', 'FK_Developer_User_Id', '=', 'users.id')
-            ->join('TBL_Anteproyecto', function ($join) use ($id) {
-                $join->on('FK_TBL_Anteproyecto_Id', '=', 'PK_NPRY_IdMinr008');
-                $join->where('PK_NPRY_IdMinr008', '=', $id);
-            })
-            ->select('FK_Developer_User_Id AS Cedula', 'PK_NCRD_IdCargo', 'NCRD_Cargo');
-    }
 }
