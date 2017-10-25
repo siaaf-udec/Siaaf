@@ -10,8 +10,8 @@
 
     <ul class="sub-menu">
 
-        @permission('formAcad')
-        @permission('secret')
+        @permission('formatos')
+        @permission('registrarFormatos')
         <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -19,7 +19,7 @@
             </a>
         </li>
         @endpermission
-        @permission('administ')
+        @permission('gestionFormato')
         <li class="nav-item {{ active(['espacios.academicos.formacad.listSol'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.listSol') }}" class="nav-link nav-toggle">
                 <i class="fa fa-file-pdf-o"></i>
@@ -29,19 +29,23 @@
         @endpermission
         @endpermission
 
-        @permission('auxapoyo')
+        @permission('aulas')
         <li class="nav-item {{ active(['espacios.academicos.aulas.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.aulas.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-university"></i>
                 <span class="title">Aulas</span>
             </a>
         </li>
+        @endpermission
+        @permission('software')
         <li class="nav-item {{ active(['espacios.academicos.soft.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.soft.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-tv"></i>
                 <span class="title">Software</span>
             </a>
         </li>
+        @endpermission
+        @permission('incidentes')
         <li class="nav-item {{ active(['espacios.academicos.incidente.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.incidente.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-warning"></i>
@@ -49,7 +53,9 @@
             </a>
         </li>
         @endpermission
-        @permission('docentes')
+
+        @permission('solicitudes')
+        @permission('realizarSolicitudes')
         <li class="nav-item {{ active(['espacios.academicos.solacad.indexDoc'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.solacad.indexDoc') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -57,7 +63,7 @@
             </a>
         </li>
         @endpermission
-        @permission('auxapoyo')
+        @permission('gestionSolicitudes')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-pencil-square-o"></i>
@@ -66,7 +72,7 @@
             </a>
             <ul class="sub-menu">
 
-                @permission('auxapoyo')
+
                 <li class="nav-item {{ active(['espacios.academicos.evalsol.index'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.evalsol.index') }}" class="nav-link nav-toggle">
                         <i class="fa fa-pencil"></i>
@@ -79,32 +85,18 @@
                         <span class="title">Finalizadas</span>
                     </a>
                 </li>
-
-
-                @endpermission
-
             </ul>
         </li>
         @endpermission
+        @endpermission
 
-        @permission('horarios')
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-calendar-check-o"></i>
-                <span class="title">Horario</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu">
-                @permission('regisHorario')
-                <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
-                    <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-calendar-plus-o"></i>
-                        <span class="title">Gestionar eventos</span>
-                    </a>
-                </li>
-                @endpermission
-            </ul>
-        </li>
+        @permission('eventos')
+            <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
+                <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <span class="title">Horario y eventos</span>
+                </a>
+            </li>
         @endpermission
 
         @permission('reportes')
@@ -136,7 +128,7 @@
             </ul>
         </li>
         @endpermission
-        @permission('public')
+        @permission('publico')
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-check-square-o"></i>
