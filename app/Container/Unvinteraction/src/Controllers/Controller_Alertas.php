@@ -43,17 +43,18 @@ class Controller_Alertas extends Controller
     public function Alerta(Request $request)
     {
         $estado=1;
-        $Convenio = TBL_Convenios::join('TBL_Participantes', 'TBL_Convenios.PK_Convenios', '=', 'TBL_Participantes.FK_TBL_Convenios')
-            ->join('TBL_Estado', 'TBL_Convenios.FK_TBL_Estado', '=', 'TBL_Estado.PK_Estado')
-            ->join('TBL_Sede', 'TBL_Convenios.FK_TBL_Sede', '=', 'TBL_Sede.PK_Sede')
-            ->select('TBL_Convenios.PK_Convenios', 'TBL_Convenios.Nombre', 'TBL_Convenios.Fecha_Inicio', 'TBL_Convenios.Fecha_Fin', 'TBL_Estado.Estado', 'TBL_Sede.Sede')
-            ->where('TBL_Participantes.FK_TBL_Usuarios', '=', $request->user()->identity_no)
+        $Convenio = TBL_Participantes::where('FK_TBL_Usuarios', '=', $request->user()->identity_no)->select('PK_Participantes','FK_TBL_Convenios')
+            ->with([
+                    'convenios_Participantes'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre','Fecha_Fin');
+                    }
+            ])
             ->get();
         //calculo de la diferencia de fecha  para saber si hay que crear la  alerta
         $carbon = new \Carbon\Carbon();
         foreach ($Convenio as $row) {
             $dtVancouver = $carbon->now();
-            $fecha = $carbon->createFromFormat('Y-m-d H',  $row->Fecha_Fin.' 00');
+            $fecha = $carbon->createFromFormat('Y-m-d H',  $row->convenios_Participantes->Fecha_Fin.' 00');
             $diferencia = $fecha->diffInDays($dtVancouver,false);
             $diferencia;
             if($estado == 1 && $diferencia >= 0  ){
@@ -61,8 +62,8 @@ class Controller_Alertas extends Controller
              } else {
                 if($estado == 1 && $diferencia >= -60 ){
                     $notificacion = new TBL_Notificaciones();
-                    $notificacion->Titulo='Finalizacion convenio '.$row->Nombre;
-                    $notificacion->Mensaje='El siguiente mensaje es para avisar que el convenio '.$row->Nombre.' en el cual se encuentra como participante esta a punto de finalizar, porfavor realizar las respectivas evaluaciones';
+                    $notificacion->Titulo='Finalizacion convenio '.$row->convenios_Participantes->Nombre;
+                    $notificacion->Mensaje='El siguiente mensaje es para avisar que el convenio '.$row->convenios_Participantes->Nombre.' en el cual se encuentra como participante esta a punto de finalizar, porfavor realizar las respectivas evaluaciones';
                     $notificacion->Bandera = 'NO VISTO';
                     $notificacion->FK_TBL_Usuarios = $request->user()->identity_no;
                     $notificacion->save();
@@ -103,12 +104,5 @@ class Controller_Alertas extends Controller
         $Notificacion = TBL_Notificaciones::findOrFail($id);
         return view($this->path.'.Ver_Notificacion', compact('Notificacion'));
     }
-    /*funcion prueba 
-    *
-    *@return \Illuminate\Http\Response
-    */
-    public function Reporte()
-    {
-        return view($this->path.'.Ver_Reporte');
-    }
+   
 }

@@ -321,5 +321,5 @@ Route::get('Ver_Alerta/{id}', [
 //__________________________END_ALERTAS____________________
 Route::get('Reporte', [    
     'as' => 'Reporte.Reporte',
-    'uses' => $controller.'Controller_Evaluaciones@Reporte'
+    'uses' => $controller.'Controller_Alertas@Reporte'
 ]);
