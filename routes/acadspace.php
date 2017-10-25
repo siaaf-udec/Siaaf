@@ -144,7 +144,7 @@ Route::group(['middleware' => ['auth']], function () {
         ])->where(['id' => '[0-9]+']);
 
         Route::get('descargarArchivo/{id?}', [
-            'uses' => $controller . 'formatosController@descargar_publicacion',
+            'uses' => $controller . 'formatosController@descargarPublicacion',
             'as' => 'espacios.academicos.descargarArchivo'
         ])->where(['id' => '[0-9]+']);
     });

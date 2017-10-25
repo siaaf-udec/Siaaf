@@ -123,7 +123,7 @@ class formatosController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function descargar_publicacion(Request $request, $id)
+    public function descargarPublicacion(Request $request, $id)
     {
         //Recibe id de solicitud
         $solicitudess = formatos::find($id);
