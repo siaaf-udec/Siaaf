@@ -13,15 +13,15 @@ class Dependencias extends Model
     protected $primaryKey = 'PK_CD_IdDependencia';
 
     protected $fillable = [
-        'PK_CD_IdDependencia', 
+        'PK_CD_IdDependencia',
         'CD_Dependencia',
     ];
 
     //Función de conexión entre las tablas de dependencia y usuario por el campo de PK_CD_IdDependencia y FK_CU_IdDependencia para realizar las busquedas complementarias
     public function relacionDependenciaUsuario()
     {
-        return $this->belongsTo(Usuarios::class, 
-            'PK_CD_IdDependencia', 
+        return $this->belongsTo(Usuarios::class,
+            'PK_CD_IdDependencia',
             'FK_CU_IdDependencia'
         );
     }

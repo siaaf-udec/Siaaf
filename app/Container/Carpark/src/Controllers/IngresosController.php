@@ -48,15 +48,16 @@ class IngresosController extends Controller
      * Función que consulta las motos dentro del parqueadero las envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
-     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaMotosDentro(Request $request){
+    public function tablaMotosDentro(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return Datatables::of(Ingresos::all())  
-                    ->removeColumn('created_at')
-                    ->removeColumn('updated_at')                  
-                    ->addIndexColumn()
-                    ->make(true);
+            return Datatables::of(Ingresos::all())
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -160,10 +161,9 @@ class IngresosController extends Controller
         if ($request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
 
-            if (is_null($infoMoto))
-            {
+            if (is_null($infoMoto)) {
                 return view('carpark.ingresos.tablaIngresos');
-            }            
+            }
 
             $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
@@ -245,11 +245,10 @@ class IngresosController extends Controller
     {
         if ($request->isMethod('GET')) {
             $infoMoto = Motos::where([['PK_CM_IdMoto', '=', $id], ['CM_Placa', '=', $placa]])->get();
-            
-            if ($infoMoto == '[]')
-            {
+
+            if ($infoMoto == '[]') {
                 return view('carpark.ingresos.tablaIngresos');
-            }            
+            }
             $infoMoto = Motos::find($id);
             $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
 
@@ -270,40 +269,48 @@ class IngresosController extends Controller
      * Función que almacena en la base de datos un las acciones del parqueadero por medio de la tarjeta RFID.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Illuminate\Http\Response
      */
     public function storeTarjeta(Request $request)
     {
-        ////////////////Validación entrada o salida//////////////////
-        $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
-        if ($infoIngresos == '[]') {
+        if ($request->isMethod('GET')) {
+            ////////////////Validación entrada o salida//////////////////
+            $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
+            if ($infoIngresos == '[]') {
+                $generadorID = date_create();
+                Ingresos::create([
+                    'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
+                    'CI_NombresUser' => $request['CI_NombresUser'],
+                    'CI_CodigoUser' => $request['CI_CodigoUser'],
+                    'CI_Placa' => $request['CI_Placa'],
+                    'CI_CodigoMoto' => $request['CI_CodigoMoto']
+                ]);
+
+                return view('carpark.ingresos.tablaIngresos');
+            }
+
             $generadorID = date_create();
-            Ingresos::create([
-                'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
-                'CI_NombresUser' => $request['CI_NombresUser'],
-                'CI_CodigoUser' => $request['CI_CodigoUser'],
-                'CI_Placa' => $request['CI_Placa'],
-                'CI_CodigoMoto' => $request['CI_CodigoMoto']
+            Historiales::create([
+                'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+                'CH_NombresUser' => $request['CI_NombresUser'],
+                'CH_CodigoUser' => $request['CI_CodigoUser'],
+                'CH_Placa' => $request['CI_Placa'],
+                'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+                'CH_FHentrada' => $infoIngresos[0]['created_at'],
             ]);
 
+            Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+
             return view('carpark.ingresos.tablaIngresos');
+
+            //////////////// FIN Validación entrada o salida//////////////////
         }
 
-        $generadorID = date_create();
-        Historiales::create([
-            'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
-            'CH_NombresUser' => $request['CI_NombresUser'],
-            'CH_CodigoUser' => $request['CI_CodigoUser'],
-            'CH_Placa' => $request['CI_Placa'],
-            'CH_CodigoMoto' => $request['CI_CodigoMoto'],
-            'CH_FHentrada' => $infoIngresos[0]['created_at'],
-        ]);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
-        Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
-
-        return view('carpark.ingresos.tablaIngresos');
-
-        //////////////// FIN Validación entrada o salida//////////////////        
     }
 
 }

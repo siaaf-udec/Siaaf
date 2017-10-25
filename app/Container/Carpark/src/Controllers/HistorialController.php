@@ -43,7 +43,7 @@ class HistorialController extends Controller
      * Función que consulta los historiales registrados y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
-     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables| \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaHistoriales(Request $request){
         if ($request->ajax() && $request->isMethod('GET')) {            

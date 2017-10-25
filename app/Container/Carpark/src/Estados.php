@@ -13,7 +13,7 @@ class Estados extends Model
     protected $primaryKey = 'PK_CE_IdEstados';
 
     protected $fillable = [
-        'PK_CE_IdEstados', 
+        'PK_CE_IdEstados',
         'CE_Estados',
     ];
 }

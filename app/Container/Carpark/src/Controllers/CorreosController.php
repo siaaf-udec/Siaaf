@@ -33,10 +33,9 @@ class CorreosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
-            for ($i = 0; $i < sizeof($infoEntradas); $i++) 
-            {
+            for ($i = 0; $i < sizeof($infoEntradas); $i++) {
                 $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
-                $subject = $infoCorreo['CU_Nombre1'].' '.$infoCorreo['CU_Apellido1']; 
+                $subject = $infoCorreo['CU_Nombre1'] . ' ' . $infoCorreo['CU_Apellido1'];
                 Mail::to($infoCorreo['CU_Correo'], 'P1')->send(new EmailCarpark($subject));
             }
 

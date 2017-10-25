@@ -62,15 +62,16 @@ class DependenciasController extends Controller
      * Función que consulta las dependencias registradas y las envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
-     * @return Datatables | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaDependencias(Request $request){
+    public function tablaDependencias(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('GET')) {
             return Datatables::of(Dependencias::all())
-                    ->removeColumn('created_at')
-                    ->removeColumn('updated_at')
-                    ->addIndexColumn()
-                    ->make(true);
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
