@@ -39,17 +39,16 @@ class Controller_Documentos extends Controller
     */
     public function Subir_Documento_Convenio(Request $request, $id)
     {
+        $carbon = new \Carbon\Carbon();
         $Ubicacion="unvinteraction/convenios/".$id;
         $files = $request->file('file');
         foreach ($files as $file) {
-            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $file->getClientOriginalName());
+            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
         }
         $Estado = new TBL_Documentacion();
-        $Estado->Entidad =$file->getClientOriginalName();
-        $Estado->Ubicacion = $Ubicacion."/".$file->getClientOriginalName() ;
-        $Estado->Tipo = 'ninguno' ;
+        $Estado->Entidad =$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
+        $Estado->Ubicacion = $Ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
         $Estado->FK_TBL_Convenios= $id;
-        $Estado->Descripcion = 'ninguno' ;
         $Estado->save();
     }
     /*funcion para descargar el documento subido para el convenio
