@@ -12,6 +12,7 @@ use App\Container\Acadspace\src\Asistencia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Aulas;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class ReporteController extends Controller
@@ -19,25 +20,35 @@ class ReporteController extends Controller
 
     /**
      * Retorna la vista de reportes docente
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        return view('acadspace.Reportes.reportesIndex');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Reportes.reportesIndex',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
      * Retorna la vista de reportes estudiantes
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function repIndexEst()
     {
-        return view('acadspace.Reportes.reportesIndexEst');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Reportes.reportesIndexEst',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
      * Retorna la vista de reportes carrera
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function repIndexCarr()
     {
@@ -50,14 +61,17 @@ class ReporteController extends Controller
      * disponibles de acuerdo al espacio
      * @param Request $request
      * @param $espacio
-     * @return \Illuminate\Http\JsonResponse | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarSalasReportes(Request $request, $espacio)
     {
-        if ($request->ajax()) {
-            $aula = Aulas::where('SAL_nombre_espacio', '=', $espacio)
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $aula = Aulas::where('FK_SAL_Id_Espacio', '=', $espacio)
                 ->get();
-            return response()->json($aula);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos recibidos correctamente.', $aula
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -100,7 +114,7 @@ class ReporteController extends Controller
         $estudiantes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
             ->where('ASIS_Id_Carrera', '=', $id_carr)
             ->where('ASIS_Tipo_Practica', '=', $id_tipPrac)
-            ->where('ASIS_Espacio_Academico', '=', $id_Lab)
+            ->where('FK_ASIS_Id_Espacio', '=', $id_Lab)
             ->get();
 
         $total = count($estudiantes);
@@ -126,7 +140,7 @@ class ReporteController extends Controller
         $estudiantes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
             ->where('ASIS_Id_Carrera', '=', $id_carr)
             ->where('ASIS_Tipo_Practica', '=', $id_tipPrac)
-            ->where('ASIS_Espacio_Academico', '=', $id_Lab)
+            ->where('FK_ASIS_Id_Espacio', '=', $id_Lab)
             ->get();
 
         foreach ($estudiantes as $estudiante) {
@@ -142,13 +156,14 @@ class ReporteController extends Controller
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado al laboratorio elegido
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function cargarRepEst(Request $request)
     {
         $data = $request->all();
         $code = $data['date_range'];
         $lab = $request['SOL_laboratorios'];
+
         $f2 = substr($code, -10);
         $f1 = substr($code, -23, -13);
         $fech1 = $this->changeForm($f1);
@@ -172,6 +187,11 @@ class ReporteController extends Controller
             + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
             + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup;
 
+        $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $lab)->get();
+        foreach ($nomEsp as $nomEsps) {
+            $lab = $nomEsps->ESP_Nombre_Espacio;
+        }
+
         $cont = 1;
         return view('acadspace.Reportes.ReportesEstudiantes',
             compact('totSistemasLibre', 'totSistemasGrup',
@@ -187,19 +207,18 @@ class ReporteController extends Controller
     }
 
 
-
     /**
      * Recibe los campos de la vista ReportesIndexCarr y llama las funcion "changeform" para obtener
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado a todos los espacios academicos
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function reporCarrera(Request $request)
     {
         $data = $request->all();
         $fecha = $data['date_range'];
-        $carr = $request['SOL_carrera'];
+        $carr = $data['SOL_carrera'];
         switch ($carr) {
             case 1:
                 $carrera = 'Ingeniería de Sistemas';
@@ -234,8 +253,8 @@ class ReporteController extends Controller
         $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Aulas de computo', $carr, 2);
         $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Laboratorio psicologia', $carr, 1);
         $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Laboratorio psicologia', $carr, 2);
-        $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 1);
-        $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 'Ciencias agropecuarias y ambientales', $carr, 2);
+        $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 1, $carr, 1);
+        $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 1, $carr, 2);
 
 
         $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
@@ -253,7 +272,7 @@ class ReporteController extends Controller
      * la fecha en el formato necesario. Obtiene la cantidad de docentes que han ingresado
      * al laboratorio elegido entre las fechas proporcionadas
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function reporDocente(Request $request)
     {
@@ -277,9 +296,14 @@ class ReporteController extends Controller
         foreach ($nomAula as $nombAula) {
             $nombreAula = $nombAula->SAL_Nombre_Sala;
         }
+        $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $lab)->get();
+        foreach ($nomEsp as $nomEsps) {
+            $nomEspacio = $nomEsps->ESP_Nombre_Espacio;
+        }
+
 
         $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
-            ->where('ASIS_Espacio', '=', $aula)
+            ->where('FK_ASIS_Id_Aula', '=', $aula)
             ->where('ASIS_Tipo_Practica', '=', 2)
             ->orderBy('created_at', 'asc')
             ->get();
@@ -288,7 +312,7 @@ class ReporteController extends Controller
 
         $cont = 1;
         return view('acadspace.Reportes.ReportesDocentes',
-            compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha', 'nombreAula')
+            compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'lab', 'aula', 'totalTot', 'fecha', 'nombreAula')
         );
 
 

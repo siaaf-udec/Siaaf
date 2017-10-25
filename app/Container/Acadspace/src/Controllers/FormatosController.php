@@ -24,7 +24,7 @@ class formatosController extends Controller
 
     /**
      * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -34,7 +34,7 @@ class formatosController extends Controller
 
     /**
      * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function indexajax()
     {
@@ -44,7 +44,7 @@ class formatosController extends Controller
 
     /**
      * Funcion para mostrar la vista de solicitudes de formatos academicos para el administrador
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function listSol()
     {

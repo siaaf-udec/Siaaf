@@ -16,28 +16,13 @@ class Incidentes extends Model
 
     protected $fillable = [
         'FK_INC_Id_User',
-        'INC_Nombre_Espacio',
+        'FK_INC_Id_Espacio',
         'INC_Descripcion'
     ];
 
-    public function Asistents()
+    public function espacio()
     {
-        return $this->hasMany(Asistent::class);
+        return $this->hasOne(Espacios::class, 'PK_ESP_Id_Espacio', 'FK_INC_Id_Espacio');
     }
 
-    public function StatusOfDocuments()
-    {
-        return $this->hasMany(StatusOfDocument::class);
-    }
-
-    public function Inductions()
-    {
-        return $this->hasMany(Induction::class);
-    }
-
-    public function Permissions()
-    {
-        return $this->hasMany(Permission::class);
-    }
-    //
 }

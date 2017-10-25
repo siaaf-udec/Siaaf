@@ -15,7 +15,7 @@ class Solicitud extends Model
 
     protected $fillable = [
         'SOL_Guia_Practica',
-        'SOL_Software',
+        'FK_SOL_Id_Software',
         'SOL_Grupo',
         'SOL_Cant_Estudiantes',
         'FK_SOL_Id_Docente',
@@ -41,6 +41,16 @@ class Solicitud extends Model
     public function coment()
     {
         return $this->hasOne(Comentarios::class, 'FK_COM_Id_Solicitud', 'PK_SOL_Id_Solicitud');
+    }
+
+    public function aula()
+    {
+        return $this->hasOne(Aulas::class, 'PK_SAL_Id_Sala', 'FK_SOL_Id_Sala');
+    }
+
+    public function software()
+    {
+        return $this->hasOne(Software::class, 'PK_SOF_Id', 'FK_SOL_Id_Software');
     }
     //
 }

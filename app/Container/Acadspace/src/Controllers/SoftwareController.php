@@ -15,15 +15,13 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 
-
-
 class SoftwareController extends Controller
 {
 
 
     /**
      * Funcion mostrar vista de gestion software
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -33,7 +31,7 @@ class SoftwareController extends Controller
     /**
      * Funcion para registrar un nuevo software retorna un mensaje Ajax
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function registroSoftware(Request $request)
     {
@@ -59,12 +57,12 @@ class SoftwareController extends Controller
     /**
      * Funcion creada para cargar datatable con software
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Yajra\DataTables\ | \App\Container\Overall\Src\Facades\AjaxResponse\
      */
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $software = Software::all();
+            $software = Software::where('PK_SOF_Id', '!=', 1);
             return Datatables::of($software)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
@@ -85,7 +83,7 @@ class SoftwareController extends Controller
      * retorna mensaje ajax
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {

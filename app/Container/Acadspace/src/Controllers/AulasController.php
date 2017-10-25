@@ -11,26 +11,31 @@ namespace App\Container\Acadspace\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Aulas;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 class AulasController extends Controller
 {
-
     /**
-     * Funcion para mostrar la vista de Aulas
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Funcion para mostrar la vista de Aulas     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        return view('acadspace.Aulas.formularioAulas');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Aulas.formularioAulas',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
 
     /**
      * Funcion para registrar una nueva aula retorna un mensaje Ajax
      * @param Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function regisAula(Request $request)
     {
@@ -57,14 +62,17 @@ class AulasController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            // $articulos = software::all(['nombre_soft','version','licencias'])->get();
-            $aulas = Aulas::all();
+            $aulas = Aulas::select('PK_SAL_Id_Sala', 'SAL_Nombre_Sala', 'FK_SAL_Id_Espacio')
+                ->with(['espacio' => function ($query) {
+                    return $query->select('PK_ESP_Id_Espacio',
+                        'ESP_Nombre_Espacio as N_espacio');
+                }])
+                ->get();
             return Datatables::of($aulas)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
-
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -79,7 +87,7 @@ class AulasController extends Controller
      * retorna mensaje ajax
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function destroy(Request $request, $id)
     {

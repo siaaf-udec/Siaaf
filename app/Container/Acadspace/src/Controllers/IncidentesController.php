@@ -11,6 +11,7 @@ namespace App\Container\Acadspace\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Incidentes;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
@@ -19,11 +20,16 @@ class IncidentesController extends Controller
 {
     /**
      * Funcion para mostrar la vista de incidentes
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        return view('acadspace.Incidentes.formularioIncidente');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Incidentes.formularioIncidente',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
@@ -37,7 +43,7 @@ class IncidentesController extends Controller
 
             Incidentes::create([
                 'FK_INC_Id_User' => $request['FK_INC_Id_User'],
-                'INC_Nombre_Espacio' => $request['INC_Nombre_Espacio'],
+                'FK_INC_Id_Espacio' => $request['INC_Nombre_Espacio'],
                 'INC_Descripcion' => $request['INC_Descripcion']
             ]);
 
@@ -56,12 +62,17 @@ class IncidentesController extends Controller
     /**
      * Funcion cargar datatable con incidentes registrados
      * @param Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Yajra\DataTables\
      */
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $incidentes = Incidentes::all();
+            $incidentes = Incidentes::select()
+                ->with(['espacio' => function ($query) {
+                    return $query->select('PK_ESP_Id_Espacio',
+                        'ESP_Nombre_Espacio');
+                }])
+                ->get();
             return Datatables::of($incidentes)
                 ->removeColumn('updated_at')
                 ->addIndexColumn()

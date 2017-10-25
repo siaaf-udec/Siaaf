@@ -12,27 +12,39 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Asistencia;
 use App\Container\Acadspace\src\Aulas;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class AsistenciaController extends Controller
 {
 
+
     /**
      * Retorna la vista de control estudiante
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *\Illuminate\View\View
      */
     public function asisEst()
     {
-        return view('acadspace.controlEstudiante');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.controlEstudiante',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
      * Retorna la vista de control docente
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function asisDoc()
     {
-        return view('acadspace.controlDocente');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.controlDocente',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
@@ -44,10 +56,13 @@ class AsistenciaController extends Controller
      */
     public function cargarSalasAsitencia(Request $request, $espacio)
     {
-        if ($request->ajax()) {
-            $aula = Aulas::where('SAL_nombre_espacio', '=', $espacio)
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $aula = Aulas::where('FK_SAL_Id_Espacio', '=', $espacio)
                 ->get();
-            return response()->json($aula);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos recibidos correctamente.', $aula
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -59,7 +74,7 @@ class AsistenciaController extends Controller
     /**
      * Registra ingreso del estudiante
      * @param Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function regisAsistenciaEst(Request $request)
     {
@@ -67,18 +82,15 @@ class AsistenciaController extends Controller
 
             $model = new Asistencia();
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
-            $model->ASIS_Espacio_Academico = $request['ASIS_Espacio_Academico'];
-            $model->ASIS_Espacio = $request['ASIS_Espacio'];
             $model->ASIS_Id_Carrera = $request['ASIS_Id_Carrera'];
             $model->ASIS_Tipo_Practica = 1;
+            $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
 
             $model->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Ingreso registrado correctamente.'
             );
-
-
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -92,7 +104,7 @@ class AsistenciaController extends Controller
     /**
      * Registra ingreso del docente
      * @param Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function regisAsistenciaDoc(Request $request)
     {
@@ -101,12 +113,12 @@ class AsistenciaController extends Controller
             $model = new Asistencia();
 
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
-            $model->ASIS_Espacio_Academico = $request['ASIS_Espacio_Academico'];
-            $model->ASIS_Espacio = $request['ASIS_Espacio'];
             $model->ASIS_Id_Carrera = $request['ASIS_Id_Carrera'];
             $model->ASIS_Nombre_Materia = $request['ASIS_Nombre_Materia'];
             $model->ASIS_Cant_Estudiantes = $request['ASIS_Cant_Estudiantes'];
             $model->ASIS_Tipo_Practica = 2;
+            $model->FK_ASIS_Id_Aula = $request['ASIS_Espacio'];
+            $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
 
             $model->save();
             return AjaxResponse::success(

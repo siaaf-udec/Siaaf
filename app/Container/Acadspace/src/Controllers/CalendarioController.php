@@ -12,19 +12,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Calendario;
 use App\Container\Acadspace\src\Solicitud;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Acadspace\src\Aulas;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+
 
 class CalendarioController extends Controller
 {
     /**
      * Funcion mostrar vista de gestion aulas - calendario
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        return view('acadspace.gestionhorarios.calendarioaulas');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.gestionhorarios.calendarioaulas',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
@@ -32,14 +39,17 @@ class CalendarioController extends Controller
      * recibida de otro select que viene en $espacio
      * @param Request $request
      * @param $espacio
-     * @return \Illuminate\Http\JsonResponse | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarSalasCalendario(Request $request, $espacio)
     {
-        if ($request->ajax()) {
-            $aula = Aulas::where('SAL_Nombre_Espacio', '=', $espacio)
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $aula = Aulas::where('FK_SAL_Id_Espacio', '=', $espacio)
                 ->get();
-            return response()->json($aula);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos recibidos correctamente.', $aula
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -58,11 +68,11 @@ class CalendarioController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $sala = $request['sala'];
             $data = array();
-            $id = Calendario::where('CAL_Sala', '=', $sala)->pluck('PK_CAL_id');
-            $titulo = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Titulo');
-            $color = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Color');
-            $fecha_inicial = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Fecha_Ini');
-            $fecha_final = Calendario::where('CAL_Sala', '=', $sala)->pluck('CAL_Fecha_Fin');
+            $id = Calendario::where('FK_CAL_Id_Sala', '=', $sala)->pluck('PK_CAL_id');
+            $titulo = Calendario::where('FK_CAL_Id_Sala', '=', $sala)->pluck('CAL_Titulo');
+            $color = Calendario::where('FK_CAL_Id_Sala', '=', $sala)->pluck('CAL_Color');
+            $fecha_inicial = Calendario::where('FK_CAL_Id_Sala', '=', $sala)->pluck('CAL_Fecha_Ini');
+            $fecha_final = Calendario::where('FK_CAL_Id_Sala', '=', $sala)->pluck('CAL_Fecha_Fin');
             $count = count($id);
 
             for ($i = 0; $i < $count; $i++) {
@@ -83,38 +93,42 @@ class CalendarioController extends Controller
 
 
     /**
-     *Funcion para crear evento en el calendario
-     * no retorna nada, la validacion de que se creo
-     * se hace en el formulario     *
+     * Funcion para crear evento en el calendario
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $titulo = $request['title'];
-            $fecha_inicio = $request['start'];
-            // $fecha_fin = date($fecha_inicio, (strtotime ("+2 Hours")));
-            $fecha_fin = strtotime('+2 hours', strtotime($fecha_inicio));
+            $fecha_fin = strtotime('+2 hours', strtotime($request['start']));
             $fecha_final = date('Y-m-d H:i:s', $fecha_fin);
-            $color = $request['background'];
-            $sala = $request['salaSeleccionada'];
+
             $evento = new Calendario();
 
-            $evento->CAL_Titulo = $titulo;
-            $evento->CAL_Fecha_Ini = $fecha_inicio;
+            $evento->CAL_Titulo = $request['title'];
+            $evento->CAL_Fecha_Ini = $request['start'];
             $evento->CAL_Fecha_Fin = $fecha_final;
-            $evento->CAL_Color = $color;
-            $evento->CAL_Sala = $sala;
-
-
+            $evento->CAL_Color = $request['background'];
+            $evento->FK_CAL_Id_Sala = $request['salaSeleccionada'];
             $evento->save();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Evento registrado correctamente.'
+            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
 
     /**
-     *Funcion para actualizar evento en el calendario
-     * no retorna nada, la validacion de que se actualizo
-     * se hace en el formulario
+     * Funcion para editar evento en el calendario
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function update(Request $request)
     {
@@ -136,18 +150,37 @@ class CalendarioController extends Controller
             $evento->CAL_Titulo = $title;
 
             $evento->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Evento actualizado correctamente.'
+            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
     /**
-     *Funcion para eliminar un evento del calendario
+     * Funcion para eliminar evento en el calendario
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function delete(Request $request)    {
+    public function delete(Request $request)
+    {
         if ($request->ajax() && $request->isMethod('POST')) {
             $id = $request['id'];
             Calendario::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Evento eliminado correctamente.'
+            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -165,7 +198,7 @@ class CalendarioController extends Controller
             $solicitud = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
                 'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
                 'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
-                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas',
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Rango_Fechas',
                 'SOL_fecha_inicial')
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');

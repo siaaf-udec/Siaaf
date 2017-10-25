@@ -18,4 +18,9 @@ class Software extends Model
         'SOF_Licencias'
     ];
 
+    public function solicitud()
+    {
+        return $this->hasOne(Solicitud::class, 'PK_SOF_Id', 'FK_SOL_Id_Software');
+    }
+
 }

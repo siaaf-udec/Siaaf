@@ -21,7 +21,19 @@ class Asistencia extends Model
         'ASIS_Tipo_Practica',
         'ASIS_Id_Carrera',
         'ASIS_Nombre_Materia',
-        'ASIS_Cant_Estudiantes'
+        'ASIS_Cant_Estudiantes',
+        'FK_ASIS_Id_Aula',
+        'FK_ASIS_Id_Espacio'
     ];
+
+    public function espacios()
+    {
+        return $this->hasMany(Espacios::class, 'FK_ASIS_Id_Espacio', 'PK_ESP_Id_Espacio');
+    }
+
+    public function aulas()
+    {
+        return $this->hasMany(Aulas::class, 'FK_ASIS_Id_Aula', 'PK_SAL_Id_Sala');
+    }
     // 
 }

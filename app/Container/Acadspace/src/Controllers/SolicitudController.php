@@ -16,11 +16,11 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use App\Container\Acadspace\src\Solicitud;
 use App\Container\Acadspace\src\Software;
+use App\Container\Acadspace\src\Espacios;
 use App\Container\Acadspace\src\Aulas;
 use App\Container\Acadspace\src\Comentarios;
 use App\Container\Users\src\User;
 use App\Notifications\HeaderSiaaf;
-
 
 
 class SolicitudController extends Controller
@@ -29,7 +29,7 @@ class SolicitudController extends Controller
 
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function mostrarSolicitudesDocente()
     {
@@ -39,7 +39,7 @@ class SolicitudController extends Controller
 
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente AJAX
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function mostrarSolicitudesDocenteAjax()
     {
@@ -52,14 +52,22 @@ class SolicitudController extends Controller
      * retorna los software disponibles del modelo Software
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse |
-     * \Illuminate\Http\Response|\Illuminate\View\View
+     * \Illuminate\View\View
      */
     public function crearSolicitudGrupal(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
             $soft = new software();
-            $software = $soft->pluck('SOF_Nombre_Soft', 'SOF_Nombre_Soft');
-            return view('acadspace.Solicitudes.registroSolicitudGrupal', ['software' => $software->toArray()]);
+            $software = $soft->orderBy('PK_SOF_Id', 'desc')
+                ->pluck('SOF_Nombre_Soft', 'PK_SOF_Id');
+            return view('acadspace.Solicitudes.registroSolicitudGrupal',
+                [
+                    'software' => $software->toArray(),
+                    'espacios' => $espacios->toArray()
+                ]
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -74,17 +82,22 @@ class SolicitudController extends Controller
      * retorna los software disponibles del modelo Software
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse |
-     * \Illuminate\Http\Response|\Illuminate\View\View
+     * \Illuminate\View\View
      */
     public function crearSolicitudLibre(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
             $soft = new software();
-            $software = $soft->pluck('SOF_Nombre_Soft', 'SOF_Nombre_Soft');
+            $software = $soft->orderBy('PK_SOF_Id', 'desc')
+                ->pluck('SOF_Nombre_Soft', 'PK_SOF_Id');
             return view('acadspace.Solicitudes.registroSolicitudPracLibre',
                 [
-                    'software' => $software->toArray()
-                ]);
+                    'software' => $software->toArray(),
+                    'espacios' => $espacios->toArray()
+                ]
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -112,7 +125,7 @@ class SolicitudController extends Controller
                 $model = new Solicitud();
 
                 $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
-                $model->SOL_Software = $request['SOL_NombSoft'];
+                $model->FK_SOL_Id_Software = $request['SOL_NombSoft'];
                 $model->SOL_Grupo = $request['SOL_Grupo'];
                 $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
                 $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
@@ -136,7 +149,7 @@ class SolicitudController extends Controller
                 $model = new Solicitud();
 
                 $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
-                $model->SOL_Software = $request['SOL_NombSoft'];
+                $model->FK_SOL_Id_Software = $request['SOL_NombSoft'];
                 $model->SOL_Grupo = $request['SOL_Grupo'];
                 $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
                 $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
@@ -179,11 +192,19 @@ class SolicitudController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $solicitud = Solicitud::select('PK_SOL_Id_Solicitud', 'SOL_Nucleo_Tematico',
                 'SOL_Cant_Estudiantes', 'SOL_Id_Practica', 'SOL_Estado', 'created_at',
-                'SOL_Software', 'FK_SOL_Id_Sala')
+                'FK_SOL_Id_Software', 'FK_SOL_Id_Sala')
                 ->where('FK_SOL_Id_Docente', '=', Auth::id())
                 ->with(['coment' => function ($query) {
                     return $query->select('PK_COM_Id_Comentario', 'COM_Comentario',
                         'FK_COM_Id_Solicitud');
+                }])
+                ->with(['aula' => function ($query) {
+                    return $query->select('PK_SAL_Id_Sala',
+                        'SAL_Nombre_Sala');
+                }])
+                ->with(['software' => function ($query) {
+                    return $query->select('PK_SOF_Id',
+                        'SOF_Nombre_Soft');
                 }])
                 ->get();
             return DataTables::of($solicitud)
@@ -224,21 +245,31 @@ class SolicitudController extends Controller
     /**
      * Mostrar el formulario con las solicitudes realizadas por el docente
      * para ser evaluadas por el auxiliar
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function mostrarSolicitudesAuxiliar()
     {
-        return view('acadspace.Solicitudes.evaluacionSolicitudes');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Solicitudes.evaluacionSolicitudes',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
      * Mostrar el formulario con las solicitudes que ya han terminado su
      * proceso de aprobacion y asignacion
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function mostrarSolicitudesFinalizadas()
     {
-        return view('acadspace.Solicitudes.solicitudesFinalizadas');
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.Solicitudes.solicitudesFinalizadas',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
     }
 
     /**
@@ -247,14 +278,17 @@ class SolicitudController extends Controller
      * y retorna un json con las aulas actualmente registradas
      * @param Request $request
      * @param $espacio
-     * @return \Illuminate\Http\JsonResponse |\App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarSalas(Request $request, $espacio)
     {
-        if ($request->ajax()) {
-            $aula = Aulas::where('SAL_Nombre_Espacio', '=', $espacio)
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $aula = Aulas::where('FK_SAL_Id_Espacio', '=', $espacio)
                 ->get();
-            return response()->json($aula);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos recibidos correctamente.', $aula
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -276,9 +310,13 @@ class SolicitudController extends Controller
             $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
                 'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
                 'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
-                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas')
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Rango_Fechas')
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
+                }])
+                ->with(['software' => function ($query) {
+                    return $query->select('PK_SOF_Id',
+                        'SOF_Nombre_Soft');
                 }])
                 ->where('SOL_Espacio', '=', $espacio)
                 ->where('SOL_Id_Practica', '=', 2)
@@ -320,9 +358,13 @@ class SolicitudController extends Controller
             $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
                 'SOL_Nucleo_Tematico', 'SOL_Cant_Estudiantes', 'SOL_Id_Practica',
                 'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
-                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'SOL_Software', 'SOL_Rango_Fechas')
+                'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Fecha_Inicial')
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
+                }])
+                ->with(['software' => function ($query) {
+                    return $query->select('PK_SOF_Id',
+                        'SOF_Nombre_Soft');
                 }])
                 ->where('SOL_Espacio', '=', $espacio)
                 ->where('SOL_Id_Practica', '=', 1)
@@ -480,9 +522,17 @@ class SolicitudController extends Controller
             $users = Solicitud::select('PK_SOL_id_solicitud', 'FK_SOL_Id_Docente',
                 'SOL_Nucleo_Tematico', 'SOL_Id_Practica', 'created_at',
                 'SOL_Dias', 'SOL_Hora_Inicio', 'SOL_Hora_Fin',
-                'SOL_Software', 'FK_SOL_Id_Sala', 'SOL_fecha_inicial')
+                'FK_SOL_Id_Software', 'FK_SOL_Id_Sala', 'SOL_fecha_inicial')
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
+                }])
+                ->with(['aula' => function ($query) {
+                    return $query->select('PK_SAL_Id_Sala',
+                        'SAL_Nombre_Sala');
+                }])
+                ->with(['software' => function ($query) {
+                    return $query->select('PK_SOF_Id',
+                        'SOF_Nombre_Soft');
                 }])
                 ->where('SOL_Espacio', '=', $sala)
                 ->where('SOL_Estado', '=', 3)
