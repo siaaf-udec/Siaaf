@@ -91,12 +91,12 @@
         @endpermission
 
         @permission('eventos')
-            <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
-                <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
-                    <i class="fa fa-calendar-plus-o"></i>
-                    <span class="title">Horario y eventos</span>
-                </a>
-            </li>
+        <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
+            <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-calendar-plus-o"></i>
+                <span class="title">Horario y eventos</span>
+            </a>
+        </li>
         @endpermission
 
         @permission('reportes')
@@ -149,7 +149,7 @@
                     </a>
                 </li>
             </ul>
+            @endpermission
         </li>
-        @endpermission
     </ul>
 </li>
