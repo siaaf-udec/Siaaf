@@ -6,11 +6,13 @@
     </a>
     <ul class="sub-menu">
         @permission('FUNC_RRHH')
-        <li class="nav-item {{ active(['talento.humano.empleado.*', 'talento.humano.*'], 'start active open') }}">
+        <li class="nav-item {{ active(['talento.humano.empleado.index','talento.humano.empleado.regisArchivo',
+                                'talento.humano.buscarRadicar', 'talento.humano.empleado.email'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-group"></i>
                 <span class="title">Personal</span>
-                <span class="arrow {{ active(['talento.humano.empleado.*', 'talento.humano.*'], 'open') }}"></span>
+                <span class="arrow {{ active(['talento.humano.empleado.index','talento.humano.empleado.regisArchivo',
+                                            'talento.humano.buscarRadicar', 'talento.humano.empleado.email'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.empleado.index'], 'start active open') }} ">
@@ -41,11 +43,11 @@
             </ul>
         </li>
 
-        <li class="nav-item {{ active(['talento.humano.document.*'], 'start active open') }}">
+        <li class="nav-item {{ active(['talento.humano.document.*', 'talento.humano.notificaciones.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
                 <span class="title">Documentación</span>
-                <span class="arrow {{ active(['talento.humano.document.*'], 'open') }}"></span>
+                <span class="arrow {{ active(['talento.humano.document.*','talento.humano.notificaciones.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['talento.humano.document.index'], 'start active open') }}">
@@ -54,13 +56,13 @@
                         <span class="title">Documentos</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['talento.humano.empleado.empleadosDocumentosCompletos'], 'start active open') }}">
+                <li class="nav-item {{ active(['talento.humano.notificaciones.empleadosDocumentosCompletos'], 'start active open') }}">
                     <a href="{{ route('talento.humano.notificaciones.empleadosDocumentosCompletos') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Documentos Completos</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active(['talento.humano.empleado.empleadosDocumentosIncompletos'], 'start active open') }}">
+                <li class="nav-item {{ active(['talento.humano.notificaciones.empleadosDocumentosIncompletos'], 'start active open') }}">
                     <a href="{{ route('talento.humano.notificaciones.empleadosDocumentosIncompletos') }}" class="nav-link nav-toggle">
                         <i class="fa fa-book"></i>
                         <span class="title">Documentos Incompletos</span>
