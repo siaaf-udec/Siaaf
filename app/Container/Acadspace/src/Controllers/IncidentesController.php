@@ -51,12 +51,12 @@ class IncidentesController extends Controller
                 '¡Registro exitoso!',
                 'Incidente registrado correctamente.'
             );
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
@@ -110,6 +110,5 @@ class IncidentesController extends Controller
         );
 
     }
-
 
 }
