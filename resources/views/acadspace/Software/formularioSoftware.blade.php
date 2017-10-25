@@ -160,8 +160,7 @@
                 {data: 'SOF_Version', name: 'Versión'},
                 {data: 'SOF_Licencias', name: 'Licencias'},
                 {
-                    defaultContent: '@permission('
-                    eliminarSoftware')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: ' @permission('eliminarSoftware') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

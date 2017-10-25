@@ -91,9 +91,8 @@
                 },
                 {
                     //Botones de acciones(editar estado, descargar)
-                    defaultContent: '@permission('
-                    editEstFormato')<a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission @permission('
-                    descargFormato')<a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>@endpermission',
+                    defaultContent: '@permission('editEstFormato') <a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
+                  '@permission('descargFormato') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

@@ -214,8 +214,7 @@
                 {data: 'estado', name: 'Estado'},
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('
-                    descargFormato')<a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a>@endpermission',
+                    defaultContent: ' @permission('descargFormato') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

@@ -203,8 +203,7 @@
                 {data: 'FK_INC_Id_User', name: 'Código'},
                 {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
-                    defaultContent: '@permission('
-                    eliminarIncidente')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: '@permission('eliminarIncidente') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

@@ -170,8 +170,7 @@
                 {data: 'PK_SAL_Id_Sala', name: 'id_documento', "visible": false},
                 {data: 'SAL_Nombre_Sala', name: 'Nombre Sala'},
                 {data: 'espacio.N_espacio', name: 'Nombre Espacio'}, {
-                    defaultContent: '@permission('
-                    eliminarAula')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: ' @permission('eliminarAula') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

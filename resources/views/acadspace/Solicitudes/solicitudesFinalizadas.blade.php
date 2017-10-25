@@ -153,8 +153,7 @@
                 {data: 'aula.SAL_Nombre_Sala', name: 'Sala'},
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
-                    defaultContent: '@permission('
-                    eliminarSolicitudes')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: '@permission('eliminarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

@@ -281,8 +281,7 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '@permission('
-                    verMasEvento')<a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a>@endpermission',
+                    defaultContent: '@permission('verMasEvento') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
