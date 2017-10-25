@@ -91,7 +91,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Request  | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function uploadActividad(Request $request)
-    {   
+    {
         if ($request->ajax() && $request->isMethod('POST')) {
             $date = Carbon::now();
             $date= $date->format('his');
@@ -144,58 +144,55 @@ class StudentController extends Controller
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
             ->addColumn('NPRY_Estado', function ($users) {
-            if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
-                return "<span class='label label-sm label-warning'>"
-                    .$users->anteproyecto->NPRY_Estado
-                    ."</span>";
-            } else {
-                if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
+                if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                     return "<span class='label label-sm label-warning'>"
-                        .$users->anteproyecto->NPRY_Estado
-                        ."</span>";
+                        .$users->anteproyecto->NPRY_Estado."</span>";
                 } else {
-                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                        return "<span class='label label-sm label-success'>"
-                            .$users->anteproyecto->NPRY_Estado
-                            ."</span>";
+                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->anteproyecto->NPRY_Estado."</span>";
                     } else {
-                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
-                            return "<span class='label label-sm label-danger'>"
-                                .$users->anteproyecto->NPRY_Estado
-                                ."</span>";
+                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
+                            return "<span class='label label-sm label-success'>"
+                               .$users->anteproyecto->NPRY_Estado."</span>";
                         } else {
-                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
+                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
                                 return "<span class='label label-sm label-danger'>"
-                                    .$users->anteproyecto->NPRY_Estado
-                                    ."</span>";
+                                    .$users->anteproyecto->NPRY_Estado."</span>";
                             } else {
-                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
-                                    return "<span class='label label-sm label-success'>"
-                                        .$users->anteproyecto->NPRY_Estado
-                                        ."</span>";
+                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
+                                    return "<span class='label label-sm label-danger'>"
+                                        .$users->anteproyecto->NPRY_Estado."</span>";
                                 } else {
-                                    return "<span class='label label-sm label-info'>"
-                                        .$users->anteproyecto->NPRY_Estado
-                                        ."</span>";
+                                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
+                                        return "<span class='label label-sm label-success'>"
+                                            .$users->anteproyecto->NPRY_Estado."</span>";
+                                    } else {
+                                        return "<span class='label label-sm label-info'>"
+                                            .$users->anteproyecto->NPRY_Estado."</span>";
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-        })
-		 ->addColumn('NPRY_Titulo', function ($title) {
-                $marca = "<!--corte-->"; 
+            })
+            ->addColumn('NPRY_Titulo', function ($title) {
+                $marca = "<!--corte-->";
                 $largo=50;
                 $titulo=$title->anteproyecto->NPRY_Titulo;
-                if (strlen($titulo) > $largo) {         
-                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
-                    $titulo = explode($marca, $titulo); 
+                if (strlen($titulo) > $largo) {
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
+                    $titulo = explode($marca, $titulo);
                     $texto1 = $titulo[0];
                     unset($titulo[0]);
-                    $texto2= implode(' ',$titulo);
-                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-                } 
+                    $texto2= implode(' ', $titulo);
+                    return '<p><span class="texto-mostrado">'
+                        .$texto1
+                        .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                        .$texto2
+                        .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                }
                 return '<p>'.$titulo.'</p>';
             })
             ->rawColumns(['NPRY_Estado','NPRY_Titulo'])

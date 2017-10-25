@@ -5,15 +5,13 @@
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" /><link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
-
+    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- DateInput Styles -->
+	<link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Utoastr Styles -->
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-
-    <link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
-
+    <!-- FileInput Styles -->
     <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-
-    <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Dashboard')
@@ -182,328 +180,316 @@
 
 
 @push('plugins')
-    <!-- Datatables Scripts -->
+    <!-- Datatables Plugins -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-
-
+	<!-- Utoastr Plugins -->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-
+	<!-- Validation Plugins -->
     <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
     <script src="{{asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-
+	<!-- FileInput Plugins -->
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-
-    
-    <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-
 @endpush
 
 @push('functions')
-<script>
-jQuery(document).ready(function () {
-    var table, url;
-    table = $('#lista-anteproyecto');
-    url = "{{ route('anteproyecto.juryList') }}";
+	<!-- Local Scripts -->
+	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+	<script>
+	jQuery(document).ready(function () {
+		var table, url;
+		table = $('#lista-anteproyecto');
+		url = "{{ route('anteproyecto.juryList') }}";
 
-    table.DataTable({
-       lengthMenu: [
-           [5, 10, 25, 50, -1],
-           [5, 10, 25, 50, "Todo"]
-       ],
-       responsive: true,
-       colReorder: true,
-       processing: true,
-       serverSide: true,
-       ajax: url,
-       searching: true,
-       language: {
-           "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-           "sLengthMenu": "Mostrar _MENU_ registros",
-           "sZeroRecords": "No se encontraron resultados",
-           "sEmptyTable": "Ningún dato disponible en esta tabla",
-           "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-           "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-           "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-           "sInfoPostFix": "",
-           "sSearch": "Buscar:",
-           "sUrl": "",
-           "sInfoThousands": ",",
-           "sLoadingRecords": "Cargando...",
-           "oPaginate": {
-               "sFirst": "Primero",
-               "sLast": "Último",
-               "sNext": "Siguiente",
-               "sPrevious": "Anterior"
-           },
-           "oAria": {
-               "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-           }
-       },
-       columns:[
-           {data: 'DT_Row_Index'},
-           {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
-           {data: function (data, type, dataToSet) {
-                if(data.anteproyecto.proyecto!=null){
-                    return "PROYECTO"
-                }else{
-                    return "ANTEPROYECTO"
-                }
-                   },searchable: true},
-           {data: 'NPRY_Titulo', searchable: true},
-           {data: 'anteproyecto.NPRY_Keywords', className:'none',searchable: true},
-           {data: 'anteproyecto.NPRY_Duracion',className:'none',searchable: true},
-           {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
-           {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
-           {data: 'anteproyecto.radicacion.RDCN_Min',
-                        render: function (data, type, full, meta) 
-                        {
-                            return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
-                        }, className:'none'
-                    },
-           {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
-                        render: function (data, type, full, meta) 
-                        {
-                            if(data=="NO FILE"){
-                                return "NO APLICA";    
-                            }else{
-                                return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
-                            }  
-                        }, className:'none'
-                    }, 
-           {data:  function (data, type, dataToSet) {
-                        if(data.anteproyecto.director[0]!=null)
-                            return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
-                        else
-                            return "No hay asignado"
-                    },className:'none',searchable: true},
-           {data: function (data, type, dataToSet) {
-                        if(data.anteproyecto.estudiante1[0]!=null)
-                            return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
-                        else
-                            return "No hay asignado"
-                    },className:'none',searchable: true},
-           {data: function (data, type, dataToSet) {
-                        if(data.anteproyecto.estudiante2[0]!=null)
-                        return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
-                        else
-                            return "No hay asignado"
-                    }, className:'none',searchable: true},
-           {data: function (data, type, dataToSet) {
-                        if(data.anteproyecto.jurado1[0]!=null)
-                        return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
-                        else
-                            return "No hay asignado"
-                    }, className:'none',searchable: true},
-           {data: function (data, type, dataToSet) {
-                        if(data.anteproyecto.jurado2[0]!=null)
-                        return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
-                        else
-                            return "No hay asignado"
-                    },className:'none',searchable: true},
-           {data: 'anteproyecto.concepto_final',render: "[, ].conceptos.CNPT_Concepto","visible": false },
-           {data: 'NPRY_Estado',searchable: true,name:'Estado'},
-           {data:"PK_NPRY_idMinr008",
-            name:'action',
-               title:'Acciones',
-               orderable: false,
-               searchable: false,
-               exportable: false,
-               printable: false,
-            responsivePriority:2,
-               className: '',   
-               render: function ( data, type, full, meta ) {
-                   if(full.anteproyecto.proyecto!=null){
-                       if(full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO"){
-                           return '<span class="label label-sm label-success">Proyecto Terminado</span>';
-                       }
-                   }
-                 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>';
-                   
-                }
-               
-           }
-       ],
-       buttons: [
-           { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-           { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-           { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-           { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-           { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-           { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
-           {text: '<i class="fa fa-refresh"></i>', className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-               action: function ( e, dt, node, config ) {
-                   dt.ajax.reload();
-               }
-           }
+		table.DataTable({
+		   lengthMenu: [
+			   [5, 10, 25, 50, -1],
+			   [5, 10, 25, 50, "Todo"]
+		   ],
+		   responsive: true,
+		   colReorder: true,
+		   processing: true,
+		   serverSide: true,
+		   ajax: url,
+		   searching: true,
+		   language: {
+			   "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
+			   "sLengthMenu": "Mostrar _MENU_ registros",
+			   "sZeroRecords": "No se encontraron resultados",
+			   "sEmptyTable": "Ningún dato disponible en esta tabla",
+			   "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			   "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+			   "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			   "sInfoPostFix": "",
+			   "sSearch": "Buscar:",
+			   "sUrl": "",
+			   "sInfoThousands": ",",
+			   "sLoadingRecords": "Cargando...",
+			   "oPaginate": {
+				   "sFirst": "Primero",
+				   "sLast": "Último",
+				   "sNext": "Siguiente",
+				   "sPrevious": "Anterior"
+			   },
+			   "oAria": {
+				   "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				   "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			   }
+		   },
+		   columns:[
+			   {data: 'DT_Row_Index'},
+			   {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
+			   {data: function (data, type, dataToSet) {
+					if(data.anteproyecto.proyecto!=null){
+						return "PROYECTO"
+					}else{
+						return "ANTEPROYECTO"
+					}
+					   },searchable: true},
+			   {data: 'NPRY_Titulo', searchable: true},
+			   {data: 'anteproyecto.NPRY_Keywords', className:'none',searchable: true},
+			   {data: 'anteproyecto.NPRY_Duracion',className:'none',searchable: true},
+			   {data: 'anteproyecto.NPRY_FechaR', className:'none',searchable: true},
+			   {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
+			   {data: 'anteproyecto.radicacion.RDCN_Min',
+							render: function (data, type, full, meta) 
+							{
+								return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+							}, className:'none'
+						},
+			   {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
+							render: function (data, type, full, meta) 
+							{
+								if(data=="NO FILE"){
+									return "NO APLICA";    
+								}else{
+									return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+								}  
+							}, className:'none'
+						}, 
+			   {data:  function (data, type, dataToSet) {
+							if(data.anteproyecto.director[0]!=null)
+								return data.anteproyecto.director[0].usuarios.name + " " + data.anteproyecto.director[0].usuarios.lastname;
+							else
+								return "No hay asignado"
+						},className:'none',searchable: true},
+			   {data: function (data, type, dataToSet) {
+							if(data.anteproyecto.estudiante1[0]!=null)
+								return data.anteproyecto.estudiante1[0].usuarios.name + " " + data.anteproyecto.estudiante1[0].usuarios.lastname;
+							else
+								return "No hay asignado"
+						},className:'none',searchable: true},
+			   {data: function (data, type, dataToSet) {
+							if(data.anteproyecto.estudiante2[0]!=null)
+							return data.anteproyecto.estudiante2[0].usuarios.name + " " + data.anteproyecto.estudiante2[0].usuarios.lastname;
+							else
+								return "No hay asignado"
+						}, className:'none',searchable: true},
+			   {data: function (data, type, dataToSet) {
+							if(data.anteproyecto.jurado1[0]!=null)
+							return data.anteproyecto.jurado1[0].usuarios.name + " " + data.anteproyecto.jurado1[0].usuarios.lastname;
+							else
+								return "No hay asignado"
+						}, className:'none',searchable: true},
+			   {data: function (data, type, dataToSet) {
+							if(data.anteproyecto.jurado2[0]!=null)
+							return data.anteproyecto.jurado2[0].usuarios.name + " " + data.anteproyecto.jurado2[0].usuarios.lastname;
+							else
+								return "No hay asignado"
+						},className:'none',searchable: true},
+			   {data: 'anteproyecto.concepto_final',render: "[, ].conceptos.CNPT_Concepto","visible": false },
+			   {data: 'NPRY_Estado',searchable: true,name:'Estado'},
+			   {data:"PK_NPRY_idMinr008",
+				name:'action',
+				   title:'Acciones',
+				   orderable: false,
+				   searchable: false,
+				   exportable: false,
+				   printable: false,
+				responsivePriority:2,
+				   className: '',   
+				   render: function ( data, type, full, meta ) {
+					   if(full.anteproyecto.proyecto!=null){
+						   if(full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO"){
+							   return '<span class="label label-sm label-success">Proyecto Terminado</span>';
+						   }
+					   }
+					 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>';
 
-       ],
-       pageLength: 10,
-       dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-    });
-    table = table.DataTable();
-    table.on('click', '.edit', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            $('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
-            
-            if(dataTable.anteproyecto.concepto_final[0].conceptos!=null){
-                $('select[name="concepto"]').val(dataTable.anteproyecto.concepto_final[0].conceptos.CNPT_Concepto);
-            }else{
-                $('select[name="concepto"]').val("0");
-            }
-            $('#modal-create-concept').modal('toggle');
-        });
-    
-    var createConcept = function () {
-            return{
-                init: function () {
-                    var route = '{{ route('anteproyecto.guardar.conceptos') }}';
-                    var type = 'POST';
-                    var async = async || false;
+					}
 
-                    var formData = new FormData();
-                    formData.append('concepto', $('select[name="concepto"]').val());
-                    formData.append('user', $('input[name="user"]').val());
-                    formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
+			   }
+		   ],
+		   buttons: [
+			   { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
+			   { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
+			   { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
+			   { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
+			   { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
+			   { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
+			   {text: '<i class="fa fa-refresh"></i>', className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
+				   action: function ( e, dt, node, config ) {
+					   dt.ajax.reload();
+				   }
+			   }
 
-                    $.ajax({
-                        url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                        cache: false,
-                        type: type,
-                        contentType: false,
-                        data: formData,
-                        processData: false,
-                        async: async,
-                        beforeSend: function () {
+		   ],
+		   pageLength: 10,
+		   dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+		});
+		table = table.DataTable();
+		table.on('click', '.edit', function (e) {
+				e.preventDefault();
+				$tr = $(this).closest('tr');
+				var dataTable = table.row($tr).data();
+				$('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
 
-                        },
-                        success: function (response, xhr, request) {
-                            if (request.status === 200 && xhr === 'success') {
-                                table.ajax.reload();
-                                $('#modal-create-concept').modal('hide');
-                                $('#from_concept_create')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
-                            }
-                        },
-                        error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'error') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
-                        }
-                    });
-                }
-            }
-        };
-    var form_edit = $('#from_concept_create');
-    var rules_edit = {
-        concepto: {required: true}
-    };
-    FormValidationMd.init(form_edit,rules_edit,false,createConcept());
+				if(dataTable.anteproyecto.concepto_final[0].conceptos!=null){
+					$('select[name="concepto"]').val(dataTable.anteproyecto.concepto_final[0].conceptos.CNPT_Concepto);
+				}else{
+					$('select[name="concepto"]').val("0");
+				}
+				$('#modal-create-concept').modal('toggle');
+			});
 
-    
-    table.on('click', '.create', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            $('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
-            $('#title').html(dataTable.anteproyecto.NPRY_Titulo);
-            $('#modal-create-observation').modal('toggle');
-        });
+		var createConcept = function () {
+				return{
+					init: function () {
+						var route = '{{ route('anteproyecto.guardar.conceptos') }}';
+						var type = 'POST';
+						var async = async || false;
 
-    
-    var createObservation = function () {
-            return{
-                init: function () {
-                    var route = '{{ route('anteproyecto.guardar.observaciones') }}';
-                    var type = 'POST';
-                    var async = async || false;
+						var formData = new FormData();
+						formData.append('concepto', $('select[name="concepto"]').val());
+						formData.append('user', $('input[name="user"]').val());
+						formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
 
-                    var formData = new FormData();
-                    formData.append('observacion', $('#observacion').val());
-                    formData.append('user', $('input[name="user"]').val());
-                    formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
-                    var FileMin =  document.getElementById("Min");
-                    if ($('#Min').get(0).files.length === 0) {
-                        formData.append('Min', "Vacio");  
-                    }else{
-                        formData.append('Min', FileMin.files[0]);    
-                    };
-                    var FileReq =  document.getElementById("Requerimientos");
-                    if ($('#Requerimientos').get(0).files.length === 0) {
-                        formData.append('Requerimientos', "Vacio");  
-                    }else{
-                        formData.append('Requerimientos', FileReq.files[0]);    
-                    };
-                    $.ajax({
-                        url: route,
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                        cache: false,
-                        type: type,
-                        contentType: false,
-                        data: formData,
-                        processData: false,
-                        async: async,
-                        beforeSend: function () {
+						$.ajax({
+							url: route,
+							headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+							cache: false,
+							type: type,
+							contentType: false,
+							data: formData,
+							processData: false,
+							async: async,
+							beforeSend: function () {
 
-                        },
-                        success: function (response, xhr, request) {
-                            if (request.status === 200 && xhr === 'success') {
-                                table.ajax.reload();
-                                $('#modal-create-observation').modal('hide');
-                                $('#form-register-obser')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr , response.title , response.message  );
-                            }
-                        },
-                        error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'error') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
-                        }
-                    });
-                }
-            }
-        };
-    var form_create = $('#form-register-obser');
-    var rules_create = {
-        observacion:{required: true},
-        Min:{extension: "txt|pdf|doc|docx"},
-        requerimientos:{extension: "txt|pdf|doc|docx"}
-    };
-    FormValidationMd.init(form_create,rules_create,false,createObservation());
-    
-                table.on('click','.boton_mas_info',function(){
- 
-                if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
-                    $(this).parent().find('.texto-ocultado').css('display','inline');
-                    $(this).parent().find('.puntos').html(' ');
-                    $(this).text('Ver menos');
-                } else {
-                    $(this).parent().find('.texto-ocultado').css('display','none');
-                    $(this).parent().find('.puntos').html('...');
-                    $(this).html('Ver más');
-                };
-            });
-});
-    
- 
+							},
+							success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+									$('#modal-create-concept').modal('hide');
+									$('#from_concept_create')[0].reset(); //Limpia formulario
+									UIToastr.init(xhr , response.title , response.message  );
+								}
+							},
+							error: function (response, xhr, request) {
+								if (request.status === 422 &&  xhr === 'error') {
+									UIToastr.init(xhr, response.title, response.message);
+								}
+							}
+						});
+					}
+				}
+			};
+		var form_edit = $('#from_concept_create');
+		var rules_edit = {
+			concepto: {required: true}
+		};
+		FormValidationMd.init(form_edit,rules_edit,false,createConcept());
 
-    
-    
-    
-</script>
+
+		table.on('click', '.create', function (e) {
+				e.preventDefault();
+				$tr = $(this).closest('tr');
+				var dataTable = table.row($tr).data();
+				$('input[name="PK_anteproyecto"]').val(dataTable.anteproyecto.PK_NPRY_IdMinr008);
+				$('#title').html(dataTable.anteproyecto.NPRY_Titulo);
+				$('#modal-create-observation').modal('toggle');
+			});
+
+
+		var createObservation = function () {
+				return{
+					init: function () {
+						var route = '{{ route('anteproyecto.guardar.observaciones') }}';
+						var type = 'POST';
+						var async = async || false;
+
+						var formData = new FormData();
+						formData.append('observacion', $('#observacion').val());
+						formData.append('user', $('input[name="user"]').val());
+						formData.append('PK_anteproyecto', $('input[name="PK_anteproyecto"]').val());
+						var FileMin =  document.getElementById("Min");
+						if ($('#Min').get(0).files.length === 0) {
+							formData.append('Min', "Vacio");  
+						}else{
+							formData.append('Min', FileMin.files[0]);    
+						};
+						var FileReq =  document.getElementById("Requerimientos");
+						if ($('#Requerimientos').get(0).files.length === 0) {
+							formData.append('Requerimientos', "Vacio");  
+						}else{
+							formData.append('Requerimientos', FileReq.files[0]);    
+						};
+						$.ajax({
+							url: route,
+							headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+							cache: false,
+							type: type,
+							contentType: false,
+							data: formData,
+							processData: false,
+							async: async,
+							beforeSend: function () {
+
+							},
+							success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+									$('#modal-create-observation').modal('hide');
+									$('#form-register-obser')[0].reset(); //Limpia formulario
+									UIToastr.init(xhr , response.title , response.message  );
+								}
+							},
+							error: function (response, xhr, request) {
+								if (request.status === 422 &&  xhr === 'error') {
+									UIToastr.init(xhr, response.title, response.message);
+								}
+							}
+						});
+					}
+				}
+			};
+		var form_create = $('#form-register-obser');
+		var rules_create = {
+			observacion:{required: true},
+			Min:{extension: "txt|pdf|doc|docx"},
+			requerimientos:{extension: "txt|pdf|doc|docx"}
+		};
+		FormValidationMd.init(form_create,rules_create,false,createObservation());
+
+					table.on('click','.boton_mas_info',function(){
+
+					if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
+						$(this).parent().find('.texto-ocultado').css('display','inline');
+						$(this).parent().find('.puntos').html(' ');
+						$(this).text('Ver menos');
+					} else {
+						$(this).parent().find('.texto-ocultado').css('display','none');
+						$(this).parent().find('.puntos').html('...');
+						$(this).html('Ver más');
+					};
+				});
+	});
+
+	</script>
 @endpush

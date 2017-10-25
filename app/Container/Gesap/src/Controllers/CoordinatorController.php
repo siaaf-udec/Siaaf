@@ -87,7 +87,7 @@ class CoordinatorController extends Controller
                 ->whereHas('roles', function ($e) {
                     $e->where('name', 'Student_Gesap');
                 })
-                ->get(['name','lastname','id'])
+                ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
             return view($this->path.'RegistroMin', [
@@ -180,7 +180,7 @@ class CoordinatorController extends Controller
                 ->whereHas('roles', function ($e) {
                             $e->where('name', 'Student_Gesap');
                 })
-                ->get(['name','lastname','id'])
+                ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
             
@@ -188,12 +188,11 @@ class CoordinatorController extends Controller
                      
             $estudiante12=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
                 ->select('PK_NPRY_IdMinr008')
-                ->with([
-                    'encargados'=>function ($query) {
-                    $query->select('PK_NCRD_IdCargo','FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo');
+                ->with(['encargados'=>function ($query) {
+                    $query->select('PK_NCRD_IdCargo', 'FK_TBL_Anteproyecto_Id', 'FK_Developer_User_Id', 'NCRD_Cargo');
                     $query->where('NCRD_Cargo', 'ESTUDIANTE 1');
                     $query->orwhere('NCRD_Cargo', 'ESTUDIANTE 2');
-                    }])
+                }])
                 ->get();
             
             
@@ -346,16 +345,15 @@ class CoordinatorController extends Controller
         
             $encargados=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
                 ->select('PK_NPRY_IdMinr008')
-                ->with([
-                    'encargados'=>function ($query) {
-                    $query->select('PK_NCRD_IdCargo','FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo');
+                ->with(['encargados'=>function ($query) {
+                    $query->select('PK_NCRD_IdCargo', 'FK_TBL_Anteproyecto_Id', 'FK_Developer_User_Id', 'NCRD_Cargo');
                     $query->where('NCRD_Cargo', 'DIRECTOR')  ;
                     $query->orwhere('NCRD_Cargo', 'JURADO 1');
                     $query->orwhere('NCRD_Cargo', 'JURADO 2');
-                    }])
+                }])
                 ->get();
                 
-        return view($this->path.'AsignarDocente', [
+            return view($this->path.'AsignarDocente', [
                 'anteproyectos'=>$anteproyectos,
                 'docentes'=>$docentes,
                 'encargados'=>$encargados]);
@@ -437,7 +435,7 @@ class CoordinatorController extends Controller
     public function preliminaryList()
     {
         $anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')
-            ->with(['radicacion','director','jurado1','jurado2','estudiante1','estudiante2','proyecto'])
+            ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'proyecto'])
             ->get();
         return Datatables::of($anteproyectos)
             ->removeColumn('created_at')
@@ -484,20 +482,23 @@ class CoordinatorController extends Controller
                 }
             })
             ->addColumn('NPRY_Titulo', function ($title) {
-                $marca = "<!--corte-->"; 
+                $marca = "<!--corte-->";
                 $largo=50;
                 $titulo=$title->NPRY_Titulo;
-                if (strlen($titulo) > $largo) {         
-                    $titulo = wordwrap($title->NPRY_Titulo, $largo, $marca); 
-                    $titulo = explode($marca, $titulo); 
+                if (strlen($titulo) > $largo) {
+                    $titulo = wordwrap($title->NPRY_Titulo, $largo, $marca);
+                    $titulo = explode($marca, $titulo);
                     $texto1 = $titulo[0];
                     unset($titulo[0]);
-                    $texto2= implode(' ',$titulo);
-                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-                } 
+                    $texto2= implode(' ', $titulo);
+                    return '<p><span class="texto-mostrado">'
+                        .$texto1
+                        .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                        .$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                }
                 return '<p>'.$titulo.'</p>';
             })
-            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+            ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
             ->addIndexColumn()->make(true);
         
     }
@@ -509,7 +510,7 @@ class CoordinatorController extends Controller
     */
     public function projectList()
     {
-     $proyectos = Proyecto::from('TBL_Proyecto AS A')
+        $proyectos = Proyecto::from('TBL_Proyecto AS A')
             ->with([
                 'anteproyecto' => function ($anteproyecto) {
                     $anteproyecto->with(['radicacion',
@@ -518,11 +519,11 @@ class CoordinatorController extends Controller
                                          'jurado2',
                                          'estudiante1',
                                          'estudiante2',
-                                         'proyecto']);        
+                                         'proyecto']);
                 }
                 
             ])
-            ->get();   
+            ->get();
         return Datatables::of($proyectos)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
@@ -544,20 +545,24 @@ class CoordinatorController extends Controller
                 }
             })
             ->addColumn('NPRY_Titulo', function ($title) {
-                $marca = "<!--corte-->"; 
+                $marca = "<!--corte-->";
                 $largo=50;
                 $titulo=$title->anteproyecto->NPRY_Titulo;
-                if (strlen($titulo) > $largo) {         
-                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
-                    $titulo = explode($marca, $titulo); 
+                if (strlen($titulo) > $largo) {
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
+                    $titulo = explode($marca, $titulo);
                     $texto1 = $titulo[0];
                     unset($titulo[0]);
-                    $texto2= implode(' ',$titulo);
-                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-                } 
+                    $texto2= implode(' ', $titulo);
+                    return '<p><span class="texto-mostrado">'
+                        .$texto1
+                        .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                        .$texto2
+                        .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                }
                 return '<p>'.$titulo.'</p>';
             })
-            ->rawColumns(['PRYT_Estado','NPRY_Titulo'])
+            ->rawColumns(['PRYT_Estado', 'NPRY_Titulo'])
             ->addIndexColumn()->make(true);
     }
 }

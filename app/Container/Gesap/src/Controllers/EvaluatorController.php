@@ -142,17 +142,14 @@ class EvaluatorController extends Controller
                 ->where('FK_TBL_Encargado_Id', '=', $jurado->PK_NCRD_IdCargo)
                 ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
-            
+
             $encargado2=Conceptos::select('PK_CNPT_Conceptos', 'CNPT_Concepto')
                 ->where('FK_TBL_Encargado_Id', '=', $jurado2->PK_NCRD_IdCargo)
                 ->where('CNPT_Tipo', '=', 'Anteproyecto')
                 ->first();
-            
-             
+
             $anteproyecto = Anteproyecto::findOrFail($request->get('PK_anteproyecto'));
-            
-        
-        
+
             if ($encargado==null) {//Averiguo si se encontro un concepto previo
                 //si no lo hay se crea el concepto nuevo de este jurado respecto al proyecto
                 Conceptos::create([
@@ -235,13 +232,11 @@ class EvaluatorController extends Controller
                 '¡Actualizacion exitosa!',
                 'El concepto se ha actualizado correctamente.'
             );
-        
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-        
     }
     
      /*
@@ -366,25 +361,25 @@ class EvaluatorController extends Controller
             
             
             $proyecto->documentos()->saveMany([
-                new Documentos(['DMNT_Nombre'=>'Carta de Aval del director de proyecto','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Histórico','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Teórico','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Legal','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama MER ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagramas de clases ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagramas de casos de uso ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de secuencia ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de actividades ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de despliegue ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de colaboracion ','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Desarrollo','DMNT_Descripcion'=>'(Codigo,Programacion)']),
-                new Documentos(['DMNT_Nombre'=>'Registro  de Pruebas','DMNT_Descripcion'=>'CALISOFT']),
-                new Documentos(['DMNT_Nombre'=>'Artículo de propuesta','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Artículo de proyecto','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Manual Técnico','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Manual de Usuario','DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Libro','DMNT_Descripcion'=>'Min 80 hojas']),
-                new Documentos(['DMNT_Nombre'=>'Repositorio DICTUM ','DMNT_Descripcion'=>'Formato AAAr113_V1'])
+                new Documentos(['DMNT_Nombre'=>'Carta de Aval del director de proyecto', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Histórico', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Teórico', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Marco Legal', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama MER ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagramas de clases ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagramas de casos de uso ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de secuencia ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de actividades ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de despliegue ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Diagrama de colaboracion ', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Desarrollo', 'DMNT_Descripcion'=>'(Codigo,Programacion)']),
+                new Documentos(['DMNT_Nombre'=>'Registro  de Pruebas', 'DMNT_Descripcion'=>'CALISOFT']),
+                new Documentos(['DMNT_Nombre'=>'Artículo de propuesta', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Artículo de proyecto', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Manual Técnico', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Manual de Usuario', 'DMNT_Descripcion'=>'']),
+                new Documentos(['DMNT_Nombre'=>'Libro', 'DMNT_Descripcion'=>'Min 80 hojas']),
+                new Documentos(['DMNT_Nombre'=>'Repositorio DICTUM ', 'DMNT_Descripcion'=>'Formato AAAr113_V1'])
             ]);
         
             return AjaxResponse::success(
@@ -409,9 +404,10 @@ class EvaluatorController extends Controller
      *
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function closeProject($id, Request $request){
-         if ($request->ajax() && $request->isMethod('GET')) {
-            $proyecto=Proyecto::where('FK_TBL_Anteproyecto_Id','=',$id)->first();
+    public function closeProject($id, Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $proyecto=Proyecto::where('FK_TBL_Anteproyecto_Id', '=', $id)->first();
             $proyecto->PRYT_Estado="TERMINADO";
             $proyecto->save();
             
@@ -464,18 +460,18 @@ class EvaluatorController extends Controller
     public function directorList(Request $request)
     {
         $anteproyectos = Encargados::select('FK_Developer_User_Id', 'FK_TBL_Anteproyecto_Id', 'PK_NCRD_IdCargo')
-                        ->where('NCRD_Cargo', '=', "Director")
-                        ->where('FK_Developer_user_Id', '=', $request->user()->id)
-                        ->with(['anteproyecto' => function ($proyecto) {
-                            $proyecto->with(['radicacion',
-                                             'director',
-                                             'jurado1',
-                                             'jurado2',
-                                             'estudiante1',
-                                             'estudiante2',
-                                             'proyecto']);
-                        }])
-                        ->get();
+            ->where('NCRD_Cargo', '=', "Director")
+            ->where('FK_Developer_user_Id', '=', $request->user()->id)
+            ->with(['anteproyecto' => function ($proyecto) {
+                $proyecto->with(['radicacion',
+                                 'director',
+                                 'jurado1',
+                                 'jurado2',
+                                 'estudiante1',
+                                 'estudiante2',
+                                 'proyecto']);
+            }])
+            ->get();
         return Datatables::of($anteproyectos)
             ->removeColumn('FK_Developer_User_Id')
             ->removeColumn('FK_TBL_Anteproyecto_Id')
@@ -492,7 +488,7 @@ class EvaluatorController extends Controller
                             ."</span>";
                     } else {
                         if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                            if($users->anteproyecto->proyecto != null){
+                            if ($users->anteproyecto->proyecto != null) {
                                 if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'EN CURSO')) {
                                     return "<span class='label label-sm label-warning'>"
                                         .$users->anteproyecto->proyecto->PRYT_Estado
@@ -508,10 +504,10 @@ class EvaluatorController extends Controller
                                         ."</span>";
                                     }
                                 }
-                            }else{
+                            } else {
                                 return "<span class='label label-sm label-success'>"
                                 .$users->anteproyecto->NPRY_Estado
-                                ."</span>";    
+                                ."</span>";
                             }
                         } else {
                             if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
@@ -540,20 +536,24 @@ class EvaluatorController extends Controller
                 }
             })
             ->addColumn('NPRY_Titulo', function ($title) {
-                $marca = "<!--corte-->"; 
+                $marca = "<!--corte-->";
                 $largo=50;
                 $titulo=$title->anteproyecto->NPRY_Titulo;
-                if (strlen($titulo) > $largo) {         
-                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
-                    $titulo = explode($marca, $titulo); 
+                if (strlen($titulo) > $largo) {
+                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
+                    $titulo = explode($marca, $titulo);
                     $texto1 = $titulo[0];
                     unset($titulo[0]);
-                    $texto2= implode(' ',$titulo);
-                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-                } 
+                    $texto2= implode(' ', $titulo);
+                    return '<p><span class="texto-mostrado">'
+                        .$texto1
+                        .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                        .$texto2
+                        .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                }
                 return '<p>'.$titulo.'</p>';
             })
-            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+            ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
             ->addIndexColumn()->make(true);
     }
     
@@ -565,7 +565,7 @@ class EvaluatorController extends Controller
     * @return Yajra\DataTables\DataTables
     */
     public function juryList(Request $request)
-    { 
+    {
         $anteproyectos = Encargados::where(function ($query) {
                             $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
                             $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
@@ -582,86 +582,79 @@ class EvaluatorController extends Controller
                                  'conceptoFinal']);
             }])
             ->get();
-            
             return Datatables::of($anteproyectos)
                 ->removeColumn('FK_Developer_User_Id')
                 ->removeColumn('FK_TBL_Anteproyecto_Id')
                 ->removeColumn('PK_NCRD_IdCargo')
                 ->addColumn('NPRY_Estado', function ($users) {
-                if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
+                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                         return "<span class='label label-sm label-warning'>"
-                            .$users->anteproyecto->NPRY_Estado
-                            ."</span>";
-                } else {
-                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
-                        return "<span class='label label-sm label-warning'>"
-                            .$users->anteproyecto->NPRY_Estado
-                            ."</span>";
+                            .$users->anteproyecto->NPRY_Estado."</span>";
                     } else {
-                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                            if($users->anteproyecto->proyecto != null){
-                                if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'EN CURSO')) {
-                                    return "<span class='label label-sm label-warning'>"
-                                        .$users->anteproyecto->proyecto->PRYT_Estado
-                                        ."</span>";
-                                } else {
-                                    if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'TERMINADO')) {
-                                        return "<span class='label label-sm label-success'>"
-                                        .$users->anteproyecto->proyecto->PRYT_Estado
-                                        ."</span>";
-                                    } else {
-                                        return "<span class='label label-sm label-info'>"
-                                        .$users->anteproyecto->proyecto->PRYT_Estado
-                                        ."</span>";
-                                    }
-                                }
-                            }else{
-                                return "<span class='label label-sm label-success'>"
-                                .$users->anteproyecto->NPRY_Estado
-                                ."</span>";    
-                            }
+                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
+                            return "<span class='label label-sm label-warning'>"
+                                .$users->anteproyecto->NPRY_Estado."</span>";
                         } else {
-                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
-                                return "<span class='label label-sm label-danger'>"
-                                    .$users->anteproyecto->NPRY_Estado
-                                    ."</span>";
-                            } else {
-                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
-                                    return "<span class='label label-sm label-danger'>"
-                                        .$users->anteproyecto->NPRY_Estado
-                                        ."</span>";
-                                } else {
-                                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
-                                        return "<span class='label label-sm label-success'>"
-                                            .$users->anteproyecto->NPRY_Estado
-                                            ."</span>";
+                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
+                                if ($users->anteproyecto->proyecto != null) {
+                                    if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'EN CURSO')) {
+                                        return "<span class='label label-sm label-warning'>"
+                                            .$users->anteproyecto->proyecto->PRYT_Estado."</span>";
                                     } else {
-                                        return "<span class='label label-sm label-info'>"
-                                            .$users->anteproyecto->NPRY_Estado
-                                            ."</span>";
+                                        if (!strcmp($users->anteproyecto->proyecto->PRYT_Estado, 'TERMINADO')) {
+                                            return "<span class='label label-sm label-success'>"
+                                            .$users->anteproyecto->proyecto->PRYT_Estado."</span>";
+                                        } else {
+                                            return "<span class='label label-sm label-info'>"
+                                            .$users->anteproyecto->proyecto->PRYT_Estado."</span>";
+                                        }
+                                    }
+                                } else {
+                                    return "<span class='label label-sm label-success'>"
+                                    .$users->anteproyecto->NPRY_Estado."</span>";
+                                }
+                            } else {
+                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
+                                    return "<span class='label label-sm label-danger'>"
+                                        .$users->anteproyecto->NPRY_Estado."</span>";
+                                } else {
+                                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
+                                        return "<span class='label label-sm label-danger'>"
+                                           .$users->anteproyecto->NPRY_Estado."</span>";
+                                    } else {
+                                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
+                                            return "<span class='label label-sm label-success'>"
+                                                .$users->anteproyecto->NPRY_Estado."</span>";
+                                        } else {
+                                            return "<span class='label label-sm label-info'>"
+                                                .$users->anteproyecto->NPRY_Estado."</span>";
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            })
-            ->addColumn('NPRY_Titulo', function ($title) {
-                $marca = "<!--corte-->"; 
-                $largo=50;
-                $titulo=$title->anteproyecto->NPRY_Titulo;
-                if (strlen($titulo) > $largo) {         
-                    $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca); 
-                    $titulo = explode($marca, $titulo); 
-                    $texto1 = $titulo[0];
-                    unset($titulo[0]);
-                    $texto2= implode(' ',$titulo);
-                    return '<p><span class="texto-mostrado">'.$texto1.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-                } 
-                return '<p>'.$titulo.'</p>';
-            })
-            ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
-            ->addIndexColumn()->make(true);
+                })
+                ->addColumn('NPRY_Titulo', function ($title) {
+                    $marca = "<!--corte-->";
+                    $largo=50;
+                    $titulo=$title->anteproyecto->NPRY_Titulo;
+                    if (strlen($titulo) > $largo) {
+                        $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
+                        $titulo = explode($marca, $titulo);
+                        $texto1 = $titulo[0];
+                        unset($titulo[0]);
+                        $texto2= implode(' ', $titulo);
+                        return '<p><span class="texto-mostrado">'
+                            .$texto1
+                            .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                            .$texto2
+                            .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                    }
+                    return '<p>'.$titulo.'</p>';
+                })
+               ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
+               ->addIndexColumn()->make(true);
     }
     
      /**
@@ -670,18 +663,19 @@ class EvaluatorController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  Id $actividad
      * @param  String $archivo
-	 *
+     *
      * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
-    public function downloadActivity($actividad, $archivo,Request $request){
-		
-		if ($request->isMethod('GET')) {
-			try{
-				$public_path = public_path(); 
-				$url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo; 
-				if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) 
-					return response()->download($url); 
-			} catch ( Exception $e ){
+    public function downloadActivity($actividad, $archivo, Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            try {
+                $url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo;
+                if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) {
+                    return response()->download($url);
+                }
+
+            } catch (Exception $e) {
                 abort(404);
             }
         }
@@ -689,26 +683,26 @@ class EvaluatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-		
     }
     
-	/**
+    /**
      * Permite descargar los documentes correspondientes de los proyectos
      *
      * @param  \Illuminate\Http\Request $request
      * @param  String $archivo
-	 *
+     *
      * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
      */
-    public function downloadDocument($archivo,Request $request){
-		if ($request->isMethod('GET')) {
-			try{
-				$public_path = public_path();
-				$url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
-				if (Storage::exists($archivo))
-					return response()->download($url);
-				abort(404);
-			} catch ( Exception $e ){
+    public function downloadDocument($archivo, Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            try {
+                $url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
+                if (Storage::exists($archivo)) {
+                    return response()->download($url);
+                }
+                abort(404);
+            } catch (Exception $e) {
                 abort(404);
             }
         }
@@ -717,15 +711,4 @@ class EvaluatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

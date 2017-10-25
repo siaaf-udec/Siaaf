@@ -68,7 +68,7 @@ class PermissionGesapSeeder extends Seeder
         $permission = Permission::where('name', '=', 'Assign_teacher_Gesap')->first();
         $permission->roles()->sync(3);
         $permission = Permission::where('name', '=', 'Modify_Project_Gesap')->first();
-        $permission->roles()->sync(3);  
+        $permission->roles()->sync(3);
         $permission = Permission::where('name', '=', 'See_All_Project_Gesap')->first();
         $permission->roles()->sync(3);
             

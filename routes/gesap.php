@@ -100,7 +100,7 @@ Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use (
     Route::get('jurado', [
     'as' => 'anteproyecto.juryList',
     'uses' => $controller.'EvaluatorController@juryList'
-]);
+    ]);
 });
 
 Route::group(['middleware' => ['permission:Director_List_Gesap']], function () use ($controller) {
@@ -111,7 +111,7 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
     Route::get('evaluar/ver/director/ajax', [
     'as' => 'anteproyecto.index.directorList.ajax',
     'uses' => $controller.'EvaluatorController@directorAjax'
-    ]);    
+    ]);
     Route::get('evaluar/aprobar/{id}', [
     'as' => 'proyecto.aprobado',
     'uses' => $controller.'EvaluatorController@approved'
@@ -150,12 +150,12 @@ Route::group(['middleware' => ['permission:See_Observations_Gesap']], function (
     Route::get('actividades/{id}', [
         'as' => 'proyecto.actividades',
         'uses' => $controller.'StudentController@actividad'
-    ]); 
+    ]);
     
     Route::get('download/{archivo}', [
         'as' => 'download.documento',
         'uses' => $controller.'EvaluatorController@downloadDocument'
-    ] );
+    ]);
 });
 
 Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
@@ -170,7 +170,7 @@ Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], functi
     Route::post('actividades/documento', [
         'as' => 'proyecto.actividades.upload',
         'uses' => $controller.'StudentController@uploadActividad'
-    ]); 
+    ]);
     Route::get('estudiante', [
         'as' => 'anteproyecto.studentList',
         'uses' => $controller.'StudentController@studentList'
@@ -181,19 +181,19 @@ Route::group(['middleware' => ['permission:Report_Gesap']], function () use ($co
     Route::get('graficos/', [
         'as' => 'graficos',
         'uses' => $controller.'ReportController@graficos'
-    ]); 
+    ]);
     Route::get('graficos/data/preliminary', [
         'as' => 'data.chart.preliminary',
         'uses' => $controller.'ReportController@getPreliminary'
-    ]); 
+    ]);
     Route::get('graficos/data/project', [
         'as' => 'data.chart.project',
         'uses' => $controller.'ReportController@getProject'
-    ]); 
+    ]);
     Route::get('graficos/data/Jury', [
         'as' => 'data.chart.jury',
         'uses' => $controller.'ReportController@getJury'
-    ]); 
+    ]);
     Route::get('graficos/data/Director', [
         'as' => 'data.chart.director',
         'uses' => $controller.'ReportController@getDirector'
