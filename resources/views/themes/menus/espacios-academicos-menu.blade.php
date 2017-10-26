@@ -148,6 +148,12 @@
                         <span class="title">Docente</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.asist.asisInv'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.asist.asisInv') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Externo</span>
+                    </a>
+                </li>
             </ul>
             @endpermission
         </li>

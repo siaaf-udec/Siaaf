@@ -119,6 +119,13 @@
             <td class="unit">{{$totPiscologiaLibre+$totPiscologiaaGrup}}</td>
         </tr>
         <tr>
+            <td class="no">{{$cont++}}</td>
+            <td class="unit">{{'EXTERNOS'}}</td>
+            <td class="unit"></td>
+            <td class="unit"></td>
+            <td class="unit">{{$totExternos}}</td>
+        </tr>
+        <tr>
             <td class="no"></td>
             <td class="unit">{{'TOTAL'}}</td>
             <td class="unit"

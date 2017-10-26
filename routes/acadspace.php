@@ -247,11 +247,19 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AsistenciaController@asisDoc',
             'as' => 'espacios.academicos.asist.asisDoc'
         ]);
+        Route::get('asisInv', [ //Pagina inicial asistencia invitados
+            'uses' => $controller . 'AsistenciaController@asisInvitado',
+            'as' => 'espacios.academicos.asist.asisInv'
+        ]);
+        Route::post('regisAsistInv', [ //Registrar asistencia invitado-externo
+            'uses' => $controller . 'AsistenciaController@regisAsistInv',
+            'as' => 'espacios.academicos.asist.regisAsistInv'
+        ]);
         Route::post('regisAsistDoc', [ //Registrar asistencia Docente
             'uses' => $controller . 'AsistenciaController@regisAsistenciaDoc',
             'as' => 'espacios.academicos.asist.regisAsistDoc'
         ]);
-        Route::post('regisAsistEst', [ //Registrar asistencia Docente
+        Route::post('regisAsistEst', [ //Registrar asistencia Estudiante
             'uses' => $controller . 'AsistenciaController@regisAsistenciaEst',
             'as' => 'espacios.academicos.asist.regisAsistEst'
         ]);
