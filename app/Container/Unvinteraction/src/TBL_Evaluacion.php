@@ -25,12 +25,12 @@ class TBL_Evaluacion extends Model
 
     /*
     *Función de conexión entre las tablas de TBL_Evaluacion y TBL_Evaluacion_Preguntas
-    *por los campo de FK_TBL_E<valuacion y PK_Evaluacion
+    *por los campo de FK_TBL_Evaluacion y PK_Evaluacion
     *para realizar las busquedas complementarias
     */    
     public function evaluacion_Preguntas()
     {
-        return $this->hasMany(TBL_Evaluacion_Preguntas::class, 'FK_TBL_E<valuacion', 'PK_Evaluacion');
+        return $this->hasMany(TBL_Evaluacion_Preguntas::class, 'FK_TBL_Evaluacion', 'PK_Evaluacion');
     }
 
     /*
