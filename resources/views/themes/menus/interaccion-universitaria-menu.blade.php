@@ -2,7 +2,7 @@
 @role(['Admin_uni','Funcionario_uni','Empresario_uni','Coordinador_uni','Pasante_uni'])
             <li class="nav-item {{ active(['Alerta.Alerta'], 'start active open') }}">
                 <a href="{{ route('Alerta.Alerta') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-bell"></i>
                         <span class="title">BANDEJA DE ENTRADA</span>
                     </a>
                 </li>
@@ -61,23 +61,15 @@
 @role(['Admin_uni','Funcionario_uni'])
             <li class="nav-item {{ active(['Evaluaciones.Evaluaciones'], 'start active open') }}">
                 <a href="{{ route('Evaluaciones.Evaluaciones') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-check-square-o"></i>
                         <span class="title">EVALUACIONES</span>
-                    </a>
-                </li>
-@endrole
-@role(['Admin_uni','Funcionario_uni'])
-            <li class="nav-item {{ active(['Evaluaciones.Evaluaciones'], 'start active open') }}">
-                <a href="{{ route('Evaluaciones.Evaluaciones') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
-                        <span class="title">MEJORES EMPRESAS</span>
                     </a>
                 </li>
 @endrole
 @role(['Admin_uni'])
             <li class="nav-item {{ active(['Tipo_Pregunta.Tipo_Pregunta'], 'start active open') }}">
                 <a href="{{ route('Tipo_Pregunta.Tipo_Pregunta') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-list-alt"></i>
                         <span class="title">TIPO DE PREGUNTAS</span>
                     </a>
                 </li>
@@ -85,7 +77,7 @@
 @role(['Admin_uni'])
             <li class="nav-item {{ active(['Pregunta.Pregunta'], 'start active open') }}">
                 <a href="{{ route('Pregunta.Pregunta') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-question"></i>
                         <span class="title">PREGUNTAS</span>
                     </a>
                 </li>
