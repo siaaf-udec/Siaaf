@@ -72,7 +72,7 @@ class ArticuloController extends Controller
 		if ($request->ajax() && $request->isMethod('POST')) {
 			Kit::create([
 				'KIT_Nombre' => $request['KIT_Nombre'],
-				'KIT_FK_Estado_id' => 1,
+				'KIT_FK_Estado_id' => 4,
 			]);
 			return AjaxResponse::success(
 				'¡Bien hecho!',
@@ -92,7 +92,7 @@ class ArticuloController extends Controller
 				'FK_ART_Tipo_id' => $request['FK_ART_Tipo_id'],
 				'ART_Descripcion' => $request['ART_Descripcion'],
 				'FK_ART_Kit_id' => $request['FK_ART_Kit_id'],
-				'FK_ART_Estado_id' => 1,
+				'FK_ART_Estado_id' => 4,
 				'ART_Codigo' => $request['ART_Codigo'],
 			]);
 			return AjaxResponse::success(

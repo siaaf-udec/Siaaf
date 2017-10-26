@@ -44,6 +44,7 @@
                     'Nombre',
                     'Codigo',
                     'Fecha Solicitud',
+                    'Fecha Fin',
                     'Elementos' => ['style' => 'width:90px;'],
                     'Acciones' => ['style' => 'width:90px;']
                 ])
@@ -78,7 +79,7 @@
                                 <p>
                                     {!! Field::text(
                                         'PRT_Fecha_Inicio',
-                                        ['label'=>'Fecha Recibir Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['disabled','label'=>'Fecha Recibir Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                     !!}
                                 </p>
@@ -98,7 +99,7 @@
                                 <p>
                                     {!! Field::text(
                                         'PRT_Fecha_Fin',
-                                        ['label'=>'Fecha Entregar Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['disabled','label'=>'Fecha Entregar Reserva','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar'])
                                     !!}
                                 </p>
@@ -188,6 +189,7 @@
                 },name:'Nombre'},
             {data: 'conultar_usuario_developer.email', name: 'Codigo'},
             {data: 'PRT_Fecha_Inicio', name: 'Fecha Solicitud'},
+            {data: 'PRT_Fecha_Fin', name: 'Fecha Fin'},
             {data: 'Elementos', name: 'Elementos'},
             {data: 'Acciones', name: 'Acciones'},
 

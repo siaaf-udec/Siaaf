@@ -21,15 +21,15 @@ class DatabaseAudiovisualesSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(EstadosTableAudiovisualsSeeder::class);
-        //$this->call(ProgramasTableAudiovisualsSeeder::class);
-        //$this->call(PermissionAudiovisualsSeeder::class);
+        $this->call(EstadosTableAudiovisualsSeeder::class);
+        $this->call(ProgramasTableAudiovisualsSeeder::class);
+        $this->call(PermissionAudiovisualsSeeder::class);
+        $this->call(RoleAudiovisualsSeeder::class);//
         $this->call(UsersAudiovisualsTableSeeder::class);
-        //$this->call(RoleAudiovisualsSeeder::class);
-        //$this->call(KitsTableAudiovisualsSeeder::class);
-        //$this->call(TiposArticulosTableAudiovisualsSeeder::class);
-        //$this->call(ValidationTableAudiovisualsSeeder::class);
-        //$this->call(ArticulosTableAudiovisualsSeeder::class);
+        $this->call(KitsTableAudiovisualsSeeder::class);
+        $this->call(TiposArticulosTableAudiovisualsSeeder::class);
+        $this->call(ValidationTableAudiovisualsSeeder::class);
+        $this->call(ArticulosTableAudiovisualsSeeder::class);
 
 
 

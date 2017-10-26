@@ -220,7 +220,6 @@ class AdministradorGestionController extends Controller
     }
     public function indexTablaPrestamos()
     {
-
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
         return view('audiovisuals.administrador.gestionPrestamos',
             [
@@ -253,15 +252,16 @@ class AdministradorGestionController extends Controller
     public function indexEntregaPrestamos($idNumorden){
         $prestamos = Solicitudes::with(['consultaArticulos'=> function($query){
             return $query->select('id','FK_ART_Tipo_id')
-                ->with(['consultaTipoArticulo'=>function($query){
+                ->with([
+                    'consultaTipoArticulo'=>function($query){
                         return $query->select(
                             'id','TPART_Nombre' );
                     }
-                    ]
-                );
-        }])->where([
-            ['PRT_Num_Orden','=',$idNumorden]
-            ])->get();
+                ]);
+        },'consultaKitArticulo'])->where([
+            ['PRT_Num_Orden','=',$idNumorden],
+            ['PRT_FK_Tipo_Solicitud','=',2]//prestamos
+        ])->get();
         $array2 = array();
         foreach ($prestamos as $player) {
             $dtF= new Carbon();//esto de carbon para que lo est ausando
@@ -280,27 +280,70 @@ class AdministradorGestionController extends Controller
             'contador'=>0
             ]);
     }
-    public function updateSolicitud($idArticulo,$dataObservation){
+    public function updateSolicitud($idSolicitud,$dataObservation){
         $user = Auth::user();
         $id = $user->id;
-        Solicitudes::where('id',"=",$idArticulo)
+        $idArt = Solicitudes::select('PRT_FK_Articulos_id')->where('id',"=",$idSolicitud)->get();
+        Solicitudes::where('id',"=",$idSolicitud)
             ->update( [
                 'PRT_Observacion_Recibe' => $dataObservation,
                 'PRT_FK_Administrador_Recibe_id' => $id,
                 'PRT_FK_Estado' => 3
             ]);
+        Articulo::where('id','=',$idArt[0]['PRT_FK_Articulos_id'])->update(['FK_ART_Estado_id'=>4]);
     }
     public function updatePrestamoGeneral(Request $request,$idOrden){
         $user = Auth::user();
         $id = $user->id;
         if ($request->ajax() && $request->isMethod('POST')) {
-            Solicitudes::where('PRT_Num_Orden',"=",$idOrden)
+            Solicitudes::where([
+                    ['PRT_Num_Orden',"=",$idOrden],
+                    ['PRT_FK_Tipo_Solicitud',"=",2]
+                    ]
+                )
                 ->update( [
                     'PRT_Observacion_Recibe' => $request->get('observacion'),
                     'PRT_FK_Administrador_Recibe_id' => $id,
                     'PRT_FK_Estado' => 3
                 ]);
+            $consulta = Solicitudes::where('PRT_Num_Orden',"=",$idOrden)->get();
+            foreach ($consulta as $row){
+                if($row['PRT_FK_Articulos_id'] == 0){
+                    Kit::where('id','=',$row['PRT_FK_Kits_id'])
+                        ->update(['KIT_FK_Estado_id'=>4]);
+                    Articulo::where('FK_ART_Kit_id','=',$row['PRT_FK_Kits_id'])
+                        ->update(['FK_ART_Estado_id'=>4]);
+                }else{
+                    Articulo::where('id','=',$row['PRT_FK_Articulos_id'])
+                        ->update(['FK_ART_Estado_id'=>4]);
+                }
 
+            }
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Devolución Correcta.'
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+    }
+    public function updateKitAdmin(Request $request,$idSolicitud){
+        $user = Auth::user();
+        $id = $user->id;
+        if ($request->ajax() && $request->isMethod('POST')) {
+            Solicitudes::where('id',"=",$idSolicitud)
+                ->update( [
+                    'PRT_Observacion_Recibe' => $request->get('observacionKit'),
+                    'PRT_FK_Administrador_Recibe_id' => $id,
+                    'PRT_FK_Estado' => 3
+                ]);
+            $kitId = Solicitudes::select('PRT_FK_Kits_id')->where('id','=',$idSolicitud)->get();
+             Kit::where('id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['KIT_FK_Estado_id'=>4]);
+             Articulo::where('FK_ART_Kit_id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['FK_ART_Estado_id'=>4]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Devolución Correcta.'
@@ -392,11 +435,11 @@ class AdministradorGestionController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-                $query->where('FK_ART_Estado_id', '=', 1);
+                $query->where('FK_ART_Estado_id', '=', 4);
             })->pluck('TPART_Nombre', 'id');
             $kits = Kit::select('id','KIT_Nombre')->where([
                 ['KIT_Nombre','!=','Ninguno'],
-                ['KIT_FK_Estado_id','=','1']
+                ['KIT_FK_Estado_id','=',4]
                 ]
             )->pluck('KIT_Nombre', 'id');
             $validaciones= Validaciones::all();
@@ -497,7 +540,7 @@ class AdministradorGestionController extends Controller
             $solicitudes = Solicitudes::with(
                 ['consultaTipoArticulo', 'consultaUsuarioAudiovisuales', 'conultarUsuarioDeveloper']
             )->where([
-                ['PRT_FK_Estado', '!=', '3'],//recibido
+                ['PRT_FK_Estado', '!=', '3'],// entregado
                 ['PRT_FK_Tipo_Solicitud', '=', '1']//reserva
             ])->get();
             $solicitudes =($solicitudes)->groupBy('PRT_Num_Orden');
@@ -515,10 +558,25 @@ class AdministradorGestionController extends Controller
                     }
                 })
                 ->addColumn('Acciones', function ($solicitudes) {
-                    if ($solicitudes->PRT_FK_Estado == 1) {
-                        return "<a class='btn btn-simple btn-info btn-icon verReserva' id='1'><i class=\"icon-list\"></i>Ver Reserva</a>";
-                    } else {
-                        return "<a class='btn btn-simple btn-warning btn-icon verReserva' id='2'><i class=\"icon-list\"></i>Finalizar Reserva</a>";
+                    $fechaHoy = new Carbon();
+                    $fechaReserva = new Carbon();
+                    $fechaHoy = Carbon::now();
+                    $fechaFin = new Carbon();
+                    $fechaFin = Carbon::parse($solicitudes->PRT_Fecha_Fin);
+                    $fechaReserva = Carbon::parse($solicitudes->PRT_Fecha_Inicio);
+                    if($fechaHoy >= $fechaReserva  && $fechaHoy <= $fechaFin ){
+                        if ($solicitudes->PRT_FK_Estado == 1) {
+                            return "<a class='btn btn-simple btn-info btn-icon verReserva' id='1'><i class=\"icon-list\"></i>Ver Reserva</a>";
+                        } else {
+                            return "<a class='btn btn-simple btn-warning btn-icon verReserva' id='2'><i class=\"icon-list\"></i>Finalizar Reserva</a>";
+                        }
+                    }else{
+                        if($fechaHoy <= $fechaReserva  ){
+                            return "<span class='label label-sm label-warning'>No disponible</span>";
+                        }
+                        if($fechaHoy > $fechaFin){
+                            return "<span class='label label-sm label-danger'>Sancion</span>";
+                        }
                     }
                 })
                 ->rawColumns(['Acciones'])
@@ -538,7 +596,6 @@ class AdministradorGestionController extends Controller
             $detalle = Articulo::with('consultaTipoArticulo', 'consultaKitArticulo')->where([
                 ['FK_ART_Kit_id', '=', $idKit],
             ])->get();
-            $detalle;
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos cargados correctamente.',
@@ -603,7 +660,7 @@ class AdministradorGestionController extends Controller
                 ])->update([
                         'PRT_Observacion_Entrega' => $request->get('PRT_Observacion_Entrega'),
                         'PRT_FK_Administrador_Entrega_id' => $idAdmin,
-                        'PRT_FK_Estado' => 2
+                        'PRT_FK_Estado' => 2//prestado
                     ]
                 );
                 $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
@@ -611,10 +668,10 @@ class AdministradorGestionController extends Controller
                 foreach ($articulo as $id){
                     if($id->PRT_FK_Kits_id == 1){
                         Articulo::where('id','=',$id->PRT_FK_Articulos_id)
-                            ->update(['FK_ART_Estado_id'=>2]);
+                            ->update(['FK_ART_Estado_id'=>2]);//prestado
                     }else{
                         Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
-                            ->update(['FK_ART_Estado_id'=>2]);
+                            ->update(['FK_ART_Estado_id'=>2]);//prestado
                     }
                 }
             } else {
@@ -624,7 +681,7 @@ class AdministradorGestionController extends Controller
                     [
                         'PRT_Observacion_Recibe' => $request->get('PRT_Observacion_Entrega'),
                         'PRT_FK_Administrador_Recibe_id' => $idAdmin,
-                        'PRT_FK_Estado' => 5
+                        'PRT_FK_Estado' => 3
                     ]
                 );
                 $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
@@ -632,21 +689,17 @@ class AdministradorGestionController extends Controller
                 foreach ($articulo as $id){
                     if($id->PRT_FK_Kits_id == 1){
                         Articulo::where('id','=',$id->PRT_FK_Articulos_id)
-                            ->update(['FK_ART_Estado_id'=>1]);
+                            ->update(['FK_ART_Estado_id'=>4]);//disponible
                     }else{
                         Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
-                            ->update(['FK_ART_Estado_id'=>1]);
+                            ->update(['FK_ART_Estado_id'=>4]);//disponible
                     }
                 }
-                //$this->actualizar($query);
             }
-
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Reserva registrada correctamente.'
             );
-//
-//		}
         } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -666,7 +719,10 @@ class AdministradorGestionController extends Controller
                     }
                     ]
                 );
-            }])->where('PRT_FK_Tipo_Solicitud','=',2)->get();//2=prestamos
+            }])->where([
+                ['PRT_FK_Tipo_Solicitud','=',2],
+                ['PRT_FK_Estado','!=',3]
+                ])->get();//2=prestamos
             $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
             $array = array();
             foreach ($funcionarios as $le) {
@@ -798,6 +854,48 @@ class AdministradorGestionController extends Controller
             );
         }
     }
+    public function consultarArticulosKit(Request $request,$idKit){
+
+        if($request->ajax() && $request->isMethod('GET')){
+            //$kitId = Solicitudes::select('PRT_FK_Kits_id')->where('id','=',$idSolicitud)->get();
+            $articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo'])->where([
+                ['FK_ART_Kit_id','=',$idKit]
+            ])->get();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                json_decode($articulos)
+
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
+    public function consultarArticulosKitAdmin(Request $request,$idSolicitud){
+
+        if($request->ajax() && $request->isMethod('GET')){
+            $kitId = Solicitudes::select('PRT_FK_Kits_id')->where('id','=',$idSolicitud)->get();
+            $articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo'])->where([
+                ['FK_ART_Kit_id','=',$kitId[0]['PRT_FK_Kits_id']]
+            ])->get();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                json_decode($articulos)
+
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
+    }
     public function crearPrestamoRepeat(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -807,6 +905,7 @@ class AdministradorGestionController extends Controller
             $adminId = $user->id;
             foreach ($infoRepeat as $prestamo) {
                 $bandera=false;
+                $idArticulo = 0;
                 if($prestamo->kit == true){
                     $kitSolicitado = $prestamo->tipoArticulosSelect;
                     $idKitConsultado = $this->consultarKit($prestamo->tipoArticulosSelect);
@@ -835,7 +934,7 @@ class AdministradorGestionController extends Controller
                         'PRT_FK_Kits_id' => $kitSolicitado,
                         'PRT_Observacion_Entrega' => $prestamo->observacionEntrega,
                         'PRT_Observacion_Recibe' => '',
-                        'PRT_FK_Estado' => 2,
+                        'PRT_FK_Estado' => 2,//prestado
                         'PRT_FK_Tipo_Solicitud' => 2,//prestamo
                         'PRT_FK_Administrador_Entrega_id' => $adminId,
                         'PRT_FK_Administrador_Recibe_id' => 0,
@@ -889,7 +988,7 @@ class AdministradorGestionController extends Controller
     {
         $query = Articulo::where([
             ['FK_ART_Tipo_id', '=', $idTipoArticulo],
-            ['FK_ART_Estado_id', '=', 1]
+            ['FK_ART_Estado_id', '=', 4]
 
         ])->first();
         /////////////
@@ -900,14 +999,14 @@ class AdministradorGestionController extends Controller
             Articulo::where([
                 ['id', '=', $query['id']],
 
-            ])->update(['FK_ART_Estado_id' => 3]);
+            ])->update(['FK_ART_Estado_id' => 2]);
             Kit::where([
                 ['id', '=', $query['FK_ART_Kit_id']],
-            ])->update(['KIT_FK_Estado_id' => 3]);
+            ])->update(['KIT_FK_Estado_id' => 2]);
         } else {
             Articulo::where([
                 ['id', '=', $query['id']],
-            ])->update(['FK_ART_Estado_id' => 3]);
+            ])->update(['FK_ART_Estado_id' => 2]);
         }
         return $query;
 
@@ -916,16 +1015,16 @@ class AdministradorGestionController extends Controller
     {
         $query = Kit::where([
             ['id', '=', $PRT_FK_Kits_id],
-            ['KIT_FK_Estado_id', '=', 1]
+            ['KIT_FK_Estado_id', '=', 4]
 
         ])->first();
         if($query != null){
             $query = Kit::where([
                 ['id', '=', $PRT_FK_Kits_id],
-            ])->update(['KIT_FK_Estado_id' => 3]);
+            ])->update(['KIT_FK_Estado_id' => 2]);
             $query = Articulo::where([
                 ['FK_ART_Kit_id', '=', $PRT_FK_Kits_id],
-            ])->update(['FK_ART_Estado_id' => 3]);
+            ])->update(['FK_ART_Estado_id' => 2]);
 
         }
         return $query;

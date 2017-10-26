@@ -6,8 +6,7 @@
             <!-- responsive -->
                 <div class="modal fade" data-width="750" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
                     <div class="modal-header modal-header-success">
-                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                        </button>
+
                         <h2 class="modal-title">
                             <i class="glyphicon glyphicon-user">
                             </i>
@@ -104,6 +103,11 @@
 </div>
 </div>
 <script type="text/javascript">
+    var numDias = JSON.stringify({{$validaciones[3]['VAL_PRE_Valor']}});//numDias
+    var numHoras = JSON.stringify({{$validaciones[2]['VAL_PRE_Valor']}});//numHora
+    var numhorasCancelar = JSON.stringify({{$validaciones[7]['VAL_PRE_Valor']}});
+    var numDiasHabiles = parseInt(JSON.stringify({{$validaciones[12]['VAL_PRE_Valor']}}));
+    var numDiasAnticipacion = parseInt(JSON.stringify({{$validaciones[13]['VAL_PRE_Valor']}}));
     var textArticulo,textFechaInicio,textFechaFin,
         boton_quitar,idTextTipoArticulo,idTextFechaInicio,idTextFechaFin,fila_completa,
         valueTipoArticulo,valueFechaInicio,valueFechaFin;
@@ -116,11 +120,10 @@
             if (!jQuery().datetimepicker) {
                 return;
             }
-            var tres=3;
             var fecha = new Date();
-            fecha.setDate(fecha.getDate() + 1);
+            fecha.setDate(fecha.getDate() + numDiasAnticipacion);
             var fecha2 = new Date();
-            fecha2.setDate( fecha2.getDate() + numDiasHabiles );
+            fecha2.setDate( fecha2.getDate() + (numDiasAnticipacion+numDiasHabiles) );
             $(".date-time-picker").datetimepicker({
                 autoclose: true,
                 isRTL: App.isRTL(),
@@ -158,10 +161,7 @@
             }
         }
     }();
-    var numDias = JSON.stringify({{$validaciones[3]['VAL_PRE_Valor']}});//numDias
-    var numHoras = JSON.stringify({{$validaciones[2]['VAL_PRE_Valor']}});//numHora
-    var numhorasCancelar = JSON.stringify({{$validaciones[7]['VAL_PRE_Valor']}});
-    var numDiasHabiles = parseInt(JSON.stringify({{$validaciones[12]['VAL_PRE_Valor']}}));
+
     for(i=0;i<=numDias;i++){
         var nombreDia;
         if( i == 0 )
@@ -231,7 +231,7 @@
         var rules_create = {
             PRT_Fecha_Inicio:{required: true},
             numDias:{required: true},
-            numhoras:{ required: true},
+            numHoras:{ required: true},
         };
         FormValidationMd.init(form_create,rules_create,false,createRes());
         $('#agregar').on('click',function (e){
@@ -278,7 +278,6 @@
             var formDatas = new FormData();
             formDatas.append('infoPrestamo',JSON.stringify(objectForm));
             $.ajax({
-
                 url: routeCrearPrestamo,
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 cache: false,

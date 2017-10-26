@@ -33,7 +33,7 @@ class Solicitudes extends Model
 	}
 	public function consultaKitArticulo()
 	{
-		return $this->belongsTo(Kit::class,'PRT_FK_Kits_id','id');
+		return $this->belongsTo(Kit::class,'PRT_FK_Kits_id');
 	}
 	public function consultaTipoArticulo()
 	{

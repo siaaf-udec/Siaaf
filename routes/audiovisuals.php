@@ -72,6 +72,10 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
         'uses' => $controller . 'AdministradorGestionController@updatePrestamoGeneral',
         'as'   => 'updatesPrestamoGeneral',
     ]);
+    Route::post('updateKitAdmin/{idKit?}', [
+        'uses' => $controller . 'AdministradorGestionController@updateKitAdmin',
+        'as'   => 'updateKitAdmin',
+    ]);
     Route::POST('moreTimeUpdateSolicitud/{idPrestamo?}',[
         'uses' => $controller . 'AdministradorGestionController@moreTimeUpdate',
         'as'   => 'moreTimeUpdate',
@@ -119,8 +123,14 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
         'uses' => $controller . 'AdministradorGestionController@ajaxUniqueIdentificacion',
         'as'   => 'identificacion.validar',
     ]);
-
-
+    Route::get('ListarTextAreaArticulos/{kit?}', [
+        'uses' => $controller . 'AdministradorGestionController@consultarArticulosKit',
+        'as' => 'listarArticulosKitAdministrador',
+    ]);
+    Route::get('ListarTextAreaArticulosEntrega/{kit?}', [
+        'uses' => $controller . 'AdministradorGestionController@consultarArticulosKitAdmin',
+        'as' => 'listarArticulosKitEntregaAdministrador',
+    ]);
 
 });
 // RUTAS FUNCIONARIO ************************

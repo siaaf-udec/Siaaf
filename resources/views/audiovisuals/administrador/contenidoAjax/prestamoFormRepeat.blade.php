@@ -133,6 +133,7 @@
             $('select[name="tiempoKit"]').append(new Option(i+'horas',i));
         }
     }
+    $('#tiempoKit').val([]);
     jQuery(document).ready(function () {
         $('#link_cancel').on('click', function (e) {
             e.preventDefault();
@@ -230,7 +231,6 @@
             });
             console.log(objectForm);
         });
-
         //cambio de select de articulos tiempo
         var tipoArticulo
         $('#tipoArticulosSelect').on('change', function () {
@@ -266,7 +266,7 @@
             console.log('entraCambioKit');
             tipokit= $(this).val();
             kit = $(this).val();
-            var routeArticulos = '{{ route('listarArticulosKit') }}' +'/' + kit ;
+            var routeArticulos = '{{ route('listarArticulosKitAdministrador') }}' +'/' + kit ;
             $('#ElementosKit').empty();
             $.ajax({
                 url: routeArticulos,

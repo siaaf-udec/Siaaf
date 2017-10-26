@@ -181,7 +181,7 @@ de la plantilla
                                        !!}
                                     </p>
                                     <p>
-                                        {!! Field::text('FK_ART_Estado_id','Bueno',
+                                        {!! Field::text('FK_ART_Estado_id','Disponible',
                                         ['label' => 'Estado:','disabled'],
                                         ['help' => 'Ingrese Estado "Activo","Inactivo"', 'icon' => 'fa fa-ban'])
                                         !!}
@@ -457,6 +457,7 @@ de la plantilla
                             $(response.data).each(function (key, value) {
                                 $seleccione_un_kit.append(new Option(value.KIT_Nombre, value.id));
                             });
+                            $seleccione_un_kit.val([]);
                         }
                     }
                 });
@@ -474,6 +475,7 @@ de la plantilla
                             $(response.data).each(function (key, value) {
                                 $seleccione_un_tipoArticulo.append(new Option(value.TPART_Nombre, value.id));
                             });
+                            $seleccione_un_tipoArticulo.val([]);
                         }
                     }
                 });

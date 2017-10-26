@@ -72,7 +72,7 @@
                                                             ['help' => 'Digite su Nombre']) !!}
                                                     {!! Field::date(
                                                             'date_birthday',
-                                                            ['label' => 'Fecha de Nacimiento', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
+                                                  ta-date-start-date' => "+0d"],
                                                             ['help' => 'Digite su fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
                                                     {!! Field::select(
                                                             'identity_type_create',

@@ -214,8 +214,8 @@ class FuncionarioController extends Controller
 				'PRT_FK_Kits_id'=> $request['PRT_FK_Kits_id'],
 				'PRT_Observacion_Entrega'=> '',
 				'PRT_Observacion_Recibe'=> '',
-				'PRT_FK_Estado'=> 1,
-				'PRT_FK_Tipo_Solicitud'=> 1,//reserva
+				'PRT_FK_Estado'=> 1,//reservado
+				'PRT_FK_Tipo_Solicitud'=> 1,//reserva->solicitud
 				'PRT_FK_Administrador_Entrega_id'=>0,
 				'PRT_FK_Administrador_Recibe_id'=>0,
                 'PRT_Num_Orden'=>$numOrden,
@@ -270,7 +270,7 @@ class FuncionarioController extends Controller
                     'PRT_FK_Kits_id' => 1,
                     'PRT_Observacion_Entrega' => '',
                     'PRT_Observacion_Recibe' => '',
-                    'PRT_FK_Estado' => 2,
+                    'PRT_FK_Estado' => 1,//reservado
                     'PRT_FK_Tipo_Solicitud' => 1,//reserva
                     'PRT_FK_Administrador_Entrega_id' => 0,
                     'PRT_FK_Administrador_Recibe_id' => 0,
@@ -298,7 +298,7 @@ class FuncionarioController extends Controller
 			$articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo'])->where([
 				['FK_ART_Kit_id','=',$idKit]
 			])->get();
-			return AjaxResponse::success(
+			return AjaxResponse::success(//hay ya lo habia probado es por los permisos ean hlas rout espere si es eso
 				'¡Bien hecho!',
 				'Datos consultados correctamente.',
 				json_decode($articulos)
@@ -315,7 +315,7 @@ class FuncionarioController extends Controller
 
     public function consultarKitsDisposnibles(Request $request){
 		if($request->ajax() && $request->isMethod('GET')){
-			$kits = Kit::all();
+			$kits = Kit::where('id','!=',1)->get();
 			return AjaxResponse::success(
 				'¡Bien hecho!',
 				'Datos consultados correctamente.',
