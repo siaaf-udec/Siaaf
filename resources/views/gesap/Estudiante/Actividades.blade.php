@@ -8,7 +8,7 @@
 			],
         ])
     @endpermission
-    @permission('Update_Final_Project_Gesap')
+    @permission('Student_List_Gesap')
     	@slot('actions', [
 			'link_back-estudiante' => [
 			'link' => '',
@@ -34,7 +34,7 @@
 						</div>
 						<div class="mt-list-container list-default ext-1 group">
 							<div class="mt-list-title uppercase">Lista de actividades
-								@permission('Director_List_Gesap')
+								@permission('Create_Activity_Gesap')
 								@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 								<span class="badge badge-default pull-right bg-hover-green-jungle">
 									<a class="font-white" href="javascript:;" id="create">
@@ -60,7 +60,7 @@
 												<i class="icon-check"></i>
 											</a>
 										</div>
-										@permission('Director_List_Gesap')
+										@permission('Delete_Activity_Gesap')
 										<div class="list-datetime"> 
 											@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 											<a class="task-trash delete" id=""  href="javascript:;">
@@ -116,7 +116,7 @@
 												<i class="icon-close"></i>
 											</a>
 										</div>
-										@permission('Director_List_Gesap')
+										@permission('Delete_Activity_Gesap')
 										@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 										<div class="list-datetime"> 
 											<a class="task-trash delete" id=""  href="javascript:;">

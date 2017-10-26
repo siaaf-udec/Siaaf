@@ -56,7 +56,7 @@
                 </a>
             </li>
         @endpermission
-        @role('Student_Gesap')
+        @permission('Student_List_Gesap')
                 <li class="nav-item {{ active(['anteproyecto.index.studentList'], 'start active open') }}">
                     <a class="nav-link " href="{{ route('anteproyecto.index.studentList') }}">
                         <i class="fa fa-list-alt">
@@ -66,6 +66,6 @@
                         </span>
                     </a>
                 </li>
-        @endrole
+        @endpermission
     </ul>
 </li>

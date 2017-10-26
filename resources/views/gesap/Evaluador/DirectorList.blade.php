@@ -189,17 +189,17 @@
                     render: function ( data, type, full, meta ) {
                         if(full.anteproyecto.NPRY_Estado=="APROBADO"){
                             if(full.anteproyecto.proyecto==null){
-                                return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>';
+                                return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['Aproved_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a><?php endif; // Entrust::can ?>';
                             }else{
                                 if (full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO") {
-                                     return '<center><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a></center>';
+                                     return '<center><?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['See_Activity_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><?php endif; // Entrust::can ?></center>';
                                  } else {
-                                    return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>';
+                                    return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['See_Activity_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><?php endif;  if (\Entrust::can(['Close_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a><?php endif; // Entrust::can ?>';
                                  } 
                                 
                             }
                         }else{
-                            return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>';
+                            return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><?php endif; // Entrust::can ?>';
                         }
                      }, 
                    }

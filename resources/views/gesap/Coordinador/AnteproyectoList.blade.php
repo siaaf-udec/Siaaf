@@ -32,7 +32,9 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="btn-group">
+				@permission('Create_Project_Gesap')
 				<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+				@endpermission
 			</div>
 		</div>
 		<div class="clearfix"> </div><br><br>
@@ -213,16 +215,16 @@
                      render: function ( data, type, full, meta ) {
 						 if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
 							 if(full.proyecto==null){
-								 return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
+								 return '<?php if (\Entrust::can(['Modify_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><?php endif;  if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; if (\Entrust::can(['Delete_Project_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><?php endif; // Entrust::can ?>';
                              }else{
                                  if (full.proyecto.PRYT_Estado=="TERMINADO") {
                                      return '<span class="label label-sm label-success">Proyecto Terminado</span>';
                                  } else {
-                                    return '<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><span class="label label-sm label-success">Proyecto en curso</span>'; 
+                                    return '<?php if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; // Entrust::can ?><span class="label label-sm label-success">Proyecto en curso</span>'; 
                                  } 
                              }
                          }else{
-                             return '<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i></a><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>';
+                             return '<?php if (\Entrust::can(['Modify_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><?php endif;  if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; if (\Entrust::can(['Delete_Project_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><?php endif; // Entrust::can ?>';
 						 }
 					 }, 
 					}

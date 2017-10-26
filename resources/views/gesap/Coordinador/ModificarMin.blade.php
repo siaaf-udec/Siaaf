@@ -1,16 +1,18 @@
 <div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-pencil', 'title' => 'Modificar Anteproyecto'])
-    @slot('actions', [
+    @permission('See_All_Project_Gesap')
+	@slot('actions', [
 		'link_back' => [
 			'link' => '',
 			'icon' => 'fa fa-arrow-left',
 		],
 	])
+	@endpermission
 	<div class="row">
 		@foreach ($anteproyecto as $anteproyecto)
         	{!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-modificar-min']) !!} 
             	{!! Field::hidden('_method', 'PUT') !!}
-            	{!! Field::hidden('PK_radicacion', $anteproyecto->PK_RDCN_IdRadicacion) !!}
+            	{!! Field::hidden('PK_radicacion', $anteproyecto->radicacion->PK_RDCN_IdRadicacion) !!}
             	{!! Field::hidden('PK_proyecto', $anteproyecto->PK_NPRY_IdMinr008) !!}
             	<div class="form-wizard">
                 	<div class="form-body">

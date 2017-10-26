@@ -185,7 +185,9 @@ class CoordinatorController extends Controller
                 ->pluck('full_name', 'id')
                 ->toArray();
             
-            $anteproyecto=Anteproyecto::Project($id)->get();
+            $anteproyecto=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
+				->with('radicacion')
+				->get();
                      
             $estudiante12=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
                 ->select('PK_NPRY_IdMinr008')

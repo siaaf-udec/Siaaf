@@ -321,7 +321,7 @@
 							   return '<span class="label label-sm label-success">Proyecto Terminado</span>';
 						   }
 					   }
-					 return '<a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>';
+					 return '<?php if (\Entrust::can(['Create_Observations_Gesap'])) : ?><a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><?php endif;  if (\Entrust::can(['Create_Concept_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a><?php endif; // Entrust::can ?>';
 
 					}
 

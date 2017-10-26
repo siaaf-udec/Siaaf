@@ -1,11 +1,13 @@
 <div class="col-md-12">
 	@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
-		@slot('actions', [
-			'link_back' => [
-            'link' => '',
-            'icon' => 'fa fa-arrow-left',
-            ],
-        ])
+    @permission('See_All_Project_Gesap')
+	@slot('actions', [
+		'link_back' => [
+			'link' => '',
+			'icon' => 'fa fa-arrow-left',
+		],
+	])
+	@endpermission
 		<div class="row">
         	{!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-register-min']) !!}
 				<div class="form-wizard">

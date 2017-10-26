@@ -1,6 +1,6 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-commenting-o', 'title' => 'Observaciones'])
-    @permission('Update_Final_Project_Gesap')
+    @permission('Student_List_Gesap')
     @slot('actions', [
             'link_back-estudiante' => [
                 'link' => '',

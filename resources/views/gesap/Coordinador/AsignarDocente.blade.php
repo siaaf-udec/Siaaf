@@ -1,11 +1,13 @@
 <div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-users', 'title' => 'Asignar'])
-    @slot('actions', [
+    @permission('See_All_Project_Gesap')
+	@slot('actions', [
 		'link_back' => [
 			'link' => '',
 			'icon' => 'fa fa-arrow-left',
 		],
 	])
+	@endpermission
 	<div class="row">
 		@foreach ($anteproyectos as $anteproyecto)
 			{!! Form::open(['route' => 'anteproyecto.guardardocente', 'method' => 'post', 'novalidate','class'=>'form-horizontal','id'=>'submit_form']) !!}    
