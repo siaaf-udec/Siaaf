@@ -21,40 +21,42 @@
 
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
+                    <div class="portlet light " id="form_wizard_1">
+                        {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
 
-                    <div class="form-body">
-                        {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
-                                                        ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
+                        <div class="form-body">
+                            {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                                            ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
 
-                        {!! Field::select('SOL_carrera',
-                                          ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
-                                          '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
-                                          '5' => 'Psicología', '6' => 'Contaduría','7' => 'Otro'],
-                                          null,
-                                          [ 'label' => 'Programa :']) !!}
+                            {!! Field::select('SOL_carrera',
+                                              ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
+                                              '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
+                                              '5' => 'Psicología', '6' => 'Contaduría','7' => 'Otro'],
+                                              null,
+                                              [ 'label' => 'Programa :']) !!}
 
-                        {!! Field::select('Espacio académico:',$espacios,
-                                        ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
-                                        !!}
+                            {!! Field::select('Espacio académico:',$espacios,
+                                            ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                            !!}
 
-                        {!! Field::select(
-                                                           'aula', null,
-                                                           ['name' => 'aula']) !!}
-                        <br>
+                            {!! Field::select(
+                                                               'aula', null,
+                                                               ['name' => 'aula']) !!}
+                            <br>
 
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-0">
-                                    @permission('registrarAsistencia')
-                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                                    @endpermission
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        @permission('registrarAsistencia')
+                                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                        @endpermission
+                                    </div>
                                 </div>
                             </div>
+
+
+                            {!! Form::close() !!}
                         </div>
-
-
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
@@ -85,12 +87,17 @@
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js') }}"
             type="text/javascript"></script>
+    {{-- wizard Scripts --}}
+    <script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"
+            type="text/javascript"></script>
 @endpush
 
 @push('functions')
+    {{-- wizard Scripts --}}
+    <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
+    {{--validation--}}
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
-
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <!-- Estandar Mensajes -->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -166,15 +173,27 @@
                     }
                 }
             };
-
             var form_edit = $('#form_sol_create');
             var rules_edit = {
-                codigo: {required: true, number: true, minlength: 9, maxlength: 9},
+                codigo: {
+                    required: true, number: true, minlength: 9, maxlength: 9,
+                    remote: {
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: '{{ route('espacios.academicos.asist.checkUser') }}',
+                        type: "POST"
+                    }
+                },
                 SOL_carrera: {required: true},
                 SOL_laboratorios: {required: true},
                 aula: {required: true}
             };
-            FormValidationMd.init(form_edit, rules_edit, false, createUsers());
+            var messages = {
+                codigo: {
+                    remote: "Usuario no existente en el sistema."
+                }
+            };
+
+            FormWizard.init(wizard, form_edit, rules_edit, messages, createUsers());
 
         });
 

@@ -8,6 +8,8 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use Validator;
+use App\Container\Users\Src\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Asistencia;
@@ -28,6 +30,20 @@ class AsistenciaController extends Controller
         $espa = new espacios();
         $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
         return view('acadspace.controlEstudiante',
+            [
+                'espacios' => $espacios->toArray()
+            ]);
+    }
+
+    /**
+     * Retorna la vista de control externo
+     *\Illuminate\View\View
+     */
+    public function asisInvitado()
+    {
+        $espa = new espacios();
+        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+        return view('acadspace.controlInvitado',
             [
                 'espacios' => $espacios->toArray()
             ]);
@@ -70,6 +86,32 @@ class AsistenciaController extends Controller
         );
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkUser(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $user = User::findOrFail($request['ASIS_Id_Identificacion']);
+              /*  User::where('identity_no', '=', $request['ASIS_Id_Identificacion'])
+                ->get();*/
+            if (empty($user)) {
+                return response('true');
+            } else {
+                return response('false');
+            }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
 
     /**
      * Registra ingreso del estudiante
@@ -79,10 +121,37 @@ class AsistenciaController extends Controller
     public function regisAsistenciaEst(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
             $model = new Asistencia();
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
             $model->ASIS_Id_Carrera = $request['ASIS_Id_Carrera'];
+            $model->ASIS_Tipo_Practica = 1;
+            $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
+
+            $model->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Ingreso registrado correctamente.'
+            );
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * Registra ingreso del externo
+     * @param Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function regisAsistInv(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $model = new Asistencia();
+            $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
+            $model->ASIS_Id_Carrera = 0;
             $model->ASIS_Tipo_Practica = 1;
             $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
 
@@ -100,13 +169,13 @@ class AsistenciaController extends Controller
 
     }
 
-
     /**
      * Registra ingreso del docente
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function regisAsistenciaDoc(Request $request)
+    public
+    function regisAsistenciaDoc(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 

@@ -260,6 +260,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AsistenciaController@cargarSalasAsitencia',
             'as' => 'espacios.academicos.asist.cargarSalasAsitencia'
         ]);
+        Route::post('checkUser',[
+            'uses' => $controller.'AsistenciaController@checkUser',
+            'as' => 'espacios.academicos.asist.checkUser'
+        ]);
     });
 
 

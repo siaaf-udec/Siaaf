@@ -249,7 +249,7 @@ class ReporteController extends Controller
         $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
         $time = date("h:i A");
 
-        $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 2, $carr, 1);
+        $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 'Aulas de computo', $carr, 1);
         $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 2, $carr, 2);
         $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 3, $carr, 1);
         $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 3, $carr, 2);
