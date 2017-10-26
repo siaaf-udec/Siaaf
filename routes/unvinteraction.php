@@ -189,6 +189,14 @@ Route::get('Descarga_Usuario/{id}', [
     'as' => 'Documento_Descarga_Usuario.Documento_Descarga_Usuario',
    'uses' => $controller.'Controller_Documentos@Documento_Descarga_Usuario'
 ]);
+Route::get('Documento_Reporte/{id}/{fecha_primero}/{fecha_segundo}', [
+    'as' => 'Documento_Reporte.Documento_Reporte',
+   'uses' => $controller.'Controller_Documentos@Documento_Reporte'
+]);
+Route::get('Descarga_Reporte/{id}/{fecha_primero}/{fecha_segundo}', [
+    'as' => 'Descargar_Reporte.Descargar_Reporte',
+   'uses' => $controller.'Controller_Documentos@Descargar_Reporte'
+]);
 
 //___________________END_MISDOCUMENTOS______________
 //_________________________END____RUTAS___ADMINISTRADOR________________
@@ -288,9 +296,17 @@ Route::get('Listar_Evaluacion_Empresa/{id}', [
     'as' => 'Listar_Evaluacion_Empresa.Listar_Evaluacion_Empresa', 
     'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Empresa'
 ]);
+Route::get('Listar_Evaluaciones_Usuario/{id}', [    
+    'as' => 'Listar_Evaluaciones_Usuario.Listar_Evaluaciones_Usuario', 
+    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluaciones_Usuario'
+]);
 Route::get('Listar_Evaluacion_Individual/{id}', [    
     'as' => 'Listar_Evaluacion_Individual.Listar_Evaluacion_Individual', 
     'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Individual'
+]);
+Route::get('Listar_Evaluacion_Individual_Empresa/{id}', [    
+    'as' => 'Listar_Evaluacion_Individual_Empresa.Listar_Evaluacion_Individual_Empresa', 
+    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Individual_Empresa'
 ]);
 Route::get('Listar_Pregunta_Evaluacion/{id}', [    
     'as' => 'Listar_Pregunta_Evaluacion.Listar_Pregunta_Evaluacion', 

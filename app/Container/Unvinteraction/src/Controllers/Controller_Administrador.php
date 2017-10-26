@@ -235,8 +235,5 @@ class Controller_Administrador extends Controller
     }
     //_________________END___ESTADOS______________________
    
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

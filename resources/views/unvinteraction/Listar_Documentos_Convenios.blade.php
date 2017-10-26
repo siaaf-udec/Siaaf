@@ -321,7 +321,7 @@ echo $id;
 });
 </script>
     
-<script type="text/javascript">
+<script>
     jQuery(document).ready(function() {
     var table, url,id;
     table = $('#Listar_Paticipantes');
@@ -376,7 +376,6 @@ echo $id;
 
             
         }
-          
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -396,37 +395,28 @@ echo $id;
     });
     
     table = table.DataTable();
-   
-  
-    table.on('click', '.evaluar1', function (e) {
+        table.on('click', '.evaluar1', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion/'+dataTable.FK_TBL_Usuarios+'/<?php
-echo $id;
-?>';
-
-            $(".content-ajax").load(route_edit);
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion/'+dataTable.FK_TBL_Usuarios+'/<?php echo $id;?>';
+        $(".content-ajax").load(route_edit);
         });
-  table.on('click', '.doc1', function (e) {
+        table.on('click', '.doc1', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
                 route_edit = '/siaaf/public/index.php/interaccion-universitaria/Documentos_Usuarios/'+dataTable.FK_TBL_Usuarios;
-
             $(".content-ajax").load(route_edit);
         });
-     
-    table.on('click', '.ver1', function (e) {
+        table.on('click', '.ver1', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluacion_Empresa/'+dataTable.FK_TBL_Usuarios;
-
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluaciones_Usuario/'+dataTable.FK_TBL_Usuarios;
             $(".content-ajax").load(route_edit);
         });
-   
-    $("#archivo2").on('click', function (e) {
+        $("#archivo2").on('click', function (e) {
             e.preventDefault();
             $('#participante').modal('toggle');
         });
@@ -482,8 +472,7 @@ echo $id;
    
 });
 </script>  
-<script type="text/javascript">
-
+<script>
     jQuery(document).ready(function() {
     var table, url,id;
    
@@ -536,10 +525,7 @@ echo $id;
             exportable: false,
             printable: false,
             defaultContent: '<?php if (\Entrust::can(['Eva_Pasante'])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a><?php endif; // Entrust::can ?><?php if (\Entrust::can(['Ver_Eva'])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a><?php endif; // Entrust::can ?>'
-
-            
-        }
-           
+           }
        ],
        buttons: [
            { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
@@ -554,6 +540,7 @@ echo $id;
                }
            }
        ],
+        
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
@@ -563,9 +550,7 @@ echo $id;
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion_Empresa/'+dataTable.patricipantes__empresas.PK_Empresa+'/<?php
-echo $id;
-?>';
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion_Empresa/'+dataTable.patricipantes__empresas.PK_Empresa+'/<?php echo  $id; ?>';
 
             $(".content-ajax").load(route_edit);
         });

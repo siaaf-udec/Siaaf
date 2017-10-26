@@ -1,11 +1,7 @@
 <?php
 
 namespace App\Container\Unvinteraction\src\Controllers;
-use App\Container\Unvinteraction\src\TBL_Usuarios;
 use App\Container\Unvinteraction\src\TBL_Tipo_Pregunta;
-use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
-use App\Container\Unvinteraction\src\TBL_Carrera;
-use App\Container\Unvinteraction\src\TBL_Facultad;
 use App\Container\Unvinteraction\src\TBL_Documentacion;
 use App\Container\Unvinteraction\src\TBL_Convenios;
 use App\Container\Unvinteraction\src\TBL_Evaluacion;
@@ -16,10 +12,11 @@ use App\Container\Unvinteraction\src\TBL_Estado;
 use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
 use App\Container\Unvinteraction\src\TBL_Empresa;
 use App\Container\Unvinteraction\src\TBL_Participantes;
-use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
-
+use Barryvdh\Snappy\Facades\SnappyPdf;
+use Exception;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -200,26 +197,15 @@ class Controller_Evaluaciones extends Controller
     */
     public function Modificar_Pregunta(Request $request,$id)
     {
-         if($request->ajax() && $request->isMethod('POST'))
-        {
-        $Pregunta= TBL_Preguntas::findOrFail($id);
-        $Pregunta->Enunciado=$request->Enunciado;
-        $Pregunta->FK_TBL_Tipo_Pregunta =$request->FK_TBL_Tipo_Pregunta;
-        $Pregunta->save();
-             
-        return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
-            );
+        if($request->ajax() && $request->isMethod('POST')) {
+            $Pregunta= TBL_Preguntas::findOrFail($id);
+            $Pregunta->Enunciado=$request->Enunciado;
+            $Pregunta->FK_TBL_Tipo_Pregunta =$request->FK_TBL_Tipo_Pregunta;
+            $Pregunta->save();
+            return AjaxResponse::success('¡Bien hecho!','Datos modificados correctamente.');
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
-       
     }
     /*funcion para mostrar la vista principal de las evaluaciones
     *@return \Illuminate\Http\Response
@@ -463,6 +449,15 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Evaluacion_Empresa($id)
     {
+        return view($this->path.'.listar_Evaluaciones_Individuales_Empresa',compact('id'));
+    }
+    /*funcion para mostrar la vista principal de las evaluaciones de los usuarios
+    *@param int id
+    *@return \Illuminate\Http\Response
+    *
+    */
+    public function Listar_Evaluaciones_Usuario($id)
+    {
         return view($this->path.'.listar_Evaluaciones_Individuales',compact('id'));
     }
     /*funcion para envio de los datos para la tabla de datos
@@ -491,6 +486,32 @@ class Controller_Evaluaciones extends Controller
          
        return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
     }
+    /*funcion para envio de los datos para la tabla de datos
+    *@param int id
+    *@return Yajra\DataTables\DataTable
+    */
+    public function Listar_Evaluacion_Individual_Empresa($id)
+    {
+        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+            ->with([
+                    'convenios_Evaluacion'=>function ($query) {
+                        $query->select('PK_Convenios','Nombre');
+                    }
+            ])
+            ->with([
+                'evaluado_E'=>function ($query) {
+                    $query->select('PK_Empresa','Nombre_Empresa');
+                }
+            ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('identity_no','name','lastname');
+                }
+            ])
+            ->get();  
+         
+       return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
+    }
     /*funcion para mostrar la vista principal de las preguntas de las evaluaciones 
     *@param int id
     *@return \Illuminate\Http\Response
@@ -506,15 +527,9 @@ class Controller_Evaluaciones extends Controller
     public function Listar_Pregunta_Individual($id)
     {
         $Evaluacion=TBL_Evaluacion_Preguntas::where('FK_TBL_Evaluacion',$id)->select('Puntuacion','FK_TBL_Preguntas')
-            ->with([
-                    'preguntas_Preguntas'=>function ($query) {
-                        $query->select('PK_Preguntas','Enunciado');
-                    }
-            ])
-            ->get();  
-         
-       return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
-        
+            ->with(['preguntas_Preguntas'=>function ($query) {$query->select('PK_Preguntas','Enunciado');}])
+            ->get();
+        return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
     }
     /*funcion para verificar el envio exitoso del filtro para el reporte
     *@param int id
@@ -524,7 +539,7 @@ class Controller_Evaluaciones extends Controller
     public function Vista_Reporte(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.'.$id);
+            return AjaxResponse::success('¡Bien hecho!', 'Datos filtrados correctamente.');
         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
@@ -550,7 +565,7 @@ class Controller_Evaluaciones extends Controller
     */
     public function Listar_Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
-        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
                     'convenios_Evaluacion'=>function ($query) {
                         $query->select('PK_Convenios','Nombre');
