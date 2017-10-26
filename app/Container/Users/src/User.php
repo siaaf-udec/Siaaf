@@ -111,6 +111,14 @@ class User extends Authenticatable implements AuditableContract
     }
 
     /**
+     * Get the UsuarioInteraction  record associated with the user.
+     */
+    public function unvInteraction()
+    {
+        return $this->hasOne('App\Container\Unvinteraction\Src\UsuarioInteraction', 'USER_FK_User');
+    }
+
+    /**
      * Get the UsuarioEspaciosAcademicos record associated with the user.
      */
     public function acadspace()
