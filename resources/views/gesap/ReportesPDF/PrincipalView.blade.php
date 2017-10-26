@@ -32,22 +32,14 @@
                             <i class="fa fa-dollar"></i>
                             <div> Por Director</div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <!--<a href="#" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte por fechas." id="Fechas">
-                            <i class="fa fa-dollar"></i>
-                            <div> Por Fecha </div>
-                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Graficas.">
-                            <i class="fa fa-hospital-o"></i>
-                            <div> Graficas </div>
-                        </a>&nbsp;&nbsp;&nbsp;&nbsp;-->
                     </div><br><br>
                 </div>
             </div>
         @endcomponent
     </div>
     <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
                 <!-- Modal -->
                 <div class="modal fade" id="modal-reporte-docente" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog">
@@ -75,11 +67,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 
 
     <div class="clearfix"></div>
-        <div class="row">
+    <div class="row">
             <div class="col-md-12">
                 <!-- Modal -->
                 <div class="modal fade" id="modal-reporte-date" tabindex="-1" role="dialog" aria-hidden="true">
@@ -114,13 +106,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
 @endsection
 
 @push('plugins')
@@ -131,7 +116,6 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
     <!-- Utoastr Plugins -->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <!-- Select2 Plugins -->
     <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
@@ -179,41 +163,7 @@
         });
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         });
        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     </script>
 @endpush

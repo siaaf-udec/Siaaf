@@ -2,9 +2,7 @@
 namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
@@ -21,7 +19,6 @@ use App\Container\Overall\Src\Facades\UploadFile;
 
 use Illuminate\Support\Facades\DB;
 
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Radicacion;
@@ -67,8 +64,8 @@ class ReportController extends Controller
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')
-                ->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+            $proyectos=Anteproyecto::
+                with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 ->get();
             return view($this->path.'PDF.AnteproyectosPDF', [
                 'proyectos'=>$proyectos,
@@ -88,7 +85,7 @@ class ReportController extends Controller
      *
 	 * @param  \Illuminate\Http\Request 
      *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function allProjectPrint(Request $request)
     {
@@ -96,7 +93,9 @@ class ReportController extends Controller
             try {
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $proyectos=Anteproyecto::from('TBL_Anteproyecto AS A')->get();
+                $proyectos=Anteproyecto::
+					with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+                	->get();
 
                 return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
                     'proyectos'=>$proyectos,
@@ -104,7 +103,7 @@ class ReportController extends Controller
                     'time'=>$time,
                 ])->download('ReporteAnteproyectosGesap.pdf');
             } catch (Exception $e) {
-                return view('report.index');
+                return $this->index();
             }
         }
         return AjaxResponse::fail(
@@ -163,7 +162,7 @@ class ReportController extends Controller
      * @param int $jury
 	 * @param  \Illuminate\Http\Request 
      *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function downloadJuryProject($jury, Request $request)
     {
@@ -196,7 +195,7 @@ class ReportController extends Controller
                     'cargo'     =>  "JURADO"
                 ])->download('ReporteGesapJurado.pdf');
             } catch (Exception $e) {
-                return view('report.index');
+                return $this->index();
             }
         }
         return AjaxResponse::fail(
@@ -253,7 +252,7 @@ class ReportController extends Controller
      * @param int $director
 	 * @param  \Illuminate\Http\Request 
      *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function downloadDirectorProject($director, Request $request)
     {
@@ -286,7 +285,7 @@ class ReportController extends Controller
                     'cargo'=>"JURADO"
                 ])->download('ReporteGesapDirector.pdf');
             } catch (Exception $e) {
-                return view('report.index');
+                return $this->index();
             }
         }
         return AjaxResponse::fail(
@@ -347,9 +346,9 @@ class ReportController extends Controller
         if ($request->isMethod('GET')) {
             $stats = Anteproyecto::groupBy('Estado')
             ->get([
-                DB::raw('NPRY_Estado as Estado'),
-                DB::raw('COUNT(*) as value')
-            ])
+				'NPRY_Estado AS Estado',
+				DB::raw('COUNT(*) as value')
+			])
             ->toJSON();
             return $stats;
         }
@@ -372,7 +371,7 @@ class ReportController extends Controller
             $stats = Proyecto::groupBy('Estado')
 
             ->get([
-                DB::raw('PRYT_Estado as Estado'),
+                'PRYT_Estado as Estado',
                 DB::raw('COUNT(*) as value')
             ])
             ->toJSON();
@@ -403,7 +402,10 @@ class ReportController extends Controller
                 ->with(['usuarios'=> function ($user) {
                     $user->select('id', 'name', 'lastname');
                 }])
-                ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+                ->get([
+					'FK_Developer_User_Id',
+					DB::raw('COUNT(*) as value')
+				])
                 ;
 
             foreach ($stats as $row) {
@@ -437,7 +439,10 @@ class ReportController extends Controller
                 ->with(['usuarios'=> function ($user) {
                     $user->select('id', 'name', 'lastname');
                 }])
-                ->get(['FK_Developer_User_Id',DB::raw('COUNT(*) as value')])
+                ->get([
+					'FK_Developer_User_Id',
+					DB::raw('COUNT(*) as value')
+				])
                 ;
 
             foreach ($stats as $row) {

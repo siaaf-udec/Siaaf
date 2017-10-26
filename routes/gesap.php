@@ -1,9 +1,5 @@
 <?php
 
-use Yajra\Datatables\Datatables;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 $controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
 
 Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function () use ($controller) {
@@ -48,7 +44,7 @@ Route::group(['middleware' => ['permission:Create_Project_Gesap']], function () 
     ]);
 });
 Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function () use ($controller) {
-    Route::get('min/{id?}/edit', [
+    Route::get('min/edit/{id?}', [
         'uses' => $controller.'CoordinatorController@edit',
         'as' => 'min.edit'
     ]);
@@ -58,7 +54,7 @@ Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function () 
     ]);
 });
 Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function () use ($controller) {
-    Route::get('min/asignar/{id}', [
+    Route::get('min/asignar/{id?}', [
         'as' => 'anteproyecto.asignar',
         'uses' => $controller.'CoordinatorController@assign'
     ]);
@@ -81,7 +77,7 @@ Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use (
         'as' => 'anteproyecto.index.juryList',
         'uses' => $controller.'EvaluatorController@jury'
      ]);
-    Route::get('evaluar/observaciones/{id}', [
+    Route::get('evaluar/observaciones/{id?}', [
         'as' => 'anteproyecto.observaciones',
         'uses' => $controller.'EvaluatorController@createObservations'
     ]);
@@ -89,7 +85,7 @@ Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use (
     'as' => 'anteproyecto.guardar.observaciones',
     'uses' => $controller.'EvaluatorController@storeObservations'
     ]);
-    Route::get('evaluar/concepto/{id}', [
+    Route::get('evaluar/concepto/{id?}', [
         'as' => 'anteproyecto.conceptos',
         'uses' => $controller.'EvaluatorController@createConcepts'
     ]);
@@ -112,11 +108,11 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
     'as' => 'anteproyecto.index.directorList.ajax',
     'uses' => $controller.'EvaluatorController@directorAjax'
     ]);
-    Route::get('evaluar/aprobar/{id}', [
+    Route::get('evaluar/aprobar/{id?}', [
     'as' => 'proyecto.aprobado',
     'uses' => $controller.'EvaluatorController@approved'
     ]);
-    Route::get('evaluar/cerrar/{id}', [
+    Route::get('evaluar/cerrar/{id?}', [
     'as' => 'proyecto.cerrar',
     'uses' => $controller.'EvaluatorController@closeProject'
     ]);
@@ -132,27 +128,27 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
         'as' => 'anteproyecto.directorList',
         'uses' => $controller.'EvaluatorController@directorList'
     ]);
-    Route::get('download/proyecto/{actividad}/{archivo}', [
+    Route::get('download/proyecto/{actividad?}/{archivo?}', [
         'uses' => $controller.'EvaluatorController@downloadActivity',
         'as' => 'download.activity'
     ]);
 });
 
 Route::group(['middleware' => ['permission:See_Observations_Gesap']], function () use ($controller) {
-    Route::get('show/{id}', [
+    Route::get('show/{id?}', [
         'as' => 'evaluar.show',
         'uses' => $controller.'EvaluatorController@show'
     ]);
-    Route::get('observaciones/{id}', [
+    Route::get('observaciones/{id?}', [
         'as' => 'anteproyecto.observationsList',
         'uses' => $controller.'EvaluatorController@observationsList'
     ]);
-    Route::get('actividades/{id}', [
+    Route::get('actividades/{id?}', [
         'as' => 'proyecto.actividades',
         'uses' => $controller.'StudentController@actividad'
     ]);
     
-    Route::get('download/{archivo}', [
+    Route::get('download/{archivo?}', [
         'as' => 'download.documento',
         'uses' => $controller.'EvaluatorController@downloadDocument'
     ]);

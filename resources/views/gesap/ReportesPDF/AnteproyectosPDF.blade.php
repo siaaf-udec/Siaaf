@@ -170,14 +170,11 @@
     </table>
     <div id="thanks">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
     <div id="notices">
-        <div>ADVERTENCIA:</div>
-        <div class="notice">Se hará un recargo de 1.5% adicional después de 30 días.</div>
     </div>
 </main>
 </body>
 <footer>
-    
-Pruebas    
+   
 </footer>
 
      

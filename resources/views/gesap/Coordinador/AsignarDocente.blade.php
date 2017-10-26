@@ -135,7 +135,6 @@
 @push('functions')
 	<!--Local Scripts-->
 	<script src="{{ asset('assets/main/gesap/js/form-wizard-3.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
     

@@ -2,16 +2,14 @@
 
 namespace App\Container\gesap\src\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Yajra\DataTables\DataTables;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use Yajra\DataTables\DataTables;
 
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
@@ -21,7 +19,6 @@ use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Overall\Src\Facades\UploadFile;
 
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Documentos;
@@ -125,7 +122,7 @@ class StudentController extends Controller
     *
     * @param  \Illuminate\Http\Request 
     *
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function studentList(Request $request)
     {

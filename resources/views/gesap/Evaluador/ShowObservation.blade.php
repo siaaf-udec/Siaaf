@@ -103,7 +103,7 @@ jQuery(document).ready(function () {
                         if(data=="NO FILE"){
                             return "NO APLICA";    
                         }
-                        return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+                        return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
                     }
                     return "NO APLICA";
                 }
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
                         if(data=="NO FILE"){
                             return "NO APLICA";    
                         }
-                            return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                            return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                     }
                     return "NO APLICA";
             }

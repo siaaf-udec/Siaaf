@@ -3,7 +3,6 @@
 namespace App\container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Respuesta extends Model
 {

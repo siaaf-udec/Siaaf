@@ -69,7 +69,7 @@
 											@endif
 																	
 											<a class="task-trash download" id=""  
-											   href="/gesap/download/proyecto/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
+											   href="{{route('download.activity')}}/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
 												<i class="fa fa-download"></i> 
 											</a> 
 																	
@@ -246,10 +246,6 @@
 </div>
 
 	<!--Local Scripts-->
-	<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script> 
-
-	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script> 
-    
 	<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -309,7 +305,7 @@
 								}
 							}
 						}).done(function (data) {
-							route = '/gesap/actividades/{{$id}}';
+							route = '{{ route('proyecto.actividades') }}'+'/'+{{$id}}';
 							$(".content-ajax").load(route);
 						});
 					}
@@ -326,7 +322,7 @@
 		$('.delete').on('click', function (e) {
 			e.preventDefault();
 			var parent = $(this).closest('li').attr('id');
-			var route = '/gesap/actividades/'+$(this).closest('li').attr('id');
+			var route = '{{ route('proyecto.actividades') }}'+'/'+$(this).closest('li').attr('id');
 			var type = 'DELETE';
 			var async = async || false;
 			swal({

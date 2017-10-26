@@ -3,7 +3,6 @@
 namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\File;
@@ -23,7 +22,6 @@ use App\Container\Overall\Src\Facades\UploadFile;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
-use App\Container\gesap\src;
 use App\Container\gesap\src\Observaciones;
 use App\Container\gesap\src\Respuesta;
 use App\Container\gesap\src\Proyecto;
@@ -427,25 +425,31 @@ class EvaluatorController extends Controller
     *
     * @param int $id
     *
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function observationsList($id)
     {
-        $observaciones=Observaciones::
-                with(['encargado' => function ($encargados) use ($id) {
-                    $encargados->where('FK_TBL_Anteproyecto_Id', '=', $id);
-                    $encargados->where(function ($query) {
-                            $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
-                            $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
-                    });
-                },
-                'respuesta'])
-                ->get();
-        return Datatables::of($observaciones)
-            ->removeColumn('FK_TBL_Encargado_Id')
-            ->removeColumn('created_at')
-            ->removeColumn('updated_at')
-            ->addIndexColumn()->make(true);
+        if ($request->isMethod('GET')) {
+            $observaciones=Observaciones::
+                    with(['encargado' => function ($encargados) use ($id) {
+                        $encargados->where('FK_TBL_Anteproyecto_Id', '=', $id);
+                        $encargados->where(function ($query) {
+                                $query->where('NCRD_Cargo', '=', 'Jurado 1')  ;
+                                $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
+                        });
+                    },
+                    'respuesta'])
+                    ->get();
+            return Datatables::of($observaciones)
+                ->removeColumn('FK_TBL_Encargado_Id')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /*
@@ -453,7 +457,7 @@ class EvaluatorController extends Controller
     *
     * @param  \Illuminate\Http\Request 
     *
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function directorList(Request $request)
     {
@@ -566,7 +570,7 @@ class EvaluatorController extends Controller
     *
     * @param  \Illuminate\Http\Request 
     *
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function juryList(Request $request)
     {
@@ -660,7 +664,7 @@ class EvaluatorController extends Controller
 					})
 				   ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
 				   ->addIndexColumn()->make(true);
-}
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -681,19 +685,12 @@ class EvaluatorController extends Controller
     {
         if ($request->isMethod('GET')) {
             try {
-                $url = 'C:\xampp\htdocs\siaaf\storage\app/gesap/proyecto/'.$actividad.'/'.$archivo;
-                if (Storage::exists('gesap/proyecto/'.$actividad.'/'.$archivo)) {
-                    return response()->download($url);
-                }
-
+                $url = storage_path('app/gesap/proyecto/'.$actividad.'/'.$archivo);
+				return response()->download($url);
             } catch (Exception $e) {
-                abort(404);
+                return view($this->path.'DirectorList');
             }
         }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
     
     /**
@@ -708,18 +705,13 @@ class EvaluatorController extends Controller
     {
         if ($request->isMethod('GET')) {
             try {
-                $url = 'C:\xampp\htdocs\siaaf\storage\app/'.$archivo;
+                $url = storage_path('app/'.$archivo);
                 if (Storage::exists($archivo)) {
                     return response()->download($url);
                 }
-                abort(404);
             } catch (Exception $e) {
                 abort(404);
             }
         }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
 }

@@ -2,7 +2,6 @@
 namespace App\Container\gesap\src\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
@@ -16,11 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
 
-use Illuminate\Support\Facades\DB;
-
-use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Radicacion;
@@ -435,13 +430,20 @@ class CoordinatorController extends Controller
     *
 	* @param  \Illuminate\Http\Request 
 	*
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function preliminaryList(Request $request)
     {
 		if ($request->isMethod('GET')) {
-			$anteproyectos = Anteproyecto::from('TBL_Anteproyecto AS A')
-				->with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2', 'proyecto'])
+			$anteproyectos = Anteproyecto::with([
+                'radicacion', 
+                'director', 
+                'jurado1', 
+                'jurado2', 
+                'estudiante1', 
+                'estudiante2', 
+                'proyecto'
+            ])
 				->get();
 			return Datatables::of($anteproyectos)
 				->removeColumn('created_at')
@@ -518,13 +520,12 @@ class CoordinatorController extends Controller
     *
 	* @param  \Illuminate\Http\Request 
 	*
-    * @return Yajra\DataTables\DataTables
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function projectList(Request $request)
     {
 		if ($request->isMethod('GET')) {
-			$proyectos = Proyecto::from('TBL_Proyecto AS A')
-				->with([
+			$proyectos = Proyecto::with([
 					'anteproyecto' => function ($anteproyecto) {
 						$anteproyecto->with(['radicacion',
 											 'director',

@@ -3,7 +3,6 @@
 namespace App\container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Observaciones extends Model
 {
@@ -49,7 +48,7 @@ class Observaciones extends Model
 	*por los campo de FK_TBL_Observaciones_Id y PK_BVCS_IdObservacion 
 	*para realizar las busquedas complementarias
 	*/
-    public function check()
+    public function checkObservaciones()
     {
         return $this->hasOne(checkObservaciones::class, 'FK_TBL_Observaciones_Id', 'PK_BVCS_IdObservacion');
     }

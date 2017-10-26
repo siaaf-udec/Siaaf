@@ -6,8 +6,6 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-	<!-- DateInput Styles -->
-	<link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
 	<!-- Utoastr Styles -->
 	<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
@@ -67,6 +65,7 @@
 	<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 	<!-- Dropzone Plugins -->
 	<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script> 
+
 @endpush
 
 @push('functions')
@@ -122,7 +121,7 @@
 			   {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
 							render: function (data, type, full, meta) 
 							{
-								return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+								return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
 							}
 						},
 						{data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
@@ -131,7 +130,7 @@
 								if(data=="NO FILE"){
 									return "NO FILE";    
 								}else{
-									return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+									return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
 								}  
 							}
 						}, 
@@ -177,9 +176,9 @@
 				responsivePriority:2,
 				render: function ( data, type, full, meta ) {
 					if(full.anteproyecto.proyecto!=null){
-						return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><a href="#" class="btn btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>';
+						return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>@endpermission @permission("See_Activity_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>@endpermission';
 					}else{
-						return '<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>';
+						return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>@endpermission';
 					}
 					 },
 				}
@@ -211,7 +210,7 @@
 				url: '',
 				dataType: "html",
 			}).done(function (data) {
-				route = '/gesap/show/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('evaluar.show') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
 				$(".content-ajax").load(route);
 			});
 		});
@@ -225,7 +224,7 @@
 				url: '',
 				dataType: "html",
 			}).done(function (data) {
-				route = '/gesap/actividades/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('proyecto.actividades') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
 				$(".content-ajax").load(route);
 			});
 		});

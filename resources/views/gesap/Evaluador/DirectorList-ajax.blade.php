@@ -1,4 +1,4 @@
-   <div class="col-md-12">
+    <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Director'])
             <div class="row">
                 <div class="col-md-12">
@@ -87,7 +87,7 @@
                    {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
                    {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) {
-                            return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+                            return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
                         }
                    },
                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
@@ -95,7 +95,7 @@
                             if(data=="NO FILE"){
                                 return "NO APLICA";    
                             }else{
-                                return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                                return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                             }  
                         }
                    }, 
@@ -149,17 +149,17 @@
                     render: function ( data, type, full, meta ) {
                         if(full.anteproyecto.NPRY_Estado=="APROBADO"){
                             if(full.anteproyecto.proyecto==null){
-                                return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['Aproved_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a><?php endif; // Entrust::can ?>';
+                                return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("Aproved_Project_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>@endpermission';
                             }else{
                                 if (full.anteproyecto.proyecto.PRYT_Estado=="TERMINADO") {
-                                     return '<center><?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['See_Activity_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><?php endif; // Entrust::can ?></center>';
+                                     return '<center>@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("See_Activity_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission</center>';
                                  } else {
-                                    return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a><?php endif;  if (\Entrust::can(['See_Activity_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a><?php endif;  if (\Entrust::can(['Close_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a><?php endif; // Entrust::can ?>';
+                                    return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("See_Activity_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission @permission("Close_Project_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>@endpermission';
                                  } 
                                 
                             }
                         }else{
-                            return '<?php if (\Entrust::can(['See_Observations_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a><?php endif; // Entrust::can ?>';
+                            return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>@endpermission';
                         }
                      }, 
                    }
@@ -193,7 +193,7 @@
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '/gesap/show/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                    route = '{{ route('evaluar.show') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
                     $(".content-ajax").load(route);
                 });
             });
@@ -202,7 +202,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var O = table.row($tr).data();
-                var route = '/gesap/evaluar/aprobar/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('proyecto.aprobado') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
                 var type = 'GET';
                 var async = async || false;
                 swal({
@@ -250,7 +250,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var O = table.row($tr).data();
-                var route = '/gesap/evaluar/cerrar/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('proyecto.cerrar') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
                 var type = 'GET';
                 var async = async || false;
                 swal({
@@ -303,7 +303,7 @@
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '/gesap/actividades/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                    route = '{{ route('proyecto.actividades') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
                     $(".content-ajax").load(route);
                 });
             });

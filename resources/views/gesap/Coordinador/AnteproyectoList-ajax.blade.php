@@ -34,6 +34,7 @@
 	</div>
 	@endcomponent
 </div>
+
 	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 	<script>
@@ -91,7 +92,7 @@
                     {data: 'NPRY_Estado',searchable: true, name: 'Estado'},
                     {data: 'radicacion.RDCN_Min',className:'none',
 					 render: function (data, type, full, meta) {
-						 return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+						 return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
 					 }
                     },
                     {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
@@ -99,7 +100,7 @@
 						 if(data=="NO FILE"){
 							 return "NO APLICA";    
 						 }else{
-							 return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+							 return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
 						 }  
 					 }
                     },  
@@ -150,16 +151,16 @@
                      render: function ( data, type, full, meta ) {
 						 if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
 							 if(full.proyecto==null){
-								 return '<?php if (\Entrust::can(['Modify_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><?php endif;  if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; if (\Entrust::can(['Delete_Project_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><?php endif; // Entrust::can ?>';
+								 return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a> @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
                              }else{
                                  if (full.proyecto.PRYT_Estado=="TERMINADO") {
                                      return '<span class="label label-sm label-success">Proyecto Terminado</span>';
                                  } else {
-                                    return '<?php if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; // Entrust::can ?><span class="label label-sm label-success">Proyecto en curso</span>'; 
+                                    return '@permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission<span class="label label-sm label-success">Proyecto en curso</span>'; 
                                  } 
                              }
                          }else{
-                             return '<?php if (\Entrust::can(['Modify_Project_Gesap'])) : ?><a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a><?php endif;  if (\Entrust::can(['Assign_teacher_Gesap'])) : ?><a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a><?php endif; if (\Entrust::can(['Delete_Project_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><?php endif; // Entrust::can ?>';
+                             return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
 						 }
 					 }, 
 					}
@@ -197,7 +198,7 @@
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '/gesap/min/'+O.PK_NPRY_IdMinr008+'/edit';
+					route = '{{ route('min.edit') }}'+'/'+O.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });
@@ -211,7 +212,7 @@
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '/gesap/min/asignar/'+O.PK_NPRY_IdMinr008;
+                    route = '{{ route('anteproyecto.asignar') }}'+'/'+O.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });

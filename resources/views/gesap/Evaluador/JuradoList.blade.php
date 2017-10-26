@@ -6,8 +6,6 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- DateInput Styles -->
-	<link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Utoastr Styles -->
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- FileInput Styles -->
@@ -21,7 +19,7 @@
 @section('page-title', 'Anteproyectos/Proyectos como Jurado')
 
 @section('content')
-<div class="col-md-12">
+	<div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list  ', 'title' => 'Jurado'])
         <div class="row">
         <div class="col-md-12">
@@ -52,7 +50,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-        <div class="row">
+	<div class="row">
             <div class="col-md-12">
                 <!-- Modal -->
                 <div class="modal fade" id="modal-create-concept" tabindex="-1" role="dialog" aria-hidden="true">
@@ -84,8 +82,8 @@
             </div>
         </div>    
 
-  <div class="clearfix"></div>
-        <div class="row">
+  	<div class="clearfix"></div>
+	<div class="row">
             <div class="col-md-12">
                 <!-- Modal -->
                 <div class="modal fade" id="modal-create-observation" tabindex="-1" role="dialog" aria-hidden="true">
@@ -192,8 +190,6 @@
     <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-
-    <script src="{{asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 	<!-- FileInput Plugins -->
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endpush
@@ -261,7 +257,7 @@
 			   {data: 'anteproyecto.radicacion.RDCN_Min',
 							render: function (data, type, full, meta) 
 							{
-								return '<a href="/gesap/download/'+data+'">DESCARGAR MIN</a>';
+								return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
 							}, className:'none'
 						},
 			   {data: 'anteproyecto.radicacion.RDCN_Requerimientos',searchable: true,
@@ -270,7 +266,7 @@
 								if(data=="NO FILE"){
 									return "NO APLICA";    
 								}else{
-									return '<a href="/gesap/download/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+									return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
 								}  
 							}, className:'none'
 						}, 
@@ -321,8 +317,8 @@
 							   return '<span class="label label-sm label-success">Proyecto Terminado</span>';
 						   }
 					   }
-					 return '<?php if (\Entrust::can(['Create_Observations_Gesap'])) : ?><a href="/gesap/evaluar/observaciones/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a><?php endif;  if (\Entrust::can(['Create_Concept_Gesap'])) : ?><a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a><?php endif; // Entrust::can ?>';
-
+					   
+					 return '@permission("Create_Observations_Gesap")<a href="{{ route('proyecto.aprobado') }}'+'/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a>@endpermission @permission("Create_Concept_Gesap")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>@endpermission';
 					}
 
 			   }
