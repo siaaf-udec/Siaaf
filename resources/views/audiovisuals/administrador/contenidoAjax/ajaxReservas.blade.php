@@ -144,7 +144,7 @@
                 format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO AÑO/MES/DIA
                 //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
                 fontAwesome: true,
-                //todayBtn: true,//BOTON DE HOY
+                //todayBtn: true,//BOTON DE HOY...
                 //startDate: new Date(),//EMPIEZE DESDE LA FECHA ACTUAL
                 startDate: fecha,//Fecha Actual pero sin la hora
                 endDate: fecha2,//Fecha Actual + 5 dias

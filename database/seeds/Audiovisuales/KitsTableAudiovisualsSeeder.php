@@ -29,7 +29,7 @@ class KitsTableAudiovisualsSeeder extends Seeder
         foreach ($kits as $kit) {
             $aux = new Kit();
             $aux->KIT_Nombre = $kit['KIT_Nombre'];
-            $aux->KIT_FK_Estado_id = 1;
+            $aux->KIT_FK_Estado_id = 4;
             $aux->save();
         }
     }

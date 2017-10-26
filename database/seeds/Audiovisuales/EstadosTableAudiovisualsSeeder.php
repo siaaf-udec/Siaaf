@@ -17,13 +17,10 @@ class EstadosTableAudiovisualsSeeder extends Seeder
     public function run()
     {
         $estados = [
-            [ 'EST_Descripcion' => 'Bueno' ],
-            [ 'EST_Descripcion' => 'Reparación' ],
-            [ 'EST_Descripcion' => 'Baja' ],
+            [ 'EST_Descripcion' => 'Reservado' ],
             [ 'EST_Descripcion' => 'Prestado' ],
-            [ 'EST_Descripcion' => 'Disponible' ],
             [ 'EST_Descripcion' => 'Entregado' ],
-
+            [ 'EST_Descripcion' => 'Disponible' ],
         ];
 
         foreach ($estados as $estado ) {

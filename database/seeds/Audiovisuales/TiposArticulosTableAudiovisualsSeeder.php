@@ -20,8 +20,8 @@ class TiposArticulosTableAudiovisualsSeeder extends Seeder
             [ 'TPART_Nombre' => 'Computador', 'TPART_Tiempo' => 9],
             [ 'TPART_Nombre' => 'Control', 'TPART_Tiempo' => 9 ],
             [ 'TPART_Nombre' => 'Cable', 'TPART_Tiempo' => 9 ],
-            [ 'TPART_Nombre' => 'VideoBeam', 'TPART_Tiempo' => 9],
-            [ 'TPART_Nombre' => 'Cabina' , 'TPART_Tiempo' => 9],
+            [ 'TPART_Nombre' => 'VideoBeam', 'TPART_Tiempo' => 10],
+            [ 'TPART_Nombre' => 'Cabina' , 'TPART_Tiempo' => 10],
 
         ];
 

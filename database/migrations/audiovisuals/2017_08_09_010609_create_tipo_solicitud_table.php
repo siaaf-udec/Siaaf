@@ -16,6 +16,7 @@ class CreateTipoSolicitudTable extends Migration
         Schema::connection('audiovisuals')->create('TBL_Tipos_solicitud', function (Blueprint $table) {
             $table->increments('id');
             $table->String('TPSOL_Tipo');
+            $table->timestamps();
 
         });
     }
