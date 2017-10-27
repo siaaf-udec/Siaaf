@@ -572,7 +572,7 @@ class EvaluatorController extends Controller
     *
     * @param  \Illuminate\Http\Request 
     *
-    * @return Yajra\DataTables\DataTables \App\Container\Overall\Src\Facades\AjaxResponse
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function juryList(Request $request)
     {
@@ -681,7 +681,7 @@ class EvaluatorController extends Controller
      * @param  String $archivo
 	 * @param  \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function downloadActivity($actividad, $archivo, Request $request)
     {
@@ -693,6 +693,10 @@ class EvaluatorController extends Controller
                 return view($this->path.'DirectorList');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /**
@@ -701,7 +705,7 @@ class EvaluatorController extends Controller
      * @param  String $archivo
 	 * @param  \Illuminate\Http\Request $request
      *
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function downloadDocument($archivo, Request $request)
     {
@@ -713,5 +717,9 @@ class EvaluatorController extends Controller
                 return $e->getMessage();
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }
