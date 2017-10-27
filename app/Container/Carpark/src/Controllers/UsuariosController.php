@@ -22,7 +22,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view('carpark.usuarios.TablaUsuarios');
+        return view('carpark.usuarios.tablaUsuarios');
 
     }
 
