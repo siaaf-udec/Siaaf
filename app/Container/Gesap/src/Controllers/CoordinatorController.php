@@ -18,11 +18,11 @@ use Yajra\DataTables\DataTables;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-use App\Container\gesap\src\Anteproyecto;
-use App\Container\gesap\src\Proyecto;
-use App\Container\gesap\src\Radicacion;
-use App\Container\gesap\src\Encargados;
-use App\Container\Users\Src\User;
+use App\Container\Gesap\src\Anteproyecto;
+use App\Container\Gesap\src\Proyecto;
+use App\Container\Gesap\src\Radicacion;
+use App\Container\Gesap\src\Encargados;
+use App\Container\Gesap\src\User;
 
 use Carbon\Carbon;
 
