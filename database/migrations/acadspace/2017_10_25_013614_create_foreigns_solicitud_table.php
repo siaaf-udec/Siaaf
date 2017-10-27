@@ -14,11 +14,13 @@ class CreateForeignsSolicitudTable extends Migration
     public function up()
     {
         Schema::connection('acadspace')->table('TBL_Solicitud', function (Blueprint $table) {
-            $table->foreign('FK_SOL_Id_Sala')->references('PK_SAL_Id_Sala')->on('TBL_Aulas');
+            $table->foreign('FK_SOL_Id_Sala')->references('PK_SAL_Id_Sala')->on('TBL_Aulas')
+                ->onDelete('cascade');
         });
 
         Schema::connection('acadspace')->table('TBL_Aulas', function (Blueprint $table) {
-            $table->foreign('FK_SAL_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios');
+            $table->foreign('FK_SAL_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios')
+                ->onDelete('cascade');
         });
 
         Schema::connection('acadspace')->table('TBL_Calendario', function (Blueprint $table) {
@@ -31,7 +33,8 @@ class CreateForeignsSolicitudTable extends Migration
         });
 
         Schema::connection('acadspace')->table('TBL_Incidentes', function (Blueprint $table) {
-            $table->foreign('FK_INC_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios');
+            $table->foreign('FK_INC_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios')
+                ->onDelete('cascade');
         });
 
         Schema::connection('acadspace')->table('TBL_Asistencias', function (Blueprint $table) {
@@ -40,7 +43,8 @@ class CreateForeignsSolicitudTable extends Migration
         });
 
         Schema::connection('acadspace')->table('TBL_Asistencias', function (Blueprint $table) {
-            $table->foreign('FK_ASIS_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios');
+            $table->foreign('FK_ASIS_Id_Espacio')->references('PK_ESP_Id_Espacio')->on('TBL_Espacios')
+                ->onDelete('cascade');
         });
 
     }
