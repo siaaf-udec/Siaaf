@@ -1,6 +1,6 @@
 <?php
 
-$controller = "\\App\\Container\\Gesap\\Src\\Controllers\\";
+$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function () use ($controller) {
     Route::get('min/', [
