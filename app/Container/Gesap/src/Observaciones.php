@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Observaciones extends Model
 {
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Observaciones';
 
+    /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_BVCS_IdObservacion';
 
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_Id'];
     
     

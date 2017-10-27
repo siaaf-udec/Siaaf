@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conceptos extends Model
 {
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+ /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Conceptos';
 
+ /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_CNPT_Conceptos';
 
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['CNPT_Concepto','CNPT_Tipo','FK_TBL_Encargado_Id'];
     
 	/*

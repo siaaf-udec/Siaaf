@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proyecto extends Model
 {
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Proyecto';
 
+ /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_PRYT_IdProyecto';
 
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['PRYT_Estado','FK_TBL_Anteproyecto_Id'];
 
 	/*	

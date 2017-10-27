@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Encargados extends Model
 {
+	/**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Encargados';
 
+    /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_NCRD_IdCargo';
 
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo'];
     
     

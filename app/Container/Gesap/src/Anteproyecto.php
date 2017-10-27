@@ -7,13 +7,32 @@ use Illuminate\Support\Facades\Auth;
 
 class Anteproyecto extends Model
 {
-    
+   /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */   
     protected $connection = 'gesap';
-
+   
+   /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Anteproyecto';
 
+   /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_NPRY_IdMinr008';
 
+   /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['NPRY_Titulo','NPRY_Keywords','NPRY_Duracion','NPRY_FechaR','NPRY_FechaL','NPRY_Estado'];
     
 	/*

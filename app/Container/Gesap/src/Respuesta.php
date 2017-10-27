@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Respuesta extends Model
 {
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Respuesta';
 
+ /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_RPST_IdMinr008';
 
+ /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['RPST_RMin','RPST_Requerimientos','FK_TBL_Radicacion_Id'];
     
 	/*	

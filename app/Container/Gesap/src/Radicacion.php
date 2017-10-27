@@ -6,12 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Radicacion extends Model
 {
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Radicacion';
 
+ /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_RDCN_IdRadicacion';
 
+ /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
     protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_Id'];
     
 	/*	
