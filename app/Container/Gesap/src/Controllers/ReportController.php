@@ -94,7 +94,7 @@ class ReportController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $proyectos=Anteproyecto::
-					with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+					with(['radicacsadasdasdion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 	->get();
 
                 return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
@@ -339,7 +339,7 @@ class ReportController extends Controller
      *
 	 * @param  \Illuminate\Http\Request 
 	 *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getPreliminary(Request $request)
     {
@@ -350,7 +350,11 @@ class ReportController extends Controller
 				DB::raw('COUNT(*) as value')
 			])
             ->toJSON();
-            return $stats;
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                $stats
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -363,7 +367,7 @@ class ReportController extends Controller
      *
 	 * @param  \Illuminate\Http\Request
      *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getProject(Request $request)
     {
@@ -375,7 +379,11 @@ class ReportController extends Controller
                 DB::raw('COUNT(*) as value')
             ])
             ->toJSON();
-            return $stats;
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                $stats
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -389,7 +397,7 @@ class ReportController extends Controller
      *
 	 * @param  \Illuminate\Http\Request
 	 *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return  \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getJury(Request $request)
     {
@@ -415,7 +423,11 @@ class ReportController extends Controller
                 unset($row['usuarios']);
             }
 
-            return $stats->toJSON();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                $stats->toJSON()
+            );
         
         }
         return AjaxResponse::fail(
@@ -429,7 +441,7 @@ class ReportController extends Controller
      *
 	 * @param  \Illuminate\Http\Request
 	 *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getDirector(Request $request)
     {
@@ -451,8 +463,11 @@ class ReportController extends Controller
                 unset($row['FK_Developer_User_Id']);
                 unset($row['usuarios']);
             }
-
-            return $stats->toJSON();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.',
+                $stats->toJSON()
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

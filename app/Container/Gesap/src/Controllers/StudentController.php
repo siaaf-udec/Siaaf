@@ -93,7 +93,7 @@ class StudentController extends Controller
      *
      * @param  \Illuminate\Http\Request 
      *
-     * @return \Illuminate\Http\Request  | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function uploadActividad(Request $request)
     {
@@ -109,7 +109,11 @@ class StudentController extends Controller
                 $documento->DMNT_Archivo =$nombre;
                 $documento->save();
             }
-            return $request->get('PK_actividad');
+          return AjaxResponse::success(
+            'COMPLETADA SUBIDA',
+            'SUBIDA CORRECTAMENTE.',
+             $request->get('PK_actividad')
+        );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

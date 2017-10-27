@@ -163,18 +163,28 @@
 @push('plugins')
 <script>
     $(function() {
+        
+        
         function requestData(route,chart){
             $.ajax({
                 type: "GET",
                 url:route , 
-            })
-            .done(function( data ) {
-                chart.setData(JSON.parse(data));
-            })
-            .fail(function() {
-                alert( "Error" );
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        var graficas = response.data;
+                        chart.setData(JSON.parse(graficas));
+                    }
+                }
             });
         }
+        
+        
+        
+        
         var anteproyecto = Morris.Bar({
             element: 'anteproyecto-state',
             data: [0,0],

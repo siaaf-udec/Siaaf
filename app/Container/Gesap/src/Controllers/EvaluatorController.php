@@ -679,7 +679,7 @@ class EvaluatorController extends Controller
      * @param  String $archivo
 	 * @param  \Illuminate\Http\Request $request
      *
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function downloadActivity($actividad, $archivo, Request $request)
     {
@@ -706,11 +706,13 @@ class EvaluatorController extends Controller
         if ($request->isMethod('GET')) {
             try {
                 $url = storage_path('app/'.$archivo);
-                if (Storage::exists($archivo)) {
-                    return response()->download($url);
-                }
+                return response()->download($url);                
             } catch (Exception $e) {
-                abort(404);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'El archivo no se encontro.',
+                    $e->getMessage()
+                );
             }
         }
     }

@@ -83,7 +83,7 @@ var FormDropzone = function () {
                             'El archivo se ha procesado satisfactoriamente.'
                         );
                         $('#modal_documento').modal('hide');
-                        route_index = '/gesap/actividades/'+data;
+                        route_index = '{{ route('proyecto.actividades') }}'+'/'+data;
                         $(".content-ajax").load(route_index);
                         App.unblockUI();
                         

@@ -246,6 +246,7 @@
 </div>
 
 	<!--Local Scripts-->
+
 	<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -305,7 +306,7 @@
 								}
 							}
 						}).done(function (data) {
-							route = '{{ route('proyecto.actividades') }}'+'/'+{{$id}}';
+							route = '{{ route('proyecto.actividades') }}/{{$id}}';
 							$(".content-ajax").load(route);
 						});
 					}
