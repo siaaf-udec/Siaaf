@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentacionPersona extends Model
 {
     /**
-     * The database connection used by the model.
+     * Conexión de la base de datos usada por el modelo
      *
      * @var string
      */
     protected $connection = 'humtalent';
 
     /**
-     * The database table used by the model.
+     * Tabla utilizada por el modelo.
      *
      * @var string
      */
     protected $table = 'TBL_Documentacion_Personal';
 
     /**
-     * The database key used by the model.
+     * Atributos que son asignables.
      *
      * @var string
      */

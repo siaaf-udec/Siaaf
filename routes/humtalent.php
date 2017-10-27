@@ -3,12 +3,6 @@
  * Talento Humano.
  */
 
-use App\Container\Humtalent\src\Persona;
-use App\Container\Humtalent\src\DocumentacionPersona;
-use App\Container\Humtalent\src\StatusOfDocument;
-use Yajra\DataTables\DataTables;
-use Illuminate\Http\Request;
-use App\Container\Users\Src\User;
 
 
 Route::group(['middleware' => ['auth']], function () {

@@ -83,11 +83,14 @@ class CalendarioController extends Controller
     /**
      * Funcion que llama a la vista de calendario
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
-        return view('humtalent.calendario.calendario');
+        if($request->isMethod('GET')) {
+            return view('humtalent.calendario.calendario');
+        }
     }
 
     /**

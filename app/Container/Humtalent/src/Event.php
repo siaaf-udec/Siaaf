@@ -8,28 +8,28 @@ class Event extends Model
 {
 
     /**
-     * The database connection used by the model.
+     * Conexión de la base de datos usada por el modelo
      *
      * @var string
      */
     protected $connection = 'humtalent';
 
     /**
-     * The database table used by the model.
+     * Tabla utilizada por el modelo.
      *
      * @var string
      */
     protected $table = 'TBL_Eventos';
 
     /**
-     * The database key used by the model.
+     * Llave utilizada por el modelo.
      *
      * @var string
      */
     protected $primaryKey = 'PK_EVNT_IdEvento';
 
     /**
-     * The attributes that are mass assignable.
+     * Atributos que son asignables.
      *
      * @var array
      */

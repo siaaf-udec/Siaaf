@@ -20,8 +20,8 @@ class DocumentController extends Controller
     private $tipo;  //variable para almacenar el tipo de radicación (EPS o caja de compensación)
 
     /**
-     *  Función que es consultada por otras funciones de manera recursiva para consultar datos de los documentos
-     *                      que han sido radicados.
+     * Función que es consultada por otras funciones de manera recursiva para consultar datos de los documentos
+     * que han sido radicados.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -410,13 +410,16 @@ class DocumentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Funcion que llama a la vista de los documentos registrados
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()//muestra todos los documentos que esten registrados
+    public function index( Request $request)
     {
-        return view('humtalent.documentacion.listaDocumentos');
+        if($request->isMethod('GET')) {
+            return view('humtalent.documentacion.listaDocumentos');
+        }
     }
 
     /**
@@ -438,12 +441,12 @@ class DocumentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para registrar un documento
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function create(Request $request)//preseta el formulario para registrar un documento
+    public function create(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.documentacion.registroDocumento');
@@ -455,12 +458,12 @@ class DocumentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un documento enviado desde el formulario de la funcion create
      *
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function store(Request $request) //almacena un documento enviado desde el formulario del la funcion create
+    public function store(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             DocumentacionPersona::create($request->all());
@@ -477,7 +480,7 @@ class DocumentController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra la vista para editar el documento seleccionado.
      *
      * @param \Illuminate\Http\Request
      * @param  int $id
@@ -499,7 +502,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Permite editar el dcoumento selecionado.
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -521,13 +524,13 @@ class DocumentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el documento seleccionado.
      *
      * @param \Illuminate\Http\Request
      * @param  int $id
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function destroy(Request $request, $id)  //se elimina el registro de un documento
+    public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
             StatusOfDocument::where('FK_Personal_Documento', $id)->delete();
