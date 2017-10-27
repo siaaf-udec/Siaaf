@@ -22,7 +22,7 @@ use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
-use App\Container\Gesap\src\User;
+use App\Container\Users\src\User;
 
 use Carbon\Carbon;
 
