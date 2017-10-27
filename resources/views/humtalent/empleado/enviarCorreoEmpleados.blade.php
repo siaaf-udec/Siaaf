@@ -263,7 +263,7 @@
             }
         };
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();?¿_]+$/i.test(value);
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();?¿_áéíóúñüàè¡]+$/i.test(value);
         });
         var form = $('#form_email');
         var formRules = {

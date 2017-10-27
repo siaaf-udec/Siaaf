@@ -299,7 +299,7 @@
             });
         };
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!¡¿$%/?();áéíóúñüàè]+$/i.test(value);
         });
         var addEvent = function (title) {   //cuando se añade una nueva notificación es llamada esta función para agregar el codigo html correspondiente
             title = title.length === 0 ? "Evento sin titulo" : title; //con el respectivo titulo creado o sin titulo en caso de que no se digite nada

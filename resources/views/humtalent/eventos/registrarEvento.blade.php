@@ -125,7 +125,7 @@
              });
          }
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();áéíóúñüàè]+$/i.test(value);
         });
 
         var form = $('#form_event_create');

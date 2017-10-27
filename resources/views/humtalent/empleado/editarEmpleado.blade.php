@@ -93,10 +93,10 @@ jQuery(document).ready(function() {
         form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
     });
     jQuery.validator.addMethod("letters", function(value, element) {
-        return this.optional(element) || /^[a-z," "]+$/i.test(value);
+        return this.optional(element) || /^[a-z," " áéíóúñüàè]+$/i.test(value);
     });
     jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-        return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+        return this.optional(element) || /^[-a-z," ",$,0-9,.,#áéíóúñüàè]+$/i.test(value);
     });
 
     var createUsers = function () {

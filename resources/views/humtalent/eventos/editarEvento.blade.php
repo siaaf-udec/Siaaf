@@ -126,7 +126,7 @@
             $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
         });
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();]+$/i.test(value);
+            return this.optional(element) || /^[-a-z," ",$,0-9,.,#!();áéíóúñüàè]+$/i.test(value);
         });
         var form = $('#form_event_update');
         var formRules = {
