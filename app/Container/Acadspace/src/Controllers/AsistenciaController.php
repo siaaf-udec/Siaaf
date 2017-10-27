@@ -8,8 +8,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
-use Validator;
-use App\Container\Users\Src\User;
+Use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Asistencia;
@@ -86,24 +85,27 @@ class AsistenciaController extends Controller
         );
     }
 
+
+
     /**
-     * Store a newly created resource in storage.
+     * Verificando que el estudiante exista.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function checkUser(Request $request)
+    public function verificarEstudiante(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            $user = User::findOrFail($request['ASIS_Id_Identificacion']);
-              /*  User::where('identity_no', '=', $request['ASIS_Id_Identificacion'])
-                ->get();*/
-            if (empty($user)) {
+            $validator = Validator::make($request->all(), [
+                'codigo' => 'exists:users,identity_no'
+            ]);
+            if (empty($validator->errors()->all())) {
                 return response('true');
             } else {
                 return response('false');
             }
+
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -112,6 +114,32 @@ class AsistenciaController extends Controller
 
     }
 
+    /**
+     * Verificando que el docente exista.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verificarDocente(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $validator = Validator::make($request->all(), [
+                'codigo' => 'exists:users,identity_no'
+            ]);
+            if (empty($validator->errors()->all())) {
+                return response('true');
+            } else {
+                return response('false');
+            }
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 
     /**
      * Registra ingreso del estudiante

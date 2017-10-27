@@ -8,6 +8,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Aulas;
@@ -29,6 +30,23 @@ class AulasController extends Controller
             [
                 'espacios' => $espacios->toArray()
             ]);
+    }
+
+    /**
+     * Verificando que el aula no exista.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verificarAula(Request $request){
+        $validator = Validator::make($request->all(), [
+            'nomb_sala' => 'unique:acadspace.TBL_Aulas,SAL_Nombre_Sala'
+        ]);
+        if (empty($validator->errors()->all())) {
+            return response('true');
+        } else {
+            return response('false');
+        }
     }
 
 

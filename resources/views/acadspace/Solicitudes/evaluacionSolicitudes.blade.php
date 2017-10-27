@@ -453,11 +453,13 @@
                 $("#vista-tabla").css("display", "block");
                 var select = $('#SOL_laboratorio option:selected').val();
                 /*Cargar select de aulas*/
+                $('#aula').empty();
                 $.get("cargarSalas/" + select + "", function (response) {
                     $(response.data).each(function (key, value) {
                         $("#aula").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
                     });
                     $("#aula").val([]);
+                    $('#aulas').empty();
                     $(response.data).each(function (key, value) {
                         $("#aulas").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
                     });

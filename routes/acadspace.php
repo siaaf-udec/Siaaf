@@ -170,6 +170,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AulasController@regisAula',
             'as' => 'espacios.academicos.aulas.regisAula',
         ]);
+        Route::post('verificarAula',[
+            'uses' => $controller.'AulasController@verificarAula',
+            'as' => 'espacios.academicos.aulas.verificarAula'
+        ]);
     });
 
     /*RUTAS PARA FUNCIONALIDAD INCIDENTES*/
@@ -268,9 +272,13 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AsistenciaController@cargarSalasAsitencia',
             'as' => 'espacios.academicos.asist.cargarSalasAsitencia'
         ]);
-        Route::post('checkUser',[
-            'uses' => $controller.'AsistenciaController@checkUser',
-            'as' => 'espacios.academicos.asist.checkUser'
+        Route::post('verificarEstudiante',[
+            'uses' => $controller.'AsistenciaController@verificarEstudiante',
+            'as' => 'espacios.academicos.asist.verificarEstudiante'
+        ]);
+        Route::post('verificarDocente',[
+            'uses' => $controller.'AsistenciaController@verificarDocente',
+            'as' => 'espacios.academicos.asist.verificarDocente'
         ]);
     });
 

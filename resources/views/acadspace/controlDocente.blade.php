@@ -126,8 +126,6 @@
             });
 
             /*VALIDACIONES*/
-            var form = $('#form_sol_create');
-
             var wizard = $('#form_wizard_1');
             /*Crear Solicitud*/
             var createUsers = function () {
@@ -179,14 +177,25 @@
 
             var form_edit = $('#form_sol_create');
             var rules_edit = {
-                codigo: {required: true, number: true, minlength: 3, maxlength: 11},
+                codigo: {
+                    required: true, number:true, remote: {
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: '{{ route('espacios.academicos.asist.verificarDocente') }}',
+                        type: "POST"
+                    }
+                },
                 SOL_laboratorios: {required: true},
                 materia: {required: true, minlength: 3},
                 SOL_carrera: {required: true},
                 SOL_cant_estudiantes: {required: true, number: true, maxlength: 2},
                 aula: {required: true}
             };
-            FormValidationMd.init(form_edit, rules_edit, false, createUsers());
+            var messages = {
+                codigo: {
+                    remote: "Usuario inexistente en el sistema."
+                }
+            };
+            FormValidationMd.init(form_edit, rules_edit, messages, createUsers());
 
         });
 

@@ -23,27 +23,27 @@
                 <div class="col-md-7 col-md-offset-2">
                     <div class="portlet light " id="form_wizard_1">
                         {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
+                        <div class="form-wizard">
+                            <div class="form-body">
+                                {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                                ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
 
-                        <div class="form-body">
-                            {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
-                                                            ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
+                                {!! Field::select('SOL_carrera',
+                                                  ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
+                                                  '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
+                                                  '5' => 'Psicología', '6' => 'Contaduría','7' => 'Otro'],
+                                                  null,
+                                                  [ 'label' => 'Programa :']) !!}
 
-                            {!! Field::select('SOL_carrera',
-                                              ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
-                                              '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
-                                              '5' => 'Psicología', '6' => 'Contaduría','7' => 'Otro'],
-                                              null,
-                                              [ 'label' => 'Programa :']) !!}
+                                {!! Field::select('Espacio académico:',$espacios,
+                                                ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
+                                                !!}
 
-                            {!! Field::select('Espacio académico:',$espacios,
-                                            ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
-                                            !!}
-
-                            {!! Field::select(
-                                                               'aula', null,
-                                                               ['name' => 'aula']) !!}
-                            <br>
-
+                                {!! Field::select(
+                                                                   'aula', null,
+                                                                   ['name' => 'aula']) !!}
+                                <br>
+                            </div>
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-12 col-md-offset-0">
@@ -53,8 +53,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -127,7 +125,28 @@
                 });
             });
             /*VALIDACIONES*/
+
             var wizard = $('#form_wizard_1');
+            var form_edit = $('#form_sol_create');
+            var rules_edit = {
+                codigo: {
+                    required: true, number:true, remote: {
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: '{{ route('espacios.academicos.asist.verificarEstudiante') }}',
+                        type: "POST"
+                    }
+                },
+                SOL_carrera: {required: true},
+                SOL_laboratorios: {required: true},
+                aula: {required: true}
+            };
+            var messages = {
+                codigo: {
+                    remote: "Usuario inexistente en el sistema."
+                }
+            };
+
+
             /*Crear Solicitud*/
             var createUsers = function () {
                 return {
@@ -173,28 +192,7 @@
                     }
                 }
             };
-            var form_edit = $('#form_sol_create');
-            var rules_edit = {
-                codigo: {
-                    required: true, number: true, minlength: 9, maxlength: 9,
-                    remote: {
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '{{ route('espacios.academicos.asist.checkUser') }}',
-                        type: "POST"
-                    }
-                },
-                SOL_carrera: {required: true},
-                SOL_laboratorios: {required: true},
-                aula: {required: true}
-            };
-            var messages = {
-                codigo: {
-                    remote: "Usuario no existente en el sistema."
-                }
-            };
-
-            FormWizard.init(wizard, form_edit, rules_edit, messages, createUsers());
-
+            FormValidationMd.init(form_edit, rules_edit, messages, createUsers());
         });
 
     </script>

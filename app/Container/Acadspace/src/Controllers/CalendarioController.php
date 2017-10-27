@@ -203,6 +203,10 @@ class CalendarioController extends Controller
                 ->with(['user' => function ($query) {
                     return $query->select('id', 'name', 'lastname');
                 }])
+                ->with(['software' => function ($query) {
+                    return $query->select('PK_SOF_Id',
+                        'SOF_Nombre_Soft');
+                }])
                 ->where('FK_SOL_Id_Sala', '=', $sala)
                 ->where('SOL_Estado', '=', 1)
                 ->get();

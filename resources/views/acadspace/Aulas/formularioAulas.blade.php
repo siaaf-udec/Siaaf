@@ -272,10 +272,19 @@
 
             var form_edit = $('#form_soft');
             var rules_edit = {
-                nomb_sala: {minlength: 3, required: true},
+                nomb_sala: {minlength: 3, required: true, remote: {
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ route('espacios.academicos.aulas.verificarAula') }}',
+                    type: "POST"
+                }},
                 espacios: {required: true}
             };
-            FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
+            var messages = {
+                nomb_sala: {
+                    remote: "Aula ya registrada en el sistema."
+                }
+            };
+            FormValidationMd.init(form_edit, rules_edit, messages, createPermissions());
 
         });
 

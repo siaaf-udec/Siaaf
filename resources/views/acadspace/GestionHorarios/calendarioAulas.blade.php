@@ -245,7 +245,7 @@
             </tr>
             <tr>
                 <td>Software:</td>
-                <td>@{{FK_SOL_Id_Software}}</td>
+                <td>@{{software.SOF_Nombre_Soft}}</td>
             </tr>
         </table>
     </script>
