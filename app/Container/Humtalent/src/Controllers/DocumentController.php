@@ -80,7 +80,6 @@ class DocumentController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
-
     }
 
     /**
@@ -161,7 +160,6 @@ class DocumentController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.empleado.ajaxBuscarEmpleado');
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -289,7 +287,6 @@ class DocumentController extends Controller
                 'Documentos radicados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -316,7 +313,6 @@ class DocumentController extends Controller
                 'Empleado afiliado correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -340,7 +336,6 @@ class DocumentController extends Controller
                 'Se reinicio correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -352,7 +347,7 @@ class DocumentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function consultaRadicados(Request $request, $id)
     {
@@ -365,12 +360,10 @@ class DocumentController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
 
     /**
@@ -410,7 +403,6 @@ class DocumentController extends Controller
                 compact('empleado', 'id', 'procesoEPS', 'fechaEPS', 'procesoCaja', 'fechaCaja')
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -456,7 +448,6 @@ class DocumentController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.documentacion.registroDocumento');
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -478,7 +469,6 @@ class DocumentController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -491,7 +481,7 @@ class DocumentController extends Controller
      *
      * @param \Illuminate\Http\Request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)
     {
@@ -502,7 +492,6 @@ class DocumentController extends Controller
                     'documento' => $documento,
                 ]);
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -525,7 +514,6 @@ class DocumentController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -549,7 +537,6 @@ class DocumentController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -568,7 +555,6 @@ class DocumentController extends Controller
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-
             $empleado = Persona::where('PK_PRSN_Cedula', $id)
                 ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos', 'PRSN_Area',
                     'PRSN_Correo', 'PRSN_Rol', 'PRSN_Eps', 'PRSN_Caja_Compensacion'])

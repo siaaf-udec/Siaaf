@@ -6,6 +6,7 @@
                    'icon' => 'fa fa-arrow-left',
                   ],
            ])
+            <br><br>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::model ($evento,['id'=>'form_event_update','url'=> ['/forms'],'role'=>"form"]) !!}
@@ -45,6 +46,7 @@
             </div>
     </div>
     @endcomponent
+<!-- DatatePicker, validation y Toastr Scripts -->
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -150,8 +152,7 @@
             var route = '{{ route('talento.humano.evento.index.ajax') }}';
             $(".content-ajax").load(route);
         });
-        $( "#link_cancel" ).on('click', function (e) {
-            //e.preventDefault();
+        $( "#link_cancel" ).on('click', function () {
             var route = '{{ route('talento.humano.evento.index.ajax') }}';
             $(".content-ajax").load(route);
         });

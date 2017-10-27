@@ -25,19 +25,18 @@ class EventoController extends Controller
      * Función que consulta los eventos registrados y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaEventos(Request $request){
         if ($request->ajax() && $request->isMethod('GET')) {
             return DataTables::of(Event::all())
                 ->addIndexColumn()
                 ->make(true);
-        } else {
-            return AjaxResponse::fail(
+        }
+        return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
-            );
-        }
+        );
     }
 
     /**
@@ -45,7 +44,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function tablaAsistentes(Request $request, $id){
         $asistentes=Asistent::with('personas')->where('FK_TBL_Eventos_IdEvento',$id)->get();
@@ -58,7 +57,6 @@ class EventoController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -70,7 +68,7 @@ class EventoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id_Evento
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function posiblesAsistentes(Request $request, $id_Evento){
         $this->id=$id_Evento;
@@ -107,7 +105,6 @@ class EventoController extends Controller
                 'El asistente fue registrado correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -351,7 +348,6 @@ class EventoController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'

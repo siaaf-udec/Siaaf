@@ -114,7 +114,6 @@
             $(".content-ajax").load(route);
         });
         $('#link_cancel').on('click', function (e) {
-            e.preventDefault();
             var route = '{{ route('talento.humano.document.index.ajax') }}';
             $(".content-ajax").load(route);
         });

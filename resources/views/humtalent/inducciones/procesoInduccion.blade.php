@@ -1,11 +1,12 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-layers font-blue', 'title' => 'Proceso de inducción'])
         <div class="col-md-6">
-            <div class="btn-group">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                    <i class="fa fa-arrow-circle-left"></i>Volver
-                </a>
-            </div>
+            @slot('actions', [
+                  'link_cancel' => [
+                  'link' => '',
+                  'icon' => 'fa fa-arrow-left',
+                 ],
+            ])
         </div>
 
             <div class="form-wizard">
@@ -148,6 +149,7 @@
     @endcomponent
 </div>
 
+<!-- Validation y Toastr Scripts -->
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -496,8 +498,7 @@
 
         FormValidationMd.init(form4,rulesForm4,false,induction4());
 
-        $( ".back" ).on('click', function (e) {
-            e.preventDefault();
+        $( "#link_cancel" ).on('click', function () {
             var route = '{{ route('talento.humano.Tinduccion.ajax') }}';
             $(".content-ajax").load(route);
         });

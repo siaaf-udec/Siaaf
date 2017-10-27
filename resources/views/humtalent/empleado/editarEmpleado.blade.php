@@ -70,10 +70,11 @@
     </div>
         @endcomponent
     </div>
-
+<!-- Validation, Select y Toastr Scripts -->
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function() {
 
@@ -187,8 +188,7 @@ jQuery(document).ready(function() {
         $(".content-ajax").load(route);
     });
 
-   $( "#link_cancel" ).on('click', function (e) {
-       //e.preventDefault();
+   $( "#link_cancel" ).on('click', function () {
        var route = '{{ route('talento.humano.empleado.index.ajax') }}';
        $(".content-ajax").load(route);
    });

@@ -22,7 +22,7 @@ class InduccionController extends Controller
      * Función que muestra el listado de empleados nuevos.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function listarEmpleadosNuevos(Request $request)
     {
@@ -31,12 +31,10 @@ class InduccionController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-        
     }
 
     /**

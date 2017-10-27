@@ -141,7 +141,6 @@ class CalendarioController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -164,7 +163,6 @@ class CalendarioController extends Controller
                 'Datos almacenados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -246,7 +244,6 @@ class CalendarioController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -273,12 +270,10 @@ class CalendarioController extends Controller
                 'Datos modificados correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
 
     /**
@@ -305,13 +300,11 @@ class CalendarioController extends Controller
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
             );
-        } else//en caso de que la petición no sea ajax se muestra el mensaje de error
-        {
+        }
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
-        }
     }
 
     /**
@@ -365,7 +358,6 @@ class CalendarioController extends Controller
                 'Notificaciones desactivadas correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -388,7 +380,6 @@ class CalendarioController extends Controller
                 'Notificaciones activadas correctamente.'
             );
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -414,7 +405,6 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.ajaxEmpleadosDocumentosCompletos', compact('estado'));
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -441,11 +431,9 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.ajaxEmpleadosDocumentosIncompletos', compact('estado'));
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
 }

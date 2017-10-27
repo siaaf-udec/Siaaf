@@ -6,6 +6,7 @@
                 'icon' => 'fa fa-arrow-left',
                ],
         ])
+            <br><br>
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     {!! Form::open (['id'=>'form_event_create', 'url' => '/forms']) !!}
@@ -45,6 +46,7 @@
             </div>
     </div>
     @endcomponent
+<!-- DatePicker, validation y Toastr Scripts -->
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -145,7 +147,6 @@
             $(".content-ajax").load(route);
         });
         $('#link_cancel').on('click', function (e) {
-            e.preventDefault();
             var route = '{{ route('talento.humano.evento.index.ajax') }}';
             $(".content-ajax").load(route);
         });

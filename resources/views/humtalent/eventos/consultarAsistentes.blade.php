@@ -1,12 +1,12 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Asistentes al evento:'])
-            <br><div class="col-md-6">
-                <div class="btn-group">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon back">
-                        <i class="fa fa-arrow-circle-left"></i>Volver
-                    </a>
-                </div>
-            </div><br>
+            @slot('actions', [
+                   'link_cancel' => [
+                   'link' => '',
+                   'icon' => 'fa fa-arrow-left',
+                  ],
+           ])
+        <br><br>
             <div class="row">
                 <div class="col-md-12"><br>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
@@ -36,7 +36,7 @@
 
         @endcomponent
     </div>
-
+<!-- Datatables y Toastr Scripts -->
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
@@ -128,8 +128,7 @@ jQuery(document).ready(function () {
         $(".content-ajax").load(route);
     });
 
-    $( ".back" ).on('click', function (e) {
-        e.preventDefault();
+    $( "#link_cancel" ).on('click', function () {
         var route = '{{ route('talento.humano.evento.index.ajax') }}';
         $(".content-ajax").load(route);
     });
