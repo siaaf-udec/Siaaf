@@ -17,22 +17,24 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Teléfono',
-                            'Email',
-                            'Rol ',
-                            'Acciones'
-                        ])
-                    @endcomponent
+            @permission('READ_EMP_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                            @slot('columns', [
+                                '#',
+                                'Nombres',
+                                'Apellidos',
+                                'Cédula',
+                                'Teléfono',
+                                'Email',
+                                'Rol ',
+                                'Acciones'
+                            ])
+                        @endcomponent
+                    </div>
                 </div>
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -94,7 +96,7 @@
             {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
+                defaultContent: '@permission("READ_DOC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

@@ -43,23 +43,25 @@
                 </div>
             @endif
             <br><br>
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Teléfono',
-                            'Email',
-                            'Rol ',
-                            'Área',
-                            'Acciones'
-                        ])
-                    @endcomponent
+            @permission('READ_EMP_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                            @slot('columns', [
+                                '#',
+                                'Nombres',
+                                'Apellidos',
+                                'Cédula',
+                                'Teléfono',
+                                'Email',
+                                'Rol ',
+                                'Área',
+                                'Acciones'
+                            ])
+                        @endcomponent
+                    </div>
                 </div>
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -118,7 +120,7 @@
             {data: 'personas.PRSN_Rol', name: 'Rol'},
             {data: 'personas.PRSN_Area', name: 'Área'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>',
+                defaultContent: '@permission("RAD_DOC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a> @endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

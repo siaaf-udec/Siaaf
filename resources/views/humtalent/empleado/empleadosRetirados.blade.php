@@ -19,25 +19,26 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            <div class="row">
-                <div class="col-md-12">
+            @permission('READ_EMP_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
 
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Estado',
-                            'Email',
-                            'Rol ',
-                            'Acciones'
-                        ])
-                    @endcomponent
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                            @slot('columns', [
+                                '#',
+                                'Nombres',
+                                'Apellidos',
+                                'Cédula',
+                                'Estado',
+                                'Email',
+                                'Rol ',
+                                'Acciones'
+                            ])
+                        @endcomponent
 
+                    </div>
                 </div>
-
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -83,7 +84,7 @@
             {data: 'PRSN_Correo', name: 'Email'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission("UPDATE_EMP_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_EMP_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

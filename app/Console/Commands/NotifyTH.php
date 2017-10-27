@@ -11,6 +11,7 @@ use App\Container\Permissions\Src\Role;
 use App\Container\Humtalent\src\Notification;
 use App\Notifications\HeaderSiaaf;
 use Carbon\Carbon;
+use Storage;
 
 
 
@@ -104,6 +105,13 @@ class NotifyTH extends Command
                     'image' => 'assets/layouts/layout2/img/search_icon_light.png'
                 ];
                 $user->notify(new HeaderSiaaf($data));
+            }
+
+            if($recordatorio['NOTIF_Estado_Notificacion'] === "Archivo"){
+                $nombre = $recordatorio['NOTIF_Descripcion'];
+                Storage::disk('local')->delete($nombre);
+
+                Notification::where('NOTIF_Descripcion', $nombre)->delete();
             }
         }
 

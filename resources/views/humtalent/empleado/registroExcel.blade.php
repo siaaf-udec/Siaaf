@@ -36,25 +36,26 @@
                         <br><strong>7.)</strong> El archivo debe tener extensión .xlsx .xls o .csv .<br></p>
                 </div>
 
-
+                @permission('CREATE_EMP_RRHH')
                 {!! Form::open (['id'=>'form_file', 'url'=> ['/forms'], 'files' => true]) !!}
-                <br><br><br>
-                <div class="fileinput fileinput-new" data-provides="fileinput"  >
-                    <div class="input-group input-large" >
-                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput" >
-                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
+                    <br><br><br>
+                    <div class="fileinput fileinput-new" data-provides="fileinput"  >
+                        <div class="input-group input-large" >
+                            <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput" >
+                                <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                <span class="fileinput-filename"> </span>
+                            </div>
+                            <span class="input-group-addon btn default btn-file">
+                                                                    <span class="fileinput-new">seleccionar </span>
+                                                                    <span class="fileinput-exists"> Cambiar </span>
+                                                                    <input type="file"  name="import_file" id="import_file"> </span>
+                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
                         </div>
-                        <span class="input-group-addon btn default btn-file">
-                                                                <span class="fileinput-new">seleccionar </span>
-                                                                <span class="fileinput-exists"> Cambiar </span>
-                                                                <input type="file"  name="import_file" id="import_file"> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Eliminar </a>
                     </div>
-                </div>
-                <br><br>
-                {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
-                {!! Form::close() !!}
+                    <br><br>
+                    {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
+                    {!! Form::close() !!}
+                @endpermission
             </div>
         </div>
     @endcomponent

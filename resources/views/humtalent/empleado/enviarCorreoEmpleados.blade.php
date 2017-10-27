@@ -233,7 +233,6 @@
                                     $('#form_email')[0].reset();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
-
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 && xhr === 'error') {

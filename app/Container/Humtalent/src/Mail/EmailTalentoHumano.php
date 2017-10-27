@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Exception;
 
-class EmailTalentoHumano extends Mailable
+class EmailTalentoHumano extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -56,6 +57,27 @@ class EmailTalentoHumano extends Mailable
                 ->view('humtalent.empleado.emailEmpleados', ['title' => $this->asunto, 'body' => $this->message]);
         }
 
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        // Send user notification of failure, etc...
+    }
+
+    /**
+     * Determine the time at which the job should timeout.
+     *
+     * @return \DateTime
+     */
+    public function retryUntil()
+    {
+        return now()->addSeconds(5);
     }
 
 

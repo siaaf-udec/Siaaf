@@ -31,7 +31,7 @@
             </div>
         </div>
             <br>
-            @permission('FUNC_RRHH')
+            @permission('CREATE_PERM_RRHH')
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
@@ -40,19 +40,20 @@
             </div>
             @endpermission
             <br>
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-permisos'])
-                        @slot('columns', [
-                            '#',
-                            'Descripción',
-                            'Fecha',
-                            'Acciones'
-                        ])
-                    @endcomponent
+            @permission('READ_PERM_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-permisos'])
+                            @slot('columns', [
+                                '#',
+                                'Descripción',
+                                'Fecha',
+                                'Acciones'
+                            ])
+                        @endcomponent
+                    </div>
                 </div>
-            </div>
-
+            @endpermission
         <!-- Modal -->
             <div class="modal fade" id="modal-create-permission" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
@@ -148,7 +149,7 @@
             {data: 'PERM_Descripcion', name: 'Descripción'},
             {data: 'PERM_Fecha', name: 'Fecha'},
             {
-                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("UPDATE_PERM_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_PERM_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

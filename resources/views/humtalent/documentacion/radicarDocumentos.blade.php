@@ -68,15 +68,15 @@
                         <br>
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-9">
-                                {!! Form::open (['id'=>'form-listar', 'url'=> ['/forms']]) !!}
+
                                 {!! Field::hidden('PK_PRSN_Cedula',$empleado->PK_PRSN_Cedula) !!}
                                 {!! Field::select('tipoRadicacion',
                                         ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],
                                         $tipoRad,
                                         ['id' => 'cambiar', 'label' => 'Seleccionar el tipo de radicación']) !!}
-                                {!! Form::submit('Cambiar',['class'=>'btn blue','btn-icon remove']) !!}
+
                             </div>
-                            {!! Form::close() !!}
+
                         </div>
                         @permission('FUNC_RRHH')
                         <div class="form-group">
@@ -309,47 +309,38 @@
         $('.portlet-sortable').attr("id", "form_wizard_1");
         FormWizard.init();
 
-        var listRad = function () {
-            return {
-                init: function () {
-                    var route = '{{ route('talento.humano.listarDocsRad') }}';
-                    var type = 'POST';
-                    var async = async || false;
+        $('#cambiar').change(function () {
 
-                    var formData = new FormData();
-                    formData.append('PK_PRSN_Cedula', $('[name="PK_PRSN_Cedula"]').val());
-                    formData.append('tipoRadicacion', $('select[name="tipoRadicacion"]').val());
+            var route = '{{ route('talento.humano.listarDocsRad') }}';
+            var type = 'POST';
+            var async = async || false;
 
-                    $.ajax({
-                        url: route,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        cache: false,
-                        type: type,
-                        contentType: false,
-                        data: formData,
-                        processData: false,
-                        async: async,
-                        beforeSend: function () {
-                        },
-                        success: function (route) {
-                            $(".content-ajax").html(route);
-                        },
-                        error: function (response, xhr, request) {
-                            if (request.status === 422 && xhr === 'error') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
-                        }
-                    });
+            var formData = new FormData();
+            formData.append('PK_PRSN_Cedula', $('[name="PK_PRSN_Cedula"]').val());
+            formData.append('tipoRadicacion', $('select[name="tipoRadicacion"]').val());
+
+            $.ajax({
+                url: route,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                cache: false,
+                type: type,
+                contentType: false,
+                data: formData,
+                processData: false,
+                async: async,
+                beforeSend: function () {
+                },
+                success: function (route) {
+                    $(".content-ajax").html(route);
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                    }
                 }
-            }
-        };
+            });
+        });
 
-        var formList = $('#form-listar');
-        var rulesList = {
-            PK_PRSN_Cedula: {required: true},
-        };
-
-        FormValidationMd.init(formList, rulesList, false, listRad());
 
 
         var createRad = function () {

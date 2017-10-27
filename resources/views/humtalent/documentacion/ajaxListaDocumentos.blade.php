@@ -2,7 +2,7 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Documentación registrada:'])
         <br>
         <div class="row">
-            @permission('FUNC_RRHH')
+            @permission('CREATE_DOC_RRHH')
             <div class="col-md-12">
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
@@ -14,20 +14,22 @@
             @endpermission
         </div>
         <br>
-        <div class="row">
-            <div class="col-md-12">
+        @permission('READ_DOC_RRHH')
+            <div class="row">
+                <div class="col-md-12">
 
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-documentos'])
-                    @slot('columns', [
-                        '#',
-                        'llave',
-                        'Documento',
-                        'Tipo',
-                        'Acciones'
-                    ])
-                @endcomponent
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-documentos'])
+                        @slot('columns', [
+                            '#',
+                            'llave',
+                            'Documento',
+                            'Tipo',
+                            'Acciones'
+                        ])
+                    @endcomponent
+                </div>
             </div>
-        </div>
+        @endpermission
     @endcomponent
 </div>
 
@@ -45,7 +47,7 @@
             {data: 'DCMTP_Nombre_Documento', name: 'documento'},
             {data: 'DCMTP_Tipo_Documento', name: 'tipo'},
             {
-                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("UPDATE_DOC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_DOC_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

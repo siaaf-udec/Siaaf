@@ -21,22 +21,24 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Teléfono',
-                            'Email',
-                            'Rol ',
-                            'Acciones'
-                        ])
-                    @endcomponent
+            @permission('READ_EMP_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                            @slot('columns', [
+                                '#',
+                                'Nombres',
+                                'Apellidos',
+                                'Cédula',
+                                'Teléfono',
+                                'Email',
+                                'Rol ',
+                                'Acciones'
+                            ])
+                        @endcomponent
+                    </div>
                 </div>
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -84,7 +86,7 @@
             {data: 'PRSN_Correo', name: 'Correo Electronico'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a><a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission',
+                defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission @permission("GEN_REPORT_RRHH")<a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

@@ -27,19 +27,22 @@
                         <span class="title">Registro por archivo</span>
                     </a>
                 </li>
+                @permission('RAD_DOC_RRHH')
                 <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.buscarRadicar') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Radicar Documentos</span>
                     </a>
                 </li>
+                @endpermission
+                @permission('SEND_EMAIL_RRHH')
                 <li class="nav-item {{ active(['talento.humano.empleado.email'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.email') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
                         <span class="title">Enviar Correo</span>
                     </a>
                 </li>
-
+                @endpermission
             </ul>
         </li>
 

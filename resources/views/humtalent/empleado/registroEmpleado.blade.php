@@ -156,7 +156,11 @@
         var formRules = {
             PRSN_Nombres: {required: true, letters: true},
             PRSN_Apellidos: {required: true ,letters: true},
-            PRSN_Correo: {required: true, email: true},
+            PRSN_Correo: {required: true, email: true, remote : {
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: '{{ route('talento.humano.empleado.checkEmail') }}',
+                type: "POST"
+            }},
             PK_PRSN_Cedula: {required: true, number: true},
             PRSN_Telefono: {required: true, noSpecialCharacters:true},
             PRSN_Ciudad: {required: true, letters: true},
@@ -168,6 +172,7 @@
             PRSN_Fpensiones: {letters: true},
             PRSN_Caja_Compensacion: {letters: true},
             PRSN_Direccion: {noSpecialCharacters: true}
+
         };
         var formMessage = {
             PRSN_Nombres: {letters: 'Solo se pueden ingresar letras'},
@@ -179,7 +184,10 @@
             PRSN_Caja_Compensacion: {letters: 'Solo se pueden ingresar letras'},
             PRSN_Salario: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             PRSN_Telefono: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            PRSN_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'}
+            PRSN_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            PRSN_Correo: {
+                remote: "El correo electronico ya se encuentra registrado."
+            }
         };
         FormValidationMd.init(form, formRules, formMessage, createUsers());
 

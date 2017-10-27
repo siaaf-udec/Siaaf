@@ -15,26 +15,27 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            <div class="row">
-                <div class="col-md-12">
+            @permission('READ_EMP_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
 
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
-                        @slot('columns', [
-                            '#',
-                            'Nombres',
-                            'Apellidos',
-                            'Cédula',
-                            'Estado',
-                            'Email',
-                            'Rol ',
-                            'Teléfono',
-                            'Acciones'
-                        ])
-                    @endcomponent
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
+                            @slot('columns', [
+                                '#',
+                                'Nombres',
+                                'Apellidos',
+                                'Cédula',
+                                'Estado',
+                                'Email',
+                                'Rol ',
+                                'Teléfono',
+                                'Acciones'
+                            ])
+                        @endcomponent
 
+                    </div>
                 </div>
-
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -89,7 +90,7 @@ jQuery(document).ready(function () {
         {data: 'PRSN_Rol', name: 'Rol'},
         {data: 'PRSN_Telefono', name: 'Teléfono'},
         {
-            defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>@endpermission',
+            defaultContent: '@permission("CREATE_IND_RRHH")<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>@endpermission',
             data:'action',
             name:'action',
             title:'Acciones',

@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use App\Container\Humtalent\src\Persona;
 use App\Container\Humtalent\src\Permission;
 use App\Container\Humtalent\src\StatusOfDocument;
+use App\Container\Humtalent\src\Notification;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -26,6 +27,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use Storage;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Validator;
 
 
 class EmpleadoController extends Controller
@@ -132,6 +134,31 @@ class EmpleadoController extends Controller
         );
 
     }
+
+    /**
+     * Verifica que no exista un correo ya registrado
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function verificarEmail(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('POST')){
+
+            if (Persona::where('PRSN_Correo', $request['PRSN_Correo'])->exists()) {
+                return response('false');
+            } else {
+                return response('true');
+            }
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
 
     /**
      * Función que consulta los empleados que tienen la documentación incompleta y los envía al datatable correspondiente.
@@ -374,15 +401,16 @@ class EmpleadoController extends Controller
             }
             Mail::to($user, 'P1')->send(new EmailTalentoHumano($subject, $descripcion, $url));
 
-            if ($file !== null) {
-                $nombre = $file->getClientOriginalName();
-                Storage::disk('local')->delete($nombre);
-            }
+            Notification::create([      //para asi poder crear el registro nuevo a la base de datos
+                'NOTIF_Descripcion' => $nombre,
+                'NOTIF_Estado_Notificacion' => "Archivo",
+            ]);
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Mensaje enviado correctamente.'
             );
+
         }
 
         return AjaxResponse::fail(

@@ -25,7 +25,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Eventos registrados:'])
             <br>
             <div class="row">
-                @permission('FUNC_RRHH')
+                @permission('CREATE_EVENT_RRHH')
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
@@ -37,25 +37,25 @@
                 @endpermission
             </div>
             <br>
+            @permission('READ_EVENT_RRHH')
+                <div class="row">
+                    <div class="col-md-12">
 
-            <div class="row">
-                <div class="col-md-12">
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-eventos'])
+                            @slot('columns', [
+                                '#',
+                                'llave',
+                                'Evento',
+                                'Fecha Inicio',
+                                'Fecha Fin',
+                                'Hora',
+                                'Acciones'
+                            ])
+                        @endcomponent
 
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-eventos'])
-                        @slot('columns', [
-                            '#',
-                            'llave',
-                            'Evento',
-                            'Fecha Inicio',
-                            'Fecha Fin',
-                            'Hora',
-                            'Acciones'
-                        ])
-                    @endcomponent
-
+                    </div>
                 </div>
-
-            </div>
+            @endpermission
         @endcomponent
     </div>
 @endsection
@@ -106,7 +106,7 @@
                 {data: 'EVNT_Fecha_Fin', name: 'Fecha Fin'},
                 {data: 'EVNT_Hora', name: 'Hora'},
                 {
-                    defaultContent: '@permission("FUNC_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a><a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>@endpermission',
+                    defaultContent: '@permission("UPDATE_EVENT_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_EVENT_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission @permission("UPDATE_EVENT_RRHH")<a href="javascript:;" class="btn btn-simple btn-success btn-icon asistent"><i class="icon-users"></i></a>@endpermission',
                     data:'action',
                     name:'action',
                     title:'Acciones',
