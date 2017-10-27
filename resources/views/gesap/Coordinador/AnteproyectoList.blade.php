@@ -154,13 +154,12 @@
                     {data: 'NPRY_FechaR', className:'none',searchable: true},
                     {data: 'NPRY_FechaL', className:'none',searchable: true},
                     {data: 'NPRY_Estado',searchable: true, name: 'Estado'},
-                    {data: 'action',
-                     className:'',
+                    {data: 'radicacion.RDCN_Min',className:'none',
 					 render: function (data, type, full, meta) {
-						 return '<a href="#" class="min">DESCARGAR MIN</a>';
+						 return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
 					 }
                     },
-                    {data: 'radicacion.RDCN_Requerimientos',className:'',searchable: true,
+                    {data: 'radicacion.RDCN_Requerimientos',className:'none',searchable: true,
 					 render: function (data, type, full, meta) {
 						 if(data=="NO FILE"){
 							 return "NO APLICA";    
@@ -254,11 +253,6 @@
             });
             
             table = table.DataTable();
-            
-            
-            
-            
-            
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
@@ -273,31 +267,6 @@
                 });
             });
     
-            
-            table.on('click', '.min', function (e) {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-                console.log(O.PK_NPRY_IdMinr008);
-                route = '{{ route('download.documento') }}'+'/'+O.radicacion.RDCN_Min;
-				$.ajax({
-                    url: route,
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response){
-                        $('#lista-anteproyecto').html(response);
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 &&  xhr === 'error') {
-                            UIToastr.init(xhr, response.title, response.message);
-                        }
-                    }
-                });
-            });
-            
-            
             table.on('click', '.assign', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');

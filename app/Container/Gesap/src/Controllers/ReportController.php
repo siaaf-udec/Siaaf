@@ -94,7 +94,7 @@ class ReportController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $proyectos=Anteproyecto::
-					with(['radicacsadasdasdion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+					with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 	->get();
 
                 return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
@@ -302,23 +302,23 @@ class ReportController extends Controller
     public function graficos()
     {
         $anteproyectos=Anteproyecto::all()->count();
-
+        
         $anteproyectosR=Anteproyecto::where('NPRY_Estado', '=', 'RECHAZADO')->count();
         if ($anteproyectos==0) {
-            $anteproyectosRP=$anteproyectosR*100/1;
+            $anteproyectosRP=0;
         } else {
             $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
         }
         $proyectos=Proyecto::all()->count();
         if ($anteproyectos==0) {
-            $proyectosP=$proyectos*100/1;
+            $proyectosP=0;
         } else {
             $proyectosP=$proyectos*100/$anteproyectos;
         }
 
         $proyectosT=Proyecto::where('PRYT_Estado', '=', 'TERMINADO')->count();
         if ($proyectos==0) {
-            $proyectosTP=$proyectosT*100/1;
+            $proyectosTP=0;
         } else {
             $proyectosTP=$proyectosT*100/$proyectos;
         }
@@ -348,12 +348,19 @@ class ReportController extends Controller
             ->get([
 				'NPRY_Estado AS Estado',
 				DB::raw('COUNT(*) as value')
-			])
-            ->toJSON();
+			]);
+        
+            
+            if(!$stats->count()){
+                $aux["Estado"]="Sin Registros";
+                $aux['Value']=0; 
+                $stats[]=$aux;
+            }
+            
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Mensaje enviado correctamente.',
-                $stats
+                $stats->ToJSON()
             );
         }
         return AjaxResponse::fail(
@@ -377,12 +384,18 @@ class ReportController extends Controller
             ->get([
                 'PRYT_Estado as Estado',
                 DB::raw('COUNT(*) as value')
-            ])
-            ->toJSON();
+            ]);
+        
+            if(!$stats->count()){
+                $aux["Estado"]="Sin Registros";
+                $aux['Value']=0; 
+                $stats[]=$aux;
+            }
+            
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Mensaje enviado correctamente.',
-                $stats
+                $stats->toJSON()
             );
         }
         return AjaxResponse::fail(
@@ -417,10 +430,16 @@ class ReportController extends Controller
                 ;
 
             foreach ($stats as $row) {
-                $row['Nombre']=$row->usuarios->name;
+                $row['Estado']=$row->usuarios->name;
                 $row['Apellido']=$row->usuarios->lastname;
                 unset($row['FK_Developer_User_Id']);
                 unset($row['usuarios']);
+            }
+            
+            if(!$stats->count()){
+                $aux["Estado"]="Sin Registros";
+                $aux['Value']=0; 
+                $stats[]=$aux;
             }
 
             return AjaxResponse::success(
@@ -458,10 +477,16 @@ class ReportController extends Controller
                 ;
 
             foreach ($stats as $row) {
-                $row['Nombre']=$row->usuarios->name;
+                $row['Estado']=$row->usuarios->name;
                 $row['Apellido']=$row->usuarios->lastname;
                 unset($row['FK_Developer_User_Id']);
                 unset($row['usuarios']);
+            }
+            
+            if(!$stats->count()){
+                $aux["Estado"]="Sin Registros";
+                $aux['Value']=0; 
+                $stats[]=$aux;
             }
             return AjaxResponse::success(
                 '¡Bien hecho!',

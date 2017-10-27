@@ -44,7 +44,7 @@
 								@endif
 								@endpermission
 							</div>
-							<a class="list-toggle-container" data-toggle="collapse" href="#completed" aria-expanded="true">
+							<a class="list-toggle-container" data-toggle="collapse" href="#completed" aria-expanded="false">
 								<div class="list-toggle  uppercase"> Completadas
 									<span class="badge badge-default pull-right bg-white font-green bold" id="completadas">
 									</span>
@@ -101,12 +101,12 @@
 									@endforeach
 								</ul>
 							</div>
-							<a class="list-toggle-container" data-toggle="collapse" href="#pending" aria-expanded="false">
+							<a class="list-toggle-container" data-toggle="collapse" href="#pending" aria-expanded="true">
 								<div class="list-toggle done uppercase"> Pendientes
 									<span class="badge badge-default pull-right bg-white font-dark bold" id="pendientes"></span>
 								</div>
 							</a>
-							<div class="panel-collapse collapse" id="pending">
+							<div class="panel-collapse collapse in" id="pending" aria-expanded="true">
 								<ul>
 									@foreach($anteproyecto[0]->proyecto->documentos as $documento)
 									@if($documento->DMNT_Archivo == Null)
@@ -246,29 +246,29 @@
 </div>
 
 	<!--Local Scripts-->
-
-	<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+	
+<script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>	
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
 	<script>
-	jQuery(document).ready(function () {
-		$("#completadas").html($("#completed li").size())
-		$("#pendientes").html($("#pending li").size())
+		jQuery(document).ready(function () {
+			$("#completadas").html($("#completed li").size());
+			$("#pendientes").html($("#pending li").size());
 
-		$('#create').on('click', function (e) {
-			e.preventDefault();
-			$('#modal-create-activity').modal('toggle');
-		});
+			$('#create').on('click', function (e) {
+				e.preventDefault();
+				$('#modal-create-activity').modal('toggle');
+			});
 
-		$('.upload').on('click', function (e) {
-			e.preventDefault();
-			var parent = $(this).closest('li').attr('id');
-			$('input[name="PK_actividad"]').val(parent);
-			$('#modal_documento').modal('toggle');
-		});
+			$('.upload').on('click', function (e) {
+				e.preventDefault();
+				var parent = $(this).closest('li').attr('id');
+				$('input[name="PK_actividad"]').val(parent);
+				$('#modal_documento').modal('toggle');
+			});
 
-		var createActivity = function () {
+			var createActivity = function () {
 				return{
 					init: function () {
 						var route = '{{ route('proyecto.nueva.actividad') }}';
@@ -297,14 +297,11 @@
 									$('#modal-create-activity').modal('hide');
 									$('#from_create-activity')[0].reset(); //Limpia formulario
 									UIToastr.init(xhr , response.title , response.message  );
-
-								}
-							},
+								}},
 							error: function (response, xhr, request) {
 								if (request.status === 422 &&  xhr === 'error') {
 									UIToastr.init(xhr, response.title, response.message);
-								}
-							}
+								}}
 						}).done(function (data) {
 							route = '{{ route('proyecto.actividades') }}/{{$id}}';
 							$(".content-ajax").load(route);
@@ -349,7 +346,6 @@
 							async: async,
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
-									//$('.panel-collapse').ajax.reload();
 									UIToastr.init(xhr, response.title, response.message);
 									$('#'+parent).remove();
 								}
@@ -374,14 +370,14 @@
 			  }; 
 			}
 			var route = '{{ route("proyecto.actividades.upload") }}'; 
-			var data="{{$id}}";
+			var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
 			var formatfile = '.jpeg,.pdf,.jpg,.png,.gif'; 
 			var numfile = 1; 
-		   $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,data)); 
+		   $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
 
-	});
-
-		$('#link_back-director').on('click', function (e) {
+		
+		
+				$('#link_back-director').on('click', function (e) {
 			e.preventDefault();
 			var route = '{{ route('anteproyecto.index.directorList.ajax') }}';
 			$(".content-ajax").load(route);
@@ -392,5 +388,9 @@
 			e.preventDefault();
 			var route = '{{ route('anteproyecto.index.studentList.ajax') }}';
 			$(".content-ajax").load(route);
-		});    
+		});
+		
+	});
+
+    
 	</script>   

@@ -1,3 +1,4 @@
+
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Director'])
             <div class="row">
@@ -27,6 +28,7 @@
             </div>
         @endcomponent
     </div>    
+
 	<!--Local Scripts-->
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script>

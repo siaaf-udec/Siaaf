@@ -23,6 +23,7 @@ use App\Container\gesap\src\Anteproyecto;
 use App\Container\gesap\src\Radicacion;
 use App\Container\gesap\src\Encargados;
 use App\Container\gesap\src\Observaciones;
+use App\Container\gesap\src\CheckObservaciones;
 use App\Container\gesap\src\Respuesta;
 use App\Container\gesap\src\Proyecto;
 use App\Container\gesap\src\Documentos;
@@ -424,10 +425,11 @@ class EvaluatorController extends Controller
     * Consulta de observaciones de proyecto especifico
     *
     * @param int $id
+    * @param  \Illuminate\Http\Request 
     *
     * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function observationsList($id)
+    public function observationsList($id, Request $request)
     {
         if ($request->isMethod('GET')) {
             $observaciones=Observaciones::
@@ -705,14 +707,10 @@ class EvaluatorController extends Controller
     {
         if ($request->isMethod('GET')) {
             try {
-                $url = storage_path('app/'.$archivo);
-                return response()->download($url);                
+                $url = storage_path('app/'.$archivo);  
+                return response()->download($url);
             } catch (Exception $e) {
-                return AjaxResponse::fail(
-                    '¡Lo sentimos!',
-                    'El archivo no se encontro.',
-                    $e->getMessage()
-                );
+                return $e->getMessage();
             }
         }
     }

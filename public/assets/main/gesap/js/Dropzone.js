@@ -1,7 +1,7 @@
 var FormDropzone = function () {
     return {
         //main function to initiate the module
-        init: function (route, formatfile, numfile, method, params,data) {
+        init: function (route, formatfile, numfile, method, params, comeback) {
             
             Dropzone.options.autoDiscover = false;
             Dropzone.options.myDropzone = {
@@ -11,9 +11,9 @@ var FormDropzone = function () {
                 //Agregará un enlace a cada vista previa del archivo para eliminar o cancelar
                 addRemoveLinks: true,
                 //¿Cuántas cargas de archivos se procesarán en paralelo?
-                parallelUploads:  ( typeof numfile !== 'undefined' && typeof numfile === 'number' ) ? numfile : 1,
+                parallelUploads:  (typeof numfile !== 'undefined' && typeof numfile === 'number') ? numfile : 1,
                 //Define el número de archivos
-                maxFiles: ( typeof numfile !== 'undefined' && typeof numfile === 'number' ) ? numfile : 1,
+                maxFiles: (typeof numfile !== 'undefined' && typeof numfile === 'number') ? numfile : 1,
                 //Los archivos se agregarán a la cola pero la cola no se procesará automáticamente.
                 autoProcessQueue: false,
                 //Texto que se usará para eliminar un archivo
@@ -31,7 +31,7 @@ var FormDropzone = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 acceptedFiles: formatfile,
-                init: function() {
+                init: function () {
                     var myDropzone = this,
                         btnsubmit = $('.button-submit');
 
@@ -83,9 +83,8 @@ var FormDropzone = function () {
                             'El archivo se ha procesado satisfactoriamente.'
                         );
                         $('#modal_documento').modal('hide');
-                        route_index = '{{ route('proyecto.actividades') }}'+'/'+data;
+                        route_index = comeback;
                         $(".content-ajax").load(route_index);
-                        App.unblockUI();
                         
                     }
                 },

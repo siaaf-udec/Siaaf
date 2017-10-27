@@ -8,7 +8,9 @@
 				@endpermission
 			</div>
 		</div>
-		<div class="clearfix"> </div><br><br>
+		<div class="clearfix"> </div>
+        <br>
+        <br>
 		<div class="col-md-12">
 			@component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyecto'])
 				@slot('columns', [
@@ -34,7 +36,6 @@
 	</div>
 	@endcomponent
 </div>
-
 	<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 	<script>
@@ -151,7 +152,7 @@
                      render: function ( data, type, full, meta ) {
 						 if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
 							 if(full.proyecto==null){
-								 return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a> @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
+								 return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
                              }else{
                                  if (full.proyecto.PRYT_Estado=="TERMINADO") {
                                      return '<span class="label label-sm label-success">Proyecto Terminado</span>';

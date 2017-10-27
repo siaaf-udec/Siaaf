@@ -161,70 +161,6 @@
 @endsection
 
 @push('plugins')
-<script>
-    $(function() {
-        
-        
-        function requestData(route,chart){
-            $.ajax({
-                type: "GET",
-                url:route , 
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response, xhr, request) {
-                    if (request.status === 200 && xhr === 'success') {
-                        var graficas = response.data;
-                        chart.setData(JSON.parse(graficas));
-                    }
-                }
-            });
-        }
-        
-        
-        
-        
-        var anteproyecto = Morris.Bar({
-            element: 'anteproyecto-state',
-            data: [0,0],
-            xkey: 'Estado',
-            ykeys: ['value'],
-            labels: ['#']
-        });
-        requestData("{{route('data.chart.preliminary')}}",anteproyecto);
-        
-        var proyecto = Morris.Bar({
-            element: 'proyecto-state',
-            data: [0,0],
-            xkey: 'Estado',
-            ykeys: ['value'],
-            labels: ['#']
-        });
-        requestData("{{route('data.chart.project')}}",proyecto);
-        
-        var jurados = Morris.Bar({
-            element: 'jurado-state',
-            data: [0,0],
-            xkey: 'Nombre',
-            ykeys: ['value'],
-            labels: ['#']
-        });
-        requestData("{{route('data.chart.jury')}}",jurados);
-        
-        var directores = Morris.Bar({
-            element: 'director-state',
-            data: [0,0],
-            xkey: 'Nombre',
-            ykeys: ['value'],
-            labels: ['#']
-        });
-        requestData("{{route('data.chart.director')}}",directores);
-        
-        
-    });
-</script>
-
 
 
 <script src="{{asset('assets/global/plugins/respond.min.js')}}"></script>
@@ -245,7 +181,7 @@
             <script src="{{asset('assets/global/plugins/morris/morris.min.js')}}"type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/morris/raphael-min.js')}}"type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/counterup/jquery.waypoints.min.js')}}"type="text/javascript"></script>
-            <script src="{{asset('assets/global/plugins/counterup/jquery.counterup.min.js')}}"type="text/javascript"></script>
+            <script src="{{asset('assets/main/gesap/js/jquery.counterup.js')}}"type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/amcharts/amcharts/amcharts.js')}}"type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/amcharts/amcharts/serial.js')}}"type="text/javascript"></script>
             <script src="{{asset('assets/global/plugins/amcharts/amcharts/pie.js')}}"type="text/javascript"></script>
@@ -295,4 +231,87 @@
 @endpush
 
 @push('functions')
+<script>
+    
+    $(function() {
+        function requestData(route,chart){
+            $.ajax({
+                type: "GET",
+                url:route , 
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        var graficas = response.data;
+                        chart.setData(JSON.parse(graficas));
+                    }
+                }
+            });
+        }
+        
+        var anteproyecto = Morris.Bar({
+            element: 'anteproyecto-state',
+            data: [0,0],
+            xkey: 'Estado',
+            ykeys: ['value'],
+            labels: ['# '],
+            barColors: function(row, series, type) {
+                if(row.x % 2 == 0)
+                    return '#32c5d2';
+                else
+                    return '#0e3d38';
+            }
+        });
+        requestData("{{route('data.chart.preliminary')}}",anteproyecto);
+        
+        var proyecto = Morris.Bar({
+            element: 'proyecto-state',
+            data: [0,0],
+            xkey: 'Estado',
+            ykeys: ['value'],
+            labels: ['#'],
+            barColors: function(row, series, type) {
+                if(row.x % 2 == 0)
+                    return '#32c5d2';
+                else
+                    return '#0e3d38';
+            }
+        });
+        requestData("{{route('data.chart.project')}}",proyecto);
+        
+        var jurados = Morris.Bar({
+            element: 'jurado-state',
+            data: [0,0],
+            xkey: 'Estado',//nombre
+            ykeys: ['value'],
+            labels: ['#'],
+            barColors: function(row, series, type) {
+                if(row.x % 2 == 0)
+                    return '#9CC4E4';
+                else
+                    return '#F26C4F';
+            }
+        });
+        requestData("{{route('data.chart.jury')}}",jurados);
+        
+        var directores = Morris.Bar({
+            element: 'director-state',
+            data: [0,0],
+            xkey: 'Estado',//Nombre
+            ykeys: ['value'],
+            labels: ['#'],
+            barColors: function(row, series, type) {
+                if(row.x % 2 == 0)
+                    return '#9CC4E4';
+                else
+                    return '#F26C4F';
+            }
+        });
+        requestData("{{route('data.chart.director')}}",directores);
+        
+        
+    });
+</script>
 @endpush
