@@ -230,6 +230,18 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ReporteController@reporCarrera',
             'as' => 'espacios.academicos.report.repCarr',
         ]);
+        Route::get('DescargarRepEstudiante/{fech1}/{fech2}/{labNum}', [
+            'uses' => $controller.'ReporteController@Descargar_Reporte_Est',
+            'as' => 'espacios.academicos.report.descargarRepEst'
+        ]);
+        Route::get('DescargarRepDocente/{fech1}/{fech2}/{labNum}/{aula}', [
+            'uses' => $controller.'ReporteController@Descargar_Reporte_Doc',
+            'as' => 'espacios.academicos.report.descargarRepDoc'
+        ]);
+        Route::get('DescargarRepCarrera/{fech1}/{fech2}/{carr}/{carrera}', [
+            'uses' => $controller.'ReporteController@Descargar_Reporte_Carr',
+            'as' => 'espacios.academicos.report.descargarRepCarr'
+        ]);
         Route::get('DownloadRepEstudiante', [ //DESCARGAR REPORTE
             'uses' => $controller . 'ReporteController@DownloadEstReporte',
             'as' => 'espacios.academicos.report.downReportEst'

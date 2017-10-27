@@ -57,13 +57,13 @@
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
-                <button onClick="window.print()">Imprimir</button>
+                <div>
+                    <a class="noPrint" href="{{ route('espacios.academicos.report.descargarRepDoc',[$fech1,$fech2,$labNum,$aula])}}">
+                        <i class="fa fa-download">
+                        </i>Descargar reporte
+                    </a>
+                </div>
             </div>
-            {{--<div><a class="noPrint" href="{{ route('espacios.academicos.report.downReportDoc') }}">
-                    <i class="fa fa-download">
-                    </i>Descargar reporte
-                </a>
-            </div>--}}
         </div>
     </div>
     <div align="center">
