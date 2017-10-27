@@ -232,6 +232,15 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'uses' => $controller.'ArticuloController@cargarTipoArticulos',
         'as' => 'cargar.tipoArticulos.select'
     ]);
+    Route::get('listarEstadoArticulos/{id?}',[
+        'uses' => $controller.'ArticuloController@cargarEstadoArticulos',
+        'as' => 'cargar.estadoArticulos.select'
+    ]);
+    Route::post('updateArticulo', [
+        'uses' => $controller . 'ArticuloController@update',
+        'as'   => 'articulo.update',
+    ]);
+
     Route::post('stores', [
         'uses' => $controller . 'ArticuloController@storeTipoArt',
         'as'   => 'tipoArticulos.store',
@@ -254,8 +263,14 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'uses' => $controller . 'ArticuloController@storeArticulos',
         'as'   => 'articulo.store',
     ]);
+    //Ruta para editar el Articulo
+    Route::get('edit/{id?}', [
+        'uses' => $controller . 'ArticuloController@edit',
+        'as'   => 'articulo.edit',
+    ])->where(['id' => '[0-9]+']);
     Route::get('listar', [
         'uses' => $controller . 'ArticuloController@dataTableArticulos',
         'as'   => 'listarArticulo.data',
     ]);
+
 });

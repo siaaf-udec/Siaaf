@@ -106,6 +106,33 @@ class ArticuloController extends Controller
 			);
 		}
 	}
+    /**
+     * Presenta el formulario con los datos para editar el regitro de un articulo.
+     *
+     * @param  \Illuminate\Http\Request
+     * @param  int $id
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function edit(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo','consultaEstadoArticulo' ])
+                ->where('id','=',$id)->get();
+
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos cargados correctamente.',
+                $articulos
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
 	public function ajaxUniqueTipoArt(Request $request)
     {
         if (TipoArticulo::where('TPART_Nombre', $request->get('TPART_Nombre'))->exists()) {
@@ -140,6 +167,29 @@ class ArticuloController extends Controller
 			);
 		}
 	}
+    /**
+     * Se realiza la actualización de los Articulos.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function update(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $articulo = Articulo::find($request['id']);
+            $articulo->fill($request->all());
+            $articulo->save();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 	public function cargarTipoArticulos(Request $request){
 		if($request->ajax() && $request->isMethod('GET')){
 			$tiposArticulo = TipoArticulo::all();
@@ -155,5 +205,20 @@ class ArticuloController extends Controller
 			);
 		}
 	}
+    public function cargarEstadoArticulos(Request $request){
+        if($request->ajax() && $request->isMethod('GET')){
+            $estadosArticulo = Estado::all();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente Articulos.',
+                $estadosArticulo
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
 
 }
