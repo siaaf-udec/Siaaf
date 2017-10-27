@@ -197,9 +197,8 @@
             $(".content-ajax").load(route);
         });
         $('#link_cancel').on('click', function (e) {
-
-            $(".content-ajax").load(route);e.preventDefault();
             var route = '{{ route('talento.humano.empleado.index.ajax') }}';
+            $(".content-ajax").load(route);
         });
 
     });
