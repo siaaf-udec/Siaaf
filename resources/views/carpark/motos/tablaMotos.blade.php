@@ -176,7 +176,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'suerrorccess') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
