@@ -206,11 +206,14 @@ class EventoController extends Controller
     /**
      * Muestra todos los eventos que esten registrados
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('humtalent.eventos.listaEventos');
+        if( $request->isMethod('GET')) {
+            return view('humtalent.eventos.listaEventos');
+        }
     }
 
     /**

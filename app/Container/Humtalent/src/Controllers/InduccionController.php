@@ -83,7 +83,7 @@ class InduccionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Función que almacena o actualiza el proceso de inducción.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse

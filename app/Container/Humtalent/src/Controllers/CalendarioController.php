@@ -310,32 +310,38 @@ class CalendarioController extends Controller
     /**
      *Función para mostrar la tabla con los empleados con documentación completa
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function documentacionCompleta()
+    public function documentacionCompleta(Request $request)
     {
-        $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
-            ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
-        if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
-            $estado = "Activada";
+        if ( $request->isMethod('GET')) {
+            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+            if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+                $estado = "Activada";
+            }
+            return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
         }
-        return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
     }
 
     /**
      *Función para mostrar la tabla con los empleados con documentación incompleta
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function documentacionIncompleta()
+    public function documentacionIncompleta(Request $request)
     {
-        $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
-            ->where('NOTIF_Descripcion', 'Documentos incompletos')
-            ->get(['NOTIF_Estado_Notificacion']);   //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
-        if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
-            $estado = "Activada";
+        if ( $request->isMethod('GET')) {
+            $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
+                ->where('NOTIF_Descripcion', 'Documentos incompletos')
+                ->get(['NOTIF_Estado_Notificacion']);   //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
+            if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
+                $estado = "Activada";
+            }
+            return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
         }
-        return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
     }
 
     /**

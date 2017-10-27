@@ -36,11 +36,14 @@ class EmpleadoController extends Controller
     /**
      * Muestra todos los empleados registrados.
      *
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('humtalent.empleado.tablasEmpleados');
+        if ( $request->isMethod('GET')) {
+            return view('humtalent.empleado.tablasEmpleados');
+        }
     }
 
     /**
