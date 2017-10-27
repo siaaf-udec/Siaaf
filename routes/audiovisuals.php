@@ -46,7 +46,7 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
     ]);
     Route::get('indexTablaPress', [
         'uses' => $controller . 'AdministradorGestionController@indexTablaPrestamos',
-        'as'   => 'audiovisuales.ListarPrestamo.index',
+        'as'   => 'audiovisuales.gestionPrestamos.listar',
     ]);
     Route::get('dataUsuarios', [
         'uses' => $controller . 'AdministradorGestionController@dataListarFuncionarios',

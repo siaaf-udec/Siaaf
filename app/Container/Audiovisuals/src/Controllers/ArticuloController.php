@@ -141,8 +141,6 @@ class ArticuloController extends Controller
             return \Response::json(true);
         }
     }
-
-
 	public function ajaxUniqueKit(Request $request)
 	{
 		if (Kit::where('KIT_Nombre', $request->get('KIT_Nombre'))->exists()) {
@@ -152,7 +150,6 @@ class ArticuloController extends Controller
 		}
 	}
 	public function cargarKits(Request $request){
-
 		if($request->ajax() && $request->isMethod('GET')){
 			$kit = Kit::all();
 			return AjaxResponse::success(

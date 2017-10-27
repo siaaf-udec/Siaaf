@@ -27,7 +27,6 @@ class ValidacionController extends Controller
     }
     public function edit(Request $request, Validaciones $task)
     {
-        //return redirect('/tasks');
         if ($request->ajax() && $request->isMethod('POST')) {
             $task->VAL_PRE_Valor = $request['value'];
             $task->save();

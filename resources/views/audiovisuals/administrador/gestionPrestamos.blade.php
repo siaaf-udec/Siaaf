@@ -288,18 +288,12 @@ de la plantilla
                 var dataTable = table.row($tr).data();
                 var route = '{{ route('audiovisuales.EntregasPrestamo.index') }}'+'/'+dataTable.PRT_Num_Orden;
                 $(".content-ajax").load(route);
-
             });
             $( ".reservaAjax" ).on('click', function (e) {
                 e.preventDefault();
-                //ruta para listar los prestamos
-                //audiovisuales.ListarPrestamo.index'
-                //ruta index reservas
                 var route = '{{ route('reserva.index') }}';
                 $(".content-ajax").load(route);
             });
-
-
         });
     </script>
 @endpush

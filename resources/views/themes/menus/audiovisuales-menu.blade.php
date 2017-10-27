@@ -31,21 +31,22 @@
         </li>
         @endpermission
         @permission('ADMIN_AUDIOVISUALES')
-        <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.index'], 'start active open') }}">
+        <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.*'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-settings"></i>
                 <span class="title">Gestión Prestamos</span>
-                <span class="arrow {{ active(['audiovisuales.gestionPrestamos.index.*'], 'open') }}"></span>
+                <span class="arrow {{ active(['audiovisuales.gestionPrestamos.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.index'], 'start active open') }}">
                     <a href="{{  route('audiovisuales.gestionPrestamos.index') }}" class="nav-link nav-toggle">
                         <i class="icon-plus"></i>
                         <span class="title">Realizar Prestamo</span>
+
                     </a>
                 </li>
-                <li class="nav-item {{ active(['audiovisuales.ListarPrestamo.index'], 'start active open') }}">
-                    <a href="{{ route('audiovisuales.ListarPrestamo.index') }}" class="nav-link nav-toggle">
+                <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.listar'], 'start active open') }}">
+                    <a href="{{ route('audiovisuales.gestionPrestamos.listar') }}" class="nav-link nav-toggle">
                         <i class="icon-book-open"></i>
                         <span class="title">Listar Prestamos</span>
                     </a>
@@ -85,7 +86,5 @@
             </ul>
         </li>
         @endpermission
-
-
     </ul>
 </li>

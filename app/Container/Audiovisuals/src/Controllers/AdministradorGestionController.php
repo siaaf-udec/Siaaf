@@ -31,9 +31,7 @@ class AdministradorGestionController extends Controller
     //FUNCION VISTA PRINCIPAL GESTION ADMINISTRADOR
     public function index()
     {
-
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-
         //cargar los articulos disponibles en la vista ajax
         $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
             $query->where('FK_ART_Estado_id', '=', 1);
@@ -44,81 +42,17 @@ class AdministradorGestionController extends Controller
                 'carrerasUdec' => $carreras->toArray(),
             ]
         );
-
     }
     public function reportes()
     {
-
-        return view('audiovisuals.reporte.gestionReportes'
-
-        );
-
-    }
-
-    public function getUltimoDiaMes($elAnio,$elMes) {
-        return date("d",(mktime(0,0,0,$elMes+1,1,$elAnio)-1));
-    }
-    public function registros_mes($anio,$mes)
-    {
-        $primer_dia=1;
-        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-        $usuarios=User::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $ct=count($usuarios);
-
-        for($d=1;$d<=$ultimo_dia;$d++){
-            $registros[$d]=0;
-        }
-
-        foreach($usuarios as $usuario){
-            $diasel=intval(date("d",strtotime($usuario->created_at) ) );
-            $registros[$diasel]++;
-        }
-
-        $data=array("totaldias"=>$ultimo_dia, "registrosdia" =>$registros);
-        return   json_encode($data);
+        return view('audiovisuals.reporte.gestionReportes');
     }
     public function reporteCarreras(Request $request,$anio,$mes)   {
-        //$anio=date("Y");
-        //$mes=date("m");
-        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
         $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
         $date = date("d/m/Y");
         $time = date("h:i A");
         $carreras = Programas::all()->pluck('PRO_Nombre');
         $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
-        $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
-        $total = count($empleados);
-        $cont = 1;
-
-            return view('audiovisuals.reporte.ReporteCarreras',
-                [
-                    'empleados'=>$empleados->toArray(),
-                    'date'=>$date ,
-                    'time'=>$time   ,
-                    'total'=>$total   ,
-                    'cont'=>$cont,
-                    'anio'=>$anio,
-                    'mes'=>$mes,
-                    'nombremes'=>$nombremes,
-                    'pruba'=>1,
-                    'carreras'=>$carreras->toArray(),
-                    'tipoArticulo'=>$tipoArticulo->toArray(),
-
-                ]
-            );
-
-
-/*
-        $mensaje=
-        dd($mensaje);
-        $anio=date("Y");
-        $mes=date("m");
-        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
-        $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
-        $date = date("d/m/Y");
-        $time = date("h:i A");
         $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
         $total = count($empleados);
         $cont = 1;
@@ -133,15 +67,14 @@ class AdministradorGestionController extends Controller
                 'mes'=>$mes,
                 'nombremes'=>$nombremes,
                 'pruba'=>1,
-                'mensaje'=>$mensaje,
+                'carreras'=>$carreras->toArray(),
+                'tipoArticulo'=>$tipoArticulo->toArray(),
+
             ]
-        );*/
+        );
     }
     public function downloadCarreras($anio,$mes)
     {
-        //$anio=date("Y");
-        //$mes=date("m");
-        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
         $nombremes= array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
         $date = date("d/m/Y");
         $time = date("h:i A");
@@ -149,7 +82,6 @@ class AdministradorGestionController extends Controller
         $total = count($empleados);
         $cont = 1;
         $pdf = SnappyPdf::loadView('audiovisuals.reporte.ReporteCarreras',
-
             [
                 'empleados'=>$empleados->toArray(),
                 'date'=>$date ,
@@ -167,10 +99,9 @@ class AdministradorGestionController extends Controller
     }
     public function reporteTiempoUso()
     {
-        $anio=date("Y");
-        $mes=date("m");
-        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
-        $nombremes= array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
+        $anio = date("Y");
+        $mes = date("m");
+        $nombremes = array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
         $date = date("d/m/Y");
         $time = date("h:i A");
         $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
@@ -179,18 +110,15 @@ class AdministradorGestionController extends Controller
         return view('audiovisuals.reporte.TiempoUsoArticulos',
             compact('empleados', 'date', 'time', 'cont'),
             [
-
-                'total'=>$total   ,
-
+                'total'=>$total,
             ]
         );
     }
     public function downloadTiempoUso()
     {
-        $anio=date("Y");
-        $mes=date("m");
-        //$nombremes= array('01'=>'ENERO','02'=>'FEBRERO','03'=>'MARZO','04'=>'ABRIL','05'=>'MAYO','06'=>'JUNIO','07'=>'JULIO','08'=>'AGOSTO','09'=>'SEPTIEMBRE','10'=>'OCTUBRE','11'=>'NOVIEMBRE','12'=>'DICIEMBRE');
-        $nombremes= array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+        $anio = date("Y");
+        $mes = date("m");
+        $nombremes = array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
         $date = date("d/m/Y");
         $time = date("h:i A");
         $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
@@ -199,24 +127,30 @@ class AdministradorGestionController extends Controller
         return SnappyPdf::loadView('audiovisuals.reporte.TiempoUsoArticulos',
             compact('empleados', 'date', 'time', 'cont'),
             [
-
-                'total'=>$total   ,
-
+                'total'=>$total ,
             ]
         )->download('ReporteCarreras.pdf');
     }
-    public function indexjax(){
-        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-        //cargar los articulos disponibles en la vista ajax
-        $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-            $query->where('FK_ART_Estado_id', '=', 1);
-        })->pluck('TPART_Nombre', 'id');
-        return view('audiovisuals.administrador.contenidoAjax.prestamoArticuloAjax',
-            [
-                'tipoArticulos' => $tipo->toArray(),
-                'carrerasUdec' => $carreras->toArray(),
-            ]
-        );
+    public function indexjax(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+            //cargar los articulos disponibles en la vista ajax
+            $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
+                $query->where('FK_ART_Estado_id', '=', 1);
+            })->pluck('TPART_Nombre', 'id');
+            return view('audiovisuals.administrador.contenidoAjax.prestamoArticuloAjax',
+                [
+                    'tipoArticulos' => $tipo->toArray(),
+                    'carrerasUdec' => $carreras->toArray(),
+                ]
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
     }
     public function indexTablaPrestamos()
     {
@@ -227,58 +161,67 @@ class AdministradorGestionController extends Controller
             ]
         );
     }
-    public function indexTablaPrestamos2()
+    public function indexTablaPrestamos2(Request $request)
     {
-        $funcionarios = Solicitudes::with(['consultaUsuarioAudiovisuales'=> function($query){
-            return $query->select('id','USER_FK_User')->with(['user'=>function($query){
-                    return $query->select(
-                        'id','name','lastname','identity_type',
-                        'identity_no','email'
-                    );
-                }
-                ]
-            );
-        }])->get();
-        $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
-        $array = array();
-        foreach ($funcionarios as $le) {
-            array_push($array, $le[0]);
-        }
-        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-        return view('audiovisuals.administrador.contenidoAjax.gestionPrestamosAjax',[
-            'programas' => $carreras->toArray(),
-        ]);
-    }
-    public function indexEntregaPrestamos($idNumorden){
-        $prestamos = Solicitudes::with(['consultaArticulos'=> function($query){
-            return $query->select('id','FK_ART_Tipo_id')
-                ->with([
-                    'consultaTipoArticulo'=>function($query){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $funcionarios = Solicitudes::with(['consultaUsuarioAudiovisuales'=> function($query){
+                return $query->select('id','USER_FK_User')->with(['user'=>function($query){
                         return $query->select(
-                            'id','TPART_Nombre' );
+                            'id','name','lastname','identity_type',
+                            'identity_no','email'
+                        );
                     }
-                ]);
-        },'consultaKitArticulo'])->where([
-            ['PRT_Num_Orden','=',$idNumorden],
-            ['PRT_FK_Tipo_Solicitud','=',2]//prestamos
-        ])->get();
-        $array2 = array();
-        foreach ($prestamos as $player) {
-            $dtF= new Carbon();//esto de carbon para que lo est ausando
-            $dtF=Carbon::parse($player['PRT_Fecha_Fin']);
-            $dtI = new Carbon();
-            $dtI = Carbon::now();
-            $difDt= $dtF->diffInHours($dtI);
-            if($difDt==0){
-                $difDt=$dtF->diffInMinutes($dtI);
-            }
-            $array = array_add($player, 'tiemporestante', $difDt);
-            array_push($array2,$array);
-        }
-        return view('audiovisuals.administrador.contenidoAjax.ajaxEntregarPrestamo',[
-            'prestamos'=>$array2,
-            'contador'=>0
+                    ]
+                );
+            }])->get();
+            $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+            return view('audiovisuals.administrador.contenidoAjax.gestionPrestamosAjax',[
+                'programas' => $carreras->toArray(),
             ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+    }
+    public function indexEntregaPrestamos(Request $request,$idNumorden){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $prestamos = Solicitudes::with(['consultaArticulos'=> function($query){
+                return $query->select('id','FK_ART_Tipo_id')
+                    ->with([
+                        'consultaTipoArticulo'=>function($query){
+                            return $query->select(
+                                'id','TPART_Nombre' );
+                        }
+                    ]);
+            },'consultaKitArticulo'])->where([
+                ['PRT_Num_Orden','=',$idNumorden],
+                ['PRT_FK_Tipo_Solicitud','=',2]//prestamos
+            ])->get();
+            $array2 = array();
+            foreach ($prestamos as $player) {
+                $dtF= new Carbon();//esto de carbon para que lo est ausando
+                $dtF=Carbon::parse($player['PRT_Fecha_Fin']);
+                $dtI = new Carbon();
+                $dtI = Carbon::now();
+                $difDt= $dtF->diffInHours($dtI);
+                if($difDt==0){
+                    $difDt=$dtF->diffInMinutes($dtI);
+                }
+                $array = array_add($player, 'tiemporestante', $difDt);
+                array_push($array2,$array);
+            }
+            return view('audiovisuals.administrador.contenidoAjax.ajaxEntregarPrestamo',[
+                'prestamos'=>$array2,
+                'contador'=>0
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
     }
     public function updateSolicitud($idSolicitud,$dataObservation){
         $user = Auth::user();
@@ -426,9 +369,17 @@ class AdministradorGestionController extends Controller
         }
     }
     //FUNCION VISTA AJAX GESTION RESERVAS ADMINISTRADOR
-    public function reservaIndex()
+    public function reservaIndex(Request $request)
     {
-        return view('audiovisuals.administrador.contenidoAjax.ajaxReservas');
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('audiovisuals.administrador.contenidoAjax.ajaxReservas');
+        }
+        else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     //FUNCION VISTA AJAX FORM REPEAT ADMINISTRADOR
     public function formRepeatAjaxindex(Request $request)
@@ -738,9 +689,6 @@ class AdministradorGestionController extends Controller
             );
         }
     }
-///eliminar
-/// storeProgramaAdmin
-
     public function storeProgramaAdmin(Request $request){
         if ($request->ajax() && $request->isMethod('POST')) {
             UsuarioAudiovisuales::create([
@@ -749,7 +697,7 @@ class AdministradorGestionController extends Controller
             ]);
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Programa registrado correctamente.'
+                'Datos Verificados.'
             );
         }
         else{
@@ -761,7 +709,6 @@ class AdministradorGestionController extends Controller
     }
     public function crearProgramaFuncio(Request $request, $idFuncionario)
     {
-
         if ($request->ajax() && $request->isMethod('POST')) {
             UsuarioAudiovisuales::create([
                 'USER_FK_Programa' => $request->get('FK_FUNCIONARIO_Programa'),
@@ -957,7 +904,6 @@ class AdministradorGestionController extends Controller
     }
     public function actualizarArticulos(Request $request)
     {
-        //$request=json_encode($request);
         if ($request->ajax() && $request->isMethod('POST')) {
             $h = json_decode($request->get('tipo'));
             $this->actualizarEstadosArticulo($h->tipoArticulosSelect, $h->cantidadArticulos);            //$idArticulo = $idArticuloConsultado['id'];
@@ -965,7 +911,6 @@ class AdministradorGestionController extends Controller
                 '¡Bien hecho!',
                 'Reserva registrada correctamente.'
             );
-
         } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -975,7 +920,6 @@ class AdministradorGestionController extends Controller
     }
     public function actualizarEstadosArticulo($tipo, $cantidad)
     {
-
         for ($i = 0; $i < (int)$cantidad; $i++) {
             Articulo::where([
                 ['FK_ART_Tipo_id', '=', (int)$tipo],

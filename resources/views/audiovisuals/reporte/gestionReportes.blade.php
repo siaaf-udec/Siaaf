@@ -42,7 +42,6 @@
             <div class="row">
                 <div class="col-md-9 col-md-offset-1">
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN USO DE ELEMENTOS:</b></p><br>
-
                         <a href="{{ route('audiovisuales.pdfTiempoUso') }}" target=”_blank” class="icon-btn"
                            data-toggle="tooltip" data-placement="bottom"
                            title="Reporte con información de tiempo de uso de cada articulo como tipo articulo, descripcion, tiempo de uso.">
@@ -108,17 +107,14 @@
                                 <div class="col-md-6">
                                     <p>
                                         {!! Field::select('anio_selCarrera',
-
                                                 ['2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019'],
                                                 null,
                                                 [  'label' => 'Seleccionar un año']) !!}
                                     </p>
-
                                 </div>
                                 <div class="col-md-6">
                                     <p>
                                     {!! Field::select('mes_selCarrera',
-
                                                 ['ENERO' => 'ENERO', 'FEBRERO' => 'FEBRERO', 'MARZO' => 'MARZO', 'ABRIL' => 'ABRIL', 'MAYO' => 'MAYO', 'JUNIO' => 'JUNIO', 'JULIO' => 'JULIO', 'AGOSTO' => 'AGOSTO', 'SEPTIEMBRE' => 'SEPTIEMBRE', 'OCTUBRE' => 'OCTUBRE', 'NOVIEMBRE' => 'NOVIEMBRE', 'DICIEMBRE' => 'DICIEMBRE'],
                                                 [ 'label' => 'Seleccionar una mes']) !!}
                                     </p>
@@ -152,28 +148,27 @@
                                 <div class="col-md-12">
                                     <p>
                                         {!! Field::text('id_funcionario',
-                                                            ['label' => 'Ingrese Identificación:'],
-                                                            ['help' => 'Ingrese cedula del funcionario', 'icon' => 'fa fa-credit-card'])
-                                                            !!}
+                                            ['label' => 'Ingrese Identificación:'],
+                                            ['help' => 'Ingrese cedula del funcionario', 'icon' => 'fa fa-credit-card'])
+                                        !!}
                                     </p>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
                                         {!! Field::select('anio_sel',
-
-                                                ['2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019'],
-                                                null,
-                                                [  'label' => 'Seleccionar un año']) !!}
+                                            ['2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019'],
+                                            null,
+                                            [  'label' => 'Seleccionar un año'])
+                                        !!}
                                     </p>
-
                                 </div>
                                 <div class="col-md-6">
                                     <p>
                                         {!! Field::select('mes_sel',
-
-                                                    ['1' => 'ENERO', '2' => 'FEBRERO', '3' => 'MARZO', '4' => 'ABRIL', '5' => 'MAYO', '6' => 'JUNIO', '7' => 'JULIO', '8' => 'AGOSTO', '9' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE', '12' => 'DICIEMBRE'],
-                                                    null,
-                                                    [ 'label' => 'Seleccionar una mes']) !!}
+                                            ['1' => 'ENERO', '2' => 'FEBRERO', '3' => 'MARZO', '4' => 'ABRIL', '5' => 'MAYO', '6' => 'JUNIO', '7' => 'JULIO', '8' => 'AGOSTO', '9' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE', '12' => 'DICIEMBRE'],
+                                            null,
+                                            [ 'label' => 'Seleccionar una mes'])
+                                        !!}
                                     </p>
                                 </div>
                             </div>
@@ -200,17 +195,15 @@
                             </h2>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(['id' => 'from_admin_update', 'class' => '', 'url' => '/forms']) !!}
+                            {!! Form::open(['id' => 'from_reportes_update', 'class' => '', 'url' => '/forms']) !!}
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>
                                         {!! Field::select('aniosel22',
                                                 ['2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019'],
                                                 [  'label' => 'Seleccionar un año'])
-                                          !!}
-
+                                         !!}
                                     </p>
-
                                 </div>
                             </div>
                         </div>
@@ -329,88 +322,65 @@
             var reporteCarreras = function () {
                 return{
                     init: function () {
-                        var mes =$('select[name="mes_selCarrera"]').val();
-                        var anio=$('select[name="anio_selCarrera"]').val();
+                        var mes = $('select[name="mes_selCarrera"]').val();
+                        var anio = $('select[name="anio_selCarrera"]').val();
                         var route = '{{ route('audiovisuales.pdfCarreras') }}'+ '/'+ anio+'/'+mes;
-
                         var type = 'POST';
                         var async = async || false;
                         var formData = new FormData();
-        ;
-                        console.log('entra funcion');
-                        console.log(mes);
-                        //console.log($('#mes_selPrueba').val());
-
                         formData.append('anio_sel',$('select[name="anio_selCarrera"]').val());
                         formData.append('mes_sel', $('select[name="mes_selCarrera"]').val());
                         $.get( route, function(){
-                            location.href =route;
-                        });/*
-
-                        $.ajax({
-                            url: route,
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            data: formData,
-                            processData: false,
-                            async: async,
-                            beforeSend: function () {
-
-                            },
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    console.log("enviado")
-                                    console.log(response.data);
-
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            }
-                        });*/
+                            location.href = route;
+                        });
                     }
                 }
             };
             var form_reporte_carreras = $('#from_reporte_carreras');
             var rules_reporte_carreras = {
-                anio_sel:{required: true},
-                mes_sel:{ required: true},
-
-
+                anio_selCarrera:{required: true},
+                mes_selCarrera:{ required: true},
             };
             FormValidationMd.init(form_reporte_carreras,rules_reporte_carreras,false,reporteCarreras());
+
+            var reporteFuncionario = function () {
+                return{
+                    init: function () {
+                    }
+                }
+            };
+            var form_reporte_carreras = $('#from_admin_update');
+            var rules_reporte_carreras = {
+                id_funcionario :{required: true},
+                anio_sel :{ required: true},
+                mes_sel :{ required: true}
+            };
+            FormValidationMd.init(form_reporte_carreras,rules_reporte_carreras,false,reporteFuncionario());
+
+            var reportePrestamos = function () {
+                return{
+                    init: function () {
+                    }
+                }
+            };
+            var form_reporte_carreras = $('#from_reportes_update');
+            var rules_reporte_carreras = {
+                aniosel22 :{required: true}
+            };
+            FormValidationMd.init(form_reporte_carreras,rules_reporte_carreras,false,reportePrestamos());
 
             $(".uso-carreras").on('click', function (e) {
                 e.preventDefault();
                 $('#modal-reporte-carreras').modal('toggle');
-
             });
-
-
             $(".funcionario").on('click', function (e) {
                 e.preventDefault();
                 $('#modal-reporte-funcionario').modal('toggle');
-
             });
             $(".prestamo-carreras").on('click', function (e) {
                 e.preventDefault();
                 $('#modal-reporte-prestamos-carreras').modal('toggle');
-
             });
-        });
-        $(".documentReport").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('talento.humano.empleado.index.ajax') }}';
-            $(".content-ajax").load(route);
-        });
-        $(".permisoReport").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('talento.humano.permisos.listaEmpleados.ajax') }}';
-            $(".content-ajax").load(route);
         });
     </script>
 @endpush

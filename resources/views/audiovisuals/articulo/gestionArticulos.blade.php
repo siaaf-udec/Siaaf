@@ -662,7 +662,7 @@ de la plantilla
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
@@ -720,12 +720,11 @@ de la plantilla
 
                                     $('#modal-create-kit').modal('hide');
                                     $('#from_kit_create')[0].reset(); //Limpia formulario
-
-                                    UIToastr.init(xhr, response.title, response.message);
+                                    UIToastr.init(xhr , response.title , response.message  );
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
@@ -797,13 +796,13 @@ de la plantilla
 
             var from_art_create = $('#from_art_create');
             var rules_arti_create = {
-
-                ART_Codigo: {required: true, digits: true},
-                ART_Descripcion: {required: true},
-                FK_ART_Kit_id: {required: true},
-                FK_ART_Tipo_id: {required: true},
-                FK_ART_Estado_id: {required: true},
-
+                FK_ART_Kit_id :{ required: true},
+                FK_ART_Tipo_id :{ required: true},
+                TPART_Nombre:{ required: true},
+                ART_Descripcion:{minlength: 3, required: true},
+                KIT_Nombre:{ required: true},
+                FK_ART_Estado_id:{ required: true},
+                ART_Codigo:{minlength: 3, required: true},
             };
 
             FormValidationMd.init(from_art_create, rules_arti_create, false, createArticulo());

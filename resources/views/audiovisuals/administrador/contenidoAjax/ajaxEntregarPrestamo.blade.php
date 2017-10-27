@@ -231,14 +231,12 @@
     var routeUpdate,idArticulo,idVal,observation,idArticuloTiempo,
         idPrestamoSolicitud;
     var co = JSON.stringify({{$contador}});
-    console.log('valor inicial items -> '+co);
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
             $("input[maxlength], textarea[maxlength]").maxlength({
                 alwaysShow: true,
                 appendToParent: true
             });
-
         }
         return {
             init: function () {
@@ -258,16 +256,13 @@
             routeupdate = '{{ route('updatePrestamo') }}'+ '/'+ idArticulo+'/'+observation;
             $.get( routeupdate, function(){});
             co = co-1;
-            console.log(co);
             if(co==0){
                 var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
                 $(".content-ajax").load(route);
             }
-
         });
         $('#contentFormularioPrestamos').on('click', '.recibir_kit', function(){
             kitId=$(this).data('id_kit');
-            console.log('valor items -> '+co);
             var routeArticulos = '{{ route('listarArticulosKitEntregaAdministrador') }}' +'/' + kitId ;
             $('#elementosKit').empty();
             $.ajax({
@@ -279,7 +274,6 @@
                 success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         App.unblockUI('.portlet-form');
-                        console.log(response.data);
                         $(response.data).each(function (key,value) {
                             $('#elementosKit').append(' - '+value.consulta_tipo_articulo.TPART_Nombre);
                             $('#elementosKit').append('\n');
@@ -294,11 +288,8 @@
             idPrestamo=$(this).data('id_articulo');
             var numHoras='#tiempoArticulo'+idPrestamo;
             numHoras=$(numHoras).val();
-            console.log('id prestamo => '+idPrestamo);
-            console.log('numHoras => '+numHoras);
             routeupdate = '{{ route('aumentarTiempo') }}'+ '/'+ idPrestamo+'/'+numHoras;
             $.get( routeupdate, function(info){
-                console.log(info.data);
                 idVal='#textObser'+idPrestamo;
                 var tipoArticulo = $(idVal).val();
                 var horas=5;
@@ -311,11 +302,9 @@
                         var nombreTiempo=i+' Hora';
                         $('#tiempoSelect').append(new Option(nombreTiempo,i));
                     }
-
                     $('#modal-tiempo-prestamo').modal('toggle');
                 }
             });
-
         });
         $('.getAll').on('click',function(){
             idArticulo=$(this).data('id_articulo');
@@ -338,8 +327,7 @@
                         data: formData,
                         processData: false,
                         async: async,
-                        beforeSend: function () {
-                        },
+                        beforeSend: function () { },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-observation-prestamo').modal('hide');
@@ -350,11 +338,10 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
-
                     });
                 }
             }
@@ -385,20 +372,18 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                co=co-1;
-                                console.log(co);
+                                co = co-1;
                                 $('#from_kit_recibir')[0].reset();
                                 $('#modal-recibir-kit').modal('hide');
-                                if(co==0){
+                                if( co == 0 ){
                                     var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
                                     $(".content-ajax").load(route);
                                 }
                                 $('#modal-recibir-kit').modal('hide');
-
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                             }
                         }
 
@@ -440,7 +425,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -449,13 +434,11 @@
                 }
             }
         };
-        //FormValidationMd.init(form_updateG,rule_createG,false,moreTime());
         var form_sumar = $('#from_tiempo_sumar');
         var rule_sumar = {
-            //observacionGeneral:{required: true}
+            tipoArticulo : {required: true},
+            tiempoSelect : {required: true}
         };
         FormValidationMd.init(form_sumar,rule_sumar,false,moreTime());
-
-
     });
 </script>

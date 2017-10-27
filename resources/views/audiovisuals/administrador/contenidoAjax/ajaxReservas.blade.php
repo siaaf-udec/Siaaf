@@ -214,7 +214,6 @@
                 route_ver = '{{ route('gestionVerReservaModal') }}'+ '/'+ dataTable.PRT_FK_Kits_id;
                 $.get( route_ver, function( info ) {
                     $('#KIT').val(info.data[0].consulta_kit_articulo.KIT_Nombre);
-                    console.log(info);
                     $(info.data).each(function (key,value) {
                         $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
                         $text_area_Elementos_kit.append('\n');
@@ -225,7 +224,6 @@
                 route_ver = '{{ route('gestionVerReservaArticulosModal') }}'+ '/'+ dataTable.PRT_Num_Orden;
                 $('#texareaP').show();
                 $.get( route_ver, function( info ) {
-                    console.log(info);
                     $(info.data).each(function (key,value) {
                         $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
                         $text_area_Elementos_kit.append('\n');
@@ -235,7 +233,6 @@
         });
         table.on('click', '#2', function (e) {
             e.preventDefault();
-            //$('#from_detalles_reserva')[0].reset();
             $('#PRT_Observacion_Entrega').empty();
             $('#PRT_Observacion_Recibe').empty();
             $('#modal-ver-reserva').modal('toggle');
@@ -254,7 +251,6 @@
                 route_ver = '{{ route('gestionVerReservaModal') }}'+ '/'+ dataTable.PRT_FK_Kits_id ;
                 $.get( route_ver, function( info ) {
                     $('#KIT').val(info.data[0].consulta_kit_articulo.KIT_Nombre);
-                    console.log(info);
                     $(info.data).each(function (key,value) {
                         $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
                         $text_area_Elementos_kit.append('\n');
@@ -262,12 +258,10 @@
                 });
             }
             else{
-
                 $('#KIT').val('Articulos');
                 route_ver = '{{ route('gestionVerReservaArticulosModal') }}'+ '/'+ dataTable.PRT_Num_Orden;
                 $('#texareaP').show();
                 $.get( route_ver, function( info ) {
-                    console.log(info);
                     $(info.data).each(function (key,value) {
                         $text_area_Elementos_kit.append(value.consulta_tipo_articulo.TPART_Nombre);
                         $text_area_Elementos_kit.append('\n');
@@ -294,12 +288,9 @@
                         data: formData,
                         processData: false,
                         async: async,
-                        beforeSend: function () {
-
-                        },
+                        beforeSend: function () {   },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-
                                 $('#modal-ver-reserva').modal('hide');
                                 $('#from_detalles_reserva')[0].reset(); //Limpia formulario
                                 table.ajax.reload();
@@ -307,7 +298,7 @@
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -320,7 +311,6 @@
             PRT_Observacion_Entrega:{minlength: 5, required: true},
 
         };
-        console.log(form_create_kit);
         FormValidationMd.init(form_create_kit,rules_create_kit,false,realizar());
     });
 </script>

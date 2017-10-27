@@ -24,24 +24,21 @@ use Yajra\DataTables\DataTables;
 class FuncionarioController extends Controller
 {
 
-    protected $funcionarioRepository;
-    protected $carrerasRepository;
-
-    public function __construct(FuncionarioInterface $funcionarioRepository, CarrerasInterface $carrerasRepository)
-    {
-        $this->funcionarioRepository = $funcionarioRepository;
-        $this->carrerasRepository    = $carrerasRepository;
+    public function opcionReservaArticuloAjax(Request $request){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $validaciones = Validaciones::all();
+            $tipo = TipoArticulo::whereHas('consultarArticulos')->pluck('TPART_Nombre', 'id');
+            return view('audiovisuals.funcionario.prestamoAjax.reservarArticuloAjax', [
+                'tipoArticulos' => $tipo->toArray(),
+                'validaciones' => $validaciones,
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
-    public function opcionReservaArticuloAjax(){
-        $validaciones = Validaciones::all();
-        $tipo = TipoArticulo::whereHas('consultarArticulos')->pluck('TPART_Nombre', 'id');
-        //dd($array);
-        return view('audiovisuals.funcionario.prestamoAjax.reservarArticuloAjax', [
-            'tipoArticulos' => $tipo->toArray(),
-            'validaciones' => $validaciones,
-        ]);
-    }
-	//datatable articulos1
     public function dataArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -94,46 +91,54 @@ class FuncionarioController extends Controller
 		}
 	}
 	//indexarticulo
-    public function reserva(Request $request)
-    {
-		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
-    	$usario = $this->consultarUsuario();
-        //$validaciones = Validaciones::all();
-		//array de carreras disponibles para el funcionario
-		//$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
-        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-		return view('audiovisuals.funcionario.reservarArticulo',[
-			'programas'=>$carreras->toArray(),
-			'numero'=>$usario, //bandera para abrir el modal de registro del usuairo que esta logueado
-            //'validaciones'=>$validaciones
-		]);
-	}
-    public function reservaindexAjax(Request $request)
+    public function reserva()
     {
         //consulta si el usuario logueado esxite en la tabla Audiovisuales User
         $usario = $this->consultarUsuario();
+        //$validaciones = Validaciones::all();
+        //array de carreras disponibles para el funcionario
+        //$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-        return view('audiovisuals.funcionario.prestamoAjax.reservarAjax',[
+        return view('audiovisuals.funcionario.reservarArticulo',[
             'programas'=>$carreras->toArray(),
             'numero'=>$usario, //bandera para abrir el modal de registro del usuairo que esta logueado
             //'validaciones'=>$validaciones
         ]);
+	}
+    public function reservaindexAjax(Request $request)
+    {
+        if($request->ajax() && $request->isMethod('GET')) {
+            //consulta si el usuario logueado esxite en la tabla Audiovisuales User
+            $usario = $this->consultarUsuario();
+            $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+            return view('audiovisuals.funcionario.prestamoAjax.reservarAjax',[
+                'programas'=>$carreras->toArray(),
+                'numero'=>$usario, //bandera para abrir el modal de registro del usuairo que esta logueado
+                //'validaciones'=>$validaciones
+            ]);
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+
     }
 	//indexkit
 	public function reservaKits(){
-		//consulta si el usuario logueado esxite en la tabla Audiovisuales User
-		$usario = $this->consultarUsuario();
-		//array de carreras disponibles para el funcionario
-		//$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
+        //consulta si el usuario logueado esxite en la tabla Audiovisuales User
+        $usario = $this->consultarUsuario();
+        //array de carreras disponibles para el funcionario
+        //$carreras = $this->carrerasRepository->index([])->pluck('PRO_Nombre', 'id');
         $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
         $validaciones= Validaciones::all();
-    	return view('audiovisuals.funcionario.reservarKit',
-			[
-			    'programas'=>$carreras->toArray(),
-				'numero'=>$usario,
+        return view('audiovisuals.funcionario.reservarKit',
+            [
+                'programas'=>$carreras->toArray(),
+                'numero'=>$usario,
                 'validaciones'=>$validaciones
-			]);
-	}
+            ]);
+    }
     public function almacenarArticulo(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
@@ -201,7 +206,6 @@ class FuncionarioController extends Controller
 			$user=Auth::user();
 			$id=$user->id;
             $numOrden = (Solicitudes::max('PRT_Num_Orden')) + 1;
-			//$valores=$this->consultarKit($request['PRT_FK_Kits_id']);
             $dtI=Carbon::parse($request['PRT_Fecha_Inicio']);
             $dtF=Carbon::parse($request['PRT_Fecha_Inicio']);
             $dtF->addDays(((int)$request['numDias']));
@@ -220,8 +224,7 @@ class FuncionarioController extends Controller
 				'PRT_FK_Administrador_Recibe_id'=>0,
                 'PRT_Num_Orden'=>$numOrden,
                 'PRT_Cantidad'=>1
-			]);
-//		}
+			]);//		}
 			return AjaxResponse::success(
 				'¡Bien hecho!',
 				'Reserva registrada correctamente.'
@@ -234,13 +237,12 @@ class FuncionarioController extends Controller
 		}
 	}
 	public function storePrograma(Request $request){
-
-		if ($request->ajax() && $request->isMethod('POST')) {
+		if ( $request->ajax() && $request->isMethod('POST') ) {
             $user    = Auth::user();
-            $userid  = $user->id;
+            $userid  = $user -> id;
 			UsuarioAudiovisuales::create([
-				'USER_FK_Programa'=>$request->get('FK_FUNCIONARIO_Programa'),
-				'USER_FK_User'=>$userid,
+				'USER_FK_Programa' => $request -> get('FK_FUNCIONARIO_Programa'),
+				'USER_FK_User' => $userid,
 			]);
 			return AjaxResponse::success(
 				'¡Bien hecho!',
@@ -256,11 +258,11 @@ class FuncionarioController extends Controller
 	public function reservaRepeatcrear(Request $request){
         if ($request->ajax() && $request->isMethod('POST')) {
             $infoRepeat = json_decode($request->get('infoPrestamo'));
-            $numOrden = (Solicitudes::max('PRT_Num_Orden')) + 1;
+            $numOrden = (Solicitudes::max( 'PRT_Num_Orden' )) + 1;
             $user = Auth::user();
             $funcionarioId = $user->id;
-            foreach ($infoRepeat as $prestamo) {
-                $dtI = Carbon::parse($prestamo->fechaInicio);
+            foreach ( $infoRepeat as $prestamo ) {
+                $dtI = Carbon::parse( $prestamo->fechaInicio );
                 $dtF = Carbon::parse($prestamo->fechaFin);
                 Solicitudes::create([
                     'PRT_FK_Articulos_id' => $prestamo->tipoArticulosSelect,
@@ -292,9 +294,7 @@ class FuncionarioController extends Controller
     }
 	//funcion la cual lista el textArea con los tipos de articulos que el kit tiene
 	public function consultarArticulosKit(Request $request,$idKit){
-
 		if($request->ajax() && $request->isMethod('GET')){
-
 			$articulos = Articulo::with(['consultaTipoArticulo','consultaKitArticulo'])->where([
 				['FK_ART_Kit_id','=',$idKit]
 			])->get();
@@ -310,9 +310,7 @@ class FuncionarioController extends Controller
 				'No se pudo completar tu solicitud.'
 			);
 		}
-
 	}
-
     public function consultarKitsDisposnibles(Request $request){
 		if($request->ajax() && $request->isMethod('GET')){
 			$kits = Kit::where('id','!=',1)->get();

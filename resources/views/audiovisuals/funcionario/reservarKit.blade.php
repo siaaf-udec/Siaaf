@@ -238,7 +238,6 @@ de la plantilla
                             </div>
                             {{-- END HTML MODAL CREATE--}}
                         </div>
-
                     </div>
                     @endcomponent
                 </br>
@@ -268,10 +267,10 @@ de la plantilla
 --}}
 
 @push('plugins')
-    <!-- TIEMPOS DATETIME -->
-    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <!-- SCRIPT DATETIME -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+<!-- TIEMPOS DATETIME -->
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<!-- SCRIPT DATETIME -->
+<script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 <!-- SCRIPT DATATABLE -->
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript">
 </script>
@@ -330,117 +329,115 @@ de la plantilla
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
 </script>
 <script type="text/javascript">
-    var numReserva = JSON.stringify({{$validaciones[1]['VAL_PRE_Valor']}});//nUMrESERVAS
-    var numHoras = JSON.stringify({{$validaciones[4]['VAL_PRE_Valor']}});//numHoras
-    var numDias = JSON.stringify({{$validaciones[5]['VAL_PRE_Valor']}});//numDias
-    var numhorasCancelar = JSON.stringify({{$validaciones[7]['VAL_PRE_Valor']}});
-    var numDiasHabiles = parseInt(JSON.stringify({{$validaciones[12]['VAL_PRE_Valor']}}));//
-    //console.log(numDiasHabiles);
     $( document ).scroll(function(){
         $('#modal-create-reserva .timepicker').datetimepicker('place'); //#modal is the id of the modal
     });
-    var ComponentsDateTimePickers = function () {
-        var handleDatetimePicker = function () {
-            if (!jQuery().datetimepicker) {
-                return;
-            }
-            //var tres=3;
-            var fecha = new Date();
-            fecha.setDate( fecha.getDate() + 1 );
-            var fecha2 = new Date();
-            fecha2.setDate( fecha2.getDate() + numDiasHabiles );
-
-            $(".date-time-picker").datetimepicker({
-                autoclose: true,
-                isRTL: App.isRTL(),
-                format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO
-                //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
-                fontAwesome: true,
-                //todayBtn: true,//BOTON DE HOY
-                //startDate: new Date(),//EMPIEZE DESDE LA FECHA ACTUAL
-                startDate: fecha,//Fecha Actual pero sin la hora
-                endDate: fecha2,//Fecha Actual + 5 dias
-                showMeridian: true, // HORA EN 24 HORAS
-                pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-right"),
-            });
-        }
-        return {
-            //main function to initiate the module
-            init: function () {
-                handleDatetimePicker();
-            }
-        };
-    }();
-    var ComponentsSelect2 = function() {
-        var handleSelect = function() {
-
-            $.fn.select2.defaults.set("theme", "bootstrap");
-            var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
-            $(".pmd-select2").select2({
-                width: null,
-                placeholder: placeholder,
-                escapeMarkup: function(m) {
-                    return m;
-                }
-            });
-
-        }
-
-        return {
-            init: function() {
-                handleSelect();
-            }
-        };
-
-    }();
-    var ComponentsBootstrapMaxlength = function () {
-        var handleBootstrapMaxlength = function() {
-            $("input[maxlength], textarea[maxlength]").maxlength({
-                alwaysShow: true,
-                appendToParent: true
-            });
-
-        }
-        return {
-            //main function to initiate the module
-            init: function () {
-                handleBootstrapMaxlength();
-            }
-        };
-    }();
-    var abrirModal = JSON.stringify({{$numero}});
-    //sino se encuentran registros abrir el modal para registrar
-    if( abrirModal == 0 ){
-        //console.log('abrir modal');
-        $('#static').modal('toggle');
-    }
-    for(i=0;i<=numDias;i++){
-        var nombreDia;
-        if( i == 0 )
-            $('select[name="numDias"]').append(new Option('Ninguno',0));
-        if( i == 1 ){
-            nombreDia=' dia';
-            $('select[name="numDias"]').append(new Option(i+nombreDia,i));
-        }
-        if( i != 0 && i != 1){
-            nombreDia=' dias';
-            $('select[name="numDias"]').append(new Option(i+nombreDia,i));
-        }
-
-
-    }
-    for(i=1;i<=numHoras;i++){
-        var nombreHoras;
-        if(i==1){
-            nombreHoras=' hora';
-        }else{
-            nombreHoras=' horas';
-        }
-        $('select[name="numHoras"]').append(new Option(i+nombreHoras,i));
-    }
-    $('select[name="numDias"]').val([]);
-    $('select[name="numHoras"]').val([]);
     jQuery(document).ready(function() {
+        var numReserva = JSON.stringify({{$validaciones[1]['VAL_PRE_Valor']}});//nUMrESERVAS
+        var numHoras = JSON.stringify({{$validaciones[4]['VAL_PRE_Valor']}});//numHoras
+        var numDias = JSON.stringify({{$validaciones[5]['VAL_PRE_Valor']}});//numDias
+        var numhorasCancelar = JSON.stringify({{$validaciones[7]['VAL_PRE_Valor']}});
+        var numDiasHabiles = parseInt(JSON.stringify({{$validaciones[12]['VAL_PRE_Valor']}}));//
+        var ComponentsDateTimePickers = function () {
+            var handleDatetimePicker = function () {
+                if (!jQuery().datetimepicker) {
+                    return;
+                }
+                var fecha = new Date();
+                fecha.setDate( fecha.getDate() + 1 );
+                var fecha2 = new Date();
+                fecha2.setDate( fecha2.getDate() + numDiasHabiles );
+
+                $(".date-time-picker").datetimepicker({
+                    autoclose: true,
+                    isRTL: App.isRTL(),
+                    format:"yyyy-mm-dd hh:ii",//FORMATO DE FECHA NUMERICO
+                    //format: "dd MM yyyy - hh:ii",//FORMATO DE FECHA EN TEXTO
+                    fontAwesome: true,
+                    //todayBtn: true,//BOTON DE HOY
+                    //startDate: new Date(),//EMPIEZE DESDE LA FECHA ACTUAL
+                    startDate: fecha,//Fecha Actual pero sin la hora
+                    endDate: fecha2,//Fecha Actual + 5 dias
+                    showMeridian: true, // HORA EN 24 HORAS
+                    pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-right"),
+                });
+            }
+            return {
+                //main function to initiate the module
+                init: function () {
+                    handleDatetimePicker();
+                }
+            };
+        }();
+        var ComponentsSelect2 = function() {
+            var handleSelect = function() {
+
+                $.fn.select2.defaults.set("theme", "bootstrap");
+                var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
+                $(".pmd-select2").select2({
+                    width: null,
+                    placeholder: placeholder,
+                    escapeMarkup: function(m) {
+                        return m;
+                    }
+                });
+
+            }
+
+            return {
+                init: function() {
+                    handleSelect();
+                }
+            };
+
+        }();
+        var ComponentsBootstrapMaxlength = function () {
+            var handleBootstrapMaxlength = function() {
+                $("input[maxlength], textarea[maxlength]").maxlength({
+                    alwaysShow: true,
+                    appendToParent: true
+                });
+
+            }
+            return {
+                //main function to initiate the module
+                init: function () {
+                    handleBootstrapMaxlength();
+                }
+            };
+        }();
+        var abrirModal = JSON.stringify({{$numero}});
+        //sino se encuentran registros abrir el modal para registrar
+        if( abrirModal == 0 ){
+            //console.log('abrir modal');
+            $('#static').modal('toggle');
+        }
+        for(i=0;i<=numDias;i++){
+            var nombreDia;
+            if( i == 0 )
+                $('select[name="numDias"]').append(new Option('Ninguno',0));
+            if( i == 1 ){
+                nombreDia=' dia';
+                $('select[name="numDias"]').append(new Option(i+nombreDia,i));
+            }
+            if( i != 0 && i != 1){
+                nombreDia=' dias';
+                $('select[name="numDias"]').append(new Option(i+nombreDia,i));
+            }
+
+
+        }
+        for(i=1;i<=numHoras;i++){
+            var nombreHoras;
+            if(i==1){
+                nombreHoras=' hora';
+            }else{
+                nombreHoras=' horas';
+            }
+            $('select[name="numHoras"]').append(new Option(i+nombreHoras,i));
+        }
+        $('select[name="numDias"]').val([]);
+        $('select[name="numHoras"]').val([]);
         var $seleccione_un_tipoArticulo = $('select[name="PRT_FK_Kits_id"]');
         var $text_area_kits = $('#PRT_Informacion_Kit');
         ComponentsDateTimePickers.init();
@@ -476,7 +473,6 @@ de la plantilla
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            ////////cancelar
         });
         $( ".create" ).on('click', function (e) {
             e.preventDefault();
@@ -492,14 +488,12 @@ de la plantilla
                 success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         App.unblockUI('.portlet-form');
-
                         $(response.data).each(function (key, value) {
                             $seleccione_un_tipoArticulo.append(new Option(value.KIT_Nombre, value.id));
                         });
                     }
                 }
             });
-
         });
         /*Carga todos los articulos del kit*/
         var kit;
@@ -507,7 +501,7 @@ de la plantilla
             kit = $(this).val();
             var routeArticulos = '{{ route('listarArticulosKit') }}' +'/' + kit ;
             $text_area_kits.empty();
-            if(kit!=1){
+            if( kit != 1 ){
                 $.ajax({
                     url: routeArticulos,
                     type: 'GET',
@@ -531,8 +525,6 @@ de la plantilla
             }
 
         });
-
-
         //inicio de registrar funcionario audivisuales con programa
         /*Registrar Reserva kit*/
         var createKit = function () {
@@ -543,8 +535,6 @@ de la plantilla
                     var async = async || false;
                     var formData = new FormData();
                     formData.append('PRT_FK_Kits_id', $('select[name="PRT_FK_Kits_id"]').val());
-                    console.log('este es el valor del select');
-                    console.log($('select[name="PRT_FK_Kits_id"]').val())
                     formData.append('PRT_Fecha_Inicio', $('#PRT_Fecha_Inicio').val());
                     formData.append('numDias', $('select[name="numDias"]').val());
                     formData.append('numHoras', $('select[name="numHoras"]').val());
@@ -569,7 +559,7 @@ de la plantilla
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -577,29 +567,22 @@ de la plantilla
                 }
             }
         };
-
         var form_create_kit = $('#from_kit_create');
         var rules_create_kit = {
             PRT_FK_Kits_id:{required: true},
-            //validaciones campos fechas
             PRT_Fecha_Inicio:{required: true},
-            //PRT_Fecha_Fin:{ required: true},
-
+            numDias:{required: true},
+            numHoras:{required: true}
         };
         FormValidationMd.init(form_create_kit,rules_create_kit,false,createKit());
-
         var createPrograma = function () {
             return{
                 init: function () {
-                    //aqui toca guardar eso con auth id
                     var route = '{{ route('crearFuncionarioPrograma.storePrograma') }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
-                    //formData.append('id', $('select[name="FK_FUNCIONARIO_Programa"]').val());
                     formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
-                    console.log( $('select[name="FK_FUNCIONARIO_Programa"]').val());
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -609,23 +592,16 @@ de la plantilla
                         data: formData,
                         processData: false,
                         async: async,
-                        beforeSend: function () {
-
-                        },
+                        beforeSend: function(){},
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                //table.ajax.reload();
                                 $('#static').modal('hide');
-                                //location.reload();
-                                //$('.mt-repeater').empty();
-                                $('#from_programa')[0].reset(); //Limpia formulario
-                                //$(":password").pwstrength("forceUpdate");
+                                $('#from_programa')[0].reset();
                                 UIToastr.init(xhr , response.title , response.message  );
-
                             }
                         },
                         error: function (response, xhr, request) {
-                            if (request.status === 422 &&  xhr === 'success') {
+                            if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
                             }
                         }
@@ -633,14 +609,11 @@ de la plantilla
                 }
             }
         };
-
         var form_create = $('#from_programa');
         var rules_create = {
-
             FK_FUNCIONARIO_Programa:{required: true}
         };
         FormValidationMd.init(form_create,rules_create,false,createPrograma());
     });
-
 </script>
 @endpush

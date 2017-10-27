@@ -69,47 +69,47 @@
             </br>
     </div>
     <script type="text/javascript">
-        var ComponentsSelect2 = function() {
-            var handleSelect = function() {
-
-                $.fn.select2.defaults.set("theme", "bootstrap");
-                var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
-                $(".pmd-select2").select2({
-                    width: null,
-                    placeholder: placeholder,
-                    escapeMarkup: function(m) {
-                        return m;
-                    }
-                });
-
-            }
-            return {
-                init: function() {
-                    handleSelect();
-                }
-            };
-
-        }();
-        var ComponentsBootstrapMaxlength = function () {
-            var handleBootstrapMaxlength = function() {
-                $("input[maxlength], textarea[maxlength]").maxlength({
-                    alwaysShow: true,
-                    appendToParent: true
-                });
-            }
-            return {
-                //main function to initiate the module
-                init: function () {
-                    handleBootstrapMaxlength();
-                }
-            };
-        }();
-        var abrirModal = JSON.stringify({{$numero}});
-        //sino se encuentran registros abrir el modal para registrar
-        if( abrirModal == 0 ){
-            $('#static').modal('toggle');
-        }
         jQuery(document).ready(function() {
+            var ComponentsSelect2 = function() {
+                var handleSelect = function() {
+
+                    $.fn.select2.defaults.set("theme", "bootstrap");
+                    var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
+                    $(".pmd-select2").select2({
+                        width: null,
+                        placeholder: placeholder,
+                        escapeMarkup: function(m) {
+                            return m;
+                        }
+                    });
+
+                }
+                return {
+                    init: function() {
+                        handleSelect();
+                    }
+                };
+
+            }();
+            var ComponentsBootstrapMaxlength = function () {
+                var handleBootstrapMaxlength = function() {
+                    $("input[maxlength], textarea[maxlength]").maxlength({
+                        alwaysShow: true,
+                        appendToParent: true
+                    });
+                }
+                return {
+                    //main function to initiate the module
+                    init: function () {
+                        handleBootstrapMaxlength();
+                    }
+                };
+            }();
+            var abrirModal = JSON.stringify({{$numero}});
+            //sino se encuentran registros abrir el modal para registrar
+            if( abrirModal == 0 ){
+                $('#static').modal('toggle');
+            }
             ComponentsSelect2.init();
             ComponentsBootstrapMaxlength.init();
             var $seleccione_un_tipoArticulo = $('select[name="PRT_FK_Articulos_id"]');
@@ -173,7 +173,7 @@
                                 }
                             },
                             error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
+                                if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
