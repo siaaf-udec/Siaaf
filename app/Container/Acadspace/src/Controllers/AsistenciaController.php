@@ -22,7 +22,7 @@ class AsistenciaController extends Controller
 
     /**
      * Retorna la vista de control estudiante
-     *\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function asisEst()
     {
@@ -36,7 +36,7 @@ class AsistenciaController extends Controller
 
     /**
      * Retorna la vista de control externo
-     *\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function asisInvitado()
     {

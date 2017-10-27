@@ -114,8 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'formatosController@index',
             'as' => 'espacios.academicos.formacad.index'
         ]);
-        Route::get('indexajax', [
-            'uses' => $controller . 'formatosController@indexajax',
+        Route::get('indexAjax', [
+            'uses' => $controller . 'formatosController@indexAjax',
             'as' => 'espacios.academicos.formacad.indexajax'
         ]);
         Route::get('data', [ //Cargar datatable

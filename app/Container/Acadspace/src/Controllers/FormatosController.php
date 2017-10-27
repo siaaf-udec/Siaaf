@@ -36,7 +36,7 @@ class formatosController extends Controller
      * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
      * @return \Illuminate\View\View
      */
-    public function indexajax()
+    public function indexAjax()
     {
         //Muestra vista de solicitudes por id_secretaria
         return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad-ajax');
