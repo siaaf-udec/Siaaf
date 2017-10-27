@@ -86,7 +86,6 @@ class AsistenciaController extends Controller
     }
 
 
-
     /**
      * Verificando que el estudiante exista.
      *
