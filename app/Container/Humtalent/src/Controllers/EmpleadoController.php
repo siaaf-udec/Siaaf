@@ -27,7 +27,6 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use Storage;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use Validator;
 
 
 class EmpleadoController extends Controller
@@ -41,7 +40,7 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        if ( $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             return view('humtalent.empleado.tablasEmpleados');
         }
     }
@@ -52,21 +51,22 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaEmpleados(Request $request){
+    public function tablaEmpleados(Request $request)
+    {
 
         if ($request->ajax() && $request->isMethod('GET')) {
             $empleados = Persona::all();
             return Datatables::of($empleados)
-                    ->removeColumn('PRSN_Direccion')
-                    ->removeColumn('PRSN_Ciudad')
-                    ->removeColumn('PRSN_Eps')
-                    ->removeColumn('PRSN_Fpensiones')
-                    ->removeColumn('PRSN_Caja_Compensacion')
-                    ->removeColumn('PRSN_Estado_Persona')
-                    ->removeColumn('created_at')
-                    ->removeColumn('updated_at')
-                    ->addIndexColumn()
-                    ->make(true);
+                ->removeColumn('PRSN_Direccion')
+                ->removeColumn('PRSN_Ciudad')
+                ->removeColumn('PRSN_Eps')
+                ->removeColumn('PRSN_Fpensiones')
+                ->removeColumn('PRSN_Caja_Compensacion')
+                ->removeColumn('PRSN_Estado_Persona')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -81,7 +81,8 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function empleadosRetirados(Request $request){
+    public function empleadosRetirados(Request $request)
+    {
 
         if ($request->ajax() && $request->isMethod('GET')) {
             $empleados = Persona::where('PRSN_Estado_Persona', 'Retirado')->get();
@@ -112,12 +113,13 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function listaEmpleadosDocumentosCompletos(Request $request){
+    public function listaEmpleadosDocumentosCompletos(Request $request)
+    {
 
         if ($request->ajax() && $request->isMethod('GET')) {
             $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación completa EPS")
-                            ->orWhere('EDCMT_Proceso_Documentacion', "Documentación completa Caja de compensación")
-                            ->distinct()->get(['FK_TBL_Persona_Cedula']);
+                ->orWhere('EDCMT_Proceso_Documentacion', "Documentación completa Caja de compensación")
+                ->distinct()->get(['FK_TBL_Persona_Cedula']);
             return Datatables::of($empleados)
                 ->removeColumn('PRSN_Direccion')
                 ->removeColumn('PRSN_Ciudad')
@@ -141,18 +143,18 @@ class EmpleadoController extends Controller
     /**
      * Verifica que no exista un correo ya registrado
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response| \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function verificarEmail(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
 
             if (Persona::where('PRSN_Correo', $request['PRSN_Correo'])->exists()) {
                 return response('false');
-            } else {
-                return response('true');
             }
+
+            return response('true');
 
         }
         return AjaxResponse::fail(
@@ -169,7 +171,8 @@ class EmpleadoController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function listaEmpleadosDocumentosIncompletos(Request $request){
+    public function listaEmpleadosDocumentosIncompletos(Request $request)
+    {
 
         if ($request->ajax() && $request->isMethod('GET')) {
             $empleados = StatusOfDocument::with('personas')->where('EDCMT_Proceso_Documentacion', "Documentación incompleta EPS")
@@ -360,7 +363,7 @@ class EmpleadoController extends Controller
                     '¡Bien hecho!',
                     'La información del archivo fue almacenada correctamente.'
                 );
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 return AjaxResponse::success(
                     'Ocurrió un problema',
                     'El archivo adjunto no cumple con las especificaciones'
@@ -507,7 +510,7 @@ class EmpleadoController extends Controller
      * Muestra la vista del reporte de datos de contacto de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteContactoEmpleados(Request $request)
     {
@@ -521,13 +524,18 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Permite descargar el reporte de datos de contacto de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function downloadContactoReporte(Request $request)
     {
@@ -545,17 +553,23 @@ class EmpleadoController extends Controller
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteContacto.pdf');
 
-            } catch ( Exception $e ){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Muestra la vista del reporte de datos de dirección de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteDireccionEmpleados(Request $request)
     {
@@ -571,13 +585,18 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Permite descargar el reporte de datos de dirección de los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response |\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function downloadDireccionReporte(Request $request)
     {
@@ -591,20 +610,24 @@ class EmpleadoController extends Controller
                 return SnappyPdf::loadView('humtalent.reportes.ReporteDireccionEmpleados',
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteDireccion.pdf');
-            }
-            catch ( Exception $e ){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por programa.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reporteSalario1Empleados( Request $request)
+    public function reporteSalario1Empleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
@@ -618,15 +641,19 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por programa.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadSalario1Reporte( Request $request)
+    public function downloadSalario1Reporte(Request $request)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -640,21 +667,24 @@ class EmpleadoController extends Controller
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteSalarioArea.pdf');
 
-            }
-            catch (Exception $e){
+            } catch (Exception $e) {
 
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Muestra la vista del reporte correspondiente al salario de los empleados ordenado por rol.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reporteSalario2Empleados( Request $request)
+    public function reporteSalario2Empleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
@@ -666,15 +696,20 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      * Permite descargar el reporte correspondiente al salario de los empleados ordenado por rol.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadSalario2Reporte( Request $request)
+    public function downloadSalario2Reporte(Request $request)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -688,20 +723,23 @@ class EmpleadoController extends Controller
                 return SnappyPdf::loadView('humtalent.reportes.ReporteSalario2Empleados',
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteSalarioRol.pdf');
-            }
-            catch ( Exception $e){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Muestra la vista del reporte correspondiente a las afiliaciones que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reporteAfiliacionesEmpleados( Request $request)
+    public function reporteAfiliacionesEmpleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
@@ -715,6 +753,10 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -722,9 +764,9 @@ class EmpleadoController extends Controller
      * Permite descargar el reporte correspondiente a las afiliaciones que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadAfiliacionesReporte( Request $request)
+    public function downloadAfiliacionesReporte(Request $request)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -738,20 +780,23 @@ class EmpleadoController extends Controller
                 return SnappyPdf::loadView('humtalent.reportes.ReporteAfiliacionesEmpleados',
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteAfiliaciones.pdf');
-            }
-            catch ( Exception $e ){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Muestra la vista del reporte correspondiente al estado que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reporteEstadoEmpleados( Request $request)
+    public function reporteEstadoEmpleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
@@ -765,15 +810,19 @@ class EmpleadoController extends Controller
                 compact('empleados', 'date', 'time', 'total', 'cont')
             );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Permite descargar el reporte correspondiente al estado que tienen los empleados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadEstadoReporte( Request $request)
+    public function downloadEstadoReporte(Request $request)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -787,10 +836,13 @@ class EmpleadoController extends Controller
                 return SnappyPdf::loadView('humtalent.reportes.ReporteEstadoEmpleados',
                     compact('empleados', 'date', 'time', 'total', 'cont')
                 )->download('ReporteEstado.pdf');
-            }
-            catch ( Exception $e ){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }

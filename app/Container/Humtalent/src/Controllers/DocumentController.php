@@ -74,12 +74,12 @@ class DocumentController extends Controller
                     compact('empleados', 'docs', 'seleccion', 'cantidadDocumentos',
                         'cantidadRadicados', 'estado', 'tipoRad'));     //y se muestran todas las consultas en el formuario de radicacion
             }
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -141,12 +141,13 @@ class DocumentController extends Controller
                 );
 
             }
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
@@ -172,7 +173,8 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaDocumentos(Request $request){
+    public function tablaDocumentos(Request $request)
+    {
 
         if ($request->ajax() && $request->isMethod('GET')) {
             $documentos = DocumentacionPersona::all();
@@ -413,13 +415,17 @@ class DocumentController extends Controller
      * Funcion que llama a la vista de los documentos registrados
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index( Request $request)
+    public function index(Request $request)
     {
-        if($request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             return view('humtalent.documentacion.listaDocumentos');
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -551,7 +557,7 @@ class DocumentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteRadicacionEmpleados(Request $request, $id)
     {
@@ -597,6 +603,11 @@ class DocumentController extends Controller
                     'PendientesCaja', 'radicadosEPS', 'radicadosCaja')
             );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -604,9 +615,9 @@ class DocumentController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf|\Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadReporteRadicacionEmpleados( Request $request, $id)
+    public function downloadReporteRadicacionEmpleados(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -650,20 +661,24 @@ class DocumentController extends Controller
                 return SnappyPdf::loadView('humtalent.reportes.ReporteRadicacionEmpleados',
                     compact('empleado', 'date', 'time', 'noEPS', 'PendientesCaja',
                         'radicadosEPS', 'radicadosCaja'))->download('ReporteRadicacion.pdf');
-            }
-            catch ( Exception $e){
+            } catch (Exception $e) {
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Presenta el reporte de la radicación de los documentos para todos los empleados
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reporteConsolidadoEmpleados( Request $request)
+    public function reporteConsolidadoEmpleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             $cont = 1;
@@ -701,15 +716,20 @@ class DocumentController extends Controller
                 compact('empleados', 'date', 'time', 'cont'));
         }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
 
     /**
      *  Presenta el reporte de la radicación de los documentos para todos los empleados para descargar
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf|\Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadReporteConsolidadoEmpleados( Request $request)
+    public function downloadReporteConsolidadoEmpleados(Request $request)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -746,11 +766,14 @@ class DocumentController extends Controller
                 }
                 return SnappyPdf::loadView('humtalent.reportes.ReporteConsolidadoEmpleados',
                     compact('empleados', 'date', 'time', 'cont'))->download('ReporteConsolidado.pdf');
-            }
-            catch ( Exception $e ){
+            } catch (Exception $e) {
 
                 return view('humtalent.empleado.tablasEmpleados');
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }

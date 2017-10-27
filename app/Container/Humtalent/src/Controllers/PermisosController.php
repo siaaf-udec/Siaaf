@@ -154,7 +154,7 @@ class PermisosController extends Controller
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
-            ) ;
+            );
         }
 
         return AjaxResponse::fail(
@@ -168,25 +168,29 @@ class PermisosController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function reportePermisosEmpleados( Request $request, $id)
+    public function reportePermisosEmpleados(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
-                $cont = 1;
-                $date = date("d/m/Y");
-                $time = date("h:i A");
-                $empleado = Persona::where('PK_PRSN_Cedula', $id)
-                    ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos',
-                        'PRSN_Area', 'PRSN_Correo', 'PRSN_Rol'])
-                    ->first();
-                $permisos = Permission::where('FK_TBL_Persona_Cedula', $id)
-                    ->get(['PERM_Fecha', 'PERM_Descripcion', 'PK_PERM_IdPermiso']);
-                $total = count($permisos);
-                return view('humtalent.reportes.ReportePermisosEmpleados',
-                    compact('empleado', 'date', 'time', 'permisos','total','cont')
-                );
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleado = Persona::where('PK_PRSN_Cedula', $id)
+                ->get(['PK_PRSN_Cedula', 'PRSN_Nombres', 'PRSN_Apellidos',
+                    'PRSN_Area', 'PRSN_Correo', 'PRSN_Rol'])
+                ->first();
+            $permisos = Permission::where('FK_TBL_Persona_Cedula', $id)
+                ->get(['PERM_Fecha', 'PERM_Descripcion', 'PK_PERM_IdPermiso']);
+            $total = count($permisos);
+            return view('humtalent.reportes.ReportePermisosEmpleados',
+                compact('empleado', 'date', 'time', 'permisos', 'total', 'cont')
+            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -194,9 +198,9 @@ class PermisosController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function downloadReportePermisosEmpleados( Request $request, $id)
+    public function downloadReportePermisosEmpleados(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -211,12 +215,16 @@ class PermisosController extends Controller
                     ->get(['PERM_Fecha', 'PERM_Descripcion', 'PK_PERM_IdPermiso']);
                 $total = count($permisos);
                 return SnappyPdf::loadView('humtalent.reportes.ReportePermisosEmpleados',
-                    compact('empleado', 'date', 'time','total', 'permisos', 'cont')
+                    compact('empleado', 'date', 'time', 'total', 'permisos', 'cont')
                 )->download('ReportePermisos.pdf');
-            }
-            catch ( Exception $e){
+            } catch (Exception $e) {
                 return view('humtalent.permisos.listaEmpleados');
             }
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }

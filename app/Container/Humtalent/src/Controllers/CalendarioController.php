@@ -24,8 +24,8 @@ class CalendarioController extends Controller
      * Funcion para obtener tanto lso eventos como las notificaciones que esten registradas
      *                      que han sido radicados.
      *
-     *@param \Illuminate\Http\Request
-     *@return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param \Illuminate\Http\Request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function getEvent(Request $request)
     {
@@ -84,13 +84,18 @@ class CalendarioController extends Controller
      * Funcion que llama a la vista de calendario
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index(Request $request )
+    public function index(Request $request)
     {
-        if($request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             return view('humtalent.calendario.calendario');
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -295,7 +300,7 @@ class CalendarioController extends Controller
                 ->delete();     //y se realiza la respectiva eliminación
             } else//si no es un recordatorio se deduce que es un evento
             {
-                Asistent::where('FK_TBL_Eventos_IdEvento',$request['eventId'])->delete();
+                Asistent::where('FK_TBL_Eventos_IdEvento', $request['eventId'])->delete();
                 Event::where('PK_EVNT_IdEvento', $request['eventId'])//se busca el registro a eliminar
                 ->delete();//se realiza la eliminación
             }
@@ -304,21 +309,21 @@ class CalendarioController extends Controller
                 'Datos eliminados correctamente.'
             );
         }
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *Función para mostrar la tabla con los empleados con documentación completa
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function documentacionCompleta(Request $request)
     {
-        if ( $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
                 ->where('NOTIF_Descripcion', 'Documentos completos')->get(['NOTIF_Estado_Notificacion']); //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
             if (count($estado) == 0) {  //en caso de que este desactivada se mostrará el link en la vista para activarla o visceversa
@@ -326,17 +331,21 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.empleadosDocumentosCompletos', compact('estado'));
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      *Función para mostrar la tabla con los empleados con documentación incompleta
      *
      * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function documentacionIncompleta(Request $request)
     {
-        if ( $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             $estado = Notification::where('NOTIF_Estado_Notificacion', 'Desactivada')
                 ->where('NOTIF_Descripcion', 'Documentos incompletos')
                 ->get(['NOTIF_Estado_Notificacion']);   //verifica el estado de la notificación para asi mismo mostrar el respectivo link en la vista
@@ -345,6 +354,11 @@ class CalendarioController extends Controller
             }
             return view('humtalent.empleado.empleadosDocumentosIncompletos', compact('estado'));
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
