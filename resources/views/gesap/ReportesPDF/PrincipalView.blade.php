@@ -156,9 +156,9 @@
         $('#reporte_docente').submit (function (e) {
             e.preventDefault();
             if($('input[name="tipo"]').val()=="Jurado")
-                var route = 'ReportJury/'+$('select[name="Docente"]').val();
+                var route = '{{route('report.jury.project')}}/'+$('select[name="Docente"]').val();
             if($('input[name="tipo"]').val()=="Director")
-                var route = 'ReportDirector/'+$('select[name="Docente"]').val();
+                var route = '{{route('report.director.project')}}/'+$('select[name="Docente"]').val();
             window.open(route, '_blank');
         });
         

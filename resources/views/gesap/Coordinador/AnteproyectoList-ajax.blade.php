@@ -222,7 +222,7 @@
 				e.preventDefault();
 				$tr = $(this).closest('tr');
 				var O = table.row($tr).data();
-				var route = 'min/'+O.PK_NPRY_IdMinr008;
+				var route = '{{route('min.destroy')}}/'+O.PK_NPRY_IdMinr008;
 				var type = 'DELETE';
 				var async = async || false;
 				swal({
