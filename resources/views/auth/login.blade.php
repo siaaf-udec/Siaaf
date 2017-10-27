@@ -57,7 +57,7 @@
     <div class="user-login-5">
         <div class="row bs-reset">
             <div class="col-md-6 bs-reset mt-login-5-bsfix">
-                <div class="login-bg" style="background-image:url({{ asset('assets/pages/img/login/bg1.jpg') }})">
+                <div class="login-bg" style="background-image:url({{ asset('assets/pages/img/login/N1.jpeg') }})">
                     <img class="login-logo" src="{{ asset('assets/pages/img/login/siaaf.png') }}" /> </div>
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
