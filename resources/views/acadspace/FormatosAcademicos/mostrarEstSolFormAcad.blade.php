@@ -106,17 +106,17 @@
                                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
                                 </div>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                    </div>
+                </div>
+                <div class="modal-footer">
                 </div>
             </div>
-        @endcomponent
     </div>
+    @endcomponent
     {{-- END HTML SAMPLE --}}
 @endsection
 
@@ -171,6 +171,10 @@
 
     <script>
         $(document).ready(function () {
+            /*cargar tabla*/
+            var table, url, columns;
+            //Define que tabla cargara los datos
+            table = $('#art-table-ajax');
             /*Validaciones*/
             var $form = $('#form_create_format'),
                 $wizard = $('#form_wizard_1');
@@ -200,10 +204,7 @@
                 numfile = 1;
             FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
 
-            /*cargar tabla*/
-            var table, url, columns;
-            //Define que tabla cargara los datos
-            table = $('#art-table-ajax');
+
             url = "{{ route('espacios.academicos.formacad.data') }}"; //url para cargar datos
             columns = [
                 //Carga los datos que ha traido el control

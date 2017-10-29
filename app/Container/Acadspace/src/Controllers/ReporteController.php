@@ -23,39 +23,48 @@ class ReporteController extends Controller
 
     /**
      * Retorna la vista de reportes docente
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Reportes.reportesIndex',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Reportes.reportesIndex',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
      * Retorna la vista de reportes estudiantes
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function repIndexEst()
+    public function repIndexEst(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Reportes.reportesIndexEst',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Reportes.reportesIndexEst',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
      * Retorna la vista de reportes carrera
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function repIndexCarr()
+    public function repIndexCarr(Request $request)
     {
-        return view('acadspace.Reportes.reportesIndexCarr');
+        if ($request->isMethod('GET')) {
+            return view('acadspace.Reportes.reportesIndexCarr');
+        }
     }
 
 
@@ -159,59 +168,65 @@ class ReporteController extends Controller
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado al laboratorio elegido
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargarRepEst(Request $request)
     {
-        try {
-            $data = $request->all();
-            $code = $data['date_range'];
-            $lab = $request['SOL_laboratorios'];
-            $labNum = $lab;
-            $f2 = substr($code, -10);
-            $f1 = substr($code, -23, -13);
-            $fech1 = $this->changeForm($f1);
-            $fech2 = $this->changeForm($f2);
-            $date = date("d/m/Y");
-            $time = date("h:i A");
-            $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
-            $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1, 2);
-            $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2, 1);
-            $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2, 2);
-            $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3, 1);
-            $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 3, 2);
-            $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4, 1);
-            $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4, 2);
-            $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5, 1);
-            $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5, 2);
-            $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6, 1);
-            $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6, 2);
-            $totExternos = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 0, 1);
+        if ($request->isMethod('POST')) {
+            try {
+                $data = $request->all();
+                $code = $data['date_range'];
+                $lab = $request['SOL_laboratorios'];
+                $labNum = $lab;
+                $f2 = substr($code, -10);
+                $f1 = substr($code, -23, -13);
+                $fech1 = $this->changeForm($f1);
+                $fech2 = $this->changeForm($f2);
+                $date = date("d/m/Y");
+                $time = date("h:i A");
+                $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
+                $totSistemasGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 1, 2);
+                $totAmbientalLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 2, 1);
+                $totAmbientalGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 2, 2);
+                $totAgronomicaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 3, 1);
+                $totAgronomicaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 3, 2);
+                $totAdminLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 4, 1);
+                $totAdminGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 4, 2);
+                $totContaduriaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 5, 1);
+                $totContaduriaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 5, 2);
+                $totPiscologiaLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 6, 1);
+                $totPiscologiaaGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, $lab, 6, 2);
+                $totExternos = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 0, 1);
 
-            $totalTot = $totSistemasLibre + $totSistemasGrup + $totAmbientalLibre + $totAmbientalGrup
-            + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
-            + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup + $totExternos;
+                $totalTot = $totSistemasLibre + $totSistemasGrup + $totAmbientalLibre + $totAmbientalGrup
+                    + $totAgronomicaLibre + $totAgronomicaGrup + $totAdminLibre + $totAdminGrup + $totContaduriaLibre
+                    + $totContaduriaGrup + $totPiscologiaLibre + $totPiscologiaaGrup + $totExternos;
 
-            $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $lab)->get();
-            foreach ($nomEsp as $nomEsps) {
-                $lab = $nomEsps->ESP_Nombre_Espacio;
+                $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $lab)->get();
+                foreach ($nomEsp as $nomEsps) {
+                    $lab = $nomEsps->ESP_Nombre_Espacio;
+                }
+
+                $cont = 1;
+                return view('acadspace.Reportes.ReportesEstudiantes',
+                    compact('totSistemasLibre', 'totSistemasGrup',
+                        'totAmbientalLibre', 'totAmbientalGrup',
+                        'totAgronomicaLibre', 'totAgronomicaGrup',
+                        'totAdminLibre', 'totAdminGrup',
+                        'totContaduriaLibre', 'totContaduriaGrup',
+                        'totPiscologiaLibre', 'totPiscologiaaGrup',
+                        'totalTot', 'totExternos', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code', 'labNum')
+                );
+            } catch (Exception $e) {
+
+                return view('acadspace.Reportes.indexEst');
+
             }
-
-            $cont = 1;
-            return view('acadspace.Reportes.ReportesEstudiantes',
-                compact('totSistemasLibre', 'totSistemasGrup',
-                    'totAmbientalLibre', 'totAmbientalGrup',
-                    'totAgronomicaLibre', 'totAgronomicaGrup',
-                    'totAdminLibre', 'totAdminGrup',
-                    'totContaduriaLibre', 'totContaduriaGrup',
-                    'totPiscologiaLibre', 'totPiscologiaaGrup',
-                    'totalTot', 'totExternos', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code', 'labNum')
-            );
-        } catch (Exception $e) {
-
-            return view('acadspace.Reportes.indexEst');
-
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -282,64 +297,70 @@ class ReporteController extends Controller
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
      * que han ingresado a todos los espacios academicos
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporCarrera(Request $request)
     {
-        try {
-            $data = $request->all();
-            $fecha = $data['date_range'];
-            $carr = $data['SOL_carrera'];
-            switch ($carr) {
-                case 1:
-                    $carrera = 'Ingeniería de Sistemas';
-                    break;
-                case 2:
-                    $carrera = 'Ingeniería Ambiental';
-                    break;
-                case 3:
-                    $carrera = 'Ingeniería Agronomica';
-                    break;
-                case 4:
-                    $carrera = 'Administración';
-                    break;
-                case 5:
-                    $carrera = 'Psicología';
-                    break;
-                case 6:
-                    $carrera = 'Contaduría';
-                    break;
+        if ($request->isMethod('POST')) {
+            try {
+                $data = $request->all();
+                $fecha = $data['date_range'];
+                $carr = $data['SOL_carrera'];
+                switch ($carr) {
+                    case 1:
+                        $carrera = 'Ingeniería de Sistemas';
+                        break;
+                    case 2:
+                        $carrera = 'Ingeniería Ambiental';
+                        break;
+                    case 3:
+                        $carrera = 'Ingeniería Agronomica';
+                        break;
+                    case 4:
+                        $carrera = 'Administración';
+                        break;
+                    case 5:
+                        $carrera = 'Psicología';
+                        break;
+                    case 6:
+                        $carrera = 'Contaduría';
+                        break;
+
+                }
+                $f2 = substr($fecha, -10);
+                $f1 = substr($fecha, -23, -13);
+
+                $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+                $fech2 = $this->changeForm($f2);
+
+                $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+                $time = date("h:i A");
+
+                $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 2, $carr, 1);
+                $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 2, $carr, 2);
+                $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 3, $carr, 1);
+                $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 3, $carr, 2);
+                $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 1, $carr, 1);
+                $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 1, $carr, 2);
+
+
+                $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
+
+                $cont = 1;
+                return view('acadspace.Reportes.reportesCarrera',
+                    compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
+                        'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
+                );
+            } catch (Exception $e) {
+
+                return view('acadspace.Reportes.indexCarr');
 
             }
-            $f2 = substr($fecha, -10);
-            $f1 = substr($fecha, -23, -13);
-
-            $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
-            $fech2 = $this->changeForm($f2);
-
-            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
-            $time = date("h:i A");
-
-            $sistLibre = $this->obtenerTotalEstLab($fech1, $fech2, 2, $carr, 1);
-            $sistGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 2, $carr, 2);
-            $psicLibre = $this->obtenerTotalEstLab($fech1, $fech2, 3, $carr, 1);
-            $psicGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 3, $carr, 2);
-            $ciencLibre = $this->obtenerTotalEstLab($fech1, $fech2, 1, $carr, 1);
-            $ciencGrup = $this->obtenerTotalEstPracGrupal($fech1, $fech2, 1, $carr, 2);
-
-
-            $totalTot = $sistLibre + $sistGrup + $psicLibre + $psicGrup + $ciencLibre + $ciencGrup;
-
-            $cont = 1;
-            return view('acadspace.Reportes.reportesCarrera',
-                compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
-                    'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
-            );
-        } catch (Exception $e) {
-
-            return view('acadspace.Reportes.indexCarr');
-
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar su solicitud.'
+        );
     }
 
     /*
@@ -392,53 +413,59 @@ class ReporteController extends Controller
      * la fecha en el formato necesario. Obtiene la cantidad de docentes que han ingresado
      * al laboratorio elegido entre las fechas proporcionadas
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporDocente(Request $request)
     {
-        try {
-            $data = $request->all();
+        if ($request->isMethod('POST')) {
+            try {
+                $data = $request->all();
 
-            $fecha = $request['date_range'];
-            $labNum = $request['SOL_laboratorios'];
-            $aula = $request['aula'];
+                $fecha = $request['date_range'];
+                $labNum = $request['SOL_laboratorios'];
+                $aula = $request['aula'];
 
-            $f2 = substr($fecha, -10);
-            $f1 = substr($fecha, -23, -13);
+                $f2 = substr($fecha, -10);
+                $f1 = substr($fecha, -23, -13);
 
-            $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
-            $fech2 = $this->changeForm($f2);
+                $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+                $fech2 = $this->changeForm($f2);
 
-            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
-            $time = date("h:i A");
+                $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+                $time = date("h:i A");
 
-            $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
-            foreach ($nomAula as $nombAula) {
-                $nombreAula = $nombAula->SAL_Nombre_Sala;
+                $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
+                foreach ($nomAula as $nombAula) {
+                    $nombreAula = $nombAula->SAL_Nombre_Sala;
+                }
+                $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $labNum)->get();
+                foreach ($nomEsp as $nomEsps) {
+                    $nomEspacio = $nomEsps->ESP_Nombre_Espacio;
+                }
+
+
+                $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
+                    ->where('FK_ASIS_Id_Aula', '=', $aula)
+                    ->where('ASIS_Tipo_Practica', '=', 2)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+                $totalTot = count($docentes);
+
+                $cont = 1;
+                return view('acadspace.Reportes.ReportesDocentes',
+                    compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
+                );
+            } catch (Exception $e) {
+
+                return view('acadspace.Reportes.index');
+
             }
-            $nomEsp = Espacios::where('PK_ESP_Id_Espacio', '=', $labNum)->get();
-            foreach ($nomEsp as $nomEsps) {
-                $nomEspacio = $nomEsps->ESP_Nombre_Espacio;
-            }
-
-
-            $docentes = Asistencia::whereBetween('created_at', [$fech1, $fech2])
-                ->where('FK_ASIS_Id_Aula', '=', $aula)
-                ->where('ASIS_Tipo_Practica', '=', 2)
-                ->orderBy('created_at', 'asc')
-                ->get();
-
-            $totalTot = count($docentes);
-
-            $cont = 1;
-            return view('acadspace.Reportes.ReportesDocentes',
-                compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
-            );
-        } catch (Exception $e) {
-
-            return view('acadspace.Reportes.index');
-
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 

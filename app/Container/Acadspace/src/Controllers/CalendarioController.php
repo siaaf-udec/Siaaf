@@ -22,16 +22,19 @@ class CalendarioController extends Controller
 {
     /**
      * Funcion mostrar vista de gestion aulas - calendario
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.gestionhorarios.calendarioaulas',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.gestionhorarios.calendarioaulas',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**

@@ -29,21 +29,27 @@ class SolicitudController extends Controller
 
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function mostrarSolicitudesDocente()
+    public function mostrarSolicitudesDocente(Request $request)
     {
-        return view('acadspace.Solicitudes.solicitudGrupal');
+        if ($request->isMethod('GET')) {
+            return view('acadspace.Solicitudes.solicitudGrupal');
+        }
     }
 
 
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente AJAX
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function mostrarSolicitudesDocenteAjax()
+    public function mostrarSolicitudesDocenteAjax(Request $request)
     {
-        return view('acadspace.Solicitudes.solicitudGrupal-ajax');
+        if ($request->isMethod('GET')) {
+            return view('acadspace.Solicitudes.solicitudGrupal-ajax');
+        }
     }
 
 
@@ -245,31 +251,37 @@ class SolicitudController extends Controller
     /**
      * Mostrar el formulario con las solicitudes realizadas por el docente
      * para ser evaluadas por el auxiliar
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function mostrarSolicitudesAuxiliar()
+    public function mostrarSolicitudesAuxiliar(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Solicitudes.evaluacionSolicitudes',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Solicitudes.evaluacionSolicitudes',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
      * Mostrar el formulario con las solicitudes que ya han terminado su
      * proceso de aprobacion y asignacion
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function mostrarSolicitudesFinalizadas()
+    public function mostrarSolicitudesFinalizadas(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Solicitudes.solicitudesFinalizadas',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Solicitudes.solicitudesFinalizadas',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
@@ -399,7 +411,6 @@ class SolicitudController extends Controller
      */
     public function aprobarSolicitud(Request $request)
     {
-
         if ($request->ajax() && $request->isMethod('POST')) {
             //Aprobar solicitud
             $solicitud = Solicitud::findOrFail($request['id_solicitud']);
@@ -430,8 +441,6 @@ class SolicitudController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
-
     }
 
     /**

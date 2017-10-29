@@ -18,53 +18,59 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class AsistenciaController extends Controller
 {
-
-
     /**
      * Retorna la vista de control estudiante
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function asisEst()
+    public function asisEst(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.controlEstudiante',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.controlEstudiante',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
      * Retorna la vista de control externo
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function asisInvitado()
+    public function asisInvitado(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.controlInvitado',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.controlInvitado',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
      * Retorna la vista de control docente
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function asisDoc()
+    public function asisDoc(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.controlDocente',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.controlDocente',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
-     * Recibe el parametro espacio y retorna un json con las aulas
-     * disponibles de acuerdo al espacio
+     * Recibe el parametro espacio y retorna aulas
      * @param \Illuminate\Http\Request $request
      * @param varchar $espacio
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
@@ -88,7 +94,6 @@ class AsistenciaController extends Controller
 
     /**
      * Verificando que el estudiante exista.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -104,7 +109,6 @@ class AsistenciaController extends Controller
             } else {
                 return response('false');
             }
-
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -115,7 +119,6 @@ class AsistenciaController extends Controller
 
     /**
      * Verificando que el docente exista.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
@@ -201,8 +204,7 @@ class AsistenciaController extends Controller
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public
-    function regisAsistenciaDoc(Request $request)
+    public function regisAsistenciaDoc(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 

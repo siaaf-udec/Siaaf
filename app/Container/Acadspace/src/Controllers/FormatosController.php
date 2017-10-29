@@ -24,33 +24,28 @@ class formatosController extends Controller
 
     /**
      * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //Muestra vista de solicitudes por id_secretaria
-        return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad');
-    }
-
-    /**
-     * Funcion para mostrar la vista de solicitudes de formatos academicos para secretarias
-     * @return \Illuminate\View\View
-     */
-    public function indexAjax()
-    {
-        //Muestra vista de solicitudes por id_secretaria
-        return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad-ajax');
+        if ($request->isMethod('GET')) {
+            //Muestra vista de solicitudes por id_secretaria
+            return view('acadspace.FormatosAcademicos.mostrarEstSolFormAcad');
+        }
     }
 
     /**
      * Funcion para mostrar la vista de solicitudes de formatos academicos para el administrador
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function listSol()
+    public function listSol(Request $request)
     {
-        //Muestra vista de solicitudes realizadas por secretarias
-        return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad');
-
+        if ($request->isMethod('GET')) {
+            //Muestra vista de solicitudes realizadas por secretarias
+            return view('acadspace.FormatosAcademicos.mostrarSolicitudesFormAcad');
+        }
     }
 
 
@@ -63,26 +58,33 @@ class formatosController extends Controller
     {
         $id = Auth::id();
         if ($request->ajax() && $request->isMethod('POST')) {
-            $model = new formatos();//Crea nuevo modelo
-            $archivos = $request->file('file');
-            foreach ($archivos as $archivo) {
-                $url = Storage::disk('acadspace')->putFile('formatos', $archivo);
-            }
-            $model->FAC_Titulo_Doc = $request['titulo'];
-            $model->FAC_Descripcion_Doc = $request['descripcion'];
-            $model->FAC_Nombre_Doc = $url;
-            $model->FAC_Correo = $request['email'];
-            $model->FAC_Estado = 0;
-            $model->FK_FAC_Id_Secretaria = $id;
-            $model->save();
-            //Envio de correo
-            Mail::to($request['email'])->send(new EmailAcadspace("Nuevo formato academico", "Ha recibido un nuevo formato academico"));
+            if (empty($request['titulo']) || empty($request['descripcion']) || empty($request['email'])) {
+                return AjaxResponse::fail(
+                    '¡Error!',
+                    'Verifique los campos del formulario.'
+                );
+            } else {
+                $model = new formatos();//Crea nuevo modelo
+                $archivos = $request->file('file');
+                foreach ($archivos as $archivo) {
+                    $url = Storage::disk('acadspace')->putFile('formatos', $archivo);
+                }
+                $model->FAC_Titulo_Doc = $request['titulo'];
+                $model->FAC_Descripcion_Doc = $request['descripcion'];
+                $model->FAC_Nombre_Doc = $url;
+                $model->FAC_Correo = $request['email'];
+                $model->FAC_Estado = 0;
+                $model->FK_FAC_Id_Secretaria = $id;
+                $model->save();
+                //Envio de correo
+                Mail::to($request['email'])->send(new EmailAcadspace("Nuevo formato academico", "Ha recibido un nuevo formato academico"));
 
-            return AjaxResponse::success(
-            //Envia notificacion de registro satisfactorio
-                '¡Bien hecho!',
-                'Formato registrado correctamente.'
-            );
+                return AjaxResponse::success(
+                //Envia notificacion de registro satisfactorio
+                    '¡Bien hecho!',
+                    'Formato registrado correctamente.'
+                );
+            }
 
         }
         return AjaxResponse::fail(
@@ -106,7 +108,7 @@ class formatosController extends Controller
             $solicitud->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Datos cargados correctamente.'
+                'Formato aprobado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -121,17 +123,22 @@ class formatosController extends Controller
      * Funcion para descargar el archivo que se ha cargado en la solicitud
      * @param Request $request
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function descargarPublicacion(Request $request, $id)
     {
-        //Recibe id de solicitud
-        $solicitudess = formatos::find($id);
-        //Crea ruta con el nombre del archivo a descargar
-        $rutaarchivo = "../storage/app/public/acadspace/" . $solicitudess->FAC_Nombre_Doc;
-        //Retorna y descarga el archivo
-        return response()->download($rutaarchivo);
-
+        if ($request->isMethod('GET')) {
+            //Recibe id de solicitud
+            $solicitudess = formatos::find($id);
+            //Crea ruta con el nombre del archivo a descargar
+            $rutaarchivo = "../storage/app/public/acadspace/" . $solicitudess->FAC_Nombre_Doc;
+            //Retorna y descarga el archivo
+            return response()->download($rutaarchivo);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

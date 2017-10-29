@@ -18,18 +18,22 @@ use Yajra\DataTables\DataTables;
 
 class AulasController extends Controller
 {
+
     /**
-     * Funcion para mostrar la vista de Aulas     *
+     * Funcion para mostrar la vista de Aulas
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Aulas.formularioAulas',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Aulas.formularioAulas',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
@@ -38,15 +42,22 @@ class AulasController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function verificarAula(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nomb_sala' => 'unique:acadspace.TBL_Aulas,SAL_Nombre_Sala'
-        ]);
-        if (empty($validator->errors()->all())) {
-            return response('true');
-        } else {
-            return response('false');
+    public function verificarAula(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $validator = Validator::make($request->all(), [
+                'nomb_sala' => 'unique:acadspace.TBL_Aulas,SAL_Nombre_Sala'
+            ]);
+            if (empty($validator->errors()->all())) {
+                return response('true');
+            } else {
+                return response('false');
+            }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
@@ -58,7 +69,6 @@ class AulasController extends Controller
     public function regisAula(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
             Aulas::create($request->all());
             return AjaxResponse::success(
                 '¡Registro exitoso!',

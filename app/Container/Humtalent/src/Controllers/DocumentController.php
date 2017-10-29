@@ -439,7 +439,6 @@ class DocumentController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('humtalent.documentacion.ajaxListaDocumentos');
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'

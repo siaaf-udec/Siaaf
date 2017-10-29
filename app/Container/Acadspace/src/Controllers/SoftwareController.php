@@ -21,11 +21,14 @@ class SoftwareController extends Controller
 
     /**
      * Funcion mostrar vista de gestion software
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('acadspace.Software.formularioSoftware');
+        if ($request->isMethod('GET')) {
+            return view('acadspace.Software.formularioSoftware');
+        }
     }
 
     /**
@@ -35,8 +38,6 @@ class SoftwareController extends Controller
      */
     public function registroSoftware(Request $request)
     {
-
-
         if ($request->ajax() && $request->isMethod('POST')) {
             Software::create($request->all());
             return AjaxResponse::success(
@@ -57,7 +58,7 @@ class SoftwareController extends Controller
     /**
      * Funcion creada para cargar datatable con software
      * @param Request $request
-     * @return \Yajra\DataTables\ | \App\Container\Overall\Src\Facades\AjaxResponse\
+     * @return \Yajra\DataTables\ | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function data(Request $request)
     {

@@ -52,7 +52,7 @@ var FormDropzone = function () {
                                 }
                             }
                             if (myDropzone.files.length < 1) {
-                                UIToastr.init('error', 'Campos Requerido', 'Verifique los campos.');
+                                UIToastr.init('error', 'Campos Requeridos', 'Verifique los campos.');
                             }
                         }
                         if (type_crud == 'UPDATE') {
@@ -89,9 +89,8 @@ var FormDropzone = function () {
                                     async: async,
                                     success: function (response, xhr, request) {
                                         if (request.status === 200 && xhr === 'success') {
+                                            App.unblockUI();
                                             UIToastr.init(xhr, response.title, response.message);
-                                            route_index = route('espacios.academicos.formacad.indexajax');
-                                            $(".content-ajax").load(route_index);
                                         }
                                     },
                                     error: function (response, xhr, request) {
@@ -142,19 +141,20 @@ var FormDropzone = function () {
                 },
                 complete: function (file, xhr, formData) {
                     if (file.status == 'success') {
-                        UIToastr.init('success', 'Carga Satisfactoria',
-                            'Se ha procesado satisfactoriamente.'
-                        );
+                        $('#form_create_format')[0].reset();
                         $('#modal-create-form').modal('hide');
-                        route_index = route('espacios.academicos.formacad.indexajax');
-                        $(".content-ajax").load(route_index);
                         App.unblockUI();
+                        UIToastr.init('success', 'Carga Satisfactoria',
+                            'Formato registrado correctamente.'
+                        );
+                        var table = $('#art-table-ajax').DataTable();
+                        table.ajax.reload();
                     }
                 },
                 error: function (file, xhr, formData) {
                     if (file.status == 'error') {
 
-                        UIToastr.init('error', '¡Ocurrió un Error!',
+                        UIToastr.init('error', '¡Verifique los campos del formulario!',
                             xhr.email
                         );
                     }

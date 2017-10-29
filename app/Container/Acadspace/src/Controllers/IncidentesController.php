@@ -20,16 +20,19 @@ class IncidentesController extends Controller
 {
     /**
      * Funcion para mostrar la vista de incidentes
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $espa = new espacios();
-        $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-        return view('acadspace.Incidentes.formularioIncidente',
-            [
-                'espacios' => $espacios->toArray()
-            ]);
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Incidentes.formularioIncidente',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
     }
 
     /**
