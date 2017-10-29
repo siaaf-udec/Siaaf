@@ -231,20 +231,18 @@ class ReporteController extends Controller
     }
 
     /*
-     * Descarga de reporte de estudiantes
-     *
-   * @param  \Illuminate\Http\Request
+     * Descarga de reporte de estudiante
+     * @param  \Illuminate\Http\Request
      * @param   date fech1
      * @param   date fech2
-     * @param   int $labNum
-     *
+     * @param   int $labNum     *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Est(Request $request,$fech1,$fech2,$labNum )
+    public function Descargar_Reporte_Est(Request $request, $fech1, $fech2, $labNum)
     {
         if ($request->isMethod('GET')) {
-            try{
-                $lab=$labNum;
+            try {
+                $lab = $labNum;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $totSistemasLibre = $this->obtenerTotalEstLab($fech1, $fech2, $lab, 1, 1);
@@ -273,17 +271,17 @@ class ReporteController extends Controller
                 $cont = 1;
 
                 return SnappyPdf::loadView('acadspace.Reportes.ReportesEstudiantes', [
-                    'totSistemasLibre'=>$totSistemasLibre, 'totSistemasGrup'=>$totSistemasGrup,
-                    'totAmbientalLibre'=>$totAmbientalLibre, 'totAmbientalGrup'=>$totAmbientalGrup,
-                    'totAgronomicaLibre'=>$totAgronomicaLibre, 'totAgronomicaGrup'=>$totAgronomicaGrup,
-                    'totAdminLibre'=>$totAdminLibre, 'totAdminGrup'=>$totAdminGrup,
-                    'totContaduriaLibre'=>$totContaduriaLibre, 'totContaduriaGrup'=>$totContaduriaGrup,
-                    'totPiscologiaLibre'=>$totPiscologiaLibre, 'totPiscologiaaGrup'=>$totPiscologiaaGrup,
-                    'totExternos'=>$totExternos, 'totalTot'=>$totalTot,
-                    'date'=>$date, 'time'=>$time, 'fech1'=>$fech1, 'fech2'=>$fech2, 'lab'=>$lab, 'cont'=>$cont, 'labNum'=>$labNum
+                    'totSistemasLibre' => $totSistemasLibre, 'totSistemasGrup' => $totSistemasGrup,
+                    'totAmbientalLibre' => $totAmbientalLibre, 'totAmbientalGrup' => $totAmbientalGrup,
+                    'totAgronomicaLibre' => $totAgronomicaLibre, 'totAgronomicaGrup' => $totAgronomicaGrup,
+                    'totAdminLibre' => $totAdminLibre, 'totAdminGrup' => $totAdminGrup,
+                    'totContaduriaLibre' => $totContaduriaLibre, 'totContaduriaGrup' => $totContaduriaGrup,
+                    'totPiscologiaLibre' => $totPiscologiaLibre, 'totPiscologiaaGrup' => $totPiscologiaaGrup,
+                    'totExternos' => $totExternos, 'totalTot' => $totalTot,
+                    'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'lab' => $lab, 'cont' => $cont, 'labNum' => $labNum
                 ])->download('ReporteEstudiantes.pdf');
             } catch (Exception $e) {
-                return $e."error";
+                return $e . "error";
             }
         }
         return AjaxResponse::fail(
@@ -358,6 +356,7 @@ class ReporteController extends Controller
             }
         }
         return AjaxResponse::fail(
+
             '¡Lo sentimos!',
             'No se pudo completar su solicitud.'
         );
@@ -374,10 +373,10 @@ class ReporteController extends Controller
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Carr(Request $request,$fech1,$fech2,$carr, $carrera)
+    public function Descargar_Reporte_Carr(Request $request, $fech1, $fech2, $carr, $carrera)
     {
         if ($request->isMethod('GET')) {
-            try{
+            try {
                 $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
                 $time = date("h:i A");
 
@@ -392,13 +391,13 @@ class ReporteController extends Controller
 
                 $cont = 1;
                 return SnappyPdf::loadView('acadspace.Reportes.reportesCarrera', [
-                    'carrera'=>$carrera, 'sistLibre'=>$sistLibre, 'sistGrup'=>$sistGrup,
-                    'psicLibre'=>$psicLibre, 'psicGrup'=>$psicGrup, 'ciencLibre'=>$ciencLibre, 'ciencGrup'=>$ciencGrup,
-                    'totalTot'=>$totalTot,
-                    'date'=>$date, 'time'=>$time, 'fech1'=>$fech1, 'fech2'=>$fech2, 'carr'=>$carr, 'cont'=>$cont
+                    'carrera' => $carrera, 'sistLibre' => $sistLibre, 'sistGrup' => $sistGrup,
+                    'psicLibre' => $psicLibre, 'psicGrup' => $psicGrup, 'ciencLibre' => $ciencLibre, 'ciencGrup' => $ciencGrup,
+                    'totalTot' => $totalTot,
+                    'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'carr' => $carr, 'cont' => $cont
                 ])->download('ReporteCarrera.pdf');
             } catch (Exception $e) {
-                return $e."error";
+                return $e . "error";
             }
         }
         return AjaxResponse::fail(
@@ -480,10 +479,10 @@ class ReporteController extends Controller
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Doc(Request $request,$fech1,$fech2,$labNum, $aula)
+    public function Descargar_Reporte_Doc(Request $request, $fech1, $fech2, $labNum, $aula)
     {
         if ($request->isMethod('GET')) {
-            try{
+            try {
                 $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
                 $time = date("h:i A");
                 $nomAula = Aulas::where('PK_SAL_Id_Sala', '=', $aula)->get();
@@ -504,12 +503,12 @@ class ReporteController extends Controller
 
                 $cont = 1;
                 return SnappyPdf::loadView('acadspace.Reportes.ReportesDocentes', [
-                    'docentes'=>$docentes, 'aula'=>$aula,
-                    'nomEspacio'=>$nomEspacio,'nombreAula'=>$nombreAula, 'totalTot'=>$totalTot,
-                    'date'=>$date, 'time'=>$time, 'fech1'=>$fech1, 'fech2'=>$fech2, 'labNum'=>$labNum, 'cont'=>$cont
+                    'docentes' => $docentes, 'aula' => $aula,
+                    'nomEspacio' => $nomEspacio, 'nombreAula' => $nombreAula, 'totalTot' => $totalTot,
+                    'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'labNum' => $labNum, 'cont' => $cont
                 ])->download('ReporteDocentes.pdf');
             } catch (Exception $e) {
-                return $e."error";
+                return $e . "error";
             }
         }
         return AjaxResponse::fail(

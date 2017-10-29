@@ -18,6 +18,9 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Styles SWEETALERT  -->
+    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
+          type="text/css"/>
 @endpush
 
 @section('content')
@@ -135,6 +138,9 @@
             type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <!-- SCRIPT Confirmacion Sweetalert -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+    </script>
 @endpush
 
 @push('functions')
@@ -194,29 +200,47 @@
                 var route = '{{ route('espacios.academicos.aulas.destroy') }}' + '/' + dataTable.PK_SAL_Id_Sala;
                 var type = 'DELETE';
                 var async = async || false;
+                swal({
+                    title: "¿Esta seguro?",
+                    text: "Eliminara calendario y solicitudes asociadas al aula.",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    confirmButtonText: "Si, eliminar",
+                    confirmButtonColor: "#ec6c62",
+                    confirmButtonClass: "btn blue",
+                    cancelButtonText: "Cancelar",
+                    cancelButtonClass: "btn red",
+                }, function () {
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
 
-                $.ajax({
-                    url: route,
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    cache: false,
-                    type: type,
-                    contentType: false,
-                    processData: false,
-                    async: async,
-                    beforeSend: function () {
-
-                    },
-                    success: function (response, xhr, request) {
-                        if (request.status === 200 && xhr === 'success') {
-                            table.ajax.reload();
-                            UIToastr.init(xhr, response.title, response.message);
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
                         }
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 && xhr === 'error') {
-                            UIToastr.init(xhr, response.title, response.message);
-                        }
-                    }
+                    })
+                        .done(function (data) {
+                            swal("Eliminado", "El aula se ha eliminado correctamente", "success");
+                        })
+                        .error(function (data) {
+                            swal("Oops", "Ha ocurrido un error", "error");
+                        });
                 });
 
 
@@ -272,11 +296,13 @@
 
             var form_edit = $('#form_soft');
             var rules_edit = {
-                nomb_sala: {minlength: 3, required: true, remote: {
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route('espacios.academicos.aulas.verificarAula') }}',
-                    type: "POST"
-                }},
+                nomb_sala: {
+                    minlength: 3, required: true, remote: {
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: '{{ route('espacios.academicos.aulas.verificarAula') }}',
+                        type: "POST"
+                    }
+                },
                 espacios: {required: true}
             };
             var messages = {

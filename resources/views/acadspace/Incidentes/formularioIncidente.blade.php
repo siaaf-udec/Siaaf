@@ -86,7 +86,7 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('id_persona',null,
-                                    ['label'=>'Código:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                    ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                     ['help' => 'Digite el código o identificación de la persona','icon'=>'fa fa-user'] ) !!}
 
                                     {!! Field::select('Espacio académico:',$espacios,

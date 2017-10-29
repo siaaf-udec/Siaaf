@@ -38,7 +38,6 @@ class AulasController extends Controller
 
     /**
      * Verificando que el aula no exista.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
