@@ -30,7 +30,7 @@ class CalendarioController extends Controller
         if ($request->isMethod('GET')) {
             $espa = new espacios();
             $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-            return view('acadspace.gestionhorarios.calendarioaulas',
+            return view('acadspace.GestionHorarios.calendarioAulas',
                 [
                     'espacios' => $espacios->toArray()
                 ]);
