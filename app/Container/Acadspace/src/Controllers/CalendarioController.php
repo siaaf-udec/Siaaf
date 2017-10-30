@@ -64,7 +64,7 @@ class CalendarioController extends Controller
      * Retorno un arreglo tipo JSON con todos los eventos actuales en
      * el calendario de acuerdo a la sala seleccionada
      * @param Request $request
-     * @return array
+     * @return array | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function cargaEventos(Request $request)
     {
@@ -91,6 +91,10 @@ class CalendarioController extends Controller
             json_encode($data);
             return $data;
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
