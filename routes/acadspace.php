@@ -5,10 +5,10 @@
 
 Route::group(['middleware' => ['auth']], function () {
 
-    $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+    $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
     //Ruta para manejar Solicitudes
     Route::group(['prefix' => 'solacad', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         /*RUTAS ASIGNADAS PARA SOLICITUD ROL DOCENTE*/
         Route::get('indexDoc', [ //Index ROL docente
             'uses' => $controller . 'SolicitudController@mostrarSolicitudesDocente',
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA MANEJAR EL FORMULARIO DE SOFTWARE*/
     Route::group(['prefix' => 'soft', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [ //MOSTRAR FORMULARIO
             'uses' => $controller . 'SoftwareController@index',
             'as' => 'espacios.academicos.soft.index'
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA EL FORMULARIO DE EVALUACION DE SOLICITUDES AUXILIAR ACADEMICO*/
     Route::group(['prefix' => 'evalsol', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'SolicitudController@mostrarSolicitudesAuxiliar',
             'as' => 'espacios.academicos.evalsol.index'
@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA EL FORMULARIO DE FORMATOS ACADEMICOS*/
     Route::group(['prefix' => 'formacad', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'formatosController@index',
             'as' => 'espacios.academicos.formacad.index'
@@ -147,7 +147,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA FUNCIONALIDAD AULAS*/
     Route::group(['prefix' => 'aulas', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'AulasController@index',
             'as' => 'espacios.academicos.aulas.index'
@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA FUNCIONALIDAD INCIDENTES*/
     Route::group(['prefix' => 'incidente', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'IncidentesController@index',
             'as' => 'espacios.academicos.incidente.index'
@@ -197,7 +197,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA MANEJAR EL FORMULARIO DE REPORTES*/
     Route::group(['prefix' => 'report', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [ //Pagina inicial y captura de rango de fechas
             'uses' => $controller . 'ReporteController@index',
             'as' => 'espacios.academicos.report.index'
@@ -250,7 +250,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*RUTAS PARA MANEJAR LA ASISTENCIA*/
     Route::group(['prefix' => 'asist', 'middleware' => ['permission:FUNC_ESPA']], function () {
-        $controller = "\\App\\Container\\Acadspace\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('asisEst', [ //Pagina inicial asistencia estudiantes
             'uses' => $controller . 'AsistenciaController@asisEst',
             'as' => 'espacios.academicos.asist.asisEst'
