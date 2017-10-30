@@ -8,6 +8,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use App\Container\Acadspace\src\Solicitud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Software;
@@ -89,14 +90,21 @@ class SoftwareController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-
-            $software = software::find($id);
-            $software->delete();
-
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Software eliminado correctamente.'
-            );
+            $validator = Solicitud::where('FK_SOL_Id_Software', $id)
+                ->count();
+            if ($validator == 0) {
+                $software = software::find($id);
+                $software->delete();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Software eliminado correctamente.'
+                );
+            } else {
+                return AjaxResponse::success(
+                    '¡Error!',
+                    'Primero debe eliminar las solicitudes asociadas al software.'
+                );
+            }
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

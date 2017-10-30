@@ -25,6 +25,7 @@
     <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
+
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
@@ -57,7 +58,7 @@
                     'id_incidente',
                     '  ',
                     '#',
-                    'Código',
+                    'Identificación',
                     'Nombre Espacio',
                     'Acciones' => ['style' => 'width:45px;']
                     ])
@@ -200,7 +201,7 @@
                     "defaultContent": ''
                 },
                 {data: 'DT_Row_Index'},
-                {data: 'FK_INC_Id_User', name: 'Código'},
+                {data: 'FK_INC_Id_User', name: 'Identificación'},
                 {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
                     defaultContent: '@permission('eliminarIncidente') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
@@ -322,7 +323,7 @@
 
             var form_edit = $('#form_soft');
             var rules_edit = {
-                id_persona: {minlength: 9, required: true, number: true},
+                id_persona: {minlength: 8, required: true, number: true},
                 descripcion: {required: true, minlength: 5, maxlength: 200},
                 espacios: {required: true}
             };

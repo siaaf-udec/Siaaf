@@ -198,8 +198,12 @@
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            table.ajax.reload();
-                            UIToastr.init(xhr, response.title, response.message);
+                            if(response.title=="¡Bien hecho!") {
+                                UIToastr.init(xhr, response.title, response.message);
+                                table.ajax.reload();
+                            }else{
+                                UIToastr.init('error', response.title, response.message);
+                            }
                         }
                     },
                     error: function (response, xhr, request) {
@@ -208,7 +212,6 @@
                         }
                     }
                 });
-
 
             });
 

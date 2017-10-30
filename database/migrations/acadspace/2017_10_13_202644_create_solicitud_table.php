@@ -18,7 +18,7 @@ class CreateSolicitudTable extends Migration
             $table->string('SOL_Guia_Practica',30);
             $table->string('SOL_Dias',50)->nullable();
             $table->integer('FK_SOL_Id_Software')->unsigned()->nullable();
-            $table->integer('SOL_Grupo')->unsigned();
+            $table->string('SOL_Grupo',30);
             $table->integer('SOL_Cant_Estudiantes')->unsigned();
             $table->string('SOL_Hora_Inicio',10);
             $table->string('SOL_Hora_Fin',10);
