@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use App\Mail\Acadspace\EmailAcadspace;
 use Illuminate\Support\Facades\Mail;

@@ -14,7 +14,7 @@ use App\Container\Acadspace\src\Calendario;
 use App\Container\Acadspace\src\Solicitud;
 use App\Container\Acadspace\src\Espacios;
 use App\Container\Acadspace\src\Aulas;
-use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 

@@ -12,7 +12,7 @@ use App\Container\Acadspace\src\Solicitud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Software;
-use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 

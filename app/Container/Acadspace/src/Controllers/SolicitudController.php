@@ -11,7 +11,7 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use App\Container\Acadspace\src\Solicitud;
