@@ -11,7 +11,7 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Overall\src\Facades\AjaxResponse;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use App\Container\Acadspace\src\Solicitud;
@@ -234,6 +234,11 @@ class SolicitudController extends Controller
                 })
                 ->rawColumns(['tipo_prac'])
                 ->rawColumns(['estado'])
+                ->removeColumn('SOL_Estado')
+                ->removeColumn('SOL_Id_Practica')
+                ->removeColumn('updated_at')
+                ->removeColumn('FK_SOL_Id_Software')
+                ->removeColumn('FK_SOL_Id_Sala')
                 ->addIndexColumn()
                 ->make(true);
 
