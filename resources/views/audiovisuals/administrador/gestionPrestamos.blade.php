@@ -116,11 +116,7 @@ de la plantilla
                             </i>
                             Reservas
                         </a>
-                        <a class="btn btn-outline dark sancionesAjax" data-toggle="modal">
-                            <i class="fa fa-plus">
-                            </i>
-                            Sanciones
-                        </a>
+
                     </div>
                 </div>
             </div>
@@ -294,6 +290,7 @@ de la plantilla
                 var route = '{{ route('reserva.index') }}';
                 $(".content-ajax").load(route);
             });
+
         });
     </script>
 @endpush

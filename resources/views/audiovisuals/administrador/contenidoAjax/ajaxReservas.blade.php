@@ -2,19 +2,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Reservas'])
         @slot('actions', [
+                'link_cancel' => [
+                                  'link' => '',
+                                  'icon' => 'fa fa-arrow-left',
+                                 ],
 
-                    'link_upload' => [
-                        'link' => '',
-                        'icon' => 'icon-cloud-upload',
-                    ],
-                    'link_wrench' => [
-                        'link' => '',
-                        'icon' => 'icon-wrench',
-                    ],
-                    'link_trash' => [
-                        'link' => '',
-                        'icon' => 'icon-trash',
-                    ],
 
                 ])
         <div class="clearfix">
@@ -23,19 +15,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
+
                     <a class="btn btn-outline dark prestamoAjax" data-toggle="modal">
                         <i class="fa fa-plus">
                         </i>
                         Prestamos
                     </a>
-                    <a class="btn btn-outline dark sancionesAjax" data-toggle="modal">
-                        <i class="fa fa-plus">
-                        </i>
-                        Sanciones
-                    </a>
+
                 </div>
             </div>
         </div>
+        <br><br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'reservas-table-ajax'])
                 @slot('columns', [
@@ -312,5 +302,18 @@
 
         };
         FormValidationMd.init(form_create_kit,rules_create_kit,false,realizar());
+
+        $('#link_cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
+            $(".content-ajax").load(route);
+        });
+        $('.prestamoAjax').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
+            $(".content-ajax").load(route);
+        });
+
+
     });
 </script>

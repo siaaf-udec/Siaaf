@@ -11,11 +11,7 @@
                         </i>
                         Reservas
                     </a>
-                    <a class="btn btn-outline dark sancionesAjax" data-toggle="modal">
-                        <i class="fa fa-plus">
-                        </i>
-                        Sanciones
-                    </a>
+
                 </div>
             </div>
 
