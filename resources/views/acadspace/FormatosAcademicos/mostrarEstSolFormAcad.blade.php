@@ -77,7 +77,7 @@
                                     {!! Form::open(['id' => 'form_create_format', 'class' => '', 'url' => '/forms']) !!}
                                     <div class="form-wizard">
                                         <div class="form-body">
-                                            {!! Field::text('titulo', ['required', 'label' => 'Nombre Documento:', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-file-pdf-o', 'help' => 'Ingrese el nombre.']) !!}
+                                            {!! Field::text('titulo', ['required', 'label' => 'Nombre Documento:','maxlength'=>'50', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-file-pdf-o', 'help' => 'Ingrese el nombre.']) !!}
 
                                             {!! Field::textarea(
                                             'descripcion',

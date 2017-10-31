@@ -23,7 +23,7 @@ class CalendarioController extends Controller
     /**
      * Funcion mostrar vista de gestion aulas - calendario
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request)
     {
@@ -35,6 +35,10 @@ class CalendarioController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

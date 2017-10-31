@@ -133,25 +133,23 @@ class SolicitudController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $id = Auth::id();
+            $model = new Solicitud();
+            $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
+            $model->FK_SOL_Id_Software = $request['SOL_NombSoft'];
+            $model->SOL_Grupo = $request['SOL_Grupo'];
+            $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
+            $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
+            $model->SOL_Hora_Fin = $request['SOL_Hora_Fin'];
+            $model->SOL_Nucleo_Tematico = $request['SOL_Nucleo_Tematico'];
+            $model->SOL_Carrera = $request['SOL_programa'];
+            $model->FK_SOL_Id_Docente = $id;
+            $model->SOL_Estado = 0;
+            $model->SOL_Espacio = $request['SOL_Espacio'];
 
             if ($request['ID_Practica'] == 1) {
 
-                $model = new Solicitud();
-
-                $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
-                $model->FK_SOL_Id_Software = $request['SOL_NombSoft'];
-                $model->SOL_Grupo = $request['SOL_Grupo'];
-                $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
-                $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
-                $model->SOL_Hora_Fin = $request['SOL_Hora_Fin'];
-                $model->SOL_Nucleo_Tematico = $request['SOL_Nucleo_Tematico'];
                 $model->SOL_fecha_inicial = $request['SOL_fecha_inicial'];
-                $model->SOL_Carrera = $request['SOL_programa'];
-                $model->FK_SOL_Id_Docente = $id;
-                $model->SOL_Estado = 0;
                 $model->SOL_Id_Practica = 1;
-                $model->SOL_Espacio = $request['SOL_Espacio'];
-
                 $model->save();
 
                 return AjaxResponse::success(
@@ -160,31 +158,15 @@ class SolicitudController extends Controller
                 );
 
             } else {
-                $model = new Solicitud();
-
-                $model->SOL_Guia_Practica = $request['SOL_ReqGuia'];
-                $model->FK_SOL_Id_Software = $request['SOL_NombSoft'];
-                $model->SOL_Grupo = $request['SOL_Grupo'];
-                $model->SOL_Cant_Estudiantes = $request['SOL_Cant_Estudiantes'];
-                $model->SOL_Hora_Inicio = $request['SOL_Hora_Inicio'];
-                $model->SOL_Hora_Fin = $request['SOL_Hora_Fin'];
-                $model->SOL_Nucleo_Tematico = $request['SOL_Nucleo_Tematico'];
                 $model->SOL_Dias = $request['SOL_Dias'];
-                $model->SOL_Carrera = $request['SOL_programa'];
-                $model->FK_SOL_Id_Docente = $id;
-                $model->SOL_Estado = 0;
                 $model->SOL_Id_Practica = 2;
-                $model->SOL_Espacio = $request['SOL_Espacio'];
                 $model->SOL_Rango_Fechas = $request['SOL_Rango_Fechas'];
-
                 $model->save();
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Solicitud registrada correctamente.'
                 );
             }
-
-
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

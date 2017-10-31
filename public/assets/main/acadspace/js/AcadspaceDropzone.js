@@ -141,14 +141,14 @@ var FormDropzone = function () {
                 },
                 complete: function (file, xhr, formData) {
                     if (file.status == 'success') {
+                        var table = $('#art-table-ajax').DataTable();
+                        table.ajax.reload();
                         $('#form_create_format')[0].reset();
                         $('#modal-create-form').modal('hide');
                         App.unblockUI();
                         UIToastr.init('success', 'Carga Satisfactoria',
                             'Formato registrado correctamente.'
                         );
-                        var table = $('#art-table-ajax').DataTable();
-                        table.ajax.reload();
                     }
                 },
                 error: function (file, xhr, formData) {

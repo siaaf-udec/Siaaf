@@ -22,7 +22,7 @@ class AulasController extends Controller
     /**
      * Funcion para mostrar la vista de Aulas
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request)
     {
@@ -34,6 +34,10 @@ class AulasController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

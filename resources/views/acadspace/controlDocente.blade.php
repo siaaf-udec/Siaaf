@@ -36,7 +36,7 @@
                                           null,
                                           [ 'label' => 'Programa:']) !!}
 
-                        {!! Field:: text('materia',null,['label'=>'Materia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                        {!! Field:: text('materia',null,['label'=>'Materia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                                          ['help' => 'Digite la materia a dictar','icon'=>'fa fa-desktop'] ) !!}
 
                         {!! Field::select('Espacio académico:',$espacios,

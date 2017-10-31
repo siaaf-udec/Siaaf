@@ -21,7 +21,7 @@ class AsistenciaController extends Controller
     /**
      * Retorna la vista de control estudiante
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function asisEst(Request $request)
     {
@@ -33,12 +33,16 @@ class AsistenciaController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Retorna la vista de control externo
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function asisInvitado(Request $request)
     {
@@ -50,12 +54,16 @@ class AsistenciaController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Retorna la vista de control docente
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function asisDoc(Request $request)
     {
@@ -67,6 +75,10 @@ class AsistenciaController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**

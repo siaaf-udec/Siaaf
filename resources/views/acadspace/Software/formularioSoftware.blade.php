@@ -76,12 +76,12 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('nombre_soft',null,
-                                    ['label'=>'Nombre Software:','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    ['label'=>'Nombre Software:','class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre','icon'=>'fa fa-desktop'] ) !!}
 
 
                                     {!! Field:: text('version',null,
-                                    ['label'=>'Versión','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    ['label'=>'Versión','class'=> 'form-control', 'autofocus', 'maxlength'=>'20','autocomplete'=>'off'],
                                     ['help' => 'Digite la versión.','icon'=>'fa fa-desktop']) !!}
 
                                     {!! Field:: text('licencias',null,

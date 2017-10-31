@@ -41,11 +41,11 @@
                                 {!! Field::radios('SOL_ReqGuia',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere guía de practica?', 'icon'=>'fa fa-user']) !!}
 
                                 <div id="req_guia">
-                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                    {!! Field::text('SOL_nombreGuia',null,['label'=>'Nombre de la guía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                 ['icon'=>'fa fa-group'] ) !!}
                                 </div>
 
-                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                {!! Field::text('SOL_Nucleo_Tematico',null,['label'=>'Núcleo temático:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                 ['help' => 'Digite el núcleo temático.','icon'=>'fa fa-building-o'] ) !!}
 
                                 {!! Field::radios('FK_SOL_Id_Software',['Si'=>'Si', 'No'=>'No'], ['list', 'label'=>'¿Requiere software?', 'icon'=>'fa fa-user']) !!}
@@ -56,10 +56,10 @@
                                     !!}
                                 </div>
 
-                                {!! Field::text('SOL_Grupo',null,['label'=>'Grupo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                {!! Field::text('SOL_Grupo',null,['label'=>'Grupo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                 ['icon'=>'fa fa-group'] ) !!}
 
-                                {!! Field::text('SOL_Cant_Estudiantes',null,['label'=>'Cantidad de estudiantes:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
+                                {!! Field::text('SOL_Cant_Estudiantes',null,['label'=>'Cantidad de estudiantes:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'2','autocomplete'=>'off'],
                                 ['icon'=>'fa fa-group'] ) !!}
 
                                 {!! Field::checkboxes('SOL_Dias',
@@ -241,9 +241,9 @@
             SOL_programa: {required: true},
             SOL_ReqGuia: {required: true},
             FK_SOL_Id_Software: {required: true},
-            SOL_Nucleo_Tematico: {required: true, minlength: 3, maxlength: 20},
-            SOL_Grupo: {required: true, maxlength: 30},
-            SOL_Cant_Estudiantes: {required: true, number: true, maxlength: 2},
+            SOL_Nucleo_Tematico: {required: true, minlength: 3, maxlength: 50},
+            SOL_Grupo: {required: true, maxlength: 50},
+            SOL_Cant_Estudiantes: {required: true, number: true, maxlength: 2, range: [1, 99]},
             SOL_laboratorios: {required: true},
             SOL_Hora_Fin: {required: true},
             SOL_Rango_Fechas: {required: true}

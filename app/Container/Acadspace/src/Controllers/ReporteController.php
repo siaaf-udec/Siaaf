@@ -24,7 +24,7 @@ class ReporteController extends Controller
     /**
      * Retorna la vista de reportes docente
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteIndexDoc(Request $request)
     {
@@ -36,12 +36,16 @@ class ReporteController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Retorna la vista de reportes estudiantes
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteIndexEst(Request $request)
     {
@@ -53,18 +57,26 @@ class ReporteController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Retorna la vista de reportes carrera
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteIndexCarr(Request $request)
     {
         if ($request->isMethod('GET')) {
             return view('acadspace.Reportes.reportesIndexCarr');
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
