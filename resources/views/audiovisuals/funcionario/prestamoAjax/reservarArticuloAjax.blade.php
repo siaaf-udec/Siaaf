@@ -1,13 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Asignar Reserva Articulo'])
         @slot('actions', [
-                 'link_cancel' => [
-                                   'link' => '',
-                                   'icon' => 'fa fa-arrow-left',
-                                  ],
-
-
-                 ])
+              'link_cancel' => [
+              'link' => '',
+              'icon' => 'fa fa-arrow-left',
+             ],
+        ])
         <div class="row">
             <div class="col-md-12">
             {{-- BEGIN HTML MODAL CREATE --}}
@@ -316,5 +314,6 @@
             var route = '{{ route('audiovisuales.reservaArticulo.indexAjax') }}';
             $(".content-ajax").load(route);
         });
+
     });
 </script>
