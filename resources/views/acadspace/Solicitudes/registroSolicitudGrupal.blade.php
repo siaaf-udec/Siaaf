@@ -242,7 +242,7 @@
             SOL_ReqGuia: {required: true},
             FK_SOL_Id_Software: {required: true},
             SOL_Nucleo_Tematico: {required: true, minlength: 3, maxlength: 20},
-            SOL_Grupo: {required: true, number: true, maxlength: 30},
+            SOL_Grupo: {required: true, maxlength: 30},
             SOL_Cant_Estudiantes: {required: true, number: true, maxlength: 2},
             SOL_laboratorios: {required: true},
             SOL_Hora_Fin: {required: true},

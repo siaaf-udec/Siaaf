@@ -30,26 +30,34 @@ class SolicitudController extends Controller
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function mostrarSolicitudesDocente(Request $request)
     {
         if ($request->isMethod('GET')) {
             return view('acadspace.Solicitudes.solicitudGrupal');
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
     /**
      * Mostrar el datatable con las solicitudes realizadas por el docente AJAX
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function mostrarSolicitudesDocenteAjax(Request $request)
     {
         if ($request->isMethod('GET')) {
             return view('acadspace.Solicitudes.solicitudGrupal-ajax');
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 
@@ -257,7 +265,7 @@ class SolicitudController extends Controller
      * Mostrar el formulario con las solicitudes realizadas por el docente
      * para ser evaluadas por el auxiliar
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function mostrarSolicitudesAuxiliar(Request $request)
     {
@@ -269,13 +277,17 @@ class SolicitudController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Mostrar el formulario con las solicitudes que ya han terminado su
      * proceso de aprobacion y asignacion
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function mostrarSolicitudesFinalizadas(Request $request)
     {
@@ -287,6 +299,10 @@ class SolicitudController extends Controller
                     'espacios' => $espacios->toArray()
                 ]);
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
