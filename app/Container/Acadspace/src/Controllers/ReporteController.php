@@ -26,7 +26,7 @@ class ReporteController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function reporteIndexDoc(Request $request)
     {
         if ($request->isMethod('GET')) {
             $espa = new espacios();
@@ -43,7 +43,7 @@ class ReporteController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function repIndexEst(Request $request)
+    public function reporteIndexEst(Request $request)
     {
         if ($request->isMethod('GET')) {
             $espa = new espacios();
@@ -60,7 +60,7 @@ class ReporteController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function repIndexCarr(Request $request)
+    public function reporteIndexCarr(Request $request)
     {
         if ($request->isMethod('GET')) {
             return view('acadspace.Reportes.reportesIndexCarr');
@@ -238,7 +238,7 @@ class ReporteController extends Controller
      * @param   int $labNum     *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Est(Request $request, $fech1, $fech2, $labNum)
+    public function descargarReporteEst(Request $request, $fech1, $fech2, $labNum)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -281,7 +281,15 @@ class ReporteController extends Controller
                     'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'lab' => $lab, 'cont' => $cont, 'labNum' => $labNum
                 ])->download('ReporteEstudiantes.pdf');
             } catch (Exception $e) {
-                return $e . "error";
+                return view('acadspace.Reportes.ReportesEstudiantes',
+                    compact('totSistemasLibre', 'totSistemasGrup',
+                        'totAmbientalLibre', 'totAmbientalGrup',
+                        'totAgronomicaLibre', 'totAgronomicaGrup',
+                        'totAdminLibre', 'totAdminGrup',
+                        'totContaduriaLibre', 'totContaduriaGrup',
+                        'totPiscologiaLibre', 'totPiscologiaaGrup',
+                        'totalTot', 'totExternos', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code', 'labNum')
+                );
             }
         }
         return AjaxResponse::fail(
@@ -373,7 +381,7 @@ class ReporteController extends Controller
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Carr(Request $request, $fech1, $fech2, $carr, $carrera)
+    public function descargarReporteCarrera(Request $request, $fech1, $fech2, $carr, $carrera)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -397,7 +405,10 @@ class ReporteController extends Controller
                     'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'carr' => $carr, 'cont' => $cont
                 ])->download('ReporteCarrera.pdf');
             } catch (Exception $e) {
-                return $e . "error";
+                return view('acadspace.Reportes.reportesCarrera',
+                    compact('docentes', 'cont', 'date', 'time', 'fech1', 'fech2', 'carr', 'totalTot', 'fecha', 'carrera',
+                        'sistLibre', 'sistGrup', 'psicLibre', 'psicGrup', 'ciencLibre', 'ciencGrup')
+                );
             }
         }
         return AjaxResponse::fail(
@@ -479,7 +490,7 @@ class ReporteController extends Controller
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte_Doc(Request $request, $fech1, $fech2, $labNum, $aula)
+    public function descargarReporteDoc(Request $request, $fech1, $fech2, $labNum, $aula)
     {
         if ($request->isMethod('GET')) {
             try {
@@ -508,7 +519,9 @@ class ReporteController extends Controller
                     'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'labNum' => $labNum, 'cont' => $cont
                 ])->download('ReporteDocentes.pdf');
             } catch (Exception $e) {
-                return $e . "error";
+                return view('acadspace.Reportes.ReportesDocentes',
+                    compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
+                );
             }
         }
         return AjaxResponse::fail(

@@ -58,7 +58,7 @@
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
                 <div>
-                    <a class="noPrint" href="{{ route('espacios.academicos.report.descargarRepCarr',[$fech1,$fech2,$carr,$carrera])}}">
+                    <a class="noPrint" href="{{ route('espacios.academicos.report.descargarRepCarrera',[$fech1,$fech2,$carr,$carrera])}}">
                         <i class="fa fa-download">
                         </i>Descargar reporte
                     </a>
