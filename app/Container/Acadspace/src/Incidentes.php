@@ -16,7 +16,7 @@ class Incidentes extends Model
      * Tabla utilizada por el modelo.
      * @var string
      */
-    protected $table = 'tbl_incidentes';
+    protected $table = 'TBL_Incidentes';
 
     /**
      * Llave primaria usada por el modelo

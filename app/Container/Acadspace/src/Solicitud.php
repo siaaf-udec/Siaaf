@@ -17,7 +17,7 @@ class Solicitud extends Model
      * Tabla utilizada por el modelo.
      * @var string
      */
-    protected $table = 'TBL_solicitud';
+    protected $table = 'TBL_Solicitud';
 
     /**
      * Llave primaria usada por el modelo
