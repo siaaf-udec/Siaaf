@@ -159,7 +159,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {{ Form::label('Agregar observación:') }}
-                                {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
+                                {!! Form::textarea('anotacion',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40, 'maxlength' => '200']) !!}
 
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {{ Form::label('Agregar observación:') }}
-                                {!! Form::textarea('anotacion_libre',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40]) !!}
+                                {!! Form::textarea('anotacion_libre',null,['class'=>'form-control', 'rows' => 5, 'cols' => 40, 'maxlength' => '200']) !!}
                             </div>
                         </div>
                     </div>
