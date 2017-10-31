@@ -53,7 +53,6 @@
             </a>
         </li>
         @endpermission
-
         @permission('solicitudes')
         @permission('realizarSolicitudes')
         <li class="nav-item {{ active(['espacios.academicos.solacad.indexDoc'], 'start active open') }}">
@@ -64,11 +63,11 @@
         </li>
         @endpermission
         @permission('gestionSolicitudes')
-        <li class="nav-item">
+        <li class="nav-item {{ active(['espacios.academicos.evalsol.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-pencil-square-o"></i>
                 <span class="title">Solicitudes</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['espacios.academicos.evalsol.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
 
@@ -100,11 +99,11 @@
         @endpermission
 
         @permission('reportes')
-        <li class="nav-item">
+        <li class="nav-item {{ active(['espacios.academicos.report.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-file-pdf-o"></i>
                 <span class="title">Reportes</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['espacios.academicos.report.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['espacios.academicos.report.index'], 'start active open') }}">
@@ -129,11 +128,11 @@
         </li>
         @endpermission
         @permission('publico')
-        <li class="nav-item">
+        <li class="nav-item {{ active(['espacios.academicos.asist.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-check-square-o"></i>
                 <span class="title">Registrar ingreso</span>
-                <span class="arrow"></span>
+                <span class="arrow {{ active(['espacios.academicos.asist.*'], 'open') }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['espacios.academicos.asist.asisEst'], 'start active open') }}">
