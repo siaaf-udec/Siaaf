@@ -230,9 +230,12 @@ class ReporteController extends Controller
                         'totalTot', 'totExternos', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code', 'labNum')
                 );
             } catch (Exception $e) {
-
-                return view('acadspace.Reportes.indexEst');
-
+                $espa = new espacios();
+                $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+                return view('acadspace.Reportes.reportesIndexEst',
+                    [
+                        'espacios' => $espacios->toArray()
+                    ]);
             }
         }
         return AjaxResponse::fail(
@@ -479,9 +482,12 @@ class ReporteController extends Controller
                     compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
                 );
             } catch (Exception $e) {
-
-                return view('acadspace.Reportes.index');
-
+                $espa = new espacios();
+                $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+                return view('acadspace.Reportes.reportesIndex',
+                    [
+                        'espacios' => $espacios->toArray()
+                    ]);
             }
         }
         return AjaxResponse::fail(
