@@ -14,9 +14,6 @@
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
     {{--Row details --}}
     <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
-    <!-- Styles SWEETALERT  -->
-    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
-          type="text/css"/>
 @endpush
 
 @section('content')
@@ -137,9 +134,6 @@
             type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <!-- SCRIPT Confirmacion Sweetalert -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
-    </script>
 @endpush
 
 @push('functions')
