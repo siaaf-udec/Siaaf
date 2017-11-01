@@ -95,13 +95,13 @@ class SoftwareController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
             $validator = Solicitud::where('FK_SOL_Id_Software', $id)
-                ->where('SOL_estado', 0)
-                ->orWhere('SOL_estado', 1)
-                ->orWhere('SOL_estado', 3)
+                ->where('SOL_Estado', 0)
+                ->orWhere('SOL_Estado', 1)
+                ->orWhere('SOL_Estado', 3)
                 ->count();
             if ($validator == 0) {
                 Solicitud::where('FK_SOL_Id_Software', $id)
-                    ->where('SOL_estado', 2)
+                    ->where('SOL_Estado', 2)
                     ->delete();
                 $software = software::find($id);
                 $software->delete();

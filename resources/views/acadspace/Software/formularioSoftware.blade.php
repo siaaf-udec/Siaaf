@@ -14,6 +14,9 @@
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
     {{--Row details --}}
     <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- Styles SWEETALERT  -->
+    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
+          type="text/css"/>
 @endpush
 
 @section('content')
@@ -134,6 +137,9 @@
             type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <!-- SCRIPT Confirmacion Sweetalert -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+    </script>
 @endpush
 
 @push('functions')
@@ -184,7 +190,6 @@
                 var route = '{{ route('espacios.academicos.soft.destroy') }}' + '/' + dataTable.PK_SOF_Id;
                 var type = 'DELETE';
                 var async = async || false;
-
                 $.ajax({
                     url: route,
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -198,10 +203,10 @@
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            if(response.title=="¡Bien hecho!") {
+                            if (response.title == "¡Bien hecho!") {
                                 UIToastr.init(xhr, response.title, response.message);
                                 table.ajax.reload();
-                            }else{
+                            } else {
                                 UIToastr.init('error', response.title, response.message);
                             }
                         }
@@ -211,7 +216,7 @@
                             UIToastr.init(xhr, response.title, response.message);
                         }
                     }
-                });
+                })
 
             });
 
@@ -269,7 +274,7 @@
             var rules_edit = {
                 nombre_soft: {minlength: 3, required: true},
                 version: {minlength: 1, required: true},
-                licencias: {number: true, required: true}
+                licencias: {number: true, required: true, range: [1, 99]}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
 

@@ -151,11 +151,21 @@
                     var guia = "";
                     //Validacion de campos fecha y hora
                     var f = new Date();
-                    var fechaActual = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
+                    var month = f.getMonth();
+                    var day = f.getDate().toString();
+                    var year = f.getFullYear();
+                    year = year.toString();
+                    month = (month + 1).toString();
+                    if (month.length === 1) {
+                        month = "0" + month;
+                    }
+                    if (day.length === 1) {
+                        day = "0" + day;
+                    }
+                    var fechaActual = year + "-" + month + "-" + day;
                     var fechaRecibida = $('#SOL_fecha_inicial').val();
                     var horaInicio = Date.parse('01/01/2001 ' + $('input:text[name="SOL_Hora_Inicio"]').val());
                     var horaFin = Date.parse('01/01/2001 ' + $('input:text[name="SOL_Hora_Fin"]').val());
-
                     if (horaInicio >= horaFin) {
                         UIToastr.init('error', '¡Error!', 'Verifique los campos de hora.');
                     } else if (fechaRecibida < fechaActual) {
@@ -181,7 +191,6 @@
                         formData.append('SOL_programa', $('select[name="SOL_programa"]').val());
                         formData.append('SOL_ReqGuia', guia);
                         formData.append('ID_Practica', $('input:hidden[name="ID_Practica"]').val());
-                        formData.append('SOL_ReqGuia', guia);
                         formData.append('SOL_Nucleo_Tematico', $('input:text[name="SOL_Nucleo_Tematico"]').val());
                         formData.append('SOL_Grupo', $('input:text[name="SOL_Grupo"]').val());
                         formData.append('SOL_NombSoft', soft);
@@ -204,6 +213,7 @@
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
+                                    console.log(fechaActual);
                                     $('#form_sol_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
