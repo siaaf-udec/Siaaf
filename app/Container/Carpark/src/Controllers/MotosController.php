@@ -5,6 +5,7 @@ namespace App\Container\Carpark\src\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use App\Container\Carpark\src\Motos;
+use App\Container\Carpark\src\Ingresos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
@@ -201,6 +202,8 @@ class MotosController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
+            $infoIngresos = Ingresos::where('CI_CodigoMoto','=',$id)->delete();
+
             Motos::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',

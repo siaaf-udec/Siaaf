@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Container\Carpark\src\Dependencias;
 use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
+use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -284,9 +285,11 @@ class UsuariosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
-            $Infomoto = Usuarios::with('relacionUsuariosMotos')->where('PK_CU_Codigo', $id)->get();
+            $infoIngresos = Ingresos::where('CI_CodigoUser','=',$id)->delete();            
 
-            if (null === $Infomoto[0]['relacionUsuariosMotos']) {
+            $infoMoto = Usuarios::with('relacionUsuariosMotos')->where('PK_CU_Codigo', $id)->get();
+
+            if (null === $infoMoto[0]['relacionUsuariosMotos']) {
                 Usuarios::destroy($id);
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -294,8 +297,8 @@ class UsuariosController extends Controller
                 );
             }
 
-            for ($i = 0; $i < sizeof($Infomoto[0]['relacionUsuariosMotos']); $i++) {
-                Motos::destroy($Infomoto[0]['relacionUsuariosMotos'][$i]['PK_CM_IdMoto']);
+            for ($i = 0; $i < sizeof($infoMoto[0]['relacionUsuariosMotos']); $i++) {
+                Motos::destroy($infoMoto[0]['relacionUsuariosMotos'][$i]['PK_CM_IdMoto']);
             }
 
             Usuarios::destroy($id);
