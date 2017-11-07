@@ -13,6 +13,13 @@ class PermissionParqueaderosSeeder extends Seeder
     {
         //Inicio De Permisos Generales De Los Roles
         $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'PARK_MODULE';
+        $permissionFuncionario->display_name = 'Parqueaderos';
+        $permissionFuncionario->description = 'Acceso completo a la modulo de parqueaderos.';
+        $permissionFuncionario->module_id = 3;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'FUNC_CARPARK';
         $permissionFuncionario->display_name = 'Parqueaderos';
         $permissionFuncionario->description = 'Acceso completo a la modulo de parqueaderos.';

@@ -13,6 +13,13 @@ class PermissionAcadspaceSeeder extends Seeder
     public function run()
     {
         $permission= new Permission;
+        $permission->name = 'ACAD_MODULE';
+        $permission->display_name = 'Espacios Academicos';
+        $permission->description = 'Acceso completo al modulo de espacios academicos.';
+        $permission->module_id = 1;
+        $permission ->save();
+
+        $permission= new Permission;
         $permission->name = 'FUNC_ESPA';
         $permission->display_name = 'Acadspace';
         $permission->description = 'Acceso completo al modulo de espacios academicos.';
