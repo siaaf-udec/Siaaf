@@ -78,7 +78,7 @@
                             </div>
 
                         </div>
-                        @permission('FUNC_RRHH')
+                        @permission('TAL_MODULE')
                         <div class="form-group">
                             {!! Form::open (['id'=>'form-radicar', 'url'=> ['/forms']]) !!}
                             <div class="col-md-offset-1 col-md-9">
@@ -106,7 +106,7 @@
                         <div class="col-md-offset-1 col-md-10">
                             <hr>
                         </div>
-                        @permission('FUNC_RRHH')
+                        @permission('TAL_MODULE')
                         <div class="row">
                             <div class="form-group">
                                 {!! Form::open (['id'=>'form-afiliar', 'url'=> ['/forms']]) !!}
@@ -133,7 +133,7 @@
                             <hr>
                             <hr class="visible-xs"/>
                         </div>
-                        @permission('FUNC_RRHH')
+                        @permission('TAL_MODULE')
                         <div class="row">
                             <div class="form-group">
                                 {!! Form::open (['id'=>'form-reiniciar', 'url'=> ['/forms']]) !!}

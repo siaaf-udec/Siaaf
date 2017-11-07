@@ -36,7 +36,7 @@ class UserHumTalentSeeder extends Seeder
         $role = Role:: where('name' , 'RRHH')->get(['id'])->first();
         $user->roles()->sync($role);
 
-        $permiso = Permission::where('name', 'FUNC_RRHH')->first();
+        $permiso = Permission::where('name', 'TAL_MODULE')->first();
         $permiso->roles()->sync($role);
 
     }

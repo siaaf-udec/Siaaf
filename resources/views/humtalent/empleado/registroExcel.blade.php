@@ -15,7 +15,7 @@
                     <p> <strong>Instrucciones para subir un archivo:</strong><br>
                         <br><strong>1.)</strong> El archivo debe contener los mismos campos que el formulario de registro.<br>
                         <br><strong>2.)</strong> La primer fila debe contener los nombres de cada columna.<br>
-                        <br><strong>3.)</strong> No afecta si los nombres de las columnas estan en mayuscula o minuscula.<br>
+                        <br><strong>3.)</strong> No afecta si los nombres de las columnas estan en mayúscula o minúscula.<br>
                         <br><strong>4.)</strong> Los nombres de las columnas deben ser nombrados de la siguiente manera:<br>
                         <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cedula</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombres</strong>
@@ -32,11 +32,11 @@
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado</strong>
                         <br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rol</strong>
                         <br><strong>5.)</strong> No es necesario que las columnas sigan el orden mostrado.<br>
-                        <br><strong>6.)</strong> Las columnas Dirección, Eps, Fpensiones y Cajacompensacion pueden estar vacias las demas deben tener información.<br>
+                        <br><strong>6.)</strong> Las columnas Dirección, Eps, Fpensiones y Cajacompensacion pueden estar vacías las demas deben tener información.<br>
                         <br><strong>7.)</strong> El archivo debe tener extensión .xlsx .xls o .csv .<br></p>
                 </div>
 
-                @permission('CREATE_EMP_RRHH')
+                @permission('TAL_CREATE_EMP')
                 {!! Form::open (['id'=>'form_file', 'url'=> ['/forms'], 'files' => true]) !!}
                     <br><br><br>
                     <div class="fileinput fileinput-new" data-provides="fileinput"  >

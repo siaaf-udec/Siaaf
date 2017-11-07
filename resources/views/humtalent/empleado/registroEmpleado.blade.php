@@ -21,14 +21,14 @@
                     {!! Field:: text('PRSN_Apellidos',null,['label'=>'Apellido(s):', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                      ['help' => 'Digite el apellido del empleado.','icon'=>'fa fa-user'] ) !!}
 
-                    {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                     ['help' => 'Digite la cedula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
+                    {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cédula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                     ['help' => 'Digite la cédula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
 
                     {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
                                                      ['help' => 'Digite un correo válido.','icon'=>'fa fa-envelope-open '] ) !!}
 
                     {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
-                                                     ['help' => 'Digite un numero de telefono o celular.','icon'=>'fa fa-phone'] ) !!}
+                                                     ['help' => 'Digite un numero de teléfono o celular.','icon'=>'fa fa-phone'] ) !!}
 
                     {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'90','autocomplete'=>'off'],
                                                      ['help' => 'Digite la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
@@ -161,7 +161,11 @@
                 url: '{{ route('talento.humano.empleado.checkEmail') }}',
                 type: "POST"
             }},
-            PK_PRSN_Cedula: {required: true, number: true},
+            PK_PRSN_Cedula: {required: true, number: true, remote : {
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: '{{ route('talento.humano.empleado.checkCedula') }}',
+                type: "POST"
+            }},
             PRSN_Telefono: {required: true, noSpecialCharacters:true},
             PRSN_Ciudad: {required: true, letters: true},
             PRSN_Area: {required: true, letters: true},
@@ -187,6 +191,9 @@
             PRSN_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             PRSN_Correo: {
                 remote: "El correo electronico ya se encuentra registrado."
+            },
+            PK_PRSN_Cedula: {
+                remote: "El numero de cédula ya se encuentra registrado."
             }
         };
         FormValidationMd.init(form, formRules, formMessage, createUsers());

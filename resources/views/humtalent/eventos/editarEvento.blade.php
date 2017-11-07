@@ -1,5 +1,5 @@
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de eventos: '])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de edición de eventos: '])
             @slot('actions', [
                    'link_cancel' => [
                    'link' => '',

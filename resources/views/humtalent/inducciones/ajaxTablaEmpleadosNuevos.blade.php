@@ -1,6 +1,6 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            @permission('READ_EMP_RRHH')
+            @permission('TAL_READ_EMP')
                 <div class="row">
                     <div class="col-md-12">
 
@@ -42,7 +42,7 @@
             {data: 'PRSN_Rol', name: 'Rol'},
             {data: 'PRSN_Telefono', name: 'Teléfono'},
             {
-                defaultContent: '@permission("CREATE_IND_RRHH")<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>@endpermission',
+                defaultContent: '@permission("TAL_CREATE_IND")<a href="javascript:;" class="btn btn-primary new" ><i class="fa fa-list-ol"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

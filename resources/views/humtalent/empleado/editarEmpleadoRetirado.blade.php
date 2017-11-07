@@ -22,17 +22,17 @@
                     {!! Field:: text('PRSN_Apellidos',null,['label'=>'Apellido(s):', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                      ['help' => 'Digite el apellido del empleado.','icon'=>'fa fa-user'] ) !!}
 
-                    {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'disabled', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                     ['help' => 'Digite la cedula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
+                    {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cédula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'disabled', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                     ['help' => 'Digite la cédula del empleado.','icon'=>'fa fa-credit-card'] ) !!}
 
                     {!! Field:: email('PRSN_Correo',null,['label'=>'Correo electrónico:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'60','autocomplete'=>'off'],
                                                      ['help' => 'Digite un correo válido.','icon'=>'fa fa-envelope-open '] ) !!}
 
                     {!! Field:: text('PRSN_Telefono',null,['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off'],
-                                                     ['help' => 'Digite un numero de telefono o celular.','icon'=>'fa fa-phone'] ) !!}
+                                                     ['help' => 'Digite un numero de teléfono o celular.','icon'=>'fa fa-phone'] ) !!}
 
                     {!! Field:: text('PRSN_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'90','autocomplete'=>'off'],
-                                                     ['help' => 'Digite la direccion de residencia.','icon'=>'fa fa-building-o'] ) !!}
+                                                     ['help' => 'Digite la dirección de residencia.','icon'=>'fa fa-building-o'] ) !!}
 
                     {!! Field:: text('PRSN_Ciudad',null,['label'=>'Ciudad de residencia:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'35','autocomplete'=>'off'],
                                                      ['help' => 'Digite la ciudad del empleado.','icon'=>'fa fa-map-o'] ) !!}
@@ -41,8 +41,8 @@
                                                     ['help' => 'Digite el salario del empleado.','icon'=>'fa fa-dollar'] ) !!}
 
 
-                    {!! Field:: text('PRSN_Area',null,['label'=>'Area o programa de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'on'],
-                                                     ['help' => 'Digite el area o facultad del empleado.','icon'=>'fa fa-group'] ) !!}
+                    {!! Field:: text('PRSN_Area',null,['label'=>'Área o programa de trabajo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'on'],
+                                                     ['help' => 'Digite el área o facultad del empleado.','icon'=>'fa fa-group'] ) !!}
 
                     {!! Field:: text('PRSN_Eps',null,['label'=>'EPS:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
                                                     ['help' => 'EPS (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
@@ -51,7 +51,7 @@
                                                     ['help' => 'Fondo de pensiones (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
                     {!! Field:: text('PRSN_Caja_Compensacion',null,['label'=>'Caja de compensación:', 'class'=> 'form-control','autofocus', 'maxlength'=>'40','autocomplete'=>'off'],
-                                                     ['help' => 'Caja de compensacion (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
+                                                     ['help' => 'Caja de compensación (Es opcional).','icon'=>'fa fa-list-alt'] ) !!}
 
                     {!! Field::select('PRSN_Estado_Persona',['NUEVO'=>'NUEVO', 'ANTIGUO'=>'ANTIGUO', 'RETIRADO'=>'RETIRADO'],null,['label'=>'Estado del empleado: Selecciona una opción']) !!}
 

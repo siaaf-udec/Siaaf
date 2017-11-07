@@ -40,7 +40,7 @@
                 </div>
             @endif
             <br><br>
-            @permission('READ_EMP_RRHH')
+            @permission('TAL_READ_EMP')
                 <div class="row">
                     <div class="col-md-12">
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-empleados'])
@@ -116,7 +116,7 @@
             {data: 'personas.PRSN_Rol', name: 'Rol'},
             {data: 'personas.PRSN_Area', name: 'Área'},
             {
-                defaultContent: '@permission("RAD_DOC_RRHH")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
+                defaultContent: '@permission("TAL_RAD_DOC")<a href="javascript:;" class="btn btn-primary documents" ><i class="fa fa-book"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

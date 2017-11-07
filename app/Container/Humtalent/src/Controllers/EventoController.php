@@ -78,7 +78,7 @@ class EventoController extends Controller
         $this->id = $id_Evento;
         $asistentes = Persona::whereDoesntHave('asistents', function ($query) {
             $query->where('FK_TBL_Eventos_IdEvento', $this->id);
-        })->get();
+        })->where('PRSN_Estado_Persona', '!=', 'RETIRADO')->get();
         if ($request->ajax() && $request->isMethod('GET')) {
             return DataTables::of($asistentes)
                 ->addIndexColumn()

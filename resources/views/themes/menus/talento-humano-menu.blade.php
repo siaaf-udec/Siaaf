@@ -5,7 +5,7 @@
         <span class="arrow {{ active(['talento.humano.*'], 'open') }}"></span>
     </a>
     <ul class="sub-menu">
-        @permission('FUNC_RRHH')
+        @permission('TAL_MODULE')
         <li class="nav-item {{ active(['talento.humano.empleado.index','talento.humano.empleado.regisArchivo',
                                 'talento.humano.buscarRadicar', 'talento.humano.empleado.email'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
@@ -27,7 +27,7 @@
                         <span class="title">Registro por archivo</span>
                     </a>
                 </li>
-                @permission('RAD_DOC_RRHH')
+                @permission('TAL_RAD_DOC')
                 <li class="nav-item {{ active(['talento.humano.buscarRadicar'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.buscarRadicar') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>
@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 @endpermission
-                @permission('SEND_EMAIL_RRHH')
+                @permission('TAL_SEND_EMAIL')
                 <li class="nav-item {{ active(['talento.humano.empleado.email'], 'start active open') }} ">
                     <a href="{{ route('talento.humano.empleado.email') }}" class="nav-link nav-toggle">
                         <i class="fa fa-address-book"></i>

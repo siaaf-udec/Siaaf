@@ -31,7 +31,7 @@
             </div>
         </div>
             <br>
-            @permission('CREATE_PERM_RRHH')
+            @permission('TAL_CREATE_PERM')
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
@@ -40,7 +40,7 @@
             </div>
             @endpermission
             <br>
-            @permission('READ_PERM_RRHH')
+            @permission('TAL_READ_PERM')
                 <div class="row">
                     <div class="col-md-12">
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-permisos'])
@@ -62,7 +62,7 @@
                         {!! Form::open(['id' => 'form_permission_create', 'url'=> ['/forms']]) !!}
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Regitro de permisos o incapacidades</h1>
+                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Registro de permisos o incapacidades</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -149,7 +149,7 @@
             {data: 'PERM_Descripcion', name: 'Descripción'},
             {data: 'PERM_Fecha', name: 'Fecha'},
             {
-                defaultContent: '@permission("UPDATE_PERM_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_PERM_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("TAL_UPDATE_PERM")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("TAL_DELETE_PERM")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

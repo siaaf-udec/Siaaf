@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <br>
-                    <label> Solo archivos con extensión pdf,csv, xlsx, docx, doc.<br> Tamaño máximo: 10 MB</label>
+                    <label> Sólo archivos con extensión pdf,csv, xlsx, docx, doc.<br> Tamaño máximo: 10 MB</label>
                     <br><br><br><br>
                     <div class="row">
                         <div class="col-md-12">

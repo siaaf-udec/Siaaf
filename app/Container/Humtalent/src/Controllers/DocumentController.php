@@ -683,7 +683,7 @@ class DocumentController extends Controller
             $cont = 1;
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $empleados = Persona::all();
+            $empleados = Persona::where('PRSN_Estado_Persona', '!=', 'RETIRADO')->get();
             foreach ($empleados as $empleado) {
                 $estadoCaja = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
                     ->whereIn('EDCMT_Proceso_Documentacion',

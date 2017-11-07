@@ -19,7 +19,7 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Personal registrado:'])
-            @permission('READ_EMP_RRHH')
+            @permission('TAL_READ_EMP')
                 <div class="row">
                     <div class="col-md-12">
 
@@ -84,7 +84,7 @@
             {data: 'PRSN_Correo', name: 'Email'},
             {data: 'PRSN_Rol', name: 'Rol'},
             {
-                defaultContent: '@permission("UPDATE_EMP_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_EMP_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("TAL_UPDATE_EMP")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("TAL_DELETE_EMP")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data:'action',
                 name:'action',
                 title:'Acciones',

@@ -55,7 +55,7 @@ class EmpleadoController extends Controller
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
-            $empleados = Persona::all();
+            $empleados = Persona::where('PRSN_Estado_Persona', '!=', 'RETIRADO');
             return Datatables::of($empleados)
                 ->removeColumn('PRSN_Direccion')
                 ->removeColumn('PRSN_Ciudad')
@@ -85,7 +85,7 @@ class EmpleadoController extends Controller
     {
 
         if ($request->ajax() && $request->isMethod('GET')) {
-            $empleados = Persona::where('PRSN_Estado_Persona', 'Retirado')->get();
+            $empleados = Persona::where('PRSN_Estado_Persona', 'RETIRADO')->get();
             return Datatables::of($empleados)
                 ->removeColumn('PRSN_Direccion')
                 ->removeColumn('PRSN_Ciudad')
@@ -151,6 +151,30 @@ class EmpleadoController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             if (Persona::where('PRSN_Correo', $request['PRSN_Correo'])->exists()) {
+                return response('false');
+            }
+
+            return response('true');
+
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
+    /**
+     * Verifica que no exista una cédula ya registrada
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response| \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verificarCedula(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            if (Persona::where('PK_PRSN_Cedula', $request['PK_PRSN_Cedula'])->exists()) {
                 return response('false');
             }
 
@@ -744,7 +768,7 @@ class EmpleadoController extends Controller
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $empleados = Persona::whereNotNull('created_at', null)
+            $empleados = Persona::where('PRSN_Estado_Persona', '!=', 'RETIRADO')
                 ->orderBy('PRSN_Nombres', 'asc')
                 ->get();
             $total = count($empleados);

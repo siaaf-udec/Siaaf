@@ -25,7 +25,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    @permission('CREATE_EMP_RRHH')
+                    @permission('TAL_CREATE_EMP')
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create">
                             <i class="fa fa-plus">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <br>
-            @permission('READ_EMP_RRHH')
+            @permission('TAL_READ_EMP')
             <div class="row">
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaEmpleados'])
@@ -106,7 +106,7 @@ jQuery(document).ready(function () {
             {data: 'PRSN_Area', name: 'Área'},
             {data: 'PRSN_Salario', name: 'Salario'},
             {
-            defaultContent: '@permission("GEN_REPORT_RRHH") <a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission("UPDATE_EMP_RRHH")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_EMP_RRHH")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> @endpermission',
+            defaultContent: '@permission("TAL_GEN_REPORT") <a href="javascript:;" class="btn btn-success reports"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission("TAL_UPDATE_EMP")<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission("TAL_DELETE_EMP")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> @endpermission',
             data:'action',
             name:'action',
             title:'Acciones',

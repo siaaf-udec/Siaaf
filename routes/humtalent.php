@@ -8,7 +8,7 @@
 Route::group(['middleware' => ['auth']], function () {
 
 //Rutas para el manejo de los empleados
-    Route::group(['prefix' => 'empleado', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'empleado', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
         Route::get('pdfContacto', [
             'uses' => $controller . 'EmpleadoController@reporteContactoEmpleados',
@@ -139,11 +139,15 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller.'EmpleadoController@verificarEmail',
             'as' => 'talento.humano.empleado.checkEmail'
         ]);
+        Route::post('checkCedula',[
+            'uses' => $controller.'EmpleadoController@verificarCedula',
+            'as' => 'talento.humano.empleado.checkCedula'
+        ]);
 
     });
 
 //Rutas para el manejo de la documentación
-    Route::group(['prefix' => 'document', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'document', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
         Route::get('pdfConsolidado', [
             'uses' => $controller . 'DocumentController@reporteConsolidadoEmpleados',
@@ -245,7 +249,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 //Rutas para el manejo de los eventos
-    Route::group(['prefix' => 'evento', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'evento', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'EventoController@index',   //ruta que conduce al controlador para mostrar  la tabla donde se cargan los eventos reegistrados
@@ -318,7 +322,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 //rutas para el manejo de las inducciones
-    Route::group(['prefix' => 'induccion', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'induccion', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
 
         Route::get('tablaInduccion', [    //ruta para mostrar una lista de los empleados nuevos
@@ -349,7 +353,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 //rutas para el Calendario.
-    Route::group(['prefix' => 'calendario', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'calendario', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'CalendarioController@index',   //ruta que conduce al controlador para mostrar  el calendario
@@ -390,7 +394,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 //rutas para el manejo del modulo de permisos e incapacidades para los empleados.
-    Route::group(['prefix' => 'permisos', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'permisos', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
         Route::get('listaEmpleados', [    //ruta para mostrar una lista de los empleados
             'as' => 'talento.humano.permisos.listaEmpleados',
@@ -433,7 +437,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 //grupo de rutas para generar, activar y/o descativar notificaciones
-    Route::group(['prefix' => 'notificaciones', 'middleware' => ['permission:FUNC_RRHH']], function () {
+    Route::group(['prefix' => 'notificaciones', 'middleware' => ['permission:TAL_MODULE']], function () {
         $controller = "\\App\\Container\\Humtalent\\src\\Controllers\\";
 
         Route::get('listaEmpleadosDocumentosCompletos', [  //ruta que realiza la consulta para cargar la tabla de los empleados con documentos completos

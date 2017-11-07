@@ -50,7 +50,7 @@ class NotifyTH extends Command
     {
         $fecha = getdate(); //se toma la fecha actual
         $dia = $fecha['wday']; //se toma el numero del día
-        $permiso = Permission::where('name','FUNC_RRHH')->get(['id'])->first(); //se realiza la consulta del permiso del área de recursos humanos
+        $permiso = Permission::where('name','TAL_MODULE')->get(['id'])->first(); //se realiza la consulta del permiso del área de recursos humanos
         $role = Permission::find($permiso->id)->roles()->first()->pivot->role_id;//se realiza la consulta del rol del recurso humano
         $users = Role::find($role)->users()->get(['id'])->first(); //se realiza la consulta del usuario que tiene el permiso consultado
         $user = User::find($users->id);

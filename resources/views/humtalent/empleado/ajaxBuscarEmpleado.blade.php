@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 {!! Form::open(['id' => 'from_users_browse', 'class' => '', 'url' => '/forms']) !!}
-                {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                 ['help'=>'Digite el número de cedula.','icon'=>'fa fa-credit-card'] ) !!}
+                {!! Field:: text('PK_PRSN_Cedula',null,['label'=>'Cédula de ciudadanía:', 'class'=> 'form-control','id'=>'cedula','required', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                 ['help'=>'Digite el número de cédula.','icon'=>'fa fa-credit-card'] ) !!}
 
                 {!! Field::select('tipoRadicacion',
                             ['EPS' => 'EPS', 'Caja de compensación' => 'Caja de compensación'],

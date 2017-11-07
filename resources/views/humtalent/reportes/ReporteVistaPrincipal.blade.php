@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-md-9 col-md-offset-1">
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN GENERAL DE LOS EMPLEADOS REGISTRADOS:</b></p><br>
-                    @permission("GEN_REPORT_RRHH")
+                    @permission("TAL_GEN_REPORT")
                         <a href="{{ route('talento.humano.empleado.pdfContacto') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de contacto de los empleados como nombres, apellidos, cédula, teléfono y correo electrónico.">
                             <i class="fa fa-group"></i>
                             <div> Contacto</div>
@@ -53,7 +53,7 @@
                     </div><br>
 
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN DE LA DOCUMENTACIÓN FALTANTE POR CADA EMPLEADO:</b></p><br>
-                    @permission("GEN_REPORT_RRHH")
+                    @permission("TAL_GEN_REPORT")
                         <a href="{{ route('talento.humano.document.pdfConsolidado') }}" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de todos los empleados del estado de su documentación (Sin documentación, documentación incompleta, documentación completa y afiliado).">
                             <i class="fa fa-file-o"></i>
                             <div> Consolidado </div>
@@ -68,7 +68,7 @@
                     </div><br>
 
                     <div class="m-heading-1 border-green m-bordered"><p><b>INFORMACIÓN GENERAL DE LOS PERMISOS QUE TIENEN LOS EMPLEADOS:</b></p><br>
-                    @permission("GEN_REPORT_RRHH")
+                    @permission("TAL_GEN_REPORT")
                         <a href="javascript:;" class="icon-btn permisoReport" data-toggle="tooltip" data-placement="bottom" title="Reporte con información de los permisos de cada empleado como fecha, descripción y número de permisos.">
                             <i class="fa fa-group"></i>
                             <div> Permisos/persona </div>
