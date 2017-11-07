@@ -46,10 +46,10 @@
                         </div>
                         <div class="col-md-6">
 
-                            {!! Field:: text('FK_CM_CodigoUser',$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Nombre1'],['label'=>'Nombre del Dueño:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('FK_CM_CodigoUser',$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Nombre1'].' '.$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Apellido1'],['label'=>'Nombre del Dueño:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('FK_CM_CodigoUser2',$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Apellido1'],['label'=>'Apellido del dueño:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('CM_CodigoMoto',$infoMoto[0]['PK_CM_IdMoto'],['label'=>'Código de la motocicleta:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
                             {!! Field:: text('CM_Marca',$infoMoto[0]['CM_Marca'],['label'=>'Marca del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],

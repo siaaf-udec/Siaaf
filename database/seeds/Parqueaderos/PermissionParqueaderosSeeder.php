@@ -134,7 +134,7 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre CRUD De historiales        
 
         $permissionReportHistoriales = new Permission;
-        $permissionReportHistoriales->name = 'REPORT_HISTORIAL_CARPARK';
+        $permissionReportHistoriales->name = 'PARK_REPORT_HISTORIAL';
         $permissionReportHistoriales->display_name = 'Parqueaderos';
         $permissionReportHistoriales->description = 'Permiso para autorizar sacar los reportes de historiales.';
         $permissionReportHistoriales->module_id = 3;
@@ -191,7 +191,7 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre Cerrar Parqueadero
 
         $permissionClosePark = new Permission;
-        $permissionClosePark->name = 'CLOSE_CARPARK';
+        $permissionClosePark->name = 'PARK_CLOSE_CARPARK';
         $permissionClosePark->display_name = 'Parqueaderos';
         $permissionClosePark->description = 'Permiso para autorizar el envio de correos de advertencia sobre el cierre del parqueadero.';
         $permissionClosePark->module_id = 3;
