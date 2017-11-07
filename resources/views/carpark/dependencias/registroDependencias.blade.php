@@ -18,12 +18,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('CREATE_DEPENDENCIA_CARPARK')<a href="javascript:;"
+                                @permission('PARK_CREATE_DEPENDENCIA')<a href="javascript:;"
                                                                             class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>@endpermission
                                     Cancelar
                                 </a>
-                                @permission('CREATE_DEPENDENCIA_CARPARK'){{ Form::submit('Guardar Dependencia', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_CREATE_DEPENDENCIA'){{ Form::submit('Guardar Dependencia', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

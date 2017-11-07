@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-12 col-md-offset-5">
                     <div class="actions">
-                        @permission('CLOSE_CARPARK')<a href="javascript:;" class="btn btn-danger btn-icon enviarCorreos"
+                        @permission('PARK_CLOSE_CARPARK')<a href="javascript:;" class="btn btn-danger btn-icon enviarCorreos"
                                                        title="Registar nueva dependencia"><i
                                     class="fa fa-paper-plane"></i>Enviar Correos</a>@endpermission
                     </div>

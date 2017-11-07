@@ -22,12 +22,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('CREATE_INGRESO_CARPARK') <a href="javascript:;"
+                        @permission('PARK_CREATE_INGRESO') <a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create">
                             <i class="fa fa-plus">
                             </i>Acción
                         </a>@endpermission
-                        @permission('REPORT_INGRESO_CARPARK')<a href="javascript:;"
+                        @permission('PARK_REPORT_INGRESO')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Ingresos</a><br>@endpermission

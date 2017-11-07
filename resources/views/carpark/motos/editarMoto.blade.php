@@ -43,21 +43,21 @@
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
+                                @permission('PARK_UPDATE_MOTO')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}"
                                             class=" img-circle UpdateFotoMoto" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
-                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
+                                @permission('PARK_UPDATE_MOTO')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlPropiedad'])) }}"
                                             class=" UpdateFotoPropiedad" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
-                                @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"><img
+                                @permission('PARK_UPDATE_MOTO')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoMoto['CM_UrlSoat'])) }}"
                                             class="  UpdateFotoSOAT" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a>@endpermission
@@ -71,13 +71,13 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                            @permission('UPDATE_MOTO_CARPARK')<a href="javascript:;"
+                            @permission('PARK_UPDATE_MOTO')<a href="javascript:;"
                                                            class="btn btn-outline red button-cancel"><i
                                         class="fa fa-angle-left"></i>
                                 Cancelar
                             </a>@endpermission
 
-                            @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                            @permission('PARK_UPDATE_MOTO'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                         {!! Field::file('CM_UrlFotoM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('PARK_UPDATE_MOTO'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                         {!! Field::file('CM_UrlPropiedadM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('PARK_UPDATE_MOTO'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>
@@ -168,7 +168,7 @@
                         {!! Field::file('CM_UrlSoatM') !!}
                     </p>
                     {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    @permission('UPDATE_MOTO_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                    @permission('PARK_UPDATE_MOTO'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                 </div>
             </div>
         </div>

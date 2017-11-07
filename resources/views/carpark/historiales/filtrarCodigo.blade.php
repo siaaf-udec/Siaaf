@@ -1,4 +1,4 @@
-@permission('REPORT_HISTOCODIGO_CARPARK')
+@permission('PARK_REPORT_HISTOCODIGO')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de filtrado de un reporte por código.'])
         @slot('actions', [
@@ -18,12 +18,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('REPORT_HISTOCODIGO_CARPARK')<a href="javascript:;"
+                                @permission('PARK_REPORT_HISTOCODIGO')<a href="javascript:;"
                                                                             class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('REPORT_HISTOCODIGO_CARPARK'){{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_REPORT_HISTOCODIGO'){{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

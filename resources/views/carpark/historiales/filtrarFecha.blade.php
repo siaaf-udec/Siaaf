@@ -1,4 +1,4 @@
-@permission('REPORT_HISTOFECHA_CARPARK')
+@permission('PARK_REPORT_HISTOFECHA')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de filtrado de un reporte por fecha.'])
         @slot('actions', [
@@ -18,12 +18,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('REPORT_HISTOFECHA_CARPARK')<a href="javascript:;"
+                                @permission('PARK_REPORT_HISTOFECHA')<a href="javascript:;"
                                                                            class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('REPORT_HISTOFECHA_CARPARK'){{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_REPORT_HISTOFECHA'){{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

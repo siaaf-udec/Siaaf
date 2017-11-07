@@ -38,35 +38,35 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre CRUD De Usuarios
 
         $permissionCreateUser = new Permission;
-        $permissionCreateUser->name = 'CREATE_USER_CARPARK';
+        $permissionCreateUser->name = 'PARK_CREATE_USER';
         $permissionCreateUser->display_name = 'Parqueaderos';
         $permissionCreateUser->description = 'Permiso para autorizar la creación de usuarios nuevos.';
         $permissionCreateUser->module_id = 3;
         $permissionCreateUser->save();
 
         $permissionSeeUser = new Permission;
-        $permissionSeeUser->name = 'SEE_USER_CARPARK';
+        $permissionSeeUser->name = 'PARK_SEE_USER';
         $permissionSeeUser->display_name = 'Parqueaderos';
         $permissionSeeUser->description = 'Permiso para autorizar la vista del perfil de los usuarios.';
         $permissionSeeUser->module_id = 3;
         $permissionSeeUser->save();
 
         $permissionUpdateUser = new Permission;
-        $permissionUpdateUser->name = 'UPDATE_USER_CARPARK';
+        $permissionUpdateUser->name = 'PARK_UPDATE_USER';
         $permissionUpdateUser->display_name = 'Parqueaderos';
         $permissionUpdateUser->description = 'Permiso para autorizar la actualización de la información de los usuarios.';
         $permissionUpdateUser->module_id = 3;
         $permissionUpdateUser->save();
 
         $permissionDeleteUser = new Permission;
-        $permissionDeleteUser->name = 'DELETE_USER_CARPARK';
+        $permissionDeleteUser->name = 'PARK_DELETE_USER';
         $permissionDeleteUser->display_name = 'Parqueaderos';
         $permissionDeleteUser->description = 'Permiso para autorizar la eliminación de usuarios.';
         $permissionDeleteUser->module_id = 3;
         $permissionDeleteUser->save();
 
         $permissionReportUser = new Permission;
-        $permissionReportUser->name = 'REPORT_USER_CARPARK';
+        $permissionReportUser->name = 'PARK_REPORT_USER';
         $permissionReportUser->display_name = 'Parqueaderos';
         $permissionReportUser->description = 'Permiso para autorizar sacar los reportes de los usuarios.';
         $permissionReportUser->module_id = 3;
@@ -77,35 +77,35 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre CRUD De Motos
 
         $permissionCreateMoto = new Permission;
-        $permissionCreateMoto->name = 'CREATE_MOTO_CARPARK';
+        $permissionCreateMoto->name = 'PARK_CREATE_MOTO';
         $permissionCreateMoto->display_name = 'Parqueaderos';
         $permissionCreateMoto->description = 'Permiso para autorizar la creación de motocicletas nuevas.';
         $permissionCreateMoto->module_id = 3;
         $permissionCreateMoto->save();
 
         $permissionSeeMoto = new Permission;
-        $permissionSeeMoto->name = 'SEE_MOTO_CARPARK';
+        $permissionSeeMoto->name = 'PARK_SEE_MOTO';
         $permissionSeeMoto->display_name = 'Parqueaderos';
         $permissionSeeMoto->description = 'Permiso para autorizar la vista del perfil de las motocicletas.';
         $permissionSeeMoto->module_id = 3;
         $permissionSeeMoto->save();
 
         $permissionUpdateMoto = new Permission;
-        $permissionUpdateMoto->name = 'UPDATE_MOTO_CARPARK';
+        $permissionUpdateMoto->name = 'PARK_UPDATE_MOTO';
         $permissionUpdateMoto->display_name = 'Parqueaderos';
         $permissionUpdateMoto->description = 'Permiso para autorizar la actualización de la información de las motocicletas.';
         $permissionUpdateMoto->module_id = 3;
         $permissionUpdateMoto->save();
 
         $permissionDeleteMoto = new Permission;
-        $permissionDeleteMoto->name = 'DELETE_MOTO_CARPARK';
+        $permissionDeleteMoto->name = 'PARK_DELETE_MOTO';
         $permissionDeleteMoto->display_name = 'Parqueaderos';
         $permissionDeleteMoto->description = 'Permiso para autorizar la eliminación de motocicletas.';
         $permissionDeleteMoto->module_id = 3;
         $permissionDeleteMoto->save();
 
         $permissionReportMoto = new Permission;
-        $permissionReportMoto->name = 'REPORT_MOTO_CARPARK';
+        $permissionReportMoto->name = 'PARK_REPORT_MOTO';
         $permissionReportMoto->display_name = 'Parqueaderos';
         $permissionReportMoto->description = 'Permiso para autorizar sacar los reportes de las motocicletas.';
         $permissionReportMoto->module_id = 3;
@@ -116,14 +116,14 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre CRUD De ingresos
 
         $permissionCreateIngreso = new Permission;
-        $permissionCreateIngreso->name = 'CREATE_INGRESO_CARPARK';
+        $permissionCreateIngreso->name = 'PARK_CREATE_INGRESO';
         $permissionCreateIngreso->display_name = 'Parqueaderos';
         $permissionCreateIngreso->description = 'Permiso para autorizar la creación de acciones de ingreso nuevas.';
         $permissionCreateIngreso->module_id = 3;
         $permissionCreateIngreso->save();
 
         $permissionReportIngresos = new Permission;
-        $permissionReportIngresos->name = 'REPORT_INGRESO_CARPARK';
+        $permissionReportIngresos->name = 'PARK_REPORT_INGRESO';
         $permissionReportIngresos->display_name = 'Parqueaderos';
         $permissionReportIngresos->description = 'Permiso para autorizar sacar los reportes de acciones de ingreso.';
         $permissionReportIngresos->module_id = 3;
@@ -141,21 +141,21 @@ class PermissionParqueaderosSeeder extends Seeder
         $permissionReportHistoriales->save();
 
         $permissionReportHistoFechas = new Permission;
-        $permissionReportHistoFechas->name = 'REPORT_HISTOFECHA_CARPARK';
+        $permissionReportHistoFechas->name = 'PARK_REPORT_HISTOFECHA';
         $permissionReportHistoFechas->display_name = 'Parqueaderos';
         $permissionReportHistoFechas->description = 'Permiso para autorizar sacar los reportes de historiales filtrado por fecha.';
         $permissionReportHistoFechas->module_id = 3;
         $permissionReportHistoFechas->save();
 
         $permissionReportHistoCodigo = new Permission;
-        $permissionReportHistoCodigo->name = 'REPORT_HISTOCODIGO_CARPARK';
+        $permissionReportHistoCodigo->name = 'PARK_REPORT_HISTOCODIGO';
         $permissionReportHistoCodigo->display_name = 'Parqueaderos';
         $permissionReportHistoCodigo->description = 'Permiso para autorizar sacar los reportes de historiales filtrado por código.';
         $permissionReportHistoCodigo->module_id = 3;
         $permissionReportHistoCodigo->save();
 
         $permissionReportHistoPlaca = new Permission;
-        $permissionReportHistoPlaca->name = 'REPORT_HISTOPLACA_CARPARK';
+        $permissionReportHistoPlaca->name = 'PARK_REPORT_HISTOPLACA';
         $permissionReportHistoPlaca->display_name = 'Parqueaderos';
         $permissionReportHistoPlaca->description = 'Permiso para autorizar sacar los reportes de historiales filtrado por placa.';
         $permissionReportHistoPlaca->module_id = 3;
@@ -166,21 +166,21 @@ class PermissionParqueaderosSeeder extends Seeder
         //Inicio De Permisos Sobre CRUD De Dependencias
 
         $permissionCreateDependencia = new Permission;
-        $permissionCreateDependencia->name = 'CREATE_DEPENDENCIA_CARPARK';
+        $permissionCreateDependencia->name = 'PARK_CREATE_DEPENDENCIA';
         $permissionCreateDependencia->display_name = 'Parqueaderos';
         $permissionCreateDependencia->description = 'Permiso para autorizar la creación de Dependencias nuevas.';
         $permissionCreateDependencia->module_id = 3;
         $permissionCreateDependencia->save();
 
         $permissionUpdateDependencia = new Permission;
-        $permissionUpdateDependencia->name = 'UPDATE_DEPENDENCIA_CARPARK';
+        $permissionUpdateDependencia->name = 'PARK_UPDATE_DEPENDENCIA';
         $permissionUpdateDependencia->display_name = 'Parqueaderos';
         $permissionUpdateDependencia->description = 'Permiso para autorizar la actualización de la información de las Dependencias.';
         $permissionUpdateDependencia->module_id = 3;
         $permissionUpdateDependencia->save();
 
         $permissionReportDependencia = new Permission;
-        $permissionReportDependencia->name = 'REPORT_DEPENDENCIA_CARPARK';
+        $permissionReportDependencia->name = 'PARK_REPORT_DEPENDENCIA';
         $permissionReportDependencia->display_name = 'Parqueaderos';
         $permissionReportDependencia->description = 'Permiso para autorizar sacar los reportes de Dependencias.';
         $permissionReportDependencia->module_id = 3;

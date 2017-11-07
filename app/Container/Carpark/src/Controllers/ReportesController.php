@@ -231,7 +231,7 @@ class ReportesController extends Controller
             $infoIngresos = Ingresos::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
             $total = count($infoIngresos);
             $cont = 1;
-            return view('carpark.reportes.ReporteMotosDentro',
+            return view('carpark.reportes.reporteMotosDentro',
                 compact('infoIngresos', 'date', 'time', 'total', 'cont')
             );
         }
@@ -257,11 +257,11 @@ class ReportesController extends Controller
                 $infoIngresos = Ingresos::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
                 $total = count($infoIngresos);
                 $cont = 1;
-                return SnappyPdf::loadView('carpark.reportes.ReporteMotosDentro',
+                return SnappyPdf::loadView('carpark.reportes.reporteMotosDentro',
                     compact('infoIngresos', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMotosDentro.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReporteMotosDentro',
+                return view('carpark.reportes.reporteMotosDentro',
                     compact('infoIngresos', 'date', 'time', 'total', 'cont'));
             }
         }
@@ -286,7 +286,7 @@ class ReportesController extends Controller
             $infoHistoriales = Historiales::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
             $total = count($infoHistoriales);
             $cont = 1;
-            return view('carpark.reportes.ReporteHistorico',
+            return view('carpark.reportes.reporteHistorico',
                 compact('infoHistoriales', 'date', 'time', 'total', 'cont')
             );
         }
@@ -312,11 +312,11 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
                 $total = count($infoHistoriales);
                 $cont = 1;
-                return SnappyPdf::loadView('carpark.reportes.ReporteHistorico',
+                return SnappyPdf::loadView('carpark.reportes.reporteHistorico',
                     compact('infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteHistorico.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReporteHistorico',
+                return view('carpark.reportes.reporteHistorico',
                     compact('infoHistoriales', 'date', 'time', 'total', 'cont')
                 );
             }
@@ -350,7 +350,7 @@ class ReportesController extends Controller
             $date = date("d/m/Y");
             $time = date("h:i A");
 
-            return view('carpark.reportes.ReportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'));
+            return view('carpark.reportes.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'));
         }
 
         return AjaxResponse::fail(
@@ -382,9 +382,9 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
 
-                return SnappyPdf::loadView('carpark.reportes.ReportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'))->download('ReportePorFechas.pdf');
+                return SnappyPdf::loadView('carpark.reportes.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'))->download('ReportePorFechas.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'));
+                return view('carpark.reportes.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'));
             }
         }
 
@@ -530,7 +530,7 @@ class ReportesController extends Controller
 
             $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
             $total = count($infoHistoriales);
-            return view('carpark.reportes.ReporteUsuario',
+            return view('carpark.reportes.reporteUsuario',
                 compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont')
             );
         }
@@ -563,7 +563,7 @@ class ReportesController extends Controller
                 return SnappyPdf::loadView('carpark.reportes.ReporteUsuario',
                     compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReporteUsuario',
+                return view('carpark.reportes.reporteUsuario',
                     compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 );
             }
@@ -593,7 +593,7 @@ class ReportesController extends Controller
             $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
 
             $total = count($infoHistoriales);
-            return view('carpark.reportes.ReporteMoto',
+            return view('carpark.reportes.reporteMoto',
                 compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
             );
         }
@@ -630,7 +630,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
 
                 $total = count($infoHistoriales);
-                return SnappyPdf::loadView('carpark.reportes.ReporteMoto',
+                return SnappyPdf::loadView('carpark.reportes.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMoto.pdf');
             } catch (Exception $e) {

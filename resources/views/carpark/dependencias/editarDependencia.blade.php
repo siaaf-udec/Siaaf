@@ -21,12 +21,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('UPDATE_DEPENDENCIA_CARPARK')<a href="javascript:;"
+                                @permission('PARK_UPDATE_DEPENDENCIA')<a href="javascript:;"
                                                                             class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('UPDATE_DEPENDENCIA_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_UPDATE_DEPENDENCIA'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

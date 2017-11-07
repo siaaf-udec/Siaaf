@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('REPORT_MOTO_CARPARK')<a href="javascript:;"
+                        @permission('PARK_REPORT_MOTO')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Motos</a>@endpermission
@@ -110,7 +110,7 @@
             {data: 'CM_Marca', name: 'Marca'},
             {data: 'FK_CM_CodigoUser', name: 'Código Propietario'},
             {
-                defaultContent: '@permission('SEE_MOTO_CARPARK')<a href="javascript:;" class="btn btn-success verPerfil"  title="Perfil" ><i class="fa fa-address-card"></i></a>@endpermission',
+                defaultContent: '@permission('PARK_SEE_MOTO')<a href="javascript:;" class="btn btn-success verPerfil"  title="Perfil" ><i class="fa fa-address-card"></i></a>@endpermission',
                 data: 'action',
                 name: 'Perfil',
                 title: 'Perfil',
@@ -124,7 +124,7 @@
                 responsivePriority: 2
             },
             {
-                defaultContent: '@permission('REPORT_MOTO_CARPARK')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@permission('UPDATE_MOTO_CARPARK') @endpermission<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@permission('DELETE_MOTO_CARPARK') @endpermission<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> @endpermission',
+                defaultContent: '@permission('PARK_REPORT_MOTO')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@permission('PARK_UPDATE_MOTO') @endpermission<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@permission('PARK_DELETE_MOTO') @endpermission<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> @endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

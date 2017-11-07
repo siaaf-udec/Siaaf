@@ -53,12 +53,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CREATE_INGRESO_CARPARK')<a href="javascript:;"
+                                @permission('PARK_CREATE_INGRESO')<a href="javascript:;"
                                                               class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>@endpermission
-                                @permission('CREATE_INGRESO_CARPARK'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_CREATE_INGRESO'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

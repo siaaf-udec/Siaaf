@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div>
-                                @permission('UPDATE_USER_CARPARK')<a href="javascript:;"><img
+                                @permission('PARK_UPDATE_USER')<a href="javascript:;"><img
                                             src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}"
                                             class="img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a> @endpermission
@@ -61,12 +61,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('UPDATE_USER_CARPARK')<a href="javascript:;"
+                                @permission('PARK_UPDATE_USER')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('UPDATE_USER_CARPARK'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                                @permission('PARK_UPDATE_USER'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

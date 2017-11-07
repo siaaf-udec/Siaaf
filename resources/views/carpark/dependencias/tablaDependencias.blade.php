@@ -23,13 +23,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('CREATE_DEPENDENCIA_CARPARK')<a href="javascript:;"
+                        @permission('PARK_CREATE_DEPENDENCIA')<a href="javascript:;"
                                                                     class="btn btn-simple btn-success btn-icon create"
                                                                     title="Registar nueva dependencia">
                             <i class="fa fa-plus">
                             </i>Nueva
                         </a>@endpermission
-                        @permission('REPORT_DEPENDENCIA_CARPARK')<a href="javascript:;"
+                        @permission('PARK_REPORT_DEPENDENCIA')<a href="javascript:;"
                                                                     class="btn btn-simple btn-success btn-icon reports"
                                                                     title="Reporte"><i
                                     class="glyphicon glyphicon-list-alt"></i>Reporte
@@ -90,7 +90,7 @@
             {data: 'DT_Row_Index'},
             {data: 'CD_Dependencia', name: 'Dependencia'},
             {
-                defaultContent: '@permission('UPDATE_DEPENDENCIA_CARPARK')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission',
+                defaultContent: '@permission('PARK_UPDATE_DEPENDENCIA')<a href="javascript:;" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
