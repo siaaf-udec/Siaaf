@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-@permission('publico')
+@permission('ACAD_PUBLICO')
 @section('page-title', 'Control Docente:')
 @push('styles')
     {{--TOAST--}}
@@ -53,7 +53,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    @permission('registrarAsistencia')
+                                    @permission('ACAD_REGISTRAR_ASISTENCIA')
                                     {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                                     @endpermission
                                 </div>

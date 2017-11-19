@@ -1,4 +1,4 @@
-@permission('incidentes')
+@permission('ACAD_INCIDENTES')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('registrarIncidente')
+                        @permission('ACAD_REGISTRAR_INCIDENTE')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
@@ -52,7 +52,7 @@
             </div>
             <br>
             <div class="col-md-12">
-                @permission('consultarIncidente')
+                @permission('ACAD_CONSULTAR_INCIDENTE')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
                     @slot('columns', [
                     'id_incidente',
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @permission('registrarIncidente')
+                            @permission('ACAD_REGISTRAR_INCIDENTE')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -204,7 +204,7 @@
                 {data: 'FK_INC_Id_User', name: 'Identificación'},
                 {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
-                    defaultContent: '@permission('eliminarIncidente') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

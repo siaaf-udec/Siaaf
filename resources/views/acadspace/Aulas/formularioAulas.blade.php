@@ -1,4 +1,4 @@
-@permission('aulas')
+@permission('ACAD_AULAS')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('registrarAula')
+                        @permission('ACAD_REGISTRAR_AULA')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
@@ -49,7 +49,7 @@
             </div>
             <br>
             <div class="col-md-12">
-                @permission('consultarAula')
+                @permission('ACAD_CONSULTAR_AULA')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @permission('registrarAula')
+                            @permission('ACAD_REGISTRAR_AULA')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -176,7 +176,7 @@
                 {data: 'PK_SAL_Id_Sala', name: 'id_documento', "visible": false},
                 {data: 'SAL_Nombre_Sala', name: 'Nombre Sala'},
                 {data: 'espacio.N_espacio', name: 'Nombre Espacio'}, {
-                    defaultContent: ' @permission('eliminarAula') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: ' @permission('ACAD_ELIMINAR_AULA') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

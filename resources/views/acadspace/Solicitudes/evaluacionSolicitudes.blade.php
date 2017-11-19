@@ -1,4 +1,4 @@
-@permission('gestionSolicitudes')
+@permission('ACAD_GESTION_SOLICITUDES')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -36,7 +36,7 @@
                 {{--DIVISION NAV--}}
                 <div class="portlet-body" id="vista-tabla">
                     <ul class="nav nav-pills">
-                        @permission('gestionSolicitudes')
+                        @permission('ACAD_GESTION_SOLICITUDES')
                         <li class="active">
                             <a href="#tab_2_1" data-toggle="tab"> Solicitudes grupales </a>
                         </li>
@@ -53,7 +53,7 @@
                                 <br>
                                 <br>
                                 <br>
-                                @permission('consultarSolicitudes')
+                                @permission('ACAD_CONSULTAR_SOLICITUDES')
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
@@ -73,7 +73,7 @@
                                 <br>
                                 <br>
                                 <br>
-                                @permission('consultarSolicitudes')
+                                @permission('ACAD_CONSULTAR_SOLICITUDES')
                                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax-libre'])
                                     @slot('columns', [
                                     '#' => ['style' => 'width:20px;'],
@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                        @permission('aprobarSolicitudes')
+                        @permission('ACAD_APROBAR_SOLICITUDES')
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         @endpermission
                     </div>
@@ -165,7 +165,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @permission('rechazarSolicitudes')
+                        @permission('ACAD_RECHAZAR_SOLICITUDES')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                         @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -203,7 +203,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @permission('aprobarSolicitudes')
+                        @permission('ACAD_APROBAR_SOLICITUDES')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                         @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -238,7 +238,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @permission('rechazarSolicitudes')
+                        @permission('ACAD_RECHAZAR_SOLICITUDES')
                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                         @endpermission
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -397,8 +397,8 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
-                    defaultContent: ' @permission('aprobarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
-                    '@permission('rechazarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
+                    defaultContent: ' @permission('ACAD_APROBAR_SOLICITUDES') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
+                    '@permission('ACAD_RECHAZAR_SOLICITUDES') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -432,8 +432,8 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '@permission('aprobarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
-                    '@permission('rechazarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_APROBAR_SOLICITUDES') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
+                    '@permission('ACAD_RECHAZAR_SOLICITUDES') <a href="javascript:;" class="btn btn-simple btn-warning btn-icon remove" data-toggle="confirmation"><i class="icon-pencil"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

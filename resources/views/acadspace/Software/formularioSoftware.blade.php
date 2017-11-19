@@ -1,4 +1,4 @@
-@permission('software')
+@permission('ACAD_SOFTWARE')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('registrarSoftware')
+                        @permission('ACAD_REGISTRAR_SOFTWARE')
                         <a class="btn btn-outline dark create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
@@ -42,7 +42,7 @@
             </div>
             <br>
             <div class="col-md-12">
-                @permission('consultarSoftware')
+                @permission('ACAD_CONSULTAR_SOFTWARE')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @permission('registrarSoftware')
+                            @permission('ACAD_REGISTRAR_SOFTWARE')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -160,7 +160,7 @@
                 {data: 'SOF_Version', name: 'Versión'},
                 {data: 'SOF_Licencias', name: 'Licencias'},
                 {
-                    defaultContent: ' @permission('eliminarSoftware') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: ' @permission('ACAD_ELIMINAR_SOFTWARE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

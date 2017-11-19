@@ -1,4 +1,4 @@
-@permission('gestionFormato')
+@permission('ACAD_GESTION_FORMATOS')
 @extends('material.layouts.dashboard')
 @push('styles')
     <!-- MODAL -->
@@ -35,7 +35,7 @@
             <br>
             <div class="col-md-12">
                 {{--COlumnas añadidas a la tabla--}}
-                @permission('gestionFormato')
+                @permission('ACAD_GESTION_FORMATOS')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -91,8 +91,8 @@
                 },
                 {
                     //Botones de acciones(editar estado, descargar)
-                    defaultContent: '@permission('editEstFormato') <a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
-                  '@permission('descargFormato') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_EDIT_ESTADO_FORMATO') <a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
+                  '@permission('ACAD_DESCARGAR_FORMATO') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

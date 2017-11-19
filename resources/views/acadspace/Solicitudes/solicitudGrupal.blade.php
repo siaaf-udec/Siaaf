@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-@permission('realizarSolicitudes')
+@permission('ACAD_REALIZAR_SOLICITUDES')
 @push('styles')
     {{--Select2--}}
     <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('realizarSolicitudes')
+                        @permission('ACAD_REALIZAR_SOLICITUDES')
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
                                     class="fa fa-plus"></i>Práctica Grupal</a> <a href="javascript:;"
                                                                                   class="btn btn-simple btn-success btn-icon createLib"><i
@@ -50,7 +50,7 @@
     </div>
     <br>
     <div class="col-md-12">
-        @permission('consultarSolicitudes')
+        @permission('ACAD_CONSULTAR_SOLICITUDES')
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
             @slot('columns', [
             '#' => ['style' => 'width:20px;'],

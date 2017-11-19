@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-@permission('reportes')
+@permission('ACAD_REPORTES')
 @section('page-title', 'Reportes:')
 @push('styles')
     {{--Select2--}}
@@ -32,7 +32,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">
-                                    @permission('realizarReporte')
+                                    @permission('ACAD_REALIZAR_REPORTE')
                                     {{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}
                                     @endpermission
                                 </div>

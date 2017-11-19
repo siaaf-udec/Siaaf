@@ -1,5 +1,5 @@
 {{-- BEGIN HTML SAMPLE --}}
-@permission('realizarSolicitudes')
+@permission('ACAD_REALIZAR_SOLICITUDES')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-th-list', 'title' => 'Mis Solicitudes'])
         <div class="clearfix">
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    @permission('realizarSolicitudes')
+                    @permission('ACAD_REALIZAR_SOLICITUDES')
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i>Práctica
                         Grupal</a>
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon createLib"><i
@@ -23,7 +23,7 @@
 </div>
 <br>
 <div class="col-md-12">
-    @permission('consultarSolicitudes')
+    @permission('ACAD_CONSULTAR_SOLICITUDES')
     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
         @slot('columns', [
         '#' => ['style' => 'width:20px;'],

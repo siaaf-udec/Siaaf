@@ -1,4 +1,4 @@
-@permission('realizarSolicitudes')
+@permission('ACAD_REALIZAR_SOLICITUDES')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-pencil', 'title' => 'Crear Solicitud libre'])
         @slot('actions', [
@@ -81,7 +81,7 @@
                                         <a href="javascript:;" class="btn red button-cancel">
                                             Cancelar
                                         </a>
-                                        @permission('realizarSolicitudes')
+                                        @permission('ACAD_REALIZAR_SOLICITUDES')
                                         {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
                                         @endpermission
                                     </div>

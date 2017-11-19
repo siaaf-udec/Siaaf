@@ -10,8 +10,8 @@
 
     <ul class="sub-menu">
 
-        @permission('formatos')
-        @permission('registrarFormatos')
+        @permission('ACAD_FORMATOS')
+        @permission('ACAD_REGISTRAR_FORMATOS')
         <li class="nav-item {{ active(['espacios.academicos.formacad.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -19,7 +19,7 @@
             </a>
         </li>
         @endpermission
-        @permission('gestionFormato')
+        @permission('ACAD_GESTION_FORMATOS')
         <li class="nav-item {{ active(['espacios.academicos.formacad.listSol'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.formacad.listSol') }}" class="nav-link nav-toggle">
                 <i class="fa fa-file-pdf-o"></i>
@@ -29,7 +29,7 @@
         @endpermission
         @endpermission
 
-        @permission('aulas')
+        @permission('ACAD_AULAS')
         <li class="nav-item {{ active(['espacios.academicos.aulas.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.aulas.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-university"></i>
@@ -37,7 +37,7 @@
             </a>
         </li>
         @endpermission
-        @permission('software')
+        @permission('ACAD_SOFTWARE')
         <li class="nav-item {{ active(['espacios.academicos.soft.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.soft.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-tv"></i>
@@ -45,7 +45,7 @@
             </a>
         </li>
         @endpermission
-        @permission('incidentes')
+        @permission('ACAD_INCIDENTES')
         <li class="nav-item {{ active(['espacios.academicos.incidente.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.incidente.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-warning"></i>
@@ -53,8 +53,8 @@
             </a>
         </li>
         @endpermission
-        @permission('solicitudes')
-        @permission('realizarSolicitudes')
+        @permission('ACAD_SOLICITUDES')
+        @permission('ACAD_REALIZAR_SOLICITUDES')
         <li class="nav-item {{ active(['espacios.academicos.solacad.indexDoc'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.solacad.indexDoc') }}" class="nav-link nav-toggle">
                 <i class="fa fa-book"></i>
@@ -62,7 +62,7 @@
             </a>
         </li>
         @endpermission
-        @permission('gestionSolicitudes')
+        @permission('ACAD_GESTION_SOLICITUDES')
         <li class="nav-item {{ active(['espacios.academicos.evalsol.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-pencil-square-o"></i>
@@ -89,7 +89,7 @@
         @endpermission
         @endpermission
 
-        @permission('eventos')
+        @permission('ACAD_EVENTOS')
         <li class="nav-item {{ active(['espacios.academicos.acadcalendar.index'], 'start active open') }}">
             <a href="{{ route('espacios.academicos.acadcalendar.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-calendar-plus-o"></i>
@@ -98,7 +98,7 @@
         </li>
         @endpermission
 
-        @permission('reportes')
+        @permission('ACAD_REPORTES')
         <li class="nav-item {{ active(['espacios.academicos.report.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-file-pdf-o"></i>
@@ -127,7 +127,7 @@
             </ul>
         </li>
         @endpermission
-        @permission('publico')
+        @permission('ACAD_PUBLICO')
         <li class="nav-item {{ active(['espacios.academicos.asist.*' ], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-check-square-o"></i>

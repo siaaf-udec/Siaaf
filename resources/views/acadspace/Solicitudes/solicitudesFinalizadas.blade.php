@@ -1,4 +1,4 @@
-@permission('gestionSolicitudes')
+@permission('ACAD_GESTION_SOLICITUDES')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -43,7 +43,7 @@
             <br>
 
             <div class="col-md-12">
-                @permission('consultarSolicitudes')
+                @permission('ACAD_CONSULTAR_SOLICITUDES')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
@@ -153,7 +153,7 @@
                 {data: 'aula.SAL_Nombre_Sala', name: 'Sala'},
                 {data: 'tipo_prac', name: 'Práctica'},
                 {
-                    defaultContent: '@permission('eliminarSolicitudes') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_SOLICITUDES') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

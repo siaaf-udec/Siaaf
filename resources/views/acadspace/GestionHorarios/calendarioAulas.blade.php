@@ -4,7 +4,7 @@
  * Date: 4/09/17
  * Time: 12:51 PM
  */-->
-@permission('eventos')
+@permission('ACAD_EVENTOS')
 @extends('material.layouts.dashboard')
 @push('styles')
     {{--Fullcalendar--}}
@@ -42,7 +42,7 @@
                 <section class="content">
                     <div class="col-md-12">
                         <div class="note">
-                            @permission('consultarAula')
+                            @permission('ACAD_CONSULTAR_AULA')
                             {!! Field::select('Espacio académico:',$espacios,
                                     ['id' => 'SOL_laboratorios', 'name' => 'SOL_laboratorios'])
                                     !!}
@@ -131,7 +131,7 @@
                                                                placeholder="Titulo del evento">
 
                                                         <div class="input-group-btn">
-                                                            @permission('registrarEvento')
+                                                            @permission('ACAD_REGISTRAR_EVENTO')
                                                             <button id="add-new-event" type="button"
                                                                     class="btn btn-primary btn-flat">
                                                                 Agregar
@@ -163,7 +163,7 @@
                                                 <!-- /.box-body -->
                                                 <div id="event_box" class="margin-bottom-10"></div>
                                                 <hr class="visible-xs"/>
-                                                @permission('imprimirPdf')
+                                                @permission('ACAD_IMPRIMIR_PDF')
                                                 <span id="AE_btn_pdf" class="btn blue"><input type="hidden"
                                                                                               id="zz_pdf"
                                                                                               value=""/>Generar PDF</span>
@@ -281,7 +281,7 @@
                 {data: 'SOL_Cant_Estudiantes', name: 'Estudiantes'},
                 {data: 'tipo_prac', name: 'Practica'},
                 {
-                    defaultContent: '@permission('verMasEvento') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_VER_MAS_EVENTO') <a href="javascript:;" class="btn btn-simple btn-primary btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
