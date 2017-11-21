@@ -69,6 +69,13 @@ class PermissionAcadspaceSeeder extends Seeder
         $permission ->save();
 
         $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_SOL_FORMATO';
+        $permission2->display_name = 'Eliminar Solicitud Formato';
+        $permission2->description = 'Acceso a eliminar solicitud.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
         $permission2->name = 'ACAD_AULAS';
         $permission2->display_name = 'Aulas';
         $permission2->description = 'Acceso al modulo aulas.';

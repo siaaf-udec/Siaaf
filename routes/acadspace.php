@@ -139,9 +139,14 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.formacad.edit'
         ])->where(['id' => '[0-9]+']);
 
-        Route::get('descargarArchivo/{id?}', [
+        Route::get('descargarArchivo/{id?}', [//DESCARGAR
             'uses' => $controller . 'formatosController@descargarPublicacion',
             'as' => 'espacios.academicos.descargarArchivo'
+        ])->where(['id' => '[0-9]+']);
+
+        Route::delete('delete/{id?}', [ //ELIMINAR
+            'uses' => $controller . 'formatosController@destroy',
+            'as' => 'espacios.academicos.formacad.destroy'
         ])->where(['id' => '[0-9]+']);
     });
 

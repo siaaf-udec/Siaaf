@@ -51,7 +51,7 @@
                     'Formato Académico',
                     'Fecha',
                     'Estado',
-                    'Acciones' => ['style' => 'width:45px;']
+                    'Acciones' => ['style' => 'width:150px;']
                     ])
                 @endcomponent
                 @endpermission
@@ -215,7 +215,8 @@
                 {data: 'estado', name: 'Estado'},
                 {
                     //Boton para descargar el archivo
-                    defaultContent: ' @permission('ACAD_DESCARGAR_FORMATO') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission',
+                    defaultContent: ' @permission('ACAD_DESCARGAR_FORMATO') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission' +
+                    '@permission('ACAD_ELIMINAR_SOL_FORMATO')  <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -239,6 +240,42 @@
                 $.ajax({}).done(function () {
                     window.location.href = '{{ route('espacios.academicos.descargarArchivo') }}' + '/' + dataTable.PK_FAC_Id_Formato;
                 });
+            });
+
+            /*ELIMINAR REGISTROS*/
+            table.on('click', '.remove', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var route = '{{ route('espacios.academicos.formacad.destroy') }}' + '/' + dataTable.PK_FAC_Id_Formato;
+                var type = 'DELETE';
+                var async = async || false;
+
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+
+
             });
 
             /*ABRIR MODAL*/

@@ -216,4 +216,29 @@ class formatosController extends Controller
 
 
     }
+
+    /**
+     * Funcion eliminar formatos registrados
+     * @param Request $request
+     * @param $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function destroy(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+
+            $formato = formatos::find($id);
+            $formato->delete();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Solicitud eliminada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 }
