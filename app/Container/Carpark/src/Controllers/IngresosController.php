@@ -273,7 +273,7 @@ class IngresosController extends Controller
      */
     public function storeTarjeta(Request $request)
     {
-        if ($request->isMethod('GET')) {
+        if ($request->isMethod('POST')) {
             ////////////////Validación entrada o salida//////////////////
             $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
             if ($infoIngresos == '[]') {
@@ -308,7 +308,7 @@ class IngresosController extends Controller
 
         return AjaxResponse::fail(
             '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
+            'No se pudo completar tu solicitud, petición errada.'
         );
 
     }
