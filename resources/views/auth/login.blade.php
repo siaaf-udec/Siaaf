@@ -22,7 +22,8 @@
 --}}
 @push('styles')
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="{{ asset('assets/pages/css/login-5.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/pages/css/login-5.min.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 @endpush
 
@@ -58,14 +59,14 @@
         <div class="row bs-reset">
             <div class="col-md-6 bs-reset mt-login-5-bsfix">
                 <div class="login-bg" style="background-image:url({{ asset('assets/pages/img/login/N1.jpeg') }})">
-                    <img class="login-logo" src="{{ asset('assets/pages/img/login/siaaf.png') }}" /> </div>
+                    <img class="login-logo" src="{{ asset('assets/pages/img/login/siaaf.png') }}"/></div>
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                 <div class="login-content">
                     <h1>{{ $title or config('app.name') }}</h1>
                     <p> {{ $description or config('app.description') }} </p>
                     {!! Form::open(['role' => 'form', 'id' => 'form-login', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
-                     @if (Auth::guest())
+                    @if (Auth::guest())
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-xs-6">
@@ -76,37 +77,37 @@
                                 </div>
                             </div>
                         </div>
-                     @endif
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="rem-password">
-                                    {!! Field::checkbox('remember', old('remember'), ['label' => 'Recordarme', old('remember') ? 'checked' : '']) !!}
-                                </div>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                                {{ Form::submit('Ingresar', ['class' => 'btn green']) }}
-                            </div>
-                            <div class="col-sm-12 text-right">
-                                <div class="forgot-password">
-                                    <a href="javascript:;" id="forget-password" class="forget-password">
-                                        ¿Se te olvidó tu contraseña?</a>
-                                </div>
+                    @endif
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="rem-password">
+                                {!! Field::checkbox('remember', old('remember'), ['label' => 'Recordarme', old('remember') ? 'checked' : '']) !!}
                             </div>
                         </div>
+                        <div class="col-sm-6 text-right">
+                            {{ Form::submit('Ingresar', ['class' => 'btn green']) }}
+                        </div>
+                        <div class="col-sm-12 text-right">
+                            <div class="forgot-password">
+                                <a href="javascript:;" id="forget-password" class="forget-password">
+                                    ¿Se te olvidó tu contraseña?</a>
+                            </div>
+                        </div>
+                    </div>
                     {!! Form::close() !!}
-                    <!-- END : LOGIN PAGE 5-1 -->
+                <!-- END : LOGIN PAGE 5-1 -->
 
                     <!-- BEGIN FORGOT PASSWORD FORM -->
                     {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
-                        <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
-                        <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
-                         {!! Field::email('email-forget', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
-                        <div class="form-actions">
-                            {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
-                            {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}
-                        </div>
-                    {!! Form::close() !!}
-                    <!-- END FORGOT PASSWORD FORM -->
+                    <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
+                    <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
+                    {!! Field::email('email-forget', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
+                    <div class="form-actions">
+                        {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
+                        {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}
+                    </div>
+                {!! Form::close() !!}
+                <!-- END FORGOT PASSWORD FORM -->
                 </div>
                 <div class="login-footer">
                     <div class="row bs-reset">
@@ -160,16 +161,23 @@
 --}}
 
 @push('plugins')
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
+        type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/backstretch/jquery.backstretch.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/backstretch/jquery.backstretch.min.js') }}"
+        type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
+        type="text/javascript"></script>
 
 <script src="{{ asset('assets/pages/scripts/login-5.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
 
 {{--
@@ -190,13 +198,19 @@
 | @endpush
 --}}
 @push('functions')
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    @if($errors->has('read'))
+        <script type="text/javascript">
+            UIToastr.init('error', '{{$errors->first('read')}}', '');
+        </script>
+    @endif
     <script type="text/javascript">
         var rules = {
-            email: { email: true, required: true },
+            email: {email: true, required: true},
         };
-        var messages = { };
+        var messages = {};
         var form = $('#form-forget');
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
             FormValidationMd.init(form, rules, messages);
         });
     </script>
