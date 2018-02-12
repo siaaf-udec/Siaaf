@@ -1,4 +1,4 @@
-<!--[if lt IE 9]>
+<!--[if lt IE 9]-->
 <script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>
 <script src="{{ asset('assets/global/plugins/excanvas.min.js') }}"></script>
 <script src="{{ asset('assets/global/plugins/ie8.fix.min.js') }}"></script>
