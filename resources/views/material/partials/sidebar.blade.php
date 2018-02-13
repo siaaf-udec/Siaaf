@@ -4,6 +4,18 @@
         data-slide-speed="200">
         {{-- HOME Y COMPONENTES --}}
         @include('themes.menus.home-menu')
+        {{-- COMPONENTES --}}
+        @permission('MASTER_ELEMENTS')
+        @include('themes.menus.elementos-menu')
+        @endpermission
+        {{-- USUARIOS --}}
+        @permission('MASTER_USERS')
+        @include('themes.menus.user-menu')
+        @endpermission
+        {{-- PERMISOS DE USUARIOS --}}
+        @permission('MASTER_PERMISSIOM')
+        @include('themes.menus.permisos-menu')
+        @endpermission
         {{-- ESPACIOS ACADÉMICOS --}}
         @permission('ACAD_MODULE')
         @include('themes.menus.espacios-academicos-menu')
