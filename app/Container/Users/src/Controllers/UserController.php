@@ -49,9 +49,9 @@ class UserController extends Controller
      */
     public function index_ajax(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')){
+        if ($request->ajax() && $request->isMethod('GET')) {
             return view('users.content-ajax.ajax-user');
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -66,17 +66,17 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')){
-            $roles =  $this->roleRepository->index([]);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $roles = $this->roleRepository->index([]);
             return view('users.content-ajax.ajax-create-user', [
-                    'roles' => $roles
+                'roles' => $roles
             ]);
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends Controller
      */
     public function data(Request $request)
     {
-        if($request->ajax() && $request->isMethod('GET')){
+        if ($request->ajax() && $request->isMethod('GET')) {
             /*
              * Forma Incorrecta
              * $users = $this->userRepository->index([]);
@@ -96,25 +96,25 @@ class UserController extends Controller
                 return $this->userRepository->index(['roles']);
             });
             return DataTables::of($users)
-                ->addColumn('roles', function ($users){
-                    if ( !empty($users->roles)) {
+                ->addColumn('roles', function ($users) {
+                    if (!empty($users->roles)) {
                         foreach ($users->roles as $role) {
                             $aux[] = $role->display_name;
                         }
-                        if(!empty($aux)){
+                        if (!empty($aux)) {
                             return implode(',', $aux);
-                        }else{
+                        } else {
                             return 'No Definido';
                         }
                     }
                 })
-                ->addColumn('state', function ($users){
-                    if(!strcmp($users->state, 'Aprobado')){
-                        return "<span class='label label-sm label-success'>".$users->state. "</span>";
-                    }elseif (!strcmp($users->state, 'Pendiente')){
-                        return "<span class='label label-sm label-warning'>".$users->state. "</span>";
-                    }else{
-                        return "<span class='label label-sm label-danger'>".$users->state. "</span>";
+                ->addColumn('state', function ($users) {
+                    if (!strcmp($users->state, 'Aprobado')) {
+                        return "<span class='label label-sm label-success'>" . $users->state . "</span>";
+                    } elseif (!strcmp($users->state, 'Pendiente')) {
+                        return "<span class='label label-sm label-warning'>" . $users->state . "</span>";
+                    } else {
+                        return "<span class='label label-sm label-danger'>" . $users->state . "</span>";
                     }
                 })
                 ->rawColumns(['state'])
@@ -133,42 +133,42 @@ class UserController extends Controller
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
 
             /*Guarda Usuario*/
             $user = $this->userRepository->store($request->all());
 
             /*Guarda la imagen */
             $img = $request->file('image_profile_create');
-            if($img !== null){
+            if ($img !== null) {
                 $url = Storage::disk('developer')->putFile('avatars', $img);
                 $user->images()->create([
                     'url' => $url
                 ]);
-            }else{
+            } else {
                 $user->images()->create([
                     'url' => $request->get('identicon')
                 ]);
             }
 
             /*Guarda los Roles*/
-            $roles =  $request->get('multi_select_roles_create');
+            $roles = $request->get('multi_select_roles_create');
             $user->roles()->sync(
                 ($roles !== null) ? explode(',', $roles) : []
             );
@@ -185,104 +185,124 @@ class UserController extends Controller
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function checkEmail(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST')){
+        if ($request->ajax() && $request->isMethod('POST')) {
 
             $validator = Validator::make($request->all(), [
                 'email_create' => 'unique:users,email'
             ]);
 
-            if(empty($validator->errors()->all())){
+            if (empty($validator->errors()->all())) {
                 return response('true');
-            }else{
-                return response('false');
             }
 
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
+            return response('false');
+
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET')){
-            $user = $this->userRepository->show($id,[]);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $user = $this->userRepository->show($id, []);
 
             return view('users.content-ajax.ajax-update-user', [
-                    'user' => $user,
-                    'roles' => $this->roleRepository->index([]),
+                'user' => $user,
+                'roles' => $this->roleRepository->index([])
             ]);
 
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('POST')){
-            $module = [
-                'id' => $id,
-                'name'=> $request->get('name'),
-                'display_name'=> $request->get('display_name'),
-                'description'=> $request->get('description'),
-            ];
-            $this->userRepository->update($module);
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            /*Modifica Usuario*/
+            $user = $this->userRepository->update($request->all());
+
+            /*Guarda la imagen */
+            $img = $request->file('image_profile_create');
+            if ($img !== null) {
+
+                foreach($user->images as $image) {
+                    Storage::disk('developer')->delete($image->url);
+                }
+                dd('tue');
+                $url = Storage::disk('developer')->putFile('avatars', $img);
+                $user->images()->update([
+                    'url' => $url
+                ]);
+            }
+            $user->images()->update([
+                'url' => $request->get('identicon')
+            ]);
+
+            /*Guarda los Roles*/
+            $roles = $request->get('multi_select_roles_create');
+            $user->roles()->sync(
+                ($roles !== null) ? explode(',', $roles) : []
+            );
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('DELETE')){
+        if ($request->ajax() && $request->isMethod('DELETE')) {
 
             $this->userRepository->destroy($id);
 
@@ -290,11 +310,11 @@ class UserController extends Controller
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
             );
-        }else{
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 }

@@ -12,6 +12,7 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 /*
  * Modelos
  */
+
 use App\Container\Users\Src\User;
 
 class UserRepository extends ControllerRepository implements UserInterface
@@ -30,14 +31,15 @@ class UserRepository extends ControllerRepository implements UserInterface
         $user['identity_no'] = $data['identity_no'];
         $user['identity_expe_place'] = $data['identity_expe_place'];
         $user['identity_expe_date'] = $data['identity_expe_date'];
+        $user['address'] = $data['address_create'];
         $user['sexo'] = $data['sexo'];
         $user['phone'] = $data['phone'];
         $user['email'] = $data['email'];
         $user['password'] = bcrypt($data['password']);
         $user['state'] = $data['state'];
-        $user['cities_id'] = (!isset($data['cities_id']) || empty($data['cities_id'])) ? $data['cities_id'] : 1 ;
-        $user['countries_id'] =(!isset($data['countries_id']) || empty($data['countries_id'])) ? $data['countries_id'] : 1 ;
-        $user['regions_id'] = (!isset($data['regions_id']) || empty($data['regions_id'])) ? $data['regions_id'] : 1 ;
+        $user['cities_id'] = (!isset($data['cities_id']) || empty($data['cities_id'])) ? $data['cities_id'] : 1;
+        $user['countries_id'] = (!isset($data['countries_id']) || empty($data['countries_id'])) ? $data['countries_id'] : 1;
+        $user['regions_id'] = (!isset($data['regions_id']) || empty($data['regions_id'])) ? $data['regions_id'] : 1;
         $user->save();
         return $user;
     }

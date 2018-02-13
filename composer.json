@@ -19,7 +19,7 @@
         "owen-it/laravel-auditing": "^4.1",
         "predis/predis": "^1.1",
         "styde/html": "~1.4",
-        "tightenco/ziggy": "^0.3.0",
+        "tightenco/ziggy": "^0.6.0",
         "watson/active": "^2.0",
         "yajra/laravel-datatables-oracle": "8.*",
         "zizaco/entrust": "1.9.0-beta1"
