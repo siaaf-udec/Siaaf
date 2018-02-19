@@ -14,15 +14,13 @@ class CreateTBLEmpresaTbl extends Migration
     public function up()
     {
         Schema::connection('unvinteraction')->create('TBL_Empresa', function (Blueprint $table) {
-            
-            $table->increments('PK_Empresa');
-            $table->string('Nombre_Empresa',90);
-            $table->string('Razon_Social',90);            
-            $table->string('Telefono',30);
-            $table->string('Direccion',90);
+            $table->increments('PK_EMPS_Empresa');
+            $table->string('EMPS_Nombre_Empresa',90);
+            $table->string('EMPS_Razon_Social',90);            
+            $table->string('EMPS_Telefono',30);
+            $table->string('EMPS_Direccion',90);
         });
     }
-
     /**
      * Reverse the migrations.
      *

@@ -13,17 +13,15 @@ class CreateTBLEvaluacionTbl extends Migration
      */
     public function up()
     {
-
-         Schema::connection('unvinteraction')->create('TBL_Evaluacion', function (Blueprint $table) {
-             
-            $table->increments('PK_Evaluacion');
-            $table->bigInteger('Evaluador');
-            $table->bigInteger('Evaluado');
-            $table->date('Fecha'); 
-            $table->integer('FK_TBL_Convenios')->unsigned();
-            $table->foreign('FK_TBL_Convenios')->references('PK_Convenios')->on('TBL_Convenios');
-            $table->float('Nota_Final');
-            $table->integer('Tipo_Evaluacion')->unsigned();
+        Schema::connection('unvinteraction')->create('TBL_Evaluacion', function (Blueprint $table) {
+            $table->increments('PK_VLCN_Evaluacion');
+            $table->bigInteger('VLCN_Evaluador');
+            $table->bigInteger('VLCN_Evaluado');
+            $table->date('VLCN_Fecha'); 
+            $table->integer('FK_TBL_Convenio_Id')->unsigned();
+            $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
+            $table->float('VLCN_Nota_Final');
+            $table->integer('VLCN_Tipo_Evaluacion')->unsigned();
 
         }); 
     }

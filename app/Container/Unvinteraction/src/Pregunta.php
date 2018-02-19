@@ -4,32 +4,31 @@ namespace App\Container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TBL_Preguntas extends Model
+class Pregunta extends Model
 {
     public $timestamps = false;
     protected $connection ='unvinteraction';
     protected $table = 'TBL_Preguntas';
-    protected $primaryKey = 'PK_Preguntas';
-    protected $fillable = ['Enunciado','FK_TBL_Tipo_Pregunta'];
+    protected $primaryKey = 'PK_PRGT_Pregunta';
+    protected $fillable = ['PRGT_Enunciado','FK_TBL_Tipo_Pregunta_Id'];
  
     /*
     *Función de conexión entre las tablas de TBL_Preguntas y TBL_Evaluacion_Preguntas
     *por los campo de FK_TBL_Preguntas y PK_Preguntas
     *para realizar las busquedas complementarias
     */   
-    public function preguntas_Preguntas()
+    public function preguntaPregunta()
     {
-        return $this->hasMany(TBL_Evaluacion_Preguntas::class, 'FK_TBL_Preguntas', 'PK_Preguntas');
+        return $this->hasMany(EvaluacionPreguntas::class, 'FK_TBL_Pregunta_Id', 'PK_PRGT_Pregunta');
     }
-
     /*
     *Función de conexión entre las tablas de TBL_Preguntas y TBL_Tipo_Pregunta
     *por los campo de FK_TBL_Tipo_pregunta y PK_Tipo_Pregunta
     *para realizar las busquedas complementarias
     */
-    public function preguntas_tiposPreguntas()
+    public function preguntatiposPregunta()
     {
-        return $this->belongsto(TBL_Tipo_Pregunta::class, 'FK_TBL_Tipo_pregunta', 'PK_Tipo_Pregunta');
+        return $this->belongsto(TipoPregunta::class, 'FK_TBL_Tipo_Pregunta_Id', 'PK_TPPG_Tipo_Pregunta');
     }
     
 }

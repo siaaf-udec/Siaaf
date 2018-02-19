@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Container\Unvinteraction\src\Controllers;
-use App\Container\Unvinteraction\src\TBL_Tipo_Pregunta;
-use App\Container\Unvinteraction\src\TBL_Documentacion;
-use App\Container\Unvinteraction\src\TBL_Convenios;
-use App\Container\Unvinteraction\src\TBL_Evaluacion;
-use App\Container\Unvinteraction\src\TBL_Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Sede;
-use App\Container\Unvinteraction\src\TBL_Estado;
-use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
-use App\Container\Unvinteraction\src\TBL_Empresa;
-use App\Container\Unvinteraction\src\TBL_Participantes;
+use App\Container\Unvinteraction\src\Tipo_Pregunta;
+use App\Container\Unvinteraction\src\Documentacion;
+use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Evaluacion;
+use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\Sede;
+use App\Container\Unvinteraction\src\Estado;
+use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 use Barryvdh\Snappy\Facades\SnappyPdf;
@@ -25,7 +25,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class Controller_Evaluaciones extends Controller
+class controllerEvaluaciones extends Controller
 {
      private $path='unvinteraction';
     //__________________EVALUACIONES___________
@@ -33,7 +33,7 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Tipo_Pregunta()
+    public function tipoPregunta()
     {
         return view($this->path.'.listar_Tipo_Pregunta');
     }
@@ -41,7 +41,7 @@ class Controller_Evaluaciones extends Controller
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     *
     */
-    public function Tipo_Pregunta_Ajax()
+    public function tipoPreguntaAjax()
     {
         return view($this->path.'.listar_Tipo_Pregunta_Ajax');
     }
@@ -49,7 +49,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Agregar_Tipo_Pregunta(Request $request)
+    public function agregarTipoPregunta(Request $request)
     {
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -73,7 +73,7 @@ class Controller_Evaluaciones extends Controller
     *
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Tipo_Pregunta()
+    public function listarTipoPregunta()
     {
          $Pregunta = TBL_Tipo_Pregunta::all();
          return Datatables::of($Pregunta)->addIndexColumn()->make(true);
@@ -82,7 +82,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Editar_Tipo_Pregunta($id)
+    public function editarTipoPregunta($id)
     {
         $Pregunta = TBL_Tipo_Pregunta::findOrFail($id);
         return view($this->path.'.Editar_Tipo_Pregunta', compact('Pregunta'));
@@ -92,7 +92,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Modificar_Tipo_Pregunta(Request $request,$id)
+    public function modificarTipoPregunta(Request $request,$id)
     {
       if($request->ajax() && $request->isMethod('POST'))
         {
@@ -119,7 +119,7 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Pregunta()
+    public function pregunta()
     {
         $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
                 ->toArray();  
@@ -131,14 +131,14 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Pregunta_Ajax()
+    public function preguntaAjax()
     {
        $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
                 ->toArray();  
        return view($this->path.'.listar_Pregunta_Ajax',compact('Pregunta'));
       
     }
-     public function Agregar_Pregunta(Request $request)
+     public function agregarPregunta(Request $request)
     {
          $Pregunta = TBL_Tipo_Pregunta::all(); 
         if($request->ajax() && $request->isMethod('POST'))
@@ -165,7 +165,7 @@ class Controller_Evaluaciones extends Controller
     *
     *@return Yajra\DataTables\DataTable
     */
-     public function Listar_Pregunta()
+     public function listarPregunta()
     {
       $Pregunta = TBL_Preguntas::select('PK_Preguntas','Enunciado','FK_TBL_Tipo_pregunta')
             ->with([
@@ -182,7 +182,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Editar_Pregunta($id)
+    public function editarPregunta($id)
     {
         $Pregunta = TBL_Preguntas::findOrFail($id);
         $Pregunta1 = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
@@ -195,7 +195,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Modificar_Pregunta(Request $request,$id)
+    public function modificarPregunta(Request $request,$id)
     {
         if($request->ajax() && $request->isMethod('POST')) {
             $Pregunta= TBL_Preguntas::findOrFail($id);
@@ -211,7 +211,7 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Evaluaciones()
+    public function evaluaciones()
     {
         
          return view($this->path.'.listar_Evaluaciones');
@@ -221,7 +221,7 @@ class Controller_Evaluaciones extends Controller
     *
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Evaluaciones_Empresas()
+    public function listarEvaluacionesEmpresas()
     {
        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',1)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
@@ -248,7 +248,7 @@ class Controller_Evaluaciones extends Controller
     *
     *@return Yajra\DataTables\DataTable
     */
-     public function Listar_Evaluaciones_Usuarios()
+     public function listarEvaluacionesUsuarios()
     {
        $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
@@ -277,7 +277,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Realizar_Evaluacion(Request $request,$id,$convenio)
+    public function realizarEvaluacion(Request $request,$id,$convenio)
     {
         $tipo=0;
         $decicion=1;
@@ -333,7 +333,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Registrar_Evaluacion(Request $request,$n,$id,$convenio)
+    public function registrarEvaluacion(Request $request,$n,$id,$convenio)
     {
         $carbon = new \Carbon\Carbon();
         try{
@@ -374,7 +374,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Realizar_Evaluacion_Empresa(Request $request,$id,$convenio)
+    public function realizarEvaluacionEmpresa(Request $request,$id,$convenio)
     {
         $tipo=0;
         $id2=$request->user()->identity_no;
@@ -407,7 +407,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Registrar_Evaluacion_Empresa(Request $request,$n,$id,$convenio)
+    public function registrarEvaluacionEmpresa(Request $request,$n,$id,$convenio)
     {
         $carbon = new \Carbon\Carbon();
         try{
@@ -447,7 +447,7 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Listar_Evaluacion_Empresa($id)
+    public function listarEvaluacionEmpresa($id)
     {
         return view($this->path.'.listar_Evaluaciones_Individuales_Empresa',compact('id'));
     }
@@ -456,7 +456,7 @@ class Controller_Evaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Listar_Evaluaciones_Usuario($id)
+    public function listarEvaluacionesUsuario($id)
     {
         return view($this->path.'.listar_Evaluaciones_Individuales',compact('id'));
     }
@@ -464,7 +464,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Evaluacion_Individual($id)
+    public function listarEvaluacionIndividual($id)
     {
         $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
@@ -490,7 +490,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Evaluacion_Individual_Empresa($id)
+    public function listarEvaluacionIndividualEmpresa($id)
     {
         $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
@@ -516,7 +516,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Listar_Pregunta_Evaluacion($id)
+    public function listarPreguntaEvaluacion($id)
     {
         return view($this->path.'.listar_Preguntas_Individuales',compact('id'));
     }
@@ -524,7 +524,7 @@ class Controller_Evaluaciones extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Pregunta_Individual($id)
+    public function listarPreguntaIndividual($id)
     {
         $Evaluacion=TBL_Evaluacion_Preguntas::where('FK_TBL_Evaluacion',$id)->select('Puntuacion','FK_TBL_Preguntas')
             ->with(['preguntas_Preguntas'=>function ($query) {$query->select('PK_Preguntas','Enunciado');}])
@@ -536,7 +536,7 @@ class Controller_Evaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Vista_Reporte(Request $request,$id)
+    public function vistaReporte(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             return AjaxResponse::success('¡Bien hecho!', 'Datos filtrados correctamente.');
@@ -552,7 +552,7 @@ class Controller_Evaluaciones extends Controller
     *@param Date fecha_segunda
     *@return \Illuminate\Http\Response
     */
-    public function Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
         return view($this->path.'.Ver_Reporte',compact('id','fecha_primera','fecha_segunda','lava'));
     }
@@ -563,7 +563,7 @@ class Controller_Evaluaciones extends Controller
     *@param Date fecha_segunda
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function listarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
         $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([

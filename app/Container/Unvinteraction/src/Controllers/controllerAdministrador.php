@@ -2,22 +2,22 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\TBL_Usuarios;
-use App\Container\Unvinteraction\src\TBL_Tipo_Usuario;
-use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
-use App\Container\Unvinteraction\src\TBL_Carrera;
-use App\Container\Unvinteraction\src\TBL_Facultad;
-use App\Container\Unvinteraction\src\TBL_Documentacion;
-use App\Container\Unvinteraction\src\TBL_Convenios;
-use App\Container\Unvinteraction\src\TBL_Evaluacion;
-use App\Container\Unvinteraction\src\TBL_Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Sede;
-use App\Container\Unvinteraction\src\TBL_Estado;
-use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
-use App\Container\Unvinteraction\src\TBL_Empresa;
-use App\Container\Unvinteraction\src\TBL_Participantes;
-use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
+use App\Container\Unvinteraction\src\Usuarios;
+use App\Container\Unvinteraction\src\Tipo_Usuario;
+use App\Container\Unvinteraction\src\Estado_Usuario;
+use App\Container\Unvinteraction\src\Carrera;
+use App\Container\Unvinteraction\src\Facultad;
+use App\Container\Unvinteraction\src\Documentacion;
+use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Evaluacion;
+use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\Sede;
+use App\Container\Unvinteraction\src\Estado;
+use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Participantes;
+use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 
@@ -29,27 +29,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class Controller_Administrador extends Controller
+class controllerAdministrador extends Controller
 {
     private $path='unvinteraction'; 
     //_____________________SEDES____________________
-    public function Sedes()
+    public function sedes()
     {
         //
         return view($this->path.'.Listar_Sedes');
-    }public function Sedes_Ajax()
+    }public function sedesAjax()
     {
         //
         return view($this->path.'.Listar_Sedes_Ajax');
     }
-     public function Listar_Sedes()
+     public function listarSedes()
     {
         //
          $Sedes=TBL_Sede::all();
          return Datatables::of($Sedes)->addIndexColumn()->make(true);
     }
    
-     public function Resgistrar_Sedes(Request $request)
+     public function resgistrarSedes(Request $request)
     {
           if($request->ajax() && $request->isMethod('POST'))
         {
@@ -69,13 +69,13 @@ class Controller_Administrador extends Controller
             );
         }
     }
-    public function Editar_Sedes($id)
+    public function editarSedes($id)
     {
         //
         $Sede= TBL_Sede::findOrFail($id);
         return view($this->path.'.Editar_Sedes', compact('Sede'));
     }
-     public function  Modificar_Sedes(Request $request, $id)
+     public function  modificarSedes(Request $request, $id)
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
@@ -98,24 +98,24 @@ class Controller_Administrador extends Controller
     
     //______________________END_SEDES_________
     //________________________EMPRESAS____________________
-    public function Empresas()
+    public function empresas()
     {
         //
         return view($this->path.'.Listar_Empresas');
     }
-    public function Empresas_Ajax()
+    public function empresasAjax()
     {
         //
         return view($this->path.'.Listar_Empresas_Ajax');
     }
-    public function Listar_Empresas()
+    public function listarEmpresas()
     {
         //
         $Empresa=TBL_Empresa::all();
          return Datatables::of($Empresa)->addIndexColumn()->make(true);
     }
    
-    public function Registro_Empresa(Request $request)
+    public function registroEmpresa(Request $request)
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
@@ -139,12 +139,12 @@ class Controller_Administrador extends Controller
             );
         }
     }
-    public function Editar_Empresa($id)
+    public function editarEmpresa($id)
     {
         $Empresa= TBL_Empresa::findOrFail($id);
         return view($this->path.'.Editar_Empresa', compact('Empresa'));
     }
-    public function Modificar_Empresa(Request $request, $id)
+    public function modificarEmpresa(Request $request, $id)
     { 
         if($request->ajax() && $request->isMethod('POST'))
         {
@@ -170,24 +170,24 @@ class Controller_Administrador extends Controller
     //____________________END___EMPRESAS___________________
     //___________________ESTADOS___________________________
     
-    public function Estados()
+    public function estados()
     {
         //
         return view($this->path.'.Listar_Estados');
     }
-     public function Estados_Ajax()
+     public function estadosAjax()
     {
         //
         return view($this->path.'.Listar_Estados_Ajax');
     }
-     public function Listar_Estados()
+     public function listarEstados()
     {
         //
          $Estado=TBL_Estado::all();
          return Datatables::of($Estado)->addIndexColumn()->make(true);
     }
    
-     public function Resgistrar_Estados(Request $request)
+     public function resgistrarEstados(Request $request)
     {
           if($request->ajax() && $request->isMethod('POST'))
         {
@@ -207,13 +207,13 @@ class Controller_Administrador extends Controller
             );
         }
     }
-    public function Editar_Estado($id)
+    public function editarEstado($id)
     {
         $Estado= TBL_Estado::findOrFail($id);
         
         return view($this->path.'.Editar_Estados', compact('Estado'));
     }
-     public function  Modificar_Estados(Request $request, $id)
+     public function modificarEstados(Request $request, $id)
     {
          if($request->ajax() && $request->isMethod('POST'))
         {

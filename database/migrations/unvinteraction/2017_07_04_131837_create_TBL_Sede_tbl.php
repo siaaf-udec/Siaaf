@@ -15,11 +15,9 @@ class CreateTBLSedeTbl extends Migration
     {
         //
           Schema::connection('unvinteraction')->create('TBL_Sede', function (Blueprint $table) {
-              
-            $table->increments('PK_Sede');
-            $table->string('Sede',20);          
-        });
-        
+              $table->increments('PK_SEDE_Sede');
+              $table->string('SEDE_Sede',20);
+          });
     }
 
     /**

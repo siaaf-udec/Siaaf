@@ -13,11 +13,9 @@ class CreateTBLTipoPreguntaTbl extends Migration
      */
     public function up()
     {
-        //
-         Schema::connection('unvinteraction')->create('TBL_Tipo_Pregunta', function (Blueprint $table) {
-             
-            $table->increments('PK_Tipo_Pregunta');
-            $table->string('Tipo',20);          
+        Schema::connection('unvinteraction')->create('TBL_Tipo_Pregunta', function (Blueprint $table) {
+            $table->increments('PK_TPPG_Tipo_Pregunta');
+            $table->string('TPPG_Tipo',20);
         });
     }
 

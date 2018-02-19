@@ -1,22 +1,22 @@
 <?php
 namespace App\Container\Unvinteraction\src\Controllers;
-use App\Container\Unvinteraction\src\TBL_Usuarios;
-use App\Container\Unvinteraction\src\TBL_Tipo_Usuario;
-use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
-use App\Container\Unvinteraction\src\TBL_Carrera;
-use App\Container\Unvinteraction\src\TBL_Facultad;
-use App\Container\Unvinteraction\src\TBL_Documentacion;
-use App\Container\Unvinteraction\src\TBL_Convenios;
-use App\Container\Unvinteraction\src\TBL_Evaluacion;
-use App\Container\Unvinteraction\src\TBL_Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Sede;
-use App\Container\Unvinteraction\src\TBL_Estado;
-use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
-use App\Container\Unvinteraction\src\TBL_Empresa;
-use App\Container\Unvinteraction\src\TBL_Participantes;
-use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
-use App\Container\Unvinteraction\src\TBL_Notificaciones;
+use App\Container\Unvinteraction\src\Usuarios;
+use App\Container\Unvinteraction\src\Tipo_Usuario;
+use App\Container\Unvinteraction\src\Estado_Usuario;
+use App\Container\Unvinteraction\src\Carrera;
+use App\Container\Unvinteraction\src\Facultad;
+use App\Container\Unvinteraction\src\Documentacion;
+use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Evaluacion;
+use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\Sede;
+use App\Container\Unvinteraction\src\Estado;
+use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Participantes;
+use App\Container\Unvinteraction\src\Documentacion_Extra;
+use App\Container\Unvinteraction\src\Notificaciones;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
-class Controller_Alertas extends Controller
+class controllerAlertas extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,7 +40,7 @@ class Controller_Alertas extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Alerta(Request $request)
+    public function alerta(Request $request)
     {
         $estado=1;
         $Convenio = TBL_Participantes::where('FK_TBL_Usuarios', '=', $request->user()->identity_no)->select('PK_Participantes','FK_TBL_Convenios')
@@ -76,7 +76,7 @@ class Controller_Alertas extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function Alerta_Ajax(Request $request)
+    public function alertaAjax(Request $request)
     {
         return view($this->path.'.Listar_Notificaciones_Ajax');
     }
@@ -84,7 +84,7 @@ class Controller_Alertas extends Controller
     *@param \Illuminate\Http\Request
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Alerta(Request $request)
+    public function listarAlerta(Request $request)
     {
           $Notificaciones = TBL_Notificaciones::select('PK_Notificacion','Titulo', 'Bandera')
               ->where('bandera','NO VISTO')
@@ -96,7 +96,7 @@ class Controller_Alertas extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Ver_Alerta($id)
+    public function verAlerta($id)
     {
         $Bandera = TBL_Notificaciones::findOrFail($id);
         $Bandera->Bandera = 'VISTO';

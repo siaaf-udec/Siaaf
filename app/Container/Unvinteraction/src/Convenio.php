@@ -4,23 +4,23 @@ namespace App\container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TBL_Convenios extends Model
+class Convenio extends Model
 {
     //
     public $timestamps    = false;
     protected $connection ='unvinteraction';
     protected $table      = 'TBL_Convenios';
-    protected $primaryKey = 'PK_Convenios';
-    protected $fillable   =['Nombre','Fecha_Inicio','Fecha_Fin','FK_TBL_Estado','FK_TBL_Sede'];
+    protected $primaryKey = 'PK_CVNO_Convenio';
+    protected $fillable   =['CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id'];
 
     /*
     *Función de conexión entre las tablas de TBL_Convenios y TBL_Sedes 
     *por los campo de FK_TBL_Sede y PK_Sede 
     *para realizar las busquedas complementarias
     */
-    public function convenios_Sedes()
+    public function convenioSede()
     {
-        return $this->belongsto(TBL_Sede::class, 'FK_TBL_Sede', 'PK_Sede');
+        return $this->belongsto(Sede::class, 'FK_TBL_Sede_Id', 'PK_SEDE_Sede');
     }
 
     /*
@@ -28,9 +28,9 @@ class TBL_Convenios extends Model
     *por los campo de FK_TBL_Estado y PK_Estado 
     *para realizar las busquedas complementarias
     */
-    public function convenios_Estados()
+    public function conveniosEstados()
     {
-        return $this->belongsto(TBL_Estado::class, 'FK_TBL_Estado', 'PK_Estado');
+        return $this->belongsto(Estado::class, 'FK_TBL_Estado_Id', 'PK_ETAD_Estado');
     }
 
     /*
@@ -38,9 +38,9 @@ class TBL_Convenios extends Model
     *por los campo de FK_TBL_Convenios y PK_Convenios 
     *para realizar las busquedas complementarias
     */
-    public function convenios_Documentos()
+    public function conveniosDocumentos()
     {
-        return $this->hasMany(TBL_Documentacion::class, 'FK_TBL_Convenios', 'PK_Convenios');
+        return $this->hasMany(Documentacion::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
 
     /*
@@ -48,9 +48,9 @@ class TBL_Convenios extends Model
     *por los campo de FK_TBL_Convenios y PK_Convenios 
     *para realizar las busquedas complementarias
     */
-    public function convenios_Evaluacion()
+    public function conveniosEvaluacion()
     {
-        return $this->hasMany(TBL_Evaluacion::class, 'FK_TBL_Convenios', 'PK_Convenios');
+        return $this->hasMany(Evaluacion::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
     
     /*
@@ -58,9 +58,9 @@ class TBL_Convenios extends Model
     *por los campo de FK_TBL_Convenios y PK_Convenios 
     *para realizar las busquedas complementarias
     */    
-    public function convenios_Empresas()
+    public function conveniosEmpresas()
     {
-        return $this->hasMany(TBL_Empresas_Participantes::class, 'FK_TBL_Convenios', 'PK_Convenios');
+        return $this->hasMany(Empresas_Participantes::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
 
     /*
@@ -68,8 +68,8 @@ class TBL_Convenios extends Model
     *por los campo de FK_TBL_Convenios y PK_Convenios 
     *para realizar las busquedas complementarias
     */    
-    public function convenios_Participantes()
+    public function conveniosParticipante()
     {
-        return $this->hasMany(TBL_Participantes::class, 'FK_TBL_Convenios', 'PK_Convenios');
+        return $this->hasMany(Participantes::class, 'FK_TBL_Convenios', 'PK_Convenios');
     }
 }

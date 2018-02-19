@@ -2,22 +2,22 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\TBL_Usuarios;
-use App\Container\Unvinteraction\src\TBL_Tipo_Usuario;
-use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
-use App\Container\Unvinteraction\src\TBL_Carrera;
-use App\Container\Unvinteraction\src\TBL_Facultad;
-use App\Container\Unvinteraction\src\TBL_Documentacion;
-use App\Container\Unvinteraction\src\TBL_Convenios;
-use App\Container\Unvinteraction\src\TBL_Evaluacion;
-use App\Container\Unvinteraction\src\TBL_Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Sede;
-use App\Container\Unvinteraction\src\TBL_Estado;
-use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
-use App\Container\Unvinteraction\src\TBL_Empresa;
-use App\Container\Unvinteraction\src\TBL_Participantes;
-use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
+use App\Container\Unvinteraction\src\Usuarios;
+use App\Container\Unvinteraction\src\Tipo_Usuario;
+use App\Container\Unvinteraction\src\Estado_Usuario;
+use App\Container\Unvinteraction\src\Carrera;
+use App\Container\Unvinteraction\src\Facultad;
+use App\Container\Unvinteraction\src\Documentacion;
+use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Evaluacion;
+use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\Sede;
+use App\Container\Unvinteraction\src\Estado;
+use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Participantes;
+use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 
@@ -29,7 +29,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class Controller_Convenios extends Controller
+class controllerConvenios extends Controller
 {
     /**
     * Display a listing of the resource.
@@ -42,7 +42,7 @@ class Controller_Convenios extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function Convenios()
+    public function convenios()
     {
         $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
         return view($this->path.'.Listar_Convenios', compact('Sede'));
@@ -51,7 +51,7 @@ class Controller_Convenios extends Controller
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     *
     */
-    public function Convenios_Ajax()
+    public function conveniosAjax()
     {
         $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
         return view($this->path.'.Listar_Convenios_Ajax', compact('Sede'));
@@ -60,7 +60,7 @@ class Controller_Convenios extends Controller
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     *
     */
-    public function Mis_Convenios()
+    public function misConvenios()
     {
         return view($this->path.'.listar_Mis_Convenios');
     }
@@ -68,7 +68,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Mis_Convenios(Request $request)
+    public function listarMisConvenios(Request $request)
     {
         $Convenio= TBL_Participantes::where('FK_TBL_Usuarios', '=', $request->user()->identity_no)->select('FK_TBL_Convenios')
             ->with([
@@ -91,7 +91,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Convenios()
+    public function listarConvenios()
     {
         $Convenio= TBL_Convenios::select('PK_Convenios','Nombre','Fecha_Inicio', 'Fecha_Fin','FK_TBL_Sede','FK_TBL_Estado')
             ->with([
@@ -110,7 +110,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Registro_Convenios(Request $request)
+    public function registroConvenios(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $convenio = new TBL_Convenios();
@@ -129,7 +129,7 @@ class Controller_Convenios extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Editar_Convenios($id)
+    public function editarConvenios($id)
     {
         $Convenio= TBL_Convenios::findOrFail($id);
         $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
@@ -141,7 +141,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Modificar_Convenios(Request $request, $id)
+    public function modificarConvenios(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $convenio= TBL_Convenios::findOrFail($id);
@@ -160,7 +160,7 @@ class Controller_Convenios extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function Documentos_Convenios($id)
+    public function documentosConvenios($id)
     {
          return view($this->path.'.Listar_Documentos_Convenios', compact('id'));
     }
@@ -168,7 +168,7 @@ class Controller_Convenios extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Documentos_Convenios($id)
+    public function listarDocumentosConvenios($id)
     {
         $documento = TBL_Documentacion::select('PK_Documentacion', 'Entidad', 'Ubicacion')
             ->where('FK_TBL_Convenios', $id)->get();
@@ -178,7 +178,7 @@ class Controller_Convenios extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Participantes_Convenios($id)
+    public function listarParticipantesConvenios($id)
     {
         $participante = TBL_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Participantes', 'FK_TBL_Usuarios')
             ->with([
@@ -193,7 +193,7 @@ class Controller_Convenios extends Controller
     *@param int id
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Empresas_Participantes_Convenios($id)
+    public function listarEmpresasParticipantesConvenios($id)
     {
         $EM_participante =  TBL_Empresas_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Empresas_Participantes','FK_TBL_Empresa')
             ->with([
@@ -209,7 +209,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Empresa_Convenio(Request $request, $id)
+    public function empresaConvenio(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $Empresa = new TBL_Empresas_Participantes();
@@ -226,7 +226,7 @@ class Controller_Convenios extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Participante_Convenio(Request $request, $id)
+    public function participanteConvenio(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $Participante = new TBL_Participantes();

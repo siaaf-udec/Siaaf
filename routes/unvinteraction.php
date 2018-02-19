@@ -19,331 +19,331 @@ $controller = "\\App\\Container\\Unvinteraction\\Src\\Controllers\\";
 //_____________________________RUTAS___ADMINISTRADOR________________
 Route::get('Administrador', [
     'as' => 'administrador.index',
-    'uses' => $controller.'Controller_Administrador@index'
+    'uses' => $controller.'controllerAdministrador@index'
 ]);
 
 //_____________________CONVENIOS__________________________
-Route::get('Convenios', [
-    'as' => 'Convenios.Convenios',
-    'uses' => $controller.'Controller_Convenios@Convenios'
+Route::get('convenios', [
+    'as' => 'convenios.convenios',
+    'uses' => $controller.'controllerConvenios@convenios'
 ]);
-Route::get('Convenios_Ajax', [
-    'as' => 'Convenios_Ajax.Convenios_Ajax',
-    'uses' => $controller.'Controller_Convenios@Convenios_Ajax'
+Route::get('conveniosAjax', [
+    'as' => 'conveniosAjax.conveniosAjax',
+    'uses' => $controller.'controllerConvenios@conveniosAjax'
 ]);
-Route::get('Mis_Convenios', [
-    'as' => 'Mis_Convenios.Mis_Convenios',
-    'uses' => $controller.'Controller_Convenios@Mis_Convenios'
+Route::get('misConvenios', [
+    'as' => 'misConvenios.misConvenios',
+    'uses' => $controller.'controllerConvenios@misConvenios'
 ]);
-Route::get('Listar_Mis_Convenios', [
-    'as' => 'Listar_Mis_Convenios.Listar_Mis_Convenios',
-    'uses' => $controller.'Controller_Convenios@Listar_Mis_Convenios'
+Route::get('listarMisConvenios', [
+    'as' => 'listarMisConvenios.listarMisConvenios',
+    'uses' => $controller.'controllerConvenios@listarMisConvenios'
 ]);
-Route::get('Listar_Convenios', [
-    'as' => 'Listar_Convenios.Listar_Convenios',
-    'uses' => $controller.'Controller_Convenios@Listar_Convenios'
+Route::get('listarConvenios', [
+    'as' => 'listarConvenios.listarConvenios',
+    'uses' => $controller.'controllerConvenios@listarConvenios'
 ]);
 
-Route::post('Registro_Convenios', [
-   'as' => 'Registro_Convenios.Registro_Convenios',
-   'uses' => $controller.'Controller_Convenios@Registro_Convenios'
+Route::post('registroConvenios', [
+   'as' => 'registroConvenios.registroConvenios',
+   'uses' => $controller.'controllerConvenios@registroConvenios'
 ]);
-Route::get('Editar_Convenios/{id}', [    
-    'as' => 'Editar_Convenios.Editar_Convenios', 
-    'uses' => $controller.'Controller_Convenios@Editar_Convenios'
+Route::get('editarConvenios/{id}', [    
+    'as' => 'editarConvenios.editarConvenios', 
+    'uses' => $controller.'controllerConvenios@editarConvenios'
 ]);
-Route::post('Modificar_Convenios/{id}', [
-    'as' => 'Modificar_Convenios.Modificar_Convenios',
-   'uses' => $controller.'Controller_Convenios@Modificar_Convenios'
+Route::post('modificarConvenios/{id}', [
+    'as' => 'modificarConvenios.modificarConvenios',
+   'uses' => $controller.'controllerConvenios@modificarConvenios'
 ]);
-Route::get('Documentos_Convenios/{id}', [    
-    'as' => 'Documentos_Convenios.Documentos_Convenios', 
-    'uses' => $controller.'Controller_Convenios@Documentos_Convenios'
+Route::get('documentosConvenios/{id}', [    
+    'as' => 'documentosConvenios.documentosConvenios', 
+    'uses' => $controller.'controllerConvenios@documentosConvenios'
 ]);
-Route::post('Agregar_Documento/{id}', [    
-    'as' => 'Agregar_Documento.Agregar_Documento', 
-    'uses' => $controller.'Controller_Convenios@Agregar_Documento'
+Route::post('agregarDocumento/{id}', [    
+    'as' => 'agregarDocumento.agregarDocumento', 
+    'uses' => $controller.'controllerConvenios@agregarDocumento'
 ]);
-Route::get('Listar_Documentos_Convenios/{id}', [    
-    'as' => 'Listar_Documentos_Convenios.Listar_Documentos_Convenios', 
-    'uses' => $controller.'Controller_Convenios@Listar_Documentos_Convenios'
+Route::get('listarDocumentosConvenios/{id}', [    
+    'as' => 'listarDocumentosConvenios.listarDocumentosConvenios', 
+    'uses' => $controller.'controllerConvenios@listarDocumentosConvenios'
 ]);
-Route::get('Listar_Participantes_Convenios/{id}', [    
-    'as' => 'Listar_Participantes_Convenios.Listar_Participantes_Convenios', 
-    'uses' => $controller.'Controller_Convenios@Listar_Participantes_Convenios'
+Route::get('listarParticipantesConvenios/{id}', [    
+    'as' => 'listarParticipantesConvenios.listarParticipantesConvenios', 
+    'uses' => $controller.'controllerConvenios@listarParticipantesConvenios'
 ]);
-Route::get('Listar_Empresas_Participantes_Convenios/{id}', [    
-    'as' => 'Listar_Empresas_Participantes_Convenios.Listar_Empresas_Participantes_Convenios', 
-    'uses' => $controller.'Controller_Convenios@Listar_Empresas_Participantes_Convenios'
+Route::get('listarEmpresasParticipantesConvenios/{id}', [    
+    'as' => 'listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios', 
+    'uses' => $controller.'controllerConvenios@listarEmpresasParticipantesConvenios'
 ]);
-Route::post('Empresa_Convenio/{id}', [    
-    'as' => 'Empresa_Convenio.Empresa_Convenio', 
-    'uses' => $controller.'Controller_Convenios@Empresa_Convenio'
+Route::post('empresaConvenio/{id}', [    
+    'as' => 'empresaConvenio.empresaConvenio', 
+    'uses' => $controller.'controllerConvenios@empresaConvenio'
 ]);
-Route::post('Participante_Convenio/{id}', [    
-    'as' => 'Participante_Convenio.Participante_Convenio', 
-    'uses' => $controller.'Controller_Convenios@Participante_Convenio'
+Route::post('participanteConvenio/{id}', [    
+    'as' => 'participanteConvenio.participanteConvenio', 
+    'uses' => $controller.'controllerConvenios@participanteConvenio'
 ]);
 // ___________________________END_________CONVENIOS__________
 //___________________SEDES_______________
 
-Route::get('Sedes', [
-    'as' => 'Sedes.Sedes',
-    'uses' => $controller.'Controller_Administrador@Sedes'
+Route::get('sedes', [
+    'as' => 'sedes.sedes',
+    'uses' => $controller.'controllerAdministrador@sedes'
 ]);
-Route::get('Sedes_Ajax', [
-    'as' => 'Sedes_Ajax.Sedes_Ajax',
-    'uses' => $controller.'Controller_Administrador@Sedes_Ajax'
+Route::get('sedesAjax', [
+    'as' => 'sedesAjax.sedesAjax',
+    'uses' => $controller.'controllerAdministrador@sedesAjax'
 ]);
-Route::get('Listar_Sedes', [
-    'as' => 'Listar_Sedes.Listar_Sedes',
-    'uses' => $controller.'Controller_Administrador@Listar_Sedes'
+Route::get('listarSedes', [
+    'as' => 'listarSedes.listarSedes',
+    'uses' => $controller.'controllerAdministrador@listarSedes'
 ]);
 Route::post('Resgistrar_Sedes', [
     'as' => 'Resgistrar_Sedes.Resgistrar_Sedes',
-    'uses' => $controller.'Controller_Administrador@Resgistrar_Sedes'
+    'uses' => $controller.'controllerAdministrador@Resgistrar_Sedes'
 ]);
-Route::get('Editar_Sedes/{id}', [
-    'as' => 'Editar_Sedes.Editar_Sedes',
-    'uses' => $controller.'Controller_Administrador@Editar_Sedes'
+Route::get('editarSedes/{id}', [
+    'as' => 'editarSedes.editarSedes',
+    'uses' => $controller.'controllerAdministrador@editarSedes'
 ]);
-Route::post('Modificar_Sedes/{id}', [
-    'as' => 'Modificar_Sedes.Modificar_Sedes',
-    'uses' => $controller.'Controller_Administrador@Modificar_Sedes'
+Route::post('modificarSedes/{id}', [
+    'as' => 'modificarSedes.modificarSedes',
+    'uses' => $controller.'controllerAdministrador@modificarSedes'
 ]);
 //__________________END___SEDES_______________
 //____________________ESTADOS_________________________
 
-Route::get('Estados', [
-    'as' => 'Estados.Estados',
-    'uses' => $controller.'Controller_Administrador@Estados'
+Route::get('estados', [
+    'as' => 'estados.estados',
+    'uses' => $controller.'controllerAdministrador@estados'
 ]);
-Route::get('Estados_Ajax', [
-    'as' => 'Estados_Ajax.Estados_Ajax',
-    'uses' => $controller.'Controller_Administrador@Estados_Ajax'
+Route::get('estadosAjax', [
+    'as' => 'estadosAjax.estadosAjax',
+    'uses' => $controller.'controllerAdministrador@estadosAjax'
 ]);
-Route::get('Listar_Estados', [
-    'as' => 'Listar_Estados.Listar_Estados',
-    'uses' => $controller.'Controller_Administrador@Listar_Estados'
+Route::get('listarEstados', [
+    'as' => 'listarEstados.listarEstados',
+    'uses' => $controller.'controllerAdministrador@listarEstados'
 ]);
-Route::post('Resgistrar_Estados', [
-    'as' => 'Resgistrar_Estados.Resgistrar_Estados',
-    'uses' => $controller.'Controller_Administrador@Resgistrar_Estados'
+Route::post('registrarEstados', [
+    'as' => 'registrarEstados.registrarEstados',
+    'uses' => $controller.'controllerAdministrador@registrarEstados'
 ]);
-Route::get('Editar_Estado/{id}', [
-    'as' => 'Editar_Estado.Editar_Estado',
-    'uses' => $controller.'Controller_Administrador@Editar_Estado'
+Route::get('editarEstado/{id}', [
+    'as' => 'editarEstado.editarEstado',
+    'uses' => $controller.'controllerAdministrador@editarEstado'
 ]);
-Route::post('Modificar_Estados/{id}', [
-    'as' => 'Modificar_Estados.Modificar_Estados',
-    'uses' => $controller.'Controller_Administrador@Modificar_Estados'
+Route::post('modificarEstados/{id}', [
+    'as' => 'modificarEstados.modificarEstados',
+    'uses' => $controller.'controllerAdministrador@modificarEstados'
 ]);
 //__________________END___ESTADOS_______________________
 //______________________EMPRESAS________________________
-Route::get('Empresas', [
-    'as' => 'Empresas.Empresas',
-    'uses' => $controller.'Controller_Administrador@Empresas'
+Route::get('empresas', [
+    'as' => 'empresas.empresas',
+    'uses' => $controller.'controllerAdministrador@empresas'
 ]);
-Route::get('Empresas_Ajax', [
-    'as' => 'Empresas_Ajax.Empresas_Ajax',
-    'uses' => $controller.'Controller_Administrador@Empresas_Ajax'
+Route::get('empresasAjax', [
+    'as' => 'empresasAjax.empresasAjax',
+    'uses' => $controller.'controllerAdministrador@empresasAjax'
 ]);
-Route::get('Listar_Empresas', [
-    'as' => 'Listar_Empresas.Listar_Empresas',
-    'uses' => $controller.'Controller_Administrador@Listar_Empresas'
+Route::get('listarEmpresas', [
+    'as' => 'listarEmpresas.listarEmpresas',
+    'uses' => $controller.'controllerAdministrador@listarEmpresas'
 ]);
-Route::get('Agregar_Empresas', [
-    'as' => 'Agregar_Empresas.Agregar_Empresas',
-    'uses' => $controller.'Controller_Administrador@Agregar_Empresas'
+Route::get('agregarEmpresas', [
+    'as' => 'agregarEmpresas.agregarEmpresas',
+    'uses' => $controller.'controllerAdministrador@agregarEmpresas'
 ]);
-Route::post('Registro_Empresa', [
-   'as' => 'Registro_Empresa.Registro_Empresa',
-   'uses' => $controller.'Controller_Administrador@Registro_Empresa'
+Route::post('registroEmpresa', [
+   'as' => 'registroEmpresa.registroEmpresa',
+   'uses' => $controller.'controllerAdministrador@registroEmpresa'
 ]);
-Route::get('Editar_Empresa/{id}', [    
-    'as' => 'Editar_Empresa.Editar_Empresa', 
-    'uses' => $controller.'Controller_Administrador@Editar_Empresa'
+Route::get('editarEmpresa/{id}', [    
+    'as' => 'editarEmpresa.editarEmpresa', 
+    'uses' => $controller.'controllerAdministrador@editarEmpresa'
 ]);
-Route::post('Modificar_Empresa/{id}', [
-    'as' => 'Modificar_Empresa.Modificar_Empresa',
-   'uses' => $controller.'Controller_Administrador@Modificar_Empresa'
+Route::post('modificarEmpresa/{id}', [
+    'as' => 'modificarEmpresa.modificarEmpresa',
+   'uses' => $controller.'controllerAdministrador@modificarEmpresa'
 ]);
 //__________________END___EMPRESAS_____________________
 //_____________________MIS_DOCUMENTOS______________________
 
-Route::get('Mis_Documentos', [
-    'as' => 'Mis_Documentos.Mis_Documentos',
-   'uses' => $controller.'Controller_Documentos@Mis_Documentos'
+Route::get('misDocumentos', [
+    'as' => 'misDocumentos.misDocumentos',
+   'uses' => $controller.'controllerDocumentos@misDocumentos'
 ]);
-Route::get('Listar_Mis_Documentos', [
-    'as' => 'Listar_Mis_Documentos.Listar_Mis_Documentos',
-   'uses' => $controller.'Controller_Documentos@Listar_Mis_Documentos'
+Route::get('listarMisDocumentos', [
+    'as' => 'listarMisDocumentos.listarMisDocumentos',
+   'uses' => $controller.'controllerDocumentos@listarMisDocumentos'
 ]);
-Route::post('Subir_Documento_Usuario', [
-    'as' => 'Subir_Documento_Usuario.Subir_Documento_Usuario',
-   'uses' => $controller.'Controller_Documentos@Subir_Documento_Usuario'
+Route::post('subirDocumentoUsuario', [
+    'as' => 'subirDocumentoUsuario.subirDocumentoUsuario',
+   'uses' => $controller.'controllerDocumentos@subirDocumentoUsuario'
 ]);
 
 
-Route::get('Descarga_Usuario/{id}', [
-    'as' => 'Documento_Descarga_Usuario.Documento_Descarga_Usuario',
-   'uses' => $controller.'Controller_Documentos@Documento_Descarga_Usuario'
+Route::get('descargaUsuario/{id}', [
+    'as' => 'documentoDescargaUsuario.documentoDescargaUsuario',
+   'uses' => $controller.'controllerDocumentos@documentoDescargaUsuario'
 ]);
-Route::get('Documento_Reporte/{id}/{fecha_primero}/{fecha_segundo}', [
-    'as' => 'Documento_Reporte.Documento_Reporte',
-   'uses' => $controller.'Controller_Documentos@Documento_Reporte'
+Route::get('documentoReporte/{id}/{fecha_primero}/{fecha_segundo}', [
+    'as' => 'documentoReporte.documentoReporte',
+   'uses' => $controller.'controllerDocumentos@documentoReporte'
 ]);
-Route::get('Descarga_Reporte/{id}/{fecha_primero}/{fecha_segundo}', [
-    'as' => 'Descargar_Reporte.Descargar_Reporte',
-   'uses' => $controller.'Controller_Documentos@Descargar_Reporte'
+Route::get('descargarReporte/{id}/{fecha_primero}/{fecha_segundo}', [
+    'as' => 'descargarReporte.descargarReporte',
+   'uses' => $controller.'controllerDocumentos@descargarReporte'
 ]);
 
 //___________________END_MISDOCUMENTOS______________
 //_________________________END____RUTAS___ADMINISTRADOR________________
-Route::post('Subir_Documento_Convenio/{id}', [
-    'as' => 'Subir_Documento_Convenio.Subir_Documento_Convenio',
-   'uses' => $controller.'Controller_Documentos@Subir_Documento_Convenio'
+Route::post('subirDocumentoConvenio/{id}', [
+    'as' => 'subirDocumentoConvenio.subirDocumentoConvenio',
+   'uses' => $controller.'controllerDocumentos@subirDocumentoConvenio'
 ]);
-Route::post('Subir_Documento_Convenio_DB/{id}', [
-    'as' => 'Subir_Documento_Convenio_DB.Subir_Documento_Convenio_DB',
-   'uses' => $controller.'Controller_Documentos@Subir_Documento_Convenio_DB'
+Route::post('subirDocumentoConvenioDB/{id}', [
+    'as' => 'subirDocumentoConvenioDB.subirDocumentoConvenioDB',
+   'uses' => $controller.'controllerDocumentos@subirDocumentoConvenioDB'
 ]);
 Route::get('Descarga/{id}/{idc}', [
-    'as' => 'Documento_Descarga.Documento_Descarga',
-   'uses' => $controller.'Controller_Documentos@Documento_Descarga'
+    'as' => 'DocumentoDescarga.DocumentoDescarga',
+   'uses' => $controller.'controllerDocumentos@DocumentoDescarga'
 ]);
 
 //__________________________RUTAS_FUNCIONARIOS
 
-Route::get('Tipo_Pregunta', [    
-    'as' => 'Tipo_Pregunta.Tipo_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Tipo_Pregunta'
+Route::get('tipoPregunta', [    
+    'as' => 'tipoPregunta.tipoPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@tipoPregunta'
 ]);
-Route::get('Tipo_Pregunta_Ajax', [    
-    'as' => 'Tipo_Pregunta_Ajax.Tipo_Pregunta_Ajax', 
-    'uses' => $controller.'Controller_Evaluaciones@Tipo_Pregunta_Ajax'
+Route::get('tipoPreguntaAjax', [    
+    'as' => 'tipoPreguntaAjax.tipoPreguntaAjax', 
+    'uses' => $controller.'controllerEvaluaciones@tipoPreguntaAjax'
 ]);
-Route::post('Agregar_Tipo_Pregunta', [  
-    'as' => 'Agregar_Tipo_Pregunta.Agregar_Tipo_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Agregar_Tipo_Pregunta'
+Route::post('agregarTipoPregunta', [  
+    'as' => 'agregarTipoPregunta.agregarTipoPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@agregarTipoPregunta'
 ]);
-Route::get('Listar_Tipo_Pregunta', [    
-    'as' => 'Listar_Tipo_Pregunta.Listar_Tipo_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Tipo_Pregunta'
+Route::get('listarTipoPregunta', [    
+    'as' => 'listarTipoPregunta.listarTipoPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@listarTipoPregunta'
 ]);
-Route::get('Editar_Tipo_Pregunta/{id}', [    
-    'as' => 'Editar_Tipo_Pregunta.Editar_Tipo_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Editar_Tipo_Pregunta'
+Route::get('editarTipoPregunta/{id}', [    
+    'as' => 'editarTipoPregunta.editarTipoPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@editarTipoPregunta'
 ]);
-Route::post('Modificar_Tipo_Pregunta/{id}', [    
-    'as' => 'Modificar_Tipo_Pregunta.Modificar_Tipo_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Modificar_Tipo_Pregunta'
+Route::post('modificarTipoPregunta/{id}', [    
+    'as' => 'modificarTipoPregunta.modificarTipoPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@modificarTipoPregunta'
 ]);
-Route::get('Pregunta', [    
-    'as' => 'Pregunta.Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Pregunta'
+Route::get('pregunta', [    
+    'as' => 'pregunta.pregunta', 
+    'uses' => $controller.'controllerEvaluaciones@Pregunta'
 ]);
-Route::get('Pregunta_Ajax', [    
-    'as' => 'Pregunta_Ajax.Pregunta_Ajax', 
-    'uses' => $controller.'Controller_Evaluaciones@Pregunta_Ajax'
+Route::get('PreguntaAjax', [    
+    'as' => 'PreguntaAjax.PreguntaAjax', 
+    'uses' => $controller.'controllerEvaluaciones@PreguntaAjax'
 ]);
 
-Route::get('Editar_Pregunta/{id}', [    
-    'as' => 'Editar_Pregunta.Editar_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Editar_Pregunta'
+Route::get('editarPregunta/{id}', [    
+    'as' => 'editarPregunta.editarPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@editarPregunta'
 ]);
-Route::post('Modificar_Pregunta/{id}', [    
-    'as' => 'Modificar_Pregunta.Modificar_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Modificar_Pregunta'
+Route::post('modificarPregunta/{id}', [    
+    'as' => 'modificarPregunta.modificarPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@modificarPregunta'
 ]);
-Route::post('Agregar_Pregunta', [    
-    'as' => 'Agregar_Pregunta.Agregar_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Agregar_Pregunta'
+Route::post('agregarPregunta', [    
+    'as' => 'agregarPregunta.agregarPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@agregarPregunta'
 ]);
-Route::get('Listar_Pregunta', [    
-    'as' => 'Listar_Pregunta.Listar_Pregunta', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Pregunta'
+Route::get('listarPregunta', [    
+    'as' => 'listarPregunta.listarPregunta', 
+    'uses' => $controller.'controllerEvaluaciones@listarPregunta'
 ]);
-Route::get('Evaluaciones', [    
-    'as' => 'Evaluaciones.Evaluaciones', 
-    'uses' => $controller.'Controller_Evaluaciones@Evaluaciones'
+Route::get('evaluaciones', [    
+    'as' => 'evaluaciones.evaluaciones', 
+    'uses' => $controller.'controllerEvaluaciones@evaluaciones'
 ]);
-Route::get('Listar_Evaluaciones_Empresas', [    
-    'as' => 'Listar_Evaluaciones_Empresas.Listar_Evaluaciones_Empresas', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluaciones_Empresas'
+Route::get('listarEvaluacionesEmpresas', [    
+    'as' => 'listarEvaluacionesEmpresas.listarEvaluacionesEmpresas', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesEmpresas'
 ]);
-Route::get('Listar_Evaluaciones_Usuarios', [    
-    'as' => 'Listar_Evaluaciones_Usuarios.Listar_Evaluaciones_Usuarios', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluaciones_Usuarios'
+Route::get('listarEvaluacionesUsuarios', [    
+    'as' => 'listarEvaluacionesUsuarios.listarEvaluacionesUsuarios', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesUsuarios'
 ]);
-Route::get('Realizar_Evaluacion/{id}/{convenio}', [    
-    'as' => 'Realizar_Evaluacion.Realizar_Evaluacion', 
-    'uses' => $controller.'Controller_Evaluaciones@Realizar_Evaluacion'
+Route::get('realizarEvaluacion/{id}/{convenio}', [    
+    'as' => 'realizarEvaluacion.realizarEvaluacion', 
+    'uses' => $controller.'controllerEvaluaciones@realizarEvaluacion'
 ]);
-Route::post('Registrar_Evaluacion/{n}/{id}/{convenio}', [    
-    'as' => 'Registrar_Evaluacion.Registrar_Evaluacion', 
-    'uses' => $controller.'Controller_Evaluaciones@Registrar_Evaluacion'
+Route::post('registrarEvaluacion/{n}/{id}/{convenio}', [    
+    'as' => 'registrarEvaluacion.registrarEvaluacion', 
+    'uses' => $controller.'controllerEvaluaciones@registrarEvaluacion'
 ]);
-Route::get('Realizar_Evaluacion_Empresa/{id}/{convenio}', [    
-    'as' => 'Realizar_Evaluacion_Empresa.Realizar_Evaluacion_Empresar', 
-    'uses' => $controller.'Controller_Evaluaciones@Realizar_Evaluacion_Empresa'
+Route::get('realizarEvaluacionEmpresa/{id}/{convenio}', [    
+    'as' => 'realizarEvaluacionEmpresa.realizarEvaluacionEmpresar', 
+    'uses' => $controller.'controllerEvaluaciones@realizarEvaluacionEmpresa'
 ]);
-Route::post('Registrar_Evaluacion_Empresa/{n}/{id}/{convenio}', [    
-    'as' => 'Registrar_Evaluacion_Empresa.Registrar_Evaluacion_Empresa', 
-    'uses' => $controller.'Controller_Evaluaciones@Registrar_Evaluacion_Empresa'
+Route::post('registrarEvaluacionEmpresa/{n}/{id}/{convenio}', [    
+    'as' => 'registrarEvaluacionEmpresa.registrarEvaluacionEmpresa', 
+    'uses' => $controller.'controllerEvaluaciones@registrarEvaluacionEmpresa'
 ]);
-Route::get('Listar_Evaluacion_Empresa/{id}', [    
-    'as' => 'Listar_Evaluacion_Empresa.Listar_Evaluacion_Empresa', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Empresa'
+Route::get('listarEvaluacionEmpresa/{id}', [    
+    'as' => 'listarEvaluacionEmpresa.listarEvaluacionEmpresa', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionEmpresa'
 ]);
-Route::get('Listar_Evaluaciones_Usuario/{id}', [    
-    'as' => 'Listar_Evaluaciones_Usuario.Listar_Evaluaciones_Usuario', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluaciones_Usuario'
+Route::get('listarEvaluacionesUsuario/{id}', [    
+    'as' => 'listarEvaluacionesUsuario.listarEvaluacionesUsuario', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesUsuario'
 ]);
-Route::get('Listar_Evaluacion_Individual/{id}', [    
-    'as' => 'Listar_Evaluacion_Individual.Listar_Evaluacion_Individual', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Individual'
+Route::get('listarEvaluacionIndividual/{id}', [    
+    'as' => 'listarEvaluacionIndividual.listarEvaluacionIndividual', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionIndividual'
 ]);
-Route::get('Listar_Evaluacion_Individual_Empresa/{id}', [    
-    'as' => 'Listar_Evaluacion_Individual_Empresa.Listar_Evaluacion_Individual_Empresa', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Evaluacion_Individual_Empresa'
+Route::get('listarEvaluacionIndividualEmpresa/{id}', [    
+    'as' => 'listarEvaluacionIndividualEmpresa.listarEvaluacionIndividualEmpresa', 
+    'uses' => $controller.'controllerEvaluaciones@listarEvaluacionIndividualEmpresa'
 ]);
-Route::get('Listar_Pregunta_Evaluacion/{id}', [    
-    'as' => 'Listar_Pregunta_Evaluacion.Listar_Pregunta_Evaluacion', 
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Pregunta_Evaluacion'
+Route::get('listarPreguntaEvaluacion/{id}', [    
+    'as' => 'listarPreguntaEvaluacion.listarPreguntaEvaluacion', 
+    'uses' => $controller.'controllerEvaluaciones@listarPreguntaEvaluacion'
 ]);
-Route::get('Listar_Pregunta_Individual/{id}', [    
-    'as' => 'Listar_Pregunta_Individual.Listar_Pregunta_Individual',
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Pregunta_Individual'
+Route::get('listarPreguntaIndividual/{id}', [    
+    'as' => 'listarPreguntaIndividual.listarPreguntaIndividual',
+    'uses' => $controller.'controllerEvaluaciones@listarPreguntaIndividual'
 ]);
 //_____________________________END_RUTAS_FUNCIONARIOS
 //______________________________ALERTAS____________________
-Route::get('Alerta', [    
-    'as' => 'Alerta.Alerta',
-    'uses' => $controller.'Controller_Alertas@Alerta'
+Route::get('alerta', [    
+    'as' => 'alerta.alerta',
+    'uses' => $controller.'controllerAlertas@alerta'
 ]);
-Route::get('Alerta_Ajax', [    
-    'as' => 'Alerta_Ajax.Alerta_Ajax',
-    'uses' => $controller.'Controller_Alertas@Alerta_Ajax'
+Route::get('alertaAjax', [    
+    'as' => 'alertaAjax.alertaAjax',
+    'uses' => $controller.'controllerAlertas@alertaAjax'
 ]);
-Route::get('Listar_Alerta', [    
-    'as' => 'Listar_Alerta.Listar_Alerta',
-    'uses' => $controller.'Controller_Alertas@Listar_Alerta'
+Route::get('listarAlerta', [    
+    'as' => 'listarAlerta.listarAlerta',
+    'uses' => $controller.'controllerAlertas@listarAlerta'
 ]);
-Route::get('Ver_Alerta/{id}', [    
-    'as' => 'Ver_Alerta.Ver_Alerta',
-    'uses' => $controller.'Controller_Alertas@Ver_Alerta'
+Route::get('verAlerta/{id}', [    
+    'as' => 'verAlerta.verAlerta',
+    'uses' => $controller.'controllerAlertas@verAlerta'
 ]);
 //__________________________END_ALERTAS____________________
-Route::get('Reporte/{id}/{fecha_primera}/{fecha_segunda}', [    
-    'as' => 'Reporte.Reporte',
-    'uses' => $controller.'Controller_Evaluaciones@Reporte'
+Route::get('reporte/{id}/{fecha_primera}/{fecha_segunda}', [    
+    'as' => 'reporte.reporte',
+    'uses' => $controller.'controllerEvaluaciones@reporte'
 ]);
-Route::get('Listar_Reporte/{id}/{fecha_primera}/{fecha_segunda}', [    
-    'as' => 'Listar_Reporte.Listar_Reporte',
-    'uses' => $controller.'Controller_Evaluaciones@Listar_Reporte'
+Route::get('listarReporte/{id}/{fecha_primera}/{fecha_segunda}', [    
+    'as' => 'listarReporte.listarReporte',
+    'uses' => $controller.'controllerEvaluaciones@listarReporte'
 ]);
-Route::post('Vista_Reporte/{id}', [    
-    'as' => 'Vista_Reporte.Vista_Reporte',
-    'uses' => $controller.'Controller_Evaluaciones@Vista_Reporte'
+Route::post('vistaReporte/{id}', [    
+    'as' => 'vistaReporte.vistaReporte',
+    'uses' => $controller.'controllerEvaluaciones@vistaReporte'
 ]);

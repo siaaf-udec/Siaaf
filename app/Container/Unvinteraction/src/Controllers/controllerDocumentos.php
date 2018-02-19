@@ -1,22 +1,22 @@
 <?php
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\TBL_Usuarios;
-use App\Container\Unvinteraction\src\TBL_Tipo_Usuario;
-use App\Container\Unvinteraction\src\TBL_Estado_Usuario;
-use App\Container\Unvinteraction\src\TBL_Carrera;
-use App\Container\Unvinteraction\src\TBL_Facultad;
-use App\Container\Unvinteraction\src\TBL_Documentacion;
-use App\Container\Unvinteraction\src\TBL_Convenios;
-use App\Container\Unvinteraction\src\TBL_Evaluacion;
-use App\Container\Unvinteraction\src\TBL_Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Preguntas;
-use App\Container\Unvinteraction\src\TBL_Sede;
-use App\Container\Unvinteraction\src\TBL_Estado;
-use App\Container\Unvinteraction\src\TBL_Empresas_Participantes;
-use App\Container\Unvinteraction\src\TBL_Empresa;
-use App\Container\Unvinteraction\src\TBL_Participantes;
-use App\Container\Unvinteraction\src\TBL_Documentacion_Extra;
+use App\Container\Unvinteraction\src\Usuarios;
+use App\Container\Unvinteraction\src\Tipo_Usuario;
+use App\Container\Unvinteraction\src\Estado_Usuario;
+use App\Container\Unvinteraction\src\Carrera;
+use App\Container\Unvinteraction\src\Facultad;
+use App\Container\Unvinteraction\src\Documentacion;
+use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Evaluacion;
+use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\Sede;
+use App\Container\Unvinteraction\src\Estado;
+use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Participantes;
+use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 use App\Container\Overall\Src\Facades\UploadFile;
@@ -31,7 +31,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
 
-class Controller_Documentos extends Controller
+class controllerDocumentos extends Controller
 {
     private $path='unvinteraction';
     /*funcion para subir el documento para los convenios
@@ -40,7 +40,7 @@ class Controller_Documentos extends Controller
     *@return
     *
     */
-    public function Subir_Documento_Convenio(Request $request, $id)
+    public function subirDocumentoConvenio(Request $request, $id)
     {
         $carbon = new \Carbon\Carbon();
         $Ubicacion="unvinteraction/convenios/".$id;
@@ -61,7 +61,7 @@ class Controller_Documentos extends Controller
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     *
     */
-    public function Documento_Descarga(Request $request, $id, $idc)
+    public function documentoDescarga(Request $request, $id, $idc)
     {
         $Ubicacion ="unvinteraction/convenios/".$id;
         $Documento = TBL_Documentacion::select('TBL_Documentacion.Ubicacion')->where('PK_Documentacion', $id)->get();
@@ -78,7 +78,7 @@ class Controller_Documentos extends Controller
     /*funcion para enviar a la vista principal de listar mis documentos
     *@return \Illuminate\Http\Response
     */
-    public function Mis_Documentos()
+    public function misDocumentos()
     {
         return view($this->path.'.Listar_Mis_Documentos');
     }
@@ -86,7 +86,7 @@ class Controller_Documentos extends Controller
     *@param \Illuminate\Http\Request
     *@return Yajra\DataTables\DataTable
     */
-    public function Listar_Mis_Documentos(Request $request)
+    public function listarMisDocumentos(Request $request)
     {
         $documento = TBL_Documentacion_Extra::select('PK_Documentacion_Extra', 'Descripcion', 'Ubicacion', 'Entidad')
             ->where('FK_TBL_Usuarios', $request->user()->identity_no)->get();
@@ -96,7 +96,7 @@ class Controller_Documentos extends Controller
     *@param \Illuminate\Http\Request
     *@return
     */
-    public function Subir_Documento_Usuario(Request $request)
+    public function subirDocumentoUsuario(Request $request)
     {
         $carbon = new \Carbon\Carbon();
         $Ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
@@ -117,7 +117,7 @@ class Controller_Documentos extends Controller
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function Documento_Descarga_Usuario(Request $request, $id)
+    public function documentoDescargaUsuario(Request $request, $id)
     {
         $Ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
         $Documento=TBL_Documentacion_Extra::select('Ubicacion', 'Entidad')
@@ -133,7 +133,7 @@ class Controller_Documentos extends Controller
             }
         }
     }
-    public function Documento_Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function documentoReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
@@ -174,7 +174,7 @@ class Controller_Documentos extends Controller
      *
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function Descargar_Reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function descargarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
         if ($request->isMethod('GET')) {
             try{

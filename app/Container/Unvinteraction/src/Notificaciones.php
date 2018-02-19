@@ -4,7 +4,7 @@ namespace App\Container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TBL_Notificaciones extends Model
+class Notificaciones extends Model
 {
     public $timestamps = false;
     protected $connection ='unvinteraction';
