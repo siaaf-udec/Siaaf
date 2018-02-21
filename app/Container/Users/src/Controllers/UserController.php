@@ -205,7 +205,7 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_create' => 'current_password'
+                'email_create' => 'unique:users,email'
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
