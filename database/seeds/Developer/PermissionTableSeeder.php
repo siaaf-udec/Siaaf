@@ -1,6 +1,7 @@
 <?php
 
 use App\Container\Permissions\Src\Permission;
+use App\Container\Permissions\Src\Role;
 use Illuminate\Database\Seeder;
 
 class PermissionTableSeeder extends Seeder
@@ -33,5 +34,7 @@ class PermissionTableSeeder extends Seeder
         $permission->module_id = 8;
         $permission ->save();
 
+        $role = Role::findOrFail(1);
+        $role->perms()->sync([1, 2, 3]);
     }
 }
