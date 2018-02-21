@@ -201,6 +201,7 @@ return [
          * Custom Service Providers...
          */
         App\Container\Users\Src\Providers\UserServiceProvider::class,
+        App\Container\Users\Src\Providers\ValidatorServiceProvider::class,
         App\Container\Permissions\Src\Providers\PermissionServiceProvider::class,
         App\Container\Permissions\Src\Providers\RoleServiceProvider::class,
         App\Container\Permissions\Src\Providers\ModuleServiceProvider::class,

@@ -156,4 +156,6 @@ return [
         'teacher'               => 'docente',
     ],
 
+    'current_password' => 'contraseña incorrecta',
+
 ];

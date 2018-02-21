@@ -441,7 +441,13 @@
         var rules = {
             name_create: {minlength: 5, required: true},
             lastname_create: {minlength: 5, required: true},
-            email_create: {required: true, email: true},
+            email_create: {
+                required: true, email: true, remote: {
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ route('users.check.email') }}',
+                    type: "POST"
+                }
+            },
             password_create: {minlength: 5, required: true},
             state_create: {required: true},
             phone_create: {minlength: 5},
@@ -493,6 +499,18 @@
                     /*Imagen*/
                     var FileImage = document.getElementById("image_profile_create");
                     formData.append('image_profile_create', FileImage.files[0]);
+
+                    var hash = "c157a79031e1c40f85931829bc5fc552";  // 15+ hex chars
+                    var options = {
+                        foreground: [0, 0, 0, 255],               // rgba black
+                        background: [255, 255, 255, 255],         // rgba white
+                        margin: 0.2,                              // 20% margin
+                        size: 420,                                // 420px square
+                        format: 'svg'                             // use SVG instead of PNG
+                    };
+                    var data = new Identicon(hash, options).toString();
+                    data = 'data:image/svg+xml;base64,' + data;
+                    formData.append('identicon', data);
 
                     $.ajax({
                         url: route,

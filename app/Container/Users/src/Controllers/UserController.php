@@ -82,7 +82,9 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function data(Request $request)
     {
@@ -202,17 +204,13 @@ class UserController extends Controller
     public function checkEmail(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
             $validator = Validator::make($request->all(), [
-                'email_create' => 'unique:users,email'
+                'email_create' => 'current_password'
             ]);
-
             if (empty($validator->errors()->all())) {
                 return response('true');
             }
-
             return response('false');
-
         }
 
         return AjaxResponse::fail(
@@ -262,19 +260,18 @@ class UserController extends Controller
             /*Guarda la imagen */
             $img = $request->file('image_profile_create');
             if ($img !== null) {
-
-                foreach($user->images as $image) {
+                foreach ($user->images as $image) {
                     Storage::disk('developer')->delete($image->url);
                 }
-                dd('tue');
                 $url = Storage::disk('developer')->putFile('avatars', $img);
                 $user->images()->update([
                     'url' => $url
                 ]);
+            } else {
+                $user->images()->update([
+                    'url' => $request->get('identicon')
+                ]);
             }
-            $user->images()->update([
-                'url' => $request->get('identicon')
-            ]);
 
             /*Guarda los Roles*/
             $roles = $request->get('multi_select_roles_create');
