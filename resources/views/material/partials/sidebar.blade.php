@@ -52,6 +52,8 @@
         @permission('SCHOOL_MODULE')
         @include('themes.menus.escuelas-deportivas-menu')
         @endpermission
+        {{-- ADMISIONES Y REGISTRO --}}
+        @include('themes.menus.adminregist-menu')
     </ul>
     {{-- BEGIN SIDEBAR MENU --}}
 </div>
