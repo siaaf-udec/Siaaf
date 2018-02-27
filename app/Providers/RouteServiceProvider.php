@@ -57,6 +57,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapHumtalentRoutes();
 
         $this->mapSportcitRoutes();
+
+        $this->mapAdminRegistRoutes();
     }
 
     /**
@@ -158,5 +160,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/sportcit.php'));
+    }
+
+    protected function mapAdminRegistRoutes()
+    {
+        Route::prefix('adminregist')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/adminregist.php'));
     }
 }
