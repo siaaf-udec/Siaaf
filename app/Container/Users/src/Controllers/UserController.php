@@ -4,32 +4,35 @@ namespace App\Container\Users\Src\Controllers;
 
 use App\Notifications\HeaderSiaaf;
 
+
 use Validator;
 use Yajra\DataTables\DataTables;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Permissions\Src\Interfaces\ModuleInterface;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Overall\Src\Facades\UploadFile;
 
-use App\Container\Users\Src\Country;
 
 class UserController extends Controller
 {
 
     protected $userRepository;
     protected $roleRepository;
+    protected $user;
 
     public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
+        $this->user = Auth::user();
     }
 
     /**
@@ -205,7 +208,31 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_create' => 'unique:users,email'
+                'email_create' => 'unique:users,email'.Auth::id()
+            ]);
+            if (empty($validator->errors()->all())) {
+                return response('true');
+            }
+            return response('false');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPassword(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $validator = Validator::make($request->all(), [
+                'password_update' => 'current_password'
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -222,6 +249,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -229,12 +257,15 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = $this->userRepository->show($id, []);
-
+            $img = $user->images[0]->url;
+            if (!strcmp(substr($img, 0, 4), 'data') === 0 && Storage::disk('developer')->has('avatars', $img)) {
+                $img = Storage::disk('developer')->get('avatars', $img);
+            }
             return view('users.content-ajax.ajax-update-user', [
                 'user' => $user,
+                'img' => $img,
                 'roles' => $this->roleRepository->index([])
             ]);
-
         }
 
         return AjaxResponse::fail(
@@ -255,6 +286,9 @@ class UserController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             /*Modifica Usuario*/
+            if (!empty($request->get('password'))) {
+                $request->merge(['password' => $request->get('password_new')]);
+            }
             $user = $this->userRepository->update($request->all());
 
             /*Guarda la imagen */

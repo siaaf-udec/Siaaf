@@ -260,6 +260,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UserController@checkEmail',
             'as' => 'users.check.email'
         ]);
+        Route::post('check/password', [
+            'uses' => $controller . 'UserController@checkPassword',
+            'as' => 'users.check.password'
+        ]);
         Route::get('edit/{id?}', [
             'uses' => $controller . 'UserController@edit',
             'as' => 'users.edit'

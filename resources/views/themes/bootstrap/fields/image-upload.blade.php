@@ -1,7 +1,7 @@
 <div class="form-group">
     <div class="fileinput fileinput-new" data-provides="fileinput">
         <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=sin+imágen" alt="Imágen" />
+            <img id="file_image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=sin+imágen" alt="Imágen" />
         </div>
         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
         <div class="row">

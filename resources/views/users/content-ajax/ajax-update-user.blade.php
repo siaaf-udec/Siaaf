@@ -95,6 +95,10 @@
                                                         'email_create', $user->email,
                                                         ['label' => 'Correo Electronico', 'auto' => 'off'],
                                                         ['help' => 'Digite su correo electronico']) !!}
+                                                {!! Field::password(
+                                                        'password_create',
+                                                        ['label' => 'Nueva Contraseña', 'disabled'],
+                                                        ['help' => 'Digite su contreaseña.']) !!}
                                             </div>
                                             <div class="col-md-4 col-md-offset-1">
                                                 {!! Field::text(
@@ -118,9 +122,13 @@
                                                         ['Aprobado' => 'Aprobado', 'Pendiente' => 'Pendiente', 'Denegado' => 'Denegado'], $user->state,
                                                         [ 'label' => 'Estado']) !!}
                                                 {!! Field::password(
-                                                        'password_create',
+                                                        'password_update',
                                                         ['label' => 'Contraseña'],
-                                                        ['help' => 'Digite su contreaseña.']) !!}
+                                                        ['help' => 'Digite su nueva contreaseña.']) !!}
+                                                {!! Field::password(
+                                                        'password_create_verify',
+                                                        ['label' => 'Nueva Contraseña' , 'disabled'],
+                                                        ['help' => 'Digite su nueva contreaseña.']) !!}
                                             </div>
                                         </div>
                                         <h3 class="block">Datos de Ubicación</h3>
@@ -399,6 +407,9 @@
             });
         });
 
+        /*Carga la foto*/
+        $('#file_image').attr("src", "{{$img}}");
+
         /*Configuracion de input tipo fecha*/
         $('.date-picker').datepicker({
             rtl: App.isRTL(),
@@ -445,10 +456,31 @@
                 required: true, email: true, remote: {
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     url: '{{ route('users.check.email') }}',
-                    type: "POST"
+                    type: 'POST'
+                }
+            },
+            password_update: {
+                minlength: 4, remote: {
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ route('users.check.password') }}',
+                    type: 'POST',
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            let password_new = $('input[name="password_create"]'),
+                                password_new_verify = $('input[name="password_create_verify"]');
+                            if (response === true) {
+                                password_new.prop("disabled", false);
+                                password_new_verify.prop("disabled", false);
+                            } else {
+                                password_new.prop("disabled", true);
+                                password_new_verify.prop("disabled", true);
+                            }
+                        }
+                    },
                 }
             },
             password_create: {minlength: 5, required: true},
+            password_create_verify: {minlength: 5, equalTo: "#password_create", required: true},
             state_create: {required: true},
             phone_create: {minlength: 5},
             sexo_create: {required: true},
@@ -466,7 +498,7 @@
             return {
                 init: function () {
                     let $user = $('input[name="id_edit"]').val(),
-                        route = '{{ route('users.update') }}'+ '/'+ $user,
+                        route = '{{ route('users.update') }}' + '/' + $user,
                         type = 'POST';
 
                     var async = async || false;
@@ -484,7 +516,8 @@
                     formData.append('phone', $('input:text[name="phone_create"]').val());
                     formData.append('state', $('select[name="state_create"]').val());
                     formData.append('email', $('input[name="email_create"]').val());
-                    formData.append('password', $('input:text[name="password_create"]').val());
+                    formData.append('password', $('input[name="password_update"]').val());
+                    formData.append('password_new', $('input[name="password_create"]').val());
                     formData.append('address_create', $('input:text[name="address_create"]').val());
                     formData.append('countries_id', $('select[name="countries_create"]').val());
                     formData.append('regions_id', $('select[name="regions_create"]').val());
@@ -525,7 +558,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#from_users_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
