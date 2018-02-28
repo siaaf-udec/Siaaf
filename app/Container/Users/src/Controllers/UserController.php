@@ -257,9 +257,9 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = $this->userRepository->show($id, []);
-            $img = $user->images[0]->url;
-            if (!strcmp(substr($img, 0, 4), 'data') === 0 && Storage::disk('developer')->has('avatars', $img)) {
-                $img = Storage::disk('developer')->get('avatars', $img);
+            $img= $user->images[0]->url;
+            if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
+                $img = Storage::disk('developer')->url($img);
             }
             return view('users.content-ajax.ajax-update-user', [
                 'user' => $user,
