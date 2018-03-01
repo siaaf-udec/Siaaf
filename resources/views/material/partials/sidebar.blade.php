@@ -40,9 +40,9 @@
         @permission('TAL_MODULE')
         @include('themes.menus.talento-humano-menu')
         @endpermission
-        {{-- CALISOFT --}}
-        @permission('CALI_MODULE')
-        @include('themes.menus.calisoft-menu')
+        {{-- ADMINISTRATIVO --}}
+        @permission('ADMINIS_MODULE')
+        @include('themes.menus.administrative-menu')
         @endpermission
         {{-- GESAP --}}
         @permission('GESAP_MODULE')

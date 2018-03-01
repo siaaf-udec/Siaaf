@@ -33,7 +33,8 @@ class ModulesTableSeeder extends Seeder
           [ 'name' => 'Interacción Universitaria', 'description' => 'Int-Univ' ],
           [ 'name' => 'Talento Humano', 'description' => 'Talent-Huma' ],
           [ 'name' => 'Gesap', 'description' => 'Gesap' ],
-            [ 'name' => 'Master', 'description' => 'Modulo Administrador' ]
+            [ 'name' => 'Master', 'description' => 'Modulo Administrador' ],
+            [ 'name' => 'Administrativo', 'description' => 'Modulo Administrativo' ]
         ];
 
         foreach ($modules as $module ) {
