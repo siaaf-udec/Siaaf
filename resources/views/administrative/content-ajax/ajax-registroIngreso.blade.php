@@ -111,10 +111,20 @@
                                     App.unblockUI('.portlet-form');
                                 }else {
                                     $('#form_register')[0].reset(); //Limpiar formulario
+                                    /*Configuracion de Select*/
+                                    $.fn.select2.defaults.set("theme", "bootstrap");
+                                    $(".pmd-select2").select2({
+                                        placeholder: "Selecccionar",
+                                        allowClear: true,
+                                        width: 'auto',
+                                        escapeMarkup: function (m) {
+                                            return m;
+                                        }
+                                    });
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('administrative.user.index.ajax') }}';
-                                    $(".content-ajax").load(route);
+                                    //var route = ' //route('administrative.user.index.ajax') }}';
+                                    //$(".content-ajax").load(route);
                                 }
 
                             }

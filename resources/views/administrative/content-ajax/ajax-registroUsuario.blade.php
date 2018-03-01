@@ -150,6 +150,14 @@
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_create_user')[0].reset(); //Limpiar formulario
+                                $(".pmd-select2").select2({
+                                    placeholder: "Selecccionar",
+                                    allowClear: true,
+                                    width: 'auto',
+                                    escapeMarkup: function (m) {
+                                        return m;
+                                    }
+                                });
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('administrative.user.index.ajax') }}';
