@@ -98,10 +98,10 @@
                 <!-- END : LOGIN PAGE 5-1 -->
 
                     <!-- BEGIN FORGOT PASSWORD FORM -->
-                    {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('login')]) !!}
+                    {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('password.email')]) !!}
                     <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
                     <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
-                    {!! Field::email('email-forget', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
+                    {!! Field::email('email', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
                     <div class="form-actions">
                         {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
                         {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}

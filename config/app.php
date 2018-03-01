@@ -200,16 +200,16 @@ return [
         /*
          * Custom Service Providers...
          */
-        App\Container\Users\Src\Providers\UserServiceProvider::class,
-        App\Container\Users\Src\Providers\ValidatorServiceProvider::class,
-        App\Container\Permissions\Src\Providers\PermissionServiceProvider::class,
-        App\Container\Permissions\Src\Providers\RoleServiceProvider::class,
-        App\Container\Permissions\Src\Providers\ModuleServiceProvider::class,
-        App\Container\Users\Src\Providers\UserServiceProvider::class,
-        App\Container\Audiovisuals\Src\Providers\AdminServiceProvider::class, //Audiovisuales
-        App\Container\Audiovisuals\Src\Providers\FuncionarioServiceProvider::class, //Audiovisuales
-        App\Container\Audiovisuals\Src\Providers\CarrerasServiceProvider::class, //Audiovisuales
-		App\Container\Audiovisuals\Src\Providers\UsuarioAudiovisualesServiceProvider::class,
+        App\Container\Users\src\Providers\UserServiceProvider::class,
+        App\Container\Users\src\Providers\ValidatorServiceProvider::class,
+        App\Container\Permissions\src\Providers\PermissionServiceProvider::class,
+        App\Container\Permissions\src\Providers\RoleServiceProvider::class,
+        App\Container\Permissions\src\Providers\ModuleServiceProvider::class,
+        App\Container\Users\src\Providers\UserServiceProvider::class,
+        App\Container\Audiovisuals\src\Providers\AdminServiceProvider::class, //Audiovisuales
+        App\Container\Audiovisuals\src\Providers\FuncionarioServiceProvider::class, //Audiovisuales
+        App\Container\Audiovisuals\src\Providers\CarrerasServiceProvider::class, //Audiovisuales
+		App\Container\Audiovisuals\src\Providers\UsuarioAudiovisualesServiceProvider::class,
         App\Container\Administrative\Src\Providers\RegistroServiceProvider::class,
         App\Container\Administrative\Src\Providers\RegistroIngresoServiceProvider::class,
 
