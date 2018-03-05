@@ -32,7 +32,7 @@ class RegistroIngreso extends Model
 
     //relationships one to many
     public function proceso(){
-        return $this->belongsTo(RegistroIngreso::class,'id_proceso');
+        return $this->belongsTo(Proceso::class,'id_proceso');
     }
 
 

@@ -49,6 +49,16 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'RegistroController@entry',
             'as' => 'administrative.user.registerEntry'
         ]);
+
+        Route::get('history', [
+            'uses' => $controller . 'MenuAdministrativeController@history',
+            'as' => 'administrative.user.history',
+        ]);
+
+        Route::get('history/data', [
+            'uses' => $controller . 'RegistroController@history_data',
+            'as' => 'administrative.user.history.data',
+        ]);
     });
 
 });

@@ -52,4 +52,9 @@ class MenuAdministrativeController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    public function history()
+    {
+        return view('administrative.history');
+    }
 }

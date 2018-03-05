@@ -13,6 +13,12 @@
                 <span class="title">Usuarios</span>
             </a>
         </li>
+        <li class="nav-item {{ active(['administrative.user.*'], 'start active open') }}">
+            <a href="{{ route('administrative.user.history') }}" class="nav-link nav-toggle">
+                <i class="fa fa-database"></i>
+                <span class="title">Historial de Ingreso</span>
+            </a>
+        </li>
         @endpermission
     </ul>
 </li>

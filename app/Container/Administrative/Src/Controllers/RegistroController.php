@@ -74,6 +74,7 @@ class RegistroController extends Controller
                 ->removeColumn('company')
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
+                ->removeColumn('deleted_at')
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -106,6 +107,35 @@ class RegistroController extends Controller
                     'Registro de ingreso correcto.'
                 );
             }
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    public function history_data(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $history = $this->registroIngresoRepository->index(['registro','proceso']);
+
+            return DataTables::of($history)
+                ->removeColumn('registro.number_document')
+                ->removeColumn('registro.company')
+                ->removeColumn('registro.created_at')
+                ->removeColumn('registro.updated_at')
+                ->removeColumn('registro.number_phone')
+                ->removeColumn('registro.email')
+                ->removeColumn('proceso.id')
+                ->removeColumn('proceso.updated_at')
+                ->removeColumn('proceso.created_at')
+                ->removeColumn('proceso.id_macro')
+                ->removeColumn('registro.updated_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return AjaxResponse::fail(
