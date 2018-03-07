@@ -19,7 +19,7 @@ class CreateIngresoTable extends Migration
             $table->string('lastname');
             $table->enum('type_user', ['Estudiante', 'Docente', 'Externo']);
             $table->string('company')->nullable();
-            $table->enum('place', ['Fusagasugá', 'Girardot', 'Ubaté', 'Chia', 'Chocontá', 'Facatativá', 'Soacha', 'Zipaquirá']);
+            $table->enum('place', ['Fusagasugá', 'Girardot', 'Ubaté', 'Chia', 'Chocontá', 'Facatativá', 'Soacha', 'Zipaquirá','Ninguna']);
             $table->string('number_phone');
             $table->string('email')->nullable();
             $table->timestamps();
