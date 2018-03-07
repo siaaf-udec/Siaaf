@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RegistroIngreso extends Model
 {
-    protected $connection = 'adminis';
+    protected $connection = 'administrative';
     protected $table = 'registro_ingreso';
     protected $primaryKey = 'id';
 

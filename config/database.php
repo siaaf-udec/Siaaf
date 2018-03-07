@@ -68,13 +68,13 @@ return [
             'strict' => true,
             'engine' => null,
         ],
-        'adminis' => [
+        'administrative' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST_ADMINIS', '127.0.0.1'),
+            'host' => env('DB_HOST_ADMINISTRATIVE', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE_ADMINIS', 'forge'),
-            'username' => env('DB_USERNAME_ADMINIS', 'forge'),
-            'password' => env('DB_PASSWORD_ADMINIS', ''),
+            'database' => env('DB_DATABASE_ADMINISTRATIVE', 'forge'),
+            'username' => env('DB_USERNAME_ADMINISTRATIVE', 'forge'),
+            'password' => env('DB_PASSWORD_ADMINISTRATIVE', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

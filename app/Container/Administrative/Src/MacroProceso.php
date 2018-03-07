@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MacroProceso extends Model
 {
-    protected $connection = 'adminis';
+    protected $connection = 'administrative';
     protected $table = 'macroproceso';
     protected $primaryKey = 'id';
     /**

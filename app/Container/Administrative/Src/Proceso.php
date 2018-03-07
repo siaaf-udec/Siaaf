@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proceso extends Model
 {
-    protected $connection = 'adminis';
+    protected $connection = 'administrative';
     protected $table = 'proceso';
     protected $primaryKey = 'id';
     /**

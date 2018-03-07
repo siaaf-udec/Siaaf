@@ -7,7 +7,7 @@ use App\Container\Administrative\Src\RegistroIngreso;
 
 class Registro extends Model
 {
-    protected $connection = 'adminis';
+    protected $connection = 'administrative';
     protected $table = 'ingreso';
     protected $primaryKey = 'number_document';
     /**
