@@ -88,7 +88,7 @@
 
                                     {!! Field:: text('id_persona',null,
                                     ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                    ['help' => 'Digite el código o identificación de la persona','icon'=>'fa fa-user'] ) !!}
+                                    ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
 
                                     {!! Field::select('Espacio académico:',$espacios,
                                         ['id' => 'espacios', 'name' => 'espacios'])
@@ -97,7 +97,6 @@
                                     {!! Field:: textarea('descripcion',null,
                                          ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
                                          ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
-
                                 </div>
 
                             </div>

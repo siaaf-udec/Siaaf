@@ -155,6 +155,13 @@
                 </li>
             </ul>
             @endpermission
-        </li>
+
+            <li class="nav-item {{ active(['espacios.academicos.elementos.index'], 'start active open') }}">
+                <a href="{{ route('espacios.academicos.elementos.index') }}" class="nav-link nav-toggle">
+                    <i class="fa fa-book"></i>
+                    <span class="title">Elementos</span>
+                </a>
+            </li>
+        </li
     </ul>
 </li>

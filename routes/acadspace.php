@@ -329,6 +329,31 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     /**FIN RUTAS CALENDARIO**/
+    /*RUTAS PARA FUNCIONALIDAD ELEMENTOS*/
+    Route::group(['prefix' => 'elementos', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+        Route::get('index', [
+            'uses' => $controller . 'ElementosController@index',
+            'as' => 'espacios.academicos.elementos.index'
+        ]);
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'ElementosController@data',
+            'as' => 'espacios.academicos.elementos.data'
+        ]);
+
+        Route::delete('delete/{id?}', [ //ELIMINAR
+            'uses' => $controller . 'ElementosController@destroy',
+            'as' => 'espacios.academicos.elementos.destroy'
+        ])->where(['id' => '[0-9]+']);
+
+        Route::post('regisIncidente', [ //CREAR INCIDENTE
+            'uses' => $controller . 'ElementosController@regisIncidente',
+            'as' => 'espacios.academicos.elementos.regisElementos',
+        ]);
+    });
+    
+    /*FIN FUNCIONALIDAD ELEMENTOS*/
+
 });
 
 
