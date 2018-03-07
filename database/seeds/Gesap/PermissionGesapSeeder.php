@@ -84,6 +84,11 @@ class PermissionGesapSeeder extends Seeder
             ['name'=>'Update_Final_Project_Gesap',
              'display_name'=>'Subir Archivos de Proyecto',
              'description'=>'Subida de archivos para el proyecto final',
+             'module_id'=>'7'],
+            
+            ['name'=>'GESAP_MODULE',
+             'display_name'=>'Modulo GESAP',
+             'description'=>'Acceso a solo este modulo',
              'module_id'=>'7']
         ]);
         
@@ -91,6 +96,13 @@ class PermissionGesapSeeder extends Seeder
 		$role2 = Role::where('name' , 'Evaluator_Gesap')->get(['id'])->first();
 		$role3 = Role::where('name' , 'Student_Gesap')->get(['id'])->first();
 		
+        $permission = Permission::where('name', '=', 'GESAP_MODULE')->first();
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'GESAP_MODULE')->first();
+        $permission->roles()->attach($role2);
+        $permission = Permission::where('name', '=', 'GESAP_MODULE')->first();
+        $permission->roles()->attach($role3);
+        
 		$permission = Permission::where('name', '=', 'See_All_Project_Gesap')->first();
         $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'Create_Project_Gesap')->first();
