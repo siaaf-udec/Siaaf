@@ -13,7 +13,7 @@ class CreateProcesoTable extends Migration
      */
     public function up()
     {
-        Schema::create('proceso', function (Blueprint $table) {
+        Schema::connection('administrative')->create('proceso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre_proceso');
             $table->timestamps();

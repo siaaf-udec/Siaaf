@@ -13,7 +13,7 @@ class CreateMacroprocesoTable extends Migration
      */
     public function up()
     {
-        Schema::create('macroproceso', function (Blueprint $table) {
+        Schema::connection('administrative')->create('macroproceso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre_macro');
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateForeignsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminis')->table('registro_ingreso', function (Blueprint $table) {
+        Schema::connection('administrative')->table('registro_ingreso', function (Blueprint $table) {
             $table->string('id_registro')->nullable();
             $table->integer('id_proceso')->nullable()->unsigned();
 
@@ -23,7 +23,7 @@ class CreateForeignsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::connection('adminis')->table('proceso', function (Blueprint $table) {
+        Schema::connection('administrative')->table('proceso', function (Blueprint $table) {
             $table->integer('id_macro')->nullable()->unsigned();
 
             $table->foreign('id_macro')->references('id')->on('macroproceso')

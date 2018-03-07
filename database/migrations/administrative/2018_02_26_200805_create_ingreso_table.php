@@ -13,7 +13,7 @@ class CreateIngresoTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminis')->create('ingreso', function (Blueprint $table) {
+        Schema::connection('administrative')->create('ingreso', function (Blueprint $table) {
             $table->string('number_document')->primary()->nullable();
             $table->string('username');
             $table->string('lastname');

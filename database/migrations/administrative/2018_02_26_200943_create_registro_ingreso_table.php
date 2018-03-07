@@ -13,7 +13,7 @@ class CreateRegistroIngresoTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminis')->create('registro_ingreso', function (Blueprint $table) {
+        Schema::connection('administrative')->create('registro_ingreso', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
