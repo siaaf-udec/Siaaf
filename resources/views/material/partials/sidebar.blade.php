@@ -54,6 +54,10 @@
         @endpermission
         {{-- ADMISIONES Y REGISTRO --}}
         @include('themes.menus.adminregist-menu')
+        {{-- USUARIOS UDEC --}}
+        @permission('MASTER_USER_UDEC')
+        @include('themes.menus.users-udec-menu')
+        @endpermission
     </ul>
     {{-- BEGIN SIDEBAR MENU --}}
 </div>

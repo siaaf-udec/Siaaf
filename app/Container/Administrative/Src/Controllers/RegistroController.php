@@ -8,18 +8,18 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Administrative\Src\Interfaces\RegistroInterface;
+use App\Container\Users\src\Interfaces\UsersUdecInterface;
 use App\Container\Administrative\Src\Interfaces\RegistroIngresoInterface;
-use App\Container\Administrative\Src\Registro;
+use App\Container\Users\src\UsersUdec;
 
 class RegistroController extends Controller
 {
-    protected $registroRepository;
+    protected $usersudecRepository;
     protected $registroIngresoRepository;
 
-    public function __construct(RegistroInterface $registroRepository,RegistroIngresoInterface $registroIngresoRepository)
+    public function __construct(UsersUdecInterface $usersudecRepository,RegistroIngresoInterface $registroIngresoRepository)
     {
-        $this->registroRepository = $registroRepository;
+        $this->usersudecRepository = $usersudecRepository;
         $this->registroIngresoRepository = $registroIngresoRepository;
     }
 
@@ -28,7 +28,7 @@ class RegistroController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $validator = Validator::make($request->all(), [
-                'number_document' => 'unique:adminis.ingreso'
+                'number_document' => 'unique:developer.users_udec'
             ]);
 
             if (empty($validator->errors()->all())) {
@@ -50,7 +50,7 @@ class RegistroController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             /*Guarda Usuario*/
-            $user = $this->registroRepository->store($request->all());
+            $user = $this->usersudecRepository->store($request->all());
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -68,7 +68,7 @@ class RegistroController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $user = Registro::query();
+            $user = UsersUdec::query();
 
             return DataTables::of($user)
                 ->removeColumn('company')
@@ -89,7 +89,7 @@ class RegistroController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'number_document' => 'unique:adminis.ingreso'
+                'number_document' => 'unique:developer.users_udec'
             ]);
 
             if (empty($validator->errors()->all())) {

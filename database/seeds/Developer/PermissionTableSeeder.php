@@ -30,8 +30,15 @@ class PermissionTableSeeder extends Seeder
         $permission= new Permission;
         $permission->name = 'MASTER_ELEMENTS';
         $permission->display_name = 'Elementos';
-        $permission->description = 'Acceso al modulo de elementos visuales estandares .';
+        $permission->description = 'Acceso al modulo de elementos visuales estandares.';
         $permission->module_id = 8;
+        $permission ->save();
+
+        $permission= new Permission;
+        $permission->name = 'MASTER_USER_UDEC';
+        $permission->display_name = 'Usuario Udec';
+        $permission->description = 'Acceso al modulo de administración de usuarios udec.';
+        $permission->module_id = 10;
         $permission ->save();
 
         $role = Role::findOrFail(1);

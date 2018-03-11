@@ -120,7 +120,7 @@ class User extends Authenticatable implements AuditableContract
 
     /**
      * Get the UsuarioEspaciosAcademicos record associated with the user.
-     */
+     *
     public function acadspace()
     {
         return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
@@ -130,6 +130,7 @@ class User extends Authenticatable implements AuditableContract
     {
         return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');
     }
+    */
 
     /**
      * Get the UsuarioGesap record associated with the user.

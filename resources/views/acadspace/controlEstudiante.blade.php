@@ -25,8 +25,8 @@
                         {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
                         <div class="form-wizard">
                             <div class="form-body">
-                                {!! Field:: text('codigo',null,['label'=>'Codigo:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                                ['help' => 'Digité el codigo','icon'=>'fa fa-credit-card'] ) !!}
+                                {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                                ['help' => 'Digité el identificación','icon'=>'fa fa-credit-card'] ) !!}
 
                                 {!! Field::select('SOL_carrera',
                                                   ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',

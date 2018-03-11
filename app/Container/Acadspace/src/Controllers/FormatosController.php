@@ -200,7 +200,7 @@ class formatosController extends Controller
             $solic = formatos::select(['PK_FAC_Id_Formato',
                 'FAC_Titulo_Doc', 'created_at', 'FK_FAC_Id_Secretaria'])
                 ->with(['user' => function ($query) {
-                    return $query->select('id', 'name', 'lastname');
+                    return $query->select('number_document', 'username', 'lastname');
                 }])
                 ->where('FAC_Estado', '=', 0)
                 ->get();

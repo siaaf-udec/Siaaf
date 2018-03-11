@@ -2,6 +2,7 @@
 
 namespace App\Container\Administrative\Src;
 
+use App\Container\Users\src\UsersUdec;
 use Illuminate\Database\Eloquent\Model;
 
 class RegistroIngreso extends Model
@@ -27,7 +28,7 @@ class RegistroIngreso extends Model
 
     //relationships one to many
     public function registro(){
-        return $this->belongsTo(Registro::class,'id_registro');
+        return $this->belongsTo(UsersUdec::class,'id_registro');
     }
 
     //relationships one to many

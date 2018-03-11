@@ -5,7 +5,7 @@ namespace App\Container\Acadspace\src;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Container\Users\Src\User;
+use App\Container\Users\src\UsersUdec;
 
 class Formatos extends Model
 {
@@ -56,7 +56,7 @@ class Formatos extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'FK_FAC_Id_Secretaria');
+        return $this->belongsTo(UsersUdec::class, 'FK_FAC_Id_Secretaria');
     }
     //
 }

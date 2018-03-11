@@ -114,7 +114,7 @@ class AsistenciaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $validator = Validator::make($request->all(), [
-                'codigo' => 'exists:users,identity_no'
+                'codigo' => 'exists:users_udec,number_document'
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -139,7 +139,7 @@ class AsistenciaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $validator = Validator::make($request->all(), [
-                'codigo' => 'exists:users,identity_no'
+                'codigo' => 'exists:users_udec,number_document'
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');

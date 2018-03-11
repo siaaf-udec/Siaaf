@@ -17,7 +17,7 @@ class CreateForeignsTable extends Migration
             $table->string('id_registro')->nullable();
             $table->integer('id_proceso')->nullable()->unsigned();
 
-            $table->foreign('id_registro')->references('number_document')->on('ingreso')
+            $table->foreign('id_registro')->references('number_document')->on('developer.users_udec')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_proceso')->references('id')->on('proceso')
                 ->onUpdate('cascade')->onDelete('cascade');

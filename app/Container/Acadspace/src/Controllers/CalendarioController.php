@@ -212,7 +212,7 @@ class CalendarioController extends Controller
                 'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Rango_Fechas',
                 'SOL_fecha_inicial')
                 ->with(['user' => function ($query) {
-                    return $query->select('id', 'name', 'lastname');
+                    return $query->select('number_document', 'username', 'lastname');
                 }])
                 ->with(['software' => function ($query) {
                     return $query->select('PK_SOF_Id',

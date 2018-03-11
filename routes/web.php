@@ -301,6 +301,45 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'location.cities.find'
         ]);
     });
+
+    Route::group(['prefix' => 'usersUdec' , 'middleware' => ['permission:MASTER_USER_UDEC']],function (){
+        $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+
+        Route::get('index',[
+            'uses' => $controller . 'UsersUdecController@index',
+            'as' => 'usersUdec.index'
+        ]);
+
+        Route::get('data', [
+            'uses' => $controller . 'UsersUdecController@data',
+            'as' => 'usersUdec.data'
+        ]);
+
+        Route::post('check/document', [
+            'uses' => $controller . 'UsersUdecController@checkDocument',
+            'as' => 'usersUdec.check.document'
+        ]);
+
+        Route::post('check/code', [
+            'uses' => $controller . 'UsersUdecController@checkCode',
+            'as' => 'usersUdec.check.code'
+        ]);
+
+        Route::get('create', [
+            'uses' => $controller . 'UsersUdecController@create',
+            'as' => 'usersUdec.create'
+        ]);
+
+        Route::post('store',[
+            'uses' => $controller . 'UsersUdecController@store',
+            'as' => 'usersUdec.store'
+        ]);
+
+        Route::get('index/ajax', [
+            'uses' => $controller . 'UsersUdecController@index_ajax',
+            'as' => 'usersUdec.index.ajax'
+        ]);
+    });
 });
 
 // Lenguaje
