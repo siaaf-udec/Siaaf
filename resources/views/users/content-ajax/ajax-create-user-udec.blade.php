@@ -206,5 +206,21 @@
             var route = '{{ route('usersUdec.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+        /*Configuracion de Select*/
+        $.fn.select2.defaults.set("theme", "bootstrap");
+        $(".pmd-select2").select2({
+            placeholder: "Selecccionar",
+            allowClear: true,
+            width: 'auto',
+            escapeMarkup: function (m) {
+                return m;
+            }
+        });
+
+        //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
+        $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
     });
 </script>
