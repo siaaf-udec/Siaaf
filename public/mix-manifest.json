@@ -1,0 +1,15 @@
+{
+  "/js/app.js": "/js/app.js",
+  "/css/app.css": "/css/app.css",
+  "/mix.js": "/mix.js",
+  "/assets/pages/scripts/financial/file-upload-dropzone.min.js": "/assets/pages/scripts/financial/file-upload-dropzone.min.js",
+  "/assets/pages/scripts/financial/dropzone.min.css": "/assets/pages/scripts/financial/dropzone.min.css",
+  "/assets/pages/scripts/financial/inancial-select2.min.js": "/assets/pages/scripts/financial/inancial-select2.min.js",
+  "/assets/pages/scripts/financial/financial-select2.min.js": "/assets/pages/scripts/financial/financial-select2.min.js",
+  "/assets/pages/scripts/financial/financial-form-validation.min.js": "/assets/pages/scripts/financial/financial-form-validation.min.js",
+  "/assets/pages/scripts/financial/ui-toaster.min.js": "/assets/pages/scripts/financial/ui-toaster.min.js",
+  "/assets/pages/scripts/financial/identicon.min.js": "/assets/pages/scripts/financial/identicon.min.js",
+  "/assets/pages/scripts/financial/pnglib.min.js": "/assets/pages/scripts/financial/pnglib.min.js",
+  "/assets/pages/scripts/financial/financial-form-extension-validation.js.min.js": "/assets/pages/scripts/financial/financial-form-extension-validation.js.min.js",
+  "/assets/pages/scripts/financial/financial-form-extension-validation.min.js": "/assets/pages/scripts/financial/financial-form-extension-validation.min.js"
+}

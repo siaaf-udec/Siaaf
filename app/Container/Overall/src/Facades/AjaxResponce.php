@@ -15,17 +15,20 @@ class AjaxResponse extends Facade
      *
      * @return \Illuminate\Http\Response
      */
-    static function make( $data = null, $success = true, $message = null ){
+    public static function make($title = null, $message = null, $data = null, $state = null)
+    {
         return response()->json([
-            'success' => $success,
-            'data' => $data,
+            'title'   => $title,
             'message' => $message,
-        ]);
+            'data'    => $data,
+        ], $state);
     }
-    static function success( $data ){
-        return self::make($data);
+    public static function success($title = '', $message = '', $data = null)
+    {
+        return self::make($title, $message, $data, 200);
     }
-    static function fail( $message = null, $data = null ){
-        return self::make($data, false, $message);
+    public static function fail($title = '', $message = null, $data = null)
+    {
+        return self::make($title, $message, $data, 422);
     }
 }

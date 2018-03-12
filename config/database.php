@@ -68,6 +68,20 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+        'administrative' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_ADMINISTRATIVE', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE_ADMINISTRATIVE', 'forge'),
+            'username' => env('DB_USERNAME_ADMINISTRATIVE', 'forge'),
+            'password' => env('DB_PASSWORD_ADMINISTRATIVE', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'acadspace' => [
             'driver' => 'mysql',
@@ -144,13 +158,13 @@ return [
             'engine' => null,
         ],
 
-        'geesap' => [
+        'gesap' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST_GEESAP', '127.0.0.1'),
+            'host' => env('DB_HOST_GESAP', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE_GEESAP', 'forge'),
-            'username' => env('DB_USERNAME_GEESAP', 'forge'),
-            'password' => env('DB_PASSWORD_GEESAP', ''),
+            'database' => env('DB_DATABASE_GESAP', 'forge'),
+            'username' => env('DB_USERNAME_GESAP', 'forge'),
+            'password' => env('DB_PASSWORD_GESAP', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

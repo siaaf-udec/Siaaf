@@ -1,4 +1,4 @@
-<!--[if lt IE 9]>
+<!--[if lt IE 9]-->
 <script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>
 <script src="{{ asset('assets/global/plugins/excanvas.min.js') }}"></script>
 <script src="{{ asset('assets/global/plugins/ie8.fix.min.js') }}"></script>
@@ -25,3 +25,9 @@
 <script src="{{ asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 {{-- END THEME LAYOUT SCRIPTS --}}
+
+@env('production')
+    {{-- SOCKETS CLIENT--}}
+    <script src="{{ asset('assets/main/scripts/client-notifications.js') }}" type="text/javascript"></script>
+    {{-- END SOCKETS CLIENT --}}
+@endenv

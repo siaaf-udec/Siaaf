@@ -1,11 +1,9 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-
 <!-- Editor -->
-<link href="{{ asset('assets/global/plugins/codemirror/lib/codemirror.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/codemirror/theme/material.css') }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('assets/global/plugins/codemirror/lib/codemirror.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/codemirror/theme/material.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('title', '| Validaciones')
@@ -15,8 +13,8 @@
 @section('page-description', 'Ejemplo de Formularios con validación')
 
 @section('content')
-    <div class="col-md-12">
-        {{-- BEGIN COMPONENTS SAMPLE --}}
+<div class="col-md-12">
+    {{-- BEGIN COMPONENTS SAMPLE --}}
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formularios'])
             @slot('actions', [
 
@@ -35,8 +33,8 @@
 
             ])
             {!! Form::open(['id' => 'form_material', 'class' => '', 'url' => '/forms']) !!}
-            <div class="form-body">
-                {!! Field::text(
+    <div class="form-body">
+        {!! Field::text(
                             'name',
                             ['label' => 'Texto para el Label', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
                             ['help' => 'Texto de ayuda', 'icon' => 'fa fa-user']) !!}
@@ -64,28 +62,38 @@
                             'url',
                             ['required', 'auto' => 'off', 'max' => '255'],
                             ['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-link']) !!}
-            </div>
-            <div class="form-actions">
-                <div class="row">
-                    <div class="col-md-12">
-                        {{ Form::submit('Validar', ['class' => 'btn green']) }}
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-12">
+                {{ Form::submit('Validar', ['class' => 'btn green']) }}
                         {{ Form::button('Cancelar', ['class' => 'btn red']) }}
                         {{ Form::reset('Reset', ['class' => 'btn yellow-gold']) }}
-                    </div>
-                </div>
             </div>
-            {!! Form::close() !!}
-
-            <hr>
-            <div class="m-heading-1 border-green m-bordered">
-                <h3>Validaciones</h3>
-                <p> Validaciones
-                    <a href="http://jqueryvalidation.org/" target="_blank">Documentación Oficial</a>. </p>
-            </div>
-            <p>Requisitos</p>
-            <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script></pre>
-            <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script></pre>
-            <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script></pre>
+        </div>
+    </div>
+    {!! Form::close() !!}
+    <hr>
+        <div class="m-heading-1 border-green m-bordered">
+            <h3>
+                Validaciones
+            </h3>
+            <p>
+                Validaciones
+                <a href="http://jqueryvalidation.org/" target="_blank">
+                    Documentación Oficial
+                </a>
+                .
+            </p>
+        </div>
+        <p>
+            Requisitos
+        </p>
+        <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></pre>
+    </hr>
+</div>
+<pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></pre>
+<pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></pre>
 <textarea id="validation-editor">
     var FormValidationMd = function() {
 
@@ -189,14 +197,24 @@
         FormValidationMd.init();
     });
 </textarea>
-            <hr>
-            <div class="m-heading-1 border-green m-bordered">
-                <h3>Max Length</h3>
-                <p> Max Length
-                    <a href="http://mimo84.github.io/bootstrap-maxlength/" target="_blank">Documentación Oficial</a>. </p>
-            </div>
-            <p>Requisitos</p>
-            <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script></pre>
+<hr>
+    <div class="m-heading-1 border-green m-bordered">
+        <h3>
+            Max Length
+        </h3>
+        <p>
+            Max Length
+            <a href="http://mimo84.github.io/bootstrap-maxlength/" target="_blank">
+                Documentación Oficial
+            </a>
+            .
+        </p>
+    </div>
+    <p>
+        Requisitos
+    </p>
+    <pre><span><</span>script src="{<span>{</span> asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></pre>
+</hr>
 <textarea id="max-editor">
     var ComponentsBootstrapMaxlength = function () {
 
@@ -219,31 +237,31 @@
         ComponentsBootstrapMaxlength.init();
     });
 </textarea>
-        @endcomponent
+@endcomponent
         {{-- END COMPONENTS SAMPLE --}}
-    </div>
 @endsection
 
 @push('plugins')
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-
-
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript">
+</script>
 <!-- Editor -->
-
-<script src="{{ asset('assets/global/plugins/codemirror/lib/codemirror.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/global/plugins/codemirror/addon/edit/closebrackets.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/codemirror/mode/javascript/javascript.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/global/plugins/codemirror/lib/codemirror.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/codemirror/addon/edit/closebrackets.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/codemirror/mode/javascript/javascript.js') }}" type="text/javascript">
+</script>
 @endpush
 
 @push('functions')
-    <script type="text/javascript">
-
-        var FormValidationMd = function() {
+<script type="text/javascript">
+    var FormValidationMd = function() {
 
             $.validator.addMethod(
                 'passwordStr',
@@ -341,7 +359,7 @@
 
                     success: function(label) {
                         label
-                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                            .closest('.form-group').removeClass('has-error');
                     },
 
                     submitHandler: function(form) {
@@ -417,5 +435,5 @@
             ComponentsBootstrapMaxlength.init();
             ComponentsCodeEditors.init();
         });
-    </script>
+</script>
 @endpush

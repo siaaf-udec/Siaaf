@@ -109,6 +109,7 @@ return [
                     'title' => 'Componentes',
                     'icon' => 'icon-puzzle',
                 ],
+
                 'forms' =>  [
                     'submenu' => [
                         'fields' => ['url' => '/forms/fields', 'icon' => 'icon-layers', 'title' => 'Input Fields'],
@@ -116,7 +117,8 @@ return [
                     ],
                     'title' => 'Formularios',
                     'icon' => 'icon-settings',
-                ],
+                ], //ok
+
                 'elements' =>  [
                     'submenu' => [
 
@@ -124,13 +126,14 @@ return [
                     'title' => 'Elementos',
                     'icon' => 'icon-bulb',
                 ],
+
                 'tables' =>  [
                     'submenu' => [
                         'datatables' => ['url' => '/components/datatables', 'icon' => 'icon-layers'],
                     ],
                     'title' => 'Tablas',
                     'icon' => 'icon-briefcase',
-                ],
+                ], //ok
                 'portlets' =>  [
                     'submenu' => [
                         'portlet' => ['url' => '/components/portlet', 'icon' => 'icon-layers',],
@@ -138,6 +141,7 @@ return [
                     'title' => 'Portlets',
                     'icon' => 'icon-wallet',
                 ],
+
                 'charts' =>  [
                     'submenu' => [
 
@@ -152,6 +156,7 @@ return [
                     'title' => 'Mapas',
                     'icon' => 'icon-pointer',
                 ],
+
                 'sidebar' =>  [
                     'submenu' => [
                         'sidebar' => ['url' => '/components/sidebar', 'icon' => 'icon-layers'],
@@ -172,7 +177,7 @@ return [
         ],
         'audiovisuals' =>  [
             'submenu' => [
-
+                
             ],
             'title' => 'Audiovisuales ',
             'icon' => 'fa fa-desktop',
@@ -200,23 +205,32 @@ return [
         ],
         'humtalent' =>  [
             'submenu' => [
-
+                'registrar' => ['url' => 'talento-humano/rrhh/create','icon' => 'fa fa-users', 'title' => 'Registrar Usuario'],
+                'consultar' => ['url' => 'talento-humano/rrhh/show','icon' => 'fa fa-book', 'title' => 'Consultar Usuario'],
+                'regDoc'    => ['url' => 'talento-humano/Document/create','icon' => 'fa fa-book', 'title' => 'Registrar Documento'],
+                'ConsDoc'    => ['url' =>'talento-humano/Document','icon' => 'fa fa-book', 'title' => 'Consultar Documentos'],
             ],
             'title' => 'Talento Humano ',
             'icon' => 'fa fa-group',
         ],
         'calisoft' =>  [
             'submenu' => [
-
+                'usuarios' => ['url' => '#', 'icon' => 'fa fa-users', 'title' => 'Usuarios'],
+                'peticiones' => ['url' => '#', 'icon' => 'fa fa-university', 'title' => 'Peticiones'],
+                'proyectos' => ['url' => '#', 'icon' => 'fa fa-folder-open', 'title' => 'Proyectos'],
+                'categorias' => ['url' => '#', 'icon' => 'fa fa-pie-chart', 'title' => 'Categorias'],
+                'documentos' => ['url' => '#', 'icon' => 'fa fa-book', 'title' => 'Documentos'],
+                'semilleros' => ['url' => '#', 'icon' => 'fa fa-gears', 'title' => 'Semilleros']
             ],
             'title' => 'Calisoft ',
             'icon' => 'fa fa-archive',
         ],
-        'geesap' =>  [
+
+        'gesap' =>  [
             'submenu' => [
 
             ],
-            'title' => 'Geesap ',
+            'title' => 'Gesap ',
             'icon' => 'fa fa-cube',
         ],
         'sportcit' =>  [

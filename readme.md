@@ -66,13 +66,35 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
     $ php artisan migrate --path=/database/migrations/developer --database=developer
     $ php artisan migrate --path=/database/migrations/sportcit --database=sportcit
 
-8- $ php artisan db:seed
+8- $ php artisan db:seed --class=DatabaseDeveloperSeeder
  
+```
+
+### Actualización Laravel 5.5
+
+```sh
+1- composer update
+2- php artisan package:discover
+```
+
+### Instalacion Node
+
+Activación de notificaciones de tiempo real (No es obligatorio)
+
+```sh
+1- Instalar Redis-x64-3.2.100.msi (Material de apoyo / Redis Windows)
+2- Instalar Node.js V8.4.0 (Material de apoyo / Node.js)
+3- $ npm install
+3- Verificar cambios en el archivo .env.example
+4- Inicializar el servidor de node
+   
+5- Ejecutar los Queues
+    $ php artisan queue:work
 ```
 
 ### Herramientas
 
-* <a href="http://keenthemes.com/preview/metronic/theme/admin_2_material_design/index.html">Plantilla Base Metronic Material Theme</a>
+* <a href="https://github.com/siaaf-udec/dashboard-template">Plantilla Base Metronic Material Theme</a>
 * <a href="https://education.github.com/pack">GitHub Student Pack</a>
 * <a href="https://www.gitkraken.com/">GitKraken</a>
 * <a href="https://siaaf-cit.slack.com/">Canal de Comunicación de Notificaciones</a>
@@ -85,6 +107,9 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
 * <a href="https://www.youtube.com/channel/UC07xim4Gg8kOk3uZwMrGNeQ/playlists">YouTube - Raul Palacios</a>
 * <a href="https://laravel.com/docs/5.4">Documentación Laravel 5.4</a>
 * <a href="https://mailtrap.io/">Pruebas de Email</a>
+* <a href="https://wkhtmltopdf.org/downloads.html">Binarios Snappy</a>
+* <a href="https://github.com/MicrosoftArchive/redis/releases">Redis Windows</a>
+* <a href="https://nodejs.org/en/">Node.js</a>
 
 ### Documentos
 * <a href="http://es.presidencia.gov.co/dapre/DocumentosSIGEPRE/L-TI-12-denominacion-bases_de_datos.pdf">Denominacion Base de Datos</a>

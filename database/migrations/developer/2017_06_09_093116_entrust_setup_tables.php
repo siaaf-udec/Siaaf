@@ -41,7 +41,13 @@ class EntrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->integer('module_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('module_id')
+                ->references('id')->on('TBL_Modules')
+                ->onDelete('cascade') //Eliminacion en casacada
+                ->onUpdate('cascade'); //Actualización en casacada
         });
 
         // Create table for associating permissions to roles (Many-to-Many)

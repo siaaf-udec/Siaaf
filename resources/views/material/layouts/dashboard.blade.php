@@ -14,6 +14,8 @@
 
     @include('material.partials.head')
 
+    @routes {{-- https://github.com/tightenco/ziggy --}}
+
     {{-- BEGIN THEME LAYOUT STYLES --}}
     <link href="{{ asset('assets/layouts/layout2/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/layouts/layout2/css/custom.css') }}" rel="stylesheet" type="text/css" />
@@ -52,7 +54,7 @@
                         {{-- END BREADCRUMB --}}
                         {{-- END PAGE HEADER --}}
                         {{-- BEGIN CUSTOM CONTENT --}}
-                        <div class="row" id="sortable_portlets">
+                        <div class="row content-ajax" id="sortable_portlets">
                             @yield('content')
                         </div>
                         {{-- END CUSTOM CONTENT --}}

@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $financialNamespace = 'App\Container\Financial\src\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -49,13 +50,17 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapUnvInteractionRoutes();
 
-        $this->mapGeesapRoutes();
+        $this->mapGesapRoutes();
 
         $this->mapCalisoftRoutes();
 
         $this->mapHumtalentRoutes();
 
         $this->mapSportcitRoutes();
+
+        $this->mapAdministrative();
+
+        $this->mapAdminRegistRoutes();
     }
 
     /**
@@ -89,7 +94,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapAcadSpaceRoutes()
     {
-        Route::prefix('acadspace')
+        Route::prefix('espacios-academicos')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/acadspace.php'));
@@ -97,7 +102,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapAudioVisualsRoutes()
     {
-        Route::prefix('audiovisuals')
+        Route::prefix('audiovisuales')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/audiovisuals.php'));
@@ -105,34 +110,34 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapCarParkRoutes()
     {
-        Route::prefix('carpark')
-            ->middleware(['web','auth'])
+        Route::prefix('parqueadero')
+            ->middleware(['web'])
             ->namespace($this->namespace)
             ->group(base_path('routes/carpark.php'));
     }
 
     protected function mapFinancialRoutes()
     {
-        Route::prefix('financial')
+        Route::prefix('financiero')
             ->middleware(['web','auth'])
-            ->namespace($this->namespace)
+            ->namespace($this->financialNamespace)
             ->group(base_path('routes/financial.php'));
     }
 
     protected function mapUnvInteractionRoutes()
     {
-        Route::prefix('unvinteraction')
+        Route::prefix('interaccion-universitaria')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/unvinteraction.php'));
     }
 
-    protected function mapGeesapRoutes()
+    protected function mapGesapRoutes()
     {
-        Route::prefix('geesap')
+        Route::prefix('gesap')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
-            ->group(base_path('routes/geesap.php'));
+            ->group(base_path('routes/gesap.php'));
     }
 
     protected function mapCalisoftRoutes()
@@ -145,7 +150,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapHumtalentRoutes()
     {
-        Route::prefix('humtalent')
+        Route::prefix('talento-humano')
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/humtalent.php'));
@@ -157,5 +162,21 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/sportcit.php'));
+    }
+
+    protected function mapAdministrative()
+    {
+        Route::prefix('administrative')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/administrative.php'));
+    }
+
+    protected function mapAdminRegistRoutes()
+    {
+        Route::prefix('adminregist')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/adminregist.php'));
     }
 }

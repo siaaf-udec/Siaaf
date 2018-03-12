@@ -5,10 +5,14 @@ var FormValidationMd = function() {
 
     var handleValidation = function(form, rules, messages, method) {
 
+        if (typeof messages === 'undefined' || messages === false) {
+            messages = {};
+        }
+
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
-            focusInvalid: false,
+            focusInvalid: true,
             ignore: "",
             messages: messages,
             rules: rules,
@@ -22,7 +26,7 @@ var FormValidationMd = function() {
                     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
                 } else if (element.is(':radio')) {
                     error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                } else if (element.hasClass('.select2-hidden-accessible')) {
+                } else if (element.hasClass('select2-hidden-accessible')) {
                     error.insertAfter(element.parent().find(".help-block"));
                 } else {
                     error.insertAfter(element);

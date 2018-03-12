@@ -32,4 +32,8 @@
 <link href="{{ asset('assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css" />
 {{-- END THEME GLOBAL STYLES --}}
 
+{{-- SOCKETS --}}
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js') }}" type="text/javascript"></script>
+{{-- END SOCKETS --}}
+
 <link rel="shortcut icon" href="favicon.ico" />

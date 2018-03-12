@@ -55,6 +55,40 @@ return [
             'visibility' => 'public',
         ],
 
+        'developer' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/developer'),
+            'url' => env('APP_URL').'/storage/developer',
+            'visibility' => 'public',
+        ],
+
+        'audiovisuals' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/audiovisuals'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'acadspace' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/acadspace'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'financial' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/financial'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+        'gesap' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/gesap'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),
