@@ -211,7 +211,6 @@ return [
         App\Container\Audiovisuals\src\Providers\FuncionarioServiceProvider::class, //Audiovisuales
         App\Container\Audiovisuals\src\Providers\CarrerasServiceProvider::class, //Audiovisuales
 		App\Container\Audiovisuals\src\Providers\UsuarioAudiovisualesServiceProvider::class,
-        App\Container\Administrative\Src\Providers\RegistroServiceProvider::class,
         App\Container\Administrative\Src\Providers\RegistroIngresoServiceProvider::class,
 
         /*

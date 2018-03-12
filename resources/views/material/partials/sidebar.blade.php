@@ -52,8 +52,10 @@
         @permission('SCHOOL_MODULE')
         @include('themes.menus.escuelas-deportivas-menu')
         @endpermission
+        @env('local')
         {{-- ADMISIONES Y REGISTRO --}}
         @include('themes.menus.adminregist-menu')
+        @endenv
         {{-- USUARIOS UDEC --}}
         @permission('MASTER_USER_UDEC')
         @include('themes.menus.users-udec-menu')
