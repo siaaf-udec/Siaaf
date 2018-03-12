@@ -149,7 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'permissions'], function () {
-        $controller = "\\App\\Container\\Permissions\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Permissions\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'PermissionController@index',
             'as' => 'permissions.index'
@@ -179,7 +179,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'roles'], function () {
-        $controller = "\\App\\Container\\Permissions\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Permissions\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'RoleController@index',
             'as' => 'roles.index'
@@ -203,7 +203,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'modules'], function () {
-        $controller = "\\App\\Container\\Permissions\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Permissions\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'ModuleController@index',
             'as' => 'modules.index'
@@ -227,7 +227,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'role/permission'], function () {
-        $controller = "\\App\\Container\\Permissions\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Permissions\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'RolePermissionController@index',
             'as' => 'roles.permission.index'
@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'users'], function () {
-        $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Users\\src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller . 'UserController@index',
             'as' => 'users.index'
@@ -303,7 +303,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'usersUdec' , 'middleware' => ['permission:MASTER_USER_UDEC']],function (){
-        $controller = "\\App\\Container\\Users\\Src\\Controllers\\";
+        $controller = "\\App\\Container\\Users\\src\\Controllers\\";
 
         Route::get('index',[
             'uses' => $controller . 'UsersUdecController@index',
