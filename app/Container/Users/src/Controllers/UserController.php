@@ -54,12 +54,12 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('users.content-ajax.ajax-user');
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     /**
@@ -208,7 +208,31 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_create' => 'unique:users,email'.Auth::id()
+                'email_create' => 'unique:users,email' . Auth::id()
+            ]);
+            if (empty($validator->errors()->all())) {
+                return response('true');
+            }
+            return response('false');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkEmailExisting(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $validator = Validator::make($request->all(), [
+                'email_forget' => 'exists:users,email'
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -257,7 +281,7 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = $this->userRepository->show($id, []);
-            $img= $user->images[0]->url;
+            $img = $user->images[0]->url;
             if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
                 $img = Storage::disk('developer')->url($img);
             }

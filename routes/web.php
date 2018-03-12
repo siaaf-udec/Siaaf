@@ -348,6 +348,12 @@ Route::get('lang/{lang}', function ($lang) {
     return back()->withInput();
 })->where(['lang' => 'en|es']);
 
+$controller = "\\App\\Container\\Users\\src\\Controllers\\";
+Route::post('check/email/existing', [
+    'uses' => $controller . 'UserController@checkEmailExisting',
+    'as' => 'users.check.email.existing'
+]);
+
 /*
  * Fin de las rutas de ejemplo.
  */

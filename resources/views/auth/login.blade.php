@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6 text-right">
-                            {{ Form::submit('Ingresar', ['class' => 'btn green']) }}
+                            {{ Form::submit('Ingresar', ['class' => 'btn btn green uppercase pull-right']) }}
                         </div>
                         <div class="col-sm-12 text-right">
                             <div class="forgot-password">
@@ -101,7 +101,7 @@
                     {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('password.email')]) !!}
                     <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
                     <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
-                    {!! Field::email('email', old('email'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
+                    {!! Field::email('email_forget', old('email_forget'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
                     <div class="form-actions">
                         {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
                         {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}
@@ -205,13 +205,63 @@
         </script>
     @endif
     <script type="text/javascript">
-        var rules = {
-            email: {email: true, required: true},
+
+        /*Recuperar Contraseña*/
+        let forgetPassword = function () {
+            return {
+                init: function () {
+                    var route = '{{ route('password.email') }}';
+                    var type = 'POST';
+                    var async = async || false;
+
+                    var formData = new FormData();
+                    formData.append('email', $('input[name="email_forget"]').val());
+
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+                            //App.blockUI({target: '.portlet-form', animate: true});
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
         };
-        var messages = {};
-        var form = $('#form-forget');
+
+
+        let rules_forget = {
+            email_forget: {
+                required: true, email: true, remote: {
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ route('users.check.email.existing') }}',
+                    type: "POST"
+                }
+            }
+        };
+        let messages_forget = {
+            email_forget: {
+                remote: "El correo electronico no ha sido registrado."
+            }
+        };
+        let form_forget = $('#form-forget');
         jQuery(document).ready(function () {
-            FormValidationMd.init(form, rules, messages);
+            FormValidationMd.init(form_forget, rules_forget, messages_forget, forgetPassword());
         });
     </script>
 @endpush
