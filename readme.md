@@ -61,12 +61,13 @@ El proyecto esta desarrollado en [Laravel 5.4](https://laravel.com/docs/5.4/)
    DB sportcit
    
 6- $ php artisan key:generate
-7- Migrar las bases de datos de developer y el modulo asignado ejemplo
+7- $ php artisan storage:link
+8- Migrar las bases de datos de developer y el modulo asignado ejemplo
    
     $ php artisan migrate --path=/database/migrations/developer --database=developer
     $ php artisan migrate --path=/database/migrations/sportcit --database=sportcit
 
-8- $ php artisan db:seed --class=DatabaseDeveloperSeeder
+9- $ php artisan db:seed --class=DatabaseDeveloperSeeder
  
 ```
 

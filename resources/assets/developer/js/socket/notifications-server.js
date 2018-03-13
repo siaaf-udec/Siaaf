@@ -1,14 +1,14 @@
 //Redis
-var Redis = require('ioredis'),
+let Redis = require('ioredis'),
     redis = new Redis({ showFriendlyErrorStack: true }); //Nueva instancia de redis mostrando errores.
 
 //Socket
-var io = require('socket.io')(6001);
+let io = require('socket.io')(6001);
 //var io = require('socket.io')(6001, {origins : 'localhost:*'});
 
 //Request
 //Diseñada para realizar peticiones HTTPS
-var request = require('request');
+let request = require('request');
 
 //Suscribe a un canal con una conexión
 redis.psubscribe('*', function (error, count) {
@@ -16,7 +16,7 @@ redis.psubscribe('*', function (error, count) {
 });
 
 //Bandera
-var flag = false;
+let flag = false;
 
 // Determina Conexion
 io.on('connection', function (socket) {
