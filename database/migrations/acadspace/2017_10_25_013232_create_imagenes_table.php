@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIncidentesTable extends Migration
+class CreateImagenesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateIncidentesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('TBL_Incidentes', function (Blueprint $table) {
-            $table->increments('PK_INC_Id_Incidente')->unique();
-            $table->integer('FK_INC_Id_User')->unsigned();
-            $table->integer('FK_INC_Id_Espacio')->unsigned();
+        Schema::connection('acadspace')->create('tbl_imagenes', function (Blueprint $table) {
+            $table->increments('pk_id_imagen')->unsigned()->unique();
+            $table->string('ruta_imagen',250);
+            $table->string('nombre_imagen',250);
             $table->integer('fk_id_articulo')->unsigned();
-            $table->string('INC_Descripcion',255);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -30,6 +28,6 @@ class CreateIncidentesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Incidentes');
+        Schema::dropIfExists('tbl_imagenes');
     }
 }
