@@ -2,6 +2,7 @@
 
 namespace App\Container\Users\src;
 
+use App\Container\AdminRegist\Src\Registros;
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Administrative\Src\RegistroIngreso;
 
@@ -22,6 +23,11 @@ class UsersUdec extends Model
     //relationships one to many
     public function registroIngreso(){
         return $this->hasMany(RegistroIngreso::class,'id_registro');
+    }
+
+    //relationships one to many
+    public function registroAdminRegist(){
+        return $this->hasMany(Registros::class,'id_registro');
     }
 
     /**
