@@ -1,10 +1,4 @@
-<!-- TABLAS -->
-<!-- TABLAS DOCUMENTOS DEL CONVENIO -->
-
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'INFORMNACION DEL CONVENIO'])
-
-
-
 <div class="portlet-body">
     <ul class="nav nav-tabs">
         <li class="active">
@@ -21,7 +15,7 @@
     <div class="tab-content">
         <div class="tab-pane fade active in" id="tab_1_1">
             <div class="actions">
-                @permission(['Des_Doc_Con'])
+                @permission(['Add_doc_con'])
                 <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
             </div>
 
@@ -30,14 +24,21 @@
 
                 <div class="clearfix"> </div><br><br>
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Entidad', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) 
+                        @slot('columns', [ 
+                            '#' => ['style' => 'width:20px;'], 
+                            'ID', 
+                            'Entidad', 
+                            'Acciones' => ['style' => 'width:160px;'] 
+                        ])
+                    @endcomponent
                 </div>
             </div>
         </div>
         <!-- TABLAS  PARTICIPANTES -->
         <div class="tab-pane fade" id="tab_1_2">
             <div class="col-md-12">
-                @permission(['Add_Convenio'])
+                @permission(['Add_parti'])
                 <div class="actions">
                     <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -48,7 +49,14 @@
 
                 <div class="clearfix"> </div><br><br>
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'Documentacion', 'Nombres', 'Apellidos', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes'])                  @slot('columns', [
+                            '#' => ['style' => 'width:20px;'],
+                            'Identidicacion',
+                            'Nombres',
+                            'Apellidos',
+                            'Acciones' => ['style' => 'width:160px;']
+                        ]) 
+                    @endcomponent
                 </div>
             </div>
         </div>
@@ -56,7 +64,7 @@
         <div class="tab-pane fade" id="tab_1_3">
 
             <div class="col-md-12">
-                @permission(['Add_Convenio'])
+                @permission(['Add_emp_parti'])
                 <div class="actions">
                     <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -67,7 +75,13 @@
 
                 <div class="clearfix"> </div><br><br>
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Identificacion', 'Empresa', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ 
+                        '#' => ['style' => 'width:20px;'], 
+                        'ID',
+                        'Identificacion',
+                        'Empresa',
+                        'Acciones' => ['style' => 'width:160px;'] ]) 
+                    @endcomponent
                 </div>
             </div>
 
@@ -75,15 +89,6 @@
 
     </div>
     @endcomponent
-
-
-
-
-
-
-    <!-- FIN TABLAS -->
-    <!-- MODALS -->
-    <!-- AGREGAR DOCUMENTO-->
     <div class="col-md-12">
         <!-- Modal -->
         <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
@@ -95,14 +100,11 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
                     </div>
                     <div class="modal-body">
-
                         {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
-
-
                         <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
                         {!! Form::close() !!}
-                        <br> {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-
+                        <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
 
                 </div>
@@ -125,7 +127,7 @@
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
                         </div>
                         <div class="modal-body">
-                            {!! Field:: text('identity_no',null,['label'=>'Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+                            {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
 
                         </div>
                         <div class="modal-footer">
@@ -137,7 +139,6 @@
             </div>
         </div>
     </div>
-
     <!-- AGREGAR EMPRESA PARTICIPANTE -->
     <div class="col-md-12">
         <!-- Modal -->
@@ -152,10 +153,7 @@
                             <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                         </div>
                         <div class="modal-body">
-
-
-                            {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Codigo de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
-
+                            {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                         </div>
                         <div class="modal-footer">
                             {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -166,37 +164,34 @@
             </div>
         </div>
     </div>
-
-
-    <!-- FIN MODALS -->
-
-
-
-
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
-
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            var x = function() {
-                return {
-                    init: function() {
-                        alert('Seguro que desea subir este archivo, recuerda dar clic en la tabla para actualizarla');
-                    }
-                };
-            };
-            var route = '{{route('
-            Subir_Documento_Convenio.Subir_Documento_Convenio ',[$id])}}';
-            var formatfile = 'image/*,.jpeg,.pdf,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.PDF';
-            var numfile = 1;
-
-            $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, x(), name));
-            var table, url, id;
+</div>
+<!-- FIN MODALS -->
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script>   
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var table, url, id;
+        table = $('#Listar_Documentos');
+        var documento = function () { 
+            return { 
+                init:function(){
+                    table.ajax.reload();
+                    $('#documento').modal('hide'); 
+                    
+                }
+            }; 
+        }
+        var route = '{{route('subirDocumentoConvenio.subirDocumentoConvenio',[$id])}}';
+        var formatfile = '.pdf'; 
+        var numfile = 1; 
+        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
+        
+        
+            
             table = $('#Listar_Documentos');
-            url = "{{ route('Listar_Documentos_Convenios.Listar_Documentos_Convenios',[$id]) }}";
+            url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
             table.DataTable({
                 lengthMenu: [
                     [5, 10, 25, 50, -1],
@@ -236,13 +231,13 @@
                         data: 'DT_Row_Index'
                     },
                     {
-                        data: 'PK_Documentacion',
+                        data: 'PK_DOCU_Documentacion',
                         "visible": true,
                         name: "documento",
                         className: 'none'
                     },
                     {
-                        data: 'Entidad',
+                        data: 'DOCU_Nombre',
                         searchable: true
                     },
                     {
@@ -254,8 +249,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '<?php if (\Entrust::can(['
-                        Des_Doc_Con '])) : ?><a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a><?php endif; // Entrust::can ?>'
+                        defaultContent: ' @permission(['Des_Doc_Con'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
 
 
                     }
@@ -317,74 +311,70 @@
                     url: '',
                     dataType: "html",
                 }).done(function(data) {
-                    window.location.href = '/siaaf/public/index.php/interaccion-universitaria/Descarga/' + O.PK_Documentacion + '/<?php
-                    echo $id; ?
-                    > ';
+                    window.location.href = '/siaaf/public/index.php/interaccion-universitaria/Descarga/'+ O.PK_DOCU_Documentacion+'/<?php echo $id; ?>';
                 });
             });
 
         });
-
-    </script>
-
-    <script>
+</script>
+<script type="text/javascript">
         jQuery(document).ready(function() {
-            var table, url, id;
-            table = $('#Listar_Paticipantes');
-            url = "{{ route('Listar_Participantes_Convenios.Listar_Participantes_Convenios',[$id]) }}";
-            table.DataTable({
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "Todo"]
-                ],
-                responsive: true,
-                colReorder: true,
-                processing: true,
-                serverSide: true,
-                ajax: url,
-                searching: true,
-                language: {
-                    "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+           
+        var table, url;
+        table = $('#Listar_Paticipantes');
+        url = "{{ route('listarParticipantesConvenios.listarParticipantesConvenios',[$id]) }}";
+        table.DataTable({
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "Todo"]
+            ],
+            responsive: true,
+            colReorder: true,
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            searching: true,
+            language: {
+                "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
                 },
-                columns: [{
-                        data: 'DT_Row_Index'
-                    },
-                    {
-                        data: 'FK_TBL_Usuarios',
-                        className: 'none',
-                        "visible": true,
-                        name: "participante"
-                    },
-                    {
-                        data: 'usuarios__participantes.name',
-                        searchable: true
-                    },
-                    {
-                        data: 'usuarios__participantes.lastname',
-                        searchable: true
-                    },
-                    {
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            columns: [{
+                    data: 'DT_Row_Index'
+                },
+                {
+                    data: 'usuarios_participantes.dato_usuario.identity_no',
+                    "visible": true,
+                    name: "documento"
+                },
+                {
+                    data: 'usuarios_participantes.dato_usuario.name',
+                    searchable: true
+                },
+                {
+                    data: 'usuarios_participantes.dato_usuario.lastname',
+                    searchable: true
+                },
+               {
                         data: 'action',
                         className: '',
                         searchable: false,
@@ -393,76 +383,74 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '<?php if (\Entrust::can(['
-                        Eva_Empresa '])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a><?php endif; // Entrust::can ?><?php if (\Entrust::can(['
-                        Eva_Empresa '])) : ?><a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a><?php endif; // Entrust::can ?><?php if (\Entrust::can(['
-                        Ver_Eva '])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a><?php endif; // Entrust::can ?>'
+                        defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
 
 
                     }
-                ],
-                buttons: [{
-                        extend: 'print',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                        text: '<i class="fa fa-print"></i>'
-                    },
-                    {
-                        extend: 'copy',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                        text: '<i class="fa fa-files-o"></i>'
-                    },
-                    {
-                        extend: 'pdf',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                        text: '<i class="fa fa-file-text-o"></i>',
-                    },
-                    {
-                        extend: 'colvis',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
-                        text: '<i class="fa fa-bars"></i>'
-                    },
-                    {
-                        text: '<i class="fa fa-refresh"></i>',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                        action: function(e, dt, node, config) {
-                            dt.ajax.reload();
-                        }
+
+            ],
+            buttons: [{
+                    extend: 'print',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
+                    text: '<i class="fa fa-print"></i>'
+                },
+                {
+                    extend: 'copy',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
+                    text: '<i class="fa fa-files-o"></i>'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
+                    text: '<i class="fa fa-file-pdf-o"></i>',
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
+                    text: '<i class="fa fa-file-text-o"></i>',
+                },
+                {
+                    extend: 'colvis',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
+                    text: '<i class="fa fa-bars"></i>'
+                },
+                {
+                    text: '<i class="fa fa-refresh"></i>',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
+                    action: function(e, dt, node, config) {
+                        dt.ajax.reload();
                     }
-                ],
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-            });
+                }
+            ],
+            pageLength: 10,
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+        });
 
             table = table.DataTable();
             table.on('click', '.evaluar1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion/' + dataTable.FK_TBL_Usuarios + '/<?php echo $id;?>';
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacion/' + dataTable.usuarios_participantes.USER_FK_Users+'/ @php echo $id; @endphp ';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.doc1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/Documentos_Usuarios/' + dataTable.FK_TBL_Usuarios;
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentosUsuarios/'+dataTable.FK_TBL_Usuarios_Id;
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.ver1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluaciones_Usuario/' + dataTable.FK_TBL_Usuarios;
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionesUsuario/'+dataTable.FK_TBL_Usuarios;
                 $(".content-ajax").load(route_edit);
             });
             $("#archivo2").on('click', function(e) {
@@ -473,15 +461,16 @@
             var rules = {
 
             };
-
-
+            $('.portlet-form').attr("id","form_wizard_1");
+             var rules = {
+                identity_no: {required: true,number: true},
+                };
             var form = $('#form-Participante');
             var wizard = $('#form_wizard_1');
             var agregarParticipante = function() {
                 return {
                     init: function() {
-                        var route = '{{ route('
-                        Participante_Convenio.Participante_Convenio ',[$id]) }}';
+                        var route = '{{ route('participanteConvenio.participanteConvenio',[$id]) }}';
                         var type = 'POST';
                         var async = async || false;
 
@@ -504,11 +493,13 @@
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#participante').modal('hide');
+                                    $('#form-Participante')[0].reset();
                                     table.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
                             error: function(response, xhr, request) {
+                                UIToastr.init(xhr, 'usuario ya existente', 'el usuario a insertar ya esta en el convenio');
                                 if (request.status === 422 && xhr === 'success') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
@@ -523,67 +514,64 @@
             FormValidationMd.init(form, rules, messages, agregarParticipante());
 
         });
-
-    </script>
-    <script>
+</script>
+<script type="text/javascript">
         jQuery(document).ready(function() {
-            var table, url, id;
-
-            table = $('#Listar_Empresas_Paticipantes');
-            url = "{{ route('Listar_Empresas_Participantes_Convenios.Listar_Empresas_Participantes_Convenios',[$id]) }}";
-            table.DataTable({
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "Todo"]
-                ],
-                responsive: true,
-                colReorder: true,
-                processing: true,
-                serverSide: true,
-                ajax: url,
-                searching: true,
-                language: {
-                    "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+        var table, url;
+        table = $('#Listar_Empresas_Paticipantes');
+        url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
+        table.DataTable({
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "Todo"]
+            ],
+            responsive: true,
+            colReorder: true,
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            searching: true,
+            language: {
+                "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
                 },
-                columns: [{
-                        data: 'DT_Row_Index'
-                    },
-                    {
-                        data: 'PK_Empresas_Participantes',
-                        className: 'none',
-                        "visible": true,
-                        name: "empresa"
-                    },
-                    {
-                        data: 'patricipantes__empresas.PK_Empresa',
-                        searchable: true
-                    },
-                    {
-                        data: 'patricipantes__empresas.Nombre_Empresa',
-                        searchable: true
-                    },
-                    {
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            columns: [{
+                    data: 'DT_Row_Index'
+                },
+                {
+                    data: 'PK_EMPT_Empresa_Participante',
+                    "visible": true,
+                    name: "documento"
+                },
+                {
+                    data: 'patricipantes_empresas.PK_EMPS_Empresa',
+                    searchable: true
+                },
+                {
+                    data: 'patricipantes_empresas.EMPS_Nombre_Empresa',
+                    searchable: true
+                },
+                {
                         data: 'action',
                         className: '',
                         searchable: false,
@@ -592,60 +580,58 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '<?php if (\Entrust::can(['
-                        Eva_Pasante '])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a><?php endif; // Entrust::can ?><?php if (\Entrust::can(['
-                        Ver_Eva '])) : ?><a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a><?php endif; // Entrust::can ?>'
+                        defaultContent: '@permission(['Eva_Pasante'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
                     }
-                ],
-                buttons: [{
-                        extend: 'print',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                        text: '<i class="fa fa-print"></i>'
-                    },
-                    {
-                        extend: 'copy',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                        text: '<i class="fa fa-files-o"></i>'
-                    },
-                    {
-                        extend: 'pdf',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                        text: '<i class="fa fa-file-text-o"></i>',
-                    },
-                    {
-                        extend: 'colvis',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
-                        text: '<i class="fa fa-bars"></i>'
-                    },
-                    {
-                        text: '<i class="fa fa-refresh"></i>',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                        action: function(e, dt, node, config) {
-                            dt.ajax.reload();
-                        }
-                    }
-                ],
 
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-            });
+            ],
+            buttons: [{
+                    extend: 'print',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
+                    text: '<i class="fa fa-print"></i>'
+                },
+                {
+                    extend: 'copy',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
+                    text: '<i class="fa fa-files-o"></i>'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
+                    text: '<i class="fa fa-file-pdf-o"></i>',
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
+                    text: '<i class="fa fa-file-text-o"></i>',
+                },
+                {
+                    extend: 'colvis',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
+                    text: '<i class="fa fa-bars"></i>'
+                },
+                {
+                    text: '<i class="fa fa-refresh"></i>',
+                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
+                    action: function(e, dt, node, config) {
+                        dt.ajax.reload();
+                    }
+                }
+            ],
+            pageLength: 10,
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+        });
 
             table = table.DataTable();
             table.on('click', '.evaluar2', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/Realizar_Evaluacion_Empresa/' + dataTable.patricipantes__empresas.PK_Empresa + '/<?php echo  $id; ?>';
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/<?php echo  $id; ?>';
 
                 $(".content-ajax").load(route_edit);
             });
@@ -654,8 +640,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Evaluacion_Empresa/' + dataTable.patricipantes__empresas.PK_Empresa;
-
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
                 $(".content-ajax").load(route_edit);
             });
 
@@ -664,17 +649,16 @@
                 $('#empresa').modal('toggle');
             });
 
-            $('.portlet-form').attr("id", "form_wizard_1");
-            var rules = {
-
-            };
+            $('.portlet-form').attr("id","form_wizard_1");
+             var rules = {
+                FK_TBL_Empresa: {required: true,number: true},
+                };
             var form = $('#form-Empresas');
             var wizard = $('#form_wizard_1');
             var agregarEmpresa = function() {
                 return {
                     init: function() {
-                        var route = '{{ route('
-                        Empresa_Convenio.Empresa_Convenio ',[$id]) }}';
+                        var route = '{{ route('empresaConvenio.empresaConvenio',[$id]) }}';
                         var type = 'POST';
                         var async = async || false;
                         var formData = new FormData();
@@ -694,12 +678,14 @@
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#empresa').modal('hide');
                                     table.ajax.reload();
+                                    $('#form-Empresas')[0].reset();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
                             error: function(response, xhr, request) {
+                                 UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingresada ya se encuentra  o no existe');
                                 if (request.status === 422 && xhr === 'success') {
-                                    UIToastr.init(xhr, response.title, response.message);
+                                    UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingrsada ya se encuentra  o no existe');
                                 }
                             }
                         });

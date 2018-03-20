@@ -39,5 +39,16 @@ class Usuario extends Model
     {
         return $this->hasMany(Participantes::class, 'FK_TBL_Usuario_Id', 'PK_USER_Usuario');
     }
+    /*
+    *Función de conexión entre las tablas de TBL_Usuario y TBL_participante
+    *por los campo de FK_TBL_Sede y PK_Sede
+    *para realizar las busquedas complementarias
+    */
+        
+    public function datoUsuario()
+    {
+        return $this->belongsTo('App\container\Users\src\User', 'USER_FK_Users', 'identity_no');
+        
+    }
     
 }

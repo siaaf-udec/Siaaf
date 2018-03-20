@@ -1,17 +1,17 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
-                                        <div class="form-wizard">
-                                        {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-
-                                        {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-                                        <div class="form-actions">
-                                        <div class="row">
-                                            <div class="modal-footer">
-                                                {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
-                                            </div>
-                                        </div>
-                                       </div>    
-                                    {!! Form::close() !!}
+<div class="form-wizard">
+    {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+    
+    {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+    <div class="form-actions">
+        <div class="row">
+            <div class="modal-footer">
+                {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
+            </div>
+        </div>
+    </div>
+    {!! Form::close() !!}
 <br><br>
     <div class="row">
         <div class="clearfix"> </div><br><br>
@@ -41,6 +41,7 @@
 
 <script>
 jQuery(document).ready(function () {
+    ComponentsDateTimePickers.init();
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
             };
@@ -50,7 +51,7 @@ jQuery(document).ready(function () {
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('Vista_Reporte.Vista_Reporte',[$id]) }}';
+                    var route = '{{ route('vistaReporte.vistaReporte',[$id]) }}';
                     var type = 'POST';
                     var async = async || false;
 
@@ -89,7 +90,7 @@ jQuery(document).ready(function () {
     
     var table, url;
     table = $('#Listar_Pasante');
-    url = "{{ route('Listar_Evaluacion_Individual.Listar_Evaluacion_Individual',[$id]) }}";
+    url = "{{ route('listarEvaluacionIndividual.listarEvaluacionIndividual',[$id]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -170,7 +171,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Pregunta_Evaluacion/'+dataTable.PK_Evaluacion;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

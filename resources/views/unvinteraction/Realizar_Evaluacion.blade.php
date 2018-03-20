@@ -1,33 +1,20 @@
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'EVALUACION'])
-  {!! Form::open (['method'=>'POST', 'route'=> ['Registrar_Evaluacion.Registrar_Evaluacion',$N,$id,$convenio], 'role'=>"form"]) !!}
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'EVALUACION'])
+ {!! Form::open (['method'=>'POST', 'route'=> ['registrarEvaluacion.registrarEvaluacion',$N,$id,$convenio], 'role'=>"form"]) !!}
 @if($Pregunta)
-
-        <?php
-        $N=0;
-         ;
-        ?> 
-
-        @foreach($Pregunta as $row)
+@php $N=0; @endphp 
+@foreach($Pregunta as $row)
 <div class="lead">
     <strong>
-        <?php
-        $N=$N+1;
-echo $N.")";
-?> 
+        @php 
+        $N=$N+1; 
+        echo $N.")";
+        @endphp
     </strong>
-    {{ $row->Enunciado}}
-</div> 
-        
-
-    {!! Field::hidden('Pregunta_'.$N, $row->PK_Preguntas) !!}   
-  <?php
-        
-        ?> 
-    {!! Field::radios( 'Respuesta_'.$row->PK_Preguntas,
-                            ['1' => 'Deficiente', '2' => 'Insuficioente','3' => 'Aceptable', '4' => 'Sobresaliente','5' => 'Excelente'],
-                            
-                            ['list', 'label' => 'Selecciona una opcion']) !!}
+    {{ $row->PRGT_Enunciado}}
+</div>
+{!! Field::hidden('Pregunta_'.$N, $row->PK_PRGT_Pregunta) !!}   
+   
+    {!! Field::radios('Respuesta_'.$row->PK_PRGT_Pregunta,['1' => 'Deficiente', '2' => 'Insuficioente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente'],['list', 'label' => 'Selecciona una opcion']) !!}
  
     @endforeach
 @endif
@@ -42,14 +29,8 @@ jQuery(document).ready(function () {
 
   $('.atras').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('Documentos_Convenios.Documentos_Convenios',[$convenio]) }}';
+            var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio]) }}';
             $(".content-ajax").load(route);
         });
-     $('.atras').on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('Registrar_Evaluacion.Registrar_Evaluacion',[$N,$id,$convenio]) }}';
-            $(".content-ajax").load(route);
-        });
-  
 });
 </script>

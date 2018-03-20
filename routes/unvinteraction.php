@@ -99,9 +99,9 @@ Route::get('listarSedes', [
     'as' => 'listarSedes.listarSedes',
     'uses' => $controller.'controllerAdministrador@listarSedes'
 ]);
-Route::post('Resgistrar_Sedes', [
-    'as' => 'Resgistrar_Sedes.Resgistrar_Sedes',
-    'uses' => $controller.'controllerAdministrador@Resgistrar_Sedes'
+Route::post('resgistrarSedes', [
+    'as' => 'resgistrarSedes.resgistrarSedes',
+    'uses' => $controller.'controllerAdministrador@resgistrarSedes'
 ]);
 Route::get('editarSedes/{id}', [
     'as' => 'editarSedes.editarSedes',
@@ -126,9 +126,9 @@ Route::get('listarEstados', [
     'as' => 'listarEstados.listarEstados',
     'uses' => $controller.'controllerAdministrador@listarEstados'
 ]);
-Route::post('registrarEstados', [
-    'as' => 'registrarEstados.registrarEstados',
-    'uses' => $controller.'controllerAdministrador@registrarEstados'
+Route::post('resgistrarEstados', [
+    'as' => 'resgistrarEstados.resgistrarEstados',
+    'uses' => $controller.'controllerAdministrador@resgistrarEstados'
 ]);
 Route::get('editarEstado/{id}', [
     'as' => 'editarEstado.editarEstado',
@@ -243,9 +243,9 @@ Route::get('pregunta', [
     'as' => 'pregunta.pregunta', 
     'uses' => $controller.'controllerEvaluaciones@Pregunta'
 ]);
-Route::get('PreguntaAjax', [    
-    'as' => 'PreguntaAjax.PreguntaAjax', 
-    'uses' => $controller.'controllerEvaluaciones@PreguntaAjax'
+Route::get('preguntaAjax', [    
+    'as' => 'preguntaAjax.preguntaAjax', 
+    'uses' => $controller.'controllerEvaluaciones@preguntaAjax'
 ]);
 
 Route::get('editarPregunta/{id}', [    

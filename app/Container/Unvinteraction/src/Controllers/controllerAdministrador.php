@@ -31,30 +31,52 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class controllerAdministrador extends Controller
 {
+     /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     private $path='unvinteraction'; 
     //_____________________SEDES____________________
+    /*funcion para mostrar la vista principal de las sedes
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function sedes()
     {
-        //
         return view($this->path.'.Listar_Sedes');
-    }public function sedesAjax()
+    }
+    
+    /*funcion para mostrar la vista ajax de las sedes
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    *
+    */
+    public function sedesAjax()
     {
-        //
         return view($this->path.'.Listar_Sedes_Ajax');
     }
-     public function listarSedes()
+    
+    /*funcion para envio de los datos para la tabla de datos
+    *
+    *@return Yajra\DataTables\DataTable
+    */
+    public function listarSedes()
     {
         //
-         $Sedes=TBL_Sede::all();
+         $Sedes=Sede::all();
          return Datatables::of($Sedes)->addIndexColumn()->make(true);
     }
    
-     public function resgistrarSedes(Request $request)
+    /*funcion para registrar una nueva sede
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function resgistrarSedes(Request $request)
     {
           if($request->ajax() && $request->isMethod('POST'))
         {
-            $Sede = new TBL_Sede();
-            $Sede->Sede= $request->Sede;
+            $Sede = new Sede();
+            $Sede->SEDE_Sede= $request->SEDE_Sede;
             $Sede->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -69,28 +91,35 @@ class controllerAdministrador extends Controller
             );
         }
     }
+    
+    /*funcion para buscar una sede y enviar la informacion 
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function editarSedes($id)
     {
-        //
-        $Sede= TBL_Sede::findOrFail($id);
+        $Sede=Sede::findOrFail($id);
         return view($this->path.'.Editar_Sedes', compact('Sede'));
     }
+    
+    /*funcion para registrar los nuevo datos dela sede
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
      public function  modificarSedes(Request $request, $id)
     {
-         if($request->ajax() && $request->isMethod('POST'))
-        {
-        $Sede= TBL_Sede::findOrFail($id);
-        $Sede->Sede =$request->Sede;
-        $Sede->save();
-        return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Sede editada correctamente.'
-            );
-        }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
+         if($request->ajax() && $request->isMethod('POST')){
+             $Sede= Sede::findOrFail($id);
+             $Sede->save();
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede editada correctamente.'
+             );
+         }
+         else{
+             return AjaxResponse::fail(
+                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
@@ -98,33 +127,49 @@ class controllerAdministrador extends Controller
     
     //______________________END_SEDES_________
     //________________________EMPRESAS____________________
+     
+    /*funcion para mostrar la vista principal de las empresas
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function empresas()
     {
         //
         return view($this->path.'.Listar_Empresas');
     }
+    /*funcion para mostrar la vista ajax de las empresas
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    *
+    */
     public function empresasAjax()
     {
         //
         return view($this->path.'.Listar_Empresas_Ajax');
     }
+    /*funcion para registrar una nueva empresa
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function listarEmpresas()
     {
         //
-        $Empresa=TBL_Empresa::all();
-         return Datatables::of($Empresa)->addIndexColumn()->make(true);
+        $Empresa = Empresa::all();
+        return Datatables::of($Empresa)->addIndexColumn()->make(true);
     }
-   
+   /*funcion para registrar una nueva empresa
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function registroEmpresa(Request $request)
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
-            $Empresa = new TBL_Empresa();
-            $Empresa->PK_Empresa = $request->PK_Empresa;
-            $Empresa->Nombre_Empresa= $request->Nombre_Empresa;
-            $Empresa->Razon_Social = $request->Razon_Social;
-            $Empresa->Telefono = $request->Telefono;
-            $Empresa->Direccion = $request->Direccion;
+            $Empresa = new Empresa();
+            $Empresa->PK_EMPS_Empresa = $request->PK_EMPS_Empresa;
+            $Empresa->EMPS_Nombre_Empresa= $request->EMPS_Nombre_Empresa;
+            $Empresa->EMPS_Razon_Social = $request->EMPS_Razon_Social;
+            $Empresa->EMPS_Telefono = $request->EMPS_Telefono;
+            $Empresa->EMPS_Direccion = $request->EMPS_Direccion;
             $Empresa->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -139,20 +184,29 @@ class controllerAdministrador extends Controller
             );
         }
     }
+    /*funcion para buscar una empresa y enviar la informacion 
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function editarEmpresa($id)
     {
-        $Empresa= TBL_Empresa::findOrFail($id);
+        $Empresa = Empresa::findOrFail($id);
         return view($this->path.'.Editar_Empresa', compact('Empresa'));
     }
+    /*funcion para registrar los nuevo datos dela empresa
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function modificarEmpresa(Request $request, $id)
     { 
         if($request->ajax() && $request->isMethod('POST'))
         {
-        $Empresa= TBL_Empresa::findOrFail($id);
-        $Empresa->Nombre_Empresa =$request->Nombre_Empresa;
-        $Empresa->Razon_Social =$request->Razon_Social;
-        $Empresa->Telefono =$request->Telefono;
-        $Empresa->Direccion =$request->Direccion;
+        $Empresa= Empresa::findOrFail($id);
+        $Empresa->EMPS_Nombre_Empresa =$request->EMPS_Nombre_Empresa;
+        $Empresa->EMPS_Razon_Social =$request->EMPS_Razon_Social;
+        $Empresa->EMPS_Telefono =$request->EMPS_Telefono;
+        $Empresa->EMPS_Direccion =$request->EMPS_Direccion;
         $Empresa->save();
          return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -169,30 +223,44 @@ class controllerAdministrador extends Controller
     }
     //____________________END___EMPRESAS___________________
     //___________________ESTADOS___________________________
-    
+    /*funcion para mostrar la vista principal de las Estados
+    *@return \Illuminate\Http\Response
+    *
+    */
     public function estados()
     {
         //
         return view($this->path.'.Listar_Estados');
     }
+    /*funcion para mostrar la vista ajax de las Estados
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    *
+    */
      public function estadosAjax()
     {
         //
         return view($this->path.'.Listar_Estados_Ajax');
     }
-     public function listarEstados()
+    /*funcion para registrar una nueva Estado
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function listarEstados()
     {
-        //
-         $Estado=TBL_Estado::all();
+        
+         $Estado= Estado ::all();
          return Datatables::of($Estado)->addIndexColumn()->make(true);
     }
-   
-     public function resgistrarEstados(Request $request)
+   /*funcion para registrar una nueva Estado
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function resgistrarEstados(Request $request)
     {
           if($request->ajax() && $request->isMethod('POST'))
         {
-            $Estado = new TBL_Estado();
-            $Estado->Estado= $request->Estado;
+            $Estado = new Estado();
+            $Estado->ETAD_Estado= $request->ETAD_Estado;
             $Estado->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -207,18 +275,26 @@ class controllerAdministrador extends Controller
             );
         }
     }
+    /*funcion para buscar una Estado y enviar la informacion 
+    *@param int id
+    *@return \Illuminate\Http\Response
+    */
     public function editarEstado($id)
     {
-        $Estado= TBL_Estado::findOrFail($id);
-        
+        $Estado = Estado :: findOrFail($id);
         return view($this->path.'.Editar_Estados', compact('Estado'));
     }
-     public function modificarEstados(Request $request, $id)
+    /*funcion para registrar los nuevo datos dela Estado
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function modificarEstados(Request $request, $id)
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
-        $Estado= TBL_Estado::findOrFail($id);
-        $Estado->Estado =$request->Estado;
+        $Estado= Estado ::findOrFail($id);
+        $Estado->ETAD_Estado =$request->ETAD_Estado;
         $Estado->save();
          return AjaxResponse::success(
                 '¡Bien hecho!',

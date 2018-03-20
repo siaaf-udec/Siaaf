@@ -1,19 +1,16 @@
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR CONVENIOS'])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR CONVENIOS'])
 @permission(['Add_Convenio'])
- <div class="col-md-12">
-                    <div class="actions">
-                        <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
+<div class="col-md-12">
+    <div class="actions">
+        <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
  @endpermission
-
-    <div class="row">
-        <div class="clearfix"> </div><br><br>
-        <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios'])
-            
-                @slot('columns', [
+<div class="row">
+    <div class="clearfix"> </div><br><br>
+    <div class="col-md-12">
+        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios'])
+        @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'Codigo',
                     'Tipo',
@@ -25,25 +22,22 @@
     @endcomponent
  <!-- Modal agregar Tipo -->
 <div class="col-md-12">
-                    <!-- Modal -->
-                    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header modal-header-success">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
-                                </div>
-                                <div class="modal-body">
-                                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Tipo-Pregunta']) !!}
-                                <div class="form-wizard">
-                                {!! Field:: text('Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
-                    
-                              <div class="form-actions">
+    <!-- Modal -->
+    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Tipo-Pregunta']) !!}
+                    <div class="form-wizard">
+                        {!! Field:: text('TPPG_Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
+                        <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    
-                                  
                                 </div>
                                 <div class="modal-footer">
                                     {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
@@ -55,12 +49,15 @@
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+</div>
 
 <script>
 jQuery(document).ready(function () {
     var table, url;
     table = $('#Listar_Convenios');
-    url = "{{ route('Listar_Tipo_Pregunta.Listar_Tipo_Pregunta') }}";
+    url = "{{ route('listarTipoPregunta.listarTipoPregunta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -98,8 +95,8 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Tipo_Pregunta', "visible": true, name:"documento" },
-           {data: 'Tipo', searchable: true},
+           {data: 'PK_TPPG_Tipo_Pregunta', "visible": true, name:"documento" },
+           {data: 'TPPG_Tipo', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -133,31 +130,30 @@ jQuery(document).ready(function () {
             $('#agregar').modal('toggle');
         });
     
-       table = table.DataTable();
+    
+     table = table.DataTable();
      table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Editar_Tipo_Pregunta/'+dataTable.PK_Tipo_Pregunta;
-
-            $(".content-ajax").load(route_edit);
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarTipoPregunta/'+dataTable.PK_TPPG_Tipo_Pregunta;
+         $(".content-ajax").load(route_edit);
         });
-    
    $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
-            };
-            
-    var form=$('#form-Agregar-Tipo-Pregunta');
-    var wizard =  $('#form_wizard_1');
+            TPPG_Tipo: {required: true},
+    };
+    var form    =  $('#form-Agregar-Tipo-Pregunta');
+    var wizard  =  $('#form_wizard_1');
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('Agregar_Tipo_Pregunta.Agregar_Tipo_Pregunta') }}';
+                    var route = '{{ route('agregarTipoPregunta.agregarTipoPregunta') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('Tipo', $('#Tipo').val());
+                    formData.append('TPPG_Tipo', $('#TPPG_Tipo').val());
                     
                     $.ajax({
                         url: route,

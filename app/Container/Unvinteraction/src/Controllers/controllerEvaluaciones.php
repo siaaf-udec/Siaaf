@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Container\Unvinteraction\src\Controllers;
-use App\Container\Unvinteraction\src\Tipo_Pregunta;
+use App\Container\Unvinteraction\src\TipoPregunta;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
 use App\Container\Unvinteraction\src\Evaluacion;
-use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\Preguntas;
+use App\Container\Unvinteraction\src\EvaluacionPregunta;
+use App\Container\Unvinteraction\src\Pregunta;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
-use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\EmpresasParticipantes;
 use App\Container\Unvinteraction\src\Empresa;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Users\Src\Interfaces\UserInterface;
@@ -51,10 +51,9 @@ class controllerEvaluaciones extends Controller
     */
     public function agregarTipoPregunta(Request $request)
     {
-        if($request->ajax() && $request->isMethod('POST'))
-        {
-            $Tipo = new TBL_Tipo_Pregunta();
-           $Tipo->Tipo= $request->Tipo;
+        if($request->ajax() && $request->isMethod('POST')){
+            $Tipo = new TipoPregunta();
+            $Tipo->TPPG_Tipo= $request->TPPG_Tipo;
             $Tipo->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -75,7 +74,7 @@ class controllerEvaluaciones extends Controller
     */
     public function listarTipoPregunta()
     {
-         $Pregunta = TBL_Tipo_Pregunta::all();
+         $Pregunta = TipoPregunta::all();
          return Datatables::of($Pregunta)->addIndexColumn()->make(true);
     }
     /*funcion para buscar un Tipo de pregunta y enviar la informacion de un Tipo de pregunta
@@ -84,7 +83,7 @@ class controllerEvaluaciones extends Controller
     */
     public function editarTipoPregunta($id)
     {
-        $Pregunta = TBL_Tipo_Pregunta::findOrFail($id);
+        $Pregunta = TipoPregunta::findOrFail($id);
         return view($this->path.'.Editar_Tipo_Pregunta', compact('Pregunta'));
     }
     /*funcion para registrar los nuevo datos de tipo de pregunta
@@ -94,14 +93,11 @@ class controllerEvaluaciones extends Controller
     */
     public function modificarTipoPregunta(Request $request,$id)
     {
-      if($request->ajax() && $request->isMethod('POST'))
-        {
-        $Pregunta= TBL_Tipo_Pregunta::findOrFail($id);
-        $Pregunta->Tipo=$request->Tipo;
-        
-        $Pregunta->save();
-             
-        return AjaxResponse::success(
+      if($request->ajax() && $request->isMethod('POST')){
+          $Pregunta= TipoPregunta::findOrFail($id);
+          $Pregunta->TPPG_Tipo=$request->TPPG_Tipo;
+          $Pregunta->save();
+          return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
@@ -121,7 +117,7 @@ class controllerEvaluaciones extends Controller
     */
     public function pregunta()
     {
-        $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
+        $Pregunta = TipoPregunta::select('PK_TPPG_Tipo_Pregunta','TPPG_Tipo')->pluck('TPPG_Tipo','PK_TPPG_Tipo_Pregunta')
                 ->toArray();  
        
        return view($this->path.'.listar_Pregunta',compact('Pregunta'));
@@ -133,20 +129,24 @@ class controllerEvaluaciones extends Controller
     */
     public function preguntaAjax()
     {
-       $Pregunta = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
+       $Pregunta = TipoPregunta::select('PK_TPPG_Tipo_Pregunta','TPPG_Tipo')->pluck('TPPG_Tipo','PK_TPPG_Tipo_Pregunta')
                 ->toArray();  
+        
        return view($this->path.'.listar_Pregunta_Ajax',compact('Pregunta'));
       
     }
+    /*funcion para registrar una nueva pregunta
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
      public function agregarPregunta(Request $request)
     {
-         $Pregunta = TBL_Tipo_Pregunta::all(); 
+         $Pregunta = TipoPregunta::all(); 
         if($request->ajax() && $request->isMethod('POST'))
         {
-            $Tipo = new TBL_Preguntas();
-            $Tipo->Enunciado= $request->Enunciado;
-            $Tipo->FK_TBL_Tipo_Pregunta= $request->FK_TBL_Tipo_Pregunta;
-            
+            $Tipo = new Pregunta();
+            $Tipo->PRGT_Enunciado= $request->PRGT_Enunciado;
+            $Tipo->FK_TBL_Tipo_Pregunta_Id= $request->FK_TBL_Tipo_Pregunta_Id;
             $Tipo->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -167,10 +167,10 @@ class controllerEvaluaciones extends Controller
     */
      public function listarPregunta()
     {
-      $Pregunta = TBL_Preguntas::select('PK_Preguntas','Enunciado','FK_TBL_Tipo_pregunta')
+      $Pregunta = Pregunta::select('PK_PRGT_Pregunta','PRGT_Enunciado','FK_TBL_Tipo_Pregunta_Id')
             ->with([
-                    'preguntas_tiposPreguntas'=>function ($query) {
-                    $query->select('PK_Tipo_Pregunta','Tipo');
+                    'preguntaTiposPregunta'=>function ($query) {
+                    $query->select('PK_TPPG_Tipo_Pregunta','TPPG_Tipo');
                     }
             ])
             ->get();
@@ -184,8 +184,8 @@ class controllerEvaluaciones extends Controller
     */
     public function editarPregunta($id)
     {
-        $Pregunta = TBL_Preguntas::findOrFail($id);
-        $Pregunta1 = TBL_Tipo_Pregunta::select('PK_Tipo_Pregunta','Tipo')->pluck('Tipo','PK_Tipo_Pregunta')
+        $Pregunta = Pregunta::findOrFail($id);
+        $Pregunta1 = TipoPregunta::select('PK_TPPG_Tipo_Pregunta','TPPG_Tipo')->pluck('TPPG_Tipo','PK_TPPG_Tipo_Pregunta')
                 ->toArray();  
         return view($this->path.'.Editar_Pregunta', compact('Pregunta','Pregunta1'));
        
@@ -198,9 +198,9 @@ class controllerEvaluaciones extends Controller
     public function modificarPregunta(Request $request,$id)
     {
         if($request->ajax() && $request->isMethod('POST')) {
-            $Pregunta= TBL_Preguntas::findOrFail($id);
-            $Pregunta->Enunciado=$request->Enunciado;
-            $Pregunta->FK_TBL_Tipo_Pregunta =$request->FK_TBL_Tipo_Pregunta;
+            $Pregunta= Pregunta::findOrFail($id);
+            $Pregunta->PRGT_Enunciado=$request->PRGT_Enunciado;
+            $Pregunta->FK_TBL_Tipo_Pregunta_Id =$request->FK_TBL_Tipo_Pregunta_Id;
             $Pregunta->save();
             return AjaxResponse::success('¡Bien hecho!','Datos modificados correctamente.');
         } else {
@@ -211,19 +211,20 @@ class controllerEvaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
+    
     public function evaluaciones()
     {
-        
-         return view($this->path.'.listar_Evaluaciones');
-       
+        return view($this->path.'.listar_Evaluaciones');
     }
+    
     /*funcion para envio de los datos para la tabla de datos
     *
     *@return Yajra\DataTables\DataTable
     */
+    
     public function listarEvaluacionesEmpresas()
     {
-       $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',1)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+       $Evaluacion=Evaluacion::where('Tipo_Evaluacion',1)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
             ->with([
                     'convenios_Evaluacion'=>function ($query) {
                         $query->select('PK_Convenios','Nombre');
@@ -322,8 +323,8 @@ class controllerEvaluaciones extends Controller
         if( $decicion2==2 and  $decicion==2){
             $tipo=4;
         }
-        $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
-        $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
+        $Pregunta= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',$tipo)->get();
+        $N= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',$tipo)->count();
         return view($this->path.'.Realizar_Evaluacion',compact('Pregunta','id','N','convenio'));
     }
     /*funcion para guardar las preguntas de la evaluacion y los datos correspondientes a esta misma para un usuario
@@ -337,31 +338,31 @@ class controllerEvaluaciones extends Controller
     {
         $carbon = new \Carbon\Carbon();
         try{
-            $Evaluacion = new TBL_Evaluacion();
-            $Evaluacion->Evaluador = $request->user()->identity_no;
-            $Evaluacion->Evaluado = $id;
-            $Evaluacion->FK_TBL_Convenios= $convenio;
-            $Evaluacion->Tipo_Evaluacion= 2;
-            $Evaluacion->Nota_Final= 0;
-            $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
+            $Evaluacion = new Evaluacion();
+            $Evaluacion->VLCN_Evaluador = $request->user()->identity_no;
+            $Evaluacion->VLCN_Evaluado = $id;
+            $Evaluacion->FK_TBL_Convenio_Id= $convenio;
+            $Evaluacion->VLCN_Tipo_Evaluacion= 2;
+            $Evaluacion->VLCN_Nota_Final= 0;
+            $Evaluacion->VLCN_Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
             //saber que evaluacion es 
-            $id_Evaluacion=$Evaluacion->PK_Evaluacion;
+            $id_Evaluacion=$Evaluacion->PK_VLCN_Evaluacion;
             $Nota_Final=0.000;
             for($i=1;$i<=$n;$i++){
                 $IDpregunta="Pregunta_".$i;
                 $IDrespuesta='Respuesta_'.$request->$IDpregunta;
-                $resultado= new TBL_Evaluacion_Preguntas();
-                $resultado->Puntuacion=$request->$IDrespuesta;
-                $resultado->FK_TBL_Evaluacion=$id_Evaluacion;
-                $resultado->FK_TBL_Preguntas=$request->$IDpregunta;
+                $resultado= new EvaluacionPregunta();
+                $resultado->VCPT_Puntuacion=$request->$IDrespuesta;
+                $resultado->FK_TBL_Evaluacion_Id=$id_Evaluacion;
+                $resultado->FK_TBL_Pregunta_Id=$request->$IDpregunta;
                 $resultado->save();
                 $Nota_Final= $Nota_Final + $request->$IDrespuesta;
             }
             //promedio entre el resultado de las preguntas para sacar una nota promedio final
             $Nota_Final=$Nota_Final / $n;
-            $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
-            $evaluacion->Nota_Final =$Nota_Final;
+            $evaluacion= Evaluacion::findOrFail($id_Evaluacion);
+            $evaluacion->VLCN_Nota_Final =$Nota_Final;
             $evaluacion->save();
             return view('unvinteraction.listar_Mis_Convenios');
         }catch(Exception $e){
@@ -466,20 +467,20 @@ class controllerEvaluaciones extends Controller
     */
     public function listarEvaluacionIndividual($id)
     {
-        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+        $Evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
             ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
             ])
             ->with([
-                'evaluado_U'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                'evaluado'=>function ($query) {
+                    $query->select('PK_USER_Usuario');
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario');
                 }
             ])
             ->get();  

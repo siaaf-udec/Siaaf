@@ -2,19 +2,17 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\Usuarios;
-use App\Container\Unvinteraction\src\Tipo_Usuario;
-use App\Container\Unvinteraction\src\Estado_Usuario;
+use App\Container\Unvinteraction\src\Usuario;
 use App\Container\Unvinteraction\src\Carrera;
 use App\Container\Unvinteraction\src\Facultad;
 use App\Container\Unvinteraction\src\Documentacion;
-use App\Container\Unvinteraction\src\Convenios;
+use App\Container\Unvinteraction\src\Convenio;
 use App\Container\Unvinteraction\src\Evaluacion;
-use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\EvaluacionPreguntas;
 use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
-use App\Container\Unvinteraction\src\Empresas_Participantes;
+use App\Container\Unvinteraction\src\EmpresaParticipante;
 use App\Container\Unvinteraction\src\Empresa;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\Documentacion_Extra;
@@ -44,8 +42,9 @@ class controllerConvenios extends Controller
     */
     public function convenios()
     {
-        $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
+        $Sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
         return view($this->path.'.Listar_Convenios', compact('Sede'));
+       
     }
     /*funcion para mostrar la vista ajax de los convenios
     *@return App\Container\Overall\Src\Facades\AjaxResponse
@@ -53,7 +52,7 @@ class controllerConvenios extends Controller
     */
     public function conveniosAjax()
     {
-        $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
+        $Sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
         return view($this->path.'.Listar_Convenios_Ajax', compact('Sede'));
     }
     /*funcion para mostrar la vista principal de los convenios por usuario
@@ -70,16 +69,16 @@ class controllerConvenios extends Controller
     */
     public function listarMisConvenios(Request $request)
     {
-        $Convenio= TBL_Participantes::where('FK_TBL_Usuarios', '=', $request->user()->identity_no)->select('FK_TBL_Convenios')
+        $Convenio= Participantes::where('FK_TBL_Usuarios_Id', '=', $request->user()->identity_no)->select('FK_TBL_Convenio_Id')
             ->with([
-                    'convenios_Participantes'=>function ($query) {
-                    $query->select('PK_Convenios','Nombre','Fecha_Inicio','Fecha_Fin','FK_TBL_Estado','FK_TBL_Sede');
+                    'conveniosParticipante'=>function ($query) {
+                    $query->select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id');
                     $query->with([
-                        'convenios_Estados'=>function ($query) {
-                            $query->select('PK_Estado','Estado');
+                        'convenioEstado'=>function ($query) {
+                            $query->select('PK_ETAD_Estado','ETAD_Estado');
                         },
-                        'convenios_Sedes'=>function ($query) {
-                            $query->select('PK_Sede','Sede');
+                        'convenioSede'=>function ($query) {
+                            $query->select('PK_SEDE_Sede','SEDE_Sede');
                         }    
                     ]);
                 }
@@ -93,17 +92,18 @@ class controllerConvenios extends Controller
     */
     public function listarConvenios()
     {
-        $Convenio= TBL_Convenios::select('PK_Convenios','Nombre','Fecha_Inicio', 'Fecha_Fin','FK_TBL_Sede','FK_TBL_Estado')
+        $Convenio= Convenio::select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio', 'CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id')
             ->with([
-                    'convenios_Sedes'=>function ($query) {
-                    $query->select('PK_Sede','Sede');
+                    'convenioSede'=>function ($query) {
+                    $query->select('PK_SEDE_Sede','SEDE_Sede');
                     
                     },
-                    'convenios_Estados'=>function ($query) {
-                    $query->select('PK_Estado','Estado');
+                    'convenioEstado'=>function ($query) {
+                    $query->select('PK_ETAD_Estado','ETAD_Estado');
                     
                     }
             ])->get();
+        //var_dump($Convenio);
         return Datatables::of($Convenio)->addIndexColumn()->make(true);
     }
     /*funcion para registrar un nuevo convenio
@@ -113,12 +113,12 @@ class controllerConvenios extends Controller
     public function registroConvenios(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $convenio = new TBL_Convenios();
-            $convenio->Nombre= $request->Nombre;
-            $convenio->Fecha_Inicio = $request->Fecha_Inicio;
-            $convenio->Fecha_Fin = $request->Fecha_Fin;
-            $convenio->FK_TBL_Estado = 1;
-            $convenio->FK_TBL_Sede = $request->FK_TBL_Sede;
+            $convenio = new Convenio();
+            $convenio->CVNO_Nombre= $request->CVNO_Nombre;
+            $convenio->CVNO_Fecha_Inicio = $request->CVNO_Fecha_Inicio;
+            $convenio->CVNO_Fecha_Fin = $request->CVNO_Fecha_Fin;
+            $convenio->FK_TBL_Estado_Id = 1;
+            $convenio->FK_TBL_Sede_Id = $request->FK_TBL_Sede_Id;
             $convenio->save();
             return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
         } else {
@@ -131,9 +131,9 @@ class controllerConvenios extends Controller
     */
     public function editarConvenios($id)
     {
-        $Convenio= TBL_Convenios::findOrFail($id);
-        $Sede = TBL_Sede::select('PK_Sede', 'Sede')->pluck('Sede', 'PK_Sede')->toArray();
-        $Estado = TBL_Estado::select('PK_Estado', 'Estado')->pluck('Estado', 'PK_Estado')->toArray();
+        $Convenio   = Convenio::findOrFail($id);
+        $Sede       = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+        $Estado     = Estado::select('PK_ETAD_Estado', 'ETAD_Estado')->pluck('ETAD_Estado', 'PK_ETAD_Estado')->toArray();
         return view($this->path.'.Editar_Convenios', compact('Convenio', 'Sede', 'Estado'));
     }
     /*funcion para registrar los nuevo datos del convenio
@@ -144,12 +144,12 @@ class controllerConvenios extends Controller
     public function modificarConvenios(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $convenio= TBL_Convenios::findOrFail($id);
-            $convenio->Nombre =$request->Nombre;
-            $convenio->Fecha_Inicio =$request->Fecha_Inicio;
-            $convenio->Fecha_Fin =$request->Fecha_Fin;
-            $convenio->FK_TBL_Estado =$request->FK_TBL_Estado;
-            $convenio->FK_TBL_Sede =$request->FK_TBL_Sede;
+            $convenio= Convenio::findOrFail($id);
+            $convenio->CVNO_Nombre =$request->CVNO_Nombre;
+            $convenio->CVNO_Fecha_Inicio =$request->CVNO_Fecha_Inicio;
+            $convenio->CVNO_Fecha_Fin =$request->CVNO_Fecha_Fin;
+            $convenio->FK_TBL_Estado_Id =$request->FK_TBL_Estado_Id;
+            $convenio->FK_TBL_Sede_Id =$request->FK_TBL_Sede_Id;
             $convenio->save();
             return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
         } else {
@@ -170,8 +170,8 @@ class controllerConvenios extends Controller
     */
     public function listarDocumentosConvenios($id)
     {
-        $documento = TBL_Documentacion::select('PK_Documentacion', 'Entidad', 'Ubicacion')
-            ->where('FK_TBL_Convenios', $id)->get();
+        $documento = Documentacion::select('PK_DOCU_Documentacion', 'DOCU_Nombre', 'DOCU_Ubicacion')
+            ->where('FK_TBL_Convenio_Id', $id)->get();
         return Datatables::of($documento)->addIndexColumn()->make(true);
     }
     /*funcion para el envio de datos para la tabla listar particioantes del convenio
@@ -180,12 +180,17 @@ class controllerConvenios extends Controller
     */
     public function listarParticipantesConvenios($id)
     {
-        $participante = TBL_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Participantes', 'FK_TBL_Usuarios')
+        $participante = Participantes::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_PTPT_Participantes', 'FK_TBL_Usuarios_Id')
             ->with([
-                    'usuarios_Participantes'=>function ($query) {
-                    $query->select('name', 'lastname', 'identity_no');
+                    'usuariosParticipantes'=>function ($query) {
+                    $query->select( 'PK_USER_Usuario','USER_FK_Users')->with([
+                    'datoUsuario'=>function ($query) {
+                                $query->select('id','name','lastname','identity_no');
+                            }
+                        ]);
                     }
             ])
+             
             ->get();
         return Datatables::of($participante)->addIndexColumn()->make(true);
     }
@@ -195,10 +200,10 @@ class controllerConvenios extends Controller
     */
     public function listarEmpresasParticipantesConvenios($id)
     {
-        $EM_participante =  TBL_Empresas_Participantes::where('FK_TBL_Convenios', '=', $id)->select('PK_Empresas_Participantes','FK_TBL_Empresa')
+        $EM_participante =  EmpresaParticipante::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_EMPT_Empresa_Participante','FK_TBL_Empresa_Id')
             ->with([
-                    'patricipantes_Empresas'=>function ($query) {
-                    $query->select('PK_Empresa','Nombre_Empresa');
+                    'patricipantesEmpresas'=>function ($query) {
+                    $query->select('PK_EMPS_Empresa','EMPS_Nombre_Empresa');
                     }
             ])
             ->get();
@@ -211,13 +216,21 @@ class controllerConvenios extends Controller
     */
     public function empresaConvenio(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {
-            $Empresa = new TBL_Empresas_Participantes();
-            $Empresa->FK_TBL_Empresa = $request->FK_TBL_Empresa;
-            $Empresa->FK_TBL_Convenios= $request->id;
-            $Empresa->save();
-            return AjaxResponse::success('¡Bien hecho!', 'empresa agregada correctamente.');
-        } else {
+       if ($request->ajax() && $request->isMethod('POST')) {
+           $ident=$request->FK_TBL_Empresa;
+            $conve =$id;
+            // saber si el usuario se encuentra en el convenio
+           if($empresa= EmpresaParticipante::where('FK_TBL_Empresa_Id','=',$ident)->where('FK_TBL_Convenio_Id','=',$conve)->count()){
+               return AjaxResponse::fail('¡Lo sentimos!', 'El usuario ya pertenece ael convenio.');
+            }else{
+               //insertamos la empresa en el convenio
+               $empresa= new EmpresaParticipante();
+               $empresa->FK_TBL_Convenio_Id=$conve;
+               $empresa->FK_TBL_Empresa_Id=$ident;
+               $empresa->save();
+               return AjaxResponse::success('¡Bien hecho!', 'Empresa agregada correctamente.');
+           }
+         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
     }
@@ -229,14 +242,43 @@ class controllerConvenios extends Controller
     public function participanteConvenio(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $Participante = new TBL_Participantes();
-            $Participante->FK_TBL_Usuarios = $request->identity_no;
-            $Participante->FK_TBL_Convenios= $request->id;
-            $Participante->save();
-            return AjaxResponse::success('¡Bien hecho!', 'usuario agregado correctamente.');
+        //saber si el usuario existe
+            $identi=$request->identity_no;
+            $conve =$id;
+            if($usuario=user::where('identity_no','=',$identi)->select('id')->count()){
+                //saber si se encuntra en el modulo
+                if(!$usuariomodulo= Usuario::where('USER_FK_Users','=',$identi)->count()){
+                    //insertamos el usuario al modulo
+                    $usuariomodulo= new Usuario();
+                    $usuariomodulo->PK_USER_Usuario = $identi;
+                    $usuariomodulo->USER_FK_Users = $identi;
+                    $usuariomodulo->save();
+                    //insertamos el usuario en el convenio
+                    $participante= new Participantes();
+                    $participante->FK_TBL_Convenio_Id=$conve;
+                    $participante->FK_TBL_Usuarios_Id=$identi;
+                    $participante->save();
+                    return AjaxResponse::success('¡Bien hecho!', 'Usuario agregado correctamente.');
+
+                }else{
+                    // saber si el usuario se encuentra en el convenio
+                    if($participante= Participantes::where('FK_TBL_Usuarios_Id','=',$identi)->where('FK_TBL_Convenio_Id','=',$conve)->count()){
+                        return AjaxResponse::fail('¡Lo sentimos!', 'El usuario ya pertenece ael convenio.');
+                    }else{
+                        $participante= new Participantes();
+                        $participante->FK_TBL_Convenio_Id=$conve;
+                        $participante->FK_TBL_Usuarios_Id=$identi;
+                        $participante->save();
+                        return AjaxResponse::success('¡Bien hecho!', 'Usuario agregado correctamente.');
+                    }
+                }
+            }else{
+                return AjaxResponse::fail('¡Lo sentimos!', 'El usuario no se encuentra registrado.');
+            }
         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
+       
     }
     
     

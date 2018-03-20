@@ -20,7 +20,7 @@ class Evaluacion extends Model
     */        
      public function conveniosEvaluacion()
     {
-        return $this->belongsto(Convenios::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
+        return $this->belongsto(Convenio::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
 
     /*
@@ -33,6 +33,23 @@ class Evaluacion extends Model
         return $this->hasMany(EvaluacionPregunta::class, 'FK_TBL_Evaluacion_Id', 'PK_VLCN_Evaluacion');
     }
     
-    
+    /*
+    *Función de conexión entre las tablas de TBL_Evaluacion y TBL_usuarios
+    *por los campo de FK_TBL_Evaluacion y PK_Evaluacion
+    *para realizar las busquedas complementarias
+    */    
+    public function evaluador()
+    {
+         return $this->belongsTo(Usuario::class, 'VLCN_Evaluador', 'PK_USER_Usuario');
+    }
+    /*
+    *Función de conexión entre las tablas de TBL_Evaluacion y TBL_usuarios
+    *por los campo de FK_TBL_Evaluacion y PK_Evaluacion
+    *para realizar las busquedas complementarias
+    */    
+    public function evaluado()
+    {
+         return $this->belongsTo(Usuario::class, 'VLCN_Evaluado', 'PK_USER_Usuario');
+    }
     
 }

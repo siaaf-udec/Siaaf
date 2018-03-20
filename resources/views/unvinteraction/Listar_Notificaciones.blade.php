@@ -72,7 +72,7 @@ jQuery(document).ready(function () {
    
     var table, url;
     table = $('#Listar_Notificaciones');
-    url = "{{ route('Listar_Alerta.Listar_Alerta') }}";
+    url = "{{ route('listarAlerta.listarAlerta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -110,9 +110,9 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Notificacion', className:'none',"visible": true, name:"documento" },
-           {data: 'Titulo', searchable: true},
-           {data: 'Bandera', searchable: true},
+           {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"documento" },
+           {data: 'NTFC_Titulo', searchable: true},
+           {data: 'NTFC_Bandera', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',

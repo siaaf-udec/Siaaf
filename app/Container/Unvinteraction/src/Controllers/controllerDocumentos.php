@@ -48,11 +48,11 @@ class controllerDocumentos extends Controller
         foreach ($files as $file) {
             $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
         }
-        $Estado = new TBL_Documentacion();
-        $Estado->Entidad =$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-        $Estado->Ubicacion = $Ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
-        $Estado->FK_TBL_Convenios= $id;
-        $Estado->save();
+        $Documento = new Documentacion();
+        $Documento->DOCU_Nombre =$file->getClientOriginalName();
+        $Documento->DOCU_Ubicacion = $Ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
+        $Documento->FK_TBL_Convenio_Id= $id;
+        $Documento->save();
     }
     /*funcion para descargar el documento subido para el convenio
     *@param int id  
@@ -63,12 +63,11 @@ class controllerDocumentos extends Controller
     */
     public function documentoDescarga(Request $request, $id, $idc)
     {
-        $Ubicacion ="unvinteraction/convenios/".$id;
-        $Documento = TBL_Documentacion::select('TBL_Documentacion.Ubicacion')->where('PK_Documentacion', $id)->get();
+        $Documento = Documentacion::select('DOCU_Ubicacion')->where('PK_DOCU_Documentacion', $id)->get();
         foreach ($Documento as $row) {
-            if ($exists = Storage::disk('developer')->exists($row->Ubicacion)) {
-                $Contents = Storage::disk('developer')->get($row->Ubicacion);
-                return response()->download(storage_path()."/app/public/developer/".$row->Ubicacion, "documento.jpg");
+            if ($exists = Storage::disk('developer')->exists($row->DOCU_Ubicacion)) {
+                $Contents = Storage::disk('developer')->get($row->DOCU_Ubicacion);
+                return response()->download(storage_path()."/app/public/developer/".$row->DOCU_Ubicacion, $row->DOCU_Nombre);
                 return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
             } else {
                 return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');

@@ -20,7 +20,7 @@ class Participantes extends Model
     */     
     public function conveniosParticipante()
     {
-        return $this->belongsto(Convenios::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
+        return $this->belongsto(Convenio::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
     
     /*
@@ -28,8 +28,8 @@ class Participantes extends Model
     *por los campo de FK_TBL_Usuarios y identity_no
     *para realizar las busquedas complementarias
     */      
-    public function usuariosParticipante()
+    public function usuariosParticipantes()
     {
-        return $this->belongsto(Usuario, 'FK_TBL_Usuarios_Id', 'PK_USER_Usuario');
+        return $this->belongsto( Usuario::class, 'FK_TBL_Usuarios_Id', 'PK_USER_Usuario');
     }
 }
