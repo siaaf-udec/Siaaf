@@ -71,4 +71,40 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::group(['prefix' => 'help'], function (){
+        $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
+
+        //ruta que conduce al controlador para mostrar el registro de usuarios
+        Route::get('index', [
+            'uses' => $controller . 'HelpController@index',
+            'as' => 'adminRegist.help.index',
+        ]);
+
+        Route::get('data', [
+            'uses' => $controller . 'HelpController@data',
+            'as' => 'adminRegist.help.data',
+        ]);
+
+        Route::get('index/ajax', [
+            'uses' => $controller . 'HelpController@index_ajax',
+            'as' => 'adminRegist.help.index.ajax'
+        ]);
+
+        Route::get('create', [
+            'uses' => $controller . 'HelpController@create',
+            'as' => 'adminRegist.help.create'
+        ]);
+
+        Route::post('store',[
+            'uses' => $controller . 'HelpController@store',
+            'as' => 'adminRegist.help.store'
+        ]);
+
+        Route::delete('destroy/{id?}', [
+            'uses' => $controller . 'HelpController@destroy',
+            'as' => 'adminRegist.help.destroy'
+        ]);
+
+    });
+
 });
