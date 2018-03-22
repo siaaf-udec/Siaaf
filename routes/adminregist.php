@@ -100,6 +100,16 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.help.store'
         ]);
 
+        Route::get('editar/{id?}', [
+            'uses' => $controller . 'HelpController@edit',
+            'as' => 'adminRegist.help.edit'
+        ]);
+
+        Route::post('update', [
+            'uses' => $controller . 'HelpController@update',
+            'as' => 'adminRegist.help.update'
+        ]);
+
         Route::delete('destroy/{id?}', [
             'uses' => $controller . 'HelpController@destroy',
             'as' => 'adminRegist.help.destroy'

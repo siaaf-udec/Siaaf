@@ -154,6 +154,31 @@
             </div>
         @endcomponent
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div id="Modal-viewquestion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-center">Documento de Legalidad</h4>
+                        </div>
+                        <div class="modal-body text-center body-viewquestion" id="texto">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-primary btn-center" data-dismiss="modal">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 {{--
@@ -177,7 +202,8 @@
 @push('plugins')
     <!-- Datatables Scripts -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"
+            type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"
             type="text/javascript"></script>
 
@@ -196,10 +222,12 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"
             type="text/javascript">
     </script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
+    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}"
+            type="text/javascript">
     </script>
 
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}"
+            type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}"
             type="text/javascript"></script>
 
@@ -245,7 +273,7 @@
                 {data: 'pregunta', name: 'pregunta'},
                 {data: 'respuesta', name: 'respuesta', "visible": false},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-bars"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
+                    defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -313,6 +341,14 @@
                 e.preventDefault();
                 var route_create = '{{ route('adminRegist.help.create') }}';
                 $(".content-ajax").load(route_create);
+            });
+
+            table.on('click', '.edit', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.id;
+                $(".content-ajax").load(route_edit);
             });
         });
     </script>

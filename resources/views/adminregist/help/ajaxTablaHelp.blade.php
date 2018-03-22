@@ -57,7 +57,7 @@
             {data: 'pregunta', name: 'pregunta'},
             {data: 'respuesta', name: 'respuesta', "visible": false},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-bars"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
+                defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -74,10 +74,65 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
+        table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('adminRegist.help.destroy') }}' + '/' + dataTable.id;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar los datos?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ninguna pregunta", "error");
+                    }
+                });
+
+        });
+
         $(".register").on('click', function (e) {
             e.preventDefault();
             var route_create = '{{ route('adminRegist.help.create') }}';
             $(".content-ajax").load(route_create);
+        });
+
+        table.on('click', '.edit', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.id;
+            $(".content-ajax").load(route_edit);
         });
 
     });
