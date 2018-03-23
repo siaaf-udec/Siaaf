@@ -233,6 +233,20 @@ return [
             'engine' => null,
         ],
 
+        'crmudec' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_CRMUDEC', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE_CRMUDEC', 'forge'),
+            'username' => env('DB_USERNAME_CRMUDEC', 'forge'),
+            'password' => env('DB_PASSWORD_CRMUDEC', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

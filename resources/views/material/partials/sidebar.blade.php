@@ -60,6 +60,10 @@
         @permission('MASTER_USER_UDEC')
         @include('themes.menus.users-udec-menu')
         @endpermission
+        @env('local')
+        {{-- CRM UDEC --}}
+        @include('themes.menus.crmudec-menu')
+        @endenv
     </ul>
     {{-- BEGIN SIDEBAR MENU --}}
 </div>
