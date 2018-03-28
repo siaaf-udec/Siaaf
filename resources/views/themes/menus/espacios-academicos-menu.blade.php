@@ -155,12 +155,41 @@
                 </li>
             </ul>
             @endpermission
-
+            
+            {{-- INICIO SEGUNDA FASE ESPACIOS ACADEMICOS--}}
+            
             <li class="nav-item {{ active(['espacios.academicos.elementos.index'], 'start active open') }}">
-                <a href="{{ route('espacios.academicos.elementos.index') }}" class="nav-link nav-toggle">
-                    <i class="fa fa-book"></i>
-                    <span class="title">Elementos</span>
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-list-ol"></i>
+                    <span class="title">Inventario</span>
+                    <span class="arrow {{ active(['espacios.academicos.*'], 'open') }}"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ active(['espacios.academicos.elementos.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.elementos.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-archive"></i>
+                            <span class="title">Elementos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ active(['espacios.academicos.categoria.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.asist.asisEst') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-bars"></i>
+                            <span class="title">Categoria</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ active(['espacios.academicos.procedencia.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.asist.asisDoc') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-home"></i>
+                            <span class="title">Procedencia</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ active(['espacios.academicos.marcas.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.asist.asisInv') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-wrench"></i>
+                            <span class="title">Marcas</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </li>
     </ul>
