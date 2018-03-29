@@ -30,11 +30,26 @@
             </a>
         </li>
 
-        <li class="nav-item {{ active(['adminRegist.help.*'], 'start active open') }}">
+        <li class="nav-item {{ active(['adminRegist.report.*'], 'start active open') }}">
             <a href="#" class="nav-link nav-toggle">
                 <i class="fa fa-line-chart"></i>
                 <span class="title">Reportes</span>
+                <span class="arrow {{ active(['adminRegist.report.*'], 'open') }}"></span>
             </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ active(['adminRegist.report.novedad.index'], 'start active open') }}">
+                    <a href="{{route('adminRegist.report.novedad.index')}}" class="nav-link nav-toggle">
+                        <i class="fa fa-bullhorn"></i>
+                        <span class="title">Novedades</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['adminRegist.report.index.fecha'], 'start active open') }}">
+                    <a href="{{route('adminRegist.report.index.fecha')}}" class="nav-link nav-toggle">
+                        <i class="fa fa-calendar"></i>
+                        <span class="title">Fechas</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
     </ul>

@@ -37,7 +37,7 @@
                             Cancelar
                         </a>
 
-                        {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                        {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
                     </div>
                 </div>
 

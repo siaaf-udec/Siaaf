@@ -117,4 +117,38 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::group(['prefix' => 'report'],function (){
+        $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
+        Route::get('report',[
+            'uses' => $controller.'ReporteController@indexFecha',
+            'as' => 'adminRegist.report.index.fecha'
+        ]);
+
+        Route::post('report/date',[
+            'uses' => $controller.'ReporteController@reportFecha',
+            'as' => 'adminRegist.report.date'
+        ]);
+
+        Route::get('descargarRepFecha/{fech1}/{fech2}', [
+            'uses' => $controller.'ReporteController@descargarReporteFecha',
+            'as' => 'adminRegist.report.descargarRepFecha'
+        ]);
+
+        Route::get('novedad',[
+            'uses' => $controller.'ReporteController@indexNovedad',
+            'as' => 'adminRegist.report.novedad.index'
+        ]);
+
+        Route::post('report/novedad',[
+            'uses' => $controller.'ReporteController@reportNovedad',
+            'as' => 'adminRegist.report.novedad'
+        ]);
+
+        Route::get('descargarRepNovedad/{novedad}', [
+            'uses' => $controller.'ReporteController@descargarReporteNovedad',
+            'as' => 'adminRegist.report.descargarRepNovedad'
+        ]);
+
+    });
+
 });
