@@ -8,6 +8,9 @@
           type="text/css"/>
     <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
           type="text/css"/>
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -20,7 +23,7 @@
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet" type="text/css"/>
     {{--toast--}}
-    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+ {{--  <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>--}}
     {{--JQuery datatable and row details--}}
     <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
@@ -39,10 +42,10 @@
                 <div class="col-md-12">
                     <div class="actions">
                         @permission('ACAD_REGISTRAR_INCIDENTE')
-                        <a class="btn btn-outline dark create" data-toggle="modal">
+                        <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
-                            Registrar
+                            Registrar Articulo
                         </a>
                         @endpermission
                     </div>
@@ -55,12 +58,13 @@
                 @permission('ACAD_CONSULTAR_INCIDENTE')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
                     @slot('columns', [
-                    'id_incidente',
-                    '  ',
-                    '#',
-                    'Identificación',
-                    'Nombre Espacio',
-                    'Acciones' => ['style' => 'width:45px;']
+                    '#' => ['style' => 'width:20px;'],
+                    'id_articulo',
+                    'Codigo',
+                    'Procedencia',
+                    'Categoria',
+                    'Hoja de vida',
+                    'Acciones' => ['style' => 'width:150px;']
                     ])
                 @endcomponent
                 @endpermission
@@ -71,14 +75,14 @@
                 <div class="col-md-12">
                 {{-- BEGIN HTML MODAL CREATE --}}
                 <!-- responsive -->
-                    <div class="modal fade" data-width="760" id="modal-create-soft" tabindex="-1">
+                {{--    <div class="modal fade" data-width="760" id="modal-create-soft" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                             </button>
                             <h2 class="modal-title">
                                 <i class="glyphicon glyphicon-tv">
                                 </i>
-                                Registrar Incidente
+                                Registrar articulo.
                             </h2>
                         </div>
                         <div class="modal-body">
@@ -87,30 +91,38 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('id_persona',null,
-                                    ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                    ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Codigo o serial del articulo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                    ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa fa-barcode'] ) !!}
 
-                                    {!! Field::select('Espacio académico:',$espacios,
+                                    {!! Field::select('Categoria del articulo:',$espacios,
                                         ['id' => 'espacios', 'name' => 'espacios'])
                                         !!}
 
-                                    {!! Field:: textarea('descripcion',null,
-                                         ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                                         ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
+                                    {!! Field:: textarea('Descripcion del articulo:',null,
+                                         ['label'=>'Descripción articulo:','class'=> 'form-control', 'rows'=>'3','maxlength'=>'450', 'autofocus','autocomplete'=>'off'],
+                                         ['help' => 'Digite la descripción del articulo','icon'=>'fa fa-desktop'] ) !!}
+                                    <div><h3 class="block">Subir imagenes del articulo</h3><h6>10 archivos maximos por carga</h6></div>
+                                    <div class="form-group">
+                                        <div class="dropzone dropzone-file-area data-dz-size"
+                                             id="my_dropzone">
+                                            <h3 class="sbold">Arrastra o da click aquí para cargar las imagenes</h3>
+                                            <p> Solo se admiten formatos JPEG - JPG - PNG  </p>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @permission('ACAD_REGISTRAR_INCIDENTE')
-                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @permission('ACAD_REGISTRAR_FORMATOS')
+                            {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
                             @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>
                     {{-- END HTML MODAL CREATE--}}
-                </div>
+                </div> 
                 {{-- END HTML MODAL CREATE--}}
             </div>
         @endcomponent
@@ -120,6 +132,11 @@
 
 
 @push('plugins')
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
     {{--Selects--}}
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
@@ -139,12 +156,9 @@
             type="text/javascript">
     </script>
     <!-- SCRIPT Validacion Personalizadas -->
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
-            type="text/javascript"></script>
+    <!-- DROPZONE-->
+    <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+    
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
@@ -160,8 +174,10 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+    {{--Dropzone--}}
+    <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
-    <script id="details-template" type="text/x-handlebars-template">
+   {{-- <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
                 <td>Descripcion:</td>
@@ -172,10 +188,13 @@
                 <td>@{{created_at}}</td>
             </tr>
         </table>
-    </script>
+    </script>--}}
     <script>
         $(document).ready(function () {
             //inicializar select
+            var table, url, columns;
+            //Define que tabla cargara los datos
+            table = $('#art-table-ajax');
             $.fn.select2.defaults.set("theme", "bootstrap");
             $(".pmd-select2").select2({
                 placeholder: "Seleccionar",
@@ -185,25 +204,36 @@
                     return m;
                 }
             });
-            var template = Handlebars.compile($("#details-template").html());
-            var table, url, columns;
-            //Define que tabla cargara los datos
-            table = $('#art-table-ajax');
-            url = "{{ route('espacios.academicos.incidente.data') }}"; //url para cargar datos
+            
+            var method = function () {
+                return {
+                    init: function () {
+                        return valores = {
+                            'titulo': $('input[name="titulo"]').val(),
+                            'descripcion': $('textarea[name="descripcion"]').val(),
+                            'email': $('input[name="email"]').val()
+                        }
+                    }
+                };
+            };
+            var type_crud = 'CREATE',
+                route_store = route('espacios.academicos.formacad.store'),
+                formatfile = 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
+                numfile = 10;
+            FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
+            url = "{{ route('espacios.academicos.elementos.data') }}"; //url para cargar datos
             columns = [
-                {data: 'PK_INC_Id_Incidente', name: 'id_incidente', "visible": false},
-                {
-                    "className": 'details-control',
-                    "orderable": false,
-                    "searchable": false,
-                    "data": null,
-                    "defaultContent": ''
-                },
+                //Carga los datos que ha traido el control
                 {data: 'DT_Row_Index'},
-                {data: 'FK_INC_Id_User', name: 'Identificación'},
-                {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
+                {data: 'pk_id_articulo', name: 'id_articulo', "visible": false},
+                {data: 'codigo_articulo', name: 'Codigo'},
+                {data: 'procedencia.tipo_procedencia', name: 'Procedencia'},
+                {data: 'categoria.nombre_categoria', name: 'Categoria'},
+                {data: 'hojavida', name: 'Hoja de vida'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                     //Boton para descargar el archivo
+                    defaultContent: ' @permission('ACAD_DESCARGAR_FORMATO') <a href="javascript:;" class="btn btn-simple btn-icon download"><i class="icon-cloud-download"></i></a> @endpermission' +
+                    '@permission('ACAD_ELIMINAR_SOL_FORMATO')  <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
