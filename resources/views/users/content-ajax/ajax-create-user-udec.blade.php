@@ -37,20 +37,20 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('code', old('code'), ['required', 'max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::select(
                                 'type_user',
                                 ['Estudiante' => 'Estudiante', 'Docente' => 'Docente', 'Externo' => 'Externo'],null,
                                 ['label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
+                        <div class="form-group divcode">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                {!! Field::text('code', old('code'), ['max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group divcompany">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::text('company', old('company'), ['max' => 25, 'label' => 'Empresa', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-building', 'help' => 'Ingrese la Empresa.']) !!}
                             </div>
@@ -124,6 +124,24 @@
             place: {required: true}
 
         };
+        $('.divcode').hide();
+        $('.divcompany').hide();
+
+        $("#type_user").on('change', function () {
+            var tipo = $('select[name="type_user"]').val();
+            if (tipo == 'Estudiante') {
+                $('.divcode').show();
+                $('.divcompany').hide();
+            }
+            if (tipo == 'Externo') {
+                $('.divcode').hide();
+                $('.divcompany').show();
+            }
+            if (tipo == 'Docente') {
+                $('.divcode').hide();
+                $('.divcompany').hide();
+            }
+        });
         var messages = {
             number_document: {
                 remote: "El número de documento ya ha sido registrado."
