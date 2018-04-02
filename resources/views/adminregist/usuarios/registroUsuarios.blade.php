@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group divcode">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('code', old('code'), ['required', 'max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                                {!! Field::text('code', old('code'), ['max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                             </div>
                         </div>
                     </div>
