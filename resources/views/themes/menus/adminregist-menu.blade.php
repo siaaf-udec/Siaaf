@@ -32,7 +32,7 @@
 
         <li class="nav-item {{ active(['adminRegist.report.*'], 'start active open') }}">
             <a href="#" class="nav-link nav-toggle">
-                <i class="fa fa-line-chart"></i>
+                <i class="fa fa-file-pdf-o"></i>
                 <span class="title">Reportes</span>
                 <span class="arrow {{ active(['adminRegist.report.*'], 'open') }}"></span>
             </a>
@@ -50,6 +50,13 @@
                     </a>
                 </li>
             </ul>
+        </li>
+
+        <li class="nav-item {{ active(['adminRegist.chart.*'], 'start active open') }}">
+            <a href="{{route('adminRegist.chart.index')}}" class="nav-link nav-toggle">
+                <i class="fa fa-line-chart"></i>
+                <span class="title">Gráficos</span>
+            </a>
         </li>
 
     </ul>

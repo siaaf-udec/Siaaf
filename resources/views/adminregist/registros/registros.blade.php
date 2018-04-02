@@ -1,19 +1,6 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Registrar Novedad'])
-        @slot('actions', [
-                    'link_upload' => [
-                        'link' => '',
-                        'icon' => 'icon-cloud-upload',
-                    ],
-                    'link_wrench' => [
-                        'link' => '',
-                        'icon' => 'icon-wrench',
-                    ],
-                    'link_trash' => [
-                        'link' => '',
-                        'icon' => 'icon-trash',
-                    ],
-                ])
+
         <div class="row">
             <div class="col-md-12">
 

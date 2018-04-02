@@ -2,10 +2,10 @@
 Plugin Name: amCharts Data Loader
 Description: This plugin adds external data loading capabilities to all amCharts libraries.
 Author: Martynas Majeris, amCharts
-Version: 1.0.8
+Version: 1.0.19
 Author URI: http://www.amcharts.com/
 
-Copyright 2015 amCharts
+Copyright 2015-2017 amCharts
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -61,6 +61,7 @@ AmCharts.addInitHandler( function( chart ) {
    */
   var l = chart.dataLoader;
   l.remaining = 0;
+  l.percentLoaded = {};
 
   /**
    * Set defaults
@@ -75,11 +76,16 @@ AmCharts.addInitHandler( function( chart ) {
     'timestamp': false,
     'delimiter': ',',
     'skip': 0,
+    'skipEmpty': true,
+    'emptyAs': undefined,
     'useColumnNames': false,
+    'init': false,
+    'progress': false,
     'reverse': false,
     'reloading': false,
     'complete': false,
     'error': false,
+    'numberFields': [],
     'headers': [],
     'chart': chart
   };
@@ -110,6 +116,7 @@ AmCharts.addInitHandler( function( chart ) {
           // load data
           if ( undefined !== ds.dataLoader && undefined !== ds.dataLoader.url ) {
 
+            callFunction( ds.dataLoader.init, ds.dataLoader, chart );
             ds.dataProvider = [];
             applyDefaults( ds.dataLoader );
             loadFile( ds.dataLoader.url, ds, ds.dataLoader, 'dataProvider' );
@@ -119,6 +126,7 @@ AmCharts.addInitHandler( function( chart ) {
           // load events data
           if ( undefined !== ds.eventDataLoader && undefined !== ds.eventDataLoader.url ) {
 
+            callFunction( ds.eventDataLoader.init, ds.eventDataLoader, chart );
             ds.events = [];
             applyDefaults( ds.eventDataLoader );
             loadFile( ds.eventDataLoader.url, ds, ds.eventDataLoader, 'stockEvents' );
@@ -129,6 +137,8 @@ AmCharts.addInitHandler( function( chart ) {
       }, 100 );
 
     } else {
+
+      callFunction( l.init, l, chart );
 
       applyDefaults( l );
 
@@ -179,6 +189,33 @@ AmCharts.addInitHandler( function( chart ) {
 
     // increment loader count
     l.remaining++;
+
+    // set percent loaded for this file
+    l.percentLoaded[ url ] = 0;
+
+    // hijack user-defined "progress" handler with our own, so that we can
+    // track progress
+    if ( options.progress !== undefined && typeof( options.progress ) === 'function' && options._progress === undefined ) {
+      options._progress = options.progress;
+      options.progress = function( percent ) {
+        // set progress
+        l.percentLoaded[ url ] = percent;
+
+        // calculate global percent
+        var totalPercent = 0;
+        var fileCount = 0;
+        for ( var x in l.percentLoaded ) {
+          if ( l.percentLoaded.hasOwnProperty( x ) ) {
+            fileCount++;
+            totalPercent += l.percentLoaded[ x ];
+          }
+        }
+        var globalPercent = Math.round( ( totalPercent / fileCount ) * 100 ) / 100;
+
+        // call user function
+        options._progress.call( this, globalPercent, Math.round( percent * 100 ) / 100, url );
+      };
+    }
 
     // load the file
     AmCharts.loadFile( url, options, function( response ) {
@@ -251,16 +288,50 @@ AmCharts.addInitHandler( function( chart ) {
           // take in the new data
           if ( options.async ) {
 
-            if ( 'map' === chart.type )
-              chart.validateNow( true );
-            else {
+            if ( 'map' === chart.type ) {
 
               // take in new data
-              chart.validateData();
+              chart.validateNow( true );
+
+              // remove curtain
+              removeCurtain();
+
+            } else {
+
+              // add a dataUpdated event to handle post-load stuff
+              if ( 'gauge' !== chart.type ) {
+                chart.addListener( 'dataUpdated', function( event ) {
+
+                  // restore default period (stock chart)
+                  if ( 'stock' === chart.type && !options.reloading && undefined !== chart.periodSelector ) {
+                    chart.periodSelector.setDefaultPeriod();
+                  }
+
+                  // remove curtain
+                  removeCurtain();
+
+                  // remove this listener
+                  chart.events.dataUpdated.pop();
+                } );
+              }
+
+
 
               // invalidate size for the pie chart
-              if ( 'pie' === chart.type && chart.invalidateSize !== undefined )
-                chart.invalidateSize();
+              // disabled for now as it is not longer necessary
+              /*if ( 'pie' === chart.type && chart.invalidateSize !== undefined )
+                chart.invalidateSize();*/
+
+              // gauge chart does not trigger dataUpdated event
+              // let's explicitly remove the curtain for it
+              // and use `validateNow()
+              if ( 'gauge' === chart.type ) {
+                removeCurtain();
+                chart.validateNow();
+              } else {
+                // take in new data
+                chart.validateData();
+              }
 
               // make the chart animate again
               if ( l.startDuration ) {
@@ -279,24 +350,19 @@ AmCharts.addInitHandler( function( chart ) {
             }
           }
 
-          // restore default period
-          if ( 'stock' === chart.type && !options.reloading && undefined !== chart.periodSelector )
-            chart.periodSelector.setDefaultPeriod();
-
-          // remove curtain
-          removeCurtain();
         }
 
-        // schedule another load if necessary
-        if ( options.reload ) {
 
-          if ( options.timeout )
-            clearTimeout( options.timeout );
+      }
 
-          options.timeout = setTimeout( loadFile, 1000 * options.reload, url, holder, options );
-          options.reloading = true;
+      // schedule another load if necessary
+      if ( options.reload ) {
 
-        }
+        if ( options.timeout )
+          clearTimeout( options.timeout );
+
+        options.timeout = setTimeout( loadFile, 1000 * options.reload, url, holder, options, providerKey );
+        options.reloading = true;
 
       }
 
@@ -448,6 +514,12 @@ if ( undefined === AmCharts.__ ) {
  */
 AmCharts.loadFile = function( url, options, handler ) {
 
+  // prepopulate options with minimal defaults if necessary
+  if ( typeof( options ) !== 'object' )
+    options = {};
+  if ( options.async === undefined )
+    options.async = true;
+
   // create the request
   var request;
   if ( window.XMLHttpRequest ) {
@@ -466,17 +538,25 @@ AmCharts.loadFile = function( url, options, handler ) {
   }
 
   // add headers?
-  if ( options.headers.length ) {
+  if ( options.headers !== undefined && options.headers.length ) {
     for ( var i = 0; i < options.headers.length; i++ ) {
       var header = options.headers[ i ];
       request.setRequestHeader( header.key, header.value );
     }
   }
 
+  // add onprogress handlers
+  if ( options.progress !== undefined && typeof( options.progress ) === 'function' ) {
+    request.onprogress = function( e ) {
+      var complete = ( e.loaded / e.total ) * 100;
+      options.progress.call( this, complete );
+    }
+  }
+
   // set handler for data if async loading
   request.onreadystatechange = function() {
 
-    if ( 4 === request.readyState && 404 === request.status )
+    if ( 4 === request.readyState && ( 404 === request.status || 500 === request.status ) )
       handler.call( this, false );
 
     else if ( 4 === request.readyState && 200 === request.status )
@@ -515,6 +595,9 @@ AmCharts.parseCSV = function( response, options ) {
   // parse CSV into array
   var data = AmCharts.CSVToArray( response, options.delimiter );
 
+  // do we need to cast some fields to numbers?
+  var numbers = options.numberFields && ( options.numberFields.length > 0 );
+
   // init resuling array
   var res = [];
   var cols = [];
@@ -547,10 +630,16 @@ AmCharts.parseCSV = function( response, options ) {
   // iterate through the result set
   var row;
   while ( ( row = options.reverse ? data.pop() : data.shift() ) ) {
+    if ( options.skipEmpty && row.length === 1 && row[ 0 ] === '' )
+      continue;
     var dataPoint = {};
     for ( i = 0; i < row.length; i++ ) {
       col = undefined === cols[ i ] ? 'col' + i : cols[ i ];
-      dataPoint[ col ] = row[ i ];
+      dataPoint[ col ] = row[ i ] === "" ? options.emptyAs : row[ i ];
+
+      // check if we need to cast to integer
+      if ( numbers && options.numberFields.indexOf( col ) !== -1 )
+        dataPoint[ col ] = Number( dataPoint[ col ] );
     }
     res.push( dataPoint );
   }
@@ -566,7 +655,7 @@ AmCharts.parseCSV = function( response, options ) {
 AmCharts.CSVToArray = function( strData, strDelimiter ) {
   // Check to see if the delimiter is defined. If not,
   // then default to comma.
-  strDelimiter = ( strDelimiter || "," );
+  strDelimiter = ( strDelimiter || ',' );
 
   // Create a regular expression to parse the CSV values.
   var objPattern = new RegExp(
@@ -637,7 +726,6 @@ AmCharts.CSVToArray = function( strData, strDelimiter ) {
       strMatchedValue = arrMatches[ 3 ];
 
     }
-
 
     // Now that we have our value string, let's add
     // it to the data array.

@@ -112,21 +112,6 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Admisiones y Registro'])
-
-            @slot('actions', [
-                'link_upload' => [
-                    'link' => '',
-                    'icon' => 'icon-cloud-upload',
-                ],
-                'link_wrench' => [
-                    'link' => '',
-                    'icon' => 'icon-wrench',
-                ],
-                'link_trash' => [
-                    'link' => '',
-                    'icon' => 'icon-trash',
-                ],
-            ])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
                 <div class="col-md-12">

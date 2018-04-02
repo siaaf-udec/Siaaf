@@ -151,4 +151,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::group(['prefix' => 'chart'],function (){
+        $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
+        Route::get('index', [
+            'uses' => $controller.'ReporteController@charIndex',
+            'as' => 'adminRegist.chart.index'
+        ]);
+    });
+
 });

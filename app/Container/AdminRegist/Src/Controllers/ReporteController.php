@@ -124,4 +124,25 @@ class ReporteController extends Controller
         );
     }
 
+    public function charIndex()
+    {
+        $novedades = Novedad::all();
+        $registros = Registros::with('registro')->get();
+        $daPlace = array();
+        foreach ($registros as $cont)
+        {
+            $daPlace[] = $cont->registro->place;
+        }
+        $place = array_count_values($daPlace);
+
+        $daTypeUser = array();
+        foreach ($registros as $cont)
+        {
+            $daTypeUser[] = $cont->registro->type_user;
+        }
+        $typeUser = array_count_values($daTypeUser);
+
+        return view('adminregist.reportes.charts',compact('novedades','typeUser','place'));
+    }
+
 }

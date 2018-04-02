@@ -31,4 +31,7 @@ class Registros extends Model
 
 
 
+
+
+
 }

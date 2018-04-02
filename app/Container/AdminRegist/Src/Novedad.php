@@ -24,6 +24,11 @@ class Novedad extends Model
         return $this->hasMany(Registros::class,'id_novedad');
     }
 
+    //Traer el total de registros con la novedad correspondiente
+    public function getNumNovedadAttribute(){
+        return count($this->novedad);
+    }
+
 
 
 
