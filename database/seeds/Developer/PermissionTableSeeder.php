@@ -37,7 +37,21 @@ class PermissionTableSeeder extends Seeder
         $permission= new Permission;
         $permission->name = 'MASTER_USER_UDEC';
         $permission->display_name = 'Usuario Udec';
+        $permission->description = 'Acceso completo al modulo de administración de usuarios udec.';
+        $permission->module_id = 10;
+        $permission ->save();
+
+        $permission= new Permission;
+        $permission->name = 'USER_UDEC';
+        $permission->display_name = 'Usuario Udec';
         $permission->description = 'Acceso al modulo de administración de usuarios udec.';
+        $permission->module_id = 10;
+        $permission ->save();
+
+        $permission= new Permission;
+        $permission->name = 'USER_UDEC_REGIS';
+        $permission->display_name = 'Usuario Udec';
+        $permission->description = 'Registro de usuarios udec.';
         $permission->module_id = 10;
         $permission ->save();
 

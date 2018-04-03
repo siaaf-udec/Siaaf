@@ -9,7 +9,7 @@ class Convenio extends Model
     //
     public $timestamps    = false;
     protected $connection ='unvinteraction';
-    protected $table      = 'TBL_Convenios';
+    protected $table      = 'TBL_Convenio';
     protected $primaryKey = 'PK_CVNO_Convenio';
     protected $fillable   =['CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id'];
 
@@ -28,7 +28,7 @@ class Convenio extends Model
     *por los campo de FK_TBL_Estado y PK_Estado 
     *para realizar las busquedas complementarias
     */
-    public function conveniosEstados()
+    public function convenioEstado()
     {
         return $this->belongsto(Estado::class, 'FK_TBL_Estado_Id', 'PK_ETAD_Estado');
     }

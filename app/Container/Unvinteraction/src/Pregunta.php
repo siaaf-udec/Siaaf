@@ -8,7 +8,7 @@ class Pregunta extends Model
 {
     public $timestamps = false;
     protected $connection ='unvinteraction';
-    protected $table = 'TBL_Preguntas';
+    protected $table = 'TBL_Pregunta';
     protected $primaryKey = 'PK_PRGT_Pregunta';
     protected $fillable = ['PRGT_Enunciado','FK_TBL_Tipo_Pregunta_Id'];
  
@@ -26,7 +26,7 @@ class Pregunta extends Model
     *por los campo de FK_TBL_Tipo_pregunta y PK_Tipo_Pregunta
     *para realizar las busquedas complementarias
     */
-    public function preguntatiposPregunta()
+    public function preguntaTiposPregunta()
     {
         return $this->belongsto(TipoPregunta::class, 'FK_TBL_Tipo_Pregunta_Id', 'PK_TPPG_Tipo_Pregunta');
     }

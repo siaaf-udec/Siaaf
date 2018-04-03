@@ -61,6 +61,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAdministrative();
 
         $this->mapAdminRegistRoutes();
+
+        $this->mapCrmUdecRoutes();
     }
 
     /**
@@ -178,5 +180,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web','auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/adminregist.php'));
+    }
+
+    protected function mapCrmUdecRoutes()
+    {
+        Route::prefix('crmudec')
+            ->middleware(['web','auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/crmudec.php'));
     }
 }

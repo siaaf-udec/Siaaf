@@ -339,6 +339,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UsersUdecController@index_ajax',
             'as' => 'usersUdec.index.ajax'
         ]);
+
+        Route::get('register', [
+            'uses' => $controller . 'UsersUdecController@register',
+            'as' => 'usersUdec.register'
+        ]);
     });
 });
 

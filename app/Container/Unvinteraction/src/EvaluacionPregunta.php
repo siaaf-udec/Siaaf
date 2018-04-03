@@ -9,7 +9,7 @@ class EvaluacionPregunta extends Model
     //
     public $timestamps = false;
     protected $connection = 'unvinteraction';
-    protected $table = 'TBL_Evaluacion_Preguntas';
+    protected $table = 'TBL_Evaluacion_Pregunta';
     protected $primaryKey = 'PK_VCPT_Evaluacion_Pregunta';
     protected $fillable = ['VCPT_Puntuacion','FK_TBL_Evaluacion_Id','FK_TBL_Pregunta_Id'];
     
@@ -30,6 +30,6 @@ class EvaluacionPregunta extends Model
     */ 
     public function preguntaPregunta()
     {
-        return $this->belongsto(Preguntas::class, 'FK_TBL_Pregunta_Id', 'PK_PRGT_Pregunta');
+        return $this->belongsto(Pregunta::class, 'FK_TBL_Pregunta_Id', 'PK_PRGT_Pregunta');
     }
 }

@@ -131,6 +131,8 @@ class UsersUdecController extends Controller
         );
     }
 
-
+    public function register(){
+        return view('users.register-user-udec');
+    }
 
 }

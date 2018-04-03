@@ -157,6 +157,11 @@
             var route = '{{ route('administrative.user.index.ajax') }}';
             $(".content-ajax").load(route);
         });
+
+        //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
+        $('.pmd-select2', $form).change(function () {
+            $form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
     });
 
 </script>

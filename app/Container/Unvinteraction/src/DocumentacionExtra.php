@@ -10,7 +10,7 @@ class DocumentacionExtra extends Model
     protected $connection ='unvinteraction';
     protected $table = 'TBL_Documentacion_Extra';
     protected $primaryKey = 'PK_DCET_Documentacion_Extra';
-    protected $fillable = ['DCET_Descripcion','DCET_Ubicacion','DCET_Entidad','FK_TBL_Usuario_Id'];
+    protected $fillable = ['DCET_Descripcion','DCET_Ubicacion','DCET_Nombre','FK_TBL_Usuarios_Id'];
    
     /*
     *Función de conexión entre las tablas de TBL_Documentacion_Extra y Usuario

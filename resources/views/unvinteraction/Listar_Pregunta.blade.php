@@ -1,13 +1,15 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-    <!-- Datatables Styles -->
-        <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
- <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<!-- Datatables Styles -->
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Lista de Pregunta')
@@ -45,70 +47,86 @@
     @endcomponent
  <!-- Modal agregar Tipo -->
 <div class="col-md-12">
-                    <!-- Modal -->
-                    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                
-                                <div class="modal-header modal-header-success">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PREGUNTA</h1>
-                                </div>
-                                <div class="modal-body">
-                                 {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
-                                    <div class="form-wizard">
-                                 {!! Field:: textarea('Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
-                                 {!! Field::select('FK_TBL_Tipo_Pregunta',$Pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-                                  
-                                    
-                              <div class="form-actions">
+    <!-- Modal -->
+    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PREGUNTA</h1>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
+                    <div class="form-wizard">
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$Pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
+                        <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    
+
                                 </div>
-                                </div>
-                                <div class="modal-footer">
-                                    {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                                </div>
-                                {!! Form::close() !!}
                             </div>
+                            <div class="modal-footer">
+                                {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
+                                {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        
 @endsection
 
 
 
 @push('plugins')
-     <!-- Datatables Scripts -->
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
-    
-     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
- <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<!-- Datatables Plugins -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+<!-- Validation Plugins -->
+<script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<!-- Utoastr Plugins -->
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
+var ComponentsSelect2 = function() {
+        var handleSelect = function() {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                width: null,
+                placeholder: "Selecccionar",
+            });
+        }
+        return {
+            init: function() {
+                handleSelect();
+            }
+        };
+
+    }();
 jQuery(document).ready(function () {
+        
+    ComponentsSelect2.init();
     var table, url;
     table = $('#Listar_Preguntas');
-    url = "{{ route('Listar_Pregunta.Listar_Pregunta') }}";
+    url = "{{ route('listarPregunta.listarPregunta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -146,9 +164,9 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Preguntas', "visible": true, name:"documento" },
-           {data: 'Enunciado', searchable: true},
-           {data: 'preguntas_tipos_preguntas.Tipo', searchable: true},
+           {data: 'PK_PRGT_Pregunta', "visible": true, name:"documento" },
+           {data: 'PRGT_Enunciado', searchable: true},
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -188,27 +206,28 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Editar_Pregunta/'+dataTable.PK_Preguntas;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarPregunta/'+dataTable.PK_PRGT_Pregunta;
 
             $(".content-ajax").load(route_edit);
         });
     
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
-            };
-            
+            PRGT_Enunciado: {required: true},
+            FK_TBL_Tipo_Pregunta_Id: {required: true},
+    };
     var form=$('#form-Agregar-Pregunta');
     var wizard =  $('#form_wizard_1');
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('Agregar_Pregunta.Agregar_Pregunta') }}';
+                    var route = '{{ route('agregarPregunta.agregarPregunta') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('Enunciado', $('#Enunciado').val());
-                    formData.append('FK_TBL_Tipo_Pregunta', $('select[name="FK_TBL_Tipo_Pregunta"]').val());
+                    formData.append('PRGT_Enunciado', $('#PRGT_Enunciado').val());
+                    formData.append('FK_TBL_Tipo_Pregunta_Id', $('select[name="FK_TBL_Tipo_Pregunta_Id"]').val());
                     
                     $.ajax({
                         url: route,

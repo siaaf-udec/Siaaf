@@ -16,7 +16,7 @@ use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\Empresas_Participantes;
 use App\Container\Unvinteraction\src\Empresa;
 use App\Container\Unvinteraction\src\Participantes;
-use App\Container\Unvinteraction\src\Documentacion_Extra;
+use App\Container\Unvinteraction\src\DocumentacionExtra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 use App\Container\Overall\Src\Facades\UploadFile;
@@ -43,16 +43,16 @@ class controllerDocumentos extends Controller
     public function subirDocumentoConvenio(Request $request, $id)
     {
         $carbon = new \Carbon\Carbon();
-        $Ubicacion="unvinteraction/convenios/".$id;
+        $ubicacion="unvinteraction/convenios/".$id;
         $files = $request->file('file');
         foreach ($files as $file) {
-            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+            $url = Storage::disk('developer')->putFileAs($ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
         }
-        $Estado = new TBL_Documentacion();
-        $Estado->Entidad =$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-        $Estado->Ubicacion = $Ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
-        $Estado->FK_TBL_Convenios= $id;
-        $Estado->save();
+        $documento = new Documentacion();
+        $documento->DOCU_Nombre =$file->getClientOriginalName();
+        $documento->DOCU_Ubicacion = $ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
+        $documento->FK_TBL_Convenio_Id= $id;
+        $documento->save();
     }
     /*funcion para descargar el documento subido para el convenio
     *@param int id  
@@ -63,12 +63,11 @@ class controllerDocumentos extends Controller
     */
     public function documentoDescarga(Request $request, $id, $idc)
     {
-        $Ubicacion ="unvinteraction/convenios/".$id;
-        $Documento = TBL_Documentacion::select('TBL_Documentacion.Ubicacion')->where('PK_Documentacion', $id)->get();
-        foreach ($Documento as $row) {
-            if ($exists = Storage::disk('developer')->exists($row->Ubicacion)) {
-                $Contents = Storage::disk('developer')->get($row->Ubicacion);
-                return response()->download(storage_path()."/app/public/developer/".$row->Ubicacion, "documento.jpg");
+        $documento = Documentacion::select('DOCU_Ubicacion')->where('PK_DOCU_Documentacion', $id)->get();
+        foreach ($documento as $row) {
+            if ($exists = Storage::disk('developer')->exists($row->DOCU_Ubicacion)) {
+                $Contents = Storage::disk('developer')->get($row->DOCU_Ubicacion);
+                return response()->download(storage_path()."/app/public/developer/".$row->DOCU_Ubicacion, $row->DOCU_Nombre);
                 return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
             } else {
                 return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
@@ -88,8 +87,8 @@ class controllerDocumentos extends Controller
     */
     public function listarMisDocumentos(Request $request)
     {
-        $documento = TBL_Documentacion_Extra::select('PK_Documentacion_Extra', 'Descripcion', 'Ubicacion', 'Entidad')
-            ->where('FK_TBL_Usuarios', $request->user()->identity_no)->get();
+        $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
+            ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)->get();
         return Datatables::of($documento)->addIndexColumn()->make(true);
     }
     /*funcion para subir el documento para los Usuarios
@@ -99,17 +98,16 @@ class controllerDocumentos extends Controller
     public function subirDocumentoUsuario(Request $request)
     {
         $carbon = new \Carbon\Carbon();
-        $Ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+        $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
         $files = $request->file('file');
         foreach ($files as $file) {
-            $url = Storage::disk('developer')->putFileAs($Ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+            $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
         }
-        $Estado = new TBL_Documentacion_Extra();
-        $Estado->Entidad = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-        $Estado->Ubicacion = $Ubicacion ;
-        $Estado->FK_TBL_Usuarios=$request->user()->identity_no ;
-        $Estado->Descripcion = 'NINGUNA';
-        $Estado->save();
+        $doc = new DocumentacionExtra();
+        $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
+        $doc->DCET_Ubicacion = $ubicacion ;
+        $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
+        $doc->save();
         return $request->get('name');
     }
     /*funcion para descargar el documento subido para el usuario
@@ -119,39 +117,48 @@ class controllerDocumentos extends Controller
     */
     public function documentoDescargaUsuario(Request $request, $id)
     {
-        $Ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
-        $Documento=TBL_Documentacion_Extra::select('Ubicacion', 'Entidad')
-            ->where('FK_TBL_Usuarios', $request->user()->identity_no)
-            ->where('PK_Documentacion_Extra', $id)->get();
-        foreach ($Documento as $row) {
-            if ($exists = Storage::disk('developer')->exists($row->Ubicacion."/".$row->Entidad)) {
+        $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+        $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')
+            ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)
+            ->where('PK_DCET_Documentacion_Extra', $id)->get();
+        foreach ($documento as $row) {
+            if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion."/".$row->DCET_Nombre)) {
                 return response()
-                    ->download(storage_path()."/app/public/developer/".$row->Ubicacion."/".$row->Entidad,"Documento.jpg");
+                    ->download(storage_path()."/app/public/developer/".$row->DCET_Ubicacion."/".$row->DCET_Nombre,$row->DCET_Nombre);
                 return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
             } else {
                 return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
             }
         }
     }
+    /*funcion para descargar el documento subido para el usuario
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
     public function documentoReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado','Fecha')
+            $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
                 ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
                 ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->get();
             return view($this->path.'.ReportePDF', [
-                'Evaluacion'=>$Evaluacion,
+                'evaluacion'=>$evaluacion,
                 'date'=>$date,
                 'time'=>$time,
                 'id'=>$id,
@@ -180,20 +187,24 @@ class controllerDocumentos extends Controller
             try{
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado','Fecha')
-                    ->with([
-                        'convenios_Evaluacion'=>function ($query) {
-                            $query->select('PK_Convenios','Nombre');
+                $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
+                ->with([
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
+                    }
+                ])
+            ->with([
+                'evaluador'=>function ($query) {
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
                         }
-                    ])
-                    ->with([
-                        'evaluador'=>function ($query) {
-                            $query->select('identity_no','name','lastname');
-                        }
-                    ])
-                    ->get();
+                    ]);
+                }
+            ])
+            ->get();
                 return SnappyPdf::loadView($this->path.'.ReportePDF', [
-                    'Evaluacion'=>$Evaluacion,
+                    'evaluacion'=>$evaluacion,
                     'date'=>$date,
                     'time'=>$time,
                     'id'=>$id,
@@ -208,6 +219,35 @@ class controllerDocumentos extends Controller
             '¡Lo sentimos!',
             'No se pudo completar su solicitud.'
         );
+    }
+    /*
+     * Descarga de reporte de evaluaciones filtradas por fechas
+     *
+	 * @param  \Illuminate\Http\Request 
+     * @param   int id
+     * @param   date fecha_primera
+     * @param   date fecha_segunda
+     *
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function documentoUsuario(Request $request,$id){
+        
+        return view($this->path.'.Listar_Documentos_Usuarios',compact('id'));
+    }
+    /*
+     * Descarga de reporte de evaluaciones filtradas por fechas
+     *
+	 * @param  \Illuminate\Http\Request 
+     * @param   int id
+     * @param   date fecha_primera
+     * @param   date fecha_segunda
+     *
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function listarDocumentoUsuario(Request $request,$id){
+        $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
+            ->where('FK_TBL_Usuarios_Id', $id)->get();
+        return Datatables::of($documento)->addIndexColumn()->make(true);
     }
   
 }

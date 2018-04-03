@@ -13,3 +13,5 @@ npm-debug.log
 /public/error.log
 package-lock.json
 /webpack.mix.js
+
+resources/views/gesap/

@@ -20,7 +20,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#Listar_Pasante');
-    url = "{{ route('Listar_Pregunta_Individual.Listar_Pregunta_Individual',[$id]) }}";
+    url = "{{ route('listarPreguntaIndividual.listarPreguntaIndividual',[$id]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -58,8 +58,8 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'preguntas__preguntas.Enunciado', "visible": true, name:"documento" },
-           {data: 'Puntuacion', searchable: true},
+           {data: 'pregunta_pregunta.PRGT_Enunciado', "visible": true, name:"documento" },
+           {data: 'VCPT_Puntuacion', searchable: true},
           
            
            

@@ -9,7 +9,7 @@ class EmpresaParticipante extends Model
     //
     public $timestamps = false;
     protected $connection ='unvinteraction';
-    protected $table = 'TBL_Empresas_Participantes';
+    protected $table = 'TBL_Empresa_Participante';
     protected $primaryKey = 'PK_EMPT_Empresa_Participante';
     protected $fillable = ['FK_TBL_Convenio_Id','FK_TBL_Empresa_Id'];
     
@@ -20,7 +20,7 @@ class EmpresaParticipante extends Model
     */ 
     public function conveniosEmpresas()
     {
-        return $this->belongsto(TBL_Convenios::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
+        return $this->belongsto(Convenio::class, 'FK_TBL_Convenio_Id', 'PK_CVNO_Convenio');
     }
     
     /*
@@ -30,6 +30,6 @@ class EmpresaParticipante extends Model
     */ 
      public function patricipantesEmpresas()
     {
-        return $this->belongsto(TBL_Empresa::class, 'FK_TBL_Empresa_Id', 'PK_EMPS_Empresa');
+        return $this->belongsto(Empresa::class, 'FK_TBL_Empresa_Id', 'PK_EMPS_Empresa');
     }
 }

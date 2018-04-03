@@ -329,6 +329,9 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     /**FIN RUTAS CALENDARIO**/
+
+    /*INICIO SEGUNDA FASE ESPACIOS ACADEMICOS*/
+
     /*RUTAS PARA FUNCIONALIDAD ELEMENTOS*/
     Route::group(['prefix' => 'elementos', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
@@ -341,15 +344,20 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.elementos.data'
         ]);
 
+        Route::post('regisElemento', [ //Registrar elemento
+            'uses' => $controller . 'ElementosController@regisIncidente',
+            'as' => 'espacios.academicos.elementos.regisElemento',
+        ]);
+
+        Route::get('edit/{id?}', [ //EDITAR
+            'uses' => $controller . 'formatosController@edit',
+            'as' => 'espacios.academicos.elementos.edit'
+        ])->where(['id' => '[0-9]+']);
+
         Route::delete('delete/{id?}', [ //ELIMINAR
             'uses' => $controller . 'ElementosController@destroy',
             'as' => 'espacios.academicos.elementos.destroy'
         ])->where(['id' => '[0-9]+']);
-
-        Route::post('regisIncidente', [ //CREAR INCIDENTE
-            'uses' => $controller . 'ElementosController@regisIncidente',
-            'as' => 'espacios.academicos.elementos.regisElementos',
-        ]);
     });
     
     /*FIN FUNCIONALIDAD ELEMENTOS*/

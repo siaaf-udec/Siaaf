@@ -12,30 +12,35 @@ class UsersInteraccionSeeder extends Seeder
             //Administrador
             ['name'=> 'Administrador',
              'lastname' => 'Interaccion',
+             'identity_no' => 1,
              'state' => 'aprobado',
              'email' => 'adminintera@app.com',
              'password' => bcrypt('123456')],
             //Coordinador
             ['name'=> 'Coordinador',
              'lastname' => 'Interaccion',
+             'identity_no' => 5,
              'state' => 'aprobado',
              'email' => 'Coorintera@app.com',
              'password' => bcrypt('123456')],
             //Funcionario
             ['name'=> 'Funcionario',
              'lastname' => 'Interaccion',
+             'identity_no' =>3,
              'state' => 'aprobado',
              'email' => 'funintera@app.com',
              'password' => bcrypt('123456')],
             //Pasante
             ['name'=> 'Pasante',
              'lastname' => 'Interaccion',
+             'identity_no' => 4,
              'state' => 'aprobado',
              'email' => 'pasante@app.com',
              'password' => bcrypt('123456')],
             //Empresa
             ['name'=> 'Empresa',
              'lastname' => 'Interaccion',
+             'identity_no' => 5,
              'state' => 'aprobado',
              'email' => 'empresa@app.com',
              'password' => bcrypt('123456')]

@@ -1,13 +1,16 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-     <!-- Datatables Styles -->
-    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
- <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Lista de Estados')
@@ -53,7 +56,7 @@
                                 <div class="modal-body">
                                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Estado']) !!}
                                      <div class="form-wizard">
-                                    {!! Field:: text('Estado',null,['label'=>'Estado','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el estado.','icon'=>'fa fa-cog']) !!}
+                                    {!! Field:: text('ETAD_Estado',null,['label'=>'Estado','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el estado.','icon'=>'fa fa-cog']) !!}
                                  
                                 <div class="modal-footer">
                                     {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
@@ -76,23 +79,23 @@
 
 
 @push('plugins')
-     <!-- Datatables Scripts -->
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/form-wizard.js') }}" type="text/javascript"></script>
-    
-     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
- <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
-
-    <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+ <!-- Datatables Plugins -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+<!-- Validation Plugins -->
+<script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+<!-- Utoastr Plugins -->
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -102,7 +105,7 @@
 jQuery(document).ready(function () {
     var table, url;
     table = $('#Listar_Convenios');
-    url = "{{ route('Listar_Estados.Listar_Estados') }}";
+    url = "{{ route('listarEstados.listarEstados') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -140,8 +143,8 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Estado', "visible": true, name:"documento" },
-           {data: 'Estado', searchable: true},
+           {data: 'PK_ETAD_Estado', "visible": true, name:"documento" },
+           {data: 'ETAD_Estado', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -180,25 +183,25 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Editar_Estado/'+dataTable.PK_Estado;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarEstado/'+dataTable.PK_ETAD_Estado;
      $(".content-ajax").load(route_edit);
         });
     
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
-            };        
-    var form=$('#form-Agregar-Estado');
-    var wizard =  $('#form_wizard_1');
-            
+            ETAD_Estado: {required: true}
+    };    
+    var form    =  $('#form-Agregar-Estado');
+    var wizard  =  $('#form_wizard_1');
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('Resgistrar_Estados.Resgistrar_Estados') }}';
+                    var route = '{{ route('resgistrarEstados.resgistrarEstados') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('Estado', $('#Estado').val());
+                    formData.append('ETAD_Estado', $('#ETAD_Estado').val());
                     
                     $.ajax({
                         url: route,

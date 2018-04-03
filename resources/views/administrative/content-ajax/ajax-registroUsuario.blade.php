@@ -43,9 +43,14 @@
                                 ['label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
+                        <div class="form-group divcode">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                {!! Field::text('code', old('code'), [ 'max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group divcompany">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::text('company', old('company'), ['max' => 25, 'label' => 'Empresa', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-building', 'help' => 'Ingrese la Empresa.']) !!}
                             </div>
@@ -112,6 +117,24 @@
             place: {required: true}
 
         };
+        $('.divcode').hide();
+        $('.divcompany').hide();
+
+        $("#type_user").on('change', function () {
+            var tipo = $('select[name="type_user"]').val();
+            if (tipo == 'Estudiante') {
+                $('.divcode').show();
+                $('.divcompany').hide();
+            }
+            if (tipo == 'Externo') {
+                $('.divcode').hide();
+                $('.divcompany').show();
+            }
+            if (tipo == 'Docente') {
+                $('.divcode').hide();
+                $('.divcompany').hide();
+            }
+        });
         var messages = {
             number_document: {
                 remote: "El número de documento ya ha sido registrado."
@@ -129,6 +152,7 @@
                     formData.append('username', $('input[name="username"]').val());
                     formData.append('lastname', $('input[name="lastname"]').val());
                     formData.append('number_document', $('input[name="number_document"]').val());
+                    formData.append('code', $('input[name="code"]').val());
                     formData.append('company', $('input[name="company"]').val());
                     formData.append('number_phone', $('input[name="number_phone"]').val());
                     formData.append('email', $('input[name="email"]').val());
@@ -189,6 +213,11 @@
             e.preventDefault();
             var route = '{{ route('administrative.user.index.ajax') }}';
             $(".content-ajax").load(route);
+        });
+
+        //Aplicar la validación en select2 cambio de valor desplegable, esto sólo es necesario para la integración de lista desplegable elegido.
+        $('.pmd-select2', $form).change(function () {
+            $form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
     });
 </script>

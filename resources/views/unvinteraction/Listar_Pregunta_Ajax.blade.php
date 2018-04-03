@@ -1,5 +1,4 @@
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR PREGUNTAS'])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR PREGUNTAS'])
 @permission(['Add_Convenio'])
  <div class="col-md-12">
                     <div class="actions">
@@ -26,47 +25,48 @@
     @endcomponent
  <!-- Modal agregar Tipo -->
 <div class="col-md-12">
-                    <!-- Modal -->
-                    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                
-                                <div class="modal-header modal-header-success">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PREGUNTA</h1>
-                                </div>
-                                <div class="modal-body">
-                                 {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
-                                    <div class="form-wizard">
-                                 {!! Field:: textarea('Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
-                                 {!! Field::select('FK_TBL_Tipo_Pregunta',$Pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-                                  
-                                    
-                              <div class="form-actions">
+    <!-- Modal -->
+    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PREGUNTA</h1>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
+                    <div class="form-wizard">
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        
+                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$Pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
+
+
+                        <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
-                                    
+
                                 </div>
-                                </div>
-                                <div class="modal-footer">
-                                    {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                                </div>
-                                {!! Form::close() !!}
                             </div>
+                            <div class="modal-footer">
+                                {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+
 jQuery(document).ready(function () {
+    ComponentsSelect2.init();
     var table, url;
     table = $('#Listar_Preguntas');
-    url = "{{ route('Listar_Pregunta.Listar_Pregunta') }}";
+    url = "{{ route('listarPregunta.listarPregunta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -104,9 +104,9 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Preguntas', "visible": true, name:"documento" },
-           {data: 'Enunciado', searchable: true},
-           {data: 'Tipo', searchable: true},
+           {data: 'PK_PRGT_Pregunta', "visible": true, name:"documento" },
+           {data: 'PRGT_Enunciado', searchable: true},
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -146,27 +146,29 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Editar_Pregunta/'+dataTable.PK_Preguntas;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarPregunta/'+dataTable.PK_PRGT_Pregunta;
 
             $(".content-ajax").load(route_edit);
         });
     
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
-            };
-            
+            PRGT_Enunciado: {required: true},
+            FK_TBL_Tipo_Pregunta_Id: {required: true},
+    };
     var form=$('#form-Agregar-Pregunta');
     var wizard =  $('#form_wizard_1');
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('Agregar_Pregunta.Agregar_Pregunta') }}';
+                    var route = '{{ route('agregarPregunta.agregarPregunta') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
-                    formData.append('Enunciado', $('#Enunciado').val());
-                    formData.append('FK_TBL_Tipo_Pregunta', $('select[name="FK_TBL_Tipo_Pregunta"]').val());
+                    formData.append('PRGT_Enunciado', $('#PRGT_Enunciado').val());
+                    formData.append('FK_TBL_Tipo_Pregunta_Id', $('select[name="FK_TBL_Tipo_Pregunta_Id"]').val());
+                    
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
