@@ -362,6 +362,63 @@ Route::group(['middleware' => ['auth']], function () {
     
     /*FIN FUNCIONALIDAD ELEMENTOS*/
 
+    /*RUTAS FUNCIONALIDAD CATEGORIA*/
+
+    Route::group(['prefix' => 'categoria', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+    
+        Route::get('index', [
+            'uses' => $controller . 'CategoriaController@index',
+            'as' => 'espacios.academicos.categoria.index'
+        ]);
+    
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'CategoriaController@data',
+            'as' => 'espacios.academicos.categoria.data'
+        ]);
+    
+        Route::post('regisCategoria', [ //Registrar Categoria
+            'uses' => $controller . 'CategoriaController@regisCategoria',
+            'as' => 'espacios.academicos.categoria.regisCategoria',
+        ]);
+    
+        Route::delete('delete/{id?}', [ //Eliminar Categoria
+            'uses' => $controller . 'CategoriaController@destroy',
+            'as' => 'espacios.academicos.categoria.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
+        
+    
+    /*FIN FUNCIONALIDAD CATEGORIA*/
+    
+    /*RUTAS FUNCIONALIDAD PROCEDENCIA*/
+    
+    Route::group(['prefix' => 'procedencia', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+    
+        Route::get('index', [
+            'uses' => $controller . 'ProcedenciaController@index',
+            'as' => 'espacios.academicos.procedencia.index'
+        ]);
+    
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'ProcedenciaController@data',
+            'as' => 'espacios.academicos.procedencia.data'
+        ]);
+    
+        Route::post('regisProcedencia', [ //Registrar Procedencia
+            'uses' => $controller . 'ProcedenciaController@regisProcedencia',
+            'as' => 'espacios.academicos.procedencia.regisProcedencia',
+        ]);
+    
+        Route::delete('delete/{id?}', [ //Eliminar Procedencia
+            'uses' => $controller . 'ProcedenciaController@destroy',
+            'as' => 'espacios.academicos.procedencia.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
+        
+    /*FIN FUNCIONALIDAD PROCEDENCIA*/
+
 });
 
 

@@ -34,7 +34,11 @@ class Categoria extends Model
         'nombre_categoria'
             
     ];   
-    
+    /**
+     *  Función que retorna la relación entre la tabla 'tbl_categorias' y la tabla
+     * 'tb_articulos' a través de la llave foránea 'fk_id_categoria'
+     *  y la llave 'pk_id_categoria'
+     */
     public function articulo()
     {
         return $this->hasMany(Articulo::class, 'fk_id_categoria', 'pk_id_categoria');

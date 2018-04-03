@@ -172,19 +172,19 @@
                         </a>
                     </li>
                     <li class="nav-item {{ active(['espacios.academicos.categoria.index'], 'start active open') }}">
-                        <a href="{{ route('espacios.academicos.asist.asisEst') }}" class="nav-link nav-toggle">
+                        <a href="{{ route('espacios.academicos.categoria.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-bars"></i>
                             <span class="title">Categoria</span>
                         </a>
                     </li>
                     <li class="nav-item {{ active(['espacios.academicos.procedencia.index'], 'start active open') }}">
-                        <a href="{{ route('espacios.academicos.asist.asisDoc') }}" class="nav-link nav-toggle">
+                        <a href="{{ route('espacios.academicos.procedencia.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-home"></i>
                             <span class="title">Procedencia</span>
                         </a>
                     </li>
                     <li class="nav-item {{ active(['espacios.academicos.marcas.index'], 'start active open') }}">
-                        <a href="{{ route('espacios.academicos.asist.asisInv') }}" class="nav-link nav-toggle">
+                        <a href="{{ route('espacios.academicos.procedencia.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-wrench"></i>
                             <span class="title">Marcas</span>
                         </a>
