@@ -1,18 +1,12 @@
-@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A PASANTES '])
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A USUARIOS '])
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
-<div class="form-wizard">
-    {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-    
-    {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-    <div class="form-actions">
-        <div class="row">
-            <div class="modal-footer">
-                {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
-            </div>
-        </div>
-    </div>
+    <div class="form-wizard">
+        {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+        {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+        {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
+    </div>      
     {!! Form::close() !!}
-<br><br>
+<br><br><br><br><br><br>
     <div class="row">
         <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
@@ -34,11 +28,6 @@
         </div>
     </div>
     @endcomponent
-
-
-
-
-
 <script>
 jQuery(document).ready(function () {
     ComponentsDateTimePickers.init();
@@ -54,7 +43,6 @@ jQuery(document).ready(function () {
                     var route = '{{ route('vistaReporte.vistaReporte',[$id]) }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
                     formData.append('Fecha_Inicio', $('#Fecha_Inicio').val());
                     formData.append('Fecha_Fin', $('#Fecha_Fin').val());
@@ -69,7 +57,7 @@ jQuery(document).ready(function () {
                         async: async,
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
-                        var route = '/siaaf/public/index.php/interaccion-universitaria/Reporte/<?php echo $id; ?>/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
+                        var route = '/siaaf/public/index.php/interaccion-universitaria/reporte/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
                         $(".content-ajax").load(route);
                         UIToastr.init(xhr , response.title , response.message  );
                     }
@@ -128,21 +116,21 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado__u.name', searchable: true},
-           {data: 'evaluado__u.name',className:'none', searchable: true},
-           {data: 'evaluado__u.lastname', className:'none',searchable: true},
-           {data: 'evaluador.name',className:'none', searchable: true},
-           {data: 'evaluador.lastname', className:'none',searchable: true},
-           {data: 'convenios__evaluacion.Nombre', searchable: true},
-           {data: 'Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
+           {data: 'evaluado.dato_usuario.name', searchable: true},
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
+           {data: 'VLCN_Nota_Final', searchable: true},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
             exportable: false,
             printable: false,
-            defaultContent: '<a href="#" title="ver preguntas" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"> VER </i></a>'
+            defaultContent: '<a href="#" title="ver preguntas" class="btn btn-simple btn-warning btn-icon ver"><i class="icon-pencil"> VER </i></a>'
 
             
         }
@@ -167,12 +155,12 @@ jQuery(document).ready(function () {
     
     
    table = table.DataTable();
-    table.on('click', '.editar', function (e) {
+    table.on('click', '.ver', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_Evaluacion;
-     $(".content-ajax").load(route_edit);
+            route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
+            $(".content-ajax").load(route_edit);
         });
     
    

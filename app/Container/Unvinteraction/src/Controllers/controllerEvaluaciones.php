@@ -224,20 +224,24 @@ class controllerEvaluaciones extends Controller
     
     public function listarEvaluacionesEmpresas()
     {
-       $Evaluacion=Evaluacion::where('Tipo_Evaluacion',1)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
-            ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+       $Evaluacion = Evaluacion::where('VLCN_Tipo_Evaluacion',1)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
+           ->with([
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
             ])
             ->with([
-                'evaluado_E'=>function ($query) {
-                    $query->select('PK_Empresa','Nombre_Empresa');
+                'evaluadoEmpresa'=>function ($query) {
+                    $query->select('PK_EMPS_Empresa','EMPS_Nombre_Empresa');
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->get();  
@@ -251,20 +255,28 @@ class controllerEvaluaciones extends Controller
     */
      public function listarEvaluacionesUsuarios()
     {
-       $Evaluacion=TBL_Evaluacion::where('Tipo_Evaluacion',2)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+       $Evaluacion = Evaluacion::where('VLCN_Tipo_Evaluacion',2)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
             ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
             ])
             ->with([
-                'evaluado_U'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                'evaluado'=>function ($query) {
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->get();  
@@ -280,52 +292,15 @@ class controllerEvaluaciones extends Controller
     */
     public function realizarEvaluacion(Request $request,$id,$convenio)
     {
-        $tipo=0;
-        $decicion=1;
-        $decicion2=1;
-        $rol= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id)->get();
-        $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$request->user()->identity_no)->get();
-        //toma la decision de que preguntas debe mostrar segun el rol del evaluador y el evaluado
-        foreach($rol as $Rol){
-            switch($Rol->name){
-                case 'Pasante_uni':
-                    $decicion=1;
-                    break;
-                case 'Empresario_uni':
-                    $decicion=2;
-                    break;
-                case 'Coordinador_uni':
-                    $decicion=1;
-                    break;
-            }
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $pregunta1= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',1)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
+            $pregunta2= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',2)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
+            return view($this->path.'.Realizar_Evaluacion',compact('pregunta1','id','pregunta2','convenio','n'));
         }
-        foreach($rol2 as $Rol2){
-            switch($Rol2->name){
-                case 'Coordinador_uni':
-                    $decicion2=1;
-                    break;
-                case 'Empresario_uni':
-                    $decicion2=2;
-                    break;
-            }
-        }
-        if( $decicion2==1  and  $decicion==1){
-            $tipo=1;
-        }
-        if( $decicion2==2 and  $decicion==1){
-            $tipo=4;
-        }
-        if( $decicion2==1 and  $decicion==2){
-            $tipo=2;
-        }
-        if( $decicion2==2 and  $decicion==2){
-            $tipo=4;
-        }
-        $Pregunta= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',$tipo)->get();
-        $N= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',$tipo)->count();
-        return view($this->path.'.Realizar_Evaluacion',compact('Pregunta','id','N','convenio'));
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para guardar las preguntas de la evaluacion y los datos correspondientes a esta misma para un usuario
     *@param int n
@@ -334,10 +309,10 @@ class controllerEvaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function registrarEvaluacion(Request $request,$n,$id,$convenio)
+    public function registrarEvaluacion(Request $request,$id,$convenio,$n)
     {
-        $carbon = new \Carbon\Carbon();
-        try{
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $carbon = new \Carbon\Carbon();
             $Evaluacion = new Evaluacion();
             $Evaluacion->VLCN_Evaluador = $request->user()->identity_no;
             $Evaluacion->VLCN_Evaluado = $id;
@@ -351,7 +326,7 @@ class controllerEvaluaciones extends Controller
             $Nota_Final=0.000;
             for($i=1;$i<=$n;$i++){
                 $IDpregunta="Pregunta_".$i;
-                $IDrespuesta='Respuesta_'.$request->$IDpregunta;
+                $IDrespuesta= 'Respuesta_'.$i;
                 $resultado= new EvaluacionPregunta();
                 $resultado->VCPT_Puntuacion=$request->$IDrespuesta;
                 $resultado->FK_TBL_Evaluacion_Id=$id_Evaluacion;
@@ -364,9 +339,10 @@ class controllerEvaluaciones extends Controller
             $evaluacion= Evaluacion::findOrFail($id_Evaluacion);
             $evaluacion->VLCN_Nota_Final =$Nota_Final;
             $evaluacion->save();
-            return view('unvinteraction.listar_Mis_Convenios');
-        }catch(Exception $e){
-            return "Fatal error - ".$e->getMessage();
+            
+            return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
     }
     /*funcion para mostrar las preguntas de la evaluacion para una empresa
@@ -377,29 +353,10 @@ class controllerEvaluaciones extends Controller
     */
     public function realizarEvaluacionEmpresa(Request $request,$id,$convenio)
     {
-        $tipo=0;
-        $id2=$request->user()->identity_no;
-        $rol2= DB::table('role_user')->join('developer.users','users.id','=','role_user.user_id')
-            ->join('developer.roles','roles.id','=','role_user.role_id')->select('roles.name')->where('users.identity_no',$id2)->get();
-        foreach($rol2 as $Rol2) {
-            switch($Rol2->name) {
-                case 'Coordinador_uni':
-                    $decision2=1;
-                    break;
-                case 'Pasante_uni':
-                    $decision2=2;
-                    break;
-            }
-        }
-        if( $decision2==1) {
-            $tipo=2;
-        }
-        if( $decision2==2) {
-            $tipo=3;
-        }
-        $Pregunta= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->get();
-        $N= TBL_Preguntas::where('FK_TBL_Tipo_Pregunta',$tipo)->count();
-        return view($this->path.'.Realizar_Evaluacion_Empresa',compact('Pregunta','id','N','convenio'));
+        $pregunta3= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',3)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
+        $pregunta4= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',4)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
+        
+        return view($this->path.'.Realizar_Evaluacion_Empresa',compact('id','convenio','pregunta3','pregunta4'));
     }
     /*funcion para guardar las preguntas de la evaluacion y los datos correspondientes a esta misma para una empresa
     *@param int n
@@ -408,39 +365,40 @@ class controllerEvaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function registrarEvaluacionEmpresa(Request $request,$n,$id,$convenio)
+    public function registrarEvaluacionEmpresa(Request $request,$id,$convenio,$n)
     {
-        $carbon = new \Carbon\Carbon();
-        try{
-            $Evaluacion = new TBL_Evaluacion();
-            $Evaluacion->Evaluador = $request->user()->identity_no;
-            $Evaluacion->Evaluado = $id;
-            $Evaluacion->FK_TBL_Convenios= $convenio;
-            $Evaluacion->Tipo_Evaluacion= 1;
-            $Evaluacion->Nota_Final= 0;
-            $Evaluacion->Fecha= $carbon->now()->format('y-m-d');
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $carbon = new \Carbon\Carbon();
+            $Evaluacion = new Evaluacion();
+            $Evaluacion->VLCN_Evaluador = $request->user()->identity_no;
+            $Evaluacion->VLCN_Evaluado = $id;
+            $Evaluacion->FK_TBL_Convenio_Id= $convenio;
+            $Evaluacion->VLCN_Tipo_Evaluacion= 1;
+            $Evaluacion->VLCN_Nota_Final= 0;
+            $Evaluacion->VLCN_Fecha= $carbon->now()->format('y-m-d');
             $Evaluacion->save();
-            //saber que evaluacion es
-            $id_Evaluacion=$Evaluacion->PK_Evaluacion;
+            //saber que evaluacion es 
+            $id_Evaluacion=$Evaluacion->PK_VLCN_Evaluacion;
             $Nota_Final=0.000;
             for($i=1;$i<=$n;$i++){
                 $IDpregunta="Pregunta_".$i;
-                $IDrespuesta='Respuesta_'.$request->$IDpregunta;
-                $resultado= new TBL_Evaluacion_Preguntas();
-                $resultado->Puntuacion=$request->$IDrespuesta;
-                $resultado->FK_TBL_Evaluacion=$id_Evaluacion;
-                $resultado->FK_TBL_Preguntas=$request->$IDpregunta;
+                $IDrespuesta= 'Respuesta_'.$i;
+                $resultado= new EvaluacionPregunta();
+                $resultado->VCPT_Puntuacion=$request->$IDrespuesta;
+                $resultado->FK_TBL_Evaluacion_Id=$id_Evaluacion;
+                $resultado->FK_TBL_Pregunta_Id=$request->$IDpregunta;
                 $resultado->save();
-                $Nota_Final= $Nota_Final + $request->$IDrespuesta;
+                $Nota_Final= $Nota_Final + $request->$IDpregunta;
             }
             //promedio entre el resultado de las preguntas para sacar una nota promedio final
             $Nota_Final=$Nota_Final / $n;
-            $evaluacion= TBL_Evaluacion::findOrFail($id_Evaluacion);
-            $evaluacion->Nota_Final =$Nota_Final;
+            $evaluacion= Evaluacion::findOrFail($id_Evaluacion);
+            $evaluacion->VLCN_Nota_Final =$Nota_Final;
             $evaluacion->save();
-            return view('unvinteraction.listar_Mis_Convenios');
-        }catch(Exception $e){
-            return "Fatal error - ".$e->getMessage();
+            
+            return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
     }
     /*funcion para mostrar la vista principal de las evaluaciones de las empresas
@@ -448,18 +406,30 @@ class controllerEvaluaciones extends Controller
     *@return \Illuminate\Http\Response
     *
     */
-    public function listarEvaluacionEmpresa($id)
+    public function listarEvaluacionEmpresa(Request $request,$id)
     {
-        return view($this->path.'.listar_Evaluaciones_Individuales_Empresa',compact('id'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.listar_Evaluaciones_Individuales_Empresa',compact('id'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para mostrar la vista principal de las evaluaciones de los usuarios
     *@param int id
     *@return \Illuminate\Http\Response
     *
     */
-    public function listarEvaluacionesUsuario($id)
+    public function listarEvaluacionesUsuario(Request $request,$id)
     {
-        return view($this->path.'.listar_Evaluaciones_Individuales',compact('id'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.listar_Evaluaciones_Individuales',compact('id'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para envio de los datos para la tabla de datos
     *@param int id
@@ -467,7 +437,8 @@ class controllerEvaluaciones extends Controller
     */
     public function listarEvaluacionIndividual($id)
     {
-        $Evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
+         
+        $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->where('VLCN_Tipo_Evaluacion',2)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
             ->with([
                     'conveniosEvaluacion'=>function ($query) {
                         $query->select('PK_CVNO_Convenio','CVNO_Nombre');
@@ -475,17 +446,25 @@ class controllerEvaluaciones extends Controller
             ])
             ->with([
                 'evaluado'=>function ($query) {
-                    $query->select('PK_USER_Usuario');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('PK_USER_Usuario');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->get();  
          
-       return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
+       return Datatables::of($evaluacion)->addIndexColumn()->make(true);
     }
     /*funcion para envio de los datos para la tabla de datos
     *@param int id
@@ -493,25 +472,29 @@ class controllerEvaluaciones extends Controller
     */
     public function listarEvaluacionIndividualEmpresa($id)
     {
-        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+        $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->where('VLCN_Tipo_Evaluacion',1)->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
             ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
             ])
             ->with([
-                'evaluado_E'=>function ($query) {
-                    $query->select('PK_Empresa','Nombre_Empresa');
+                'evaluadoEmpresa'=>function ($query) {
+                    $query->select('PK_EMPS_Empresa','EMPS_Nombre_Empresa');
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->get();  
          
-       return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
+       return Datatables::of($evaluacion)->addIndexColumn()->make(true);
     }
     /*funcion para mostrar la vista principal de las preguntas de las evaluaciones 
     *@param int id
@@ -519,6 +502,7 @@ class controllerEvaluaciones extends Controller
     */
     public function listarPreguntaEvaluacion($id)
     {
+         
         return view($this->path.'.listar_Preguntas_Individuales',compact('id'));
     }
     /*funcion para envio de los datos para la tabla de datos
@@ -527,8 +511,8 @@ class controllerEvaluaciones extends Controller
     */
     public function listarPreguntaIndividual($id)
     {
-        $Evaluacion=TBL_Evaluacion_Preguntas::where('FK_TBL_Evaluacion',$id)->select('Puntuacion','FK_TBL_Preguntas')
-            ->with(['preguntas_Preguntas'=>function ($query) {$query->select('PK_Preguntas','Enunciado');}])
+        $Evaluacion=EvaluacionPregunta::where('FK_TBL_Evaluacion_Id',$id)->select('VCPT_Puntuacion','FK_TBL_Pregunta_Id')
+            ->with(['preguntaPregunta'=>function ($query) {$query->select('PK_PRGT_Pregunta','PRGT_Enunciado');}])
             ->get();
         return Datatables::of( $Evaluacion)->addIndexColumn()->make(true);
     }
@@ -566,23 +550,31 @@ class controllerEvaluaciones extends Controller
     */
     public function listarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
-        $Evaluacion=TBL_Evaluacion::where('Evaluado',$id)->whereBetween('Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenios','PK_Evaluacion','Nota_Final','Evaluador','Evaluado')
+        $Evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
             ->with([
-                    'convenios_Evaluacion'=>function ($query) {
-                        $query->select('PK_Convenios','Nombre');
+                    'conveniosEvaluacion'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre');
                     }
             ])
             ->with([
-                'evaluado_U'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                'evaluado'=>function ($query) {
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
             ->with([
                 'evaluador'=>function ($query) {
-                    $query->select('identity_no','name','lastname');
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('name','identity_no','lastname');
+                        }
+                    ]);
                 }
             ])
-            ->get();
+            ->get(); 
         return Datatables::of($Evaluacion)->addIndexColumn()->make(true);
       
     }

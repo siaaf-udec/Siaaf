@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DE ESTADOS'])
             <div class="row">
@@ -6,23 +5,11 @@
                     <div class="form-body">
                             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Estado']) !!}
                             <div class="form-wizard">
-                            
-
-                            {!! Field:: text('ETAD_Estado',$Estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
+                                {!! Field:: text('ETAD_Estado',$estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
                         
-                            
-                        
-                            <div class="form-actions">
-                              <div class="row">
-                                <div class="col-md-12 col-md-offset-0">
-                                    {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                                    {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
-                                  </div>
-                                    
-                                    
-
-                                </div>
-                            </div>
+                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+                                 
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -44,7 +31,7 @@ jQuery(document).ready(function () {
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('modificarEstados.modificarEstados',[$Estado->PK_ETAD_Estado]) }}';
+                    var route = '{{ route('modificarEstados.modificarEstados',[$estado->PK_ETAD_Estado]) }}';
                     var type = 'POST';
                     var async = async || false;
 

@@ -166,8 +166,8 @@
     </div>
 </div>
 <!-- FIN MODALS -->
-<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+
+
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
@@ -436,21 +436,21 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacion/' + dataTable.usuarios_participantes.USER_FK_Users+'/ @php echo $id; @endphp ';
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacion/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.doc1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentosUsuarios/'+dataTable.FK_TBL_Usuarios_Id;
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentoUsuario/'+dataTable.FK_TBL_Usuarios_Id;
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.ver1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionesUsuario/'+dataTable.FK_TBL_Usuarios;
+                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionesUsuario/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
                 $(".content-ajax").load(route_edit);
             });
             $("#archivo2").on('click', function(e) {
@@ -631,7 +631,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/<?php echo  $id; ?>';
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
 
                 $(".content-ajax").load(route_edit);
             });

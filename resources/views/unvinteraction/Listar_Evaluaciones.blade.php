@@ -25,10 +25,10 @@
 <div class="portlet-body">
     <ul class="nav nav-tabs">
         <li class="active">
-            <a href="#tab_1_1" data-toggle="tab"> DOCUMENTOS </a>
+            <a href="#tab_1_1" data-toggle="tab"> EMPRESAS </a>
         </li>
         <li>
-            <a href="#tab_1_2" data-toggle="tab"> PARTICIPANTES </a>
+            <a href="#tab_1_2" data-toggle="tab"> USUARIOS </a>
         </li>
 
     </ul>
@@ -55,11 +55,11 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade active in" id="tab_1_2">
+        <div class="tab-pane fade " id="tab_1_2">
             <br><br>
             <br><br>
             <div class="row">
-                <div class="clearfix"> </div><br><br>
+                <div class="clearfix"> </div>
                 <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Pasante'])
             
@@ -149,13 +149,13 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluador.name', searchable: true},
-           {data: 'evaluador.name',className:'none', searchable: true},
-           {data: 'evaluador.lastname', className:'none',searchable: true},
-           {data: 'evaluado__e.Nombre_Empresa', searchable: true},
-           {data: 'convenios__evaluacion.Nombre', searchable: true},
-           {data: 'Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true}, 
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
+           {data: 'VLCN_Nota_Final', searchable: true},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -191,7 +191,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Pregunta_Evaluacion/'+dataTable.PK_Evaluacion;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     
@@ -242,14 +242,14 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado__u.name', searchable: true},
-           {data: 'evaluado__u.name',className:'none', searchable: true},
-           {data: 'evaluado__u.lastname', className:'none',searchable: true},
-           {data: 'evaluador.name',className:'none', searchable: true},
-           {data: 'evaluador.lastname', className:'none',searchable: true},
-           {data: 'convenios__evaluacion.Nombre', searchable: true},
-           {data: 'Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
+           {data: 'evaluado.dato_usuario.name', searchable: true},
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
+           {data: 'VLCN_Nota_Final', searchable: true},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -285,7 +285,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Pregunta_Evaluacion/'+dataTable.PK_Evaluacion;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

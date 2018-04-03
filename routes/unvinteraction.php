@@ -197,6 +197,14 @@ Route::get('descargarReporte/{id}/{fecha_primero}/{fecha_segundo}', [
     'as' => 'descargarReporte.descargarReporte',
    'uses' => $controller.'controllerDocumentos@descargarReporte'
 ]);
+Route::get('documentoUsuario/{id}', [
+    'as' => 'documentoUsuario.documentoUsuario',
+   'uses' => $controller.'controllerDocumentos@documentoUsuario'
+]);
+Route::get('listarDocumentoUsuario/{id}', [
+    'as' => 'listarDocumentoUsuario.listarDocumentoUsuario',
+   'uses' => $controller.'controllerDocumentos@listarDocumentoUsuario'
+]);
 
 //___________________END_MISDOCUMENTOS______________
 //_________________________END____RUTAS___ADMINISTRADOR________________
@@ -208,10 +216,7 @@ Route::post('subirDocumentoConvenioDB/{id}', [
     'as' => 'subirDocumentoConvenioDB.subirDocumentoConvenioDB',
    'uses' => $controller.'controllerDocumentos@subirDocumentoConvenioDB'
 ]);
-Route::get('Descarga/{id}/{idc}', [
-    'as' => 'DocumentoDescarga.DocumentoDescarga',
-   'uses' => $controller.'controllerDocumentos@DocumentoDescarga'
-]);
+
 
 //__________________________RUTAS_FUNCIONARIOS
 
@@ -280,7 +285,7 @@ Route::get('realizarEvaluacion/{id}/{convenio}', [
     'as' => 'realizarEvaluacion.realizarEvaluacion', 
     'uses' => $controller.'controllerEvaluaciones@realizarEvaluacion'
 ]);
-Route::post('registrarEvaluacion/{n}/{id}/{convenio}', [    
+Route::post('registrarEvaluacion/{id}/{convenio}/{n}', [    
     'as' => 'registrarEvaluacion.registrarEvaluacion', 
     'uses' => $controller.'controllerEvaluaciones@registrarEvaluacion'
 ]);
@@ -288,7 +293,7 @@ Route::get('realizarEvaluacionEmpresa/{id}/{convenio}', [
     'as' => 'realizarEvaluacionEmpresa.realizarEvaluacionEmpresar', 
     'uses' => $controller.'controllerEvaluaciones@realizarEvaluacionEmpresa'
 ]);
-Route::post('registrarEvaluacionEmpresa/{n}/{id}/{convenio}', [    
+Route::post('registrarEvaluacionEmpresa/{id}/{convenio}/{n}', [    
     'as' => 'registrarEvaluacionEmpresa.registrarEvaluacionEmpresa', 
     'uses' => $controller.'controllerEvaluaciones@registrarEvaluacionEmpresa'
 ]);

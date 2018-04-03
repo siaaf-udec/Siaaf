@@ -16,7 +16,7 @@ class Notificaciones extends Model
     *Función de conexión entre las tablas de TBL_Notificacione y Usuario
     *para realizar las busquedas complementarias
     */ 
-    public function Usuario(){
-        return $this->hasMany(Usuario::class);
+    public function usuario(){
+        return $this->belongsto(Usuario::class,'FK_TBL_Usuarios_Id','PK_USER_Usuario');;
     }
 }

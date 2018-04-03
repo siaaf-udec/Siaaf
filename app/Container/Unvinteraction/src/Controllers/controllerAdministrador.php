@@ -3,21 +3,16 @@
 namespace App\Container\Unvinteraction\src\Controllers;
 
 use App\Container\Unvinteraction\src\Usuarios;
-use App\Container\Unvinteraction\src\Tipo_Usuario;
-use App\Container\Unvinteraction\src\Estado_Usuario;
-use App\Container\Unvinteraction\src\Carrera;
-use App\Container\Unvinteraction\src\Facultad;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
 use App\Container\Unvinteraction\src\Evaluacion;
-use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
+use App\Container\Unvinteraction\src\EvaluacionPreguntas;
 use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
-use App\Container\Unvinteraction\src\Empresas_Participantes;
 use App\Container\Unvinteraction\src\Empresa;
 use App\Container\Unvinteraction\src\Participantes;
-use App\Container\Unvinteraction\src\Documentacion_Extra;
+use App\Container\Unvinteraction\src\DocumentacionExtra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
 
@@ -39,32 +34,53 @@ class controllerAdministrador extends Controller
     private $path='unvinteraction'; 
     //_____________________SEDES____________________
     /*funcion para mostrar la vista principal de las sedes
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function sedes()
+    public function sedes(Request $request)
     {
-        return view($this->path.'.Listar_Sedes');
+        if($request->isMethod('GET')){
+            return view($this->path.'.Listar_Sedes');
+        }
+        return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+        );
     }
     
     /*funcion para mostrar la vista ajax de las sedes
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function sedesAjax()
+    public function sedesAjax(Request $request)
     {
-        return view($this->path.'.Listar_Sedes_Ajax');
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.Listar_Sedes_Ajax');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*funcion para envio de los datos para la tabla de datos
+    * @param  \Illuminate\Http\Request
     *
-    *@return Yajra\DataTables\DataTable
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
+    * Yajra\DataTables\DataTable
     */
-    public function listarSedes()
+    public function listarSedes(Request $request)
     {
-        //
-         $Sedes=Sede::all();
-         return Datatables::of($Sedes)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $sedes=Sede::all();
+            return Datatables::of($sedes)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
    
     /*funcion para registrar una nueva sede
@@ -73,89 +89,105 @@ class controllerAdministrador extends Controller
     */
     public function resgistrarSedes(Request $request)
     {
-          if($request->ajax() && $request->isMethod('POST'))
+        if($request->ajax() && $request->isMethod('POST'))
         {
-            $Sede = new Sede();
-            $Sede->SEDE_Sede= $request->SEDE_Sede;
-            $Sede->save();
+            $sede = new Sede();
+            $sede->SEDE_Sede= $request->SEDE_Sede;
+            $sede->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
                 'empresa agregada correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
-        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
     
     /*funcion para buscar una sede y enviar la informacion 
-    *@param int id
-    *@return \Illuminate\Http\Response
+    *@param int id | \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function editarSedes($id)
+    public function editarSedes(Request $request,$id)
     {
-        $Sede=Sede::findOrFail($id);
-        return view($this->path.'.Editar_Sedes', compact('Sede'));
+        if($request->ajax() && $request->isMethod('GET')) {
+            $sede=Sede::findOrFail($id);
+            return view($this->path.'.Editar_Sedes', compact('sede'));
+        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
     
     /*funcion para registrar los nuevo datos dela sede
-    *@param int id
-    *@param \Illuminate\Http\Request
+    *@param int id |\Illuminate\Http\Request
+    *
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
      public function  modificarSedes(Request $request, $id)
     {
          if($request->ajax() && $request->isMethod('POST')){
-             $Sede= Sede::findOrFail($id);
-             $Sede->save();
+             $sede= Sede::findOrFail($id);
+             $sede->save();
              return AjaxResponse::success(
                  '¡Bien hecho!',
                  'Sede editada correctamente.'
              );
          }
-         else{
-             return AjaxResponse::fail(
+         return AjaxResponse::fail(
                  '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
-            );
-        }
+         );
+       
     }
     
     //______________________END_SEDES_________
     //________________________EMPRESAS____________________
      
     /*funcion para mostrar la vista principal de las empresas
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function empresas()
+    public function empresas(Request $request)
     {
-        //
-        return view($this->path.'.Listar_Empresas');
+        if($request->isMethod('GET')){
+            return view($this->path.'.Listar_Empresas');
+        }
+        return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para mostrar la vista ajax de las empresas
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function empresasAjax()
+    public function empresasAjax(Request $request)
     {
-        //
-        return view($this->path.'.Listar_Empresas_Ajax');
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.Listar_Empresas_Ajax');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
-    /*funcion para registrar una nueva empresa
-    *@param \Illuminate\Http\Request
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    /*funcion para listar las empresas
+    * @param  \Illuminate\Http\Request
+    *
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
+    * 
     */
-    public function listarEmpresas()
+    public function listarEmpresas(Request $request)
     {
-        //
-        $Empresa = Empresa::all();
-        return Datatables::of($Empresa)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $empresa = Empresa::all();
+            return Datatables::of($empresa)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
+    
    /*funcion para registrar una nueva empresa
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
@@ -164,35 +196,37 @@ class controllerAdministrador extends Controller
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
-            $Empresa = new Empresa();
-            $Empresa->PK_EMPS_Empresa = $request->PK_EMPS_Empresa;
-            $Empresa->EMPS_Nombre_Empresa= $request->EMPS_Nombre_Empresa;
-            $Empresa->EMPS_Razon_Social = $request->EMPS_Razon_Social;
-            $Empresa->EMPS_Telefono = $request->EMPS_Telefono;
-            $Empresa->EMPS_Direccion = $request->EMPS_Direccion;
-            $Empresa->save();
+            $empresa = new Empresa();
+            $empresa->PK_EMPS_Empresa = $request->PK_EMPS_Empresa;
+            $empresa->EMPS_Nombre_Empresa= $request->EMPS_Nombre_Empresa;
+            $empresa->EMPS_Razon_Social = $request->EMPS_Razon_Social;
+            $empresa->EMPS_Telefono = $request->EMPS_Telefono;
+            $empresa->EMPS_Direccion = $request->EMPS_Direccion;
+            $empresa->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
                 'empresa agregada correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
+        return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
-        }
     }
+    
     /*funcion para buscar una empresa y enviar la informacion 
-    *@param int id
-    *@return \Illuminate\Http\Response
+    *@param int id | \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function editarEmpresa($id)
+    public function editarEmpresa(Request $request,$id)
     {
-        $Empresa = Empresa::findOrFail($id);
-        return view($this->path.'.Editar_Empresa', compact('Empresa'));
+        if($request->ajax() && $request->isMethod('GET')) {
+            $empresa = Empresa::findOrFail($id);
+            return view($this->path.'.Editar_Empresa', compact('empresa'));
+        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
+    
     /*funcion para registrar los nuevo datos dela empresa
     *@param int id
     *@param \Illuminate\Http\Request
@@ -202,55 +236,74 @@ class controllerAdministrador extends Controller
     { 
         if($request->ajax() && $request->isMethod('POST'))
         {
-        $Empresa= Empresa::findOrFail($id);
-        $Empresa->EMPS_Nombre_Empresa =$request->EMPS_Nombre_Empresa;
-        $Empresa->EMPS_Razon_Social =$request->EMPS_Razon_Social;
-        $Empresa->EMPS_Telefono =$request->EMPS_Telefono;
-        $Empresa->EMPS_Direccion =$request->EMPS_Direccion;
-        $Empresa->save();
+        $empresa= Empresa::findOrFail($id);
+        $empresa->EMPS_Nombre_Empresa =$request->EMPS_Nombre_Empresa;
+        $empresa->EMPS_Razon_Social =$request->EMPS_Razon_Social;
+        $empresa->EMPS_Telefono =$request->EMPS_Telefono;
+        $empresa->EMPS_Direccion =$request->EMPS_Direccion;
+        $empresa->save();
          return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
+        return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
-    }
+    
     //____________________END___EMPRESAS___________________
     //___________________ESTADOS___________________________
+    
     /*funcion para mostrar la vista principal de las Estados
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function estados()
+    public function estados(Request $request)
     {
-        //
-        return view($this->path.'.Listar_Estados');
+        if($request->isMethod('GET')){
+            return view($this->path.'.Listar_Estados');
+        }
+        return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para mostrar la vista ajax de las Estados
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    * @param  \Illuminate\Http\Request
     *
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-     public function estadosAjax()
+     public function estadosAjax(Request $request)
     {
-        //
-        return view($this->path.'.Listar_Estados_Ajax');
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.Listar_Estados_Ajax');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
-    /*funcion para registrar una nueva Estado
-    *@param \Illuminate\Http\Request
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    
+    /*funcion para listar los Estados
+    * @param  \Illuminate\Http\Request
+    *
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
     */
-    public function listarEstados()
+    public function listarEstados(Request $request)
     {
-        
-         $Estado= Estado ::all();
-         return Datatables::of($Estado)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $estado= Estado ::all();
+            return Datatables::of($estado)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
+    
    /*funcion para registrar una nueva Estado
     *@param \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
@@ -259,30 +312,31 @@ class controllerAdministrador extends Controller
     {
           if($request->ajax() && $request->isMethod('POST'))
         {
-            $Estado = new Estado();
-            $Estado->ETAD_Estado= $request->ETAD_Estado;
-            $Estado->save();
+            $estado = new Estado();
+            $estado->ETAD_Estado= $request->ETAD_Estado;
+            $estado->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Estado Agregado correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
+        return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
-        }
+            
     }
     /*funcion para buscar una Estado y enviar la informacion 
-    *@param int id
-    *@return \Illuminate\Http\Response
+    *@param int id | \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function editarEstado($id)
+    public function editarEstado(Request $request,$id)
     {
-        $Estado = Estado :: findOrFail($id);
-        return view($this->path.'.Editar_Estados', compact('Estado'));
+        if($request->ajax() && $request->isMethod('GET')) {
+            $estado = Estado :: findOrFail($id);
+            return view($this->path.'.Editar_Estados', compact('estado'));
+        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
     /*funcion para registrar los nuevo datos dela Estado
     *@param int id
@@ -293,22 +347,19 @@ class controllerAdministrador extends Controller
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
-        $Estado= Estado ::findOrFail($id);
-        $Estado->ETAD_Estado =$request->ETAD_Estado;
-        $Estado->save();
+        $estado= Estado ::findOrFail($id);
+        $estado->ETAD_Estado =$request->ETAD_Estado;
+        $estado->save();
          return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
             );
         }
-        else
-        {
-            return AjaxResponse::fail(
+        return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
         }
-    }
     //_________________END___ESTADOS______________________
    
     

@@ -93,7 +93,22 @@ class PermisosInteraccionSeeder extends Seeder
              'display_name'=>'descargar arch',
              'description'=>'premite a los usuarios descargar archivos',
              'module_id'=>'5'],
-             
+             ['name'=>'Eva_pre1',
+             'display_name'=>'descargar arch',
+             'description'=>'premite a los usuarios descargar archivos',
+             'module_id'=>'5'],
+             ['name'=>'Eva_pre2',
+             'display_name'=>'descargar arch',
+             'description'=>'premite a los usuarios descargar archivos',
+             'module_id'=>'5'],
+             ['name'=>'Eva_pre3',
+             'display_name'=>'descargar arch',
+             'description'=>'premite a los usuarios descargar archivos',
+             'module_id'=>'5'],
+             ['name'=>'Eva_pre4',
+             'display_name'=>'descargar arch',
+             'description'=>'premite a los usuarios descargar archivos',
+             'module_id'=>'5'],
         ]);
         
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();

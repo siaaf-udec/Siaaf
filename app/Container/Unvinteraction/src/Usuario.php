@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
-    //
+    
     public $timestamps = false;
     protected $connection ='unvinteraction';
     protected $table = 'TBL_Usuario';
@@ -44,7 +44,6 @@ class Usuario extends Model
     *por los campo de FK_TBL_Sede y PK_Sede
     *para realizar las busquedas complementarias
     */
-        
     public function datoUsuario()
     {
         return $this->belongsTo('App\container\Users\src\User', 'USER_FK_Users', 'identity_no');

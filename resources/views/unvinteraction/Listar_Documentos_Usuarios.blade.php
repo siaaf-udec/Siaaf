@@ -1,64 +1,19 @@
-@extends('material.layouts.dashboard')
-
-@push('styles')
-    <!-- Datatables Styles -->
-    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@section('title', '| Lista de Documentos')
-
-
-@section('page-title', 'Lista de Documentos')
-
-@section('page-description', 'Documentos Subidos')
-
-@section('content')
-
-   @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'DOCUMENTOS USUARIOS'])
- <a class="dt-button buttons-print btn btn-circle btn-icon-only btn-default tooltips t-print" tabindex="0" aria-controls="example-table-ajax" onclick=" location.href='http://localhost/siaaf/public/index.php/interaccion-universitaria/Agregar_Usuarios' " title="Agregar Documento">
-        <span>
-            <i class="fa fa-plus-square" ></i>
-        </span>
-    </a>
-      <div class="row">
-        
-        <div class="clearfix"> </div><br><br>
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'DOCUMENTOS USUARIOS'])
+<div class="row">
+    <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos'])
-            
                 @slot('columns', [
                     '#' => ['style' => 'width:20px;'],
                     'ID',
-                    'Descripcion',
-                    'Ubicacion',
-                    'Entidad',
+                    'Nombre',
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
-        </div>
     </div>
+</div>
 
 @endcomponent
-
-@endsection
-
-
-
-@push('plugins')
-
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-
-
-@endpush
-
-
-@push('functions')
 {{--
     <script>
         $(document).ready(function()
@@ -75,7 +30,7 @@ jQuery(document).ready(function () {
     var table, url,id;
    
     table = $('#Listar_Documentos');
-    url = "{{ route('ListarD.listar',[$id]) }}";
+    url = "{{ route('listarDocumentoUsuario.listarDocumentoUsuario',[$id]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -113,11 +68,9 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Documentacion_Extra', "visible": true, name:"documento" },
-           {data: 'Descripcion', searchable: true},
-           {data: 'Ubicacion',className:'none', searchable: true},
-           {data: 'Entidad',searchable: true},
-           {   data:"PK_Documentacion_Extra",
+           {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"documento",className:'none' },
+           {data: 'DCET_Nombre',searchable: true},
+           {   data:"PK_DCET_Documentacion_Extra",
                name:'action',
                title:'Acciones',
                orderable: false,
@@ -126,7 +79,7 @@ jQuery(document).ready(function () {
                printable: false,
                className: '',   
                render: function ( data, type, full, meta ) {
-                 return '<a href="" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="/siaaf/public/index.php/interaccion-universitaria/Documentos_Usuarios/'+data+'" class="btn btn-simple btn-success btn-icon edit"><i class="icon-notebook"></i></a>';
+                 return '<a href="/siaaf/public/index.php/interaccion-universitaria/descargaUsuario/'+data+'" target="_blank" class="btn btn-simple "><i class="fa fa-cloud-download"></i></a>';
                 },
                 responsivePriority:2
                 
@@ -152,4 +105,3 @@ jQuery(document).ready(function () {
     
 });
 </script>
-@endpush

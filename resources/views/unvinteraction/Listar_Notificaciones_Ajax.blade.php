@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
    
     var table, url;
     table = $('#Listar_Notificaciones');
-    url = "{{ route('Listar_Alerta.Listar_Alerta') }}";
+    url = "{{ route('listarAlerta.listarAlerta') }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -65,9 +65,9 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Notificacion',className:'none', "visible": false, name:"documento" },
-           {data: 'Titulo', searchable: true},
-           {data: 'Bandera', searchable: true},
+           {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"documento" },
+           {data: 'NTFC_Titulo', searchable: true},
+           {data: 'NTFC_Bandera', searchable: true},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -103,7 +103,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Ver_Alerta/'+dataTable.PK_Notificacion;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/verAlerta/'+dataTable.PK_NTFC_Notificacion;
 
             $(".content-ajax").load(route_edit);
         });

@@ -50,11 +50,11 @@
         </div>
         <div id="invoice">
             <h1>DATOS DE REPORTE:</h1>
-            <div class="date">Total de evaluaciones: {{sizeof($Evaluacion)}} evaluaciones</div>
+            <div class="date">Total de evaluaciones: {{sizeof($evaluacion)}} evaluaciones</div>
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
-				<a class="noPrint" href="{{ route('Descargar_Reporte.Descargar_Reporte',[$id,$fecha_primera,$fecha_segunda])}}">
+				<a class="noPrint" href="{{ route('descargarReporte.descargarReporte',[$id,$fecha_primera,$fecha_segunda])}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             	</a>
@@ -74,14 +74,14 @@
         </thead>
         <tbody>
          
-                @if(!empty($Evaluacion[0]))
-        @foreach ($Evaluacion as  $index => $row)  
+        @if(!empty($evaluacion[0]))
+        @foreach ($evaluacion as  $index => $row)  
             <tr>
                 <td class="no" rowspan="5">{{$index+1}}</td>
-                <td class="desc" rowspan="5"><h3>{{ $row->convenios_Evaluacion->Nombre }}</h3></td>
-                <td class="desc" rowspan="5" >{{ $row->evaluador->name }} {{ $row->evaluador->lastname }}</td> 
-                <td class="desc" rowspan="5"> {{ $row->Nota_Final }}</td>
-                <td class="desc" rowspan="5"> {{ $row->Fecha }}</td>
+                <td class="desc" rowspan="5"><h3>{{ $row->conveniosEvaluacion->CVNO_Nombre }}</h3></td>
+                <td class="desc" rowspan="5" >{{ $row->evaluador->datoUsuario->name }} {{ $row->evaluador->datoUsuario->lastname }}</td> 
+                <td class="desc" rowspan="5"> {{ $row->VLCN_Nota_Final }}</td>
+                <td class="desc" rowspan="5"> {{ $row->VLCN_Fecha }}</td>
             </tr>
             <tr></tr>
             <tr></tr>

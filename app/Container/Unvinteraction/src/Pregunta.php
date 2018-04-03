@@ -26,7 +26,7 @@ class Pregunta extends Model
     *por los campo de FK_TBL_Tipo_pregunta y PK_Tipo_Pregunta
     *para realizar las busquedas complementarias
     */
-    public function PreguntatiposPregunta()
+    public function preguntaTiposPregunta()
     {
         return $this->belongsto(TipoPregunta::class, 'FK_TBL_Tipo_Pregunta_Id', 'PK_TPPG_Tipo_Pregunta');
     }

@@ -1,10 +1,8 @@
-
-
 <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'FILTRO DE EVALUACION POR FECHA'])
     <div class="col-md-12">
                     <div class="actions">
-                        <a id="archivo3" href="Documento_Reporte/{{$id}}/{{$fecha_primera}}/{{$fecha_segunda}}" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio" target="_blank"><i class="fa fa-plus"></i></a>
+                        <a id="archivo3" href="documentoReporte/{{$id}}/{{$fecha_primera}}/{{$fecha_segunda}}" class="btn btn-simple btn-success btn-icon create" title="imprimir" target="_blank"><i class="fa fa-plus"></i>IMPRIMIR</a>
                     </div>
          </div>
         <div class="row">
@@ -32,12 +30,12 @@ jQuery(document).ready(function () {
     
     $('.atras').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('Alerta_Ajax.Alerta_Ajax') }}';
+            var route = '{{ route('alertaAjax.alertaAjax') }}';
             $(".content-ajax").load(route);
         });
     var table, url;
     table = $('#Listar_Pasante');
-    url = "{{ route('Listar_Reporte.Listar_Reporte',[$id,$fecha_primera,$fecha_segunda]) }}";
+    url = "{{ route('listarReporte.listarReporte',[$id,$fecha_primera,$fecha_segunda]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],
@@ -75,11 +73,11 @@ jQuery(document).ready(function () {
        },
        columns:[
            {data: 'DT_Row_Index'},
-           {data: 'PK_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluador.name',className:'none', searchable: true},
-           {data: 'evaluador.lastname', className:'none',searchable: true},
-           {data: 'convenios__evaluacion.Nombre', searchable: true},
-           {data: 'Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
+           {data: 'VLCN_Nota_Final', searchable: true},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -115,7 +113,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/Listar_Pregunta_Evaluacion/'+dataTable.PK_Evaluacion;
+                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

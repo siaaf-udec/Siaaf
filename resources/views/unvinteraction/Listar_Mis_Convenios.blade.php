@@ -65,12 +65,58 @@
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
+    var ComponentsDateTimePickers = function () {
+            var handleDatePickers = function () {
+                if (jQuery().datepicker) {
+                    $('.date-picker').datepicker({
+                        rtl: App.isRTL(),
+                        orientation: "left",
+                        autoclose: true,
+                        regional: 'es',
+                        closeText: 'Cerrar',
+                        prevText: '<Ant',
+                        nextText: 'Sig>',
+                        currentText: 'Hoy',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+                        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+                        weekHeader: 'Sm',
+                        dateFormat: 'yyyy-mm-dd',
+                        firstDay: 1,
+                        yearSuffix: '',
+                        startDate: null,
+                       
+                    });
+                }
+            }
+            return {
+                init: function () {
+                    handleDatePickers();
+                }
+            };
+        }();
+    var ComponentsSelect2 = function() {
+        var handleSelect = function() {
+            $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                width: null,
+                placeholder: "Selecccionar",
+            });
+        }
+        return {
+            init: function() {
+                handleSelect();
+            }
+        };
+
+    }();
 jQuery(document).ready(function () {
     var table, url;
     table = $('#Listar_Convenios');

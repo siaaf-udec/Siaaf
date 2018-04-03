@@ -5,21 +5,18 @@
         <div class="form-body">
             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Empresa']) !!}
             <div class="form-wizard">
-                {!! Field:: text('EMPS_Nombre_Empresa',$Empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Razon_Social',$Empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Telefono',$Empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Telefono',$empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Direccion',$Empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
-                <div class="form-actions">
-                    <div class="row">
-                        <div class="col-md-12 col-md-offset-0">
-                            {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                            {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
-                        </div>
-                    </div>
-                </div>
+                {!! Field:: text('EMPS_Direccion',$empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
+                
+                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+                
+                    
             </div>
             {!! Form::close() !!}
         </div>
@@ -41,7 +38,7 @@ jQuery(document).ready(function () {
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('modificarEmpresa.modificarEmpresa',[$Empresa->PK_EMPS_Empresa]) }}';
+                    var route = '{{ route('modificarEmpresa.modificarEmpresa',[$empresa->PK_EMPS_Empresa]) }}';
                     var type = 'POST';
                     var async = async || false;
 
