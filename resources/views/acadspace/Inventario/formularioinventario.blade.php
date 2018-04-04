@@ -58,8 +58,9 @@
                 @permission('ACAD_CONSULTAR_INCIDENTE')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
                     @slot('columns', [
-                    '#' => ['style' => 'width:20px;'],
                     'id_articulo',
+                    '  ',
+                    '#',
                     'Codigo',
                     'Procedencia',
                     'Categoria',
@@ -177,24 +178,18 @@
     {{--Dropzone--}}
     <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
-   {{-- <script id="details-template" type="text/x-handlebars-template">
+    <script id="details-template" type="text/x-handlebars-template">
         <table class="table">
             <tr>
-                <td>Descripcion:</td>
-                <td>@{{INC_Descripcion}}</td>
-            </tr>
-            <tr>
-                <td>Fecha:</td>
-                <td>@{{created_at}}</td>
+                <td>Descripcion articulo:</td>
+                <td>@{{descripcion_articulo}}</td>
             </tr>
         </table>
-    </script>--}}
+    </script>
     <script>
         $(document).ready(function () {
             //inicializar select
-            var table, url, columns;
-            //Define que tabla cargara los datos
-            table = $('#art-table-ajax');
+            
             $.fn.select2.defaults.set("theme", "bootstrap");
             $(".pmd-select2").select2({
                 placeholder: "Seleccionar",
@@ -221,11 +216,22 @@
                 formatfile = 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
                 numfile = 10;
             FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
+            var template = Handlebars.compile($("#details-template").html());
+            var table, url, columns;
+            //Define que tabla cargara los datos
+            table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.elementos.data') }}"; //url para cargar datos
             columns = [
                 //Carga los datos que ha traido el control
+                {data: 'pk_id_articulo', name: 'id_articulo', "visible": false},                
+                {
+                    "className": 'details-control',
+                    "orderable": false,
+                    "searchable": false,
+                    "data": null,
+                    "defaultContent": ''
+                },
                 {data: 'DT_Row_Index'},
-                {data: 'pk_id_articulo', name: 'id_articulo', "visible": false},
                 {data: 'codigo_articulo', name: 'Codigo'},
                 {data: 'procedencia.tipo_procedencia', name: 'Procedencia'},
                 {data: 'categoria.nombre_categoria', name: 'Categoria'},
