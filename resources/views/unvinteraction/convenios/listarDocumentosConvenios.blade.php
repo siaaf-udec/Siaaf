@@ -166,8 +166,6 @@
     </div>
 </div>
 <!-- FIN MODALS -->
-
-
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
@@ -188,58 +186,13 @@
         var numfile = 1; 
         $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
         
-        
-            
-            table = $('#Listar_Documentos');
-            url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
-            table.DataTable({
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "Todo"]
-                ],
-                responsive: true,
-                colReorder: true,
-                processing: true,
-                serverSide: true,
-                ajax: url,
-                searching: true,
-                language: {
-                    "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                columns: [{
-                        data: 'DT_Row_Index'
-                    },
-                    {
-                        data: 'PK_DOCU_Documentacion',
-                        "visible": true,
-                        name: "documento",
-                        className: 'none'
-                    },
-                    {
-                        data: 'DOCU_Nombre',
-                        searchable: true
-                    },
+        var table, url, columns;
+        table = $('#Listar_Documentos');
+        url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
+        columns = [
+            {data: 'DT_Row_Index'},
+                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "documento",className: 'none'},
+                    {data: 'DOCU_Nombre',searchable: true},
                     {
                         data: 'action',
                         className: '',
@@ -250,52 +203,10 @@
                         exportable: false,
                         printable: false,
                         defaultContent: ' @permission(['Des_Doc_Con'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
-
-
                     }
-                ],
-                buttons: [{
-                        extend: 'print',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                        text: '<i class="fa fa-print"></i>'
-                    },
-                    {
-                        extend: 'copy',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                        text: '<i class="fa fa-files-o"></i>'
-                    },
-                    {
-                        extend: 'pdf',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                        text: '<i class="fa fa-file-text-o"></i>',
-                    },
-                    {
-                        extend: 'colvis',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
-                        text: '<i class="fa fa-bars"></i>'
-                    },
-                    {
-                        text: '<i class="fa fa-refresh"></i>',
-                        className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                        action: function(e, dt, node, config) {
-                            dt.ajax.reload();
-                        }
-                    }
-                ],
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-            });
-
+        ];
+        dataTableServer.init(table, url, columns);
+        
             $("#archivo1").on('click', function(e) {
                 e.preventDefault();
                 $('#documento').modal('toggle');
@@ -311,126 +222,39 @@
                     url: '',
                     dataType: "html",
                 }).done(function(data) {
-                    window.location.href = '/siaaf/public/index.php/interaccion-universitaria/Descarga/'+ O.PK_DOCU_Documentacion+'/<?php echo $id; ?>';
+                    window.location.href = '/siaaf/public/index.php/interaccion-universitaria/descarga/'+ O.PK_DOCU_Documentacion+'/@php echo $id; @endphp';
                 });
             });
 
         });
 </script>
 <script type="text/javascript">
-        jQuery(document).ready(function() {
-           
-        var table, url;
+    jQuery(document).ready(function() {
+        var table, url, columns;
         table = $('#Listar_Paticipantes');
         url = "{{ route('listarParticipantesConvenios.listarParticipantesConvenios',[$id]) }}";
-        table.DataTable({
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "Todo"]
-            ],
-            responsive: true,
-            colReorder: true,
-            processing: true,
-            serverSide: true,
-            ajax: url,
-            searching: true,
-            language: {
-                "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-            },
-            columns: [{
-                    data: 'DT_Row_Index'
-                },
-                {
-                    data: 'usuarios_participantes.dato_usuario.identity_no',
-                    "visible": true,
-                    name: "documento"
-                },
-                {
-                    data: 'usuarios_participantes.dato_usuario.name',
-                    searchable: true
-                },
-                {
-                    data: 'usuarios_participantes.dato_usuario.lastname',
-                    searchable: true
-                },
-               {
-                        data: 'action',
-                        className: '',
-                        searchable: false,
-                        name: 'action',
-                        title: 'Acciones',
-                        orderable: false,
-                        exportable: false,
-                        printable: false,
-                        defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+        columns = [
+            {data: 'DT_Row_Index'},
+            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "documento"},
+            {data: 'usuarios_participantes.dato_usuario.name',searchable: true},
+            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true},
+            {
+                data: 'action',
+                className: '',
+                searchable: false,
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                exportable: false,
+                printable: false,
+                defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
 
 
                     }
-
-            ],
-            buttons: [{
-                    extend: 'print',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                    text: '<i class="fa fa-print"></i>'
-                },
-                {
-                    extend: 'copy',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                    text: '<i class="fa fa-files-o"></i>'
-                },
-                {
-                    extend: 'pdf',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                    text: '<i class="fa fa-file-pdf-o"></i>',
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                    text: '<i class="fa fa-file-excel-o"></i>',
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                    text: '<i class="fa fa-file-text-o"></i>',
-                },
-                {
-                    extend: 'colvis',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
-                    text: '<i class="fa fa-bars"></i>'
-                },
-                {
-                    text: '<i class="fa fa-refresh"></i>',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                    action: function(e, dt, node, config) {
-                        dt.ajax.reload();
-                    }
-                }
-            ],
-            pageLength: 10,
-            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-        });
-
+        ];
+        dataTableServer.init(table, url, columns);
+            
+       
             table = table.DataTable();
             table.on('click', '.evaluar1', function(e) {
                 e.preventDefault();
@@ -517,60 +341,14 @@
 </script>
 <script type="text/javascript">
         jQuery(document).ready(function() {
-        var table, url;
-        table = $('#Listar_Empresas_Paticipantes');
-        url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
-        table.DataTable({
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "Todo"]
-            ],
-            responsive: true,
-            colReorder: true,
-            processing: true,
-            serverSide: true,
-            ajax: url,
-            searching: true,
-            language: {
-                "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-            },
-            columns: [{
-                    data: 'DT_Row_Index'
-                },
-                {
-                    data: 'PK_EMPT_Empresa_Participante',
-                    "visible": true,
-                    name: "documento"
-                },
-                {
-                    data: 'patricipantes_empresas.PK_EMPS_Empresa',
-                    searchable: true
-                },
-                {
-                    data: 'patricipantes_empresas.EMPS_Nombre_Empresa',
-                    searchable: true
-                },
+            var table, url, columns;
+            table = $('#Listar_Empresas_Paticipantes');
+            url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
+            columns = [
+                {data: 'DT_Row_Index'},
+                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "documento"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true},
                 {
                         data: 'action',
                         className: '',
@@ -582,49 +360,9 @@
                         printable: false,
                         defaultContent: '@permission(['Eva_Pasante'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
                     }
-
-            ],
-            buttons: [{
-                    extend: 'print',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-print',
-                    text: '<i class="fa fa-print"></i>'
-                },
-                {
-                    extend: 'copy',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy',
-                    text: '<i class="fa fa-files-o"></i>'
-                },
-                {
-                    extend: 'pdf',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf',
-                    text: '<i class="fa fa-file-pdf-o"></i>',
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel',
-                    text: '<i class="fa fa-file-excel-o"></i>',
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',
-                    text: '<i class="fa fa-file-text-o"></i>',
-                },
-                {
-                    extend: 'colvis',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis',
-                    text: '<i class="fa fa-bars"></i>'
-                },
-                {
-                    text: '<i class="fa fa-refresh"></i>',
-                    className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-                    action: function(e, dt, node, config) {
-                        dt.ajax.reload();
-                    }
-                }
-            ],
-            pageLength: 10,
-            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-        });
+        ];
+        dataTableServer.init(table, url, columns);
+        
 
             table = table.DataTable();
             table.on('click', '.evaluar2', function(e) {

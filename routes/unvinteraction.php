@@ -189,9 +189,14 @@ Route::get('descargaUsuario/{id}', [
     'as' => 'documentoDescargaUsuario.documentoDescargaUsuario',
    'uses' => $controller.'controllerDocumentos@documentoDescargaUsuario'
 ]);
+
 Route::get('documentoReporte/{id}/{fecha_primero}/{fecha_segundo}', [
     'as' => 'documentoReporte.documentoReporte',
    'uses' => $controller.'controllerDocumentos@documentoReporte'
+]);
+Route::get('descarga/{id}/{idc}', [
+    'as' => 'documentoDescarga.documentoDescarga',
+   'uses' => $controller.'controllerDocumentos@documentoDescarga'
 ]);
 Route::get('descargarReporte/{id}/{fecha_primero}/{fecha_segundo}', [
     'as' => 'descargarReporte.descargarReporte',

@@ -41,7 +41,7 @@ class controllerDocumentos extends Controller
     */
     public function subirDocumentoConvenio(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $carbon = new \Carbon\Carbon();
             $ubicacion="unvinteraction/convenios/".$id;
             $files = $request->file('file');
@@ -57,23 +57,22 @@ class controllerDocumentos extends Controller
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
-        );
+        );   
     }
     /*funcion para descargar el documento subido para el convenio
     *@param int id  
     *@param int idc
     *@param \Illuminate\Http\Request
-    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    *@return \Illuminate\Http\Response 
     */
     public function documentoDescarga(Request $request, $id, $idc)
     {
-        if ($request->ajax() && $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             $documento = Documentacion::select('DOCU_Ubicacion')->where('PK_DOCU_Documentacion', $id)->get();
             foreach ($documento as $row) {
                 if ($exists = Storage::disk('developer')->exists($row->DOCU_Ubicacion)) {
                     $Contents = Storage::disk('developer')->get($row->DOCU_Ubicacion);
                     return response()->download(storage_path()."/app/public/developer/".$row->DOCU_Ubicacion, $row->DOCU_Nombre);
-                    return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
                 } else {
                     return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
                 }
@@ -102,6 +101,7 @@ class controllerDocumentos extends Controller
     * @param  \Illuminate\Http\Request
     * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
+
     public function listarMisDocumentos(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -147,7 +147,7 @@ class controllerDocumentos extends Controller
     */
     public function documentoDescargaUsuario(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
             $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')
                 ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)

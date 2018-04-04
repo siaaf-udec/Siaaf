@@ -27,8 +27,31 @@
 --}}
  <script>
 jQuery(document).ready(function () {
-    var table, url,id;
-   
+    var id;
+    var table, url, columns;
+        table = $('#Listar_Documento');
+        url = "{{ route('listarDocumentoUsuario.listarDocumentoUsuario',[$id]) }}";
+        columns = [
+            {data: 'DT_Row_Index'},
+           {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"documento",className:'none' },
+           {data: 'DCET_Nombre',searchable: true},
+           {   data:"PK_DCET_Documentacion_Extra",
+               name:'action',
+               title:'Acciones',
+               orderable: false,
+               searchable: false,
+               exportable: false,
+               printable: false,
+               className: '',   
+               render: function ( data, type, full, meta ) {
+                 return '<a href="/siaaf/public/index.php/interaccion-universitaria/descargaUsuario/'+data+'" target="_blank" class="btn btn-simple "><i class="fa fa-cloud-download"></i></a>';
+                },
+                responsivePriority:2
+                
+               
+           }
+        ];
+     dataTableServer.init(table, url, columns);
     table = $('#Listar_Documentos');
     url = "{{ route('listarDocumentoUsuario.listarDocumentoUsuario',[$id]) }}";
     table.DataTable({

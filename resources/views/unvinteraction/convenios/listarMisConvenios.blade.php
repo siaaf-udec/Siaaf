@@ -65,6 +65,7 @@
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
 @endpush
 
@@ -118,81 +119,30 @@
 
     }();
 jQuery(document).ready(function () {
-    var table, url;
-    table = $('#Listar_Convenios');
-    url = "{{ route('listarMisConvenios.listarMisConvenios') }}";
-    table.DataTable({
-       lengthMenu: [
-           [5, 10, 25, 50, -1],
-           [5, 10, 25, 50, "Todo"]
-       ],
-       responsive: true,
-       colReorder: true,
-       processing: true,
-       serverSide: true,
-       ajax: url,
-       searching: true,
-       language: {
-           "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-           "sLengthMenu": "Mostrar _MENU_ registros",
-           "sZeroRecords": "No se encontraron resultados",
-           "sEmptyTable": "Ningún dato disponible en esta tabla",
-           "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-           "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-           "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-           "sInfoPostFix": "",
-           "sSearch": "Buscar:",
-           "sUrl": "",
-           "sInfoThousands": ",",
-           "sLoadingRecords": "Cargando...",
-           "oPaginate": {
-               "sFirst": "Primero",
-               "sLast": "Último",
-               "sNext": "Siguiente",
-               "sPrevious": "Anterior"
-           },
-           "oAria": {
-               "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-           }
-       },
-       columns:[
-           {data: 'DT_Row_Index'},
-           {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"documento" },
-           {data: 'convenios_participante.CVNO_Nombre', searchable: true},
-           {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true},
-           {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true},
-           {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true},
-           {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true},
-           {data:'action',className:'',searchable: false,
-            name:'action',
-            title:'Acciones',
-            orderable: false,
-            exportable: false,
-            printable: false,
-            defaultContent: '<a href="#" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"> VER</i></a>'
+    var table, url, columns;
+            table = $('#Listar_Convenios');
+            url = "{{ route('listarMisConvenios.listarMisConvenios') }}";
+            columns = [
+                {data: 'DT_Row_Index'},
+                {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"documento" },
+               {data: 'convenios_participante.CVNO_Nombre', searchable: true},
+               {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true},
+               {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true},
+               {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true},
+               {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true},
+               {data:'action',className:'',searchable: false,
+                name:'action',
+                title:'Acciones',
+                orderable: false,
+                exportable: false,
+                printable: false,
+                defaultContent: '<a href="#" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"> VER</i></a>'
 
-            
-        }
-           
-       ],
-       buttons: [
-           { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-           { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-           { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-           { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-           { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-           { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
-           {text: '<i class="fa fa-refresh"></i>', className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-               action: function ( e, dt, node, config ) {
-                   dt.ajax.reload();
-               }
-           }
-       ],
-       pageLength: 10,
-       dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-    });
-    
+
+            }
+        ];
+        dataTableServer.init(table, url, columns);
+   
     table = table.DataTable();
     table.on('click', '.editar2', function (e) {
             e.preventDefault();

@@ -31,7 +31,7 @@ class controllerAlertas extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $path='unvinteraction';
+    private $path='unvinteraction.alertas';
     /*funcion para crear  una alerta de los convenios que van a finalizar para el usuario
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
@@ -67,6 +67,7 @@ class controllerAlertas extends Controller
                     }
                 } 
             }
+            return view($this->path.'.listarNotificaciones');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -80,7 +81,7 @@ class controllerAlertas extends Controller
     public function alertaAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.Listar_Notificaciones_Ajax');
+            return view($this->path.'.listarNotificacionesAjax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -109,14 +110,14 @@ class controllerAlertas extends Controller
     *@param int id
     *@return \Illuminate\Http\Response
     */
-    public function verAlerta($id)
+    public function verAlerta(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $bandera = Notificaciones::findOrFail($id);
             $bandera->NTFC_Bandera = 'VISTO';
             $bandera->save();
             $notificacion = Notificaciones::findOrFail($id);
-            return view($this->path.'.Ver_Notificacion', compact('notificacion'));
+            return view($this->path.'.verNotificacion', compact('notificacion'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
