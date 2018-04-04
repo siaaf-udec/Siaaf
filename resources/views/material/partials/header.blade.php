@@ -296,7 +296,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
-                                <a href="javascript:;"><i class="icon-user"></i> My Profile </a>
+                                <a href="{{ route('users.profile') }}"><i class="icon-user"></i> My Profile </a>
                             </li>
                             <li>
                                 <a href="javascript:;"><i class="icon-calendar"></i> My Calendar </a>
