@@ -26,12 +26,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class controllerAdministrador extends Controller
 {
-     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    private $path='unvinteraction'; 
+    
+    private $path='unvinteraction.administrador'; 
     //_____________________SEDES____________________
     /*funcion para mostrar la vista principal de las sedes
     * @param  \Illuminate\Http\Request
@@ -41,7 +37,7 @@ class controllerAdministrador extends Controller
     public function sedes(Request $request)
     {
         if($request->isMethod('GET')){
-            return view($this->path.'.Listar_Sedes');
+            return view($this->path.'.listarSedes');
         }
         return AjaxResponse::fail(
                  '¡Lo sentimos!',
@@ -57,7 +53,7 @@ class controllerAdministrador extends Controller
     public function sedesAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.Listar_Sedes_Ajax');
+            return view($this->path.'.listarSedesAjax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -69,7 +65,7 @@ class controllerAdministrador extends Controller
     * @param  \Illuminate\Http\Request
     *
     * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
-    * Yajra\DataTables\DataTable
+    * 
     */
     public function listarSedes(Request $request)
     {
@@ -103,21 +99,22 @@ class controllerAdministrador extends Controller
     }
     
     /*funcion para buscar una sede y enviar la informacion 
-    *@param int id | \Illuminate\Http\Request
+    *@param int id 
+    *@param  \Illuminate\Http\Request
     *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function editarSedes(Request $request,$id)
     {
         if($request->ajax() && $request->isMethod('GET')) {
             $sede=Sede::findOrFail($id);
-            return view($this->path.'.Editar_Sedes', compact('sede'));
+            return view($this->path.'.editarSedes', compact('sede'));
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
     
     /*funcion para registrar los nuevo datos dela sede
-    *@param int id |\Illuminate\Http\Request
-    *
+    *@param int id
+    *@param  \Illuminate\Http\Request
     *@return App\Container\Overall\Src\Facades\AjaxResponse
     */
      public function  modificarSedes(Request $request, $id)
@@ -148,7 +145,7 @@ class controllerAdministrador extends Controller
     public function empresas(Request $request)
     {
         if($request->isMethod('GET')){
-            return view($this->path.'.Listar_Empresas');
+            return view($this->path.'.listarEmpresas');
         }
         return AjaxResponse::fail(
                  '¡Lo sentimos!',
@@ -163,7 +160,7 @@ class controllerAdministrador extends Controller
     public function empresasAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.Listar_Empresas_Ajax');
+            return view($this->path.'.listarEmpresasAjax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -215,14 +212,15 @@ class controllerAdministrador extends Controller
     }
     
     /*funcion para buscar una empresa y enviar la informacion 
-    *@param int id | \Illuminate\Http\Request
+    *@param int id 
+    *@param  \Illuminate\Http\Request
     *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function editarEmpresa(Request $request,$id)
     {
         if($request->ajax() && $request->isMethod('GET')) {
             $empresa = Empresa::findOrFail($id);
-            return view($this->path.'.Editar_Empresa', compact('empresa'));
+            return view($this->path.'.editarEmpresa', compact('empresa'));
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
@@ -264,7 +262,7 @@ class controllerAdministrador extends Controller
     public function estados(Request $request)
     {
         if($request->isMethod('GET')){
-            return view($this->path.'.Listar_Estados');
+            return view($this->path.'.listarEstados');
         }
         return AjaxResponse::fail(
                  '¡Lo sentimos!',
@@ -279,7 +277,7 @@ class controllerAdministrador extends Controller
      public function estadosAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.Listar_Estados_Ajax');
+            return view($this->path.'.listarEstadosAjax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -327,14 +325,15 @@ class controllerAdministrador extends Controller
             
     }
     /*funcion para buscar una Estado y enviar la informacion 
-    *@param int id | \Illuminate\Http\Request
+    *@param int id
+    *@param  \Illuminate\Http\Request
     *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function editarEstado(Request $request,$id)
     {
         if($request->ajax() && $request->isMethod('GET')) {
             $estado = Estado :: findOrFail($id);
-            return view($this->path.'.Editar_Estados', compact('estado'));
+            return view($this->path.'.editarEstados', compact('estado'));
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }

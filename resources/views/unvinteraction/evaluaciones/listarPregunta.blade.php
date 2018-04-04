@@ -60,7 +60,7 @@
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
                     <div class="form-wizard">
                         {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
-                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$Pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
+                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">

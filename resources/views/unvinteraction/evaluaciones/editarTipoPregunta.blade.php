@@ -1,48 +1,47 @@
 <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DE ESTADOS'])
-    <div class="row">
-        <div class="col-md-7 col-md-offset-2">
-            <div class="form-body">
-                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Pregunta']) !!}
-                <div class="form-wizard">
-                    {!! Field:: textarea('PRGT_Enunciado',$Pregunta->PRGT_Enunciado,['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
-                    
-                    {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$Pregunta1,$Pregunta->FK_TBL_Tipo_Pregunta_Id,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                                {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DE TIPOS DE PREGUNTAS'])
+            <div class="row">
+                <div class="col-md-7 col-md-offset-2">
+                    <div class="form-body">
+                            {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Pregunta']) !!}
+                            <div class="form-wizard">
+                            {!! Field:: text('TPPG_Tipo',$pregunta->TPPG_Tipo,['label'=>'Tipo de pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el tipo de pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                            
+                            <div class="form-actions">
+                              <div class="row">
+                                <div class="col-md-12 col-md-offset-0">
+                                    {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                    {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+                                  </div>
+                                </div>
                             </div>
                         </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
-                {!! Form::close() !!}
             </div>
-        </div>
-    </div>
     @endcomponent
 </div>
 
 <script>
 jQuery(document).ready(function () {
-    ComponentsSelect2.init();
+    
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
-            };
+            TPPG_Tipo: {required: true},
+    };
     var form=$('#form-Modificar-Pregunta');
     var wizard =  $('#form_wizard_1');
-            
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('modificarPregunta.modificarPregunta',[$Pregunta->PK_PRGT_Pregunta]) }}';
+                    var route = '{{ route('modificarTipoPregunta.modificarTipoPregunta',[$pregunta->PK_TPPG_Tipo_Pregunta]) }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
-                    formData.append('PRGT_Enunciado', $('#PRGT_Enunciado').val());
-                    formData.append('FK_TBL_Tipo_Pregunta_Id', $('select[name="FK_TBL_Tipo_Pregunta_Id"]').val());
+                    formData.append('TPPG_Tipo', $('#TPPG_Tipo').val());
+                   
+                   
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -55,7 +54,7 @@ jQuery(document).ready(function () {
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );
-                        var route = '{{ route('preguntaAjax.preguntaAjax') }}';
+                        var route = '{{ route('tipoPreguntaAjax.tipoPreguntaAjax') }}';
                         $(".content-ajax").load(route);
                     }
                 },
@@ -75,7 +74,7 @@ jQuery(document).ready(function () {
     
     $('.atras').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('preguntaAjax.preguntaAjax') }}';
+            var route = '{{ route('tipoPreguntaAjax.tipoPreguntaAjax') }}';
             $(".content-ajax").load(route);
         });
   });   

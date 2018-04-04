@@ -6,15 +6,15 @@
                            
                         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Convenio']) !!}
                         <div class="form-wizard">
-                            {!! Field:: text('CVNO_Nombre',$Convenio->CVNO_Nombre,['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
+                            {!! Field:: text('CVNO_Nombre',$convenio->CVNO_Nombre,['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
                         
-                            {!! Field::date('CVNO_Fecha_Inicio',$Convenio->CVNO_Fecha_Inicio,['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CVNO_Fecha_Inicio',$convenio->CVNO_Fecha_Inicio,['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
                         
-                            {!! Field::date('CVNO_Fecha_Fin',$Convenio->CVNO_Fecha_Fin,['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CVNO_Fecha_Fin',$convenio->CVNO_Fecha_Fin,['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
                             
-                            {!! Field::select('FK_TBL_Estado_Id',$Estado,$Convenio->FK_TBL_Estado_Id,[ 'label' => 'Selecciona un estado'])!!}
+                            {!! Field::select('FK_TBL_Estado_Id',$estado,$convenio->FK_TBL_Estado_Id,[ 'label' => 'Selecciona un estado'])!!}
                         
-                            {!! Field::select('FK_TBL_Sede_Id',$Sede,$Convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede'])!!}
+                            {!! Field::select('FK_TBL_Sede_Id',$sede,$convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede'])!!}
                         <div class="form-actions">
                               <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
@@ -52,7 +52,7 @@ jQuery(document).ready(function () {
     var crearConvenio = function () {
             return{
                 init: function () {
-                    var route = '{{ route('modificarConvenios.modificarConvenios',[$Convenio->PK_CVNO_Convenio]) }}';
+                    var route = '{{ route('modificarConvenios.modificarConvenios',[$convenio->PK_CVNO_Convenio]) }}';
                     var type = 'POST';
                     var async = async || false;
 
