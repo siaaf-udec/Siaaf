@@ -5,6 +5,7 @@ namespace App\Container\Acadspace\src\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
+use App\Container\Acadspace\src\Categoria;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
@@ -22,8 +23,13 @@ class ElementosController extends Controller
     {
 
         if ($request->isMethod('GET')) {
+                $cate=new categoria();
+                $categoria=$cate->pluck('nombre_categoria','pk_id_categoria');
                 //Muestra vista elementos
-                return view('acadspace.Inventario.formularioinventario');
+                return view('acadspace.Inventario.formularioinventario',
+                [
+                   'categoria'=>$categoria->toArray()
+                ]);
             }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -105,6 +111,24 @@ class ElementosController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
+
+    }
+    public function destroy(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+
+            $aulas = Incidentes::find($id);
+            $aulas->delete();
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Incidente eliminado correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
     
