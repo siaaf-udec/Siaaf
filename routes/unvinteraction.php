@@ -3,11 +3,7 @@
  *  Interacción Universitaria
  */
 //RUTA DE EJEMPLO
-use App\Container\Users\Src\User;
-use Yajra\Datatables\Datatables;
-use Illuminate\Http\Request;
-use App\Container\Gesap\Src\Anteproyecto;
-use Illuminate\Support\Facades\DB;
+
 
 Route::get('/', [
     'as' => 'interaccion.universitaria.index',
@@ -16,74 +12,70 @@ Route::get('/', [
     }
 ]);
 $controller = "\\App\\Container\\Unvinteraction\\Src\\Controllers\\";
-//_____________________________RUTAS___ADMINISTRADOR________________
-Route::get('Administrador', [
-    'as' => 'administrador.index',
-    'uses' => $controller.'controllerAdministrador@index'
-]);
+//_____________________CONVENIOS__________________________[['middleware' => ['permission:Ver_Convenio']],
+//Route::group(['middleware' => ['permission:Ver_Convenio']], function () use ($controller) {
+    Route::get('convenios', [
+        'as' => 'convenios.convenios',
+        'uses' => $controller.'controllerConvenios@convenios'
+    ]);
+    Route::get('conveniosAjax', [
+        'as' => 'conveniosAjax.conveniosAjax',
+        'uses' => $controller.'controllerConvenios@conveniosAjax'
+    ]);
+    Route::get('misConvenios', [
+        'as' => 'misConvenios.misConvenios',
+        'uses' => $controller.'controllerConvenios@misConvenios'
+    ]);
+    Route::get('listarMisConvenios', [
+        'as' => 'listarMisConvenios.listarMisConvenios',
+        'uses' => $controller.'controllerConvenios@listarMisConvenios'
+    ]);
+    Route::get('listarConvenios', [
+        'as' => 'listarConvenios.listarConvenios',
+        'uses' => $controller.'controllerConvenios@listarConvenios'
+    ]);
 
-//_____________________CONVENIOS__________________________
-Route::get('convenios', [
-    'as' => 'convenios.convenios',
-    'uses' => $controller.'controllerConvenios@convenios'
-]);
-Route::get('conveniosAjax', [
-    'as' => 'conveniosAjax.conveniosAjax',
-    'uses' => $controller.'controllerConvenios@conveniosAjax'
-]);
-Route::get('misConvenios', [
-    'as' => 'misConvenios.misConvenios',
-    'uses' => $controller.'controllerConvenios@misConvenios'
-]);
-Route::get('listarMisConvenios', [
-    'as' => 'listarMisConvenios.listarMisConvenios',
-    'uses' => $controller.'controllerConvenios@listarMisConvenios'
-]);
-Route::get('listarConvenios', [
-    'as' => 'listarConvenios.listarConvenios',
-    'uses' => $controller.'controllerConvenios@listarConvenios'
-]);
-
-Route::post('registroConvenios', [
-   'as' => 'registroConvenios.registroConvenios',
-   'uses' => $controller.'controllerConvenios@registroConvenios'
-]);
-Route::get('editarConvenios/{id}', [    
-    'as' => 'editarConvenios.editarConvenios', 
-    'uses' => $controller.'controllerConvenios@editarConvenios'
-]);
-Route::post('modificarConvenios/{id}', [
-    'as' => 'modificarConvenios.modificarConvenios',
-   'uses' => $controller.'controllerConvenios@modificarConvenios'
-]);
-Route::get('documentosConvenios/{id}', [    
-    'as' => 'documentosConvenios.documentosConvenios', 
-    'uses' => $controller.'controllerConvenios@documentosConvenios'
-]);
-Route::post('agregarDocumento/{id}', [    
-    'as' => 'agregarDocumento.agregarDocumento', 
-    'uses' => $controller.'controllerConvenios@agregarDocumento'
-]);
-Route::get('listarDocumentosConvenios/{id}', [    
-    'as' => 'listarDocumentosConvenios.listarDocumentosConvenios', 
-    'uses' => $controller.'controllerConvenios@listarDocumentosConvenios'
-]);
-Route::get('listarParticipantesConvenios/{id}', [    
-    'as' => 'listarParticipantesConvenios.listarParticipantesConvenios', 
-    'uses' => $controller.'controllerConvenios@listarParticipantesConvenios'
-]);
-Route::get('listarEmpresasParticipantesConvenios/{id}', [    
-    'as' => 'listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios', 
-    'uses' => $controller.'controllerConvenios@listarEmpresasParticipantesConvenios'
-]);
-Route::post('empresaConvenio/{id}', [    
-    'as' => 'empresaConvenio.empresaConvenio', 
-    'uses' => $controller.'controllerConvenios@empresaConvenio'
-]);
-Route::post('participanteConvenio/{id}', [    
-    'as' => 'participanteConvenio.participanteConvenio', 
-    'uses' => $controller.'controllerConvenios@participanteConvenio'
-]);
+    Route::post('registroConvenios', [
+       'as' => 'registroConvenios.registroConvenios',
+       'uses' => $controller.'controllerConvenios@registroConvenios'
+    ]);
+    Route::get('editarConvenios/{id}', [    
+        'as' => 'editarConvenios.editarConvenios', 
+        'uses' => $controller.'controllerConvenios@editarConvenios'
+    ]);
+    Route::post('modificarConvenios/{id}', [
+        'as' => 'modificarConvenios.modificarConvenios',
+       'uses' => $controller.'controllerConvenios@modificarConvenios'
+    ]);
+    Route::get('documentosConvenios/{id}', [    
+        'as' => 'documentosConvenios.documentosConvenios', 
+        'uses' => $controller.'controllerConvenios@documentosConvenios'
+    ]);
+    Route::post('agregarDocumento/{id}', [    
+        'as' => 'agregarDocumento.agregarDocumento', 
+        'uses' => $controller.'controllerConvenios@agregarDocumento'
+    ]);
+    Route::get('listarDocumentosConvenios/{id}', [    
+        'as' => 'listarDocumentosConvenios.listarDocumentosConvenios', 
+        'uses' => $controller.'controllerConvenios@listarDocumentosConvenios'
+    ]);
+    Route::get('listarParticipantesConvenios/{id}', [    
+        'as' => 'listarParticipantesConvenios.listarParticipantesConvenios', 
+        'uses' => $controller.'controllerConvenios@listarParticipantesConvenios'
+    ]);
+    Route::get('listarEmpresasParticipantesConvenios/{id}', [    
+        'as' => 'listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios', 
+        'uses' => $controller.'controllerConvenios@listarEmpresasParticipantesConvenios'
+    ]);
+    Route::post('empresaConvenio/{id}', [    
+        'as' => 'empresaConvenio.empresaConvenio', 
+        'uses' => $controller.'controllerConvenios@empresaConvenio'
+    ]);
+    Route::post('participanteConvenio/{id}', [    
+        'as' => 'participanteConvenio.participanteConvenio', 
+        'uses' => $controller.'controllerConvenios@participanteConvenio'
+    ]);
+//});
 // ___________________________END_________CONVENIOS__________
 //___________________SEDES_______________
 
@@ -169,7 +161,7 @@ Route::post('modificarEmpresa/{id}', [
    'uses' => $controller.'controllerAdministrador@modificarEmpresa'
 ]);
 //__________________END___EMPRESAS_____________________
-//_____________________MIS_DOCUMENTOS______________________
+//_____________________DOCUMENTOS______________________
 
 Route::get('misDocumentos', [
     'as' => 'misDocumentos.misDocumentos',
@@ -210,9 +202,6 @@ Route::get('listarDocumentoUsuario/{id}', [
     'as' => 'listarDocumentoUsuario.listarDocumentoUsuario',
    'uses' => $controller.'controllerDocumentos@listarDocumentoUsuario'
 ]);
-
-//___________________END_MISDOCUMENTOS______________
-//_________________________END____RUTAS___ADMINISTRADOR________________
 Route::post('subirDocumentoConvenio/{id}', [
     'as' => 'subirDocumentoConvenio.subirDocumentoConvenio',
    'uses' => $controller.'controllerDocumentos@subirDocumentoConvenio'
@@ -221,6 +210,9 @@ Route::post('subirDocumentoConvenioDB/{id}', [
     'as' => 'subirDocumentoConvenioDB.subirDocumentoConvenioDB',
    'uses' => $controller.'controllerDocumentos@subirDocumentoConvenioDB'
 ]);
+//___________________END_MISDOCUMENTOS______________
+
+
 
 
 //__________________________RUTAS_FUNCIONARIOS
