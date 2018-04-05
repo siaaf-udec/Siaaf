@@ -140,13 +140,13 @@
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
 				$.ajax({
 					type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-					route = '{{ route('min.edit') }}'+'/'+O.PK_NPRY_IdMinr008;
+					route = '{{ route('min.edit') }}'+'/'+o.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });
@@ -154,13 +154,13 @@
             table.on('click', '.assign', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
 	           	$.ajax({
                     type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '{{ route('anteproyecto.asignar') }}'+'/'+O.PK_NPRY_IdMinr008;
+                    route = '{{ route('anteproyecto.asignar') }}'+'/'+o.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });
@@ -168,8 +168,8 @@
             table.on('click', '.remove', function (e) {
 				e.preventDefault();
 				$tr = $(this).closest('tr');
-				var O = table.row($tr).data();
-				var route = '{{route('min.destroy')}}/'+O.PK_NPRY_IdMinr008;
+				var o = table.row($tr).data();
+				var route = '{{route('min.destroy')}}/'+o.PK_NPRY_IdMinr008;
 				var type = 'DELETE';
 				var async = async || false;
 				swal({

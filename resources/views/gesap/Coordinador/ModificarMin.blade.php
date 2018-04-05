@@ -332,18 +332,18 @@
 						formData.append('FechaL', $('#FechaL').val());
 
 
-						var FileReq =  document.getElementById("Min");
+						var fileMin =  document.getElementById("Min");
 						if ($('#Min').get(0).files.length === 0) {
 							formData.append('Min', "Vacio");  
 						}else{
-							formData.append('Min', FileReq.files[0]);    
+							formData.append('Min', fileMin.files[0]);    
 						};
 
-						var FileReq =  document.getElementById("Requerimientos");
+						var fileReq =  document.getElementById("Requerimientos");
 						if ($('#Requerimientos').get(0).files.length === 0) {
 							formData.append('Requerimientos', "Vacio");  
 						}else{
-							formData.append('Requerimientos', FileReq.files[0]);    
+							formData.append('Requerimientos', fileReq.files[0]);    
 						};
 						$.ajax({
 							url: route,

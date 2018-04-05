@@ -11,7 +11,7 @@
 	<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	<!-- Select2 Styles -->
     <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+ 	<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{  asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{  asset('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
@@ -135,7 +135,6 @@
                             return "SIN ASIGNAR"
 							},className:'none',searchable: true
 					},
-
                     {data: function (data, type, dataToSet) {
                         if(data.estudiante1[0]!=null)
                             return data.estudiante1[0].usuarios.name + " " + data.estudiante1[0].usuarios.lastname;
@@ -190,25 +189,24 @@
 					}
 				];
 			dataTableServer.init(table, url, columns);
-            
-                
+ 
             $( ".create" ).on('click', function (e) {
 				e.preventDefault();
                 var route = '{{ route('min.create') }}';
                 $(".content-ajax").load(route);
             });
-            
+
             table = table.DataTable();
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
 				$.ajax({
 					type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-					route = '{{ route('min.edit') }}'+'/'+O.PK_NPRY_IdMinr008;
+					route = '{{ route('min.edit') }}'+'/'+o.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });
@@ -216,22 +214,22 @@
             table.on('click', '.assign', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
 	           	$.ajax({
                     type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '{{ route('anteproyecto.asignar') }}'+'/'+O.PK_NPRY_IdMinr008;
+                    route = '{{ route('anteproyecto.asignar') }}'+'/'+o.PK_NPRY_IdMinr008;
 					$(".content-ajax").load(route);
                 });
             });
-            
+
             table.on('click', '.remove', function (e) {
 				e.preventDefault();
 				$tr = $(this).closest('tr');
-				var O = table.row($tr).data();
-				var route = '{{route('min.destroy')}}/'+O.PK_NPRY_IdMinr008;
+				var o = table.row($tr).data();
+				var route = '{{route('min.destroy')}}/'+o.PK_NPRY_IdMinr008;
 				var type = 'DELETE';
 				var async = async || false;
 				swal({
@@ -273,7 +271,7 @@
                     }
                 });
         });
-            
+
 			table.on('click','.boton_mas_info',function(){
 				if($(this).parent().find('.texto-ocultado').css('display') == 'none'){
 					$(this).parent().find('.texto-ocultado').css('display','inline');

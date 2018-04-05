@@ -291,14 +291,14 @@
 						formData.append('FechaR', $('#FechaR').val());
 						formData.append('FechaL', $('#FechaL').val());
 
-						var FileImage =  document.getElementById("Min");
-						formData.append('Min', FileImage.files[0]);
+						var fileMin =  document.getElementById("Min");
+						formData.append('Min', fileMin.files[0]);
 
-						var FileReq =  document.getElementById("Requerimientos");
+						var fileReq =  document.getElementById("Requerimientos");
 						if ($('#Requerimientos').get(0).files.length === 0) {
 							formData.append('Requerimientos', "Vacio");  
 						}else{
-							formData.append('Requerimientos', FileReq.files[0]);    
+							formData.append('Requerimientos', fileReq.files[0]);    
 						};
 
 						$.ajax({

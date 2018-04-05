@@ -178,13 +178,13 @@
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
                 $.ajax({
                     type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '{{ route('evaluar.show') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                    route = '{{ route('evaluar.show') }}'+'/'+o.anteproyecto.PK_NPRY_IdMinr008;
                     $(".content-ajax").load(route);
                 });
             });
@@ -192,8 +192,8 @@
             table.on('click', '#proyecto', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-				route = '{{ route('proyecto.aprobado') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                var o = table.row($tr).data();
+				route = '{{ route('proyecto.aprobado') }}'+'/'+o.anteproyecto.PK_NPRY_IdMinr008;
                 var type = 'GET';
                 var async = async || false;
                 swal({
@@ -240,8 +240,8 @@
             table.on('click', '#close', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
-				route = '{{ route('proyecto.cerrar') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                var o = table.row($tr).data();
+				route = '{{ route('proyecto.cerrar') }}'+'/'+o.anteproyecto.PK_NPRY_IdMinr008;
                 var type = 'GET';
                 var async = async || false;
                 swal({
@@ -288,13 +288,13 @@
     table.on('click', '#actividades', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
-                var O = table.row($tr).data();
+                var o = table.row($tr).data();
                 $.ajax({
                     type: "GET",
                     url: '',
                     dataType: "html",
                 }).done(function (data) {
-                    route = '{{ route('proyecto.actividades') }}'+'/'+O.anteproyecto.PK_NPRY_IdMinr008;
+                    route = '{{ route('proyecto.actividades') }}'+'/'+o.anteproyecto.PK_NPRY_IdMinr008;
                     $(".content-ajax").load(route);
                 });
             });
