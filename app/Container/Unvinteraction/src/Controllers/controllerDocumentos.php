@@ -248,7 +248,8 @@ class controllerDocumentos extends Controller
                     'fecha_segunda'=>$fecha_segunda
                 ])->download('ReporteEvaluaciones.pdf');
             } catch (Exception $e) {
-                return $e."error";
+                $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+                return view($this->path.'.listarConvenios', compact('sede'));
             }
         }
         return AjaxResponse::fail(
