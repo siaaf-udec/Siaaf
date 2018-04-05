@@ -194,7 +194,7 @@
                                 });
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('adminRegist.users.index.ajax') }}';
+                                var route = '{{ route('adminRegist.registros.index') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
@@ -221,10 +221,9 @@
         });
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('adminRegist.users.index.ajax') }}';
+            var route = '{{ route('adminRegist.registros.index') }}';
             $(".content-ajax").load(route);
         });
-
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({

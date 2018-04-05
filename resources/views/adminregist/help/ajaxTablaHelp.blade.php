@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
-                    <a href="javascript:;" class="btn btn-simple dark btn-icon register"><i
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon register"><i
                                 class="fa fa-chevron-circle-right"></i>Registrar Pregunta</a>
 
                 </div>

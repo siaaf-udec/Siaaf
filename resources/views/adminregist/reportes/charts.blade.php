@@ -118,12 +118,84 @@
 @push('functions')
     <script>
         $(document).ready(function () {
+            var chartFecha = AmCharts.makeChart("chartFecha", {
+                "type": "serial",
+                "theme": "light",
+
+                "fontFamily": 'Open Sans',
+                "color": '#888888',
+
+                "dataProvider": [
+                        @foreach($date as $info => $valor)
+                            {
+                                "date": "{{$info}}",
+                                "duration": {{$valor}},
+                                "lineColor": "#b7e021"
+                            },
+                        @endforeach],
+                "balloon": {
+                    "cornerRadius": 6
+                },
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "fillColorsField": "lineColor",
+                    "legendValueText": "[[value]]",
+                    "lineColorField": "lineColor",
+                    "title": "duration",
+                    "valueField": "duration"
+                }],
+                "chartScrollbar": {
+                    "oppositeAxis": false,
+                    "dragIcon": "dragIconRectSmallBlack"
+                },
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "zoomable": false
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
+                    }],
+                    "parseDates": true,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
+                },
+                "export": {
+                    "enabled": true
+                }
+            });
+
+            $('#chartFecha').closest('.portlet').find('.fullscreen').click(function () {
+                chartFecha.invalidateSize();
+            });
+
+
+            /*
             var chartData = generateChartData();
 
             function generateChartData() {
                 var chartData = [];
                 var firstDate = new Date(2012, 0, 1);
                 firstDate.setDate(firstDate.getDate() - 500);
+
                 for (var i = 0; i < 500; i++) {
                     var newDate = new Date(firstDate);
                     newDate.setDate(newDate.getDate() + i);
@@ -138,6 +210,7 @@
                 return chartData;
             }
 
+            console.log(chartData);
 
             var chartFecha = AmCharts.makeChart("chartFecha", {
 
@@ -205,7 +278,7 @@
                 export: {
                     enabled: true
                 }
-            });
+            });*/
 
             var chartNovedad = AmCharts.makeChart("chartNovedad", {
                 "theme": "light",

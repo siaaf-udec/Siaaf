@@ -23,10 +23,24 @@
             </a>
         </li>
 
+        <li class="nav-item {{ active(['adminRegist.registros.registro.index'], 'start active open') }}">
+            <a href="{{route('adminRegist.registros.registro.index')}}" class="nav-link nav-toggle">
+                <i class="fa fa-newspaper-o"></i>
+                <span class="title">Registrar Ingreso</span>
+            </a>
+        </li>
+
         <li class="nav-item {{ active(['adminRegist.help.*'], 'start active open') }}">
             <a href="{{route('adminRegist.help.index')}}" class="nav-link nav-toggle">
+                <i class="fa fa-gears"></i>
+                <span class="title">Administrar Preguntas</span>
+            </a>
+        </li>
+
+        <li class="nav-item {{ active(['adminRegist.help.index*'], 'start active open') }}">
+            <a href="{{route('adminRegist.help.index.preguntas')}}" class="nav-link nav-toggle">
                 <i class="fa fa-support"></i>
-                <span class="title">Preguntas</span>
+                <span class="title">Preguntas Frecuentes</span>
             </a>
         </li>
 

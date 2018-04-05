@@ -115,7 +115,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reporte"><i
+                                    class="fa fa-chevron-circle-right"></i>Generar Reporte</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -236,6 +237,13 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
+            $(".reporte").on('click', function (e) {
+                e.preventDefault();
+                $.ajax({}).done(function () {
+                    window.open('{{ route('adminRegist.report.reportGeneral') }}', '_blank');
+                });
+            });
         });
     </script>
 @endpush

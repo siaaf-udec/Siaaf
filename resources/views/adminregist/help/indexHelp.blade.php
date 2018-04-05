@@ -1,5 +1,5 @@
 @extends('material.layouts.dashboard')
-@section('page-title', 'Reportes:')
+@section('page-title', 'Preguntas y Respuestas')
 @push('styles')
     {{--Select2--}}
     <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -13,26 +13,28 @@
 @endpush
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Reportes por Novedad'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Preguntas Frecuentes'])
             <div class="row">
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
-                    {!! Form::open (['id'=>'form-reporte', 'class' => 'form-horizontal', 'method'=>'POST', 'route'=> ['adminRegist.report.novedad'], 'target'=>'_blank']) !!}
-                    <div class="form-body">
-                        {!! Field::select(
-                        'novedad',
-                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
-                        ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-0" align="center">
-                                    {{ Form::submit('Generar Reporte', ['class' => 'btn blue']) }}
+                    <div class="panel-group accordion scrollable {{$i=0}}" id="accordion2">
+
+                        @foreach($help as $info)
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title {{$i++}}">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                                           href="#collapse_2_{{$i}}"> {{$info->pregunta}} </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_2_{{$i}}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>{{$info->respuesta}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {!! Form::close() !!}
+                        @endforeach
                     </div>
-
                 </div>
             </div>
     </div>
@@ -63,6 +65,8 @@
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"
             type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -71,24 +75,7 @@
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            /*Select*/
-            $.fn.select2.defaults.set("theme", "bootstrap");
-            $(".pmd-select2").select2({
-                placeholder: "Seleccionar",
-                allowClear: true,
-                width: 'auto',
-                escapeMarkup: function (m) {
-                    return m;
-                }
-            });
-            /*Wizard*/
-            var report = function () {
-            };
-            var form_report = $('#form-reporte');
-            var rules_report = {
-                novedad: {required: true}
-            };
-            FormValidationMd.init(form_report, rules_report, false, report());
+
         });
     </script>
 @endpush

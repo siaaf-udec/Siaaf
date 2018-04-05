@@ -54,6 +54,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.registros.index',
         ]);
 
+        Route::get('registro/index', [
+            'uses' => $controller . 'RegistrosController@indexRegistro',
+            'as' => 'adminRegist.registros.registro.index',
+        ]);
+
         Route::post('registro',[
             'uses' => $controller . 'RegistrosController@registrar',
             'as' => 'adminRegist.registros.registro'
@@ -115,6 +120,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.help.destroy'
         ]);
 
+        Route::get('index/preguntas', [
+            'uses' => $controller . 'HelpController@indexPreguntas',
+            'as' => 'adminRegist.help.index.preguntas'
+        ]);
+
     });
 
     Route::group(['prefix' => 'report'],function (){
@@ -147,6 +157,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('descargarRepNovedad/{novedad}', [
             'uses' => $controller.'ReporteController@descargarReporteNovedad',
             'as' => 'adminRegist.report.descargarRepNovedad'
+        ]);
+
+        Route::get('reportGeneral', [
+            'uses' => $controller.'ReporteController@reporteGeneral',
+            'as' => 'adminRegist.report.reportGeneral'
+        ]);
+
+        Route::get('descargarRepGeneral', [
+            'uses' => $controller.'ReporteController@descargarReporteGeneral',
+            'as' => 'adminRegist.report.descargarRepGeneral'
         ]);
 
     });

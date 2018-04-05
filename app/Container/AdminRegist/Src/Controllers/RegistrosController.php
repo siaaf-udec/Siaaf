@@ -23,6 +23,11 @@ class RegistrosController extends Controller
         return view('adminregist.registros.registros');
     }
 
+    public function indexRegistro()
+    {
+        return view('adminregist.registros.registroIngreso');
+    }
+
     public function registrar(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {

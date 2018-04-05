@@ -141,5 +141,11 @@ class HelpController extends Controller
         );
     }
 
+    public function indexPreguntas()
+    {
+        $help = Help::all();
+        return view('adminregist.help.indexHelp', compact('help'));
+    }
+
 
 }

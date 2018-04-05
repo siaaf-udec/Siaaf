@@ -116,8 +116,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple dark btn-icon register"><i
-                                    class="fa fa-chevron-circle-right"></i>Registrar Novedad</a>
+                        <!--<a href="javascript:;" class="btn btn-simple dark btn-icon register"><i
+                                    class="fa fa-chevron-circle-right"></i>Registrar Novedad</a>-->
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
                                     class="fa fa-plus"></i>Registrar Usuario</a>
 

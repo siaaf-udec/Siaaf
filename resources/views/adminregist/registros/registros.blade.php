@@ -2,6 +2,16 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Registrar Novedad'])
 
         <div class="row">
+            <div class="col-md-4 col-lg-offset-3">
+                <div class="alert alert-block alert-info fade in">
+                    <h4 class="alert-heading">Información!</h4>
+                    <p>Si no encuentra registrado por favor presione el siguiente boton: </p>
+                    <p>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
+                                    class="fa fa-plus"></i>Registrarse</a>
+                    </p>
+                </div>
+            </div>
             <div class="col-md-12">
 
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
@@ -15,17 +25,12 @@
                     <div class="col-md-4 col-lg-offset-3 text-left">
                         {!! Field::select(
                         'novedad',
-                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas'],null,
+                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
                         ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-center">
-                        <a href="javascript:;"
-                           class="btn btn-outline red button-cancel"><i
-                                    class="fa fa-angle-left"></i>
-                            Cancelar
-                        </a>
 
                         {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
                     </div>
@@ -48,11 +53,10 @@
             number_document: {
                 minlength: 5, number: true, maxlength: 13, required: true
             },
-            novedad: { required: true}
+            novedad: {required: true}
 
         };
-        var messages = {
-        };
+        var messages = {};
 
         var register = function () {
             return {
@@ -80,11 +84,10 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                if(response.title === 'false')
-                                {
+                                if (response.title === 'false') {
                                     UIToastr.init('error', '¡Lo sentimos!', 'El usuario no se encuentra registrado.');
                                     App.unblockUI('.portlet-form');
-                                }else {
+                                } else {
                                     $('#form_register')[0].reset(); //Limpiar formulario
                                     /*Configuracion de Select*/
                                     $.fn.select2.defaults.set("theme", "bootstrap");
@@ -125,6 +128,12 @@
             escapeMarkup: function (m) {
                 return m;
             }
+        });
+
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route_create = '{{ route('adminRegist.users.create') }}';
+            $(".content-ajax").load(route_create);
         });
 
         $('.button-cancel').on('click', function (e) {

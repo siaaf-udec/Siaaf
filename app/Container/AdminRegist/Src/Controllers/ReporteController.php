@@ -124,6 +124,45 @@ class ReporteController extends Controller
         );
     }
 
+    public function reporteGeneral(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+
+            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+            $time = date("h:i A");
+            $datos = Registros::with('registro', 'novedad')->get();
+            return view('adminregist.reportes.reporteGeneral',
+                compact('datos', 'date', 'time')
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    public function descargarReporteGeneral(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            try {
+                $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+                $time = date("h:i A");
+                $datos = Registros::with('registro', 'novedad')->get();
+                return SnappyPdf::loadView('adminregist.reportes.reporteGeneral',
+                    compact('datos', 'date', 'time'))->download('ReporteGeneral.pdf');
+            } catch (Exception $e) {
+                return view('adminregist.reportes.reporteGeneral',
+                    compact('datos', 'date', 'time')
+                );
+            }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar su solicitud.'
+        );
+    }
+
     public function charIndex()
     {
         $novedades = Novedad::all();
@@ -141,8 +180,13 @@ class ReporteController extends Controller
             $daTypeUser[] = $cont->registro->type_user;
         }
         $typeUser = array_count_values($daTypeUser);
-
-        return view('adminregist.reportes.charts',compact('novedades','typeUser','place'));
+        $daFecha = array();
+        foreach ($registros as $cont)
+        {
+            $daFecha[] = $cont->created_at->format('Y-m-d');
+        }
+        $date = array_count_values($daFecha);
+        return view('adminregist.reportes.charts',compact('novedades','typeUser','place', 'date'));
     }
 
 }

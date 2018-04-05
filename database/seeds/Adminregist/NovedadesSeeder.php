@@ -48,6 +48,8 @@ class NovedadesSeeder extends Seeder
         $novedad->nombre_novedad = 'Modificación de Notas';
         $novedad->save();
 
-
+        $novedad = new Novedad;
+        $novedad->nombre_novedad = 'Otros';
+        $novedad->save();
     }
 }
