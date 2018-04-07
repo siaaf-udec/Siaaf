@@ -13,43 +13,43 @@ class NovedadesSeeder extends Seeder
     {
         //Agregar novedades por defecto
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Matricula';
+        $novedad->NOV_NombreNovedad = 'Matricula';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Estudiantes Matriculados';
+        $novedad->NOV_NombreNovedad = 'Estudiantes Matriculados';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Aplicación Transferencias Internas';
+        $novedad->NOV_NombreNovedad = 'Aplicación Transferencias Internas';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Modificación Situación Estudiante';
+        $novedad->NOV_NombreNovedad = 'Modificación Situación Estudiante';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Aplicación Cancelación de Materia';
+        $novedad->NOV_NombreNovedad = 'Aplicación Cancelación de Materia';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Aplicación Traslado';
+        $novedad->NOV_NombreNovedad = 'Aplicación Traslado';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Aplicación Homologaciones';
+        $novedad->NOV_NombreNovedad = 'Aplicación Homologaciones';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Validaciones y Habilitaciones';
+        $novedad->NOV_NombreNovedad = 'Validaciones y Habilitaciones';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Modificación de Notas';
+        $novedad->NOV_NombreNovedad = 'Modificación de Notas';
         $novedad->save();
 
         $novedad = new Novedad;
-        $novedad->nombre_novedad = 'Otros';
+        $novedad->NOV_NombreNovedad = 'Otros';
         $novedad->save();
     }
 }

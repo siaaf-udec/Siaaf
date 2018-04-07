@@ -187,99 +187,6 @@
                 chartFecha.invalidateSize();
             });
 
-
-            /*
-            var chartData = generateChartData();
-
-            function generateChartData() {
-                var chartData = [];
-                var firstDate = new Date(2012, 0, 1);
-                firstDate.setDate(firstDate.getDate() - 500);
-
-                for (var i = 0; i < 500; i++) {
-                    var newDate = new Date(firstDate);
-                    newDate.setDate(newDate.getDate() + i);
-
-                    var value = Math.round(Math.random() * (40 + i)) + 100 + i;
-
-                    chartData.push({
-                        date: newDate,
-                        value: value
-                    });
-                }
-                return chartData;
-            }
-
-            console.log(chartData);
-
-            var chartFecha = AmCharts.makeChart("chartFecha", {
-
-                type: "stock",
-                "theme": "patterns",
-                "language": "es",
-
-                dataSets: [{
-                    color: "#b0de09",
-                    fieldMappings: [{
-                        fromField: "value",
-                        toField: "value"
-                    }],
-                    dataProvider: chartData,
-                    categoryField: "date"
-                }],
-
-                panels: [{
-                    showCategoryAxis: true,
-                    title: "Value",
-                    eraseAll: false,
-
-                    stockGraphs: [{
-                        id: "g1",
-                        valueField: "value",
-                        useDataSetColors: false
-                    }],
-
-
-                    stockLegend: {
-                        valueTextRegular: " ",
-                        markerType: "none"
-                    },
-
-                }],
-
-                chartScrollbarSettings: {
-                    graph: "g1"
-                },
-                chartCursorSettings: {
-                    valueBalloonsEnabled: true
-                },
-                periodSelector: {
-                    position: "bottom",
-                    periods: [{
-                        period: "DD",
-                        count: 10,
-                        label: "10 dias"
-                    }, {
-                        period: "MM",
-                        count: 1,
-                        label: "1 mes"
-                    }, {
-                        period: "YYYY",
-                        count: 1,
-                        label: "1 año"
-                    }, {
-                        period: "YTD",
-                        label: "YTD"
-                    }, {
-                        period: "MAX",
-                        label: "MAX"
-                    }]
-                },
-                export: {
-                    enabled: true
-                }
-            });*/
-
             var chartNovedad = AmCharts.makeChart("chartNovedad", {
                 "theme": "light",
                 "type": "serial",
@@ -294,9 +201,9 @@
                 "dataProvider": [
                         @foreach($novedades as $info)
                     {
-                        "novedad": "{{$info->nombre_novedad}}",
+                        "novedad": "{{$info->NOV_NombreNovedad}}",
                         "registro": {{$info->num_novedad}},
-                        "color": "#FF{{$info->id}}F{{$info->id}}"
+                        "color": "#FF{{$info->id}}F{{$info->PK_NOV_IdNovedad}}"
                     },
                     @endforeach
                 ],

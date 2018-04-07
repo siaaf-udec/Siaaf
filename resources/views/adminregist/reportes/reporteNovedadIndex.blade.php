@@ -20,7 +20,7 @@
                     {!! Form::open (['id'=>'form-reporte', 'class' => 'form-horizontal', 'method'=>'POST', 'route'=> ['adminRegist.report.novedad'], 'target'=>'_blank']) !!}
                     <div class="form-body">
                         {!! Field::select(
-                        'novedad',
+                        'novedad', ['required'],
                         ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
                         ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                         <div class="form-actions">

@@ -91,7 +91,7 @@
                 <td class="unit">{{$infoUsuario->registro->number_phone}}</td>
                 <td class="desc">{{$infoUsuario->registro->place}}</td>
                 <td class="unit">{{$infoUsuario->registro->email}}</td>
-                <td class="desc">{{$infoUsuario->novedad->nombre_novedad}}</td>
+                <td class="desc">{{$infoUsuario->novedad->NOV_NombreNovedad}}</td>
                 <td class="unit">{{$infoUsuario->created_at}}</td>
 
 

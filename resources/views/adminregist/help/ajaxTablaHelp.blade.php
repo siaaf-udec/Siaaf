@@ -53,9 +53,9 @@
         table = $('#listaPreguntas');
         url = "{{ route('adminRegist.help.data')}}";
         columns = [
-            {data: 'id', name: 'id', "visible": false, searchable: false},
-            {data: 'pregunta', name: 'pregunta'},
-            {data: 'respuesta', name: 'respuesta', "visible": false},
+            {data: 'PK_HE_IdHelp', name: 'PK_HE_IdHelp', "visible": false, searchable: false},
+            {data: 'HE_Pregunta', name: 'HE_Pregunta'},
+            {data: 'HE_Respuesta', name: 'HE_Respuesta', "visible": false},
             {
                 defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
                 data: 'action',
@@ -78,7 +78,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('adminRegist.help.destroy') }}' + '/' + dataTable.id;
+            var route = '{{ route('adminRegist.help.destroy') }}' + '/' + dataTable.PK_HE_IdHelp;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -131,7 +131,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.id;
+                route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.PK_HE_IdHelp;
             $(".content-ajax").load(route_edit);
         });
 

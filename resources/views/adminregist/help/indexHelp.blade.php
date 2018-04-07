@@ -24,12 +24,12 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title {{$i++}}">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
-                                           href="#collapse_2_{{$i}}"> {{$info->pregunta}} </a>
+                                           href="#collapse_2_{{$i}}"> {{$info->HE_Pregunta}} </a>
                                     </h4>
                                 </div>
                                 <div id="collapse_2_{{$i}}" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <p>{{$info->respuesta}}</p>
+                                        <p>{{$info->HE_Respuesta}}</p>
                                     </div>
                                 </div>
                             </div>

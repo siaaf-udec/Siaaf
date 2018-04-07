@@ -124,13 +124,13 @@
 
                     <div class="form-group">
                         <div class="col-md-4 col-lg-offset-3 text-left">
-                            {!! Field::text('number_document', old('number_document'), ['label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                            {!! Field::text('number_document', old('number_document'), ['required','max' => 13, 'min' => '5','label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-4 col-lg-offset-3 text-left">
                             {!! Field::select(
-                            'novedad',
+                            'novedad', ['required'],
                             ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
                             ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                         </div>

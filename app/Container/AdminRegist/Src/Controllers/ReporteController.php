@@ -12,11 +12,21 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class ReporteController extends Controller
 {
+    /**
+     *Función que redirecciona a la vista del formulario para realizar el reporte por fechas.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexFecha()
     {
         return view('adminregist.reportes.reporteFechaIndex');
     }
 
+    /**
+     *Función que redirecciona a la vista del formulario para realizar el reporte por novedad.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexNovedad()
     {
         return view('adminregist.reportes.reporteNovedadIndex');
@@ -37,7 +47,13 @@ class ReporteController extends Controller
         return $aaaa . '-' . $mm . '-' . $dd;
     }
 
-    public function reportFecha(Request $request)
+    /**
+     * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporteFecha(Request $request)
     {
         if ($request->isMethod('POST')) {
             $fecha = $request['date_range'];
@@ -62,6 +78,12 @@ class ReporteController extends Controller
         );
     }
 
+    /**
+     * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por fechas.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function descargarReporteFecha(Request $request, $fech1, $fech2)
     {
         if ($request->isMethod('GET')) {
@@ -83,14 +105,20 @@ class ReporteController extends Controller
         );
     }
 
-    public function reportNovedad(Request $request)
+    /**
+     * Función que redirecciona a la vista del reporte por novedad con sus respectivos datos a mostrar.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporteNovedad(Request $request)
     {
         if ($request->isMethod('POST')) {
 
             $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
             $time = date("h:i A");
             $novedad = Novedad::find($request['novedad']);
-            $datos = Registros::where('id_novedad',$novedad->id)->with('registro', 'novedad')->get();
+            $datos = Registros::where('FK_RE_Novedad',$novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
             return view('adminregist.reportes.reporteNovedad',
                 compact('datos', 'date', 'time','novedad')
             );
@@ -102,6 +130,12 @@ class ReporteController extends Controller
         );
     }
 
+    /**
+     * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por novedad.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function descargarReporteNovedad(Request $request, $novedad)
     {
         if ($request->isMethod('GET')) {
@@ -109,7 +143,7 @@ class ReporteController extends Controller
                 $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
                 $time = date("h:i A");
                 $novedad = Novedad::find($novedad);
-                $datos = Registros::where('id_novedad',$novedad->id)->with('registro', 'novedad')->get();
+                $datos = Registros::where('FK_RE_Novedad',$novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
                 return SnappyPdf::loadView('adminregist.reportes.reporteNovedad',
                     compact('datos', 'date', 'time', 'novedad'))->download('ReporteNovedad.pdf');
             } catch (Exception $e) {
@@ -124,6 +158,12 @@ class ReporteController extends Controller
         );
     }
 
+    /**
+     * Función que redirecciona a la vista del reporte general con sus respectivos datos a mostrar.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function reporteGeneral(Request $request)
     {
         if ($request->isMethod('GET')) {
@@ -142,6 +182,12 @@ class ReporteController extends Controller
         );
     }
 
+    /**
+     * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte general de ingreso.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function descargarReporteGeneral(Request $request)
     {
         if ($request->isMethod('GET')) {
@@ -163,29 +209,42 @@ class ReporteController extends Controller
         );
     }
 
+    /**
+     *Función que redirecciona a la vista de los graficos los cuales se muestran por novedad, fecha, tipo de usuario y por sedes.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function charIndex()
     {
         $novedades = Novedad::all();
         $registros = Registros::with('registro')->get();
+        //foreach que se encarga de guardar el registro de la sede traida de la base de datos y contar cuantas veces se repite cada sede
         $daPlace = array();
         foreach ($registros as $cont)
         {
             $daPlace[] = $cont->registro->place;
         }
+        //contar el numero de veces que se encuentra repetida la sede
         $place = array_count_values($daPlace);
 
+        //foreach que se encarga de guardar el registro de los tipos de usuario de la base de datos y contar cuantas veces se repite cada tipo de usuario
         $daTypeUser = array();
         foreach ($registros as $cont)
         {
             $daTypeUser[] = $cont->registro->type_user;
         }
+        //contar el numero de veces que se encuentra repetido el tipo de usuario
         $typeUser = array_count_values($daTypeUser);
+
+        //foreach que se encarga de guardar el registro de la fecha de ingreso de los usuarios de la base de datos y contar cuantas veces se repite cada fecha del registro
         $daFecha = array();
         foreach ($registros as $cont)
         {
             $daFecha[] = $cont->created_at->format('Y-m-d');
         }
+        //contar el numero de veces que se encuentra repetida la fecha de ingreso
         $date = array_count_values($daFecha);
+
         return view('adminregist.reportes.charts',compact('novedades','typeUser','place', 'date'));
     }
 

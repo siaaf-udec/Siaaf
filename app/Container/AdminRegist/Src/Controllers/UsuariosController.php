@@ -9,13 +9,11 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Container\Users\src\UsersUdec;
 use App\Container\Users\src\Controllers\UsersUdecController;
 
-class UserRegistController extends UsersUdecController
+class UsuariosController extends UsersUdecController
 {
     /**
-     * Display a listing of the resource.
+     *Función que redirecciona a la vista donde se encuentra la tabla de registro de usuarios.
      *
-     * @param Request $request
-     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -23,6 +21,12 @@ class UserRegistController extends UsersUdecController
         return view('adminregist.usuarios.tablaUsuarios');
     }
 
+    /**
+     * Función que redirecciona a la vista del formulario de registro de un nuevo usuario.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function create(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -34,7 +38,13 @@ class UserRegistController extends UsersUdecController
         );
     }
 
-    public function index_ajax(Request $request)
+    /**
+     *Función que muestra los usuarios registrados por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             return view('adminregist.usuarios.ajaxTablaUsuarios');

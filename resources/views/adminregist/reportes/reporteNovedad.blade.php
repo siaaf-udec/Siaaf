@@ -65,7 +65,7 @@
         </div>
     </div>
     <div align="center">
-        <h1>Usuarios que Ingresaron a Admisiones y Registro con la Novedad: {{$novedad->nombre_novedad}}</h1>
+        <h1>Usuarios que Ingresaron a Admisiones y Registro con la Novedad: {{$novedad->NOV_NombreNovedad}}</h1>
     </div>
 
     <table border="0" cellspacing="0" cellpadding="0">

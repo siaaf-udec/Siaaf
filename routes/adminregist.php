@@ -10,37 +10,37 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
         Route::get('index', [
-            'uses' => $controller . 'MenuController@index',
+            'uses' => $controller . 'UsuariosController@index',
             'as' => 'adminRegist.users.index',
         ]);
 
         Route::get('data', [
-            'uses' => $controller . 'UserRegistController@data',
+            'uses' => $controller . 'UsuariosController@data',
             'as' => 'adminRegist.users.data'
         ]);
 
         Route::post('check/document', [
-            'uses' => $controller . 'UserRegistController@checkDocument',
+            'uses' => $controller . 'UsuariosController@checkDocument',
             'as' => 'adminRegist.users.check.document'
         ]);
 
         Route::post('check/code', [
-            'uses' => $controller . 'UserRegistController@checkCode',
+            'uses' => $controller . 'UsuariosController@checkCode',
             'as' => 'adminRegist.users.check.code'
         ]);
 
         Route::get('create', [
-            'uses' => $controller . 'UserRegistController@create',
+            'uses' => $controller . 'UsuariosController@create',
             'as' => 'adminRegist.users.create'
         ]);
 
         Route::post('store',[
-            'uses' => $controller . 'UserRegistController@store',
+            'uses' => $controller . 'UsuariosController@store',
             'as' => 'adminRegist.users.store'
         ]);
 
         Route::get('index/ajax', [
-            'uses' => $controller . 'UserRegistController@index_ajax',
+            'uses' => $controller . 'UsuariosController@indexAjax',
             'as' => 'adminRegist.users.index.ajax'
         ]);
     });
@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::get('index/ajax', [
-            'uses' => $controller . 'HelpController@index_ajax',
+            'uses' => $controller . 'HelpController@indexAjax',
             'as' => 'adminRegist.help.index.ajax'
         ]);
 
@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('report/date',[
-            'uses' => $controller.'ReporteController@reportFecha',
+            'uses' => $controller.'ReporteController@reporteFecha',
             'as' => 'adminRegist.report.date'
         ]);
 
@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('report/novedad',[
-            'uses' => $controller.'ReporteController@reportNovedad',
+            'uses' => $controller.'ReporteController@reporteNovedad',
             'as' => 'adminRegist.report.novedad'
         ]);
 
