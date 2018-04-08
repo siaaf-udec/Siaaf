@@ -171,6 +171,12 @@
                             <span class="title">Elementos</span>
                         </a>
                     </li>
+                    <li class="nav-item {{ active(['espacios.academicos..index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.lectorqr.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-bars"></i>
+                            <span class="title">Lector QR</span>
+                        </a>
+                    </li>
                     <li class="nav-item {{ active(['espacios.academicos.categoria.index'], 'start active open') }}">
                         <a href="{{ route('espacios.academicos.categoria.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-bars"></i>

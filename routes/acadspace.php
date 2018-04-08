@@ -362,6 +362,18 @@ Route::group(['middleware' => ['auth']], function () {
     
     /*FIN FUNCIONALIDAD ELEMENTOS*/
 
+    /*RUTAS PARA LECTOR QR*/
+    Route::group(['prefix' => 'lectorqr', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+        Route::get('index', [
+            'uses' => $controller . 'LectorqrController@index',
+            'as' => 'espacios.academicos.lectorqr.index'
+        ]);
+        
+    });
+
+    //FIN RUTAS LECTOR QR
+
     /*RUTAS FUNCIONALIDAD CATEGORIA*/
 
     Route::group(['prefix' => 'categoria', 'middleware' => ['permission:FUNC_ESPA']], function () {
