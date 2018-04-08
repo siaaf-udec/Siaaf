@@ -1,6 +1,3 @@
-// QRCODE reader Copyright 2011 Lazar Laszlo
-// http://www.webqr.com
-
 var gCtx = null;
 var gCanvas = null;
 var c = 0;
