@@ -5,7 +5,7 @@
  */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'users'], function (){
+    Route::group(['prefix' => 'users', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
     });
 
-    Route::group(['prefix' => 'registros'], function (){
+    Route::group(['prefix' => 'registros', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'help'], function (){
+    Route::group(['prefix' => 'help', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'report'],function (){
+    Route::group(['prefix' => 'report', 'middleware' => ['permission:ADMINREGIST_MODULE']],function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
         Route::get('report',[
             'uses' => $controller.'ReporteController@indexFecha',
@@ -171,7 +171,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'chart'],function (){
+    Route::group(['prefix' => 'chart', 'middleware' => ['permission:ADMINREGIST_MODULE']],function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller.'ReporteController@charIndex',

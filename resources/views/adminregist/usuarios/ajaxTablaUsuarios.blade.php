@@ -2,13 +2,13 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Admisiones y Registro'])
         <div class="clearfix"></div><br><br><br>
         <div class="row">
+            @permission('ADMINREGIST_USER_CREATE')
             <div class="col-md-12">
                 <div class="actions">
-                    <!--<a href="javascript:;" class="btn btn-simple dark btn-icon register"><i
-                                class="fa fa-chevron-circle-right"></i>Registrar Novedad</a>-->
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
                                 class="fa fa-plus"></i>Registrar Usuario</a></div>
             </div>
+            @endpermission
             <div class="clearfix"></div>
             <br>
             <div class="row">
@@ -56,12 +56,6 @@
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route_create = '{{route('adminRegist.users.create')}}';
-            $(".content-ajax").load(route_create);
-        });
-
-        $(".register").on('click', function (e) {
-            e.preventDefault();
-            var route_create = '{{ route('adminRegist.registros.index') }}';
             $(".content-ajax").load(route_create);
         });
 

@@ -5,10 +5,14 @@
             <div class="col-md-4 col-lg-offset-3">
                 <div class="alert alert-block alert-info fade in">
                     <h4 class="alert-heading">Información!</h4>
-                    <p>Si no encuentra registrado por favor presione el siguiente boton: </p>
+                    <p>Si no se encuentra registrado por favor presione el boton Registrarse o si tiene dudas presione
+                        el boton Ayuda donde lo llevara a una sesión de preguntas frecuentes: </p>
                     <p>
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
                                     class="fa fa-plus"></i>Registrarse</a>
+                        <a href="{{route('adminRegist.help.index.preguntas')}}"
+                           class="btn btn-simple dark btn-icon"><i
+                                    class="fa fa-plus"></i>Ayuda</a>
                     </p>
                 </div>
             </div>
@@ -24,9 +28,9 @@
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-left">
                         {!! Field::select(
-                        'novedad', ['required'],
+                        'novedad',
                         ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
-                        ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
+                        ['required', 'label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                     </div>
                 </div>
                 <div class="form-group">

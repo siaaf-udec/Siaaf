@@ -38,9 +38,9 @@
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::select(
-                                'type_user',['required'],
+                                'type_user',
                                 ['Estudiante' => 'Estudiante', 'Docente' => 'Docente', 'Externo' => 'Externo'],null,
-                                ['label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
+                                ['required', 'label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
                         <div class="form-group divcode">
@@ -58,9 +58,9 @@
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::select(
-                                'place', ['required'],
+                                'place',
                                 ['Fusagasugá' => 'Fusagasugá', 'Girardot' => 'Girardot', 'Ubaté' => 'Ubaté', 'Chia' => 'Chia', 'Chocontá' => 'Chocontá', 'Facatativá' => 'Facatativá', 'Soacha' => 'Soacha', 'Zipaquirá' => 'Zipaquirá', 'Ninguna' => 'Ninguna'],null,
-                                ['label' => 'Sede' , 'autofocus', 'auto' => 'off']) !!}
+                                ['required', 'label' => 'Sede' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -71,6 +71,16 @@
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::email('email', old('email'), ['required', 'max' => 80, 'label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                {!! Field::checkbox('acceptTeminos', '1', ['label' => 'Acepta términos y condiciones de la ley de protección de datos 1581 de 2012.','required']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank">Ver ley de protección de datos 1581 de 2012.</a>
                             </div>
                         </div>
                     </div>
@@ -121,7 +131,8 @@
             number_phone: {minlength: 5, maxlength: 15, required: true},
             email: {email: true, required: true, maxlength: 80},
             type_user: {required: true},
-            place: {required: true}
+            place: {required: true},
+            acceptTeminos: {required: true}
 
         };
         $('.divcode').hide();

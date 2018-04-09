@@ -114,6 +114,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Preguntas y Respuestas'])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
+                @permission('ADMINREGIST_PRE_CREATE')
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon register"><i
@@ -121,6 +122,7 @@
 
                     </div>
                 </div>
+                @endpermission
                 <div class="clearfix"></div>
                 <br>
             </div>
@@ -258,7 +260,7 @@
                 {data: 'HE_Pregunta', name: 'HE_Pregunta'},
                 {data: 'HE_Respuesta', name: 'HE_Respuesta', "visible": false},
                 {
-                    defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission('ADMINREGIST_PRE_UPDATE')<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission('ADMINREGIST_PRE_DELETE')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

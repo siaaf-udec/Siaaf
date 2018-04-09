@@ -113,12 +113,14 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Historial de Acceso'])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
+                @permission('ADMINREGIST_REPORT_REGIST')
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon reporte"><i
                                     class="fa fa-chevron-circle-right"></i>Generar Reporte</a>
                     </div>
                 </div>
+                @endpermission
                 <div class="clearfix"></div>
                 <br>
             </div>
