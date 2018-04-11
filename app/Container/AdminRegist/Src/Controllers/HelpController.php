@@ -15,9 +15,16 @@ class HelpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('adminregist.help.tablaHelp');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.help.tablaHelp');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -188,10 +195,18 @@ class HelpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexPreguntas()
+    public function indexPreguntas(Request $request)
     {
-        $help = Help::all();
-        return view('adminregist.help.indexHelp', compact('help'));
+        if ($request->isMethod('GET')) {
+            $help = Help::all();
+            $help->pull('created_at','updated_at','PK_HE_IdHelp');
+            return view('adminregist.help.indexHelp', compact('help'));
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 

@@ -17,9 +17,16 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexFecha()
+    public function indexFecha(Request $request)
     {
-        return view('adminregist.reportes.reporteFechaIndex');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.reportes.reporteFechaIndex');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -27,9 +34,16 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexNovedad()
+    public function indexNovedad(Request $request)
     {
-        return view('adminregist.reportes.reporteNovedadIndex');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.reportes.reporteNovedadIndex');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -118,9 +132,9 @@ class ReporteController extends Controller
             $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
             $time = date("h:i A");
             $novedad = Novedad::find($request['novedad']);
-            $datos = Registros::where('FK_RE_Novedad',$novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
+            $datos = Registros::where('FK_RE_Novedad', $novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
             return view('adminregist.reportes.reporteNovedad',
-                compact('datos', 'date', 'time','novedad')
+                compact('datos', 'date', 'time', 'novedad')
             );
         }
 
@@ -143,7 +157,7 @@ class ReporteController extends Controller
                 $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
                 $time = date("h:i A");
                 $novedad = Novedad::find($novedad);
-                $datos = Registros::where('FK_RE_Novedad',$novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
+                $datos = Registros::where('FK_RE_Novedad', $novedad->PK_NOV_IdNovedad)->with('registro', 'novedad')->get();
                 return SnappyPdf::loadView('adminregist.reportes.reporteNovedad',
                     compact('datos', 'date', 'time', 'novedad'))->download('ReporteNovedad.pdf');
             } catch (Exception $e) {
@@ -214,38 +228,43 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function charIndex()
+    public function charIndex(Request $request)
     {
-        $novedades = Novedad::all();
-        $registros = Registros::with('registro')->get();
-        //foreach que se encarga de guardar el registro de la sede traida de la base de datos y contar cuantas veces se repite cada sede
-        $daPlace = array();
-        foreach ($registros as $cont)
-        {
-            $daPlace[] = $cont->registro->place;
-        }
-        //contar el numero de veces que se encuentra repetida la sede
-        $place = array_count_values($daPlace);
+        if ($request->isMethod('GET')) {
+            $novedades = Novedad::all();
+            $novedades->pull('created_at','updated_at');
+            $registros = Registros::with('registro')->get();
+            //foreach que se encarga de guardar el registro de la sede traida de la base de datos y contar cuantas veces se repite cada sede
+            $daPlace = array();
+            foreach ($registros as $cont) {
+                $daPlace[] = $cont->registro->place;
+            }
+            //contar el numero de veces que se encuentra repetida la sede
+            $place = array_count_values($daPlace);
 
-        //foreach que se encarga de guardar el registro de los tipos de usuario de la base de datos y contar cuantas veces se repite cada tipo de usuario
-        $daTypeUser = array();
-        foreach ($registros as $cont)
-        {
-            $daTypeUser[] = $cont->registro->type_user;
-        }
-        //contar el numero de veces que se encuentra repetido el tipo de usuario
-        $typeUser = array_count_values($daTypeUser);
+            //foreach que se encarga de guardar el registro de los tipos de usuario de la base de datos y contar cuantas veces se repite cada tipo de usuario
+            $daTypeUser = array();
+            foreach ($registros as $cont) {
+                $daTypeUser[] = $cont->registro->type_user;
+            }
+            //contar el numero de veces que se encuentra repetido el tipo de usuario
+            $typeUser = array_count_values($daTypeUser);
 
-        //foreach que se encarga de guardar el registro de la fecha de ingreso de los usuarios de la base de datos y contar cuantas veces se repite cada fecha del registro
-        $daFecha = array();
-        foreach ($registros as $cont)
-        {
-            $daFecha[] = $cont->created_at->format('Y-m-d');
-        }
-        //contar el numero de veces que se encuentra repetida la fecha de ingreso
-        $date = array_count_values($daFecha);
+            //foreach que se encarga de guardar el registro de la fecha de ingreso de los usuarios de la base de datos y contar cuantas veces se repite cada fecha del registro
+            $daFecha = array();
+            foreach ($registros as $cont) {
+                $daFecha[] = $cont->created_at->format('Y-m-d');
+            }
+            //contar el numero de veces que se encuentra repetida la fecha de ingreso
+            $date = array_count_values($daFecha);
 
-        return view('adminregist.reportes.charts',compact('novedades','typeUser','place', 'date'));
+            return view('adminregist.reportes.charts', compact('novedades', 'typeUser', 'place', 'date'));
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 }

@@ -203,7 +203,7 @@
                     {
                         "novedad": "{{$info->NOV_NombreNovedad}}",
                         "registro": {{$info->num_novedad}},
-                        "color": "#FF{{$info->id}}F{{$info->PK_NOV_IdNovedad}}"
+                        "color": "#b7e021"
                     },
                     @endforeach
                 ],

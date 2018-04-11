@@ -16,9 +16,16 @@ class RegistrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('adminregist.registros.registros');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.registros.registros');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -26,9 +33,16 @@ class RegistrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexRegistro()
+    public function indexRegistro(Request $request)
     {
-        return view('adminregist.registros.registroIngreso');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.registros.registroIngreso');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
     /**
@@ -99,14 +113,22 @@ class RegistrosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
     /**
      *Función que redirecciona a la vista donde se encuentra la tabla de registro de ingreso.
      *
      * @return \Illuminate\Http\Response
      */
-    public function history()
+    public function history(Request $request)
     {
-        return view('adminregist.registros.history');
+        if ($request->isMethod('GET')) {
+            return view('adminregist.registros.history');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
 
 }
