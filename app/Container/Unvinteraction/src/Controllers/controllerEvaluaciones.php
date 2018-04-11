@@ -528,7 +528,7 @@ class controllerEvaluaciones extends Controller
                 ->get();  
 
            return Datatables::of($evaluacion)->addIndexColumn()->make(true);
-        }
+       }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'

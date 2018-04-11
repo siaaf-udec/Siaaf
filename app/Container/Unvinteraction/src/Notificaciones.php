@@ -6,10 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notificaciones extends Model
 {
+    /**
+     * desactivar opcion de  rellenar casilla update y create date
+     *
+     * @var string
+     */
+
     public $timestamps = false;
+    
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
+ 
     protected $connection ='unvinteraction';
+    
+    /**
+     * Conexión de la tabla usada por el modelo
+     *
+     * @var string
+     */
+
     protected $table = 'TBL_Notificacion';
+    
+    /**
+     * llave primaria utilizada por el modelo
+     *
+     * @var string
+     */
+
     protected $primaryKey = 'PK_NTFC_Notificacion';
+   
+    /**
+     * casilla utilizadas en la tabla y el modelo
+     *
+     * @var string
+     */
     protected $fillable = ['NTFC_Titulo','NTFC_Mensaje','NTFC_Bandera','FK_TBL_Usuarios_Id'];
     
     /*

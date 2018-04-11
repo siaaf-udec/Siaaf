@@ -6,11 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmpresaParticipante extends Model
 {
-    //
+    /**
+     * desactivar opcion de  rellenar casilla update y create date
+     *
+     * @var string
+     */
+
     public $timestamps = false;
+    
+/**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
+ 
     protected $connection ='unvinteraction';
+    
+    /**
+     * Conexión de la tabla usada por el modelo
+     *
+     * @var string
+     */
+
     protected $table = 'TBL_Empresa_Participante';
+    
+    /**
+     * llave primaria utilizada por el modelo
+     *
+     * @var string
+     */
+
     protected $primaryKey = 'PK_EMPT_Empresa_Participante';
+   
+    /**
+     * casilla utilizadas en la tabla y el modelo
+     *
+     * @var string
+     */
     protected $fillable = ['FK_TBL_Convenio_Id','FK_TBL_Empresa_Id'];
     
     /*
