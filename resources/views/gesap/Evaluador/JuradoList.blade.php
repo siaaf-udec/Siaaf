@@ -284,7 +284,7 @@
 						   }
 					   }
 					   
-					 return '@permission("Create_Observations_Gesap")<a href="{{ route('proyecto.aprobado') }}'+'/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a>@endpermission @permission("Create_Concept_Gesap")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>@endpermission';
+					 return '@permission("CREATE_OBSERVATIONS_GESAP")<a href="{{ route('proyecto.aprobado') }}'+'/'+data+'" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-commenting"> </i></a>@endpermission @permission("CREATE_CONCEPT_GESAP")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="fa fa-check"></i></a>@endpermission';
 					}
 
 			   }

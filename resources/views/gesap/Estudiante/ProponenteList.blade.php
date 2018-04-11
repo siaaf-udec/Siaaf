@@ -145,9 +145,9 @@
 			   responsivePriority:2,
 			   render: function ( data, type, full, meta ) {
 				   if(full.anteproyecto.proyecto!=null){
-					   return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"	><i class="icon-eye"></i></a>@endpermission @permission("See_Activity_Gesap")<a href="#" class="btn 	btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>@endpermission';
+					   return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"	><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" class="btn 	btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>@endpermission';
 				   }else{
-					   return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit">	<i class="icon-eye"></i></a>@endpermission';
+					   return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit">	<i class="icon-eye"></i></a>@endpermission';
 				   }
 			   },
 			  }

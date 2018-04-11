@@ -1,6 +1,6 @@
 <div class="col-md-12">
 	@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-plus', 'title' => 'Registrar Anteproyecto'])
-    @permission('See_All_Project_Gesap')
+    @permission('SEE_ALL_PROJECT_GESAP')
 	@slot('actions', [
 		'link_back' => [
 			'link' => '',

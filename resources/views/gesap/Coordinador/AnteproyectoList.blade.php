@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="btn-group">
-				@permission('Create_Project_Gesap')
+				@permission('CREATE_PROJECT_GESAP')
 				<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
 				@endpermission
 			</div>
@@ -174,16 +174,16 @@
                      render: function ( data, type, full, meta ) {
 						 if(full.NPRY_Estado=="<span class='label label-sm label-success'>APROBADO<\/span>"){
 							 if(full.proyecto==null){
-								 return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
+								 return '@permission("MODIFY_PROJECT_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("ASSIGN_TEACHER_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("DELETE_PROJECT_GESAP")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
                              }else{
                                  if (full.proyecto.PRYT_Estado=="TERMINADO") {
                                      return '<span class="label label-sm label-success">Proyecto Terminado</span>';
                                  } else {
-                                    return '@permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission<span class="label label-sm label-success">Proyecto en curso</span>'; 
+                                    return '@permission("ASSIGN_TEACHER_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission<span class="label label-sm label-success">Proyecto en curso</span>'; 
                                  } 
                              }
                          }else{
-                             return '@permission("Modify_Project_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("Assign_teacher_Gesap")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("Delete_Project_Gesap")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
+                             return '@permission("MODIFY_PROJECT_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#"><i class="icon-pencil"></i></a>@endpermission @permission("ASSIGN_TEACHER_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon assign"><i class="icon-users"></i></a>@endpermission @permission("DELETE_PROJECT_GESAP")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission';
 						 }
 					 }, 
 					}
