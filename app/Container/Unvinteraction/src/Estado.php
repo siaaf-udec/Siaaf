@@ -29,7 +29,7 @@ class Estado extends Model
      */
 
     protected $table      = 'TBL_Estado';
-   
+   	/**
      * llave primaria utilizada por el modelo
      *
      * @var string

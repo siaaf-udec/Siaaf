@@ -296,41 +296,49 @@ class ReportController extends Controller
     /*
      * Vista con graficos
      *
-     * @return \Illuminate\Http\Response 
+     * @param  \Illuminate\Http\Request
+	 *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function graficos()
+    public function graficos(Request $request)
     {
-        $anteproyectos=Anteproyecto::all()->count();
-        
-        $anteproyectosR=Anteproyecto::where('NPRY_Estado', '=', 'RECHAZADO')->count();
-        if ($anteproyectos==0) {
-            $anteproyectosRP=0;
-        } else {
-            $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
-        }
-        $proyectos=Proyecto::all()->count();
-        if ($anteproyectos==0) {
-            $proyectosP=0;
-        } else {
-            $proyectosP=$proyectos*100/$anteproyectos;
-        }
+		if ($request->isMethod('GET')) {
+			$anteproyectos=Anteproyecto::all()->count();
 
-        $proyectosT=Proyecto::where('PRYT_Estado', '=', 'TERMINADO')->count();
-        if ($proyectos==0) {
-            $proyectosTP=0;
-        } else {
-            $proyectosTP=$proyectosT*100/$proyectos;
-        }
+			$anteproyectosR=Anteproyecto::where('NPRY_Estado', '=', 'RECHAZADO')->count();
+			if ($anteproyectos==0) {
+				$anteproyectosRP=0;
+			} else {
+				$anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+			}
+			$proyectos=Proyecto::all()->count();
+			if ($anteproyectos==0) {
+				$proyectosP=0;
+			} else {
+				$proyectosP=$proyectos*100/$anteproyectos;
+			}
 
-        return view('gesap.Coordinador.Graficos', [
-            'anteproyectos'=>$anteproyectos,
-            'anteproyectosR'=>$anteproyectosR,
-            'anteproyectosRP'=>$anteproyectosRP,
-            'proyectos'=>$proyectos,
-            'proyectosP'=>$proyectosP,
-            'proyectosT'=>$proyectosT,
-            'proyectosTP'=>$proyectosTP
-        ]);
+			$proyectosT=Proyecto::where('PRYT_Estado', '=', 'TERMINADO')->count();
+			if ($proyectos==0) {
+				$proyectosTP=0;
+			} else {
+				$proyectosTP=$proyectosT*100/$proyectos;
+			}
+
+			return view('gesap.Coordinador.Graficos', [
+				'anteproyectos'=>$anteproyectos,
+				'anteproyectosR'=>$anteproyectosR,
+				'anteproyectosRP'=>$anteproyectosRP,
+				'proyectos'=>$proyectos,
+				'proyectosP'=>$proyectosP,
+				'proyectosT'=>$proyectosT,
+				'proyectosTP'=>$proyectosTP
+			]);
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*

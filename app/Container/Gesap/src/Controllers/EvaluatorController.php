@@ -39,11 +39,19 @@ class EvaluatorController extends Controller
     /*
      * Listado de proyectos asignados como jurado
      *
-     * @return \Illuminate\Http\Response
+	 * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function jury()
+    public function jury(Request $request)
     {
-        return view($this->path.'JuradoList');
+		if ($request->isMethod('GET')) {
+        	return view($this->path.'JuradoList');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*
@@ -294,11 +302,19 @@ class EvaluatorController extends Controller
     /*
      * Listado de proyectos y anteproyectos asignados como director
      *
-     * @return \Illuminate\Http\Response
+	 * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function director()
+    public function director(Request $request)
     {
-        return view($this->path.'DirectorList');
+       	if ($request->isMethod('GET')) {
+			return view($this->path.'DirectorList');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*

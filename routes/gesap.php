@@ -98,7 +98,6 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
     'uses' => $controller.'EvaluatorController@juryList'
     ]);
 });
-
 Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('evaluar/ver/director', [
     'as' => 'anteproyecto.index.directorList',
@@ -133,7 +132,6 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
         'as' => 'download.activity'
     ]);
 });
-
 Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('show/{id?}', [
         'as' => 'evaluar.show',
@@ -153,7 +151,6 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
         'uses' => $controller.'EvaluatorController@downloadDocument'
     ]);
 });
-
 Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('evaluar/ver/proyecto', [
         'as' => 'anteproyecto.index.studentList',
@@ -172,7 +169,6 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
         'uses' => $controller.'StudentController@studentList'
     ]);
 });
-
 Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('graficos/', [
         'as' => 'graficos.index',

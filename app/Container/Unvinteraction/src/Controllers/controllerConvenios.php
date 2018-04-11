@@ -13,7 +13,7 @@ use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\EmpresaParticipante;
-use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Empesa;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
@@ -97,7 +97,7 @@ class controllerConvenios extends Controller
                         ]);
                     }
                 ])
-                ->get();;
+                ->get();
             return Datatables::of($convenio)->addIndexColumn()->make(true);
         }
         return AjaxResponse::fail(
