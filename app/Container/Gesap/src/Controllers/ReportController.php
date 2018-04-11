@@ -34,21 +34,29 @@ class ReportController extends Controller
     /*
      * Vista principal de generacion de reportes en PDF
      *
-     * @return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request 
+	 *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $docentes=User::orderBy('name', 'asc')
-                ->whereHas('roles', function ($e) {
-                    $e->where('name', 'Coordinator_Gesap');
-                    $e->orwhere('name', '=', 'Evaluator_Gesap');
-                })
-                ->get(['name', 'lastname', 'id'])
-                ->pluck('full_name', 'id')
-                ->toArray();
-        return view($this->path.'PDF.PrincipalView', [
-            'docentes'=>$docentes
-        ]);
+		if ($request->isMethod('GET')) {	
+			$docentes=User::orderBy('name', 'asc')
+					->whereHas('roles', function ($e) {
+						$e->where('name', 'Coordinator_Gesap');
+						$e->orwhere('name', '=', 'Evaluator_Gesap');
+					})
+					->get(['name', 'lastname', 'id'])
+					->pluck('full_name', 'id')
+					->toArray();
+			return view($this->path.'PDF.PrincipalView', [
+				'docentes'=>$docentes
+			]);
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*

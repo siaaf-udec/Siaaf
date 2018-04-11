@@ -730,7 +730,7 @@ class EvaluatorController extends Controller
                 $url = storage_path('app/'.$archivo);  
                 return response()->download($url);
             } catch (Exception $e) {
-                return $e->getMessage();
+                return $e->getMessage();//ERROR: CAMBIAR
             }
         }
         return AjaxResponse::fail(

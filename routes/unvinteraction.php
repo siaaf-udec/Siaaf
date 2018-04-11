@@ -39,7 +39,7 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
        'as' => 'registroConvenios.registroConvenios',
        'uses' => $controller.'controllerConvenios@registroConvenios'
     ]);
-    Route::get('editarConvenios/{id}', [    
+    Route::get('editarConvenios/{id?}', [    
         'as' => 'editarConvenios.editarConvenios', 
         'uses' => $controller.'controllerConvenios@editarConvenios'
     ]);
@@ -216,9 +216,6 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
     ]);
 });
 //___________________END_MISDOCUMENTOS______________
-
-
-
 
 //__________________________RUTAS_FUNCIONARIOS
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
