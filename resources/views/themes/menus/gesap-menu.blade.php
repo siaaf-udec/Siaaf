@@ -10,7 +10,7 @@
         </span>
     </a>
     <ul class="sub-menu">
-        @permission('See_All_Project_Gesap')
+        @permission('SEE_ALL_PROJECT_GESAP')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
                 <a href="{{ route('min.index') }}" class="nav-link nav-toggle">
                     <i class="fa fa-list-alt"></i>
@@ -24,7 +24,7 @@
                 </a>
             </li>
         @endpermission
-        @permission('Director_List_Gesap')
+        @permission('DIRECTOR_LIST_GESAP')
             <li class="nav-item {{ active(['anteproyecto.index.directorList'], 'start active open') }}">
                 <a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
                     <i class="fa fa-user"></i>
@@ -32,7 +32,7 @@
                 </a>
             </li>
         @endpermission
-        @permission('Jury_List_Gesap')
+        @permission('JURY_LIST_GESAP')
             <li class="nav-item {{ active(['anteproyecto.index.juryList'], 'start active open') }}">
                 <a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }} ">
                     <i class="fa fa-user"></i>
@@ -42,7 +42,7 @@
         @endpermission
 
 
-        @permission('Report_Gesap')
+        @permission('REPORT_GESAP')
             <li class="nav-item {{ active(['report.index'], 'start active open') }}">
                 <a class="nav-link " href="{{ route('report.index') }}">
                     <i class="fa fa-book"></i>
@@ -56,7 +56,7 @@
                 </a>
             </li>
         @endpermission
-        @permission('Student_List_Gesap')
+        @permission('STUDENT_LIST_GESAP')
                 <li class="nav-item {{ active(['anteproyecto.index.studentList'], 'start active open') }}">
                     <a class="nav-link " href="{{ route('anteproyecto.index.studentList') }}">
                         <i class="fa fa-list-alt">
