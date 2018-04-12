@@ -23,6 +23,7 @@
 @push('styles')
     <!-- Datatables Styles -->
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
           rel="stylesheet"
           type="text/css"/>
@@ -51,6 +52,22 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}"
           rel="stylesheet" type="text/css"/>
 
+=======
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- STYLES SELECT -->
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- STYLES MODAL -->
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- STYLES TOAST-->
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+
+    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
+          type="text/css"/>
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
 @endpush
 
 
@@ -66,7 +83,11 @@
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
 @section('title', '| Control de Admisiones y Registro')
+=======
+@section('title', '| Solicitudes Prestamo')
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
 
 {{--
 |--------------------------------------------------------------------------
@@ -82,7 +103,11 @@
 |
 |
 --}}
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
 @section('page-title', 'Control de Acceso de Usuarios')
+=======
+@section('page-title', 'Solicitudes Prestamos')
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
 {{--
 |--------------------------------------------------------------------------
 | Page Description
@@ -96,7 +121,11 @@
 | @section('page-description', 'Título')
 --}}
 
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
 @section('page-description', 'Admisiones y Registro')
+=======
+@section('page-description', 'Consulta y Finaliza prestamos')
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
 
 {{--
 |--------------------------------------------------------------------------
@@ -111,8 +140,17 @@
 --}}
 @section('content')
     <div class="col-md-12">
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Admisiones y Registro'])
             <div class="clearfix"></div><br><br><br>
+=======
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizadas'])
+            <div class="clearfix">
+            </div>
+            <br>
+            <br>
+            <br>
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
             <div class="row">
                 @permission('ADMINREGIST_USER_CREATE')
                 <div class="col-md-12">
@@ -218,12 +256,47 @@
 | @endpush
 --}}
 @push('functions')
+<<<<<<< Updated upstream:resources/views/adminregist/usuarios/tablaUsuarios.blade.php
 
     {-- bootstrap-toastr Scripts --}
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Datatables Scripts -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+=======
+    <!-- SCRIPT Confirmacion Sweetalert -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+    </script>
+    <!-- Estandar Validacion -->
+    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
+    </script>
+    <!-- Estandar Mensajes -->
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
+    </script>
+    <!-- Estandar Datatable -->
+    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        var ComponentsSelect2 = function() {
+            var handleSelect = function() {
+                $.fn.select2.defaults.set("theme", "bootstrap");
+                var placeholder = "<i class='fa fa-search'></i>  " + "Seleccionar";
+                $(".pmd-select2").select2({
+                    width: null,
+                    placeholder: placeholder,
+                    escapeMarkup: function(m) {
+                        return m;
+                    }
+                });
+            }
+            return {
+                init: function() {
+                    handleSelect();
+                }
+            };
+        }();
+
+>>>>>>> Stashed changes:resources/views/audiovisuals/administrador/gestionPrestamos.blade.php
         jQuery(document).ready(function () {
             App.unblockUI();
 
@@ -251,6 +324,8 @@
                 $(".content-ajax").load(route_create);
             });
 
+
         });
+
     </script>
 @endpush
