@@ -113,7 +113,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
+                route_edit = '{{route('listarPreguntaEvaluacion.listarPreguntaEvaluacion')}}/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

@@ -125,21 +125,19 @@ jQuery(document).ready(function () {
             columns = [
                 {data: 'DT_Row_Index'},
                 {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"documento" },
-               {data: 'convenios_participante.CVNO_Nombre', searchable: true},
-               {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true},
-               {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true},
-               {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true},
-               {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true},
-               {data:'action',className:'',searchable: false,
+                {data: 'convenios_participante.CVNO_Nombre', searchable: true},
+                {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true},
+                {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true},
+                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true},
+                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true},
+                {data:'action',className:'',searchable: false,
                 name:'action',
                 title:'Acciones',
                 orderable: false,
                 exportable: false,
                 printable: false,
                 defaultContent: '<a href="#" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"> VER</i></a>'
-
-
-            }
+                }
         ];
         dataTableServer.init(table, url, columns);
    
@@ -148,8 +146,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentosConvenios/'+dataTable.convenios_participante.PK_CVNO_Convenio;
-
+                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio;
             $(".content-ajax").load(route_edit);
         });
    

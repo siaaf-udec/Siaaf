@@ -77,7 +77,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarSedes/' + dataTable.PK_SEDE_Sede;
+                route_edit = '{{ route('editarSedes.editarSedes') }}'+'/'+dataTable.PK_SEDE_Sede;
             $(".content-ajax").load(route_edit);
         });
         $('.portlet-form').attr("id", "form_wizard_1");

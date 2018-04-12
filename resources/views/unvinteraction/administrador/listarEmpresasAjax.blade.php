@@ -110,7 +110,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarEmpresa/'+dataTable.PK_EMPS_Empresa;
+                route_edit = '{{ route('editarEmpresa.editarEmpresa') }}'+'/' + dataTable.PK_EMPS_Empresa;
      $(".content-ajax").load(route_edit);
         });
     $('.portlet-form').attr("id", "form_wizard_1");

@@ -249,7 +249,7 @@ class controllerDocumentos extends Controller
                 ])->download('ReporteEvaluaciones.pdf');
             } catch (Exception $e) {
                 $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
-                return view($this->path.'.listarConvenios', compact('sede'));
+                return view('unvinteraction.convenios.listarConvenios', compact('sede'));
             }
         }
         return AjaxResponse::fail(

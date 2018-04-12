@@ -371,7 +371,7 @@
 			}
 			var route = '{{ route("proyecto.actividades.upload") }}'; 
 			var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
-			var formatfile = '.jpeg,.pdf,.jpg,.png,.gif'; 
+			var formatfile = ''; 
 			var numfile = 1; 
 		   $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
 

@@ -90,7 +90,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarPregunta/'+dataTable.PK_PRGT_Pregunta;
+                route_edit = '{{route('editarPregunta.editarPregunta')}}/'+dataTable.PK_PRGT_Pregunta;
 
             $(".content-ajax").load(route_edit);
         });

@@ -56,7 +56,7 @@ jQuery(document).ready(function () {
                         async: async,
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
-                        var route = '/siaaf/public/index.php/interaccion-universitaria/reporte/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
+                        var route = '{{route('reporte.reporte')}}/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
                         $(".content-ajax").load(route);
                         UIToastr.init(xhr , response.title , response.message  );
                     }
@@ -106,7 +106,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
+                route_edit = '{{route('listarPreguntaEvaluacion.listarPreguntaEvaluacion')}}/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

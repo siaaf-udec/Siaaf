@@ -44,7 +44,7 @@ jQuery(document).ready(function () {
                printable: false,
                className: '',   
                render: function ( data, type, full, meta ) {
-                 return '<a href="/siaaf/public/index.php/interaccion-universitaria/descargaUsuario/'+data+'" target="_blank" class="btn btn-simple "><i class="fa fa-cloud-download"></i></a>';
+                   return '<a href="{{ route('documentoDescargaUsuario.documentoDescargaUsuario') }}/'+data+'" target="_blank" class="btn btn-simple "><i class="fa fa-cloud-download"></i></a>';
                 },
                 responsivePriority:2
                 

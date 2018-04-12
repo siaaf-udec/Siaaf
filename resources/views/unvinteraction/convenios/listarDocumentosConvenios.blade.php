@@ -222,7 +222,8 @@
                     url: '',
                     dataType: "html",
                 }).done(function(data) {
-                    window.location.href = '/siaaf/public/index.php/interaccion-universitaria/descarga/'+ O.PK_DOCU_Documentacion+'/@php echo $id; @endphp';
+                    window.location.href = '{{ route('documentoDescarga.documentoDescarga') }}'+'/'+ O.PK_DOCU_Documentacion+'/@php echo $id; @endphp';
+                    
                 });
             });
 
@@ -260,21 +261,21 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacion/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.doc1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentoUsuario/'+dataTable.FK_TBL_Usuarios_Id;
+                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id;
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.ver1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionesUsuario/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
+                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
                 $(".content-ajax").load(route_edit);
             });
             $("#archivo2").on('click', function(e) {
@@ -369,7 +370,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/realizarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
 
                 $(".content-ajax").load(route_edit);
             });
@@ -378,7 +379,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarEvaluacionEmpresa/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
+                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
                 $(".content-ajax").load(route_edit);
             });
 

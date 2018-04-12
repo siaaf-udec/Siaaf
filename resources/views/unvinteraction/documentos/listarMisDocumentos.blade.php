@@ -103,8 +103,6 @@
 <script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script> 
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 @endpush
-
-
 @push('functions')
 <script>
 jQuery(document).ready(function () {

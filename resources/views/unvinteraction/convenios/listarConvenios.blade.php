@@ -248,7 +248,6 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                //route_edit = '/siaaf/public/index.php/interaccion-universitaria/editarConvenios/' + dataTable.PK_CVNO_Convenio;
                 route_edit = '{{ route('editarConvenios.editarConvenios') }}'+'/'+dataTable.PK_CVNO_Convenio;
 
             $(".content-ajax").load(route_edit);
@@ -257,7 +256,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/documentosConvenios/' + dataTable.PK_CVNO_Convenio;
+                 route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.PK_CVNO_Convenio;
 
             $(".content-ajax").load(route_edit);
         });
