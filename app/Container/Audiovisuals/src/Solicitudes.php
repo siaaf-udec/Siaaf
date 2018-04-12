@@ -3,12 +3,16 @@
 namespace App\Container\Audiovisuals\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Solicitudes extends Model
 {
-    //
+
+    use SoftDeletes;
+
     protected $connection = 'audiovisuals';
     protected $table      = "tbl_prestamos";
+    protected $dates = ['deleted_at'];
 	protected $fillable = [
 		'PRT_FK_Articulos_id','PRT_FK_Funcionario_id','PRT_FK_Kits_id',
 		'PRT_Fecha_Inicio','PRT_Fecha_Fin','PRT_Observacion_Entrega',
@@ -28,9 +32,16 @@ class Solicitudes extends Model
 	{
 		return $this->belongsTo(UsuarioAudiovisuales::class,'PRT_FK_Funcionario_id','USER_FK_User');
 	}
+
 	public function	conultarUsuarioDeveloper(){
 		return $this->belongsTo('App\Container\Users\Src\User','PRT_FK_Funcionario_id','id');
 	}
+    public function	conultarAdministradorEntrega(){
+        return $this->belongsTo('App\Container\Users\Src\User','PRT_FK_Administrador_Entrega_id','id');
+    }
+    public function	conultarAdministradorRecibe(){
+        return $this->belongsTo('App\Container\Users\Src\User','PRT_FK_Administrador_Recibe_id','id');
+    }
 	public function consultaKitArticulo()
 	{
 		return $this->belongsTo(Kit::class,'PRT_FK_Kits_id');

@@ -13,13 +13,13 @@ class CreateForeignsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminregist')->table('registros', function (Blueprint $table) {
-            $table->string('id_registro')->nullable();
-            $table->integer('id_novedad')->nullable()->unsigned();
+        Schema::connection('adminregist')->table('TBL_Registros', function (Blueprint $table) {
+            $table->string('FK_RE_Registro')->nullable();
+            $table->integer('FK_RE_Novedad')->nullable()->unsigned();
 
-            $table->foreign('id_registro')->references('number_document')->on('developer.users_udec')
+            $table->foreign('FK_RE_Registro')->references('number_document')->on('developer.users_udec')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_novedad')->references('id')->on('novedades')
+            $table->foreign('FK_RE_Novedad')->references('PK_NOV_IdNovedad')->on('TBL_Novedades')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

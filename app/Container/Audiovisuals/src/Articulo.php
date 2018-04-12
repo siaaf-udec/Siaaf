@@ -9,13 +9,12 @@ class Articulo extends Model
     protected $connection = 'audiovisuals';
 
     protected $table = 'TBL_Articulos';
-
+    protected $dates = ['deleted_at'];
     protected $fillable = [
 
 		'FK_ART_Tipo_id','ART_Descripcion','FK_ART_Kit_id', 'FK_ART_Estado_id' ,
 		'ART_Codigo'
     ];
-
 
 	public function consultaTipoArticulo()
 	{

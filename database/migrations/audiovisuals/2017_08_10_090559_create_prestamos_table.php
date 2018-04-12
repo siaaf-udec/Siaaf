@@ -14,7 +14,7 @@ class CreatePrestamosTable extends Migration
     public function up()
     {
         Schema::connection('audiovisuals')->create('TBL_Prestamos', function (Blueprint $table) {
-			$table->dates=\Carbon\Carbon::now();
+			//$table->dates=\Carbon\Carbon::now();
         	$table->increments('id'); //id prestamo
             $table->integer('PRT_FK_Articulos_id')->unsigned()->nullable(); //->idArticulos
             $table->integer('PRT_FK_Funcionario_id')->unsigned(); //funcionario
@@ -29,7 +29,8 @@ class CreatePrestamosTable extends Migration
             $table->integer('PRT_FK_Tipo_Solicitud')->unsigned(); // prestamo o reserva
             $table->integer('PRT_FK_Administrador_Entrega_id')->unsigned(); //administradores
             $table->integer('PRT_FK_Administrador_Recibe_id')->unsigned(); //administradores
-			//$table->softDeletes();
+            $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             //$table->foreign('PRT_FK_Articulos_id')->references('id')->on('TBL_Articulos'); //->numeroArticulos
@@ -40,7 +41,7 @@ class CreatePrestamosTable extends Migration
             $table->foreign('PRT_FK_Administrador_Entrega_id')->references('id')->on('TBL_Usuario_Audiovisuales');
             $table->foreign('PRT_FK_Administrador_Recibe_id')->references('id')->on('TBL_Usuario_Audiovisuales');*/
 
-            $table->timestamps();
+
         });
     }
 

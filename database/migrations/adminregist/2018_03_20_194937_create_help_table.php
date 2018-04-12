@@ -13,10 +13,10 @@ class CreateHelpTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminregist')->create('help', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('pregunta');
-            $table->text('respuesta');
+        Schema::connection('adminregist')->create('TBL_Help', function (Blueprint $table) {
+            $table->increments('PK_HE_IdHelp');
+            $table->text('HE_Pregunta');
+            $table->text('HE_Respuesta');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateHelpTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('help');
+        Schema::dropIfExists('TBL_Help');
     }
 }

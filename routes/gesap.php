@@ -2,7 +2,7 @@
 
 $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
-Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('min/', [
         'uses' => $controller.'CoordinatorController@index',
         'as' => 'min.index'
@@ -33,7 +33,7 @@ Route::group(['middleware' => ['permission:See_All_Project_Gesap']], function ()
     ]);
 });
     
-Route::group(['middleware' => ['permission:Create_Project_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('min/create', [
         'uses' => $controller.'CoordinatorController@create',
         'as' => 'min.create'
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['permission:Create_Project_Gesap']], function () 
         'as' => 'min.store'
     ]);
 });
-Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('min/edit/{id?}', [
         'uses' => $controller.'CoordinatorController@edit',
         'as' => 'min.edit'
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['permission:Modify_Project_Gesap']], function () 
         'as' => 'min.proyecto.update'
     ]);
 });
-Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('min/asignar/{id?}', [
         'as' => 'anteproyecto.asignar',
         'uses' => $controller.'CoordinatorController@assign'
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['permission:Assign_teacher_Gesap']], function () 
     'uses' => $controller.'CoordinatorController@saveAssign'
     ]);
 });
-Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('evaluar/', [
         'uses' => $controller.'EvaluatorController@jury',
         'as' => 'evaluar.index'
@@ -98,8 +98,7 @@ Route::group(['middleware' => ['permission:Jury_List_Gesap']], function () use (
     'uses' => $controller.'EvaluatorController@juryList'
     ]);
 });
-
-Route::group(['middleware' => ['permission:Director_List_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('evaluar/ver/director', [
     'as' => 'anteproyecto.index.directorList',
     'uses' => $controller.'EvaluatorController@director'
@@ -133,8 +132,7 @@ Route::group(['middleware' => ['permission:Director_List_Gesap']], function () u
         'as' => 'download.activity'
     ]);
 });
-
-Route::group(['middleware' => ['permission:See_Observations_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('show/{id?}', [
         'as' => 'evaluar.show',
         'uses' => $controller.'EvaluatorController@show'
@@ -153,8 +151,7 @@ Route::group(['middleware' => ['permission:See_Observations_Gesap']], function (
         'uses' => $controller.'EvaluatorController@downloadDocument'
     ]);
 });
-
-Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('evaluar/ver/proyecto', [
         'as' => 'anteproyecto.index.studentList',
         'uses' => $controller.'StudentController@proyecto'
@@ -172,8 +169,7 @@ Route::group(['middleware' => ['permission:Update_Final_Project_Gesap']], functi
         'uses' => $controller.'StudentController@studentList'
     ]);
 });
-
-Route::group(['middleware' => ['permission:Report_Gesap']], function () use ($controller) {
+Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($controller) {
     Route::get('graficos/', [
         'as' => 'graficos.index',
         'uses' => $controller.'ReportController@graficos'

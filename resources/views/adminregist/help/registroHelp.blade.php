@@ -21,12 +21,12 @@
 
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('pregunta', old('pregunta'), ['label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Pregunta.','size' => '30']) !!}
+                        {!! Field::textarea('pregunta', old('pregunta'), ['required','label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Pregunta.','size' => '30']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('respuesta', old('respuesta'), ['label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Respuesta.']) !!}
+                        {!! Field::textarea('respuesta', old('respuesta'), ['required','label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Respuesta.']) !!}
                     </div>
                 </div>
                 <div class="form-group">

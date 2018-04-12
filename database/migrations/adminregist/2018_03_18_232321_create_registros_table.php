@@ -13,8 +13,8 @@ class CreateRegistrosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminregist')->create('registros', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::connection('adminregist')->create('TBL_Registros', function (Blueprint $table) {
+            $table->increments('PK_RE_IdRegistro');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateRegistrosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registros');
+        Schema::dropIfExists('TBL_Registros');
     }
 }

@@ -218,6 +218,7 @@
                     {{-- END HTML MODAL CREATE--}}
                 </div>
             </div>
+        </div>
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection
@@ -321,7 +322,7 @@
                     appendToParent: true
                 });
 
-            }
+            };
             return {
                 //main function to initiate the module
                 init: function () {
@@ -329,8 +330,6 @@
                 }
             };
         }();
-
-
         jQuery(document).ready(function () {
 
             ComponentsBootstrapMaxlength.init();
@@ -420,7 +419,7 @@
                             swal("Oops", "No pudimos conectar con el servidor", "error");
                         });
                 });
-            }
+            };
 
             table.on('click', '.edit', function (e) {
                 e.preventDefault();

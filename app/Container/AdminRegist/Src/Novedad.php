@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Novedad extends Model
 {
     protected $connection = 'adminregist';
-    protected $table = 'novedades';
-    protected $primaryKey = 'id';
+    protected $table = 'TBL_Novedades';
+    protected $primaryKey = 'PK_NOV_IdNovedad';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'nombre_novedad'
+        'NOV_NombreNovedad'
     ];
 
-    //relationships one to many
+    //relationships one to many  de la tabla TBL_Novedades con la tabla TBL_Registros
     public function novedad(){
-        return $this->hasMany(Registros::class,'id_novedad');
+        return $this->hasMany(Registros::class,'FK_RE_Novedad');
     }
 
     //Traer el total de registros con la novedad correspondiente

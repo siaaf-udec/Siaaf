@@ -5,53 +5,58 @@
  */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'users'], function (){
+    Route::group(['prefix' => 'users', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
         Route::get('index', [
-            'uses' => $controller . 'MenuController@index',
+            'uses' => $controller . 'UsuariosController@index',
             'as' => 'adminRegist.users.index',
         ]);
 
         Route::get('data', [
-            'uses' => $controller . 'UserRegistController@data',
+            'uses' => $controller . 'UsuariosController@data',
             'as' => 'adminRegist.users.data'
         ]);
 
         Route::post('check/document', [
-            'uses' => $controller . 'UserRegistController@checkDocument',
+            'uses' => $controller . 'UsuariosController@checkDocument',
             'as' => 'adminRegist.users.check.document'
         ]);
 
         Route::post('check/code', [
-            'uses' => $controller . 'UserRegistController@checkCode',
+            'uses' => $controller . 'UsuariosController@checkCode',
             'as' => 'adminRegist.users.check.code'
         ]);
 
         Route::get('create', [
-            'uses' => $controller . 'UserRegistController@create',
+            'uses' => $controller . 'UsuariosController@create',
             'as' => 'adminRegist.users.create'
         ]);
 
         Route::post('store',[
-            'uses' => $controller . 'UserRegistController@store',
+            'uses' => $controller . 'UsuariosController@store',
             'as' => 'adminRegist.users.store'
         ]);
 
         Route::get('index/ajax', [
-            'uses' => $controller . 'UserRegistController@index_ajax',
+            'uses' => $controller . 'UsuariosController@indexAjax',
             'as' => 'adminRegist.users.index.ajax'
         ]);
     });
 
-    Route::group(['prefix' => 'registros'], function (){
+    Route::group(['prefix' => 'registros', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
         Route::get('index', [
             'uses' => $controller . 'RegistrosController@index',
             'as' => 'adminRegist.registros.index',
+        ]);
+
+        Route::get('registro/index', [
+            'uses' => $controller . 'RegistrosController@indexRegistro',
+            'as' => 'adminRegist.registros.registro.index',
         ]);
 
         Route::post('registro',[
@@ -71,7 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'help'], function (){
+    Route::group(['prefix' => 'help', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
 
         //ruta que conduce al controlador para mostrar el registro de usuarios
@@ -86,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::get('index/ajax', [
-            'uses' => $controller . 'HelpController@index_ajax',
+            'uses' => $controller . 'HelpController@indexAjax',
             'as' => 'adminRegist.help.index.ajax'
         ]);
 
@@ -115,9 +120,14 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.help.destroy'
         ]);
 
+        Route::get('index/preguntas', [
+            'uses' => $controller . 'HelpController@indexPreguntas',
+            'as' => 'adminRegist.help.index.preguntas'
+        ]);
+
     });
 
-    Route::group(['prefix' => 'report'],function (){
+    Route::group(['prefix' => 'report', 'middleware' => ['permission:ADMINREGIST_MODULE']],function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
         Route::get('report',[
             'uses' => $controller.'ReporteController@indexFecha',
@@ -125,7 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('report/date',[
-            'uses' => $controller.'ReporteController@reportFecha',
+            'uses' => $controller.'ReporteController@reporteFecha',
             'as' => 'adminRegist.report.date'
         ]);
 
@@ -140,7 +150,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('report/novedad',[
-            'uses' => $controller.'ReporteController@reportNovedad',
+            'uses' => $controller.'ReporteController@reporteNovedad',
             'as' => 'adminRegist.report.novedad'
         ]);
 
@@ -149,9 +159,19 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.report.descargarRepNovedad'
         ]);
 
+        Route::get('reportGeneral', [
+            'uses' => $controller.'ReporteController@reporteGeneral',
+            'as' => 'adminRegist.report.reportGeneral'
+        ]);
+
+        Route::get('descargarRepGeneral', [
+            'uses' => $controller.'ReporteController@descargarReporteGeneral',
+            'as' => 'adminRegist.report.descargarRepGeneral'
+        ]);
+
     });
 
-    Route::group(['prefix' => 'chart'],function (){
+    Route::group(['prefix' => 'chart', 'middleware' => ['permission:ADMINREGIST_MODULE']],function (){
         $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
         Route::get('index', [
             'uses' => $controller.'ReporteController@charIndex',

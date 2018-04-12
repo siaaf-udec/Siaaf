@@ -33,7 +33,11 @@ class Procedencia extends Model
     protected $fillable = [
         'tipo_procedencia'         
     ];
-
+    /**
+     *  Función que retorna la relación entre la tabla 'tbl_procedencias' y la tabla
+     * 'tb_articulos' a través de la llave foránea 'fk_id_procedencia'
+     *  y la llave 'pk_id_procedencia'
+     */
     public function articulo()
     {
         return $this->hasMany(Articulo::class, 'fk_id_procedencia', 'pk_id_procedencia');

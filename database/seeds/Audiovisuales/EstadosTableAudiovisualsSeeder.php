@@ -17,9 +17,9 @@ class EstadosTableAudiovisualsSeeder extends Seeder
     public function run()
     {
         $estados = [
-            [ 'EST_Descripcion' => 'Reservado' ],
+            [ 'EST_Descripcion' => 'Creado' ],
             [ 'EST_Descripcion' => 'Prestado' ],
-            [ 'EST_Descripcion' => 'Entregado' ],
+            [ 'EST_Descripcion' => 'Reservado' ],
             [ 'EST_Descripcion' => 'Disponible' ],
         ];
 

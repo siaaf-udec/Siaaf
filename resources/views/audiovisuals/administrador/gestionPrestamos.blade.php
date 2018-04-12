@@ -38,6 +38,9 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
     <!-- STYLES TOAST-->
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
+
+    <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
+          type="text/css"/>
 @endpush
 
 
@@ -56,7 +59,7 @@ de la plantilla
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
-@section('title', '| Gestion Reservas')
+@section('title', '| Solicitudes Prestamo')
 
 {{--
 |--------------------------------------------------------------------------
@@ -72,7 +75,7 @@ de la plantilla
 |
 |
 --}}
-@section('page-title', 'Gestion Reservas')
+@section('page-title', 'Solicitudes Prestamos')
 {{--
 |--------------------------------------------------------------------------
 | Page Description
@@ -86,7 +89,7 @@ de la plantilla
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Solicita y Cancela una reserva')
+@section('page-description', 'Consulta y Finaliza prestamos')
 
 {{--
 |--------------------------------------------------------------------------
@@ -102,7 +105,7 @@ de la plantilla
 @section('content')
     <div class="clearfix"></div>
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Reservas Realizadas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizadas'])
             <div class="clearfix">
             </div>
             <br>
@@ -217,6 +220,9 @@ de la plantilla
 | @endpush
 --}}
 @push('functions')
+    <!-- SCRIPT Confirmacion Sweetalert -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
+    </script>
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
@@ -245,6 +251,7 @@ de la plantilla
                 }
             };
         }();
+
         jQuery(document).ready(function () {
             ComponentsSelect2.init();
             var idFuncionario;
@@ -291,6 +298,8 @@ de la plantilla
                 $(".content-ajax").load(route);
             });
 
+
         });
+
     </script>
 @endpush

@@ -64,7 +64,7 @@
             <div class="col-md-12">
                 <div class="col-md-2">
                     {!! Field::select('tipoArticulosSelect',
-                         $tipoArticulos,
+                         null,
                     ['label' => 'Tipo Articulo'])
                     !!}
                 </div>

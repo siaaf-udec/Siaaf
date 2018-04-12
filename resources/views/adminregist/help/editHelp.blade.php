@@ -18,15 +18,15 @@
             <div class="col-md-12">
 
                 {!! Form::open(['id' => 'form_update', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
-                {!! Field::hidden('id',$help->id) !!}
+                {!! Field::hidden('id',$help->PK_HE_IdHelp) !!}
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('pregunta', $help->pregunta, ['label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Pregunta.','size' => '30']) !!}
+                        {!! Field::textarea('pregunta', $help->HE_Pregunta, ['required','label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Pregunta.','size' => '30']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('respuesta', $help->respuesta, ['label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Respuesta.']) !!}
+                        {!! Field::textarea('respuesta', $help->HE_Respuesta, ['required','label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Respuesta.']) !!}
                     </div>
                 </div>
                 <div class="form-group">

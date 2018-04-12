@@ -19,8 +19,6 @@ class TiposSolicitudTableAudiovisualsSeeder extends Seeder
         $tiposSol = [
             [ 'TPSOL_Tipo' => 'Reserva'],
             [ 'TPSOL_Tipo' => 'Prestamo'],
-
-
         ];
 
         foreach ($tiposSol as $tipoSol ) {

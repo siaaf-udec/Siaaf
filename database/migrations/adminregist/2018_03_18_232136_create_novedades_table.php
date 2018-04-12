@@ -13,9 +13,9 @@ class CreateNovedadesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('adminregist')->create('novedades', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre_novedad');
+        Schema::connection('adminregist')->create('TBL_Novedades', function (Blueprint $table) {
+            $table->increments('PK_NOV_IdNovedad');
+            $table->string('NOV_NombreNovedad');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateNovedadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('novedades');
+        Schema::dropIfExists('TBL_Novedades');
     }
 }

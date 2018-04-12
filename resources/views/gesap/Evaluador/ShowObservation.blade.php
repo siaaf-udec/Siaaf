@@ -1,6 +1,6 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-commenting-o', 'title' => 'Observaciones'])
-    @permission('Student_List_Gesap')
+    @permission('STUDENT_LIST_GESAP')
     @slot('actions', [
             'link_back-estudiante' => [
                 'link' => '',
@@ -8,7 +8,7 @@
             ],
         ])
     @endpermission
-    @permission('Director_List_Gesap')
+    @permission('DIRECTOR_LIST_GESAP')
     @slot('actions', [
             'link_back-director' => [
                 'link' => '',
@@ -45,48 +45,12 @@
 
 <script>
 jQuery(document).ready(function () {
-    var table, url;
+    var table, url,columns;
     table = $('#lista-observaciones');
     var id =    $('input[name="id"]').val();
     url = '{{ route("anteproyecto.observationsList",":id") }}';
     url = url.replace(':id',id);
-    table.DataTable({
-       lengthMenu: [
-           [5, 10, 25, 50, -1],
-           [5, 10, 25, 50, "Todo"]
-       ],
-       responsive: true,
-       colReorder: true,
-       processing: true,
-       serverSide: true,
-       ajax: url,
-       searching: true,
-       language: {
-           "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-           "sLengthMenu": "Mostrar _MENU_ registros",
-           "sZeroRecords": "No se encontraron resultados",
-           "sEmptyTable": "Ningún dato disponible en esta tabla",
-           "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-           "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-           "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-           "sInfoPostFix": "",
-           "sSearch": "Buscar:",
-           "sUrl": "",
-           "sInfoThousands": ",",
-           "sLoadingRecords": "Cargando...",
-           "oPaginate": {
-               "sFirst": "Primero",
-               "sLast": "Último",
-               "sNext": "Siguiente",
-               "sPrevious": "Anterior"
-           },
-           "oAria": {
-               "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-           }
-       },
-        
-    columns:[
+    	columns=[
            {data: 'DT_Row_Index'},
            {data: 'PK_BVCS_IdObservacion', "visible": false },
            {data: 'BVCS_Observacion', className:'none', searchable: true},
@@ -103,7 +67,7 @@ jQuery(document).ready(function () {
                         if(data=="NO FILE"){
                             return "NO APLICA";    
                         }
-                        return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
+                        return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
                     }
                     return "NO APLICA";
                 }
@@ -114,29 +78,14 @@ jQuery(document).ready(function () {
                         if(data=="NO FILE"){
                             return "NO APLICA";    
                         }
-                            return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                            return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                     }
                     return "NO APLICA";
             }
             }
-       ],
-       buttons: [
-           { extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-           { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-           { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-           { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-           { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-           { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
-           {text: '<i class="fa fa-refresh"></i>', className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-               action: function ( e, dt, node, config ) {
-                   dt.ajax.reload();
-               }
-           }
-
-       ],
-       pageLength: 10,
-       dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-    });
+       ];
+	
+	dataTableServer.init(table, url, columns);
 
     $('#link_back-director').on('click', function (e) {
             e.preventDefault();
@@ -151,6 +100,34 @@ jQuery(document).ready(function () {
             $(".content-ajax").load(route);
         });    
     
-    
+    table.on('click', '.document', function (e) {
+        e.preventDefault();
+            var uri=$(this).attr('href');
+            $.ajax({
+                url: uri,
+                beforeSend: function () {
+                    App.blockUI({target: '.portlet-form', animate: true});
+                },
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        if(response.title === "Ocurrió un problema") {
+                            UIToastr.init('error', response.title, response.message);
+                            App.unblockUI();
+                        }else{
+                           var a = document.createElement('a');
+                            a.href = uri;
+                            a.click();
+                            window.URL.revokeObjectURL(uri); 
+                        }
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                    }
+                }
+            });
+            return false; 
+        }); 
 });
 </script>

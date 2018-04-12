@@ -21,6 +21,9 @@ class Validaciones extends Model
 	public function consultaTimepoArticulo(){
 		return $this->hasMany(TipoArticulo::class,'TPART_Tiempo','id');
 	}
+    public function consultaTimepoKit(){
+        return $this->hasMany(Kit::class,'KIT_FK_Tiempo','id');
+    }
 	public function consultaUsuarioAudiovisuales()
 	{
 		return $this->belongsTo(UsuarioAudiovisuales::class,'PRT_FK_Funcionario_id','id');

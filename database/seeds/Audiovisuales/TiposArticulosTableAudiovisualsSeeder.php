@@ -17,11 +17,11 @@ class TiposArticulosTableAudiovisualsSeeder extends Seeder
     public function run()
     {
         $tipos = [
-            [ 'TPART_Nombre' => 'Computador', 'TPART_Tiempo' => 9],
-            [ 'TPART_Nombre' => 'Control', 'TPART_Tiempo' => 9 ],
-            [ 'TPART_Nombre' => 'Cable', 'TPART_Tiempo' => 9 ],
-            [ 'TPART_Nombre' => 'VideoBeam', 'TPART_Tiempo' => 10],
-            [ 'TPART_Nombre' => 'Cabina' , 'TPART_Tiempo' => 10],
+            [ 'TPART_Nombre' => 'Computador', 'TPART_Tiempo' => 1],
+            [ 'TPART_Nombre' => 'Control', 'TPART_Tiempo' => 2 ],
+            [ 'TPART_Nombre' => 'Cable', 'TPART_Tiempo' => 1 ],
+            [ 'TPART_Nombre' => 'VideoBeam', 'TPART_Tiempo' => 2],
+            [ 'TPART_Nombre' => 'Cabina' , 'TPART_Tiempo' => 1],
 
         ];
 

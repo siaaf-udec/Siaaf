@@ -1,6 +1,6 @@
 <div class="col-md-12">
 	@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Actividades'])
-	@permission('Director_List_Gesap')
+	@permission('DIRECTOR_LIST_GESAP')
     	@slot('actions', [
 			'link_back-director' => [
 			'link' => '',
@@ -8,7 +8,7 @@
 			],
         ])
     @endpermission
-    @permission('Student_List_Gesap')
+    @permission('STUDENT_LIST_GESAP')
     	@slot('actions', [
 			'link_back-estudiante' => [
 			'link' => '',
@@ -34,7 +34,7 @@
 						</div>
 						<div class="mt-list-container list-default ext-1 group">
 							<div class="mt-list-title uppercase">Lista de actividades
-								@permission('Create_Activity_Gesap')
+								@permission('CREATE_ACTIVITY_GESAP')
 								@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 								<span class="badge badge-default pull-right bg-hover-green-jungle">
 									<a class="font-white" href="javascript:;" id="create">
@@ -75,7 +75,7 @@
 																	
 										</div>
 										@endpermission
-										@permission('Update_Final_Project_Gesap')
+										@permission('UPDATE_FINAL_PROJECT_GESAP')
 										@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 										<div class="list-datetime"> 
 											<a class="task-trash upload" id=""  href="javascript:;">
@@ -92,7 +92,7 @@
 											{{ date('d M', strtotime($documento->created_at)) }} </div>
 										<div class="list-item-content">
 											<h3 class="uppercase">
-												<a href="javascript:;">{{$documento->DMNT_Nombre}}</a>
+												<a href="javascript:;">{{$documento}}</a>
 											</h3>
 											<p>{{$documento->DMNT_Descripcion}}</p>
 										</div>
@@ -126,7 +126,7 @@
 										</div>
 										@endif
 										@endpermission
-										@permission('Update_Final_Project_Gesap')
+										@permission('UPDATE_FINAL_PROJECT_GESAP')
 										@if($anteproyecto[0]->proyecto->PRYT_Estado != "TERMINADO")
 										<div class="list-datetime"> 
 											<a class="task-trash upload" id=""  href="javascript:;">
@@ -141,9 +141,9 @@
 											{{ date('d M y', strtotime($documento->created_at)) }} </div>
 										<div class="list-item-content">
 											<h3 class="uppercase">
-												<a href="javascript:;">{{$documento->DMNT_Nombre}}</a>
+												<a href="javascript:;">{{$documento->actividad->CTVD_Nombre}}</a>
 											</h3>
-											<p>{{$documento->DMNT_Descripcion}}</p>
+											<p>{{$documento->actividad->CTVD_Descripcion}}</p>
 										</div>
 									</li>
 									@endif
@@ -289,9 +289,6 @@
 							data: formData,
 							processData: false,
 							async: async,
-							beforeSend: function () {
-
-							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									$('#modal-create-activity').modal('hide');
@@ -344,6 +341,9 @@
 							contentType: false,
 							processData: false,
 							async: async,
+							beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									UIToastr.init(xhr, response.title, response.message);
@@ -371,7 +371,7 @@
 			}
 			var route = '{{ route("proyecto.actividades.upload") }}'; 
 			var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
-			var formatfile = '.jpeg,.pdf,.jpg,.png,.gif'; 
+			var formatfile = ''; 
 			var numfile = 1; 
 		   $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
 

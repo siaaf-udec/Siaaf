@@ -13,7 +13,7 @@ use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\EmpresaParticipante;
-use App\Container\Unvinteraction\src\Empresa;
+use App\Container\Unvinteraction\src\Empesa;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
@@ -29,82 +29,106 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class controllerConvenios extends Controller
 {
-    /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    private $path='unvinteraction';
+    
+    private $path='unvinteraction.convenios';
     //_______________________CONVENIOS________________________________
     /*funcion para mostrar la vista principal de los convenios
-    *@return \Illuminate\Http\Response
-    *
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function convenios()
+    public function convenios(Request $request)
     {
-        $Sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
-        return view($this->path.'.Listar_Convenios', compact('Sede'));
-       
+        if ( $request->isMethod('GET')) {
+            $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+            return view($this->path.'.listarConvenios', compact('sede'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para mostrar la vista ajax de los convenios
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
-    *
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function conveniosAjax()
+    public function conveniosAjax(Request $request)
     {
-        $Sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
-        return view($this->path.'.Listar_Convenios_Ajax', compact('Sede'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+            return view($this->path.'.listarConveniosAjax', compact('sede'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para mostrar la vista principal de los convenios por usuario
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
-    *
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function misConvenios()
+    public function misConvenios(Request $request)
     {
-        return view($this->path.'.listar_Mis_Convenios');
+        if ($request->isMethod('GET')) {
+         return view($this->path.'.listarMisConvenios');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para envio de los datos para la tabla de datos
-    *@param \Illuminate\Http\Request
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
     public function listarMisConvenios(Request $request)
     {
-        $Convenio= Participantes::where('FK_TBL_Usuarios_Id', '=', $request->user()->identity_no)->select('FK_TBL_Convenio_Id')
-            ->with([
-                    'conveniosParticipante'=>function ($query) {
-                    $query->select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id');
-                    $query->with([
-                        'convenioEstado'=>function ($query) {
-                            $query->select('PK_ETAD_Estado','ETAD_Estado');
-                        },
-                        'convenioSede'=>function ($query) {
-                            $query->select('PK_SEDE_Sede','SEDE_Sede');
-                        }    
-                    ]);
-                }
-            ])
-            ->get();;
-        return Datatables::of($Convenio)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $convenio= Participantes::where('FK_TBL_Usuarios_Id', '=', $request->user()->identity_no)->select('FK_TBL_Convenio_Id')
+                ->with([
+                        'conveniosParticipante'=>function ($query) {
+                        $query->select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id');
+                        $query->with([
+                            'convenioEstado'=>function ($query) {
+                                $query->select('PK_ETAD_Estado','ETAD_Estado');
+                            },
+                            'convenioSede'=>function ($query) {
+                                $query->select('PK_SEDE_Sede','SEDE_Sede');
+                            }    
+                        ]);
+                    }
+                ])
+                ->get();
+            return Datatables::of($convenio)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para envio de los datos para la tabla de datos
-    *@param \Illuminate\Http\Request
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
-    public function listarConvenios()
+    public function listarConvenios(Request $request)
     {
-        $Convenio= Convenio::select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio', 'CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id')
-            ->with([
-                    'convenioSede'=>function ($query) {
-                    $query->select('PK_SEDE_Sede','SEDE_Sede');
-                    
-                    },
-                    'convenioEstado'=>function ($query) {
-                    $query->select('PK_ETAD_Estado','ETAD_Estado');
-                    
-                    }
-            ])->get();
-        //var_dump($Convenio);
-        return Datatables::of($Convenio)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $convenio= Convenio::select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio', 'CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id')
+                ->with([
+                        'convenioSede'=>function ($query) {
+                        $query->select('PK_SEDE_Sede','SEDE_Sede');
+
+                        },
+                        'convenioEstado'=>function ($query) {
+                        $query->select('PK_ETAD_Estado','ETAD_Estado');
+
+                        }
+                ])->get();
+            return Datatables::of($convenio)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para registrar un nuevo convenio
     *@param \Illuminate\Http\Request
@@ -127,14 +151,21 @@ class controllerConvenios extends Controller
     }
     /*funcion para buscar un convenio y enviar la informacion de un convenio
     *@param int id
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function editarConvenios($id)
+    public function editarConvenios(Request $request,$id)
     {
-        $Convenio   = Convenio::findOrFail($id);
-        $Sede       = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
-        $Estado     = Estado::select('PK_ETAD_Estado', 'ETAD_Estado')->pluck('ETAD_Estado', 'PK_ETAD_Estado')->toArray();
-        return view($this->path.'.Editar_Convenios', compact('Convenio', 'Sede', 'Estado'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $convenio   = Convenio::findOrFail($id);
+            $sede       = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+            $estado     = Estado::select('PK_ETAD_Estado', 'ETAD_Estado')->pluck('ETAD_Estado', 'PK_ETAD_Estado')->toArray();
+            return view($this->path.'.editarConvenios', compact('convenio', 'sede', 'estado'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para registrar los nuevo datos del convenio
     *@param int id
@@ -158,56 +189,84 @@ class controllerConvenios extends Controller
     }
     /*funcion para la vista de listar documentos del convenio
     *@param int id
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function documentosConvenios($id)
+    public function documentosConvenios(Request $request,$id)
     {
-         return view($this->path.'.Listar_Documentos_Convenios', compact('id'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.listarDocumentosConvenios', compact('id'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para el envio de datos para la tabla listar documentos del convenio
     *@param int id
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
-    public function listarDocumentosConvenios($id)
+    public function listarDocumentosConvenios(Request $request,$id)
     {
-        $documento = Documentacion::select('PK_DOCU_Documentacion', 'DOCU_Nombre', 'DOCU_Ubicacion')
-            ->where('FK_TBL_Convenio_Id', $id)->get();
-        return Datatables::of($documento)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $documento = Documentacion::select('PK_DOCU_Documentacion', 'DOCU_Nombre', 'DOCU_Ubicacion')
+                ->where('FK_TBL_Convenio_Id', $id)->get();
+            return Datatables::of($documento)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para el envio de datos para la tabla listar particioantes del convenio
     *@param int id
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
-    public function listarParticipantesConvenios($id)
+    public function listarParticipantesConvenios(Request $request,$id)
     {
-        $participante = Participantes::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_PTPT_Participantes', 'FK_TBL_Usuarios_Id')
-            ->with([
-                    'usuariosParticipantes'=>function ($query) {
-                    $query->select( 'PK_USER_Usuario','USER_FK_Users')->with([
-                    'datoUsuario'=>function ($query) {
-                                $query->select('id','name','lastname','identity_no');
-                            }
-                        ]);
-                    }
-            ])
-             
-            ->get();
-        return Datatables::of($participante)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $participante = Participantes::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_PTPT_Participantes', 'FK_TBL_Usuarios_Id')
+                ->with([
+                        'usuariosParticipantes'=>function ($query) {
+                        $query->select( 'PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                                    $query->select('id','name','lastname','identity_no');
+                                }
+                            ]);
+                        }
+                ])
+
+                ->get();
+            return Datatables::of($participante)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para el envio de datos para la tabla listar empresas particioantes del convenio
     *@param int id
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
-    public function listarEmpresasParticipantesConvenios($id)
+    public function listarEmpresasParticipantesConvenios(Request $request,$id)
     {
-        $EM_participante =  EmpresaParticipante::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_EMPT_Empresa_Participante','FK_TBL_Empresa_Id')
-            ->with([
-                    'patricipantesEmpresas'=>function ($query) {
-                    $query->select('PK_EMPS_Empresa','EMPS_Nombre_Empresa');
-                    }
-            ])
-            ->get();
-        return Datatables::of($EM_participante)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $participante =  EmpresaParticipante::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_EMPT_Empresa_Participante','FK_TBL_Empresa_Id')
+                ->with([
+                        'patricipantesEmpresas'=>function ($query) {
+                        $query->select('PK_EMPS_Empresa','EMPS_Nombre_Empresa');
+                        }
+                ])
+                ->get();
+            return Datatables::of($participante)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para agregar empresas particioantes del convenio
     *@param int id

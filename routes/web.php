@@ -244,6 +244,22 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'users'], function () {
         $controller = "\\App\\Container\\Users\\src\\Controllers\\";
+        Route::get('profile', [
+            'uses' => $controller . 'ProfileController@index',
+            'as' => 'users.profile'
+        ]);
+        Route::post('profile/update/{id}', [
+            'uses' => $controller . 'ProfileController@update',
+            'as' => 'users.profile.update'
+        ])->where(['id' => '[0-9]+']);
+        Route::post('profile/update/password/{id}', [
+            'uses' => $controller . 'ProfileController@updatePassword',
+            'as' => 'users.profile.updatePassword'
+        ])->where(['id' => '[0-9]+']);
+        Route::post('profile/update/avatar/{id}', [
+            'uses' => $controller . 'ProfileController@updateAvatar',
+            'as' => 'users.profile.update.avatar'
+        ])->where(['id' => '[0-9]+']);
         Route::get('index', [
             'uses' => $controller . 'UserController@index',
             'as' => 'users.index'

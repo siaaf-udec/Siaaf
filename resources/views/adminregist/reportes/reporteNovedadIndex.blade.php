@@ -21,8 +21,8 @@
                     <div class="form-body">
                         {!! Field::select(
                         'novedad',
-                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas'],null,
-                        ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
+                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
+                        ['required', 'label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0" align="center">

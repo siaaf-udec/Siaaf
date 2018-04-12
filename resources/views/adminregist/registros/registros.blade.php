@@ -2,30 +2,39 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Registrar Novedad'])
 
         <div class="row">
+            <div class="col-md-4 col-lg-offset-3">
+                <div class="alert alert-block alert-info fade in">
+                    <h4 class="alert-heading">Información!</h4>
+                    <p>Si no se encuentra registrado por favor presione el boton Registrarse o si tiene dudas presione
+                        el boton Ayuda donde lo llevara a una sesión de preguntas frecuentes: </p>
+                    <p>
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
+                                    class="fa fa-plus"></i>Registrarse</a>
+                        <a href="{{route('adminRegist.help.index.preguntas')}}"
+                           class="btn btn-simple dark btn-icon"><i
+                                    class="fa fa-plus"></i>Ayuda</a>
+                    </p>
+                </div>
+            </div>
             <div class="col-md-12">
 
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
 
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-left">
-                        {!! Field::text('number_document', old('number_document'), ['label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                        {!! Field::text('number_document', old('number_document'), ['required', 'max' => 13, 'min' => '5','label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-left">
                         {!! Field::select(
                         'novedad',
-                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas'],null,
-                        ['label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
+                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
+                        ['required', 'label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-center">
-                        <a href="javascript:;"
-                           class="btn btn-outline red button-cancel"><i
-                                    class="fa fa-angle-left"></i>
-                            Cancelar
-                        </a>
 
                         {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
                     </div>
@@ -48,11 +57,10 @@
             number_document: {
                 minlength: 5, number: true, maxlength: 13, required: true
             },
-            novedad: { required: true}
+            novedad: {required: true}
 
         };
-        var messages = {
-        };
+        var messages = {};
 
         var register = function () {
             return {
@@ -80,11 +88,10 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                if(response.title === 'false')
-                                {
+                                if (response.title === 'false') {
                                     UIToastr.init('error', '¡Lo sentimos!', 'El usuario no se encuentra registrado.');
                                     App.unblockUI('.portlet-form');
-                                }else {
+                                } else {
                                     $('#form_register')[0].reset(); //Limpiar formulario
                                     /*Configuracion de Select*/
                                     $.fn.select2.defaults.set("theme", "bootstrap");
@@ -125,6 +132,12 @@
             escapeMarkup: function (m) {
                 return m;
             }
+        });
+
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route_create = '{{ route('adminRegist.users.create') }}';
+            $(".content-ajax").load(route_create);
         });
 
         $('.button-cancel').on('click', function (e) {

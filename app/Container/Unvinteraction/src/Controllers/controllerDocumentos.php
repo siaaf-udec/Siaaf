@@ -33,108 +33,144 @@ use Validator;
 
 class controllerDocumentos extends Controller
 {
-    private $path='unvinteraction';
+    private $path='unvinteraction.documentos';
     /*funcion para subir el documento para los convenios
     *@param int id
     *@param \Illuminate\Http\Request
-    *@return
-    *
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function subirDocumentoConvenio(Request $request, $id)
     {
-        $carbon = new \Carbon\Carbon();
-        $ubicacion="unvinteraction/convenios/".$id;
-        $files = $request->file('file');
-        foreach ($files as $file) {
-            $url = Storage::disk('developer')->putFileAs($ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+        if ($request->isMethod('POST')) {
+            $carbon = new \Carbon\Carbon();
+            $ubicacion="unvinteraction/convenios/".$id;
+            $files = $request->file('file');
+            foreach ($files as $file) {
+                $url = Storage::disk('developer')->putFileAs($ubicacion, $file, $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+            }
+            $documento = new Documentacion();
+            $documento->DOCU_Nombre =$file->getClientOriginalName();
+            $documento->DOCU_Ubicacion = $ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
+            $documento->FK_TBL_Convenio_Id= $id;
+            $documento->save();
         }
-        $documento = new Documentacion();
-        $documento->DOCU_Nombre =$file->getClientOriginalName();
-        $documento->DOCU_Ubicacion = $ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
-        $documento->FK_TBL_Convenio_Id= $id;
-        $documento->save();
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );   
     }
     /*funcion para descargar el documento subido para el convenio
     *@param int id  
     *@param int idc
     *@param \Illuminate\Http\Request
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
-    *
+    *@return \Illuminate\Http\Response 
     */
     public function documentoDescarga(Request $request, $id, $idc)
     {
-        $documento = Documentacion::select('DOCU_Ubicacion')->where('PK_DOCU_Documentacion', $id)->get();
-        foreach ($documento as $row) {
-            if ($exists = Storage::disk('developer')->exists($row->DOCU_Ubicacion)) {
-                $Contents = Storage::disk('developer')->get($row->DOCU_Ubicacion);
-                return response()->download(storage_path()."/app/public/developer/".$row->DOCU_Ubicacion, $row->DOCU_Nombre);
-                return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
-            } else {
-                return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+        if ($request->isMethod('GET')) {
+            $documento = Documentacion::select('DOCU_Ubicacion')->where('PK_DOCU_Documentacion', $id)->get();
+            foreach ($documento as $row) {
+                if ($exists = Storage::disk('developer')->exists($row->DOCU_Ubicacion)) {
+                    $Contents = Storage::disk('developer')->get($row->DOCU_Ubicacion);
+                    return response()->download(storage_path()."/app/public/developer/".$row->DOCU_Ubicacion, $row->DOCU_Nombre);
+                } else {
+                    return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+                }
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para enviar a la vista principal de listar mis documentos
-    *@return \Illuminate\Http\Response
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function misDocumentos()
+    public function misDocumentos(Request $request)
     {
-        return view($this->path.'.Listar_Mis_Documentos');
+        if ($request->isMethod('GET')) {
+            return view($this->path.'.listarMisDocumentos');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para envio de los datos para la tabla de datos
-    *@param \Illuminate\Http\Request
-    *@return Yajra\DataTables\DataTable
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
+
     public function listarMisDocumentos(Request $request)
     {
-        $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
-            ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)->get();
-        return Datatables::of($documento)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
+                ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)->get();
+            return Datatables::of($documento)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para subir el documento para los Usuarios
-    *@param \Illuminate\Http\Request
-    *@return
+    * @param  \Illuminate\Http\Request
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse 
     */
     public function subirDocumentoUsuario(Request $request)
     {
-        $carbon = new \Carbon\Carbon();
-        $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
-        $files = $request->file('file');
-        foreach ($files as $file) {
-            $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $carbon = new \Carbon\Carbon();
+            $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+            $files = $request->file('file');
+            foreach ($files as $file) {
+                $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+            }
+            $doc = new DocumentacionExtra();
+            $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
+            $doc->DCET_Ubicacion = $ubicacion ;
+            $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
+            $doc->save();
+            
         }
-        $doc = new DocumentacionExtra();
-        $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-        $doc->DCET_Ubicacion = $ubicacion ;
-        $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
-        $doc->save();
-        return $request->get('name');
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para descargar el documento subido para el usuario
     *@param int id
-    *@param \Illuminate\Http\Request
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    *@param  \Illuminate\Http\Request
+    *@param  \Illuminate\Http\Request
+    *@return \App\Container\Overall\Src\Facades\AjaxResponse 
     */
     public function documentoDescargaUsuario(Request $request, $id)
     {
-        $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
-        $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')
-            ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)
-            ->where('PK_DCET_Documentacion_Extra', $id)->get();
-        foreach ($documento as $row) {
-            if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion."/".$row->DCET_Nombre)) {
-                return response()
-                    ->download(storage_path()."/app/public/developer/".$row->DCET_Ubicacion."/".$row->DCET_Nombre,$row->DCET_Nombre);
-                return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
-            } else {
-                return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+        if ($request->isMethod('GET')) {
+            $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+            $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')
+                ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)
+                ->where('PK_DCET_Documentacion_Extra', $id)->get();
+            foreach ($documento as $row) {
+                if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion."/".$row->DCET_Nombre)) {
+                    return response()
+                        ->download(storage_path()."/app/public/developer/".$row->DCET_Ubicacion."/".$row->DCET_Nombre,$row->DCET_Nombre);
+                    return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
+                } else {
+                    return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+                }
             }
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*funcion para descargar el documento subido para el usuario
     *@param int id
-    *@param \Illuminate\Http\Request
-    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
     public function documentoReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
     {
@@ -157,7 +193,7 @@ class controllerDocumentos extends Controller
                 }
             ])
             ->get();
-            return view($this->path.'.ReportePDF', [
+            return view($this->path.'.reportePDF', [
                 'evaluacion'=>$evaluacion,
                 'date'=>$date,
                 'time'=>$time,
@@ -178,7 +214,7 @@ class controllerDocumentos extends Controller
      * @param   int id
      * @param   date fecha_primera
      * @param   date fecha_segunda
-     *
+     * @param  \Illuminate\Http\Request
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function descargarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
@@ -203,7 +239,7 @@ class controllerDocumentos extends Controller
                 }
             ])
             ->get();
-                return SnappyPdf::loadView($this->path.'.ReportePDF', [
+                return SnappyPdf::loadView($this->path.'.reportePDF', [
                     'evaluacion'=>$evaluacion,
                     'date'=>$date,
                     'time'=>$time,
@@ -212,7 +248,8 @@ class controllerDocumentos extends Controller
                     'fecha_segunda'=>$fecha_segunda
                 ])->download('ReporteEvaluaciones.pdf');
             } catch (Exception $e) {
-                return $e."error";
+                $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
+                return view('unvinteraction.convenios.listarConvenios', compact('sede'));
             }
         }
         return AjaxResponse::fail(
@@ -221,33 +258,37 @@ class controllerDocumentos extends Controller
         );
     }
     /*
-     * Descarga de reporte de evaluaciones filtradas por fechas
-     *
-	 * @param  \Illuminate\Http\Request 
+     * vista para listar los documentos de un suario
      * @param   int id
-     * @param   date fecha_primera
-     * @param   date fecha_segunda
-     *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
      */
     public function documentoUsuario(Request $request,$id){
-        
-        return view($this->path.'.Listar_Documentos_Usuarios',compact('id'));
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path.'.listarDocumentosUsuarios',compact('id'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /*
-     * Descarga de reporte de evaluaciones filtradas por fechas
+     * listar documentos de un usuario en la tabla
      *
 	 * @param  \Illuminate\Http\Request 
      * @param   int id
-     * @param   date fecha_primera
-     * @param   date fecha_segunda
-     *
-     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return  \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
      */
     public function listarDocumentoUsuario(Request $request,$id){
-        $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
-            ->where('FK_TBL_Usuarios_Id', $id)->get();
-        return Datatables::of($documento)->addIndexColumn()->make(true);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $documento = DocumentacionExtra::select('PK_DCET_Documentacion_Extra', 'DCET_Ubicacion', 'DCET_Nombre')
+                ->where('FK_TBL_Usuarios_Id', $id)->get();
+            return Datatables::of($documento)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
   
 }

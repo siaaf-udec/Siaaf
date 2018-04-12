@@ -113,11 +113,14 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Historial de Acceso'])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
+                @permission('ADMINREGIST_REPORT_REGIST')
                 <div class="col-md-12">
                     <div class="actions">
-
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon reporte"><i
+                                    class="fa fa-chevron-circle-right"></i>Generar Reporte</a>
                     </div>
                 </div>
+                @endpermission
                 <div class="clearfix"></div>
                 <br>
             </div>
@@ -226,16 +229,23 @@
             table = $('#listaUsuarios');
             url = "{{ route('adminRegist.registros.data')}}";
             columns = [
-                {data: 'id_registro', name: 'id_registro'},
+                {data: 'FK_RE_Registro', name: 'FK_RE_Registro'},
                 {data: 'registro.username', name: 'registro.username'},
                 {data: 'registro.lastname', name: 'registro.lastname'},
                 {data: 'registro.type_user', name: 'registro.type_user'},
                 {data: 'registro.place', name: 'registro.place'},
-                {data: 'novedad.nombre_novedad', name: 'novedad.nombre_novedad'},
+                {data: 'novedad.NOV_NombreNovedad', name: 'novedad.NOV_NombreNovedad'},
                 {data: 'created_at', name: 'created_at'},
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
+            $(".reporte").on('click', function (e) {
+                e.preventDefault();
+                $.ajax({}).done(function () {
+                    window.open('{{ route('adminRegist.report.reportGeneral') }}', '_blank');
+                });
+            });
         });
     </script>
 @endpush

@@ -1,10 +1,10 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Asignar Prestamo'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Acciones Solicitud Prestamo'])
         <div class="row">
             <div class="col-md-12">
             {{-- BEGIN HTML MODAL CREATE --}}
             <!-- responsive -->
-                <div class="modal fade" data-width="760" id="modal-recibir-kit" tabindex="-1">
+                <div class="modal fade" data-width="360" id="modal-recibir-kit" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                         </button>
@@ -17,7 +17,7 @@
                     <div class="modal-body">
                         {!! Form::open(['id' => 'from_kit_recibir', 'class' => '', 'url' => '/forms']) !!}
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <p>
                                     {!! Field::textarea('elementosKit',
                                         ['label' => 'Elementos Del Kit', 'required', 'auto' => 'off', 'max' => '255', "rows" => '4'],
@@ -32,7 +32,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer col-md-offset-3">
                             {!! Form::submit('Recibir', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
@@ -103,17 +103,11 @@
                         {!! Form::open(['id' => 'from_observation', 'class' => '', 'url' => '/forms']) !!}
                         <div class="row">
                             <div class="col-md-12">
-                                {{--<p>
-                                    {!! Field::text('observacionGeneral',
-                                    ['label' => 'Observacion:', 'max' => '40', 'min' => '2', 'auto' => 'off','tabindex'=>'2'],
-                                    ['help' => 'Observacion', 'icon' => 'fa fa-user'])
-                                    !!}
-
-                                </p>--}}
                                 {!! Field::textarea(
-                            'observacionGeneral',
-                            ['label' => 'Observación', 'required', 'auto' => 'off', 'max' => '255', "rows" => '3'],
-                            ['help' => 'Escribe una observación.', 'icon' => 'fa fa-quote-right']) !!}
+                                    'observacionGeneral',
+                                    ['label' => 'Observación', 'required', 'auto' => 'off', 'max' => '255', "rows" => '3'],
+                                    ['help' => 'Escribe una observación.', 'icon' => 'fa fa-quote-right'])
+                                !!}
 
                             </div>
                         </div>
@@ -127,7 +121,6 @@
                 </div>
                 {{-- END HTML MODAL CREATE--}}
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -169,48 +162,76 @@
                     @php ++$contador @endphp
                     <div class="row fila_articulo" data-id_articulo={{$articulos['id']}}>
                         @if($articulos['consultaArticulos'] == null)
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 {!! Field::text("textObser".$articulos['id'],$articulos['consultaKitArticulo']['KIT_Nombre'],
-                                     ['disabled','label' => 'Tipo Articulo', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
-                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
+                                     ['disabled','label' => 'Nombre Kit', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
+                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-qrcode '])
+                                !!}
+                            </div>
+                            <div class="col-md-2">
+                                {!! Field::text("codigoKit".$articulos['id'],$articulos['consultaKitArticulo']['KIT_Codigo'],
+                                     ['disabled','label' => 'Codigo Kit', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
+                                     ['help' => 'Codigo del Kit.', 'icon' => 'fa fa-key'])
+                                !!}
+                            </div>
+                            <div class="col-md-2">
+                                {!! Field::text('tiempoArticulo'.$articulos['id'],$articulos['tiemporestante'],
+                                     ['disabled','label' => 'Tiempo Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
+                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-hourglass-half '])
+                                !!}
+                            </div>
+                            <div class="col-md-6">
+                                {!! Field::text('PRT_Observacion_Entrega'.$articulos['id'],$articulos['PRT_Observacion_Entrega'],
+                                     ['disabled','label' => 'Observacion Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
+                                     ['help' => 'Escribe una descripción del Articulo.', 'icon' => 'fa fa-pencil'])
                                 !!}
                             </div>
                             @else
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 {!! Field::text("textObser".$articulos['id'],$articulos['consultaArticulos']['consultaTipoArticulo']['TPART_Nombre'],
-                                     ['disabled','label' => 'Tipo Articulo', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
-                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
+                                     ['disabled','label' => 'Nombre Articulo', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
+                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-desktop '])
+                                !!}
+                            </div>
+                            <div class="col-md-2">
+                                {!! Field::text("codigoArticulo".$articulos['id'],$articulos['consultaArticulos']['ART_Codigo'],
+                                     ['disabled','label' => 'Codigo Articulo', 'required', 'auto' => 'off', 'max' => '255', 'disabled'],
+                                     ['help' => 'Codigo del Articulo.', 'icon' => 'fa fa-key'])
+                                !!}
+                            </div>
+                            <div class="col-md-2">
+                                {!! Field::text('tiempoArticulo'.$articulos['id'],$articulos['tiemporestante'],
+                                     ['disabled','label' => 'Tiempo Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
+                                     ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-hourglass-half'])
+                                !!}
+                            </div>
+                            <div class="col-md-3">
+                                {!! Field::text('PRT_Observacion_Entrega'.$articulos['id'],$articulos['PRT_Observacion_Entrega'],
+                                     ['disabled','label' => 'Observacion Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
+                                     ['help' => 'Escribe una descripción del Articulo.', 'icon' => 'fa fa-pencil'])
+                                !!}
+                            </div>
+                            <div class="col-md-3">
+                                {!! Field::text('PRT_Observacion_Recibe'.$articulos['id'],
+                                     ['label' => 'Observacion Recibe', 'required', 'auto' => 'off', 'max' => '255'],
+                                     ['help' => 'Escribe una descripción del Articulo.', 'icon' => 'fa fa-pencil'])
                                 !!}
                             </div>
                         @endif
-                        <div class="col-md-3">
-                            {!! Field::text('tiempoArticulo'.$articulos['id'],$articulos['tiemporestante'],
-                                 ['disabled','label' => 'Horas Restantes Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
-                                 ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
-                            !!}
-                        </div>
-                        <div class="col-md-3">
-                            {!! Field::text('PRT_Observacion_Entrega'.$articulos['id'],$articulos['PRT_Observacion_Entrega'],
-                                 ['disabled','label' => 'Observacion Entrega', 'required', 'auto' => 'off', 'max' => '255','disabled'],
-                                 ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
-                            !!}
-                        </div>
-                        <div class="col-md-3">
-                            {!! Field::text('PRT_Observacion_Recibe'.$articulos['id'],
-                                 ['label' => 'Observacion Recibe', 'required', 'auto' => 'off', 'max' => '255'],
-                                 ['help' => 'Escribe una descripción de Articulo.', 'icon' => 'fa fa-quote-right'])
-                            !!}
-                        </div>
                         <div class="row">
-                            <div class="col-md-8">
-                            </div>
-                            <div class="col-md-4">
+                                @if($articulos['sancion']){{--No se presenta sacnicon por entrega --}}
+                                <div class="col-md-offset-1" >
+                                {!! Form::button('Aplicar Sancion', ['class' => 'btn btn-danger aplicar_sancion','data-id_articulo'=>$articulos['PRT_FK_Funcionario_id']]) !!}
+                                {!! Form::button('Aumentar Tiempo', ['class' => 'btn btn-warning aumentar_tiempo','data-id_articulo'=>$articulos['id']]) !!}
+                                @else
+                                <div class="col-md-offset-1" >
+                                    {!! Form::button('Aplicar Sancion', ['class' => 'btn btn-warning aplicar_sancion','data-id_articulo'=>$articulos['PRT_FK_Funcionario_id']]) !!}
+                                @endif
                                 @if($articulos['consultaArticulos'] == null)
                                     {!! Form::button('Ver Kit', ['class' => 'btn btn-success  recibir_kit','data-id_kit'=>$articulos['id']]) !!}
                                     @else
                                     {!! Form::button('Recibir Articulo', ['class' => 'btn btn-success  recibir_articulo','data-id_articulo'=>$articulos['id']]) !!}
                                 @endif
-                                {!! Form::button('Aumentar Tiempo', ['class' => 'btn btn-warning aumentar_tiempo','data-id_articulo'=>$articulos['id']]) !!}
                             </div>
                         </div>
                     </div>
@@ -249,20 +270,32 @@
         ComponentsSelect2.init();
         ComponentsBootstrapMaxlength.init();
         $('#contentFormularioPrestamos').on('click', '.recibir_articulo', function(){
-            idArticulo=$(this).data('id_articulo');
-            idVal='#PRT_Observacion_Recibe'+idArticulo;
-            observation=$(idVal).val();
-            $(".fila_articulo[data-id_articulo='"+$(this).data('id_articulo')+"']").html('');
-            routeupdate = '{{ route('updatePrestamo') }}'+ '/'+ idArticulo+'/'+observation;
-            $.get( routeupdate, function(){});
-            co = co-1;
-            if(co==0){
-                var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
-                $(".content-ajax").load(route);
+            idArticulo = $(this).data('id_articulo');//id del prestamo
+            idVal = '#PRT_Observacion_Recibe'+idArticulo;
+            observation = $(idVal).val();
+            if(observation == ''){
+                console.log(true)
+                swal(
+                    'Oops...',
+                    'Debe agregar una observacion para poder recibir el articulo',
+                    'warning'
+                )
+
+            }else{
+                console.log(false)
+                $(".fila_articulo[data-id_articulo='"+$(this).data('id_articulo')+"']").html('');
+                routeupdate = '{{ route('updatePrestamo') }}'+ '/'+ idArticulo+'/'+observation;
+                $.get( routeupdate, function(){});
+                co = co-1;
+                if(co==0){
+                    var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
+                    $(".content-ajax").load(route);
+                }
             }
+
         });
         $('#contentFormularioPrestamos').on('click', '.recibir_kit', function(){
-            kitId=$(this).data('id_kit');
+            kitId = $(this).data('id_kit');
             var routeArticulos = '{{ route('listarArticulosKitEntregaAdministrador') }}' +'/' + kitId ;
             $('#elementosKit').empty();
             $.ajax({
@@ -278,10 +311,10 @@
                             $('#elementosKit').append(' - '+value.consulta_tipo_articulo.TPART_Nombre);
                             $('#elementosKit').append('\n');
                         });
+                        $('#modal-recibir-kit').modal('toggle');
                     }
                 }
             });
-            $('#modal-recibir-kit').modal('toggle');
 
         });
         $('#contentFormularioPrestamos').on('click', '.aumentar_tiempo', function(){
@@ -292,13 +325,14 @@
             $.get( routeupdate, function(info){
                 idVal='#textObser'+idPrestamo;
                 var tipoArticulo = $(idVal).val();
-                var horas=5;
+               // var horas=5;
+                console.log(info.data);
                 if(info.data<=0){
                     $('#modal-advertencia-tiempo').modal('toggle');
                 }else{
                     idPrestamoSolicitud = idPrestamo;
                     $('input[name="tipoArticulo"]').val(tipoArticulo);
-                    for(i=1;i<=horas;i++){
+                    for(i=1;i<=info.data;i++){
                         var nombreTiempo=i+' Hora';
                         $('#tiempoSelect').append(new Option(nombreTiempo,i));
                     }
@@ -375,6 +409,7 @@
                                 co = co-1;
                                 $('#from_kit_recibir')[0].reset();
                                 $('#modal-recibir-kit').modal('hide');
+                                $(".fila_articulo[data-id_articulo='"+kitId+"']").html('');
                                 if( co == 0 ){
                                     var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
                                     $(".content-ajax").load(route);

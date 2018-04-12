@@ -31,17 +31,7 @@ class AdministradorGestionController extends Controller
     //FUNCION VISTA PRINCIPAL GESTION ADMINISTRADOR
     public function index()
     {
-        $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
-        //cargar los articulos disponibles en la vista ajax
-        $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-            $query->where('FK_ART_Estado_id', '=', 1);
-        })->pluck('TPART_Nombre', 'id');
-        return view('audiovisuals.administrador.prestamoArticulo',
-            [
-                'tipoArticulos' => $tipo->toArray(),
-                'carrerasUdec' => $carreras->toArray(),
-            ]
-        );
+        return view('audiovisuals.administrador.prestamoArticulo');
     }
     public function reportes()
     {
@@ -137,7 +127,7 @@ class AdministradorGestionController extends Controller
             $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
             //cargar los articulos disponibles en la vista ajax
             $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-                $query->where('FK_ART_Estado_id', '=', 1);
+                $query->where('FK_ART_Estado_id', '=', 1)->orWhere('FK_ART_Estado_id', '=', 4);
             })->pluck('TPART_Nombre', 'id');
             return view('audiovisuals.administrador.contenidoAjax.prestamoArticuloAjax',
                 [
@@ -160,6 +150,10 @@ class AdministradorGestionController extends Controller
                 'programas' => $carreras->toArray(),
             ]
         );
+    }
+    public function indexPrestamosFinalizados()
+    {
+        return view('audiovisuals.administrador.prestamosFinalizados');
     }
     public function indexTablaPrestamos2(Request $request)
     {
@@ -188,7 +182,7 @@ class AdministradorGestionController extends Controller
     public function indexEntregaPrestamos(Request $request,$idNumorden){
         if ($request->ajax() && $request->isMethod('GET')) {
             $prestamos = Solicitudes::with(['consultaArticulos'=> function($query){
-                return $query->select('id','FK_ART_Tipo_id')
+                return $query->select('id','FK_ART_Tipo_id','ART_Codigo')
                     ->with([
                         'consultaTipoArticulo'=>function($query){
                             return $query->select(
@@ -200,16 +194,16 @@ class AdministradorGestionController extends Controller
                 ['PRT_FK_Tipo_Solicitud','=',2]//prestamos
             ])->get();
             $array2 = array();
-            foreach ($prestamos as $player) {
-                $dtF= new Carbon();//esto de carbon para que lo est ausando
-                $dtF=Carbon::parse($player['PRT_Fecha_Fin']);
-                $dtI = new Carbon();
-                $dtI = Carbon::now();
-                $difDt= $dtF->diffInHours($dtI);
-                if($difDt==0){
-                    $difDt=$dtF->diffInMinutes($dtI);
-                }
-                $array = array_add($player, 'tiemporestante', $difDt);
+            foreach ($prestamos as $fila) {
+                $fechaEntrega = new Carbon();//esto de carbon para que lo est ausando
+                $fechaEntrega = Carbon::parse($fila['PRT_Fecha_Fin']);
+                $fechaActual = new Carbon();
+                $fechaActual = Carbon::now();
+                $diferenciaSegundos = $fechaEntrega->diffInSeconds($fechaActual);
+                $diferenciaSegundos = floor($diferenciaSegundos/3600).gmdate(":i:s",$diferenciaSegundos % 3600);
+
+                $array = array_add($fila, 'tiemporestante', $diferenciaSegundos);
+                $array = array_add($array, 'sancion',($fechaEntrega > $fechaActual));
                 array_push($array2,$array);
             }
             return view('audiovisuals.administrador.contenidoAjax.ajaxEntregarPrestamo',[
@@ -227,19 +221,23 @@ class AdministradorGestionController extends Controller
         $user = Auth::user();
         $id = $user->id;
         $idArt = Solicitudes::select('PRT_FK_Articulos_id')->where('id',"=",$idSolicitud)->get();
-        Solicitudes::where('id',"=",$idSolicitud)
+        $solitud = Solicitudes::where('id',"=",$idSolicitud)
             ->update( [
                 'PRT_Observacion_Recibe' => $dataObservation,
                 'PRT_FK_Administrador_Recibe_id' => $id,
                 'PRT_FK_Estado' => 3
+                //entregado-faltaria agregar un finalizado en la tabla estados
             ]);
+        $solicitudEliminar = Solicitudes::find($idSolicitud);
+        $solicitudEliminar -> delete();
+        //$solitud->delete();//finalizar o elimnar la solicitud porque ya ha sido entregada
         Articulo::where('id','=',$idArt[0]['PRT_FK_Articulos_id'])->update(['FK_ART_Estado_id'=>4]);
     }
     public function updatePrestamoGeneral(Request $request,$idOrden){
         $user = Auth::user();
         $id = $user->id;
         if ($request->ajax() && $request->isMethod('POST')) {
-            Solicitudes::where([
+            $solicitud = Solicitudes::where([
                     ['PRT_Num_Orden',"=",$idOrden],
                     ['PRT_FK_Tipo_Solicitud',"=",2]
                     ]
@@ -249,6 +247,8 @@ class AdministradorGestionController extends Controller
                     'PRT_FK_Administrador_Recibe_id' => $id,
                     'PRT_FK_Estado' => 3
                 ]);
+
+            //eliminar la solicitud con softdelete
             $consulta = Solicitudes::where('PRT_Num_Orden',"=",$idOrden)->get();
             foreach ($consulta as $row){
                 if($row['PRT_FK_Articulos_id'] == 0){
@@ -260,9 +260,13 @@ class AdministradorGestionController extends Controller
                     Articulo::where('id','=',$row['PRT_FK_Articulos_id'])
                         ->update(['FK_ART_Estado_id'=>4]);
                 }
+                //////eliminar todos los de esa orden
 
             }
-
+            Solicitudes::where([
+                ['PRT_Num_Orden',"=",$idOrden],
+                ['PRT_FK_Tipo_Solicitud',"=",2]
+            ])->delete();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Devolución Correcta.'
@@ -285,9 +289,15 @@ class AdministradorGestionController extends Controller
                     'PRT_FK_Estado' => 3
                 ]);
             $kitId = Solicitudes::select('PRT_FK_Kits_id')->where('id','=',$idSolicitud)->get();
+
+            $solicitudEliminar = Solicitudes::find($idSolicitud);
+            $solicitudEliminar -> delete();
+
              Kit::where('id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['KIT_FK_Estado_id'=>4]);
              Articulo::where('FK_ART_Kit_id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['FK_ART_Estado_id'=>4]);
-            return AjaxResponse::success(
+
+
+             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Devolución Correcta.'
             );
@@ -300,12 +310,42 @@ class AdministradorGestionController extends Controller
     }
     public function moreTimeSolicitud(Request $request,$idPrestamo,$numHoras){
         if ($request->ajax() && $request->isMethod('GET')) {
-            $prestamos = Solicitudes::with('consultaTipoArticulo')
-                ->where('id','=',$idPrestamo)->get();
-            $idTiempoAsignado=$prestamos[0]['consultaTipoArticulo']['TPART_Tiempo'];
-            $tiempos = Validaciones::select('VAL_PRE_Valor')
-                ->where('id','=',$idTiempoAsignado)->get();
-            $horasDisponibles=$idTiempoAsignado-$numHoras;
+            $prestamos = Solicitudes::where('id','=',$idPrestamo)->get();
+            $identificacionArticulo = $prestamos[0]['PRT_FK_Articulos_id'];
+            if( $identificacionArticulo != 0){
+                $articuloTiempo = Articulo::with(
+                    ['consultaTipoArticulo'=> function($query){
+                        return $query->select('TPART_Tiempo','id')
+                            ->with(['consultarTiempoAsignado'=>function($query){
+                                return $query->select(
+                                    'id','VAL_PRE_Valor' );
+                            }
+                            ]);
+                    }])->where('id','=',$identificacionArticulo)->get();
+                $idTiempoAsignado=$articuloTiempo[0]['consultaTipoArticulo']['consultarTiempoAsignado']['VAL_PRE_Valor'];
+            }else{
+                $identificacionKit = $prestamos[0]['PRT_FK_Kits_id'];
+                $articuloTiempo = Kit::with(
+                    ['consultarTiempoAsignadoKit'])
+                    ->where('id','=',$identificacionKit)->get();
+                $idTiempoAsignado=$articuloTiempo[0]['consultarTiempoAsignadoKit']['VAL_PRE_Valor'];
+            }
+            $fechaActual = new Carbon();
+            $fechaActual = Carbon::now();
+            $fechaFin = new Carbon();
+            $fechaFin = Carbon::parse($prestamos[0]['PRT_Fecha_Fin']);
+            $diferenciaTimpoActual = $fechaActual->diffInSeconds($fechaFin);
+            $diferenciaTimpoActual = $diferenciaTimpoActual/3600;
+            if(is_int( $diferenciaTimpoActual)!=true){
+                //se suma uno porque si tiene minutos, se debe completar como si fuera una hora
+                //1:30
+                //articulo 3 tiempo limite
+                //1:30 + 1 =2 :30 ->quitamos los decimales nos queda 2 - 3(tiempo limite) =1
+                //maximo le podemos agregar una hora para completar la regla 2 : 30 si fuera el caso
+                $horasDisponibles = $idTiempoAsignado - intval($diferenciaTimpoActual+1);
+            }else{
+                $horasDisponibles = $idTiempoAsignado -  $diferenciaTimpoActual;
+            }
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos cargados correctamenteasdasdasd.',
@@ -321,8 +361,10 @@ class AdministradorGestionController extends Controller
     }
     public function moreTimeUpdate(Request $request,$idPrestamo){
         if ($request->ajax() && $request->isMethod('POST')) {
+
             $prestamos = Solicitudes::with('consultaTipoArticulo')
                 ->where('id','=',$idPrestamo)->get();
+
             $dtF=Carbon::parse($prestamos[0]['PRT_Fecha_Fin']);
             $dtF->addHour($request->get('hourAdd'));
             Solicitudes::where([
@@ -352,9 +394,11 @@ class AdministradorGestionController extends Controller
             );
             $cantidadArticulos = array('1' => '1', '2' => '2', '3' => '3');
             $carreras = Programas::all()->pluck('PRO_Nombre', 'id');
+
             $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-                $query->where('FK_ART_Estado_id', '=', 1);
+                $query->where('FK_ART_Estado_id', '=', 1)->orWhere('FK_ART_Estado_id', '=', 4);
             })->pluck('TPART_Nombre', 'id');;
+
             return view('audiovisuals.funcionario.reservaArticulo', [
                 'tipoArticulos' => $tipo->toArray(),
                 'numeroArticulos' => $cantidadArticulos,
@@ -372,6 +416,7 @@ class AdministradorGestionController extends Controller
     public function reservaIndex(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+
             return view('audiovisuals.administrador.contenidoAjax.ajaxReservas');
         }
         else{
@@ -382,37 +427,140 @@ class AdministradorGestionController extends Controller
         }
     }
     //FUNCION VISTA AJAX FORM REPEAT ADMINISTRADOR
-    public function formRepeatAjaxindex(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
-                $query->where('FK_ART_Estado_id', '=', 4);
-            })->pluck('TPART_Nombre', 'id');
-            $kits = Kit::select('id','KIT_Nombre')->where([
-                ['KIT_Nombre','!=','Ninguno'],
-                ['KIT_FK_Estado_id','=',4]
-                ]
-            )->pluck('KIT_Nombre', 'id');
-            $validaciones= Validaciones::all();
-            return view('audiovisuals.administrador.contenidoAjax.prestamoFormRepeat', [
-                'tipoArticulos' => $tipo->toArray(),
-                'kits' => $kits->toArray(),
-                'validaciones' =>$validaciones
-            ]);
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
+        public function formRepeatAjaxindex(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                ////////////////////////////////////////////////
+                //generará errror si no hay datos en las tablas
+                /////////////////////////////////////////////////
+                $validaciones = Validaciones::where('id','=',7)->orwhere('id','=',8)->get();
+                return view('audiovisuals.administrador.contenidoAjax.prestamoFormRepeat',
+                    ['validaciones'=>$validaciones]
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
         }
-    }
-    //listarTiempoArticulo
-    public function listarTiempoArticulo(Request $request, $idFuncionario)
+        public function cargarKitsSelect(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $kits = Kit::has('consultaArticulos')->where('KIT_Nombre','!=','Ninguno')
+                    ->where(function ($query){
+                        $query->where('KIT_FK_Estado_id', '=', 1)
+                            ->orWhere('KIT_FK_Estado_id', '=', 4);
+                    })->get();
+                return AjaxResponse::success(
+                    '¡datos consultados !',
+                    'correctamente.',
+                    $kits
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function actualizarKit(Request $request,$idKit)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $kit = Kit::find($idKit);
+                $kit->KIT_FK_Estado_id = 2;//prestado
+                $kit->save();
+                Articulo::where('FK_ART_Kit_id','=',$idKit)->update(['FK_ART_Estado_id' => 2]);//prestado
+                return AjaxResponse::success(
+                    '¡datos modificados !',
+                    'correctamente.'
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function removerKit(Request $request,$idKit)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $kit = Kit::find($idKit);
+                $kit->KIT_FK_Estado_id = 4;
+                $kit->save();
+                Articulo::where('FK_ART_Kit_id','=',$idKit)->update(['FK_ART_Estado_id' => 4]);
+                return AjaxResponse::success(
+                    '¡datos modificados !',
+                    'correctamente.'
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function cargarArticuloSelect(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $tiposArticulo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
+                    $query->where('FK_ART_Kit_id', '=', 1)->where(function ($query) {
+                        $query->where('FK_ART_Estado_id', '=', 1)
+                            ->orWhere('FK_ART_Estado_id', '=', 4);
+                    });
+                })->get();
+                return AjaxResponse::success(
+                    '¡datos consultados !',
+                    'correctamente.',
+                    $tiposArticulo
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function actualizarArticulo(Request $request,$idArticulo)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $articulo = Articulo::find($idArticulo);
+                $articulo->FK_ART_Estado_id= 2;
+                $articulo->save();
+                return AjaxResponse::success(
+                    '¡datos modificados !',
+                    'correctamente.'
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function removerArticulo(Request $request,$idArticulo)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $articulo = Articulo::find($idArticulo);
+                $articulo->FK_ART_Estado_id = 4;
+                $articulo->save();
+                return AjaxResponse::success(
+                    '¡datos modificados !',
+                    'correctamente.'
+                );
+            } else {
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+            }
+        }
+        public function listarTiempoKit(Request $request, $idKit)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $tiempos = Validaciones::whereHas('consultaTimepoArticulo',
-                function ($query) use ($idFuncionario) {
-                    $query->where('id', '=', $idFuncionario);
+            $tiempos = Validaciones::whereHas('consultaTimepoKit',
+                function ($query) use ($idKit) {
+                    $query->where('id', '=', $idKit);
                 })->get();
             return AjaxResponse::success(
                 '¡datos consultados !',
@@ -426,11 +574,34 @@ class AdministradorGestionController extends Controller
             );
         }
     }
+        public function listarTiempoArticulo(Request $request, $idArticulo)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $tiempos = Validaciones::whereHas('consultaTimepoArticulo',
+                function ($query) use ($idArticulo) {
+                    $query->where('id', '=', $idArticulo);
+                })->get();
+            return AjaxResponse::success(
+                '¡datos consultados !',
+                'correctamente.',
+                $tiempos
+            );
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+    //listarTiempoArticulo
+
     //FUNCION VALIRDAR FUNCIONARIO
     public function validarFuncionario(Request $request, $idFuncionarioA)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $idFA = (int)$idFuncionarioA;
+            $numeroDeprestamosMaximos = Validaciones::find(5);
+            //
             $infoFuncionario = User::with('audiovisual')
                 ->where('identity_no', '=', $idFA)->get()->first();
             if ($infoFuncionario->audiovisual != null) {
@@ -439,6 +610,28 @@ class AdministradorGestionController extends Controller
                 )->get()->first();
                 $infoFuncionario = array_add($infoFuncionario, 'programa', $idPrograma->PRO_Nombre);
                 $infoFuncionario = array_add($infoFuncionario, 'id_programa', $idPrograma->id);
+                $infoFuncionario->id;
+
+                $funcionarios = Solicitudes::where([
+                    ['PRT_FK_Tipo_Solicitud','=',2],
+                    ['PRT_FK_Funcionario_id','=',$infoFuncionario->id],
+                    ['PRT_FK_Estado','!=',3]
+
+                ])->get();//2=prestamos
+                $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
+                //$array = array();
+                $contador = 0;
+                foreach ($funcionarios as $le) {
+                    //array_push($array, $le[0]);
+                    $contador++;
+                }
+                if($contador >= $numeroDeprestamosMaximos->VAL_PRE_Valor){
+                    $infoFuncionario = array_add($infoFuncionario, 'numeroPrestamos', true);
+                    $infoFuncionario = array_add($infoFuncionario, 'numeroPrestamosMaximos', $numeroDeprestamosMaximos->VAL_PRE_Valor);
+                }else{
+                    $infoFuncionario = array_add($infoFuncionario, 'numeroPrestamos', false);
+                }
+
             }
             return AjaxResponse::success(
                 '¡datos consultados !',
@@ -491,7 +684,7 @@ class AdministradorGestionController extends Controller
             $solicitudes = Solicitudes::with(
                 ['consultaTipoArticulo', 'consultaUsuarioAudiovisuales', 'conultarUsuarioDeveloper']
             )->where([
-                ['PRT_FK_Estado', '!=', '3'],// entregado
+                //['PRT_FK_Estado', '!=', '3'],// entregado
                 ['PRT_FK_Tipo_Solicitud', '=', '1']//reserva
             ])->get();
             $solicitudes =($solicitudes)->groupBy('PRT_Num_Orden');
@@ -689,6 +882,40 @@ class AdministradorGestionController extends Controller
             );
         }
     }
+    public function dataListarFuncionariosSolicitudesFinalizadas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $funcionarios = Solicitudes::onlyTrashed()
+                ->with([
+                        'consultaUsuarioAudiovisuales'=> function($query){
+                            return $query->select('id','USER_FK_User')
+                                ->with(['user'=>function($query){
+                                        return $query->select(
+                                            'id','name','lastname','email','identity_type',
+                                            'identity_no'
+                                        );
+                                    }
+                                    ]
+                                );
+                        },'conultarAdministradorEntrega','conultarAdministradorRecibe'
+                    ]
+                )->where('PRT_FK_Tipo_Solicitud','=',2)
+                ->get();//2=prestamos
+            $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
+            $array = array();
+            foreach ($funcionarios as $le) {
+                array_push($array, $le[0]);
+            }
+            return DataTables::of($array)
+                ->addIndexColumn()
+                ->make(true);
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
     public function storeProgramaAdmin(Request $request){
         if ($request->ajax() && $request->isMethod('POST')) {
             UsuarioAudiovisuales::create([
@@ -730,17 +957,24 @@ class AdministradorGestionController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             if ($articulos == 1) {
                 $tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
+                    $query->where('FK_ART_Kit_id', '=', 1)->where(function ($query) {
+                        $query->where('FK_ART_Estado_id', '=', 1)
+                            ->orWhere('FK_ART_Estado_id', '=', 4);
+                    });
+                })->get();
+                /*$tipo = TipoArticulo::whereHas('consultarArticulos', function ($query) {
                     $query->where([
                         ['FK_ART_Estado_id', '=', 1],
                         ['FK_ART_Kit_id', '=', 1],
                     ]);
-                })->get();
+                })->get();*/
 
             } else {
-                $tipo = Kit::where([
-                    ['KIT_FK_Estado_id', '=', 1],
-                    ['id', '!=', 1],
-                ])->get();
+                $tipo = Kit::where('id', '!=', 1)
+                ->where(function ($query){
+                    $query->where('KIT_FK_Estado_id', '=', 1)
+                        ->orWhere('KIT_FK_Estado_id', '=', 4);
+                })->get();
             }
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -851,44 +1085,35 @@ class AdministradorGestionController extends Controller
             $user = Auth::user();
             $adminId = $user->id;
             foreach ($infoRepeat as $prestamo) {
-                $bandera=false;
-                $idArticulo = 0;
                 if($prestamo->kit == true){
+                    $this->consultarKit($prestamo->tipoArticulosSelect);
                     $kitSolicitado = $prestamo->tipoArticulosSelect;
-                    $idKitConsultado = $this->consultarKit($prestamo->tipoArticulosSelect);
-                    if($idKitConsultado != null ){
-                        $bandera = true;
-                        $idArticulo = 0;
-                    }
+                    $idArticulo=0;
+
                 }else{
-                    $idArticuloConsultado = $this->consultarArticulo($prestamo->tipoArticulosSelect);
-                    if($idArticuloConsultado != null){
-                        $bandera =true;
-                        $idArticulo = $idArticuloConsultado['id'];
-                        $kitSolicitado = 1;
-                    }
+                    $this->consultarArticulo($prestamo->tipoArticulosSelect);
+                    $idArticulo = $prestamo->tipoArticulosSelect;
+                    $kitSolicitado = 1;
                 }
-                if($bandera == true){
-                    $fechaInicial = new Carbon;
-                    $fechaFinal = new Carbon();
-                    $fechaInicial = Carbon::now();
-                    $fechaFinal = Carbon::now();
-                    Solicitudes::create([
-                        'PRT_FK_Articulos_id' => $idArticulo,
-                        'PRT_Fecha_Inicio' => $fechaInicial,
-                        'PRT_Fecha_Fin' => $fechaFinal->addHour((int)($prestamo->tiempo)),
-                        'PRT_FK_Funcionario_id' => $request->get('idFuncionario'),
-                        'PRT_FK_Kits_id' => $kitSolicitado,
-                        'PRT_Observacion_Entrega' => $prestamo->observacionEntrega,
-                        'PRT_Observacion_Recibe' => '',
-                        'PRT_FK_Estado' => 2,//prestado
-                        'PRT_FK_Tipo_Solicitud' => 2,//prestamo
-                        'PRT_FK_Administrador_Entrega_id' => $adminId,
-                        'PRT_FK_Administrador_Recibe_id' => 0,
-                        'PRT_Num_Orden' => $numOrden,
-                        'PRT_Cantidad' => $prestamo->tiempo
-                    ]);
-                }
+                $fechaInicial = new Carbon;
+                $fechaFinal = new Carbon();
+                $fechaInicial = Carbon::now();
+                $fechaFinal = Carbon::now();
+                Solicitudes::create([
+                    'PRT_FK_Articulos_id' => $idArticulo,
+                    'PRT_Fecha_Inicio' => $fechaInicial,
+                    'PRT_Fecha_Fin' => $fechaFinal->addHour((int)($prestamo->tiempo)),
+                    'PRT_FK_Funcionario_id' => $request->get('idFuncionario'),
+                    'PRT_FK_Kits_id' => $kitSolicitado,
+                    'PRT_Observacion_Entrega' => $prestamo->observacionEntrega,
+                    'PRT_Observacion_Recibe' => '',
+                    'PRT_FK_Estado' => 2,//prestado
+                    'PRT_FK_Tipo_Solicitud' => 2,//prestamo
+                    'PRT_FK_Administrador_Entrega_id' => $adminId,
+                    'PRT_FK_Administrador_Recibe_id' => 0,
+                    'PRT_Num_Orden' => $numOrden,
+                    'PRT_Cantidad' => $prestamo->tiempo
+                ]);
             }
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -928,50 +1153,19 @@ class AdministradorGestionController extends Controller
             ])->update(['FK_ART_Estado_id' => 3]);
         }
     }
-    public function consultarArticulo($idTipoArticulo)
+    public function consultarArticulo($idArticulo)
     {
-        $query = Articulo::where([
-            ['FK_ART_Tipo_id', '=', $idTipoArticulo],
-            ['FK_ART_Estado_id', '=', 4]
-
-        ])->first();
-        /////////////
-        /// si el articulo pertenece a un kit , cambia el estado del kit
-        /// el kit ya no estara completo para ser reservado
-        /// // /////////////
-        if ($query['FK_ART_Kit_id'] != 1) {
-            Articulo::where([
-                ['id', '=', $query['id']],
-
-            ])->update(['FK_ART_Estado_id' => 2]);
-            Kit::where([
-                ['id', '=', $query['FK_ART_Kit_id']],
-            ])->update(['KIT_FK_Estado_id' => 2]);
-        } else {
-            Articulo::where([
-                ['id', '=', $query['id']],
-            ])->update(['FK_ART_Estado_id' => 2]);
-        }
-        return $query;
+        $articulo = Articulo::find($idArticulo);
+        $articulo->FK_ART_Estado_id= 3;
+        $articulo->save();
 
     }
-    public function consultarKit($PRT_FK_Kits_id)
+    public function consultarKit($idKit)
     {
-        $query = Kit::where([
-            ['id', '=', $PRT_FK_Kits_id],
-            ['KIT_FK_Estado_id', '=', 4]
-
-        ])->first();
-        if($query != null){
-            $query = Kit::where([
-                ['id', '=', $PRT_FK_Kits_id],
-            ])->update(['KIT_FK_Estado_id' => 2]);
-            $query = Articulo::where([
-                ['FK_ART_Kit_id', '=', $PRT_FK_Kits_id],
-            ])->update(['FK_ART_Estado_id' => 2]);
-
-        }
-        return $query;
+        $kit = Kit::find($idKit);
+        $kit->KIT_FK_Estado_id = 2;
+        $kit->save();
+        Articulo::where('FK_ART_Kit_id','=',$idKit)->update(['FK_ART_Estado_id' => 2]);
     }
     /////////////////////////////////////////////////////////
     /// actualizar estado articulos Kits

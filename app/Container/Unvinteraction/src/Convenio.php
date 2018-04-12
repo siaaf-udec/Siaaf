@@ -6,11 +6,35 @@ use Illuminate\Database\Eloquent\Model;
 
 class Convenio extends Model
 {
-    //
+    /**
+     * desactivar opcion de  rellenar casilla update y create date
+     *
+     * @var string
+     */
     public $timestamps    = false;
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection ='unvinteraction';
+    /**
+     * Conexión de la tabla usada por el modelo
+     *
+     * @var string
+     */
     protected $table      = 'TBL_Convenio';
+    /**
+     * llave primaria utilizada por el modelo
+     *
+     * @var string
+     */
     protected $primaryKey = 'PK_CVNO_Convenio';
+    /**
+     * casilla utilizadas en la tabla y el modelo
+     *
+     * @var string
+     */
     protected $fillable   =['CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id'];
 
     /*

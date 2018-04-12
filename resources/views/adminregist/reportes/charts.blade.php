@@ -118,93 +118,73 @@
 @push('functions')
     <script>
         $(document).ready(function () {
-            var chartData = generateChartData();
-
-            function generateChartData() {
-                var chartData = [];
-                var firstDate = new Date(2012, 0, 1);
-                firstDate.setDate(firstDate.getDate() - 500);
-                for (var i = 0; i < 500; i++) {
-                    var newDate = new Date(firstDate);
-                    newDate.setDate(newDate.getDate() + i);
-
-                    var value = Math.round(Math.random() * (40 + i)) + 100 + i;
-
-                    chartData.push({
-                        date: newDate,
-                        value: value
-                    });
-                }
-                return chartData;
-            }
-
-
             var chartFecha = AmCharts.makeChart("chartFecha", {
+                "type": "serial",
+                "theme": "light",
 
-                type: "stock",
-                "theme": "patterns",
-                "language": "es",
+                "fontFamily": 'Open Sans',
+                "color": '#888888',
 
-                dataSets: [{
-                    color: "#b0de09",
-                    fieldMappings: [{
-                        fromField: "value",
-                        toField: "value"
-                    }],
-                    dataProvider: chartData,
-                    categoryField: "date"
+                "dataProvider": [
+                        @foreach($date as $info => $valor)
+                            {
+                                "date": "{{$info}}",
+                                "duration": {{$valor}},
+                                "lineColor": "#b7e021"
+                            },
+                        @endforeach],
+                "balloon": {
+                    "cornerRadius": 6
+                },
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "fillColorsField": "lineColor",
+                    "legendValueText": "[[value]]",
+                    "lineColorField": "lineColor",
+                    "title": "duration",
+                    "valueField": "duration"
                 }],
-
-                panels: [{
-                    showCategoryAxis: true,
-                    title: "Value",
-                    eraseAll: false,
-
-                    stockGraphs: [{
-                        id: "g1",
-                        valueField: "value",
-                        useDataSetColors: false
+                "chartScrollbar": {
+                    "oppositeAxis": false,
+                    "dragIcon": "dragIconRectSmallBlack"
+                },
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "zoomable": false
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
                     }],
-
-
-                    stockLegend: {
-                        valueTextRegular: " ",
-                        markerType: "none"
-                    },
-
-                }],
-
-                chartScrollbarSettings: {
-                    graph: "g1"
+                    "parseDates": true,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
                 },
-                chartCursorSettings: {
-                    valueBalloonsEnabled: true
-                },
-                periodSelector: {
-                    position: "bottom",
-                    periods: [{
-                        period: "DD",
-                        count: 10,
-                        label: "10 dias"
-                    }, {
-                        period: "MM",
-                        count: 1,
-                        label: "1 mes"
-                    }, {
-                        period: "YYYY",
-                        count: 1,
-                        label: "1 año"
-                    }, {
-                        period: "YTD",
-                        label: "YTD"
-                    }, {
-                        period: "MAX",
-                        label: "MAX"
-                    }]
-                },
-                export: {
-                    enabled: true
+                "export": {
+                    "enabled": true
                 }
+            });
+
+            $('#chartFecha').closest('.portlet').find('.fullscreen').click(function () {
+                chartFecha.invalidateSize();
             });
 
             var chartNovedad = AmCharts.makeChart("chartNovedad", {
@@ -221,9 +201,9 @@
                 "dataProvider": [
                         @foreach($novedades as $info)
                     {
-                        "novedad": "{{$info->nombre_novedad}}",
+                        "novedad": "{{$info->NOV_NombreNovedad}}",
                         "registro": {{$info->num_novedad}},
-                        "color": "#FF{{$info->id}}F{{$info->id}}"
+                        "color": "#b7e021"
                     },
                     @endforeach
                 ],

@@ -22,7 +22,10 @@ class TipoArticulo extends Model
     {
         return $this->hasMany(Articulo::class,'FK_ART_Tipo_id','id');
     }
-
+    public function consultarTiempoAsignado()
+    {
+        return $this->belongsTo(Validaciones::class,'TPART_Tiempo','id');
+    }
     public function Asistents()
     {
         return $this->hasMany(Asistent::class);

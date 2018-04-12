@@ -1,6 +1,6 @@
 <div class="col-md-12">
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-pencil', 'title' => 'Modificar Anteproyecto'])
-    @permission('See_All_Project_Gesap')
+    @permission('SEE_ALL_PROJECT_GESAP')
 	@slot('actions', [
 		'link_back' => [
 			'link' => '',
@@ -332,18 +332,18 @@
 						formData.append('FechaL', $('#FechaL').val());
 
 
-						var FileReq =  document.getElementById("Min");
+						var fileMin =  document.getElementById("Min");
 						if ($('#Min').get(0).files.length === 0) {
 							formData.append('Min', "Vacio");  
 						}else{
-							formData.append('Min', FileReq.files[0]);    
+							formData.append('Min', fileMin.files[0]);    
 						};
 
-						var FileReq =  document.getElementById("Requerimientos");
+						var fileReq =  document.getElementById("Requerimientos");
 						if ($('#Requerimientos').get(0).files.length === 0) {
 							formData.append('Requerimientos', "Vacio");  
 						}else{
-							formData.append('Requerimientos', FileReq.files[0]);    
+							formData.append('Requerimientos', fileReq.files[0]);    
 						};
 						$.ajax({
 							url: route,
@@ -354,9 +354,6 @@
 							data: formData,
 							processData: false,
 							async: async,
-							beforeSend: function () {
-								App.blockUI({target: '.portlet-form', animate: true});
-							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									//$('#form-register-min')[0].reset(); //Limpia formulario

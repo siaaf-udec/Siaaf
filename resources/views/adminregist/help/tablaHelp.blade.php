@@ -114,13 +114,15 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Preguntas y Respuestas'])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
+                @permission('ADMINREGIST_PRE_CREATE')
                 <div class="col-md-12">
                     <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple dark btn-icon register"><i
+                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon register"><i
                                     class="fa fa-chevron-circle-right"></i>Registrar Pregunta</a>
 
                     </div>
                 </div>
+                @endpermission
                 <div class="clearfix"></div>
                 <br>
             </div>
@@ -254,11 +256,11 @@
             table = $('#listaPreguntas');
             url = "{{ route('adminRegist.help.data')}}";
             columns = [
-                {data: 'id', name: 'id', "visible": false, searchable: false},
-                {data: 'pregunta', name: 'pregunta'},
-                {data: 'respuesta', name: 'respuesta', "visible": false},
+                {data: 'PK_HE_IdHelp', name: 'PK_HE_IdHelp', "visible": false, searchable: false},
+                {data: 'HE_Pregunta', name: 'HE_Pregunta'},
+                {data: 'HE_Respuesta', name: 'HE_Respuesta', "visible": false},
                 {
-                    defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission('ADMINREGIST_PRE_UPDATE')<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission('ADMINREGIST_PRE_DELETE')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -279,7 +281,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('adminRegist.help.destroy') }}' + '/' + dataTable.id;
+                var route = '{{ route('adminRegist.help.destroy') }}' + '/' + dataTable.PK_HE_IdHelp;
                 var type = 'DELETE';
                 var async = async || false;
                 swal({
@@ -332,7 +334,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.id;
+                    route_edit = '{{ route('adminRegist.help.edit') }}' + '/' + dataTable.PK_HE_IdHelp;
                 $(".content-ajax").load(route_edit);
             });
         });

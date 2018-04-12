@@ -32,11 +32,19 @@ class StudentController extends Controller
     /*
      * Listado de proyectos asignados como estudiantes
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+	 *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function proyecto()
+    public function proyecto(Request $request)
     {
-        return view($this->path.'ProponenteList');
+		if ($request->isMethod('GET')) {
+        	return view($this->path.'ProponenteList');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*
@@ -72,7 +80,9 @@ class StudentController extends Controller
                     ->where('PK_NPRY_IdMinr008', '=', $id)
                     ->with(['radicacion',
                             'proyecto' => function ($proyecto) {
-                                $proyecto->with('documentos');
+                                $proyecto->with(['documentos'=> function ($documento) {
+                                    $documento->with('actividad');
+                                }]);
                             }])
                     ->get();
             

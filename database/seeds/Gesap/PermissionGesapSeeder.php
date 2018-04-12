@@ -10,57 +10,57 @@ class PermissionGesapSeeder extends Seeder
     public function run()
     {
         Permission::insert([
-            ['name'=>'See_All_Project_Gesap',
+            ['name'=>'SEE_ALL_PROJECT_GESAP',
              'display_name'=>'Ver todos los Anteproyectos y los proyectos',
              'description'=>'Listar todos los anteproyectos y proyectos creados en la plataforma',
              'module_id'=>'7'],
-            ['name'=>'Create_Project_Gesap',
+            ['name'=>'CREATE_PROJECT_GESAP',
              'display_name'=>'Crear Anteproyecto',
              'description'=>'Creacion de nuevos anteproyectos y sus documentos',
              'module_id'=>'7'],
-			['name'=>'Modify_Project_Gesap',
+			['name'=>'MODIFY_PROJECT_GESAP',
              'display_name'=>'Modificar Anteproyectos',
              'description'=>'Modificar o actualizar los datos de un anteproyecto previo',
              'module_id'=>'7'],
-			['name'=>'Delete_Project_Gesap',
+			['name'=>'DELETE_PROJECT_GESAP',
              'display_name'=>'Eliminar Anteproyecto',
              'description'=>'Eliminacion de anteproyectos y sus documentos',
              'module_id'=>'7'],
-            ['name'=>'Assign_teacher_Gesap',
+            ['name'=>'ASSIGN_TEACHER_GESAP',
              'display_name'=>'Asignar Docentes',
              'description'=>'Asignacion de directores y jurados a los anteproyectos existentes',
              'module_id'=>'7'],
-            ['name'=>'Report_Gesap',
+            ['name'=>'REPORT_GESAP',
              'display_name'=>'Ver Reportes',
              'description'=>'Ver los reportes',
              'module_id'=>'7'],
             
-            ['name'=>'Jury_List_Gesap',
+            ['name'=>'JURY_LIST_GESAP',
              'display_name'=>'Proyectos de Jurado',
              'description'=>'Listar los proyectos asignados al usuario como jurado',
              'module_id'=>'7'],
-			['name'=>'Create_Observations_Gesap',
+			['name'=>'CREATE_OBSERVATIONS_GESAP',
              'display_name'=>'Crear Observaciones',
              'description'=>'Crear las observaciones a un anteproyecto en especifico',
              'module_id'=>'7'],
-			['name'=>'Create_Concept_Gesap',
+			['name'=>'CREATE_CONCEPT_GESAP',
              'display_name'=>'Crear Concepto',
              'description'=>'Calificacion por concepto a un anteproytecto en especifico',
              'module_id'=>'7'],
 			
-            ['name'=>'Director_List_Gesap',
+            ['name'=>'DIRECTOR_LIST_GESAP',
              'display_name'=>'Proyectos de Director',
              'description'=>'Listar los proyectos asignados al usuario como director',
              'module_id'=>'7'],
-			['name'=>'Close_Project_Gesap',
+			['name'=>'CLOSE_PROJECT_GESAP',
              'display_name'=>'Terminacion de proyecto',
              'description'=>'Cierre del proyecto dando por terminado el mismo',
              'module_id'=>'7'],
-			['name'=>'Aproved_Project_Gesap',
+			['name'=>'APROVED_PROJECT_GESAP',
              'display_name'=>'Habilitar Proyecto',
              'description'=>'Activar el proyecto cuando este aprobado el anteproyecto,habilita actividades',
              'module_id'=>'7'],
-			['name'=>'Create_Activity_Gesap',
+			['name'=>'CREATE_ACTIVITY_GESAP',
              'display_name'=>'Crear actividades',
              'description'=>'Crear nuevas actividades de proyecto',
              'module_id'=>'7'],
@@ -68,20 +68,20 @@ class PermissionGesapSeeder extends Seeder
              'display_name'=>'Eliminar actividades',
              'description'=>'Eliminar actividades de proyecto',
              'module_id'=>'7'],
-			['name'=>'Student_List_Gesap',
+			['name'=>'STUDENT_LIST_GESAP',
              'display_name'=>'Proyectos de Estudiante',
              'description'=>'Listar los proyectos asignados al usuario como Estudiante',
              'module_id'=>'7'],
             
-            ['name'=>'See_Observations_Gesap',
+            ['name'=>'SEE_OBSERVATIONS_GESAP',
              'display_name'=>'Ver Observaciones',
              'description'=>'Ver las observaciones realizadas al proyecto en especifico',
              'module_id'=>'7'],
-			['name'=>'See_Activity_Gesap',
+			['name'=>'SEE_ACTIVITY_GESAP',
              'display_name'=>'Ver Observaciones',
              'description'=>'Ver las observaciones realizadas al proyecto en especifico',
              'module_id'=>'7'],
-            ['name'=>'Update_Final_Project_Gesap',
+            ['name'=>'UPDATE_FINAL_PROJECT_GESAP',
              'display_name'=>'Subir Archivos de Proyecto',
              'description'=>'Subida de archivos para el proyecto final',
              'module_id'=>'7'],
@@ -103,71 +103,73 @@ class PermissionGesapSeeder extends Seeder
         $permission = Permission::where('name', '=', 'GESAP_MODULE')->first();
         $permission->roles()->attach($role3);
         
-		$permission = Permission::where('name', '=', 'See_All_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_ALL_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-        $permission = Permission::where('name', '=', 'Create_Project_Gesap')->first();
+        $permission = Permission::where('name', '=', 'CREATE_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Modify_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'MODIFY_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Delete_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'DELETE_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Assign_teacher_Gesap')->first();
+		$permission = Permission::where('name', '=', 'ASSIGN_TEACHER_GESAP')->first();
         $permission->roles()->attach($role1);
-        $permission = Permission::where('name', '=', 'Report_Gesap')->first();
+        $permission = Permission::where('name', '=', 'REPORT_GESAP')->first();
         $permission->roles()->attach($role1);
 		
-        $permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
+        $permission = Permission::where('name', '=', 'JURY_LIST_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Jury_List_Gesap')->first();
+		$permission = Permission::where('name', '=', 'JURY_LIST_GESAP')->first();
         $permission->roles()->attach($role2);
 		
-		$permission = Permission::where('name', '=', 'Create_Observations_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_OBSERVATIONS_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Create_Observations_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_OBSERVATIONS_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'Create_Concept_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_CONCEPT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Create_Concept_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_CONCEPT_GESAP')->first();
         $permission->roles()->attach($role2);
 		
-        $permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
+        $permission = Permission::where('name', '=', 'DIRECTOR_LIST_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Director_List_Gesap')->first();
+		$permission = Permission::where('name', '=', 'DIRECTOR_LIST_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'Close_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CLOSE_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Close_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CLOSE_PROJECT_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'Aproved_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'APROVED_PROJECT_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Aproved_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'APROVED_PROJECT_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'Create_Activity_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'Create_Activity_Gesap')->first();
+		$permission = Permission::where('name', '=', 'CREATE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role2);
 		$permission = Permission::where('name', '=', 'Delete_Activity_Gesap')->first();
         $permission->roles()->attach($role1);
 		$permission = Permission::where('name', '=', 'Delete_Activity_Gesap')->first();
         $permission->roles()->attach($role2);
         
-		$permission = Permission::where('name', '=', 'Student_List_Gesap')->first();
+		$permission = Permission::where('name', '=', 'STUDENT_LIST_GESAP')->first();
         $permission->roles()->attach($role3);
-		$permission = Permission::where('name', '=', 'Update_Final_Project_Gesap')->first();
+		$permission = Permission::where('name', '=', 'UPDATE_FINAL_PROJECT_GESAP')->first();
         $permission->roles()->attach($role3);
 		
-		$permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_OBSERVATIONS_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_OBSERVATIONS_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'See_Observations_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_OBSERVATIONS_GESAP')->first();
         $permission->roles()->attach($role3);
-		$permission = Permission::where('name', '=', 'See_Activity_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role1);
-		$permission = Permission::where('name', '=', 'See_Activity_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role2);
-		$permission = Permission::where('name', '=', 'See_Activity_Gesap')->first();
+		$permission = Permission::where('name', '=', 'SEE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role3);
 
+		$permission = Permission::where('name', '=', 'MASTER_USERS')->first();
+        $permission->roles()->attach($role1);
     }
 }

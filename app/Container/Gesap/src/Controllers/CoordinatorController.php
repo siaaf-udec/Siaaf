@@ -34,11 +34,19 @@ class CoordinatorController extends Controller
     /*
      * Listado de todos los anteproyectos que se han registrado
      *
-     * @return \Illuminate\Http\Response
+	 * @param  \Illuminate\Http\Request
+	 *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view($this->path.'AnteproyectoList');
+        if ($request->isMethod('GET')) {
+			return view($this->path.'AnteproyectoList');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     
     /*
@@ -62,11 +70,20 @@ class CoordinatorController extends Controller
     /*
      * Listado de todos los proyectos avalados
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function indexProject()
-    {
-        return view($this->path.'ProyectoList');
+    public function indexProject(Request $request)
+    {	
+		if ($request->isMethod('GET')) {		
+        	return view($this->path.'ProyectoList');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
     }
     
     /*

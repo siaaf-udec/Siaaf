@@ -22,17 +22,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('username', old('username'), ['required', 'max' => 20, 'label' => 'Nombre', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-user', 'help' => 'Ingrese el Nombre.']) !!}
+                                {!! Field::text('username', old('username'), ['required', 'max' => 20, 'min' => '3', 'label' => 'Nombre', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-user', 'help' => 'Ingrese el Nombre.']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('lastname', old('lastname'), ['required', 'max' => 20, 'label' => 'Apellido', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-user', 'help' => 'Ingrese el Apellido.']) !!}
+                                {!! Field::text('lastname', old('lastname'), ['required', 'max' => 20, 'min' => '3', 'label' => 'Apellido', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-user', 'help' => 'Ingrese el Apellido.']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('number_document', old('number_document'), ['required', 'max' => 12,'label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                                {!! Field::text('number_document', old('number_document'), ['required', 'max' => 12, 'min' => '5','label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -40,12 +40,12 @@
                                 {!! Field::select(
                                 'type_user',
                                 ['Estudiante' => 'Estudiante', 'Docente' => 'Docente', 'Externo' => 'Externo'],null,
-                                ['label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
+                                ['required', 'label' => 'Tipo de Usuario' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
                         <div class="form-group divcode">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('code', old('code'), ['max' => 12,'label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                                {!! Field::text('code', old('code'), ['max' => 12, 'min' => '4','label' => 'Codigo Instucional', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                             </div>
                         </div>
                     </div>
@@ -60,17 +60,27 @@
                                 {!! Field::select(
                                 'place',
                                 ['Fusagasugá' => 'Fusagasugá', 'Girardot' => 'Girardot', 'Ubaté' => 'Ubaté', 'Chia' => 'Chia', 'Chocontá' => 'Chocontá', 'Facatativá' => 'Facatativá', 'Soacha' => 'Soacha', 'Zipaquirá' => 'Zipaquirá', 'Ninguna' => 'Ninguna'],null,
-                                ['label' => 'Sede' , 'autofocus', 'auto' => 'off']) !!}
+                                ['required', 'label' => 'Sede' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('number_phone', old('number_phone'), ['required', 'max' => 15,'label' => 'Numero de Celular', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero de Celular.']) !!}
+                                {!! Field::text('number_phone', old('number_phone'), ['required', 'max' => 15, 'min' => '5','label' => 'Numero de Celular', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero de Celular.']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::email('email', old('email'), ['required', 'max' => 80, 'label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                {!! Field::checkbox('acceptTeminos', '1', ['label' => 'Acepta términos y condiciones de la ley de protección de datos 1581 de 2012.','required']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-lg-offset-3 text-left">
+                                <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank">Ver ley de protección de datos 1581 de 2012.</a>
                             </div>
                         </div>
                     </div>
@@ -119,9 +129,10 @@
             },
             company: {maxlength: 25},
             number_phone: {minlength: 5, maxlength: 15, required: true},
-            email: {email: true, required: true},
+            email: {email: true, required: true, maxlength: 80},
             type_user: {required: true},
-            place: {required: true}
+            place: {required: true},
+            acceptTeminos: {required: true}
 
         };
         $('.divcode').hide();
@@ -194,7 +205,7 @@
                                 });
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{ route('adminRegist.users.index.ajax') }}';
+                                var route = '{{ route('adminRegist.registros.index') }}';
                                 $(".content-ajax").load(route);
                             }
                         },
@@ -221,10 +232,9 @@
         });
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('adminRegist.users.index.ajax') }}';
+            var route = '{{ route('adminRegist.registros.index') }}';
             $(".content-ajax").load(route);
         });
-
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({

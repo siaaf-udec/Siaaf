@@ -41,6 +41,8 @@
     <!-- Styles SREETALERT  -->
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
+    <!-- Styles SWITCH  -->
+    <link href="{{asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
 
@@ -56,7 +58,7 @@
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
-@section('title', '|Reserva Por Kit')
+@section('title', '|Solicitud Prestamo')
 
 {{--
 |--------------------------------------------------------------------------
@@ -72,7 +74,7 @@
 |
 |
 --}}
-@section('page-title', 'Prestamo Articulo')
+@section('page-title', 'Solicitud Prestamo')
 {{--
 |--------------------------------------------------------------------------
 | Page Description
@@ -102,7 +104,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Reservas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Realizar Prestamo'])
         <br>
         <br>
         <div class="row">
@@ -168,7 +170,7 @@
                                     </p>
                                     <p>
                                         {!! Field::select('FK_FUNCIONARIO_Programa',
-                                            $carrerasUdec,
+                                            null,
                                            ['label' => 'seleccione un programa'])
                                        !!}
                                     </p>
@@ -245,6 +247,8 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
             type="text/javascript">
     </script>
+    <!-- SCRIPT SWITCH -->
+
 @endpush
 {{--
 |--------------------------------------------------------------------------
@@ -276,10 +280,19 @@
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
+    <!-- SWITCH-->
+
     <script type="text/javascript">
-        var FormSelect2 = function () {
+        var handleBootstrapSwitch = function() {
+            if (!$().bootstrapSwitch) {
+                return;
+            }
+            $('.make-switch').bootstrapSwitch();
+        };
+        var ComponentsSelect2 = function () {
             return {
                 init: function () {
+                    /*Configuracion de Select*/
                     $.fn.select2.defaults.set("theme", "bootstrap");
                     $(".pmd-select2").select2({
                         placeholder: "Selecccionar",
@@ -292,9 +305,23 @@
                 }
             }
         }();
+        var ComponentsBootstrapMaxlength = function () {
+            var handleBootstrapMaxlength = function () {
+                $("input[maxlength], textarea[maxlength]").maxlength({
+                    alwaysShow: true,
+                    appendToParent: true
+                });
+            }
+            return {
+                //main function to initiate the module
+                init: function () {
+                    handleBootstrapMaxlength();
+                }
+            };
+        }();
         var guardarPrograma = false,idFuncionarioD = null;
         jQuery(document).ready(function () {
-            FormSelect2.init();
+            ComponentsSelect2.init();
             var createPrograma = function () {
                 return{
                     init: function () {
@@ -349,15 +376,30 @@
                     init: function () {
                         guardarPrograma=false;
                         var route = '{{ route('opcionPrestamoAjax') }}';
-                        idfuncionarioD = $('#id_funcionario').val();
-                        var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;
+                        idFuncionarioD = $('#id_funcionario').val();
+                        var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idFuncionarioD;
                         $.get( route_edit, function( info ) {
-                            var datas=info.data;
+                            var datas = info.data;
+                            console.log(datas.numeroPrestamos);
                             idFuncionarioD=datas.id;
                             if(datas.audiovisual!=null){
-                                $('#FK_FUNCIONARIO_Programa').empty();
-                                $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
-                                $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
+                                if(datas.numeroPrestamos){
+                                    console.log('entra');
+                                    swal(
+                                        'Oops...',
+                                        'Lo sentimos el usuario solo puede realizar un maximo de '+datas.numeroPrestamosMaximos+' prestamos!',
+                                        'error'
+                                    )
+                                }else{
+                                    $('#FK_FUNCIONARIO_Programa').empty();
+                                    $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
+                                    $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
+                                    $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
+                                    $('#FUCNIONARIO_Correo').val(datas.email);
+                                    $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
+                                    $('#FUCNIONARIO_Telefono').val(datas.phone);
+                                    $('#modal-info-funcionario').modal('toggle');
+                                }
                             }
                             else{
                                 $('#FK_FUNCIONARIO_Programa').empty();
@@ -372,7 +414,6 @@
                                     success: function (response, xhr, request) {
                                         if (request.status === 200 && xhr === 'success') {
                                             App.unblockUI('.portlet-form');
-
                                             $(response.data).each(function (key,value) {
                                                 $('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));
                                             });
@@ -381,12 +422,12 @@
                                     }
                                 });
                                 guardarPrograma=true;//funcionario no tiene asignado un programa
+                                $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
+                                $('#FUCNIONARIO_Correo').val(datas.email);
+                                $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
+                                $('#FUCNIONARIO_Telefono').val(datas.phone);
+                                $('#modal-info-funcionario').modal('toggle');
                             }
-                            $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
-                            $('#FUCNIONARIO_Correo').val(datas.email);
-                            $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
-                            $('#FUCNIONARIO_Telefono').val(datas.phone);
-                            $('#modal-info-funcionario').modal('toggle');
                         });
                     }
                 }
@@ -405,7 +446,7 @@
                         url: "{{ route('identificacion.validar') }}",
                         type: "post"
                     }
-                },
+                }
             };
             var messages= {
                 id_funcionario: {

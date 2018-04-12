@@ -1,0 +1,438 @@
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'INFORMNACION DEL CONVENIO'])
+<div class="portlet-body">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab_1_1" data-toggle="tab"> DOCUMENTOS </a>
+        </li>
+        <li>
+            <a href="#tab_1_2" data-toggle="tab"> PARTICIPANTES </a>
+        </li>
+        <li>
+            <a href="#tab_1_3" data-toggle="tab"> EMPRESAS </a>
+        </li>
+
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_1_1">
+            <div class="actions">
+                @permission(['Add_doc_con'])
+                <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
+            </div>
+
+
+            <div class="row">
+
+                <div class="clearfix"> </div><br><br>
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) 
+                        @slot('columns', [ 
+                            '#' => ['style' => 'width:20px;'], 
+                            'ID', 
+                            'Entidad', 
+                            'Acciones' => ['style' => 'width:160px;'] 
+                        ])
+                    @endcomponent
+                </div>
+            </div>
+        </div>
+        <!-- TABLAS  PARTICIPANTES -->
+        <div class="tab-pane fade" id="tab_1_2">
+            <div class="col-md-12">
+                @permission(['Add_parti'])
+                <div class="actions">
+                    <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+                </div>
+                @endpermission
+            </div>
+
+            <div class="row">
+
+                <div class="clearfix"> </div><br><br>
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes'])                  @slot('columns', [
+                            '#' => ['style' => 'width:20px;'],
+                            'Identidicacion',
+                            'Nombres',
+                            'Apellidos',
+                            'Acciones' => ['style' => 'width:160px;']
+                        ]) 
+                    @endcomponent
+                </div>
+            </div>
+        </div>
+        <!-- TABLAS EMPRESAS PARTICIPANTES -->
+        <div class="tab-pane fade" id="tab_1_3">
+
+            <div class="col-md-12">
+                @permission(['Add_emp_parti'])
+                <div class="actions">
+                    <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+                </div>
+                @endpermission
+            </div>
+
+            <div class="row">
+
+                <div class="clearfix"> </div><br><br>
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ 
+                        '#' => ['style' => 'width:20px;'], 
+                        'ID',
+                        'Identificacion',
+                        'Empresa',
+                        'Acciones' => ['style' => 'width:160px;'] ]) 
+                    @endcomponent
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    @endcomponent
+    <div class="col-md-12">
+        <!-- Modal -->
+        <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
+                        <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
+                        {!! Form::close() !!}
+                        <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AGREGAR PARTICIPANTE -->
+    <div class="col-md-12">
+        <!-- Modal -->
+        <div class="modal fade" id="participante" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Participante']) !!}
+                    <div class="form-wizard">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
+                        </div>
+                        <div class="modal-body">
+                            {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- AGREGAR EMPRESA PARTICIPANTE -->
+    <div class="col-md-12">
+        <!-- Modal -->
+        <div class="modal fade" id="empresa" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Empresas']) !!}
+                    <div class="form-wizard">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
+                        </div>
+                        <div class="modal-body">
+                            {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN MODALS -->
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script>   
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var table, url, id;
+        table = $('#Listar_Documentos');
+        var documento = function () { 
+            return { 
+                init:function(){
+                    table.ajax.reload();
+                    $('#documento').modal('hide'); 
+                    
+                }
+            }; 
+        }
+        var route = '{{route('subirDocumentoConvenio.subirDocumentoConvenio',[$id])}}';
+        var formatfile = '.pdf'; 
+        var numfile = 1; 
+        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
+        
+        var table, url, columns;
+        table = $('#Listar_Documentos');
+        url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
+        columns = [
+            {data: 'DT_Row_Index'},
+                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "documento",className: 'none'},
+                    {data: 'DOCU_Nombre',searchable: true},
+                    {
+                        data: 'action',
+                        className: '',
+                        searchable: false,
+                        name: 'action',
+                        title: 'Acciones',
+                        orderable: false,
+                        exportable: false,
+                        printable: false,
+                        defaultContent: ' @permission(['Des_Doc_Con'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
+                    }
+        ];
+        dataTableServer.init(table, url, columns);
+        
+            $("#archivo1").on('click', function(e) {
+                e.preventDefault();
+                $('#documento').modal('toggle');
+            });
+
+            table = table.DataTable();
+            table.on('click', '.descargar', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var O = table.row($tr).data();
+                $.ajax({
+                    type: "GET",
+                    url: '',
+                    dataType: "html",
+                }).done(function(data) {
+                    window.location.href = '{{ route('documentoDescarga.documentoDescarga') }}'+'/'+ O.PK_DOCU_Documentacion+'/@php echo $id; @endphp';
+                    
+                });
+            });
+
+        });
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var table, url, columns;
+        table = $('#Listar_Paticipantes');
+        url = "{{ route('listarParticipantesConvenios.listarParticipantesConvenios',[$id]) }}";
+        columns = [
+            {data: 'DT_Row_Index'},
+            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "documento"},
+            {data: 'usuarios_participantes.dato_usuario.name',searchable: true},
+            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true},
+            {
+                data: 'action',
+                className: '',
+                searchable: false,
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                exportable: false,
+                printable: false,
+                defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+
+
+                    }
+        ];
+        dataTableServer.init(table, url, columns);
+            
+       
+            table = table.DataTable();
+            table.on('click', '.evaluar1', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
+                $(".content-ajax").load(route_edit);
+            });
+            table.on('click', '.doc1', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id;
+                $(".content-ajax").load(route_edit);
+            });
+            table.on('click', '.ver1', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
+                $(".content-ajax").load(route_edit);
+            });
+            $("#archivo2").on('click', function(e) {
+                e.preventDefault();
+                $('#participante').modal('toggle');
+            });
+            $('.portlet-form').attr("id", "form_wizard_1");
+            var rules = {
+
+            };
+            $('.portlet-form').attr("id","form_wizard_1");
+             var rules = {
+                identity_no: {required: true,number: true},
+                };
+            var form = $('#form-Participante');
+            var wizard = $('#form_wizard_1');
+            var agregarParticipante = function() {
+                return {
+                    init: function() {
+                        var route = '{{ route('participanteConvenio.participanteConvenio',[$id]) }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('identity_no', $('#identity_no').val());
+
+                        $.ajax({
+                            url: route,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+
+
+                            success: function(response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    $('#participante').modal('hide');
+                                    $('#form-Participante')[0].reset();
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function(response, xhr, request) {
+                                UIToastr.init(xhr, 'usuario ya existente', 'el usuario a insertar ya esta en el convenio');
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+
+            var messages = {};
+
+            FormValidationMd.init(form, rules, messages, agregarParticipante());
+
+        });
+</script>
+<script type="text/javascript">
+        jQuery(document).ready(function() {
+            var table, url, columns;
+            table = $('#Listar_Empresas_Paticipantes');
+            url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
+            columns = [
+                {data: 'DT_Row_Index'},
+                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "documento"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true},
+                {
+                        data: 'action',
+                        className: '',
+                        searchable: false,
+                        name: 'action',
+                        title: 'Acciones',
+                        orderable: false,
+                        exportable: false,
+                        printable: false,
+                        defaultContent: '@permission(['Eva_Pasante'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+                    }
+        ];
+        dataTableServer.init(table, url, columns);
+        
+
+            table = table.DataTable();
+            table.on('click', '.evaluar2', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
+
+                $(".content-ajax").load(route_edit);
+            });
+
+            table.on('click', '.ver2', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
+                $(".content-ajax").load(route_edit);
+            });
+
+            $("#archivo3").on('click', function(e) {
+                e.preventDefault();
+                $('#empresa').modal('toggle');
+            });
+
+            $('.portlet-form').attr("id","form_wizard_1");
+             var rules = {
+                FK_TBL_Empresa: {required: true,number: true},
+                };
+            var form = $('#form-Empresas');
+            var wizard = $('#form_wizard_1');
+            var agregarEmpresa = function() {
+                return {
+                    init: function() {
+                        var route = '{{ route('empresaConvenio.empresaConvenio',[$id]) }}';
+                        var type = 'POST';
+                        var async = async || false;
+                        var formData = new FormData();
+                        formData.append('FK_TBL_Empresa', $('#FK_TBL_Empresa').val());
+                        $.ajax({
+                            url: route,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            success: function(response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    $('#empresa').modal('hide');
+                                    table.ajax.reload();
+                                    $('#form-Empresas')[0].reset();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function(response, xhr, request) {
+                                 UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingresada ya se encuentra  o no existe');
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingrsada ya se encuentra  o no existe');
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var messages = {};
+            FormValidationMd.init(form, rules, messages, agregarEmpresa());
+        });
+
+    </script>

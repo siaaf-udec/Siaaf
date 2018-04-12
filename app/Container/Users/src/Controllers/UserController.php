@@ -18,7 +18,6 @@ use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Permissions\Src\Interfaces\RoleInterface;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
 
 
 class UserController extends Controller

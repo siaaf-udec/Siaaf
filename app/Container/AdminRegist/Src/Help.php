@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Help extends Model
 {
     protected $connection = 'adminregist';
-    protected $table = 'help';
-    protected $primaryKey = 'id';
+    protected $table = 'TBL_Help';
+    protected $primaryKey = 'PK_HE_IdHelp';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'pregunta', 'respuesta'
+        'HE_Pregunta', 'HE_Respuesta'
     ];
 
 

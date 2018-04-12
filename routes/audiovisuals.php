@@ -16,10 +16,45 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
         'uses' => $controller . 'AdministradorGestionController@indexjax',
         'as'   => 'audiovisuales.gestionPrestamos.indexAjax',
     ]);
-    Route::get('formRepeatAjax',[
-        'uses' => $controller.'AdministradorGestionController@formRepeatAjaxindex',
-        'as' => 'opcionPrestamoAjax'
-    ]);
+
+    ////////
+    /// RUTAS LISTAR FORMREPEAT
+        Route::get('formRepeatAjax',[
+            'uses' => $controller.'AdministradorGestionController@formRepeatAjaxindex',
+            'as' => 'opcionPrestamoAjax'
+        ]);
+        Route::get('cargarKitsSelectKitR',[
+            'uses' => $controller.'AdministradorGestionController@cargarKitsSelect',
+            'as' => 'cargar.kits.selectKit'
+        ]);
+        Route::get('asignarKitR/{idKit?}',[
+            'uses' => $controller . 'AdministradorGestionController@actualizarKit',
+            'as'   => 'asignarKit',
+        ]);
+        Route::get('removerKitR/{idKit?}',[
+            'uses' => $controller . 'AdministradorGestionController@removerKit',
+            'as'   => 'removerKit',
+        ]);
+        Route::get('cargarArticulosSelectTipoArticulo',[
+            'uses' => $controller.'AdministradorGestionController@cargarArticuloSelect',
+            'as' => 'cargar.articulos.selectTipoArticulo'
+        ]);
+        Route::get('asignarArticuloR/{idArticulo?}',[
+            'uses' => $controller . 'AdministradorGestionController@actualizarArticulo',
+            'as'   => 'asignarArticulo',
+        ]);
+        Route::get('removerArticuloR/{idArticulo?}',[
+            'uses' => $controller . 'AdministradorGestionController@removerArticulo',
+            'as'   => 'removerArticulo',
+        ]);
+        Route::post('prestamoFormRepeat',[
+            'uses' => $controller . 'AdministradorGestionController@crearPrestamoRepeat',
+            'as'   => 'prestamoRepeat.crear',
+        ]);
+        Route::get('tiempoKit/{idKit?}',[
+            'uses' => $controller . 'AdministradorGestionController@listarTiempoKit',
+            'as'   => 'listarTiempoKitSele',
+        ]);
     Route::post('CrearFuncionario', [
         'uses' => $controller . 'AdministradorGestionController@storeProgramaAdmin',
         'as'   => 'crearFuncionarioAdmin.storePrograma',
@@ -36,10 +71,7 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
         'uses' => $controller . 'AdministradorGestionController@listarTiempoArticulo',
         'as'   => 'listarTiempoArticuloSele',
     ]);
-    Route::post('prestamoFormRepeat',[
-        'uses' => $controller . 'AdministradorGestionController@crearPrestamoRepeat',
-        'as'   => 'prestamoRepeat.crear',
-    ]);
+
     Route::get('indexTablaPress2', [
         'uses' => $controller . 'AdministradorGestionController@indexTablaPrestamos2',
         'as'   => 'audiovisuales.ListarPrestamo2.index',
@@ -48,10 +80,19 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
         'uses' => $controller . 'AdministradorGestionController@indexTablaPrestamos',
         'as'   => 'audiovisuales.gestionPrestamos.listar',
     ]);
+    Route::get('indexPrestamosFinalizadosR', [
+        'uses' => $controller . 'AdministradorGestionController@indexPrestamosFinalizados',
+        'as'   => 'audiovisuales.gestionPrestamos.finalizados',
+    ]);
     Route::get('dataUsuarios', [
         'uses' => $controller . 'AdministradorGestionController@dataListarFuncionarios',
         'as'   => 'listarFuncionarios.dataTable',
     ]);
+    Route::get('solicitudesFinalizadasR', [
+        'uses' => $controller . 'AdministradorGestionController@dataListarFuncionariosSolicitudesFinalizadas',
+        'as'   => 'listarFuncionariosSolicitudesFinalizadas.dataTable',
+    ]);
+
     Route::get('indexTablaEntregaPres/{id_orden?}', [
         'uses' => $controller . 'AdministradorGestionController@indexEntregaPrestamos',
         'as'   => 'audiovisuales.EntregasPrestamo.index',
@@ -136,6 +177,64 @@ Route::group(['prefix' => 'administradorGestionPrestamos', 'middleware' => ['per
 // RUTAS FUNCIONARIO ************************
 Route::group(['prefix' => 'funcionario', 'middleware' => ['permission:FUNC_AUDIOVISUALES']], function () {
     $controller = "\\App\\Container\\Audiovisuals\\Src\\Controllers\\";
+    //ajax modalstatic reservar kit
+    /*Route::get('home2', [
+        'uses' => 'FuncionarioController@menuPrincipal',//cambiar por indexArticulos
+        'as' => 'menuPrincipalAjax',
+    ]);*/
+    ///////////////////////////////////////////
+    /// rutas para formrepeatReservas
+    Route::get('cargarKitsSelectReservaR/{fechaInicial?}',[
+        'uses' => $controller.'FuncionarioController@cargarKitsSelectReserva',
+        'as' => 'cargar.kits.selectKit.reserva'
+    ]);
+    Route::get('cargarArticulosSelectTipoArticuloReservaR',[
+        'uses' => $controller.'FuncionarioController@cargarArticuloSelectReserva',
+        'as' => 'cargar.articulos.selectTipoArticulo.reserva'
+    ]);
+    Route::get('listarCodigoArticuloSeleReservaR/{idTipoArticuloVall?}/{fechaInicial?}',[
+        'uses' => $controller . 'FuncionarioController@codigoArticuloSelectReserva',
+        'as'   => 'listarCodigoArticuloSeleReserva',
+    ]);
+    Route::post('asignarArticuloReservaR/{idArticulo?}/{fechaInicial?}/{tiempoAsignar?}/{numeroOrden?}/{kitArticulo?}',[
+        'uses' => $controller . 'FuncionarioController@actualizarArticuloReserva',
+        'as'   => 'asignarArticuloReserva',
+    ]);
+    Route::get('consultarNumeroDeOrdenR',[
+        'uses' => $controller . 'FuncionarioController@numeroOrden',
+        'as'   => 'consultarUltimoNumeroDeOrden',
+    ]);
+    Route::get('eliminarSolicitudReservaR/{idReserva?}',[
+        'uses' => $controller . 'FuncionarioController@eliminarSolicitudReser',
+        'as'   => 'eliminarSolicitudReserva',
+    ]);
+    ////////////////////////////////////////////////
+    /// Vista Principal Reservas
+    Route::get('solicitudReservaR', [
+        'uses' => $controller . 'FuncionarioController@solicitudReserva',//cambiar por indexkit
+        'as' => 'audiovisuales.reservas.solicitud.index',
+    ]);
+    Route::get('solicitudReservaAjaxR', [
+        'uses' => $controller . 'FuncionarioController@solicitudReservaAjax',//cambiar por indexkit
+        'as' => 'audiovisuales.gestionReservas.gestionReservasAjax',
+    ]);
+    Route::get('reservaFormRepeatIndexR', [
+        'uses' => $controller . 'FuncionarioController@dataListarFuncionarioReserva',
+        'as'   => 'listarFuncionarios.reservas.dataTable',
+    ]);
+    Route::get('gestionReserva',[
+        'uses' => $controller.'FuncionarioController@reservaFormRepeatIndex',
+        'as' => 'reserva.formRepeat.index'
+    ]);
+    Route::get('validarNumeroDeReservasR',[
+        'uses' => $controller.'FuncionarioController@validarNumeroDeReservas',
+        'as' => 'validarNumeroDeReservas'
+    ]);
+
+
+    //
+
+    /////////////---------------------------------------------------------------
     //ruta para vista reservar Articulos
     Route::get('reservasArticulos', [
         'uses' => $controller . 'FuncionarioController@reserva',//cambiar por indexArticulos
@@ -165,6 +264,8 @@ Route::group(['prefix' => 'funcionario', 'middleware' => ['permission:FUNC_AUDIO
         'uses' => $controller . 'FuncionarioController@reservaKits',//cambiar por indexkit
         'as' => 'audiovisuales.reservas.kits.index',
     ]);
+
+
     //ruta para almacenar los datos del selec tipo articulo dispobibles
     Route::get('ListarSelectTipoArticulo', [
         'uses' => $controller . 'FuncionarioController@consultarTiposArticulosDisposnibles',
@@ -220,17 +321,141 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'as'   => 'validaciones.edit',
     ]);
     //GESTION ARTICULO
-    Route::get('index', [
-        'uses' => $controller . 'ArticuloController@index',
-        'as'   => 'audiovisuales.articulo.index',
-    ]);
+        Route::get('indexArtiulo', [
+            'uses' => $controller . 'ArticuloController@indexArticulo',
+            'as'   => 'audiovisuales.articulo.indexArticulo',
+        ]);
+        Route::get('listar', [
+            'uses' => $controller . 'ArticuloController@dataTableArticulos',
+            'as'   => 'listarArticulo.data',
+        ]);
+        Route::get('listarKit/{id?}',[
+            'uses' => $controller.'ArticuloController@cargarKits',
+            'as' => 'cargar.kits.select'
+        ]);
+        Route::get('listarTipoArticulos/{id?}',[
+            'uses' => $controller.'ArticuloController@cargarTipoArticulosA',
+            'as' => 'cargar.tipoArticulos.selectArtciulo'
+        ]);
+        Route::post('storeArticulo', [
+            'uses' => $controller . 'ArticuloController@storeArticulos',
+            'as'   => 'articulo.store',
+        ]);
+        Route::post('modificarArticuloR', [
+            'uses' => $controller . 'ArticuloController@modificarArticulo',
+            'as'   => 'articuloModificar',
+        ]);
+        Route::post('elimarArticuloR',[
+            'uses' => $controller . 'ArticuloController@elimarArticulo',
+            'as'   => 'elimarArticulo',
+        ]);
+
+
+    //GESTION KIT
+        Route::get('indexKit', [
+            'uses' => $controller . 'ArticuloController@indexKit',
+            'as'   => 'audiovisuales.articulo.indexKit',
+        ]);
+        Route::get('crearKit', [
+            'uses' => $controller . 'ArticuloController@formRepeatKitAjax',
+            'as'   => 'audiovisuales.articulo.formRepeatKitAjax',
+        ]);
+        Route::post('storeKit', [
+            'uses' => $controller . 'ArticuloController@storeKit',
+            'as'   => 'kit.store',
+
+        ]);
+        Route::post('kits/check_unique', [
+            'uses' => $controller . 'ArticuloController@ajaxUniqueKit',
+            'as'   => 'kit.validar',
+
+        ]);
+        Route::get('listarTipoArticulosKit',[
+            'uses' => $controller.'ArticuloController@cargarTipoArticulos',
+            'as' => 'cargar.tipoArticulos.selectKit'
+        ]);
+        Route::get('listarCodigoArticuloSeleR/{idTipoArticuloVall?}',[
+            'uses' => $controller . 'ArticuloController@codigoArticuloSelect',
+            'as'   => 'listarCodigoArticuloSele',
+        ]);
+        Route::get('listarCaracteristicaArticuloR/{codigoArticulo?}',[
+             'uses' => $controller . 'ArticuloController@caracteristicaArticulo',
+             'as'   => 'listarCaracteristicaArticulo',
+         ]);
+        Route::get('AsignarArticuloAlkitR/{idArticulo?}/{idkit?}',[
+            'uses' => $controller . 'ArticuloController@asignarArticuloAlkit',
+            'as'   => 'AsignarArticuloAlkit',
+        ]);
+        Route::get('removerArticuloKitR/{idArticulo?}',[
+            'uses' => $controller . 'ArticuloController@removerArticuloKit',
+            'as'   => 'removerArticuloKit',
+        ]);
+        Route::get('listarKitDataR', [
+            'uses' => $controller . 'ArticuloController@dataTableKits',
+            'as'   => 'listarKit.data',
+        ]);
+        Route::get('EliminarKitR/{idKit?}',[
+            'uses' => $controller . 'ArticuloController@eliminarKit',
+            'as'   => 'EliminarKit',
+        ]);
+        Route::get('EliminarKitSoftdeleteR/{idKit?}',[
+            'uses' => $controller . 'ArticuloController@eliminarKitSoftdelete',
+            'as'   => 'EliminarKitSoftdelete',
+        ]);
+        Route::get('indexAjax', [
+            'uses' => $controller . 'ArticuloController@indexAjax',
+            'as'   => 'audiovisuales.gestionKits.indexAjax',
+        ]);
+        Route::post('kitModificarR', [
+            'uses' => $controller . 'ArticuloController@kitModificar',
+            'as'   => 'kitModificar',
+
+        ]);
+        Route::get('articuloskitAjaxR/{idKit?}', [
+            'uses' => $controller . 'ArticuloController@articuloskitAjax',
+            'as'   => 'audiovisuales.articulo.articuloskitAjax',
+        ]);
+    ///////////////////
+    /// GESTION TIPO ARTICULO
+        Route::get('indexTipoArtciuloAjaxR', [
+            'uses' => $controller . 'ArticuloController@indexTipoArtciuloAjax',
+            'as'   => 'audiovisuales.gestionTipoArticuloAjax',
+        ]);
+        Route::get('listarTipoArticulosdataR', [
+            'uses' => $controller . 'ArticuloController@dataTableTipoArticulos',
+            'as'   => 'listarTipoArticulos.data',
+        ]);
+        Route::post('storestipoArticulosR', [
+            'uses' => $controller . 'ArticuloController@storeTipoArt',
+            'as'   => 'tipoArticulos.store',
+        ]);
+        Route::post('articles/check_unique', [
+            'uses' => $controller . 'ArticuloController@ajaxUniqueTipoArt',
+            'as'   => 'tipoArticulo.validar',
+        ]);
+        Route::post('audiovisualesModificaTipoR/{idTipoArt?}', [
+            'uses' => $controller . 'ArticuloController@modificarTipoArt',
+            'as'   => 'audiovisuales.articulo.modificarTipo',
+        ]);
+        Route::post('tipoArticuloEliminarR/{idTipoArt?}', [
+            'uses' => $controller . 'ArticuloController@tipoArticuloEliminar',
+            'as'   => 'tipoArticuloEliminarA',
+        ]);
+        Route::get('indexGestionArticuloAjaxR', [
+            'uses' => $controller . 'ArticuloController@indexGestionArticuloAjax',
+            'as'   => 'audiovisuales.gestionArticulos.indexAjax',
+        ]);
+        Route::get('indexValidacionesAjaxR', [
+            'uses' => $controller . 'ArticuloController@indexValidacionesAjax',
+            'as'   => 'audiovisuales.gestionArticulos.ValidacionesAjax',
+        ]);
+
+
+
+    /*
     Route::get('listarKit/{id?}',[
         'uses' => $controller.'ArticuloController@cargarKits',
         'as' => 'cargar.kits.select'
-    ]);
-    Route::get('listarTipoArticulos/{id?}',[
-        'uses' => $controller.'ArticuloController@cargarTipoArticulos',
-        'as' => 'cargar.tipoArticulos.select'
     ]);
     Route::get('listarEstadoArticulos/{id?}',[
         'uses' => $controller.'ArticuloController@cargarEstadoArticulos',
@@ -241,10 +466,7 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'as'   => 'articulo.update',
     ]);
 
-    Route::post('stores', [
-        'uses' => $controller . 'ArticuloController@storeTipoArt',
-        'as'   => 'tipoArticulos.store',
-    ]);
+
     Route::post('articles/check_unique', [
         'uses' => $controller . 'ArticuloController@ajaxUniqueTipoArt',
         'as'   => 'tipoArticulo.validar',
@@ -259,10 +481,7 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'as'   => 'kit.validar',
 
     ]);
-    Route::post('storeArticulo', [
-        'uses' => $controller . 'ArticuloController@storeArticulos',
-        'as'   => 'articulo.store',
-    ]);
+
     //Ruta para editar el Articulo
     Route::get('edit/{id?}', [
         'uses' => $controller . 'ArticuloController@edit',
@@ -272,5 +491,6 @@ Route::group(['prefix' => 'superAdmin', 'middleware' => ['permission:SUPER_ADMIN
         'uses' => $controller . 'ArticuloController@dataTableArticulos',
         'as'   => 'listarArticulo.data',
     ]);
+    */
 
 });

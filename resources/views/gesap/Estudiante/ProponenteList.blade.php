@@ -71,48 +71,15 @@
 @endpush
 
 @push('functions')
+
+	<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 	<script>
 	jQuery(document).ready(function () {
-		var table, url;
+		var table, url,columns;
 		table = $('#lista-anteproyecto');
 		url = "{{ route('anteproyecto.studentList') }}";
 
-		table.DataTable({
-		   lengthMenu: [
-			   [5, 10, 25, 50, -1],
-			   [5, 10, 25, 50, "Todo"]
-		   ],
-		   responsive: true,
-		   colReorder: true,
-		   processing: true,
-		   serverSide: true,
-		   ajax: url,
-		   searching: true,
-		   language: {
-			   "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> <span class="sr-only">Procesando...</span>',
-			   "sLengthMenu": "Mostrar _MENU_ registros",
-			   "sZeroRecords": "No se encontraron resultados",
-			   "sEmptyTable": "Ningún dato disponible en esta tabla",
-			   "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			   "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-			   "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-			   "sInfoPostFix": "",
-			   "sSearch": "Buscar:",
-			   "sUrl": "",
-			   "sInfoThousands": ",",
-			   "sLoadingRecords": "Cargando...",
-			   "oPaginate": {
-				   "sFirst": "Primero",
-				   "sLast": "Último",
-				   "sNext": "Siguiente",
-				   "sPrevious": "Anterior"
-			   },
-			   "oAria": {
-				   "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-				   "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			   }
-		   },
-		  columns:[
+		columns=[
 			  {data: 'DT_Row_Index'},
 			   {data: 'anteproyecto.PK_NPRY_IdMinr008', "visible": false },
 			   {data: 'NPRY_Titulo', searchable: true},
@@ -123,7 +90,7 @@
 			   {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
 				render: function (data, type, full, meta) 
 				{
-					return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
+					return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
 				}
 			   },
 			  {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
@@ -132,7 +99,7 @@
 				   if(data=="NO FILE"){
 					   return "NO FILE";    
 				   }else{
-					   return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+					   return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
 				   }  
 			   }
 			  }, 
@@ -178,54 +145,41 @@
 			   responsivePriority:2,
 			   render: function ( data, type, full, meta ) {
 				   if(full.anteproyecto.proyecto!=null){
-					   return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit"	><i class="icon-eye"></i></a>@endpermission @permission("See_Activity_Gesap")<a href="#" class="btn 	btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>@endpermission';
+					   return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"	><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" class="btn 	btn-simple btn-success btn-icon create"><i class="icon-list"></i></a>@endpermission';
 				   }else{
-					   return '@permission("See_Observations_Gesap")<a href="#" class="btn btn-simple btn-warning btn-icon edit">	<i class="icon-eye"></i></a>@endpermission';
+					   return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit">	<i class="icon-eye"></i></a>@endpermission';
 				   }
 			   },
 			  }
-		  ],
-			buttons: [
-				{ extend: 'print', className: 'btn btn-circle btn-icon-only btn-default tooltips t-print', text: '<i class="fa fa-print"></i>' },
-			   { extend: 'copy', className: 'btn btn-circle btn-icon-only btn-default tooltips t-copy', text: '<i class="fa fa-files-o"></i>' },
-			   { extend: 'pdf', className: 'btn btn-circle btn-icon-only btn-default tooltips t-pdf', text: '<i class="fa fa-file-pdf-o"></i>',},
-			   { extend: 'excel', className: 'btn btn-circle btn-icon-only btn-default tooltips t-excel', text: '<i class="fa fa-file-excel-o"></i>',},
-			   { extend: 'csv', className: 'btn btn-circle btn-icon-only btn-default tooltips t-csv',  text: '<i class="fa fa-file-text-o"></i>', },
-			   { extend: 'colvis', className: 'btn btn-circle btn-icon-only btn-default tooltips t-colvis', text: '<i class="fa fa-bars"></i>'},
-			   {text: '<i class="fa fa-refresh"></i>', className: 'btn btn-circle btn-icon-only btn-default tooltips t-refresh',
-				   action: function ( e, dt, node, config ) {
-					   dt.ajax.reload();
-				   }
-			   }
-
-		   ],
-		   pageLength: 10,
-		   dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
-		});
+		  ];
+		
+		dataTableServer.init(table, url, columns);
 	table = table.DataTable();
 		table.on('click', '.edit', function (e) {
 			e.preventDefault();
 			$tr = $(this).closest('tr');
-			var O = table.row($tr).data();
+			var o = table.row($tr).data();
 			$.ajax({
 				type: "GET",
 				url: '',
 				dataType: "html",
+
 			}).done(function (data) {
-				route = '{{ route('evaluar.show') }}/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('evaluar.show') }}/'+o.anteproyecto.PK_NPRY_IdMinr008;
 				$(".content-ajax").load(route);
 			});
 		});
 		table.on('click', '.create', function (e) {
 			e.preventDefault();
 			$tr = $(this).closest('tr');
-			var O = table.row($tr).data();
+			var o = table.row($tr).data();
 			$.ajax({
 				type: "GET",
 				url: '',
 				dataType: "html",
+
 			}).done(function (data) {
-				route = '{{ route('proyecto.actividades') }}/'+O.anteproyecto.PK_NPRY_IdMinr008;
+				route = '{{ route('proyecto.actividades') }}/'+o.anteproyecto.PK_NPRY_IdMinr008;
 				$(".content-ajax").load(route);
 			});
 		});
@@ -243,6 +197,36 @@
 				$(this).html('Ver más');
 			};
 		});  
+		
+		table.on('click', '.document', function (e) {
+			e.preventDefault();
+			var uri=$(this).attr('href');
+			$.ajax({
+				url: uri,
+				beforeSend: function () {
+					App.blockUI({target: '.portlet-form', animate: true});
+				},
+				success: function (response, xhr, request) {
+					if (request.status === 200 && xhr === 'success') {
+						if(response.title === "Ocurrió un problema") {
+							UIToastr.init('error', response.title, response.message);
+							App.unblockUI();
+						}else{
+							var a = document.createElement('a');
+							a.href = uri;
+							a.click();
+							window.URL.revokeObjectURL(uri); 
+						}
+					}
+				},
+				error: function (response, xhr, request) {
+					if (request.status === 422 &&  xhr === 'error') {
+						UIToastr.init(xhr, response.title, response.message);
+					}
+				}
+			});
+			return false; 
+		}); 
 	});
 	</script>
 @endpush

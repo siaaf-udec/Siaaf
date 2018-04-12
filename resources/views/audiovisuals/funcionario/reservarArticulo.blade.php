@@ -125,6 +125,7 @@ de la plantilla
             </div>
             <div class="modal-footer">
                 {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                {!! Form::button('Regresar', ['class' => 'btn blue','id'=> 'modalStatic']) !!}
             </div>
             {!! Form::close() !!}
         </div>
@@ -339,6 +340,12 @@ de la plantilla
                 FK_FUNCIONARIO_Programa:{required: true}
             };
             FormValidationMd.init(form_create,rules_create,false,createPrograma());
+            $('#modalStatic').on('click',function(e){
+                e.preventDefault();
+                console.log('accion boton');
+                {{--var routeAjax = '{{route('menuPrincipalAjax')}}';--}}
+                {{-- $(".content-ajax").load(routeAjax); --}}
+            });
 
         });
     </script>
