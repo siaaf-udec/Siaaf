@@ -93,7 +93,7 @@
                    {data: 'anteproyecto.NPRY_FechaL', className:'none',searchable: true},
                    {data: 'anteproyecto.radicacion.RDCN_Min',className:'none',
                         render: function (data, type, full, meta) {
-                            return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
+                            return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR MIN</a>';
                         }
                    },
                    {data: 'anteproyecto.radicacion.RDCN_Requerimientos',className:'none',searchable: true,
@@ -101,7 +101,7 @@
                             if(data=="NO FILE"){
                                 return "NO APLICA";    
                             }else{
-                                return '<a href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
+                                return '<a class="document" href="{{ route('download.documento') }}/'+data+'">DESCARGAR REQUERIMIENTOS</a>';    
                             }  
                         }
                    }, 
@@ -312,7 +312,35 @@
                     $(this).html('Ver más');
                 };
             });            
-            
+            table.on('click', '.document', function (e) {
+                e.preventDefault();
+                var uri=$(this).attr('href');
+                $.ajax({
+                    url: uri,
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            if(response.title === "Ocurrió un problema") {
+                                UIToastr.init('error', response.title, response.message);
+                                App.unblockUI();
+                            }else{
+                               var a = document.createElement('a');
+                                a.href = uri;
+                                a.click();
+                                window.URL.revokeObjectURL(uri); 
+                            }
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+                return false; 
+            }); 
         });
 </script>
 @endpush

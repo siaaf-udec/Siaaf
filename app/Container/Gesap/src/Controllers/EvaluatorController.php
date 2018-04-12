@@ -27,6 +27,7 @@ use App\Container\Gesap\src\CheckObservaciones;
 use App\Container\Gesap\src\Respuesta;
 use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Documentos;
+use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Conceptos;
 use App\Container\Users\Src\User;
 
@@ -256,11 +257,18 @@ class EvaluatorController extends Controller
     public function storeActividad(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $actividad=new Documentos();
-            $actividad->DMNT_Nombre= $request->get('nombre');
-            $actividad->DMNT_Descripcion= $request->get('descripcion');
-            $actividad->FK_TBL_Proyecto_Id= $request->get('PK_proyecto');
+            $actividad=new Actividad();
+            $actividad->CTVD_Nombre= $request->get('nombre');
+            $actividad->CTVD_Descripcion= $request->get('descripcion');
+            $actividad->CTVD_Default=0;
             $actividad->save();
+            
+            $idactividad=$actividad->PK_CTVD_IdActividad;
+            
+            $documentos=new Documentos();
+            $documentos->FK_TBL_Proyecto_Id= $request->get('PK_proyecto');
+            $documentos->FK_TBL_Actividad_Id= $idactividad;
+            $documentos->save();
             return AjaxResponse::success(
                 '¡Creacion Existosa!',
                 'Nueva actividad creada correctamente.'
@@ -374,29 +382,11 @@ class EvaluatorController extends Controller
             $proyecto->FK_TBL_Anteproyecto_Id=$id;
             $proyecto->save();
             
+            $actividades=Actividad::where('CTVD_Default', '=', 1)->get();
+            for($i=0;$i<$actividades->count();$i++){
+                $proyecto->documentos()->save(new Documentos(['FK_TBL_Actividad_Id'=>$actividades[$i]->PK_CTVD_IdActividad]));    
+            }
             
-            $proyecto->documentos()->saveMany([
-                new Documentos(['DMNT_Nombre'=>'Carta de Aval del director de proyecto', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Histórico', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Teórico', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Marco Legal', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama MER ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagramas de clases ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagramas de casos de uso ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de secuencia ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de actividades ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de despliegue ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Diagrama de colaboracion ', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Desarrollo', 'DMNT_Descripcion'=>'(Codigo,Programacion)']),
-                new Documentos(['DMNT_Nombre'=>'Registro  de Pruebas', 'DMNT_Descripcion'=>'CALISOFT']),
-                new Documentos(['DMNT_Nombre'=>'Artículo de propuesta', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Artículo de proyecto', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Manual Técnico', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Manual de Usuario', 'DMNT_Descripcion'=>'']),
-                new Documentos(['DMNT_Nombre'=>'Libro', 'DMNT_Descripcion'=>'Min 80 hojas']),
-                new Documentos(['DMNT_Nombre'=>'Repositorio DICTUM ', 'DMNT_Descripcion'=>'Formato AAAr113_V1'])
-            ]);
-        
             return AjaxResponse::success(
                 '¡Activacion Exitosa!',
                 'Proyecto activado correctamente.'
@@ -721,7 +711,7 @@ class EvaluatorController extends Controller
      * @param  String $archivo
 	 * @param  \Illuminate\Http\Request $request
      *
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function downloadDocument($archivo, Request $request)
     {
@@ -730,7 +720,10 @@ class EvaluatorController extends Controller
                 $url = storage_path('app/'.$archivo);  
                 return response()->download($url);
             } catch (Exception $e) {
-                return $e->getMessage();//ERROR: CAMBIAR
+                return AjaxResponse::success(
+                    'Ocurrió un problema',
+                    'No existe el documento.'
+                );
             }
         }
         return AjaxResponse::fail(

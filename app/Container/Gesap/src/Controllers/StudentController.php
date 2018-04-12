@@ -80,7 +80,9 @@ class StudentController extends Controller
                     ->where('PK_NPRY_IdMinr008', '=', $id)
                     ->with(['radicacion',
                             'proyecto' => function ($proyecto) {
-                                $proyecto->with('documentos');
+                                $proyecto->with(['documentos'=> function ($documento) {
+                                    $documento->with('actividad');
+                                }]);
                             }])
                     ->get();
             

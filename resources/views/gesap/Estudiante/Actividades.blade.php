@@ -92,7 +92,7 @@
 											{{ date('d M', strtotime($documento->created_at)) }} </div>
 										<div class="list-item-content">
 											<h3 class="uppercase">
-												<a href="javascript:;">{{$documento->DMNT_Nombre}}</a>
+												<a href="javascript:;">{{$documento}}</a>
 											</h3>
 											<p>{{$documento->DMNT_Descripcion}}</p>
 										</div>
@@ -141,9 +141,9 @@
 											{{ date('d M y', strtotime($documento->created_at)) }} </div>
 										<div class="list-item-content">
 											<h3 class="uppercase">
-												<a href="javascript:;">{{$documento->DMNT_Nombre}}</a>
+												<a href="javascript:;">{{$documento->actividad->CTVD_Nombre}}</a>
 											</h3>
-											<p>{{$documento->DMNT_Descripcion}}</p>
+											<p>{{$documento->actividad->CTVD_Descripcion}}</p>
 										</div>
 									</li>
 									@endif
@@ -289,9 +289,6 @@
 							data: formData,
 							processData: false,
 							async: async,
-							beforeSend: function () {
-
-							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									$('#modal-create-activity').modal('hide');
@@ -344,6 +341,9 @@
 							contentType: false,
 							processData: false,
 							async: async,
+							beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									UIToastr.init(xhr, response.title, response.message);

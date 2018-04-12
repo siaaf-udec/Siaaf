@@ -169,5 +169,7 @@ class PermissionGesapSeeder extends Seeder
 		$permission = Permission::where('name', '=', 'SEE_ACTIVITY_GESAP')->first();
         $permission->roles()->attach($role3);
 
+		$permission = Permission::where('name', '=', 'MASTER_USERS')->first();
+        $permission->roles()->attach($role1);
     }
 }
