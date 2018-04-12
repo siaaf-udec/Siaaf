@@ -31,7 +31,7 @@
 
                         {!! Field::select('SOL_carrera',
                                           ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
-                                          '3' => 'Ingeniería agronomica', '4' => 'Administraciín de empresas',
+                                          '3' => 'Ingeniería agronomica', '4' => 'Administración de empresas',
                                           '5' => 'Psicología', '6' => 'Contaduría'],
                                           null,
                                           [ 'label' => 'Programa:']) !!}

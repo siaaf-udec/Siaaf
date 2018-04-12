@@ -138,15 +138,17 @@
                 <li class="nav-item {{ active(['espacios.academicos.asist.asisEst'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.asist.asisEst') }}" class="nav-link nav-toggle">
                         <i class="fa fa-users"></i>
-                        <span class="title">Estudiante</span>
+                        <span class="title">Usuarios Udec</span>
                     </a>
                 </li>
+                @env('local')
                 <li class="nav-item {{ active(['espacios.academicos.asist.asisDoc'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.asist.asisDoc') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
                         <span class="title">Docente</span>
                     </a>
                 </li>
+                @endenv
                 <li class="nav-item {{ active(['espacios.academicos.asist.asisInv'], 'start active open') }}">
                     <a href="{{ route('espacios.academicos.asist.asisInv') }}" class="nav-link nav-toggle">
                         <i class="fa fa-user"></i>
