@@ -7,6 +7,22 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
         'uses' => $controller.'CoordinatorController@index',
         'as' => 'min.index'
     ]);
+    Route::get('activity/', [
+        'uses' => $controller.'CoordinatorController@activityDefault',
+        'as' => 'activity.default'
+    ]);
+    Route::get('activities', [
+        'uses' => $controller.'CoordinatorController@activityDefaultList',
+        'as' => 'actividad.default.list'
+    ]);
+    Route::post('activity/new', [
+        'uses' => $controller.'CoordinatorController@storeActividadDefault',
+        'as' => 'nueva.actividad'
+    ]);
+    Route::delete('activity/{id?}', [
+        'uses' => $controller.'CoordinatorController@destroyActividadDefault',
+        'as' => 'activity.default.destroy'
+    ]);
     Route::get('min/ajax', [
         'as' => 'min.index.ajax',
         'uses' => $controller.'CoordinatorController@indexAjax'

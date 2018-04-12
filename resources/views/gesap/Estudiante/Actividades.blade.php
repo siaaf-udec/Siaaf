@@ -268,7 +268,7 @@
 				$('#modal_documento').modal('toggle');
 			});
 
-			var createActivity = function () {
+		var createActivity = function () {
 				return{
 					init: function () {
 						var route = '{{ route('proyecto.nueva.actividad') }}';
