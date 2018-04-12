@@ -21,8 +21,11 @@ class DatabaseInteraccionSeeder extends Seeder
      */
     public function run()
     {
-       $this->call(RoleInteraccionSeeder::class);
-       $this->call(PermisosInteraccionSeeder::class);
-       $this->call(UsersInteraccionSeeder::class);
+        $this->call(RoleInteraccionSeeder::class);
+        $this->call(PermisosInteraccionSeeder::class);
+        $this->call(UsersInteraccionSeeder::class);
+        $this->call(EstadosInteraccionSeeder::class);
+        $this->call(SedesInteraccionSeeder::class);
+        $this->call(TipoPreguntaInteraccionSeeder::class);
     }
 }

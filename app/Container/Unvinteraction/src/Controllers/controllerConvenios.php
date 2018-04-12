@@ -27,7 +27,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class controllerConvenios extends Controller
+class ControllerConvenios extends Controller
 {
     
     private $path='unvinteraction.convenios';

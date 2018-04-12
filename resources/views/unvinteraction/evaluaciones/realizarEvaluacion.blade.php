@@ -1,5 +1,5 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'EVALUACION'])
-@permission(['Eva_pre1'])
+@permission(['INTE_EVA_PRE1'])
 @if($pregunta1)
     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
     <div class="form-wizard">
@@ -24,7 +24,7 @@
     {!! Form::close() !!}
 @endif
 @endpermission
-@permission(['Eva_pre2'])
+@permission(['INTE_EVA_PRE2'])
 @if($pregunta2)
     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-pregunta2']) !!}
         @php $N2=0; @endphp 
@@ -48,7 +48,7 @@
 @endpermission
 
 @endcomponent
-@permission(['Eva_pre1'])
+@permission(['INTE_EVA_PRE1'])
 <script type="text/javascript">
    
 jQuery(document).ready(function () {  
@@ -111,7 +111,7 @@ ComponentsSelect2.init();
 });
 </script>
 @endpermission
-@permission(['Eva_pre2'])
+@permission(['INTE_EVA_PRE2'])
 <script type="text/javascript">
    
 jQuery(document).ready(function () {  

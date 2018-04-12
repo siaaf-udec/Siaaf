@@ -15,7 +15,7 @@
     <div class="tab-content">
         <div class="tab-pane fade active in" id="tab_1_1">
             <div class="actions">
-                @permission(['Add_doc_con'])
+                @permission(['INTE_ADD_DOC_CON'])
                 <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
             </div>
 
@@ -38,7 +38,7 @@
         <!-- TABLAS  PARTICIPANTES -->
         <div class="tab-pane fade" id="tab_1_2">
             <div class="col-md-12">
-                @permission(['Add_parti'])
+                @permission(['INTE_ADD_PARTI'])
                 <div class="actions">
                     <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -64,7 +64,7 @@
         <div class="tab-pane fade" id="tab_1_3">
 
             <div class="col-md-12">
-                @permission(['Add_emp_parti'])
+                @permission(['INTE_ADD_EMP_PARTY'])
                 <div class="actions">
                     <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -202,7 +202,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: ' @permission(['Des_Doc_Con'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
+                        defaultContent: ' @permission(['INTE_DES_DOC_CON'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -248,7 +248,7 @@
                 orderable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+                defaultContent: '@permission(['INTE_EVA_EMPRESA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
 
 
                     }
@@ -282,10 +282,7 @@
                 e.preventDefault();
                 $('#participante').modal('toggle');
             });
-            $('.portlet-form').attr("id", "form_wizard_1");
-            var rules = {
-
-            };
+            
             $('.portlet-form').attr("id","form_wizard_1");
              var rules = {
                 identity_no: {required: true,number: true},
@@ -359,7 +356,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '@permission(['Eva_Pasante'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+                        defaultContent: '@permission(['INTE_EVA_PASANTE'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -413,6 +410,9 @@
                             data: formData,
                             processData: false,
                             async: async,
+                            beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#empresa').modal('hide');

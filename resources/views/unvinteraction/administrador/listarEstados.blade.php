@@ -163,11 +163,13 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
-                        
-                     
+                        beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
-                         $('#empresa').modal('hide');
+                        $('#empresa').modal('hide');
+                        $('#form-Agregar-Estado')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
                     }

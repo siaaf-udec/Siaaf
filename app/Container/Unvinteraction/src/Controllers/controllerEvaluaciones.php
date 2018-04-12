@@ -25,7 +25,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class controllerEvaluaciones extends Controller
+class ControllerEvaluaciones extends Controller
 {
      private $path='unvinteraction.evaluaciones';
     //__________________EVALUACIONES___________

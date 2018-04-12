@@ -117,9 +117,11 @@ jQuery(document).ready(function () {
                 }
             }; 
         }
+        
         var route = '{{route('subirDocumentoUsuario.subirDocumentoUsuario')}}';
         var formatfile = '.pdf'; 
         var numfile = 1; 
+    
         $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
     
         var table, url, columns;
