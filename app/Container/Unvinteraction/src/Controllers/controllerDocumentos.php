@@ -53,6 +53,7 @@ class ControllerDocumentos extends Controller
             $documento->DOCU_Ubicacion = $ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
             $documento->FK_TBL_Convenio_Id= $id;
             $documento->save();
+            return $request->get('name');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -132,6 +133,7 @@ class ControllerDocumentos extends Controller
             $doc->DCET_Ubicacion = $ubicacion ;
             $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
             $doc->save();
+            return $request->get('name');
             
         }
         return AjaxResponse::fail(
