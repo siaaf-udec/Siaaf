@@ -75,6 +75,14 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
         'as' => 'participanteConvenio.participanteConvenio', 
         'uses' => $controller.'ControllerConvenios@participanteConvenio'
     ]);
+    Route::delete('eliminarParticipante/{id?}', [    
+        'as' => 'eliminarParticipante.eliminarParticipante', 
+        'uses' => $controller.'ControllerConvenios@eliminarParticipante'
+    ]);
+    Route::delete('eliminarEmpresa/{id?}', [    
+        'as' => 'eliminarEmpresa.eliminarEmpresa', 
+        'uses' => $controller.'ControllerConvenios@eliminarEmpresa'
+    ]);
 });
 // ___________________________END_________CONVENIOS__________
 //___________________SEDES_______________

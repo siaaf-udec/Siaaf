@@ -109,6 +109,10 @@ class PermisosInteraccionSeeder extends Seeder
              'display_name'=>'ver preguntas tipo 4',
              'description'=>'--',
              'module_id'=>'5'],
+             ['name'=>'INTE_DELET_PART',
+             'display_name'=>'eliminar perticipantes',
+             'description'=>'--',
+             'module_id'=>'5']
         ]);
         
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();

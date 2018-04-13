@@ -339,7 +339,44 @@ class ControllerConvenios extends Controller
         }
        
     }
-    
+    /*funcion para eliminar particioantes del convenio
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function eliminarParticipante(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+            $participante = Participantes::findOrFail($id);
+            $participante->delete();
+            return AjaxResponse::success(
+                '¡Eliminacion Correcta!',
+                'participante eliminado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+        }
+       
+    }
+    /*funcion para eliminar empresas del convenio
+    *@param int id
+    *@param \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function eliminarEmpresa(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+            $participante = EmpresaParticipante::findOrFail($id);
+            $participante->delete();
+            return AjaxResponse::success(
+                '¡Eliminacion Correcta!',
+                'empresa participante eliminado correctamente.'
+            );
+        } else {
+            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+        }
+       
+    }
     
     //______________________END___CONVENIOS____________________________
 }
