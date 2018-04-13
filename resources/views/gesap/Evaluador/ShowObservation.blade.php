@@ -105,9 +105,6 @@ jQuery(document).ready(function () {
             var uri=$(this).attr('href');
             $.ajax({
                 url: uri,
-                beforeSend: function () {
-                    App.blockUI({target: '.portlet-form', animate: true});
-                },
                 success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         if(response.title === "Ocurrió un problema") {

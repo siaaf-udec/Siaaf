@@ -74,7 +74,6 @@ var FormDropzone = function () {
 
                     /*Cuando todos los archivos de la cola terminan de subir.*/
                     myDropzone.on("queuecomplete", function(file, xhr, formData) {
-                        UIToastr.init('success', 'Almacenado', 'El archivo se ha cargado satisfactoriamente. Un momento mientras se procesa.');
                     });
                 },
                 complete: function(file, xhr, formData) {

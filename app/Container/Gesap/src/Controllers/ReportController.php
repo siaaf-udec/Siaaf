@@ -99,10 +99,10 @@ class ReportController extends Controller
         if ($request->isMethod('GET')) {
             try {
                 $date = date("d/m/Y");
-                $time = date("h:i A");
-                $proyectos=Anteproyecto::
-					with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
-                	->get();
+            $time = date("h:i A");
+            $proyectos=Anteproyecto::
+                with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
+                ->get();
 
                 return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
                     'proyectos'=>$proyectos,
@@ -110,7 +110,17 @@ class ReportController extends Controller
                     'time'=>$time,
                 ])->download('ReporteAnteproyectosGesap.pdf');
             } catch (Exception $e) {
-                return $this->index();
+                $docentes=User::orderBy('name', 'asc')
+					->whereHas('roles', function ($e) {
+						$e->where('name', 'Coordinator_Gesap');
+						$e->orwhere('name', '=', 'Evaluator_Gesap');
+					})
+					->get(['name', 'lastname', 'id'])
+					->pluck('full_name', 'id')
+					->toArray();
+			return view($this->path.'PDF.PrincipalView', [
+				'docentes'=>$docentes
+			]);
             }
         }
         return AjaxResponse::fail(
@@ -202,7 +212,32 @@ class ReportController extends Controller
                     'cargo'     =>  "JURADO"
                 ])->download('ReporteGesapJurado.pdf');
             } catch (Exception $e) {
-                return $this->index();
+                            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $proyectos = Encargados::where(function ($query) {
+                                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                                $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
+            })
+                ->where('FK_Developer_User_Id', '=', $jury)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($jury);
+            return view($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"JURADO"
+            ]);
             }
         }
         return AjaxResponse::fail(
@@ -292,7 +327,30 @@ class ReportController extends Controller
                     'cargo'=>"JURADO"
                 ])->download('ReporteGesapDirector.pdf');
             } catch (Exception $e) {
-                return $this->index();
+                
+                 $date = date("d/m/Y");
+            $time = date("h:i A");
+            $proyectos = Encargados::where('NCRD_Cargo', '=', "Director")
+                ->where('FK_Developer_User_Id', '=', $director)
+                ->with(['anteproyecto' => function ($proyecto) {
+                    $proyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto',
+                                     'conceptoFinal']);
+                }])
+                ->get();
+            $docente = User::find($director);
+            return view($this->path.'PDF.ProyectoDocentePDF', [
+                'proyectos'=>$proyectos,
+                'docente'=>$docente,
+                'date'=>$date,
+                'time'=>$time,
+                'cargo'=>"DIRECTOR"
+            ]);
             }
         }
         return AjaxResponse::fail(
