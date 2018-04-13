@@ -20,6 +20,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
+use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Users\src\User;
@@ -444,6 +445,109 @@ class CoordinatorController extends Controller
         );
     }
     
+    
+    
+    /*
+     * Listado de las actividades de proyectos por defecto
+     *
+	 * @param  \Illuminate\Http\Request
+	 *
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function activityDefault(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+			return view($this->path.'ActividadDefault');
+		}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    
+         /*
+     * Función de almacenamiento en la base de datos de actividades predeterminadas para nuevos proyectos
+     *
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeActividadDefault(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $actividad=new Actividad();
+            $actividad->CTVD_Nombre= $request->get('nombre');
+            $actividad->CTVD_Descripcion= $request->get('descripcion');
+            $actividad->CTVD_Default=1;
+            $actividad->save();
+            return AjaxResponse::success(
+                '¡Creacion Existosa!',
+                'Nueva actividad creada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    
+    
+    /*
+     * Función de actualizacion en la base de datos de actividades predeterminadas
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function updateActividadDefault(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $actividad = Actividad::findOrFail($request->get('PK_CTVD_IdActividad'));
+            $actividad->CTVD_Nombre=$request->get('nombre');
+            $actividad->CTVD_Descripcion=$request->get('descripcion');
+            $actividad->save();
+
+            return AjaxResponse::success(
+                '¡Actualizacion Existosa!',
+                'Actividad modificada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+        /*
+     * Funcion de eliminacion de actividades predeterminades de la base de datos
+     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function destroyActividadDefault($id, Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+ 
+            $actividad = Actividad::findOrFail($id);
+            $actividad->delete();
+            return AjaxResponse::success(
+                '¡Eliminacion Correcta!',
+                'Anteproyecto eliminado correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+        
+    }
+    
+    
     /*
     * Consulta de todos los anteproyectos con sus datos correspondientes
     *
@@ -603,4 +707,27 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    
+    /*
+    * Consulta de todos las actividades por defecto
+    *
+	* @param  \Illuminate\Http\Request 
+	*
+    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function activityDefaultList(Request $request)
+    {
+		if ($request->isMethod('GET')) {
+			$actividades = Actividad::where('CTVD_Default', '=', 1)->get();
+			return Datatables::of($actividades)
+				->removeColumn('created_at')
+				->removeColumn('updated_at')
+				->addIndexColumn()->make(true);	
+     	}
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );   
+    }
+    
 }

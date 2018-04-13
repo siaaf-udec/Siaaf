@@ -3,9 +3,12 @@
 namespace App\container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Actividad extends Model
 {
+    
+   use SoftDeletes;
     /**
      * Conexión de la base de datos usada por el modelo
      *
@@ -34,6 +37,12 @@ class Actividad extends Model
      */
     protected $fillable = ['CTVD_Nombre','CTVD_Descripcion','CTVD_Default'];
     
+    /**
+     * Atributos que con muteadas
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 	/*
 	*Función de relacion entre las tablas de Actividad y Documentos 
 	*por los campo de FK_TBL_Actividad_Id y PK_CTVD_IdActividad 

@@ -1,5 +1,5 @@
 {{-- MENÚ DE EJEMPLO --}}
-@permission(['Ver_noti'])
+@permission(['INTE_VER_NOTI'])
             <li class="nav-item {{ active(['alerta.alerta'], 'start active open') }}">
                 <a href="{{ route('alerta.alerta') }}" class="nav-link nav-toggle">
                         <i class="fa fa-bell"></i>
@@ -7,7 +7,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_Convenio'])
+@permission(['INTE_VER_CONVENIO'])
             <li class="nav-item {{ active(['convenios.convenios'], 'start active open') }}">
                 <a href="{{ route('convenios.convenios') }}" class="nav-link nav-toggle">
                         <i class="fa fa-calendar-plus-o"></i>
@@ -15,7 +15,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_mis_Con'])
+@permission(['INTE_VER_MIS_CON'])
             <li class="nav-item {{ active(['misConvenios.misConvenios'], 'start active open') }}">
                 <a href="{{ route('misConvenios.misConvenios') }}" class="nav-link nav-toggle">
                         <i class="fa fa-archive"></i>
@@ -25,7 +25,7 @@
 
 
 @endpermission
-@permission(['Ver_empresas'])
+@permission(['INTE_VER_EMPRESAS'])
             <li class="nav-item {{ active(['empresas.empresas'], 'start active open') }}">
                 <a href="{{ route('empresas.empresas') }}" class="nav-link nav-toggle">
                         <i class="fa fa-industry"></i>
@@ -34,7 +34,7 @@
                 </li>
 
 @endpermission
-@permission(['Ver_sedes'])
+@permission(['INTE_VER_SEDES'])
             <li class="nav-item {{ active(['sedes.sedes'], 'start active open') }}">
                 <a href="{{ route('sedes.sedes') }}" class="nav-link nav-toggle">
                         <i class="fa fa-building"></i>
@@ -42,7 +42,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_estados'])
+@permission(['INTE_VER_ESTADOS'])
             <li class="nav-item {{ active(['estados.estados'], 'start active open') }}">
                 <a href="{{ route('estados.estados') }}" class="nav-link nav-toggle">
                         <i class="fa fa-paper-plane"></i>
@@ -50,7 +50,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_mis_doc'])
+@permission(['INTE_VER_MIS_DOC'])
             <li class="nav-item {{ active(['misDocumentos.misDocumentos'], 'start active open') }}">
                 <a href="{{ route('misDocumentos.misDocumentos') }}" class="nav-link nav-toggle">
                         <i class="fa fa-folder"></i>
@@ -66,7 +66,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_tipo_preg'])
+@permission(['INTE_VER_TIPO_PREG'])
             <li class="nav-item {{ active(['tipoPregunta.tipoPregunta'], 'start active open') }}">
                 <a href="{{ route('tipoPregunta.tipoPregunta') }}" class="nav-link nav-toggle">
                         <i class="fa fa-list-alt"></i>
@@ -74,7 +74,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_preg'])
+@permission(['INTE_VER_PREG'])
             <li class="nav-item {{ active(['pregunta.pregunta'], 'start active open') }}">
                 <a href="{{ route('pregunta.pregunta') }}" class="nav-link nav-toggle">
                         <i class="fa fa-question"></i>

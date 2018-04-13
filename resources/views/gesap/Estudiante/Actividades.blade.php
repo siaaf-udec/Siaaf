@@ -92,9 +92,9 @@
 											{{ date('d M', strtotime($documento->created_at)) }} </div>
 										<div class="list-item-content">
 											<h3 class="uppercase">
-												<a href="javascript:;">{{$documento}}</a>
+												<a href="javascript:;">{{$documento->actividad->CTVD_Nombre}}</a>
 											</h3>
-											<p>{{$documento->DMNT_Descripcion}}</p>
+											<p>{{$documento->actividad->CTVD_Descripcion}}</p>
 										</div>
 									</li>
 									@endif
@@ -268,7 +268,7 @@
 				$('#modal_documento').modal('toggle');
 			});
 
-			var createActivity = function () {
+		var createActivity = function () {
 				return{
 					init: function () {
 						var route = '{{ route('proyecto.nueva.actividad') }}';
@@ -341,9 +341,6 @@
 							contentType: false,
 							processData: false,
 							async: async,
-							beforeSend: function () {
-								App.blockUI({target: '.portlet-form', animate: true});
-							},
 							success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									UIToastr.init(xhr, response.title, response.message);
@@ -373,11 +370,11 @@
 			var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
 			var formatfile = ''; 
 			var numfile = 1; 
-		   $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
+		$("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
 
 		
 		
-				$('#link_back-director').on('click', function (e) {
+		$('#link_back-director').on('click', function (e) {
 			e.preventDefault();
 			var route = '{{ route('anteproyecto.index.directorList.ajax') }}';
 			$(".content-ajax").load(route);

@@ -1,5 +1,5 @@
  @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR CONVENIOS']) 
-                @permission(['Add_Convenio'])
+                @permission(['INTE_ADD_CONVENIO'])
                     <div class="col-md-12">
                         <div class="actions">
                             <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
@@ -186,7 +186,7 @@
                     orderable: false,
                     exportable: false,
                     printable: false,
-                    defaultContent: '@permission(['Edit_Convenio'])<a href="#" id="editar" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission @permission(['Ver_dato_con'])<a href="#" id="ver" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"></i></a> @endpermission'
+                    defaultContent: '@permission(['INTE_EDIT_CONVENIO'])<a href="#" id="editar" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission @permission(['INTE_VER_DATO_CON'])<a href="#" id="ver" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"></i></a> @endpermission'
 
 
                 }

@@ -51,6 +51,6 @@ class Documentos extends Model
 	*/
     public function actividad()
     {
-        return $this->belongsto(Actividad::class, 'FK_TBL_Actividad_Id', 'PK_CTVD_IdActividad');
+        return $this->belongsto(Actividad::class, 'FK_TBL_Actividad_Id', 'PK_CTVD_IdActividad')->withTrashed();
     }
 }

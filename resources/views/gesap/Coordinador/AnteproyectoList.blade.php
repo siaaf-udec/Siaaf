@@ -259,9 +259,6 @@
                                     UIToastr.init(xhr, response.title, response.message);                                    
                                 }
                             },
-                            beforeSend: function () {
-								App.blockUI({target: '.portlet-form', animate: true});
-							},
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
@@ -292,9 +289,6 @@
                 var uri=$(this).attr('href');
                 $.ajax({
                     url: uri,
-                    beforeSend: function () {
-				        App.blockUI({target: '.portlet-form', animate: true});
-				    },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             if(response.title === "Ocurrió un problema") {

@@ -24,7 +24,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class controllerAdministrador extends Controller
+class ControllerAdministrador extends Controller
 {
     
     private $path='unvinteraction.administrador'; 

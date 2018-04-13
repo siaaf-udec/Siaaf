@@ -98,29 +98,19 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script> 
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
+
 @endpush
 @push('functions')
 <script>
 jQuery(document).ready(function () {
-    
+    Dropzone.autoDiscover = false;
    
-    table = $('#Listar_Documentos');
-        var documento = function () { 
-            return { 
-                init:function(){
-                    $('#documento').modal('hide');  
-                    
-                }
-            }; 
-        }
-        var route = '{{route('subirDocumentoUsuario.subirDocumentoUsuario')}}';
-        var formatfile = '.pdf'; 
-        var numfile = 1; 
-        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
+    
     
         var table, url, columns;
         table = $('#Listar_Documentos');
@@ -152,6 +142,22 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $('#documento').modal('toggle');
         });
+    table = $('#Listar_Documentos');
+        var documento = function () { 
+            return { 
+                init:function(){
+                    $('#documento').modal('hide');  
+                    
+                }
+            }; 
+        }
+        
+        var route = '{{route('subirDocumentoUsuario.subirDocumentoUsuario')}}';
+        var formatfile = '.pdf'; 
+        var numfile = 1; 
+    
+        $("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name));
+    
     
 });
 </script>

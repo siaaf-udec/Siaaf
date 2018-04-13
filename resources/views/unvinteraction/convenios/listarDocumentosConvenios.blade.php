@@ -15,13 +15,10 @@
     <div class="tab-content">
         <div class="tab-pane fade active in" id="tab_1_1">
             <div class="actions">
-                @permission(['Add_doc_con'])
+                @permission(['INTE_ADD_DOC_CON'])
                 <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
             </div>
-
-
             <div class="row">
-
                 <div class="clearfix"> </div><br><br>
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) 
@@ -38,7 +35,7 @@
         <!-- TABLAS  PARTICIPANTES -->
         <div class="tab-pane fade" id="tab_1_2">
             <div class="col-md-12">
-                @permission(['Add_parti'])
+                @permission(['INTE_ADD_PARTI'])
                 <div class="actions">
                     <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -64,7 +61,7 @@
         <div class="tab-pane fade" id="tab_1_3">
 
             <div class="col-md-12">
-                @permission(['Add_emp_parti'])
+                @permission(['INTE_ADD_EMP_PARTY'])
                 <div class="actions">
                     <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
                 </div>
@@ -167,7 +164,7 @@
 </div>
 <!-- FIN MODALS -->
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/interaccion/js/dropzone.js') }}" type="text/javascript"></script>   
+<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
     jQuery(document).ready(function() {
         var table, url, id;
@@ -175,9 +172,7 @@
         var documento = function () { 
             return { 
                 init:function(){
-                    table.ajax.reload();
                     $('#documento').modal('hide'); 
-                    
                 }
             }; 
         }
@@ -202,7 +197,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: ' @permission(['Des_Doc_Con'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
+                        defaultContent: ' @permission(['INTE_DES_DOC_CON'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -248,7 +243,7 @@
                 orderable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '@permission(['Eva_Empresa'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Eva_Empresa'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+                defaultContent: '@permission(['INTE_EVA_EMPRESA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>@endpermission'
 
 
                     }
@@ -278,14 +273,59 @@
                     route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
                 $(".content-ajax").load(route_edit);
             });
+        
+            table.on('click', '.delete', function(e) {
+                e.preventDefault();
+				$tr = $(this).closest('tr');
+				var o = table.row($tr).data();
+				var route = '{{route('eliminarParticipante.eliminarParticipante')}}/'+o.PK_PTPT_Participantes;
+				var type = 'DELETE';
+				var async = async || false;
+				swal({
+					title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+					 function(isConfirm){
+					if (isConfirm) {
+						$.ajax({
+							url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+						});
+						swal.close();
+					} else {
+                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                    }
+                });
+            });
+        
             $("#archivo2").on('click', function(e) {
                 e.preventDefault();
                 $('#participante').modal('toggle');
             });
-            $('.portlet-form').attr("id", "form_wizard_1");
-            var rules = {
-
-            };
+            
             $('.portlet-form').attr("id","form_wizard_1");
              var rules = {
                 identity_no: {required: true,number: true},
@@ -313,8 +353,6 @@
                             data: formData,
                             processData: false,
                             async: async,
-
-
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#participante').modal('hide');
@@ -359,7 +397,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '@permission(['Eva_Pasante'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['Ver_Eva'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission'
+                        defaultContent: '@permission(['INTE_EVA_PASANTE'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -382,7 +420,52 @@
                     route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
                 $(".content-ajax").load(route_edit);
             });
-
+            table.on('click', '.delete1', function(e) {
+                e.preventDefault();
+				$tr = $(this).closest('tr');
+				var o = table.row($tr).data();
+				var route = '{{route('eliminarEmpresa.eliminarEmpresa')}}/'+o.PK_EMPT_Empresa_Participante;
+				var type = 'DELETE';
+				var async = async || false;
+				swal({
+					title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+					 function(isConfirm){
+					if (isConfirm) {
+						$.ajax({
+							url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+						});
+						swal.close();
+					} else {
+                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                    }
+                });
+            });
             $("#archivo3").on('click', function(e) {
                 e.preventDefault();
                 $('#empresa').modal('toggle');

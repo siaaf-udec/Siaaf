@@ -1,8 +1,9 @@
+//2
 var FormDropzone = function () {
     return {
         //main function to initiate the module
         init: function (route, formatfile, numfile, method, params, comeback) {
-            
+            //2
             Dropzone.options.autoDiscover = false;
             Dropzone.options.myDropzone = {
                 url: route,
@@ -31,7 +32,6 @@ var FormDropzone = function () {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                
                 acceptedFiles: formatfile,
                 init: function () {
                     var myDropzone = this,
@@ -52,6 +52,13 @@ var FormDropzone = function () {
 
                     /*Cuando la subida era correcta o errónea*/
                     myDropzone.on("complete", function(file, xhr, formData) {
+                        if(file.status=='success'){
+                            myDropzone.removeFile(file);
+                        }else{
+                             UIToastr.init( 'error','ERROR', 'El archivo que desea cargar no es permitido.');
+                            myDropzone.removeFile(file);
+                        }
+                       
                         myDropzone.removeFile(file);
                     });
 
@@ -70,7 +77,7 @@ var FormDropzone = function () {
                     });
                     
                     myDropzone.on("dictInvalidFileType",function(file, xhr, formData) {
-                        
+                          UIToastr.init('success', 'ERROR', 'El archivo se ha cargado satisfactoriamente. Un momento mientras se procesa.');
                     });
 
                     /*Se llama a cada archivo que se ha rechazado porque el número de archivos excede el límite*/
@@ -86,15 +93,14 @@ var FormDropzone = function () {
                 complete: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', 'Carga Satisfactoria',
-                            'El archivo se ha procesado satisfactoriamente.'
+                            'El archivo se ha procesado satisfactoriamente.'+file.status
                         );
-                        
                     }
                 },
                 error: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', '¡Ocurrió un Error!',
-                            'El archivo se ha procesado satisfactoriamente.'
+                            'El archivo se ha procesado satisfactoriamente.'+file.status
                         );
                     }
                 }

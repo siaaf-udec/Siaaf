@@ -34,6 +34,18 @@ class PermissionGesapSeeder extends Seeder
              'display_name'=>'Ver Reportes',
              'description'=>'Ver los reportes',
              'module_id'=>'7'],
+            ['name'=>'CREATE_ACTIVITY_DEFAULT_GESAP',
+             'display_name'=>'Actividades',
+             'description'=>'Actividades default',
+             'module_id'=>'7'],
+            ['name'=>'EDIT_ACTIVITY_DEFAULT_GESAP',
+             'display_name'=>'Actividades',
+             'description'=>'Actividades default',
+             'module_id'=>'7'],
+            ['name'=>'DELETE_ACTIVITY_DEFAULT_GESAP',
+             'display_name'=>'Actividades',
+             'description'=>'Actividades default',
+             'module_id'=>'7'],
             
             ['name'=>'JURY_LIST_GESAP',
              'display_name'=>'Proyectos de Jurado',
@@ -114,6 +126,12 @@ class PermissionGesapSeeder extends Seeder
 		$permission = Permission::where('name', '=', 'ASSIGN_TEACHER_GESAP')->first();
         $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'REPORT_GESAP')->first();
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'CREATE_ACTIVITY_DEFAULT_GESAP')->first();
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'EDIT_ACTIVITY_DEFAULT_GESAP')->first();
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'DELETE_ACTIVITY_DEFAULT_GESAP')->first();
         $permission->roles()->attach($role1);
 		
         $permission = Permission::where('name', '=', 'JURY_LIST_GESAP')->first();

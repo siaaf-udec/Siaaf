@@ -24,7 +24,7 @@ use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
 
-class controllerAlertas extends Controller
+class ControllerAlertas extends Controller
 {
     /**
      * Display a listing of the resource.

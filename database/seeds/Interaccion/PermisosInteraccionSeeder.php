@@ -9,23 +9,23 @@ class PermisosInteraccionSeeder extends Seeder
     public function run()
     {
          Permission::insert([
-            ['name'=>'Add_Convenio',
+            ['name'=>'INTE_ADD_CONVENIO',
              'display_name'=>'agregar con',
              'description'=>'premite al usuario la manipulación de los convenios',
              'module_id'=>'5'],
-             ['name'=>'Eva_Empresa',
+             ['name'=>'INTE_EVA_EMPRESA',
              'display_name'=>'evalua Empresa',
              'description'=>'premite a la empresa evaluar',
              'module_id'=>'5'],
-             ['name'=>'Eva_Pasante',
+             ['name'=>'INTE_EVA_PASANTE',
              'display_name'=>'Evalua Pasante',
              'description'=>'premite al usuario evaluar una empresa',
              'module_id'=>'5'],
-             ['name'=>'Ver_Eva',
+             ['name'=>'INTE_VER_EVA',
              'display_name'=>'ver resultados',
              'description'=>'premite al usuario ver los resultados de la evalucion',
              'module_id'=>'5'],
-             ['name'=>'Des_Doc_Con',
+             ['name'=>'INTE_DES_DOC_CON',
              'display_name'=>'descargar arch',
              'description'=>'premite a los usuarios descargar archivos',
              'module_id'=>'5'],
@@ -33,82 +33,86 @@ class PermisosInteraccionSeeder extends Seeder
              'display_name'=>'Modulo INTERACCION',
              'description'=>'Acceso a solo este modulo',
              'module_id'=>'5'],
-             ['name'=>'Ver_noti',
+             ['name'=>'INTE_VER_NOTI',
              'display_name'=>'ver notificacion',
              'description'=>'permite ver las notificaciones',
              'module_id'=>'5'],
-             ['name'=>'Ver_Convenio',
+             ['name'=>'INTE_VER_CONVENIO',
              'display_name'=>'ver convenios',
              'description'=>'Ver todos los convenios',
              'module_id'=>'5'],
-             ['name'=>'Ver_mis_Con',
+             ['name'=>'INTE_VER_MIS_CON',
              'display_name'=>'ver mis convenios',
              'description'=>'ver los convenios en que participa',
              'module_id'=>'5'],
-             ['name'=>'Ver_empresas',
+             ['name'=>'INTE_VER_EMPRESAS',
              'display_name'=>'ver empresas',
              'description'=>'permite ver todas las empresas',
              'module_id'=>'5'],
-             ['name'=>'Ver_sedes',
+             ['name'=>'INTE_VER_SEDES',
              'display_name'=>'ver sedes',
              'description'=>'ver todas las sedes',
              'module_id'=>'5'],
-             ['name'=>'Ver_estados',
+             ['name'=>'INTE_VER_ESTADOS',
              'display_name'=>'ver estados',
              'description'=>'ver todos los estados ',
              'module_id'=>'5'],
-             ['name'=>'Ver_mis_doc',
+             ['name'=>'INTE_VER_MIS_DOC',
              'display_name'=>'ver mis documentos',
              'description'=>'ver mis documentos',
              'module_id'=>'5'],
-             ['name'=>'Ver_eva_prin',
+             ['name'=>'INTE_VER_EVA_prin',
              'display_name'=>'ver evaluaciones',
              'description'=>'ver todas las evaluaciones',
              'module_id'=>'5'],
-             ['name'=>'Ver_tipo_preg',
+             ['name'=>'INTE_VER_TIPO_PREG',
              'display_name'=>'ver tipo preguntas',
              'description'=>'ver todos los tipos de pregunta',
              'module_id'=>'5'],
-             ['name'=>'Ver_preg',
+             ['name'=>'INTE_VER_PREG',
              'display_name'=>'ver preguntas',
              'description'=>'permite ver las preguntas de las encuestas',
              'module_id'=>'5'],
-             ['name'=>'Edit_Convenio',
+             ['name'=>'INTE_EDIT_CONVENIO',
              'display_name'=>'editar convenio',
              'description'=>'poder editar la informacion de un convenio',
              'module_id'=>'5'],
-             ['name'=>'Ver_dato_con',
+             ['name'=>'INTE_VER_DATO_CON',
              'display_name'=>'ver datos convenios',
              'description'=>'ver los datos de un convenio',
              'module_id'=>'5'],
-             ['name'=>'Add_doc_con',
+             ['name'=>'INTE_ADD_DOC_CON',
              'display_name'=>'agregar documento convenio',
              'description'=>'permite agregar documentos al convenio',
              'module_id'=>'5'],
-             ['name'=>'Add_parti',
+             ['name'=>'INTE_ADD_PARTI',
              'display_name'=>'agregar participante',
              'description'=>'--',
              'module_id'=>'5'],
-             ['name'=>'Add_emp_parti',
+             ['name'=>'INTE_ADD_EMP_PARTY',
              'display_name'=>'agregar empresa',
              'description'=>'--',
              'module_id'=>'5'],
-             ['name'=>'Eva_pre1',
+             ['name'=>'INTE_EVA_PRE1',
              'display_name'=>'ver preguntas tipo 1',
              'description'=>'--',
              'module_id'=>'5'],
-             ['name'=>'Eva_pre2',
+             ['name'=>'INTE_EVA_PRE2',
              'display_name'=>'ver preguntas tipo 2',
              'description'=>'--',
              'module_id'=>'5'],
-             ['name'=>'Eva_pre3',
+             ['name'=>'INTE_EVA_PRE3',
              'display_name'=>'ver preguntas tipo 3',
              'description'=>'--',
              'module_id'=>'5'],
-             ['name'=>'Eva_pre4',
+             ['name'=>'INTE_EVA_PRE4',
              'display_name'=>'ver preguntas tipo 4',
              'description'=>'--',
              'module_id'=>'5'],
+             ['name'=>'INTE_DELET_PART',
+             'display_name'=>'eliminar perticipantes',
+             'description'=>'--',
+             'module_id'=>'5']
         ]);
         
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
@@ -119,33 +123,33 @@ class PermisosInteraccionSeeder extends Seeder
         $permission->roles('Empresario_uni')->sync(6);
         
         //permisos para el administrador de interccion universitaria
-        $permission = Permission::where('name', '=', 'Add_Convenio')->first();
+        $permission = Permission::where('name', '=', 'INTE_ADD_CONVENIO')->first();
         $permission->roles('Admin_uni')->sync(2);
-        $permission = Permission::where('name', '=', 'Des_Doc_Con')->first();
+        $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
         $permission->roles('Admin_uni')->sync(2);
-        $permission = Permission::where('name', '=', 'Ver_Eva')->first();
+        $permission = Permission::where('name', '=', 'INTE_VER_EVA')->first();
         $permission->roles('Admin_uni')->sync(2);
         //permisos para el pasante 
-        $permission = Permission::where('name', '=', 'Eva_Pasante')->first();
+        $permission = Permission::where('name', '=', 'INTE_EVA_PASANTE')->first();
         $permission->roles('Pasante_uni')->sync(5);
         //premisos para el funcionario 
-        $permission = Permission::where('name', '=', 'Add_Convenio')->first();
+        $permission = Permission::where('name', '=', 'INTE_ADD_CONVENIO')->first();
         $permission->roles('Funcionario_uni')->sync(4);
-        $permission = Permission::where('name', '=', 'Des_Doc_Con')->first();
+        $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
         $permission->roles('Funcionario_uni')->sync(4);
-        $permission = Permission::where('name', '=', 'Ver_Eva')->first();
+        $permission = Permission::where('name', '=', 'INTE_VER_EVA')->first();
         $permission->roles('Funcionario_uni')->sync(4);
         //premisos para los coordinadores de programa
-        $permission = Permission::where('name', '=', 'Eva_Pasante')->first();
+        $permission = Permission::where('name', '=', 'INTE_EVA_PASANTE')->first();
         $permission->roles('Coordinador_uni')->sync(3);
-        $permission = Permission::where('name', '=', 'Des_Doc_Con')->first();
+        $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
         $permission->roles('Coordinador_uni')->sync(3);
-        $permission = Permission::where('name', '=', 'Eva_Empresa')->first();
+        $permission = Permission::where('name', '=', 'INTE_EVA_EMPRESA')->first();
         $permission->roles('Coordinador_uni')->sync(3);
         //permisos para las empresas
-        $permission = Permission::where('name', '=', 'Eva_Empresa')->first();
+        $permission = Permission::where('name', '=', 'INTE_EVA_EMPRESA')->first();
         $permission->roles('Empresario_uni')->sync(6);
-        $permission = Permission::where('name', '=', 'Des_Doc_Con')->first();
+        $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
         $permission->roles('Empresario_uni')->sync(6);        
     }
 }

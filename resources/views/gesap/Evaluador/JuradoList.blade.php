@@ -190,8 +190,8 @@
     <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-	<!-- FileInput Plugins -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<!-- FileInput Scripts -->
+	<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -436,9 +436,6 @@
             var uri=$(this).attr('href');
             $.ajax({
             	url: uri,
-				beforeSend: function () {
-					App.blockUI({target: '.portlet-form', animate: true});
-				},
 				success: function (response, xhr, request) {
 					if (request.status === 200 && xhr === 'success') {
 						if(response.title === "Ocurrió un problema") {

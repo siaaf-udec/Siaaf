@@ -10,6 +10,14 @@
         </span>
     </a>
     <ul class="sub-menu">
+        @permission('CREATE_ACTIVITY_DEFAULT_GESAP')
+            <li class="nav-item {{ active(['activity.default'], 'start active open') }}">
+                <a href="{{ route('activity.default') }}" class="nav-link nav-toggle">
+                    <i class="fa fa-list-alt"></i>
+                    <span class="title">Entregables</span>
+                </a>
+            </li>
+        @endpermission
         @permission('SEE_ALL_PROJECT_GESAP')
             <li class="nav-item {{ active(['min.index'], 'start active open') }}">
                 <a href="{{ route('min.index') }}" class="nav-link nav-toggle">

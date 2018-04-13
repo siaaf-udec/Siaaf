@@ -23,7 +23,7 @@
 
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR TIPOS DE PREGUNTAS'])
-@permission(['Add_Convenio'])
+@permission(['INTE_ADD_CONVENIO'])
  <div class="col-md-12">
                     <div class="actions">
                         <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
@@ -161,11 +161,13 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
-                        
-                     
+                        beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                          $('#agregar').modal('hide');
+                        $('#form-Agregar-Tipo-Pregunta')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
                     }

@@ -16,64 +16,72 @@ $controller = "\\App\\Container\\Unvinteraction\\Src\\Controllers\\";
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('convenios', [
         'as' => 'convenios.convenios',
-        'uses' => $controller.'controllerConvenios@convenios'
+        'uses' => $controller.'ControllerConvenios@convenios'
     ]);
     Route::get('conveniosAjax', [
         'as' => 'conveniosAjax.conveniosAjax',
-        'uses' => $controller.'controllerConvenios@conveniosAjax'
+        'uses' => $controller.'ControllerConvenios@conveniosAjax'
     ]);
     Route::get('misConvenios', [
         'as' => 'misConvenios.misConvenios',
-        'uses' => $controller.'controllerConvenios@misConvenios'
+        'uses' => $controller.'ControllerConvenios@misConvenios'
     ]);
     Route::get('listarMisConvenios', [
         'as' => 'listarMisConvenios.listarMisConvenios',
-        'uses' => $controller.'controllerConvenios@listarMisConvenios'
+        'uses' => $controller.'ControllerConvenios@listarMisConvenios'
     ]);
     Route::get('listarConvenios', [
         'as' => 'listarConvenios.listarConvenios',
-        'uses' => $controller.'controllerConvenios@listarConvenios'
+        'uses' => $controller.'ControllerConvenios@listarConvenios'
     ]);
 
     Route::post('registroConvenios', [
        'as' => 'registroConvenios.registroConvenios',
-       'uses' => $controller.'controllerConvenios@registroConvenios'
+       'uses' => $controller.'ControllerConvenios@registroConvenios'
     ]);
     Route::get('editarConvenios/{id?}', [    
         'as' => 'editarConvenios.editarConvenios', 
-        'uses' => $controller.'controllerConvenios@editarConvenios'
+        'uses' => $controller.'ControllerConvenios@editarConvenios'
     ]);
     Route::post('modificarConvenios/{id?}', [
         'as' => 'modificarConvenios.modificarConvenios',
-       'uses' => $controller.'controllerConvenios@modificarConvenios'
+       'uses' => $controller.'ControllerConvenios@modificarConvenios'
     ]);
     Route::get('documentosConvenios/{id?}', [    
         'as' => 'documentosConvenios.documentosConvenios', 
-        'uses' => $controller.'controllerConvenios@documentosConvenios'
+        'uses' => $controller.'ControllerConvenios@documentosConvenios'
     ]);
     Route::post('agregarDocumento/{id?}', [    
         'as' => 'agregarDocumento.agregarDocumento', 
-        'uses' => $controller.'controllerConvenios@agregarDocumento'
+        'uses' => $controller.'ControllerConvenios@agregarDocumento'
     ]);
     Route::get('listarDocumentosConvenios/{id?}', [    
         'as' => 'listarDocumentosConvenios.listarDocumentosConvenios', 
-        'uses' => $controller.'controllerConvenios@listarDocumentosConvenios'
+        'uses' => $controller.'ControllerConvenios@listarDocumentosConvenios'
     ]);
     Route::get('listarParticipantesConvenios/{id?}', [    
         'as' => 'listarParticipantesConvenios.listarParticipantesConvenios', 
-        'uses' => $controller.'controllerConvenios@listarParticipantesConvenios'
+        'uses' => $controller.'ControllerConvenios@listarParticipantesConvenios'
     ]);
     Route::get('listarEmpresasParticipantesConvenios/{id?}', [    
         'as' => 'listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios', 
-        'uses' => $controller.'controllerConvenios@listarEmpresasParticipantesConvenios'
+        'uses' => $controller.'ControllerConvenios@listarEmpresasParticipantesConvenios'
     ]);
     Route::post('empresaConvenio/{id?}', [    
         'as' => 'empresaConvenio.empresaConvenio', 
-        'uses' => $controller.'controllerConvenios@empresaConvenio'
+        'uses' => $controller.'ControllerConvenios@empresaConvenio'
     ]);
     Route::post('participanteConvenio/{id?}', [    
         'as' => 'participanteConvenio.participanteConvenio', 
-        'uses' => $controller.'controllerConvenios@participanteConvenio'
+        'uses' => $controller.'ControllerConvenios@participanteConvenio'
+    ]);
+    Route::delete('eliminarParticipante/{id?}', [    
+        'as' => 'eliminarParticipante.eliminarParticipante', 
+        'uses' => $controller.'ControllerConvenios@eliminarParticipante'
+    ]);
+    Route::delete('eliminarEmpresa/{id?}', [    
+        'as' => 'eliminarEmpresa.eliminarEmpresa', 
+        'uses' => $controller.'ControllerConvenios@eliminarEmpresa'
     ]);
 });
 // ___________________________END_________CONVENIOS__________
@@ -81,27 +89,27 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('sedes', [
         'as' => 'sedes.sedes',
-        'uses' => $controller.'controllerAdministrador@sedes'
+        'uses' => $controller.'ControllerAdministrador@sedes'
     ]);
     Route::get('sedesAjax', [
         'as' => 'sedesAjax.sedesAjax',
-        'uses' => $controller.'controllerAdministrador@sedesAjax'
+        'uses' => $controller.'ControllerAdministrador@sedesAjax'
     ]);
     Route::get('listarSedes', [
         'as' => 'listarSedes.listarSedes',
-        'uses' => $controller.'controllerAdministrador@listarSedes'
+        'uses' => $controller.'ControllerAdministrador@listarSedes'
     ]);
     Route::post('resgistrarSedes', [
         'as' => 'resgistrarSedes.resgistrarSedes',
-        'uses' => $controller.'controllerAdministrador@resgistrarSedes'
+        'uses' => $controller.'ControllerAdministrador@resgistrarSedes'
     ]);
     Route::get('editarSedes/{id?}', [
         'as' => 'editarSedes.editarSedes',
-        'uses' => $controller.'controllerAdministrador@editarSedes'
+        'uses' => $controller.'ControllerAdministrador@editarSedes'
     ]);
     Route::post('modificarSedes/{id?}', [
         'as' => 'modificarSedes.modificarSedes',
-        'uses' => $controller.'controllerAdministrador@modificarSedes'
+        'uses' => $controller.'ControllerAdministrador@modificarSedes'
     ]);
 });
 //__________________END___SEDES_______________
@@ -109,27 +117,27 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('estados', [
         'as' => 'estados.estados',
-        'uses' => $controller.'controllerAdministrador@estados'
+        'uses' => $controller.'ControllerAdministrador@estados'
     ]);
     Route::get('estadosAjax', [
         'as' => 'estadosAjax.estadosAjax',
-        'uses' => $controller.'controllerAdministrador@estadosAjax'
+        'uses' => $controller.'ControllerAdministrador@estadosAjax'
     ]);
     Route::get('listarEstados', [
         'as' => 'listarEstados.listarEstados',
-        'uses' => $controller.'controllerAdministrador@listarEstados'
+        'uses' => $controller.'ControllerAdministrador@listarEstados'
     ]);
     Route::post('resgistrarEstados', [
         'as' => 'resgistrarEstados.resgistrarEstados',
-        'uses' => $controller.'controllerAdministrador@resgistrarEstados'
+        'uses' => $controller.'ControllerAdministrador@resgistrarEstados'
     ]);
     Route::get('editarEstado/{id?}', [
         'as' => 'editarEstado.editarEstado',
-        'uses' => $controller.'controllerAdministrador@editarEstado'
+        'uses' => $controller.'ControllerAdministrador@editarEstado'
     ]);
     Route::post('modificarEstados/{id?}', [
         'as' => 'modificarEstados.modificarEstados',
-        'uses' => $controller.'controllerAdministrador@modificarEstados'
+        'uses' => $controller.'ControllerAdministrador@modificarEstados'
     ]);
 });
 //__________________END___ESTADOS_______________________
@@ -137,31 +145,31 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('empresas', [
         'as' => 'empresas.empresas',
-        'uses' => $controller.'controllerAdministrador@empresas'
+        'uses' => $controller.'ControllerAdministrador@empresas'
     ]);
     Route::get('empresasAjax', [
         'as' => 'empresasAjax.empresasAjax',
-        'uses' => $controller.'controllerAdministrador@empresasAjax'
+        'uses' => $controller.'ControllerAdministrador@empresasAjax'
     ]);
     Route::get('listarEmpresas', [
         'as' => 'listarEmpresas.listarEmpresas',
-        'uses' => $controller.'controllerAdministrador@listarEmpresas'
+        'uses' => $controller.'ControllerAdministrador@listarEmpresas'
     ]);
     Route::get('agregarEmpresas', [
         'as' => 'agregarEmpresas.agregarEmpresas',
-        'uses' => $controller.'controllerAdministrador@agregarEmpresas'
+        'uses' => $controller.'ControllerAdministrador@agregarEmpresas'
     ]);
     Route::post('registroEmpresa', [
        'as' => 'registroEmpresa.registroEmpresa',
-       'uses' => $controller.'controllerAdministrador@registroEmpresa'
+       'uses' => $controller.'ControllerAdministrador@registroEmpresa'
     ]);
     Route::get('editarEmpresa/{id?}', [    
         'as' => 'editarEmpresa.editarEmpresa', 
-        'uses' => $controller.'controllerAdministrador@editarEmpresa'
+        'uses' => $controller.'ControllerAdministrador@editarEmpresa'
     ]);
     Route::post('modificarEmpresa/{id?}', [
         'as' => 'modificarEmpresa.modificarEmpresa',
-       'uses' => $controller.'controllerAdministrador@modificarEmpresa'
+       'uses' => $controller.'ControllerAdministrador@modificarEmpresa'
     ]);
 });
 //__________________END___EMPRESAS_____________________
@@ -169,50 +177,50 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('misDocumentos', [
         'as' => 'misDocumentos.misDocumentos',
-       'uses' => $controller.'controllerDocumentos@misDocumentos'
+       'uses' => $controller.'ControllerDocumentos@misDocumentos'
     ]);
     Route::get('listarMisDocumentos', [
         'as' => 'listarMisDocumentos.listarMisDocumentos',
-       'uses' => $controller.'controllerDocumentos@listarMisDocumentos'
+       'uses' => $controller.'ControllerDocumentos@listarMisDocumentos'
     ]);
     Route::post('subirDocumentoUsuario', [
         'as' => 'subirDocumentoUsuario.subirDocumentoUsuario',
-       'uses' => $controller.'controllerDocumentos@subirDocumentoUsuario'
+       'uses' => $controller.'ControllerDocumentos@subirDocumentoUsuario'
     ]);
 
 
     Route::get('descargaUsuario/{id?}', [
         'as' => 'documentoDescargaUsuario.documentoDescargaUsuario',
-       'uses' => $controller.'controllerDocumentos@documentoDescargaUsuario'
+       'uses' => $controller.'ControllerDocumentos@documentoDescargaUsuario'
     ]);
 
     Route::get('documentoReporte/{id?}/{fecha_primero?}/{fecha_segundo?}', [
         'as' => 'documentoReporte.documentoReporte',
-       'uses' => $controller.'controllerDocumentos@documentoReporte'
+       'uses' => $controller.'ControllerDocumentos@documentoReporte'
     ]);
     Route::get('descarga/{id?}/{idc?}', [
         'as' => 'documentoDescarga.documentoDescarga',
-       'uses' => $controller.'controllerDocumentos@documentoDescarga'
+       'uses' => $controller.'ControllerDocumentos@documentoDescarga'
     ]);
     Route::get('descargarReporte/{id?}/{fecha_primero?}/{fecha_segundo?}', [
         'as' => 'descargarReporte.descargarReporte',
-       'uses' => $controller.'controllerDocumentos@descargarReporte'
+       'uses' => $controller.'ControllerDocumentos@descargarReporte'
     ]);
     Route::get('documentoUsuario/{id?}', [
         'as' => 'documentoUsuario.documentoUsuario',
-       'uses' => $controller.'controllerDocumentos@documentoUsuario'
+       'uses' => $controller.'ControllerDocumentos@documentoUsuario'
     ]);
     Route::get('listarDocumentoUsuario/{id?}', [
         'as' => 'listarDocumentoUsuario.listarDocumentoUsuario',
-       'uses' => $controller.'controllerDocumentos@listarDocumentoUsuario'
+       'uses' => $controller.'ControllerDocumentos@listarDocumentoUsuario'
     ]);
     Route::post('subirDocumentoConvenio/{id?}', [
         'as' => 'subirDocumentoConvenio.subirDocumentoConvenio',
-       'uses' => $controller.'controllerDocumentos@subirDocumentoConvenio'
+       'uses' => $controller.'ControllerDocumentos@subirDocumentoConvenio'
     ]);
     Route::post('subirDocumentoConvenioDB/{id?}', [
         'as' => 'subirDocumentoConvenioDB.subirDocumentoConvenioDB',
-       'uses' => $controller.'controllerDocumentos@subirDocumentoConvenioDB'
+       'uses' => $controller.'ControllerDocumentos@subirDocumentoConvenioDB'
     ]);
 });
 //___________________END_MISDOCUMENTOS______________
@@ -222,104 +230,104 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 
     Route::get('tipoPregunta', [    
         'as' => 'tipoPregunta.tipoPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@tipoPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@tipoPregunta'
     ]);
     Route::get('tipoPreguntaAjax', [    
         'as' => 'tipoPreguntaAjax.tipoPreguntaAjax', 
-        'uses' => $controller.'controllerEvaluaciones@tipoPreguntaAjax'
+        'uses' => $controller.'ControllerEvaluaciones@tipoPreguntaAjax'
     ]);
     Route::post('agregarTipoPregunta', [  
         'as' => 'agregarTipoPregunta.agregarTipoPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@agregarTipoPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@agregarTipoPregunta'
     ]);
     Route::get('listarTipoPregunta', [    
         'as' => 'listarTipoPregunta.listarTipoPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@listarTipoPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@listarTipoPregunta'
     ]);
     Route::get('editarTipoPregunta/{id?}', [    
         'as' => 'editarTipoPregunta.editarTipoPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@editarTipoPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@editarTipoPregunta'
     ]);
     Route::post('modificarTipoPregunta/{id?}', [    
         'as' => 'modificarTipoPregunta.modificarTipoPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@modificarTipoPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@modificarTipoPregunta'
     ]);
     Route::get('pregunta', [    
         'as' => 'pregunta.pregunta', 
-        'uses' => $controller.'controllerEvaluaciones@Pregunta'
+        'uses' => $controller.'ControllerEvaluaciones@Pregunta'
     ]);
     Route::get('preguntaAjax', [    
         'as' => 'preguntaAjax.preguntaAjax', 
-        'uses' => $controller.'controllerEvaluaciones@preguntaAjax'
+        'uses' => $controller.'ControllerEvaluaciones@preguntaAjax'
     ]);
 
     Route::get('editarPregunta/{id?}', [    
         'as' => 'editarPregunta.editarPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@editarPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@editarPregunta'
     ]);
     Route::post('modificarPregunta/{id?}', [    
         'as' => 'modificarPregunta.modificarPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@modificarPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@modificarPregunta'
     ]);
     Route::post('agregarPregunta', [    
         'as' => 'agregarPregunta.agregarPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@agregarPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@agregarPregunta'
     ]);
     Route::get('listarPregunta', [    
         'as' => 'listarPregunta.listarPregunta', 
-        'uses' => $controller.'controllerEvaluaciones@listarPregunta'
+        'uses' => $controller.'ControllerEvaluaciones@listarPregunta'
     ]);
     Route::get('evaluaciones', [    
         'as' => 'evaluaciones.evaluaciones', 
-        'uses' => $controller.'controllerEvaluaciones@evaluaciones'
+        'uses' => $controller.'ControllerEvaluaciones@evaluaciones'
     ]);
     Route::get('listarEvaluacionesEmpresas', [    
         'as' => 'listarEvaluacionesEmpresas.listarEvaluacionesEmpresas', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesEmpresas'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionesEmpresas'
     ]);
     Route::get('listarEvaluacionesUsuarios', [    
         'as' => 'listarEvaluacionesUsuarios.listarEvaluacionesUsuarios', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesUsuarios'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionesUsuarios'
     ]);
     Route::get('realizarEvaluacion/{id?}/{convenio?}', [    
         'as' => 'realizarEvaluacion.realizarEvaluacion', 
-        'uses' => $controller.'controllerEvaluaciones@realizarEvaluacion'
+        'uses' => $controller.'ControllerEvaluaciones@realizarEvaluacion'
     ]);
     Route::post('registrarEvaluacion/{id?}/{convenio?}/{n?}', [    
         'as' => 'registrarEvaluacion.registrarEvaluacion', 
-        'uses' => $controller.'controllerEvaluaciones@registrarEvaluacion'
+        'uses' => $controller.'ControllerEvaluaciones@registrarEvaluacion'
     ]);
     Route::get('realizarEvaluacionEmpresa/{id?}/{convenio?}', [    
         'as' => 'realizarEvaluacionEmpresa.realizarEvaluacionEmpresar', 
-        'uses' => $controller.'controllerEvaluaciones@realizarEvaluacionEmpresa'
+        'uses' => $controller.'ControllerEvaluaciones@realizarEvaluacionEmpresa'
     ]);
     Route::post('registrarEvaluacionEmpresa/{id?}/{convenio?}/{n?}', [    
         'as' => 'registrarEvaluacionEmpresa.registrarEvaluacionEmpresa', 
-        'uses' => $controller.'controllerEvaluaciones@registrarEvaluacionEmpresa'
+        'uses' => $controller.'ControllerEvaluaciones@registrarEvaluacionEmpresa'
     ]);
     Route::get('listarEvaluacionEmpresa/{id?}', [    
         'as' => 'listarEvaluacionEmpresa.listarEvaluacionEmpresa', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionEmpresa'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionEmpresa'
     ]);
     Route::get('listarEvaluacionesUsuario/{id?}', [    
         'as' => 'listarEvaluacionesUsuario.listarEvaluacionesUsuario', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionesUsuario'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionesUsuario'
     ]);
     Route::get('listarEvaluacionIndividual/{id?}', [    
         'as' => 'listarEvaluacionIndividual.listarEvaluacionIndividual', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionIndividual'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionIndividual'
     ]);
     Route::get('listarEvaluacionIndividualEmpresa/{id?}', [    
         'as' => 'listarEvaluacionIndividualEmpresa.listarEvaluacionIndividualEmpresa', 
-        'uses' => $controller.'controllerEvaluaciones@listarEvaluacionIndividualEmpresa'
+        'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionIndividualEmpresa'
     ]);
     Route::get('listarPreguntaEvaluacion/{id?}', [    
         'as' => 'listarPreguntaEvaluacion.listarPreguntaEvaluacion', 
-        'uses' => $controller.'controllerEvaluaciones@listarPreguntaEvaluacion'
+        'uses' => $controller.'ControllerEvaluaciones@listarPreguntaEvaluacion'
     ]);
     Route::get('listarPreguntaIndividual/{id?}', [    
         'as' => 'listarPreguntaIndividual.listarPreguntaIndividual',
-        'uses' => $controller.'controllerEvaluaciones@listarPreguntaIndividual'
+        'uses' => $controller.'ControllerEvaluaciones@listarPreguntaIndividual'
     ]);
 });
 //_____________________________END_RUTAS_FUNCIONARIOS
@@ -327,33 +335,33 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('alerta', [    
         'as' => 'alerta.alerta',
-        'uses' => $controller.'controllerAlertas@alerta'
+        'uses' => $controller.'ControllerAlertas@alerta'
     ]);
     Route::get('alertaAjax', [    
         'as' => 'alertaAjax.alertaAjax',
-        'uses' => $controller.'controllerAlertas@alertaAjax'
+        'uses' => $controller.'ControllerAlertas@alertaAjax'
     ]);
     Route::get('listarAlerta', [    
         'as' => 'listarAlerta.listarAlerta',
-        'uses' => $controller.'controllerAlertas@listarAlerta'
+        'uses' => $controller.'ControllerAlertas@listarAlerta'
     ]);
     Route::get('verAlerta/{id?}', [    
         'as' => 'verAlerta.verAlerta',
-        'uses' => $controller.'controllerAlertas@verAlerta'
+        'uses' => $controller.'ControllerAlertas@verAlerta'
     ]);
 });
 //__________________________END_ALERTAS____________________
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
     Route::get('reporte/{id?}/{fecha_primera?}/{fecha_segunda?}', [    
         'as' => 'reporte.reporte',
-        'uses' => $controller.'controllerEvaluaciones@reporte'
+        'uses' => $controller.'ControllerEvaluaciones@reporte'
     ]);
     Route::get('listarReporte/{id?}/{fecha_primera?}/{fecha_segunda?}', [    
         'as' => 'listarReporte.listarReporte',
-        'uses' => $controller.'controllerEvaluaciones@listarReporte'
+        'uses' => $controller.'ControllerEvaluaciones@listarReporte'
     ]);
     Route::post('vistaReporte/{id?}', [    
         'as' => 'vistaReporte.vistaReporte',
-        'uses' => $controller.'controllerEvaluaciones@vistaReporte'
+        'uses' => $controller.'ControllerEvaluaciones@vistaReporte'
     ]);
 });

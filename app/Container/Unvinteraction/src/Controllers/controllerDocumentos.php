@@ -31,7 +31,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
 
-class controllerDocumentos extends Controller
+class ControllerDocumentos extends Controller
 {
     private $path='unvinteraction.documentos';
     /*funcion para subir el documento para los convenios
@@ -53,6 +53,7 @@ class controllerDocumentos extends Controller
             $documento->DOCU_Ubicacion = $ubicacion."/".$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
             $documento->FK_TBL_Convenio_Id= $id;
             $documento->save();
+            return $request->get('name');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -132,6 +133,7 @@ class controllerDocumentos extends Controller
             $doc->DCET_Ubicacion = $ubicacion ;
             $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
             $doc->save();
+            return $request->get('name');
             
         }
         return AjaxResponse::fail(
@@ -248,8 +250,8 @@ class controllerDocumentos extends Controller
                     'fecha_segunda'=>$fecha_segunda
                 ])->download('ReporteEvaluaciones.pdf');
             } catch (Exception $e) {
-                $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
-                return view('unvinteraction.convenios.listarConvenios', compact('sede'));
+                
+                return view('unvinteraction.evaluaciones.listarEvaluaciones');
             }
         }
         return AjaxResponse::fail(
