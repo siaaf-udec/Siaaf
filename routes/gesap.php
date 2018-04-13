@@ -19,6 +19,10 @@ Route::group(['middleware' => ['permission:GESAP_MODULE']], function () use ($co
         'uses' => $controller.'CoordinatorController@storeActividadDefault',
         'as' => 'nueva.actividad'
     ]);
+    Route::post('activity/edit', [
+        'uses' => $controller.'CoordinatorController@updateActividadDefault',
+        'as' => 'editar.actividad'
+    ]);
     Route::delete('activity/{id?}', [
         'uses' => $controller.'CoordinatorController@destroyActividadDefault',
         'as' => 'activity.default.destroy'

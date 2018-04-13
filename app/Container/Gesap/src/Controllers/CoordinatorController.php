@@ -467,7 +467,7 @@ class CoordinatorController extends Controller
     
     
          /*
-     * Función de almacenamiento en la base de datos de actividades para nuevos proyectos
+     * Función de almacenamiento en la base de datos de actividades predeterminadas para nuevos proyectos
      *
      * @param  \Illuminate\Http\Request 
      * 
@@ -484,6 +484,34 @@ class CoordinatorController extends Controller
             return AjaxResponse::success(
                 '¡Creacion Existosa!',
                 'Nueva actividad creada correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    
+    
+    /*
+     * Función de actualizacion en la base de datos de actividades predeterminadas
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function updateActividadDefault(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $actividad = Actividad::findOrFail($request->get('PK_CTVD_IdActividad'));
+            $actividad->CTVD_Nombre=$request->get('nombre');
+            $actividad->CTVD_Descripcion=$request->get('descripcion');
+            $actividad->save();
+
+            return AjaxResponse::success(
+                '¡Actualizacion Existosa!',
+                'Actividad modificada correctamente.'
             );
         }
         return AjaxResponse::fail(

@@ -292,8 +292,12 @@ class EvaluatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
  
-            $actividad = Documentos::findOrFail($id);
-            $actividad->delete();
+            $documento = Documentos::findOrFail($id);
+            $actividad= Actividad::withTrashed()->findOrFail($documento->FK_TBL_Actividad_Id);
+            $documento->delete();
+            if($actividad->CTVD_Default==0){
+                $actividad->forceDelete();
+            }
             return AjaxResponse::success(
                 '¡Eliminacion Exitosa!',
                 'Datos eliminados correctamente.'

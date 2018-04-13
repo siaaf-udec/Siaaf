@@ -259,9 +259,6 @@
                                     UIToastr.init(xhr, response.title, response.message);                                    
                                 }
                             },
-                            beforeSend: function () {
-								App.blockUI({target: '.portlet-form', animate: true});
-							},
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
