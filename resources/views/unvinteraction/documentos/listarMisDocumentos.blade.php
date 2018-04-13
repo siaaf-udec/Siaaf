@@ -147,7 +147,7 @@ jQuery(document).ready(function () {
             return { 
                 init:function(){
                     $('#documento').modal('hide');  
-                    $('#Listar_Documentos').ajax.reload();
+                    
                 }
             }; 
         }

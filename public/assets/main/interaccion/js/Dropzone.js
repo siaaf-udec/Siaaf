@@ -53,9 +53,10 @@ var FormDropzone = function () {
                     /*Cuando la subida era correcta o errónea*/
                     myDropzone.on("complete", function(file, xhr, formData) {
                         if(file.status=='success'){
-                            
+                            myDropzone.removeFile(file);
                         }else{
                              UIToastr.init( 'error','ERROR', 'El archivo que desea cargar no es permitido.');
+                            myDropzone.removeFile(file);
                         }
                        
                         myDropzone.removeFile(file);
@@ -94,8 +95,6 @@ var FormDropzone = function () {
                         UIToastr.init('success', 'Carga Satisfactoria',
                             'El archivo se ha procesado satisfactoriamente.'+file.status
                         );
-                        
-                        
                     }
                 },
                 error: function(file, xhr, formData) {

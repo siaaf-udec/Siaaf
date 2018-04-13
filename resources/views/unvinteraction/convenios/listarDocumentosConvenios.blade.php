@@ -172,9 +172,7 @@
         var documento = function () { 
             return { 
                 init:function(){
-                    table.ajax.reload();
                     $('#documento').modal('hide'); 
-                    
                 }
             }; 
         }
