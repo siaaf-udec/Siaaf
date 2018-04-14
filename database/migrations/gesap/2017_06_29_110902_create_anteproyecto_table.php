@@ -20,12 +20,15 @@ class CreateAnteproyectoTable extends Migration
             $table->integer('NPRY_Duracion');
             $table->date('NPRY_FechaR');
             $table->date('NPRY_FechaL');
-            $table->String('NPRY_Estado', 90)->default("EN ESPERA");
+            $table->enum('NPRY_Estado', ['EN ESPERA','EN REVISION','PENDIENTE','APROBADO','APLAZADO','RECHAZADO','COMPLETADO'])->default('EN ESPERA');
             $table->timestamps();
         });
-            
+
     }
 
+
+
+    
     /**
      * Reverse the migrations.
      *

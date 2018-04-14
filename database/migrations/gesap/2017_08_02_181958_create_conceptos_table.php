@@ -16,7 +16,7 @@ class CreateConceptosTable extends Migration
         Schema::connection('gesap')->create('TBL_Conceptos', function (Blueprint $table) {
             $table->increments('PK_CNPT_Conceptos');
             $table->string('CNPT_Concepto');
-            $table->string('CNPT_Tipo');
+            $table->enum('CNPT_Tipo', ['Anteproyecto','Proyecto'])->default('Anteproyecto');
             $table->integer('FK_TBL_Encargado_Id')->unsigned();
             $table->foreign('FK_TBL_Encargado_Id')
                 ->references('PK_NCRD_IdCargo')

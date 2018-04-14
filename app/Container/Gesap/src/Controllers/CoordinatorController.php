@@ -29,9 +29,9 @@ use Carbon\Carbon;
 
 class CoordinatorController extends Controller
 {
-    
+
     private $path='gesap.Coordinador.';
-    
+
     /*
      * Listado de todos los anteproyectos que se han registrado
      *
@@ -42,14 +42,14 @@ class CoordinatorController extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod('GET')) {
-			return view($this->path.'AnteproyectoList');
-		}
+            return view($this->path.'anteproyectoList');
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
      * Listado de todos los anteproyectos que se han registrado con vista AJAX
      *
@@ -60,14 +60,14 @@ class CoordinatorController extends Controller
     public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'AnteproyectoList-ajax');
+            return view($this->path.'anteproyectoList-ajax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
      * Listado de todos los proyectos avalados
      *
@@ -77,16 +77,16 @@ class CoordinatorController extends Controller
      */
     public function indexProject(Request $request)
     {	
-		if ($request->isMethod('GET')) {		
-        	return view($this->path.'ProyectoList');
-		}
+        if ($request->isMethod('GET')) {		
+            return view($this->path.'proyectoList');
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
 
     }
-    
+
     /*
      * Formulario de registro de nuevo proyecto de grado
      * Envia lista de usuarios estudiantes registrados
@@ -105,17 +105,17 @@ class CoordinatorController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            return view($this->path.'RegistroMin', [
+            return view($this->path.'registroMin', [
                 'estudiantes' => $estudiantes
             ]);
         }
-        
+
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-  
+
     /*
      * Función de almacenamiento en la base de datos de anteproyectos
      *
@@ -128,7 +128,7 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $date = Carbon::now();
             $date= $date->format('his');
-        
+
             $anteproyecto= new Anteproyecto();
             $anteproyecto->NPRY_Titulo=$request->get('title');
             $anteproyecto->NPRY_Keywords=$request->get('Keywords');
@@ -136,9 +136,9 @@ class CoordinatorController extends Controller
             $anteproyecto->NPRY_FechaR=$request->get('FechaR');
             $anteproyecto->NPRY_FechaL=$request->get('FechaL');
             $anteproyecto->save();
-            
+
             $idanteproyecto=$anteproyecto->PK_NPRY_IdMinr008;
-            
+
             $radicacion= new Radicacion();
             $nombre = $date."_".$request['Min']->getClientOriginalName();
             $radicacion->RDCN_Min=$nombre;
@@ -152,20 +152,20 @@ class CoordinatorController extends Controller
             }
             $radicacion->FK_TBL_Anteproyecto_Id=$idanteproyecto;
             $radicacion->save();
-            
+
             Encargados::create([
                 'FK_TBL_Anteproyecto_Id'    =>$idanteproyecto,
                 'FK_Developer_User_Id'      =>$request->get('estudiante1'),
                 'NCRD_Cargo'                =>"Estudiante 1"
             ]);
-        
+
             if ($request->get('estudiante2')!=0) {
                 Encargados::create([
                     'FK_TBL_Anteproyecto_Id'    =>$idanteproyecto ,
                     'FK_Developer_User_Id'      =>$request->get('estudiante2'),
                     'NCRD_Cargo'                =>"Estudiante 2"
                 ]);
-                
+
             }
             return AjaxResponse::success(
                 '¡Registro Exitoso!',
@@ -176,10 +176,10 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-        
+
     }
-     
-     /*
+
+    /*
      * Formulario de editar un proyecto de grado ya registrado
      * Envia lista de usuarios estudiantes registrados
      * Envia datos correspondientes al proyecto a editar
@@ -194,16 +194,16 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $estudiantes=User::orderBy('name', 'asc')
                 ->whereHas('roles', function ($e) {
-                            $e->where('name', 'Student_Gesap');
+                    $e->where('name', 'Student_Gesap');
                 })
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            
+
             $anteproyecto=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
-				->with('radicacion')
-				->get();
-                     
+                ->with('radicacion')
+                ->get();
+
             $estudiante12=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
                 ->select('PK_NPRY_IdMinr008')
                 ->with(['encargados'=>function ($query) {
@@ -212,9 +212,9 @@ class CoordinatorController extends Controller
                     $query->orwhere('NCRD_Cargo', 'ESTUDIANTE 2');
                 }])
                 ->get();
-            
-            
-            return view($this->path.'ModificarMin', [
+
+
+            return view($this->path.'modificarMin', [
                 "anteproyecto"=>$anteproyecto,
                 "estudiante12"=>$estudiante12,
                 "estudiantes"=>$estudiantes
@@ -225,7 +225,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
      * Función de actualizacion en la base de datos de anteproyectos
      *
@@ -245,7 +245,7 @@ class CoordinatorController extends Controller
             $anteproyecto->NPRY_FechaR=$request->get('FechaR');
             $anteproyecto->NPRY_FechaL=$request->get('FechaL');
             $anteproyecto->save();
-            
+
             $radicacion= Radicacion::findOrFail($request->get('PK_radicacion'));
             if ($request->get('Min')!="Vacio") {
                 \Storage::delete($radicacion->RDCN_Min);
@@ -260,7 +260,7 @@ class CoordinatorController extends Controller
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
             $radicacion->save();
-                                                     
+
             if ($request->get('PK_estudiante1')!="") {
                 $estudiante1 = Encargados::findOrFail($request->get('PK_estudiante1'));
                 if ($request->get('estudiante1')!=0) {
@@ -278,7 +278,7 @@ class CoordinatorController extends Controller
                     ]);
                 }
             }
-            
+
             if ($request->get('PK_estudiante2')!="") {
                 $estudiante2 = Encargados::findOrFail($request->get('PK_estudiante2'));
                 if ($request->get('estudiante2')!=0) {
@@ -306,7 +306,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
      * Funcion de eliminacion de anteproyectos de la base de datos
      *
@@ -318,7 +318,7 @@ class CoordinatorController extends Controller
     public function destroy($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
- 
+
             $anteproyecto = Anteproyecto::findOrFail($id);
             $anteproyecto->delete();
             return AjaxResponse::success(
@@ -330,8 +330,8 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-        
-        
+
+
     }
 
     /*
@@ -349,7 +349,7 @@ class CoordinatorController extends Controller
             $anteproyectos = Anteproyecto::select('PK_NPRY_IdMinr008', 'NPRY_Titulo')
                 ->where('PK_NPRY_IdMinr008', '=', $id)
                 ->get();
-        
+
             $docentes=User::orderBy('name', 'asc')
                 ->whereHas('roles', function ($e) {
                     $e->where('name', 'Coordinator_Gesap');
@@ -358,9 +358,9 @@ class CoordinatorController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            
-        
-        
+
+
+
             $encargados=Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
                 ->select('PK_NPRY_IdMinr008')
                 ->with(['encargados'=>function ($query) {
@@ -370,8 +370,8 @@ class CoordinatorController extends Controller
                     $query->orwhere('NCRD_Cargo', 'JURADO 2');
                 }])
                 ->get();
-                
-            return view($this->path.'AsignarDocente', [
+
+            return view($this->path.'asignarDocente', [
                 'anteproyectos'=>$anteproyectos,
                 'docentes'=>$docentes,
                 'encargados'=>$encargados]);
@@ -381,7 +381,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
      * Función de almacenamiento en la base de datos de los docentes asignados a un proyecto de grado
      *
@@ -405,7 +405,7 @@ class CoordinatorController extends Controller
                     ]);
                 }
             }
-            
+
             if ($request->get('PK_jurado1')!="") {
                 $jurado1 = Encargados::findOrFail($request->get('PK_jurado1'));
                 $jurado1->FK_Developer_User_Id=$request->get('jurado1');
@@ -419,7 +419,7 @@ class CoordinatorController extends Controller
                     ]);
                 }
             }
-            
+
             if ($request->get('PK_jurado2')!="") {
                 $jurado1 = Encargados::findOrFail($request->get('PK_jurado2'));
                 $jurado1->FK_Developer_User_Id=$request->get('jurado2');
@@ -433,7 +433,7 @@ class CoordinatorController extends Controller
                     ]);
                 }
             }
-              
+
             return AjaxResponse::success(
                 '¡Asignacion Exitosa!',
                 'Docentes asignados correctamente.'
@@ -444,9 +444,9 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
-    
-    
+
+
+
     /*
      * Listado de las actividades de proyectos por defecto
      *
@@ -457,16 +457,16 @@ class CoordinatorController extends Controller
     public function activityDefault(Request $request)
     {
         if ($request->isMethod('GET')) {
-			return view($this->path.'ActividadDefault');
-		}
+            return view($this->path.'actividadDefault');
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-    
-    
-         /*
+
+
+    /*
      * Función de almacenamiento en la base de datos de actividades predeterminadas para nuevos proyectos
      *
      * @param  \Illuminate\Http\Request 
@@ -491,9 +491,9 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
-    
-    
+
+
+
     /*
      * Función de actualizacion en la base de datos de actividades predeterminadas
      *
@@ -519,8 +519,8 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
-        /*
+
+    /*
      * Funcion de eliminacion de actividades predeterminades de la base de datos
      *
      * @param  int  $id
@@ -531,7 +531,7 @@ class CoordinatorController extends Controller
     public function destroyActividadDefault($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
- 
+
             $actividad = Actividad::findOrFail($id);
             $actividad->delete();
             return AjaxResponse::success(
@@ -543,11 +543,11 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-        
-        
+
+
     }
-    
-    
+
+
     /*
     * Consulta de todos los anteproyectos con sus datos correspondientes
     *
@@ -557,8 +557,8 @@ class CoordinatorController extends Controller
     */
     public function preliminaryList(Request $request)
     {
-		if ($request->isMethod('GET')) {
-			$anteproyectos = Anteproyecto::with([
+        if ($request->isMethod('GET')) {
+            $anteproyectos = Anteproyecto::with([
                 'radicacion', 
                 'director', 
                 'jurado1', 
@@ -567,77 +567,77 @@ class CoordinatorController extends Controller
                 'estudiante2', 
                 'proyecto'
             ])
-				->get();
-			return Datatables::of($anteproyectos)
-				->removeColumn('created_at')
-				->removeColumn('updated_at')
-				->addColumn('NPRY_Estado', function ($users) {
-					if (!strcmp($users->NPRY_Estado, 'EN REVISION')) {
-							return "<span class='label label-sm label-warning'>"
-								.$users->NPRY_Estado
-								."</span>";
-					} else {
-						if (!strcmp($users->NPRY_Estado, 'PENDIENTE')) {
-							return "<span class='label label-sm label-warning'>"
-								.$users->NPRY_Estado
-								."</span>";
-						} else {
-							if (!strcmp($users->NPRY_Estado, 'APROBADO')) {
-								return "<span class='label label-sm label-success'>"
-									.$users->NPRY_Estado
-									."</span>";
-							} else {
-								if (!strcmp($users->NPRY_Estado, 'APLAZADO')) {
-									return "<span class='label label-sm label-danger'>"
-										.$users->NPRY_Estado
-										."</span>";
-								} else {
-									if (!strcmp($users->NPRY_Estado, 'RECHAZADO')) {
-										return "<span class='label label-sm label-danger'>"
-											.$users->NPRY_Estado
-											."</span>";
-									} else {
-										if (!strcmp($users->NPRY_Estado, 'COMPLETADO')) {
-											return "<span class='label label-sm label-success'>"
-												.$users->NPRY_Estado
-												."</span>";
-										} else {
-											return "<span class='label label-sm label-info'>"
-												.$users->NPRY_Estado
-												."</span>";
-										}
-									}
-								}
-							}
-						}
-					}
-				})
-				->addColumn('NPRY_Titulo', function ($title) {
-					$marca = "<!--corte-->";
-					$largo=50;
-					$titulo=$title->NPRY_Titulo;
-					if (strlen($titulo) > $largo) {
-						$titulo = wordwrap($title->NPRY_Titulo, $largo, $marca);
-						$titulo = explode($marca, $titulo);
-						$texto1 = $titulo[0];
-						unset($titulo[0]);
-						$texto2= implode(' ', $titulo);
-						return '<p><span class="texto-mostrado">'
-							.$texto1
-							.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
-							.$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
-					}
-					return '<p>'.$titulo.'</p>';
-				})
-				->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
-				->addIndexColumn()->make(true);	
-     	}
+                ->get();
+            return Datatables::of($anteproyectos)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addColumn('NPRY_Estado', function ($users) {
+                    if (!strcmp($users->NPRY_Estado, 'EN REVISION')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->NPRY_Estado
+                            ."</span>";
+                    } else {
+                        if (!strcmp($users->NPRY_Estado, 'PENDIENTE')) {
+                            return "<span class='label label-sm label-warning'>"
+                                .$users->NPRY_Estado
+                                ."</span>";
+                        } else {
+                            if (!strcmp($users->NPRY_Estado, 'APROBADO')) {
+                                return "<span class='label label-sm label-success'>"
+                                    .$users->NPRY_Estado
+                                    ."</span>";
+                            } else {
+                                if (!strcmp($users->NPRY_Estado, 'APLAZADO')) {
+                                    return "<span class='label label-sm label-danger'>"
+                                        .$users->NPRY_Estado
+                                        ."</span>";
+                                } else {
+                                    if (!strcmp($users->NPRY_Estado, 'RECHAZADO')) {
+                                        return "<span class='label label-sm label-danger'>"
+                                            .$users->NPRY_Estado
+                                            ."</span>";
+                                    } else {
+                                        if (!strcmp($users->NPRY_Estado, 'COMPLETADO')) {
+                                            return "<span class='label label-sm label-success'>"
+                                                .$users->NPRY_Estado
+                                                ."</span>";
+                                        } else {
+                                            return "<span class='label label-sm label-info'>"
+                                                .$users->NPRY_Estado
+                                                ."</span>";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                ->addColumn('NPRY_Titulo', function ($title) {
+                    $marca = "<!--corte-->";
+                    $largo=50;
+                    $titulo=$title->NPRY_Titulo;
+                    if (strlen($titulo) > $largo) {
+                        $titulo = wordwrap($title->NPRY_Titulo, $largo, $marca);
+                        $titulo = explode($marca, $titulo);
+                        $texto1 = $titulo[0];
+                        unset($titulo[0]);
+                        $texto2= implode(' ', $titulo);
+                        return '<p><span class="texto-mostrado">'
+                            .$texto1
+                            .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                            .$texto2.'</span> <span class="boton_mas_info">Ver más</span></p>';
+                    }
+                    return '<p>'.$titulo.'</p>';
+                })
+                ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
+                ->addIndexColumn()->make(true);	
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );   
     }
-    
+
     /*
     * Consulta de todos proyectos con sus datos correspondientes
     *
@@ -647,67 +647,67 @@ class CoordinatorController extends Controller
     */
     public function projectList(Request $request)
     {
-		if ($request->isMethod('GET')) {
-			$proyectos = Proyecto::with([
-					'anteproyecto' => function ($anteproyecto) {
-						$anteproyecto->with(['radicacion',
-											 'director',
-											 'jurado1',
-											 'jurado2',
-											 'estudiante1',
-											 'estudiante2',
-											 'proyecto']);
-					}
+        if ($request->isMethod('GET')) {
+            $proyectos = Proyecto::with([
+                'anteproyecto' => function ($anteproyecto) {
+                $anteproyecto->with(['radicacion',
+                                     'director',
+                                     'jurado1',
+                                     'jurado2',
+                                     'estudiante1',
+                                     'estudiante2',
+                                     'proyecto']);
+            }
 
-				])
-				->get();
-			return Datatables::of($proyectos)
-				->removeColumn('created_at')
-				->removeColumn('updated_at')
-				->addColumn('PRYT_Estado', function ($users) {
-					if (!strcmp($users->PRYT_Estado, 'EN CURSO')) {
-							return "<span class='label label-sm label-warning'>"
-								.$users->PRYT_Estado
-								."</span>";
-					} else {
-						if (!strcmp($users->PRYT_Estado, 'TERMINADO')) {
-							return "<span class='label label-sm label-success'>"
-								.$users->PRYT_Estado
-								."</span>";
-						} else {
-							return "<span class='label label-sm label-info'>"
-								.$users->PRYT_Estado
-								."</span>";
-						}
-					}
-				})
-				->addColumn('NPRY_Titulo', function ($title) {
-					$marca = "<!--corte-->";
-					$largo=50;
-					$titulo=$title->anteproyecto->NPRY_Titulo;
-					if (strlen($titulo) > $largo) {
-						$titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
-						$titulo = explode($marca, $titulo);
-						$texto1 = $titulo[0];
-						unset($titulo[0]);
-						$texto2= implode(' ', $titulo);
-						return '<p><span class="texto-mostrado">'
-							.$texto1
-							.'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
-							.$texto2
-							.'</span> <span class="boton_mas_info">Ver más</span></p>';
-					}
-					return '<p>'.$titulo.'</p>';
-				})
-				->rawColumns(['PRYT_Estado', 'NPRY_Titulo'])
-				->addIndexColumn()->make(true);
-		}
+            ])
+                ->get();
+            return Datatables::of($proyectos)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addColumn('PRYT_Estado', function ($users) {
+                    if (!strcmp($users->PRYT_Estado, 'EN CURSO')) {
+                        return "<span class='label label-sm label-warning'>"
+                            .$users->PRYT_Estado
+                            ."</span>";
+                    } else {
+                        if (!strcmp($users->PRYT_Estado, 'TERMINADO')) {
+                            return "<span class='label label-sm label-success'>"
+                                .$users->PRYT_Estado
+                                ."</span>";
+                        } else {
+                            return "<span class='label label-sm label-info'>"
+                                .$users->PRYT_Estado
+                                ."</span>";
+                        }
+                    }
+                })
+                ->addColumn('NPRY_Titulo', function ($title) {
+                    $marca = "<!--corte-->";
+                    $largo=50;
+                    $titulo=$title->anteproyecto->NPRY_Titulo;
+                    if (strlen($titulo) > $largo) {
+                        $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
+                        $titulo = explode($marca, $titulo);
+                        $texto1 = $titulo[0];
+                        unset($titulo[0]);
+                        $texto2= implode(' ', $titulo);
+                        return '<p><span class="texto-mostrado">'
+                            .$texto1
+                            .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                            .$texto2
+                            .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                    }
+                    return '<p>'.$titulo.'</p>';
+                })
+                ->rawColumns(['PRYT_Estado', 'NPRY_Titulo'])
+                ->addIndexColumn()->make(true);
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /*
     * Consulta de todos las actividades por defecto
     *
@@ -717,17 +717,17 @@ class CoordinatorController extends Controller
     */
     public function activityDefaultList(Request $request)
     {
-		if ($request->isMethod('GET')) {
-			$actividades = Actividad::where('CTVD_Default', '=', 1)->get();
-			return Datatables::of($actividades)
-				->removeColumn('created_at')
-				->removeColumn('updated_at')
-				->addIndexColumn()->make(true);	
-     	}
+        if ($request->isMethod('GET')) {
+            $actividades = Actividad::where('CTVD_Default', '=', 1)->get();
+            return Datatables::of($actividades)
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->addIndexColumn()->make(true);	
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );   
     }
-    
+
 }

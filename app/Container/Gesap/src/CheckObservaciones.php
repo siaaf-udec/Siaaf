@@ -19,21 +19,21 @@ class CheckObservaciones extends Model
      */
     protected $table = 'TBL_Check_Observaciones';
 
- /**
+    /**
      * Nombre de columna primary_key de tabla .
      *
      * @var string
      */
     protected $primaryKey = 'PK_CBSV_Id';
 
-  /**
+    /**
      * Atributos que son asignables.
      *
      * @var array
      */
     protected $fillable = ['CBSV_Estudiante1','CBSV_Estudiante2','CBSV_Director','FK_TBL_Observaciones_Id'];
 
-	/*
+    /*
 	*Función de relacion entre las tablas de CheckObservaciones y observaciones 
 	*por los campo de FK_TBL_Observaciones_Id y PK_BVCS_IdObservacion 
 	*para realizar las busquedas complementarias

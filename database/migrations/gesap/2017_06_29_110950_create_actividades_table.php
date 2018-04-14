@@ -18,7 +18,6 @@ class CreateActividadesTable extends Migration
             $table->String('CTVD_Nombre', 50);
             $table->String('CTVD_Descripcion', 100);
             $table->integer('CTVD_Default')->unsigned()->default(0);
-            
             $table->timestamps();
             $table->softDeletes();
         });

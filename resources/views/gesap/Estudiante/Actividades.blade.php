@@ -1,21 +1,21 @@
 <div class="col-md-12">
 	@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Actividades'])
 	@permission('DIRECTOR_LIST_GESAP')
-    	@slot('actions', [
-			'link_back-director' => [
-			'link' => '',
-			'icon' => 'fa fa-arrow-left',
-			],
-        ])
-    @endpermission
-    @permission('STUDENT_LIST_GESAP')
-    	@slot('actions', [
-			'link_back-estudiante' => [
-			'link' => '',
-			'icon' => 'fa fa-arrow-left',
-			],
-		])
-    @endpermission
+	@slot('actions', [
+	'link_back-director' => [
+	'link' => '',
+	'icon' => 'fa fa-arrow-left',
+	],
+	])
+	@endpermission
+	@permission('STUDENT_LIST_GESAP')
+	@slot('actions', [
+	'link_back-estudiante' => [
+	'link' => '',
+	'icon' => 'fa fa-arrow-left',
+	],
+	])
+	@endpermission
 	<div class="row">
 		<div class="col-md-6">
 			{!! Field::hidden('id', $id) !!}
@@ -67,12 +67,12 @@
 												<i class="fa fa-trash"></i>
 											</a>
 											@endif
-																	
+
 											<a class="task-trash download" id=""  
 											   href="{{route('download.activity')}}/{{$documento->PK_DMNT_IdProyecto}}/{{$documento->DMNT_Archivo}}"> 
 												<i class="fa fa-download"></i> 
 											</a> 
-																	
+
 										</div>
 										@endpermission
 										@permission('UPDATE_FINAL_PROJECT_GESAP')
@@ -81,11 +81,11 @@
 											<a class="task-trash upload" id=""  href="javascript:;">
 												<i class="fa fa-upload"></i>
 											</a>    
-                                            	                    
+
 										</div>
 										@endif
 										@endpermission
-                                        	                    
+
 										<div class="list-datetime"> 
 											{{ date('h A', strtotime($documento->updated_at)) }}
 											<br/> 
@@ -122,7 +122,7 @@
 											<a class="task-trash delete" id=""  href="javascript:;">
 												<i class="fa fa-trash"></i>
 											</a>
-                                            	                    
+
 										</div>
 										@endif
 										@endpermission
@@ -156,7 +156,7 @@
 			</div>
 		</div>
 	</div>
-    <!--MODAL CREAR ACTIVIDAD-->
+	<!--MODAL CREAR ACTIVIDAD-->
 	<div class="clearfix"></div>
 	<div class="row">
 		<div class="col-md-12">
@@ -167,7 +167,7 @@
 					<div class="modal-content">
 						{!! Form::open(['id' => 'from_create-activity', 'class' => '', 'url' => '/forms']) !!}
 						{!! Field::hidden('PK_proyecto',$anteproyecto[0]->proyecto->PK_PRYT_IdProyecto) !!}
-                        	    
+
 						<div class="modal-header modal-header-success">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad</h1>
@@ -212,8 +212,8 @@
 			</div>
 		</div>
 	</div>  
-    <!--MODAL Subir archivo-->
-    
+	<!--MODAL Subir archivo-->
+
 	<div class="clearfix"></div>
 	<div class="row">
 		<div class="col-md-12">
@@ -234,9 +234,9 @@
 							<br>
 							{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
 							{!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            	        
+
 						</div>
-                                
+
 					</div>
 				</div>
 			</div>
@@ -245,67 +245,73 @@
 	@endcomponent
 </div>
 
-	<!--Local Scripts-->
-	
+<!--Local Scripts-->
+
 <script src="{{ asset('assets/main/gesap/js/dropzone.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>	
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 
-	<script>
-		jQuery(document).ready(function () {
-			$("#completadas").html($("#completed li").size());
-			$("#pendientes").html($("#pending li").size());
+<script>
+	jQuery(document).ready(function () {
+		App.unblockUI();
+		$("#completadas").html($("#completed li").size());
+		$("#pendientes").html($("#pending li").size());
 
-			$('#create').on('click', function (e) {
-				e.preventDefault();
-				$('#modal-create-activity').modal('toggle');
-			});
+		$('#create').on('click', function (e) {
+			e.preventDefault();
+			$('#modal-create-activity').modal('toggle');
+		});
 
-			$('.upload').on('click', function (e) {
-				e.preventDefault();
-				var parent = $(this).closest('li').attr('id');
-				$('input[name="PK_actividad"]').val(parent);
-				$('#modal_documento').modal('toggle');
-			});
+		$('.upload').on('click', function (e) {
+			e.preventDefault();
+			var parent = $(this).closest('li').attr('id');
+			$('input[name="PK_actividad"]').val(parent);
+			$('#modal_documento').modal('toggle');
+		});
 
 		var createActivity = function () {
-				return{
-					init: function () {
-						var route = '{{ route('proyecto.nueva.actividad') }}';
-						var type = 'POST';
-						var async = async || false;
+			return{
+				init: function () {
+					var route = '{{ route('proyecto.nueva.actividad') }}';
+					var type = 'POST';
+					var async = async || false;
 
-						var formData = new FormData();
-						formData.append('nombre', $('#nombre').val());
-						formData.append('descripcion', $('#descripcion').val());
-						formData.append('PK_proyecto', $('input[name="PK_proyecto"]').val());
+					var formData = new FormData();
+					formData.append('nombre', $('#nombre').val());
+					formData.append('descripcion', $('#descripcion').val());
+					formData.append('PK_proyecto', $('input[name="PK_proyecto"]').val());
 
-						$.ajax({
-							url: route,
-							headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-							cache: false,
-							type: type,
-							contentType: false,
-							data: formData,
-							processData: false,
-							async: async,
-							success: function (response, xhr, request) {
-								if (request.status === 200 && xhr === 'success') {
-									$('#modal-create-activity').modal('hide');
-									$('#from_create-activity')[0].reset(); //Limpia formulario
-									UIToastr.init(xhr , response.title , response.message  );
-								}},
-							error: function (response, xhr, request) {
-								if (request.status === 422 &&  xhr === 'error') {
-									UIToastr.init(xhr, response.title, response.message);
-								}}
-						}).done(function (data) {
-							route = '{{ route('proyecto.actividades') }}/{{$id}}';
-							$(".content-ajax").load(route);
-						});
-					}
+					$.ajax({
+						url: route,
+						headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+						cache: false,
+						type: type,
+						contentType: false,
+						data: formData,
+						processData: false,
+						async: async,
+						beforeSend: function () {
+							App.blockUI({target: '.portlet-form', animate: true});
+						},
+						success: function (response, xhr, request) {
+							if (request.status === 200 && xhr === 'success') {
+								$('#modal-create-activity').modal('hide');
+								$('#from_create-activity')[0].reset(); //Limpia formulario
+								UIToastr.init(xhr , response.title , response.message  );
+								App.unblockUI('.portlet-form');
+							}},
+						error: function (response, xhr, request) {
+							if (request.status === 422 &&  xhr === 'error') {
+								UIToastr.init(xhr, response.title, response.message);
+								App.unblockUI('.portlet-form');
+							}}
+					}).done(function (data) {
+						route = '{{ route('proyecto.actividades') }}/{{$id}}';
+						$(".content-ajax").load(route);
+					});
 				}
-			};
+			}
+		};
 
 		var form = $('#from_create-activity');
 		var rules = {
@@ -331,63 +337,62 @@
 				closeOnConfirm: true,
 				closeOnCancel: false
 			},
-				function(isConfirm){
-					if (isConfirm) {
-						$.ajax({
-							url: route,
-							headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-							cache: false,
-							type: type,
-							contentType: false,
-							processData: false,
-							async: async,
-							success: function (response, xhr, request) {
-								if (request.status === 200 && xhr === 'success') {
-									UIToastr.init(xhr, response.title, response.message);
-									$('#'+parent).remove();
-								}
-							},
-							error: function (response, xhr, request) {
-								if (request.status === 422 &&  xhr === 'error') {
-									UIToastr.init(xhr, response.title, response.message);
-								}
+				 function(isConfirm){
+				if (isConfirm) {
+					$.ajax({
+						url: route,
+						headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+						cache: false,
+						type: type,
+						contentType: false,
+						processData: false,
+						async: async,
+						beforeSend: function () {
+							App.blockUI({target: '.portlet-form', animate: true});
+						},
+						success: function (response, xhr, request) {
+							if (request.status === 200 && xhr === 'success') {
+								UIToastr.init(xhr, response.title, response.message);
+								$('#'+parent).remove();
+								App.unblockUI('.portlet-form');
 							}
-						});
-						swal.close();
-					} else {
-						swal("Cancelado", "No se eliminó ningun proyecto", "error");
-					}
-				});
+						},
+						error: function (response, xhr, request) {
+							if (request.status === 422 &&  xhr === 'error') {
+								UIToastr.init(xhr, response.title, response.message);
+								App.unblockUI('.portlet-form');
+							}
+						}
+					});
+					swal.close();
+				} else {
+					swal("Cancelado", "No se eliminó ningun proyecto", "error");
+				}
 			});
+		});
 
-			var documento = function () { 
-				return { 
-					init:function(){
-					}
-			  }; 
-			}
-			var route = '{{ route("proyecto.actividades.upload") }}'; 
-			var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
-			var formatfile = ''; 
-			var numfile = 1; 
+		var documento = function () { 
+			return { 
+				init:function(){
+				}
+			}; 
+		}
+		var route = '{{ route("proyecto.actividades.upload") }}'; 
+		var comeback = '{{ route('proyecto.actividades') }}/{{$id}}';
+		var formatfile = ''; 
+		var numfile = 1; 
 		$("#my-dropzone").dropzone(FormDropzone.init(route, formatfile, numfile, documento(),name,comeback)); 
 
-		
-		
 		$('#link_back-director').on('click', function (e) {
 			e.preventDefault();
 			var route = '{{ route('anteproyecto.index.directorList.ajax') }}';
 			$(".content-ajax").load(route);
 		});    
 
-
 		$('#link_back-estudiante').on('click', function (e) {
 			e.preventDefault();
 			var route = '{{ route('anteproyecto.index.studentList.ajax') }}';
 			$(".content-ajax").load(route);
 		});
-		
 	});
-
-    
-	</script>   
+</script>   
