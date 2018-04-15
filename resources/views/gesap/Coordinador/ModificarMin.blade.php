@@ -62,23 +62,15 @@
 						<h3 class="block">Datos del Proyecto</h3>
 						<div class="row">
 							<div class="col-xs-12 col-md-12 col-lg-12 ">
-								<div class="form-group form-md-line-input">
-									<div class="input-icon">
-										{{ Form::textarea('title', $anteproyecto->NPRY_Titulo, 
-										['required', 'auto' => 'off','rows' => '4','class'=>'form-control','id'=>'title'],
-										[ 'icon' => 'fa fa-user']) 
-										}}
-										<label for="title" class="control-label">Titulo del proyecto</label>
-										<span class="help-block"> Ingrese el titulo del proyecto </span>
-										<i class=" fa fa-user "></i>
-									</div>
-								</div>
+								{!! Field::textarea('title', $anteproyecto->NPRY_Titulo,
+								['label' => 'Titulo del proyecto', 'rows' => '3','max' => '500', 'min' => '4', 'required', 'auto' => 'off'], 
+                        		['help' => 'Ingrese el titulo del proyecto', 'icon' => 'fa fa-user']) !!} 
 							</div>
 							<hr>
 							<div class="col-xs-12 col-md-12 col-lg-12">
-								{!! Field::text('Keywords',$anteproyecto->NPRY_Keywords,
-								['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
-								['help' => 'Palabras Clave (max 5)', 'icon' => 'fa fa-user']) !!}
+								{!! Field::textarea('Keywords',$anteproyecto->NPRY_Keywords,
+								['label' => 'Palabras Clave', 'rows' => '1','max' => '300', 'min' => '4', 'required', 'auto' => 'off'],
+								['help' => 'Ingrese las palabras claves de su proyecto', 'icon' => 'fa fa-key']) !!}
 							</div>
 						</div>
 					</div>
@@ -116,8 +108,8 @@
 						<div class="row">
 							<div class="col-xs-12 col-md-4 col-lg-4">
 								{!! Field::text('duracion',$anteproyecto->NPRY_Duracion,
-								['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '1', 'required', 'auto' => 'off'],
-								['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-user']) 
+								['label' => 'Duracion del Proyecto', 'max' => '2', 'min' => '1', 'required', 'auto' => 'off'],
+								['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-clock-o']) 
 								!!}
 							</div>
 							<div class="col-xs-12 col-md-4 col-lg-4">
@@ -144,7 +136,7 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
@@ -161,7 +153,7 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
@@ -326,7 +318,7 @@
 					formData.append('title', $('#title').val());
 					formData.append('estudiante1', $('select[name="estudiante1"]').val());
 					formData.append('estudiante2', $('select[name="estudiante2"]').val());
-					formData.append('Keywords', $('input:text[name="Keywords"]').val());
+					formData.append('Keywords', $('#Keywords').val()); 
 					formData.append('duracion', $('input:text[name="duracion"]').val());
 					formData.append('FechaR', $('#FechaR').val());
 					formData.append('FechaL', $('#FechaL').val());
@@ -380,7 +372,9 @@
 
 		var messages = {
 			Min:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"},
-			Requerimientos:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"}
+			Requerimientos:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"},
+			estudiante1:{notEqualTo:'No puede ser el mismo que estudiante 2'},
+			estudiante2:{notEqualTo:'No puede ser el mismo que estudiante 1'}
 		};
 
 		FormWizard.init(wizard, form, rules, messages, createProject());

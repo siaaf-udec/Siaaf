@@ -52,21 +52,15 @@
 						<h3 class="block">Datos del Proyecto</h3>
 						<div class="row">
 							<div class="col-xs-12 col-md-12 col-lg-12 ">
-								<div class="form-group form-md-line-input">
-									<div class="input-icon">
-										{{ Form::textarea('title', null, 
-										['required', 'auto' => 'off','rows' => '3','class'=>'form-control','id'=>'title'],
-										[ 'icon' => 'fa fa-folder']) }}
-										<label for="title" class="control-label">Titulo del proyecto</label>
-										<span class="help-block"> Ingrese el titulo del proyecto </span>
-										<i class=" fa fa-user "></i>
-									</div>
-								</div>
+								{!! Field::textarea('title',
+								['label' => 'Titulo del proyecto', 'rows' => '3','max' => '500', 'min' => '4', 'required', 'auto' => 'off'],
+								['help' => 'Ingrese el titulo del proyecto', 'icon' => 'fa fa-user']) !!}
+								
 							</div>
 							<hr>
 							<div class="col-xs-12 col-md-12 col-lg-12">
-								{!! Field::text('Keywords',
-								['label' => 'Palabras Clave', 'max' => '300', 'min' => '2', 'required', 'auto' => 'off'],
+								{!! Field::textarea('Keywords',
+								['label' => 'Palabras Clave', 'rows' => '1','max' => '300', 'min' => '4', 'required', 'auto' => 'off'],
 								['help' => 'Ingrese las palabras claves de su proyecto', 'icon' => 'fa fa-key']) !!}
 							</div>
 						</div>
@@ -89,7 +83,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-md-4 col-lg-4">
 								{!! Field::text('duracion',
-								['label' => 'Duracion del Proyecto', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-clock-o']) !!}
+								['label' => 'Duracion del Proyecto', 'max' => '2', 'min' => '1', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-clock-o']) !!}
 							</div>
 							<div class="col-xs-12 col-md-4 col-lg-4">
 								{!! Field::date('FechaR',
@@ -113,12 +107,12 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
-												<input type="file" name="Min" class="" required id="Min"> </span>
+												<input type="file" name="Min" class="other-file" required id="Min"> </span>
 											<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Quitar </a>
 										</div>
 									</div>
@@ -130,12 +124,12 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
-												<input type="file" name="Requerimientos" class="" id="Requerimientos"> 
+												<input type="file" name="Requerimientos" class="other-file" id="Requerimientos"> 
 											</span>
 											<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Quitar </a>
 										</div>
@@ -284,7 +278,7 @@
 					formData.append('title', $('#title').val());
 					formData.append('estudiante1', $('select[name="estudiante1"]').val());
 					formData.append('estudiante2', $('select[name="estudiante2"]').val());
-					formData.append('Keywords', $('input:text[name="Keywords"]').val());
+					formData.append('Keywords', $('#Keywords').val());
 					formData.append('duracion', $('input:text[name="duracion"]').val());
 					formData.append('FechaR', $('#FechaR').val());
 					formData.append('FechaL', $('#FechaL').val());
@@ -332,20 +326,11 @@
 			}
 		};    
 
-		var rules = {
-			title:{required: true,minlength: 6,maxlength:500},
-			estudiante1:{required: true,notEqualTo:'#estudiante2'},
-			estudiante2:{required: true,notEqualTo:'#estudiante1'},
-			Keywords:{required: true,minlength: 4,maxlength:300},
-			duracion:{required: true,minlength: 1,maxlength:2,number: true},
-			FechaR:{required: true},
-			FechaL:{required: true},
-			Min:{required: true,extension: "txt|pdf|doc|docx"},
-			Requerimientos:{extension: "txt|pdf|doc|docx"}
-		};
 		var messages = {
 			Min:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"},
-			Requerimientos:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"}
+			Requerimientos:{extension: "Ingrese un documento valido (*.txt,*.pdf,*.doc,*.docx)"},
+			estudiante1:{notEqualTo:'No puede ser el mismo que estudiante 2'},
+			estudiante2:{notEqualTo:'No puede ser el mismo que estudiante 1'}
 		};
 
 		FormWizard.init(wizard, form, rules, messages, createProject());

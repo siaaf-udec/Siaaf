@@ -175,30 +175,14 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div class="form-group form-md-line-input">
-										<div class="input-icon">
-											{{ Form::textarea('nombre', null, 
-											['required', 'auto' => 'off','rows' => '1','class'=>'form-control','id'=>'nombre'],
-											[ 'icon' => 'fa fa-user']) 
-											}}
-											<label for="title" class="control-label">Nombre</label>
-											<span class="help-block"> </span>
-											<i class=" fa fa-user "></i>
-										</div>
-									</div>
+									{!! Field::textarea('nombre', null, 
+									['label'=>'Nombre', 'required', 'auto' => 'off','rows' => '5','max' => '50', 'min' => '5','id'=>'nombre'],
+									[ 'help'=>'Nombre de actividad','icon' => 'fa fa-user']) !!}
 								</div>
 								<div class="col-md-12">
-									<div class="form-group form-md-line-input">
-										<div class="input-icon">
-											{{ Form::textarea('descripcion', null, 
-											['required', 'auto' => 'off','rows' => '6','class'=>'form-control','id'=>'descripcion'],
-											[ 'icon' => 'fa fa-book']) 
-											}}
-											<label for="title" class="control-label">Descripcion</label>
-											<span class="help-block"> </span>
-											<i class=" fa fa-user "></i>
-										</div>
-									</div>
+									{!! Field::textarea('descripcion', null, 
+									['label'=>'Descripción','required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '1','id'=>'descripcion'],
+									[ 'help'=>'Descripcion','icon' => 'fa fa-book']) !!}
 								</div>
 							</div>
 						</div>
@@ -315,8 +299,8 @@
 
 		var form = $('#from_create-activity');
 		var rules = {
-			nombre: {required: true},
-			descripcion: {required: true}
+			nombre: {required: true,minlength: 5,maxlength:50},
+			descripcion: {required: true,minlength: 1,maxlength:100}
 		};
 		FormValidationMd.init(form,rules,false,createActivity());
 

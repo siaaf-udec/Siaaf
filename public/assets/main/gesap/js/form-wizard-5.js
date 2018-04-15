@@ -33,7 +33,13 @@ var FormWizard = function () {
 					} else if (element.hasClass('select2-hidden-accessible')) {
 						error.insertAfter(element.parent().find(".help-block"));
 					} else {
-						error.insertAfter(element);    
+						if(element.is(':file')){
+							error.insertAfter(element.parent().parent().parent());
+							
+						}else{
+							error.insertAfter(element);    	
+						}
+						
 					}
 				},
 
@@ -47,6 +53,7 @@ var FormWizard = function () {
 					if ($(element).hasClass('select2-hidden-accessible')) {
 						$(element).next('span span .selection').closest('select2-selection--single').css('border-bottom','1px solid #e73d4a;');
 					} 
+					
 					$(element)
 						.closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
 

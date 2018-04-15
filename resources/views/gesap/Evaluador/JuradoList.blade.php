@@ -114,17 +114,9 @@
 								</div>
 							</div>
 							<div class="col-md-12">
-								<div class="form-group form-md-line-input">
-									<div class="input-icon">
-										{{ Form::textarea('observacion', null, 
-										['required', 'auto' => 'off','size' => '60x6','class'=>'form-control','id'=>'observacion'],
-										[ 'icon' => 'fa fa-user']) 
-										}}
-										<label for="title" class="control-label">Observaciones</label>
-										<span class="help-block"> Ingrese el titulo del proyecto </span>
-										<i class=" fa fa-user "></i>
-									</div>
-								</div>
+								{!! Field::textarea('observacion',
+								['label' => 'Observaciones', 'rows' => '1','max' => '600', 'min' => '10', 'required', 'auto' => 'off','id'=>'observacion'],
+								['help' => 'Ingrese la observacion a realizar', 'icon' => 'fa fa-book']) !!}
 							</div>
 							<div class="col-md-12">
 								<h3 class="center">Documentos Calificados(Opcional)</h3>
@@ -136,7 +128,7 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Select file </span>    
@@ -154,11 +146,11 @@
 										<div class="input-group input-large">
 											<div class=" form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
 												<i class="fa fa-file fileinput-exists" style="left: 0;bottom: 0;color: #888;"></i>&nbsp;
-												<span class="fileinput-filename"> </span>
+												<span class="fileinput-filename" style="position:absolute"> </span>
 											</div>
 											<span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Select file </span>
-												<span class="fileinput-exists"> Change </span>
+												<span class="fileinput-exists" > Change </span>
 												<input type="file" name="requerimientos" class=""  id="Requerimientos"> </span>
 											<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 										</div>
@@ -431,7 +423,7 @@
 		};
 		var form_create = $('#form-register-obser');
 		var rules_create = {
-			observacion:{required: true},
+			observacion:{required: true,minlength: 10,maxlength:600},
 			Min:{extension: "txt|pdf|doc|docx"},
 			requerimientos:{extension: "txt|pdf|doc|docx"}
 		};

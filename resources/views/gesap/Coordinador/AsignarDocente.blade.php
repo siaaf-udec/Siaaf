@@ -158,10 +158,26 @@
 			form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
 		});        
 
+		jQuery.validator.addMethod("notEqualToGroup", function (value, element, options) {
+			var elems = $(element).parents('form').find(options[0]);
+			var valueToCompare = value;
+			var matchesFound = 0;
+			jQuery.each(elems, function () {
+				thisVal = $(this).val();
+				if (thisVal == valueToCompare) {
+					matchesFound++;
+				}
+			});
+			if (this.optional(element) || matchesFound <= 1) {
+				return true;
+			} else {
+			}
+		});
+
 		var rules = {
-			director: {required: true},
-			jurado1: {required: true, notEqualTo:'#jurado2'},
-			jurado2: {required: true, notEqualTo:'#jurado1'}
+			director: {required: true,notEqualToGroup:['.select2-hidden-accessible']},
+			jurado1: {required: true, notEqualToGroup:['.select2-hidden-accessible']},
+			jurado2: {required: true, notEqualToGroup:['.select2-hidden-accessible']}
 		};
 
 		var wizard =  $('#form_wizard_1');
@@ -221,7 +237,11 @@
 				}
 			}
 		};    
-		var messages = {};
+		var messages = {
+			director: {notEqualToGroup:'Ya selecciono este docente en otro campo'},
+			jurado1: { notEqualToGroup:'Ya selecciono este docente en otro campo'},
+			jurado2: { notEqualToGroup:'Ya selecciono este docente en otro campo'}
+		};
 		FormWizard.init(wizard, form, rules, messages, assing());
 
 		$('#link_back').on('click', function (e) {
