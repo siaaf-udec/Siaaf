@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de los usuarios registrados
         Route::get('tablaUsuarios', [   
-            'uses' => $controller . 'UsuariosController@tablaUsuarios',
+            'uses' => $controller . 'UsuariosController@data',
             'as' => 'parqueadero.usuariosCarpark.tablaUsuarios'            
         ]);
 

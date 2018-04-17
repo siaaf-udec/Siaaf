@@ -22,6 +22,6 @@ class Ingresos extends Model
     //Función de conexión entre las tablas de Ingresos y Usuarios por el campo de CI_CodigoUser y PK_CU_Codigo para realizar las busquedas complementarias
     public function relacionIngresosUsuarios()
     {
-        return $this->belongsTo(Usuarios::class, 'CI_CodigoUser', 'PK_CU_Codigo');
+        return $this->belongsTo(UsersUdec::class, 'CI_CodigoUser');
     }
 }

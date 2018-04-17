@@ -13,8 +13,9 @@ use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
+use App\Container\Users\src\Controllers\UsersUdecController;
 
-class UsuariosController extends Controller
+class UsuariosController extends UsersUdecController
 {
     /**
      * Muestra todos los usuarios registrados.
@@ -39,36 +40,6 @@ class UsuariosController extends Controller
             return view('carpark.usuarios.ajaxTablaUsuarios');
         }
 
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
-
-    /**
-     * Función que consulta los usuarios registrados y los envía al datatable correspondiente.
-     *
-     * @param  \Illuminate\Http\Request
-     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function tablaUsuarios(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            return Datatables::of(Usuarios::all())
-                ->removeColumn('CU_Cedula')
-                ->removeColumn('CU_Nombre2')
-                ->removeColumn('CU_Apellido2')
-                ->removeColumn('CU_Telefono')
-                ->removeColumn('CU_Direccion')
-                ->removeColumn('CU_UrlFoto')
-                ->removeColumn('FK_CU_IdEstado')
-                ->removeColumn('FK_CU_IdDependencia')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addIndexColumn()
-                ->make(true);
-        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'

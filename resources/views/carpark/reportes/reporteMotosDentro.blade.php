@@ -65,7 +65,7 @@
         <thead>
         <tr>
             <th class="no">#</th>
-            <th class="unit"><b>Código Del Usuario</b></th>
+            <th class="unit"><b>Documento Del Usuario</b></th>
             <th class="unit"><b>Nombre Del Usuario</b></th>
             <th class="unit"><b>Placa Del Vehículo</b></th>
             <th class="unit"><b>Código Del Vehículo</b></th>

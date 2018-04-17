@@ -12,7 +12,7 @@
 
                 <div class="form-body">
 
-                    {!! Field:: text('CodigoUsuario',null,['label'=>'Código del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],['help' => 'Digite el código del usuario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: text('CodigoUsuario',null,['label'=>'Documento del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite el documento del usuario.','icon'=>'fa fa-user']) !!}
 
                     {!! Field:: text('PlacaMoto',null,['label'=>'Placa del vehículo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'6','autocomplete'=>'off'],['help' => 'Digite la placa del vehículo.','icon'=>'fa fa-user']) !!}
 
@@ -106,7 +106,7 @@
         var form = $('#form_ingreso_create');
 
         var formRules = {
-            CodigoUsuario: {required: true, maxlength: 9, minlength: 9, number: true, noSpecialCharacters:true},
+            CodigoUsuario: {required: true, maxlength: 12, minlength: 5, number: true, noSpecialCharacters:true},
             PlacaMoto: {required: true, maxlength: 6, minlength: 5, noSpecialCharacters:true},
 
         };

@@ -104,18 +104,35 @@ class MotosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            $imgMoto = $request->file('CM_UrlFoto');
-            $imgProp = $request->file('CM_UrlPropiedad');
-            $imgSOAT = $request->file('CM_UrlSoat');
-            $urlMoto = Storage::disk('developer')->putFile('carpark/motos', $imgMoto);
-            $urlMoto = "developer/" . $urlMoto;
-            $urlProp = Storage::disk('developer')->putFile('carpark/motos', $imgProp);
-            $urlProp = "developer/" . $urlProp;
-            $urlSOAT = Storage::disk('developer')->putFile('carpark/motos', $imgSOAT);
-            $urlSOAT = "developer/" . $urlSOAT;
+            if(!empty($request->file('CM_UrlFoto')))
+            {
+                $imgMoto = $request->file('CM_UrlFoto');
+                $urlMoto = Storage::disk('developer')->putFile('carpark/motos', $imgMoto);
+                $urlMoto = "developer/" . $urlMoto;
+
+            }else
+            {
+                $urlMoto = null;
+            }
+            if(!empty($request->file('CM_UrlPropiedad')))
+            {
+                $imgProp = $request->file('CM_UrlPropiedad');
+                $urlProp = Storage::disk('developer')->putFile('carpark/motos', $imgProp);
+                $urlProp = "developer/" . $urlProp;
+            }else
+            {
+                $urlProp = null;
+            }
+            if(!empty($request->file('CM_UrlSoat')))
+            {
+                $imgSOAT = $request->file('CM_UrlSoat');
+                $urlSOAT = Storage::disk('developer')->putFile('carpark/motos', $imgSOAT);
+                $urlSOAT = "developer/" . $urlSOAT;
+            }else
+            {
+                $urlSOAT = null;
+            }
             $generadorID = date_create();
-
-
             Motos::create([
                 'PK_CM_IdMoto' => date_timestamp_get($generadorID),
                 'CM_Placa' => strtoupper($request['CM_Placa']),

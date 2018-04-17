@@ -2,6 +2,7 @@
 
 namespace App\Container\Carpark\src\Controllers;
 
+use App\Container\Users\src\UsersUdec;
 use Illuminate\Http\Request;
 use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
@@ -133,7 +134,7 @@ class IngresosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
-            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
+            $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
 
             return view('carpark.ingresos.confirmacion',
                 [
@@ -165,7 +166,7 @@ class IngresosController extends Controller
                 return view('carpark.ingresos.tablaIngresos');
             }
 
-            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
+            $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
 
             return view('carpark.ingresos.confirmacionTarjeta',
                 [
@@ -250,7 +251,7 @@ class IngresosController extends Controller
                 return view('carpark.ingresos.tablaIngresos');
             }
             $infoMoto = Motos::find($id);
-            $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
+            $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
 
             return view('carpark.ingresos.confirmacionTarjeta',
                 [

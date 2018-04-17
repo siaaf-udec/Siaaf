@@ -43,5 +43,10 @@ class UsersUdec extends Model
         return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');
     }
 
+    //Función de conexión entre las tablas de Usuarios y Motos por el campo de FK_CM_CodigoUser y PK_CU_Codigo para realizar las busquedas complementarias
+    public function relacionUsuariosMotos()
+    {
+        return $this->hasMany(Motos::class, 'FK_CM_CodigoUser');
+    }
 
 }

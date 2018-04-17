@@ -13,12 +13,6 @@
                 <div class="form-body">
 
                     <div class="row">
-
-                        <div class="col-md-6">
-                            <img src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}" class="img-circle"
-                                 height="250" width="250">
-                        </div>
-
                         <div class="col-md-6">
                             <img src="{{ asset(Storage::url($infoMoto['CM_UrlFoto'])) }}" class="" height="250"
                                  width="250">
@@ -30,10 +24,10 @@
 
                         <div class="col-md-6">
 
-                            {!! Field:: text('CI_CodigoUser',$infoUsuario['PK_CU_Codigo'],['label'=>'Código del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('CI_CodigoUser',$infoUsuario['number_document'],['label'=>'Código del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CI_NombresUser',$infoUsuario['CU_Nombre1'].' '.$infoUsuario['CU_Apellido1'],['label'=>'Nombre del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('CI_NombresUser',$infoUsuario['username'],['label'=>'Nombre del usuario:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
 
