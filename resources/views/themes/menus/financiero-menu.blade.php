@@ -120,6 +120,12 @@
                         <span class="title">Validaciones</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['financial.admin.approval.addition.subtraction.*'], 'start active open') }}">
+                    <a href="{{ route('financial.admin.approval.addition.subtraction.index') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-book"></i>
+                        <span class="title">Adición/Cancelación de Materias</span>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>

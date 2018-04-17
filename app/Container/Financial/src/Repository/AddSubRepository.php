@@ -166,15 +166,13 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
 
         $items = $items->paginate( $quantity );
 
-        /*
-        $data = $items->getCollection()
-            ->map(function($model) {
+
+        $collection = $items->getCollection()
+            ->map(function( $model ) {
                 return $this->formatData( $model );
             })->toArray();
-        */
-        $resource = new Collection($items, new AdditionSubtractionDataTableTransformer);
-        return $resource->setPaginator(new IlluminatePaginatorAdapter( $items ));
-        //return customPagination( $data,  $items);
+
+        return customPagination( $collection,  $items);
     }
 
     /**
@@ -192,10 +190,10 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
 
     /**
      * @param $model
-     * @return Collection
+     * @return array
      */
     public function formatData( $model )
     {
-        return new Collection( $model, new AdditionSubtractionDataTableTransformer );
+        return (new AdditionSubtractionDataTableTransformer)->transform( $model );
     }
 }

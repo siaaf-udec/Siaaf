@@ -43,7 +43,7 @@ class ApprovalValidationController extends Controller
         return response()->json( isset($sidebar) ? $sidebar : [], 200 );
     }
 
-    public function extensions( $status = null )
+    public function validations( $status = null )
     {
         return response()->json(
             $this->validationRepository->getAllPaginate( 10, $status ),

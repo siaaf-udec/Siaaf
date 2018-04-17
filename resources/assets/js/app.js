@@ -92,6 +92,7 @@ Vue.component('student-intersemestral-request-edit', require( financial.studentI
  */
 Vue.component('approval-index-extension', require( financial.approval + 'IndexExtension.vue' ) );
 Vue.component('approval-index-validation', require( financial.approval + 'IndexValidation.vue' ) );
+Vue.component('approval-index-add-sub', require( financial.approval + 'IndexAddSub.vue' ) );
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);

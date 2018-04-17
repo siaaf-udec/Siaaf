@@ -110,6 +110,14 @@ Route::namespace('Approval')->prefix('administrativo')->group( function () {
             ],
             'parameters' => ['validaciones' => 'id']
         ]);
+        Route::resource('adicion-cancelacion', 'ApprovalAdditionSubtractionController', [
+            'only'  => ['index', 'update'],
+            'names' => [
+                'index'  => 'financial.admin.approval.addition.subtraction.index',
+                'update' => 'financial.admin.approval.addition.subtraction.update',
+            ],
+            'parameters' => ['adicion-cancelacion' => 'id']
+        ]);
     });
 });
 
@@ -361,11 +369,15 @@ Route::namespace('Api')->prefix('api')->group( function () {
                 ->name('financial.api.approval.sidebar.extension');
             Route::get('validation', 'ApprovalValidationController@sidebar')
                 ->name('financial.api.approval.sidebar.validation');
+            Route::get('addition-subtraction', 'ApprovalAdditionSubtractionController@sidebar')
+                ->name('financial.api.approval.sidebar.addition.subtraction');
         });
         Route::get('extensions/{status?}', 'ApprovalExtensionController@extensions')
             ->name('financial.api.approval.extensions');
-        Route::get('validations/{status?}', 'ApprovalValidationController@extensions')
+        Route::get('validations/{status?}', 'ApprovalValidationController@validations')
             ->name('financial.api.approval.validation');
+        Route::get('addition-subtraction/{status?}', 'ApprovalAdditionSubtractionController@additionsSubtractions')
+            ->name('financial.api.approval.addition.subtraction');
     });
 
     Route::prefix('user')->group( function () {
