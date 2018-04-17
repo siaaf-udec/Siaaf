@@ -1,4 +1,5 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A EMPRESAS '])
+{!! Form::button('ATRAS', ['class' => 'btn red back']) !!}
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
 <div class="form-wizard">
     {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'campo obligatorio', 'icon' => 'fa fa-calendar']) !!}
@@ -110,7 +111,11 @@ jQuery(document).ready(function () {
      $(".content-ajax").load(route_edit);
         });
     
-   
+   $('.back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('documentosConvenios.documentosConvenios') }}'+'/@php echo $convenio @endphp/@php echo $estado @endphp';
+            $(".content-ajax").load(route);
+        });
     
   
 });

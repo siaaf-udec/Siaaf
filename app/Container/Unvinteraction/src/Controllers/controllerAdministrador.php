@@ -15,7 +15,8 @@ use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\DocumentacionExtra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
-
+use Exception;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -92,7 +93,7 @@ class ControllerAdministrador extends Controller
             $sede->save();
           return AjaxResponse::success(
                 '¡Bien hecho!',
-                'empresa agregada correctamente.'
+                'sede agregada correctamente.'
             );
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');

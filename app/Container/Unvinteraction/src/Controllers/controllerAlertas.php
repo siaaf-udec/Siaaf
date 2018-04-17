@@ -15,6 +15,8 @@ use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Unvinteraction\src\Notificaciones;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
+use Exception;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -26,15 +28,11 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class ControllerAlertas extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     private $path='unvinteraction.alertas';
     /*funcion para crear  una alerta de los convenios que van a finalizar para el usuario
     *@param \Illuminate\Http\Request
-    *@return \Illuminate\Http\Response
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function alerta(Request $request)
     {
@@ -76,7 +74,7 @@ class ControllerAlertas extends Controller
     }
     /*funcion para la vista de la alertas en ajax
     *@param \Illuminate\Http\Request
-    *@return \Illuminate\Http\Response
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function alertaAjax(Request $request)
     {
@@ -90,7 +88,7 @@ class ControllerAlertas extends Controller
     }
     /*funcion para envio de los datos para la tabla de datos
     *@param \Illuminate\Http\Request
-    *@return Yajra\DataTables\DataTable
+    *@return Yajra\DataTables\DataTable  | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function listarAlerta(Request $request)
     {
@@ -108,7 +106,7 @@ class ControllerAlertas extends Controller
     }
     /*funcion para la vista completa del mensaje de la alertas en ajax
     *@param int id
-    *@return \Illuminate\Http\Response
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function verAlerta(Request $request,$id)
     {

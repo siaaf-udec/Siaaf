@@ -468,10 +468,10 @@ class ControllerEvaluaciones extends Controller
     *@param  \Illuminate\Http\Request
     *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function listarEvaluacionEmpresa(Request $request,$id)
+    public function listarEvaluacionEmpresa(Request $request,$id,$convenio,$estado)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.listarEvaluacionesIndividualesEmpresa',compact('id'));
+            return view($this->path.'.listarEvaluacionesIndividualesEmpresa',compact('id','convenio','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -483,10 +483,10 @@ class ControllerEvaluaciones extends Controller
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function listarEvaluacionesUsuario(Request $request,$id)
+    public function listarEvaluacionesUsuario(Request $request,$id,$convenio,$estado)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.listarEvaluacionesIndividuales',compact('id'));
+            return view($this->path.'.listarEvaluacionesIndividuales',compact('id','convenio','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -579,6 +579,7 @@ class ControllerEvaluaciones extends Controller
     public function listarPreguntaEvaluacion(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) { 
+            
             return view($this->path.'.listarPreguntasIndividuales',compact('id'));
         }
         return AjaxResponse::fail(
@@ -621,14 +622,14 @@ class ControllerEvaluaciones extends Controller
     /*funcion para envio de la vista de filtro de reporte
     *@param \Illuminate\Http\Request
     *@param int id
-    *@param Date fecha_primera
-    *@param Date fecha_segunda
+    *@param Date fechaPrimera
+    *@param Date fechaSegunda
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-    public function reporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function reporte(Request $request,$id,$fechaPrimera,$fechaSegunda)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.verReporte',compact('id','fecha_primera','fecha_segunda'));
+            return view($this->path.'.verReporte',compact('id','fechaPrimera','fechaSegunda'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -638,15 +639,15 @@ class ControllerEvaluaciones extends Controller
     /*funcion para envio de los datos para la tabla de datos
     *@param \Illuminate\Http\Request
     *@param int id
-    *@param Date fecha_primera
-    *@param Date fecha_segunda
+    *@param Date fechaPrimera
+    *@param Date fechaSegunda
     *@param \Illuminate\Http\Request
     *@return \App\Container\Overall\Src\Facades\AjaxResponse |Yajra\DataTables\DataTable
     */
-    public function listarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function listarReporte(Request $request,$id,$fechaPrimera,$fechaSegunda)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
+            $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fechaPrimera,$fechaSegunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado')
                 ->with([
                         'conveniosEvaluacion'=>function ($query) {
                             $query->select('PK_CVNO_Convenio','CVNO_Nombre');

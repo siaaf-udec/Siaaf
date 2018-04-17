@@ -2,18 +2,8 @@
 namespace App\Container\Unvinteraction\src\Controllers;
 
 use App\Container\Unvinteraction\src\Usuarios;
-use App\Container\Unvinteraction\src\Tipo_Usuario;
-use App\Container\Unvinteraction\src\Estado_Usuario;
-use App\Container\Unvinteraction\src\Carrera;
-use App\Container\Unvinteraction\src\Facultad;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
-use App\Container\Unvinteraction\src\Evaluacion;
-use App\Container\Unvinteraction\src\Evaluacion_Preguntas;
-use App\Container\Unvinteraction\src\Preguntas;
-use App\Container\Unvinteraction\src\Sede;
-use App\Container\Unvinteraction\src\Estado;
-use App\Container\Unvinteraction\src\Empresas_Participantes;
 use App\Container\Unvinteraction\src\Empresa;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\DocumentacionExtra;
@@ -174,12 +164,12 @@ class ControllerDocumentos extends Controller
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function documentoReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function documentoReporte(Request $request,$id,$fechaPrimera,$fechaSegunda)
     {
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
+            $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fechaPrimera,$fechaSegunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
                 ->with([
                     'conveniosEvaluacion'=>function ($query) {
                         $query->select('PK_CVNO_Convenio','CVNO_Nombre');
@@ -200,8 +190,8 @@ class ControllerDocumentos extends Controller
                 'date'=>$date,
                 'time'=>$time,
                 'id'=>$id,
-                'fecha_primera'=>$fecha_primera,
-                'fecha_segunda'=>$fecha_segunda
+                'fechaPrimera'=>$fechaPrimera,
+                'fechaSegunda'=>$fechaSegunda
             ]);
             }
         return AjaxResponse::fail(
@@ -214,18 +204,18 @@ class ControllerDocumentos extends Controller
      *
 	 * @param  \Illuminate\Http\Request 
      * @param   int id
-     * @param   date fecha_primera
-     * @param   date fecha_segunda
+     * @param   date fechaPrimera
+     * @param   date fechaSegunda
      * @param  \Illuminate\Http\Request
      * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function descargarReporte(Request $request,$id,$fecha_primera,$fecha_segunda)
+    public function descargarReporte(Request $request,$id,$fechaPrimera,$fechaSegunda)
     {
         if ($request->isMethod('GET')) {
             try{
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fecha_primera,$fecha_segunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
+                $evaluacion=Evaluacion::where('VLCN_Evaluado',$id)->whereBetween('VLCN_Fecha',[$fechaPrimera,$fechaSegunda])->select('FK_TBL_Convenio_Id','PK_VLCN_Evaluacion','VLCN_Nota_Final','VLCN_Evaluador','VLCN_Evaluado','VLCN_Fecha')
                 ->with([
                     'conveniosEvaluacion'=>function ($query) {
                         $query->select('PK_CVNO_Convenio','CVNO_Nombre');
@@ -246,8 +236,8 @@ class ControllerDocumentos extends Controller
                     'date'=>$date,
                     'time'=>$time,
                     'id'=>$id,
-                    'fecha_primera'=>$fecha_primera,
-                    'fecha_segunda'=>$fecha_segunda
+                    'fechaPrimera'=>$fechaPrimera,
+                    'fechaSegunda'=>$fechaSegunda
                 ])->download('ReporteEvaluaciones.pdf');
             } catch (Exception $e) {
                 
@@ -265,9 +255,9 @@ class ControllerDocumentos extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
      */
-    public function documentoUsuario(Request $request,$id){
+    public function documentoUsuario(Request $request,$id,$convenio,$estado){
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.listarDocumentosUsuarios',compact('id'));
+            return view($this->path.'.listarDocumentosUsuarios',compact('id','convenio','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

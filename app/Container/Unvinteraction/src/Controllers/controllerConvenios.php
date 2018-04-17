@@ -3,8 +3,6 @@
 namespace App\Container\Unvinteraction\src\Controllers;
 
 use App\Container\Unvinteraction\src\Usuario;
-use App\Container\Unvinteraction\src\Carrera;
-use App\Container\Unvinteraction\src\Facultad;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenio;
 use App\Container\Unvinteraction\src\Evaluacion;
@@ -18,7 +16,8 @@ use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\Documentacion_Extra;
 use App\Container\Users\Src\Interfaces\UserInterface;
 use App\Container\Users\Src\User;
-
+use Exception;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -39,6 +38,7 @@ class ControllerConvenios extends Controller
     public function convenios(Request $request)
     {
         if ( $request->isMethod('GET')) {
+            
             $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
             return view($this->path.'.listarConvenios', compact('sede'));
         }
@@ -145,9 +145,10 @@ class ControllerConvenios extends Controller
             $convenio->FK_TBL_Sede_Id = $request->FK_TBL_Sede_Id;
             $convenio->save();
             return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
-        } else {
-            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+            
         }
+        return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+       
     }
     /*funcion para buscar un convenio y enviar la informacion de un convenio
     *@param int id
@@ -192,10 +193,11 @@ class ControllerConvenios extends Controller
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function documentosConvenios(Request $request,$id)
+    public function documentosConvenios(Request $request,$id,$estado)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'.listarDocumentosConvenios', compact('id'));
+            
+            return view($this->path.'.listarDocumentosConvenios', compact('id','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

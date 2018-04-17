@@ -10,157 +10,134 @@
         <li>
             <a href="#tab_1_3" data-toggle="tab"> EMPRESAS </a>
         </li>
-
     </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="tab_1_1">
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab_1_1">
+        <div class="actions">
+            @permission(['INTE_ADD_DOC_CON']) @php if ($estado == 1){ @endphp
+            <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @php } @endphp @endpermission
+        </div>
+        <div class="row">
+            <div class="clearfix"> </div><br><br><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Entidad', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+            </div>
+        </div>
+    </div>
+    <!-- TABLAS  PARTICIPANTES -->
+    <div class="tab-pane fade" id="tab_1_2">
+        <div class="col-md-12">
+            @permission(['INTE_ADD_PARTI']) @php if ($estado == 1){ @endphp
             <div class="actions">
-                @permission(['INTE_ADD_DOC_CON'])
-                <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
+                <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="row">
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) 
-                        @slot('columns', [ 
-                            '#' => ['style' => 'width:20px;'], 
-                            'ID', 
-                            'Entidad', 
-                            'Acciones' => ['style' => 'width:160px;'] 
-                        ])
-                    @endcomponent
-                </div>
+            @php } @endphp @endpermission
+        </div>
+
+        <div class="row">
+            <div class="clearfix"> </div><br><br><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'Identidicacion', 'Nombres', 'Apellidos', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
             </div>
         </div>
-        <!-- TABLAS  PARTICIPANTES -->
-        <div class="tab-pane fade" id="tab_1_2">
-            <div class="col-md-12">
-                @permission(['INTE_ADD_PARTI'])
-                <div class="actions">
-                    <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
-                @endpermission
-            </div>
+    </div>
+    <!-- TABLAS EMPRESAS PARTICIPANTES -->
+    <div class="tab-pane fade" id="tab_1_3">
 
-            <div class="row">
-
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes'])                  @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'Identidicacion',
-                            'Nombres',
-                            'Apellidos',
-                            'Acciones' => ['style' => 'width:160px;']
-                        ]) 
-                    @endcomponent
-                </div>
+        <div class="col-md-12">
+            @permission(['INTE_ADD_EMP_PARTY']) @php if ($estado == 1){ @endphp
+            <div class="actions">
+                <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
             </div>
+            @php } @endphp @endpermission
         </div>
-        <!-- TABLAS EMPRESAS PARTICIPANTES -->
-        <div class="tab-pane fade" id="tab_1_3">
 
+        <div class="row">
+
+            <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @permission(['INTE_ADD_EMP_PARTY'])
-                <div class="actions">
-                    <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
-                @endpermission
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Identificacion', 'Empresa', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
             </div>
-
-            <div class="row">
-
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ 
-                        '#' => ['style' => 'width:20px;'], 
-                        'ID',
-                        'Identificacion',
-                        'Empresa',
-                        'Acciones' => ['style' => 'width:160px;'] ]) 
-                    @endcomponent
-                </div>
-            </div>
-
         </div>
 
     </div>
+
+</div>
     @endcomponent
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
+                    <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
+                    {!! Form::close() !!}
+                    <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AGREGAR PARTICIPANTE -->
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="participante" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Participante']) !!}
+                <div class="form-wizard">
                     <div class="modal-header modal-header-success">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
-                        <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
-                        {!! Form::close() !!}
-                        <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
-                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    </div>
+                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
 
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
-
-    <!-- AGREGAR PARTICIPANTE -->
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="participante" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Participante']) !!}
-                    <div class="form-wizard">
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
-                        </div>
-                        <div class="modal-body">
-                            {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
-
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
+</div>
+<!-- AGREGAR EMPRESA PARTICIPANTE -->
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="empresa" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Empresas']) !!}
+                <div class="form-wizard">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
-                    {!! Form::close() !!}
+                    <div class="modal-body">
+                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
-    <!-- AGREGAR EMPRESA PARTICIPANTE -->
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="empresa" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Empresas']) !!}
-                    <div class="form-wizard">
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
-                        </div>
-                        <div class="modal-body">
-                            {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 <!-- FIN MODALS -->
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -169,13 +146,16 @@
     jQuery(document).ready(function() {
         var table, url, id;
         table = $('#Listar_Documentos');
-        var documento = function () { 
+        var documento = function () {
             return { 
                 init:function(){
-                    $('#documento').modal('hide'); 
+                    $('#documento').modal('hide');
+                    
+                    
                 }
             }; 
         }
+        
         var route = '{{route('subirDocumentoConvenio.subirDocumentoConvenio',[$id])}}';
         var formatfile = '.pdf'; 
         var numfile = 1; 
@@ -243,7 +223,7 @@
                 orderable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '@permission(['INTE_EVA_EMPRESA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>@endpermission'
+                defaultContent: '@permission(['INTE_EVA_EMPRESA']) @php if ($estado == 1){ @endphp<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a> @php } @endphp @endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver1" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission @permission(['INTE_DELET_PART']) @php if ($estado == 1){ @endphp <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a> @php } @endphp @endpermission'
 
 
                     }
@@ -263,14 +243,14 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id;
+                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id+'/@php echo $id @endphp/@php echo $estado @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.ver1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
+                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id @endphp/@php echo $estado @endphp ';
                 $(".content-ajax").load(route_edit);
             });
         
@@ -397,7 +377,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '@permission(['INTE_EVA_PASANTE'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission'
+                        defaultContent: '@php if ($estado == 1){ @endphp @permission(['INTE_EVA_PASANTE'])  <a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @php } @endphp   @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver2" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission  @php if ($estado == 1){ @endphp @permission(['INTE_DELET_PART'])  <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission @php } @endphp'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -417,7 +397,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
+                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo $id @endphp/@php echo $estado @endphp ';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.delete1', function(e) {

@@ -1,4 +1,5 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'DOCUMENTOS USUARIOS'])
+{!! Form::button('ATRAS', ['class' => 'btn red back']) !!}
 <div class="row">
     <div class="clearfix"> </div><br><br>
         <div class="col-md-12">
@@ -125,6 +126,11 @@ jQuery(document).ready(function () {
        pageLength: 10,
        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     });
+    $('.back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('documentosConvenios.documentosConvenios') }}'+'/@php echo $convenio @endphp/@php echo $estado @endphp';
+            $(".content-ajax").load(route);
+        });
     
 });
 </script>

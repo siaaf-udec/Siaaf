@@ -1,6 +1,8 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A USUARIOS '])
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
+{!! Form::button('ATRAS', ['class' => 'btn red back']) !!}
     <div class="form-wizard">
+        
         {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
         {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
         {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
@@ -110,8 +112,12 @@ jQuery(document).ready(function () {
             $(".content-ajax").load(route_edit);
         });
     
-   
     
+    $('.back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('documentosConvenios.documentosConvenios') }}'+'/@php echo $convenio @endphp/@php echo $estado @endphp';
+            $(".content-ajax").load(route);
+        });
   
 });
 </script>

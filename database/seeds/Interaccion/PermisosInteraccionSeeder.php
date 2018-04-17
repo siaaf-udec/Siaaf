@@ -61,7 +61,7 @@ class PermisosInteraccionSeeder extends Seeder
              'display_name'=>'ver mis documentos',
              'description'=>'ver mis documentos',
              'module_id'=>'5'],
-             ['name'=>'INTE_VER_EVA_prin',
+             ['name'=>'INTE_VER_EVA_PRIN',
              'display_name'=>'ver evaluaciones',
              'description'=>'ver todas las evaluaciones',
              'module_id'=>'5'],

@@ -1,4 +1,3 @@
-//2
 var FormDropzone = function () {
     return {
         //main function to initiate the module
@@ -95,7 +94,9 @@ var FormDropzone = function () {
                         UIToastr.init('success', 'Carga Satisfactoria',
                             'El archivo se ha procesado satisfactoriamente.'+file.status
                         );
-                    }
+                         $("#Listar_Documentos").DataTable().ajax.reload();
+                         
+                    } 
                 },
                 error: function(file, xhr, formData) {
                     if (file.status == 'success') {

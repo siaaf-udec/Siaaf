@@ -47,7 +47,7 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
         'as' => 'modificarConvenios.modificarConvenios',
        'uses' => $controller.'ControllerConvenios@modificarConvenios'
     ]);
-    Route::get('documentosConvenios/{id?}', [    
+    Route::get('documentosConvenios/{id?}/{estado?}', [    
         'as' => 'documentosConvenios.documentosConvenios', 
         'uses' => $controller.'ControllerConvenios@documentosConvenios'
     ]);
@@ -206,7 +206,7 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
         'as' => 'descargarReporte.descargarReporte',
        'uses' => $controller.'ControllerDocumentos@descargarReporte'
     ]);
-    Route::get('documentoUsuario/{id?}', [
+    Route::get('documentoUsuario/{id?}/{convenio?}/{estado?}', [
         'as' => 'documentoUsuario.documentoUsuario',
        'uses' => $controller.'ControllerDocumentos@documentoUsuario'
     ]);
@@ -305,11 +305,11 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
         'as' => 'registrarEvaluacionEmpresa.registrarEvaluacionEmpresa', 
         'uses' => $controller.'ControllerEvaluaciones@registrarEvaluacionEmpresa'
     ]);
-    Route::get('listarEvaluacionEmpresa/{id?}', [    
+    Route::get('listarEvaluacionEmpresa/{id?}/{convenio?}/{estado?}', [    
         'as' => 'listarEvaluacionEmpresa.listarEvaluacionEmpresa', 
         'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionEmpresa'
     ]);
-    Route::get('listarEvaluacionesUsuario/{id?}', [    
+    Route::get('listarEvaluacionesUsuario/{id?}/{convenio?}/{estado?}', [    
         'as' => 'listarEvaluacionesUsuario.listarEvaluacionesUsuario', 
         'uses' => $controller.'ControllerEvaluaciones@listarEvaluacionesUsuario'
     ]);
@@ -352,11 +352,11 @@ Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($con
 });
 //__________________________END_ALERTAS____________________
 Route::group(['middleware' => ['permission:INTE_MODULE']], function () use ($controller) {
-    Route::get('reporte/{id?}/{fecha_primera?}/{fecha_segunda?}', [    
+    Route::get('reporte/{id?}/{fechaPrimera?}/{fechaSegunda?}', [    
         'as' => 'reporte.reporte',
         'uses' => $controller.'ControllerEvaluaciones@reporte'
     ]);
-    Route::get('listarReporte/{id?}/{fecha_primera?}/{fecha_segunda?}', [    
+    Route::get('listarReporte/{id?}/{fechaPrimera?}/{fechaSegunda?}', [    
         'as' => 'listarReporte.listarReporte',
         'uses' => $controller.'ControllerEvaluaciones@listarReporte'
     ]);

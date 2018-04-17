@@ -116,6 +116,7 @@
                                 $('#form-Agregar-Sede')[0].reset();
                                 table.ajax.reload();
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function(response, xhr, request) {

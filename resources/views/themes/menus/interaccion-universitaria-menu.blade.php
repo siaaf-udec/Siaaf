@@ -58,7 +58,7 @@
                     </a>
                 </li>
 @endpermission
-@permission(['Ver_eva_prin'])
+@permission(['INTE_VER_EVA_PRIN'])
             <li class="nav-item {{ active(['evaluaciones.evaluaciones'], 'start active open') }}">
                 <a href="{{ route('evaluaciones.evaluaciones') }}" class="nav-link nav-toggle">
                         <i class="fa fa-check-square-o"></i>

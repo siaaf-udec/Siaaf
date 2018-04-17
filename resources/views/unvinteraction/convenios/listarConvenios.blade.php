@@ -14,20 +14,22 @@
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('title', '| Lista de Convenios')
-    @section('page-title', 'Lista de Convenios') @section('page-description', 'Convenios registrados')      
-        @section('content')
-            @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR CONVENIOS']) 
-                @permission(['INTE_ADD_CONVENIO'])
-                    <div class="col-md-12">
-                        <div class="actions">
-                            <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
-                        </div>
-                    </div>
-                @endpermission
-                <div class="row">
-                    <div class="clearfix"> </div><br><br>
-                    <div class="col-md-12">
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios']) 
+@section('page-title', 'Lista de Convenios') @section('page-description', 'Convenios registrados')
+@section('content')
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR CONVENIOS']) 
+
+@permission(['INTE_ADD_CONVENIO'])
+<div class="col-md-12">
+    <div class="actions">
+        <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+@endpermission
+<div class="row">
+    <div class="clearfix"> 
+    </div><br><br>
+    <div class="col-md-12">
+        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios']) 
                             @slot('columns', 
                             [ '#' => ['style' => 'width:20px;'], 
                             'ID', 
@@ -37,9 +39,9 @@
                             'Estado',
                             'Sede',
                             'Acciones' => ['style' => 'width:160px;'] ])
-                        @endcomponent
-                    </div>
-                </div>
+        @endcomponent
+    </div>
+</div>
 @endcomponent
 <!-- Modal agregar convenio -->
 <div class="col-md-12">
@@ -53,18 +55,12 @@
                     <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                 </div>
                 <div class="modal-body">
-
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('CVNO_Nombre',['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!} 
-                        
-                        {!! Field::date('CVNO_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-                        
+                        {!! Field:: text('CVNO_Nombre',['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
+                        {!! Field::date('CVNO_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!} 
                         {!! Field::date('CVNO_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
-                        
-                       
                         {!! Field::select('FK_TBL_Sede_Id',$sede,[ 'label' => 'Selecciona una sede'])!!}
-                       
                         <div class="form-actions">
                             <div class="row">
                                 <div class="modal-footer">
@@ -73,8 +69,6 @@
                             </div>
                         </div>
                         {!! Form::close() !!}
-
-
                     </div>
                 </div>
             </div>
@@ -193,7 +187,7 @@
         var rules = {
             CVNO_Nombre: {required: true},
             CVNO_Fecha_Inicio: {required: true},
-            CVNO_Fecha_Fin: {required: true},
+            CVNO_Fecha_Fin: {min :$("#CVNO_Fecha_Inicio").val(),required: true},
             FK_TBL_Sede_Id: {required: true}
             
         };
@@ -229,9 +223,9 @@
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
+                          if (request.status === 422 &&  xhr === 'success') {
+                              UIToastr.init(xhr, response.title, response.message);
+                          }
                         }
                     });
                 }
@@ -259,7 +253,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                 route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.PK_CVNO_Convenio;
+                 route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.PK_CVNO_Convenio+'/'+dataTable.FK_TBL_Estado_Id;
 
             $(".content-ajax").load(route_edit);
         });

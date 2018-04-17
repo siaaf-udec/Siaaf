@@ -97,11 +97,12 @@
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
+
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
 
 @endpush
@@ -153,6 +154,7 @@ jQuery(document).ready(function () {
         }
         
         var route = '{{route('subirDocumentoUsuario.subirDocumentoUsuario')}}';
+        
         var formatfile = '.pdf'; 
         var numfile = 1; 
     

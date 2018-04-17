@@ -2,7 +2,7 @@
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'FILTRO DE EVALUACION POR FECHA'])
     <div class="col-md-12">
                     <div class="actions">
-                        <a id="archivo3" href="documentoReporte/{{$id}}/{{$fecha_primera}}/{{$fecha_segunda}}" class="btn btn-simple btn-success btn-icon create" title="imprimir" target="_blank"><i class="fa fa-plus"></i>IMPRIMIR</a>
+                        <a id="archivo3" href="documentoReporte/{{$id}}/{{$fechaPrimera}}/{{$fechaSegunda}}" class="btn btn-simple btn-success btn-icon create" title="imprimir" target="_blank"><i class="fa fa-plus"></i>IMPRIMIR</a>
                     </div>
          </div>
         <div class="row">
@@ -35,7 +35,7 @@ jQuery(document).ready(function () {
         });
     var table, url;
     table = $('#Listar_Pasante');
-    url = "{{ route('listarReporte.listarReporte',[$id,$fecha_primera,$fecha_segunda]) }}";
+    url = "{{ route('listarReporte.listarReporte',[$id,$fechaPrimera,$fechaSegunda]) }}";
     table.DataTable({
        lengthMenu: [
            [5, 10, 25, 50, -1],

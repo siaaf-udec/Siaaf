@@ -8,14 +8,10 @@
                     {!! Field:: textarea('PRGT_Enunciado',$pregunta->PRGT_Enunciado,['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
                     
                     {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta1,$pregunta->FK_TBL_Tipo_Pregunta_Id,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                                {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
-                            </div>
-                        </div>
-                    </div>
+                    
+                    {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                    {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+                        
                 </div>
                 {!! Form::close() !!}
             </div>
