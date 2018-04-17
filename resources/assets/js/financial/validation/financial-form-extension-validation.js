@@ -49,3 +49,7 @@ var FormValidationExtension = function() {
         }
     };
 }();
+
+$(document).ready(function() {
+    FormValidationExtension.init();
+});

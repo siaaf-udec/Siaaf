@@ -21,9 +21,22 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
+        'lastname' => $faker->lastName,
+        'birthday' => $faker->date('Y-m-d'),
+        'identity_type' => $faker->randomElement(['C.C', 'T.I']),
+        'identity_no' => $faker->numerify('107#######'),
+        'identity_expe_place' => $faker->city,
+        'identity_expe_date' => $faker->date('Y-m-d'),
+        'address' => $faker->address,
+        'sexo' => $faker->randomElement(['Masculino', 'Femenino']),
+        'phone' => $faker->numerify('31########'),
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'state' => 'Aprobado',
+        'cities_id' => 1,
+        'countries_id'  => 1,
+        'regions_id'    => 1,
     ];
 });
 

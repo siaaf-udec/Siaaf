@@ -2,7 +2,7 @@
  * Created by danielprado on 20/07/17.
  */
 
-var DropZone = function (route, thumb) {
+var DropZone = function () {
     var upload = function (route, thumb) {
         Dropzone.autoDiscover = false;
         $("#dropzone").dropzone({
@@ -11,9 +11,9 @@ var DropZone = function (route, thumb) {
             parallelUploads: 1,
             maxFiles: 1,
             autoProcessQueue: false,
-            dictRemoveFile: "Remover",
+            dictRemoveFile: Lang.get("javascript.dropzone.remove"),
             maxFileSize: 1000,
-            dictResponseError: "Ha ocurrido un error en el server",
+            dictResponseError: Lang.get("javascript.dropzone.server_error"),
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -38,8 +38,8 @@ var DropZone = function (route, thumb) {
                         myDropzone.processQueue();
                     } else {
                         swal({
-                            title: "Advertencia",
-                            text: 'Debes cargar un sólo archivo y seleccionar una opción',
+                            title: Lang.get("javascript.warning"),
+                            text: Lang.get("javascript.dropzone.one_file"),
                             buttonsStyling: false,
                             confirmButtonClass: "btn btn-success",
                             type: "warning",
@@ -48,7 +48,7 @@ var DropZone = function (route, thumb) {
                 });
                 myDropzone.on("sending", function (file) {
                     $.blockUI({
-                        message: '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><h3> Procesando Archivo </h3>',
+                        message: '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><h3> '+ Lang.get("javascript.dropzone.processing") +' </h3>',
                         css: {
                             border: 'none',
                             padding: '20px',
@@ -66,17 +66,17 @@ var DropZone = function (route, thumb) {
                 });
                 myDropzone.on("queuecomplete", function(file) {
                     myDropzone.enable();
-                    UIToastr.init('success', 'Almacenado', 'El archivo se ha cargado satisfactoriamente. Un momento mientras se procesa.');
+                    UIToastr.init('success', Lang.get("javascript.dropzone.stored"), Lang.get("javascript.dropzone.stored_and_processing"));
                 });
             },
 
             complete: function(file) {
                 $.unblockUI({
                     onUnblock: function () {
-                        if (file.status == "success") {
+                        if (file.status === "success") {
                             swal({
-                                title: "Carga Satisfactoria",
-                                text: 'El archivo '+file.name+' se ha procesado satisfactoriamente.',
+                                title: Lang.get("javascript.dropzone.stored"),
+                                text: Lang.get("javascript.dropzone.success", { filename: file.name }),
                                 buttonsStyling: false,
                                 confirmButtonClass: "btn btn-success",
                                 type: "success",
@@ -88,8 +88,8 @@ var DropZone = function (route, thumb) {
 
             error: function(file) {
                 swal({
-                    title: "¡Ocurrió un Error!",
-                    text: 'El archivo '+file.name+' no se pudo cargar. Intenta nuevamente.',
+                    title: Lang.get("javascript.error"),
+                    text:  Lang.get("javascript.dropzone.failed") + ' ' +file.name ,
                     buttonsStyling: false,
                     confirmButtonClass: "btn btn-danger",
                     type: "error",

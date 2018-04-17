@@ -79,9 +79,10 @@ return [
         'financial' => [
             'driver' => 'local',
             'root' => storage_path('app/public/financial'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL').'/storage/financial',
             'visibility' => 'public',
         ],
+
         'gesap' => [
             'driver' => 'local',
             'root' => storage_path('app/public/gesap'),

@@ -15,6 +15,7 @@
 {{-- END CORE PLUGINS --}}
 {{-- BEGIN THEME GLOBAL SCRIPTS --}}
 <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/pages/scripts/financial/lang.dist.js') }}" type="text/javascript"></script>
 {{-- END THEME GLOBAL SCRIPTS --}}
 {{-- BEGIN PAGE LEVEL PLUGINS --}}
 @stack('plugins')

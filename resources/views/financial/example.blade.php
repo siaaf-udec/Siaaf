@@ -82,13 +82,17 @@
 --}}
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
-    <div class="col-md-12">
-        <div class="note note-info">
-            <p>
-                Página en blanco con dependencias de "assets" para usar como base en
-                cualquier nueva página personalizada que se cree.
-            </p>
-        </div>
+    <div class="col-md-12" id="app">
+        <portlet icon="fa fa-user" title="{{ trans('financial.extension.index.title') }}">
+            <template slot="body">
+                <p>
+                    Página en blanco con dependencias de "assets" para usar como base en
+                    cualquier nueva página personalizada que se cree.
+                </p>
+                <student-extension-request></student-extension-request>
+            </template>
+        </portlet>
+        <empty-sortable-portlet></empty-sortable-portlet>
     </div>
     {{-- END HTML SAMPLE --}}
 @endsection

@@ -9,6 +9,21 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
+/**
+ * Financial Uses
+ */
+
+use App\Container\Financial\src\Constants\SchemaConstant;
+use App\Container\Financial\src\Extension;
+use App\Container\Financial\src\Program;
+use App\Container\Financial\src\Subject;
+use App\Container\Permissions\Src\Role;
+use App\Container\Financial\src\AdditionSubtraction;
+use App\Container\Financial\src\File;
+use App\Container\Financial\src\IntersemestralStudents;
+use App\Container\Financial\src\Validation;
+use Illuminate\Support\Facades\Storage;
+
 
 class User extends Authenticatable implements AuditableContract
 {
@@ -41,7 +56,22 @@ class User extends Authenticatable implements AuditableContract
      * @var array
      */
     protected $fillable = [
-        'name','last_name' ,'email', 'password',
+        'name',
+        'lastname',
+        'birthday',
+        'identity_type',
+        'identity_no',
+        'identity_expe_place',
+        'identity_expe_date',
+        'address',
+        'sexo',
+        'phone',
+        'email',
+        'state',
+        'password',
+        'cities_id',
+        'countries_id',
+        'regions_id',
     ];
 
     /**
@@ -52,6 +82,13 @@ class User extends Authenticatable implements AuditableContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['full_name', 'profile_picture'];
 
     /**
      * The channels the user receives notification broadcasts on.
@@ -144,5 +181,74 @@ class User extends Authenticatable implements AuditableContract
     {
         return $this->name . ' ' . $this->lastname;
     }
+
+    /**
+     * Start Financial Relations
+     */
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+
+    public function getProfilePictureAttribute()
+    {
+        if ( isset( $this->images[0]->url ) ) {
+            if ( filter_var($this->images[0]->url, FILTER_VALIDATE_URL) && file_exists( $this->images[0]->url ) ) {
+                return $this->images[0]->url;
+            }
+
+            if ( Storage::disk('developer')->exists( $this->images[0]->url ) ) {
+                return Storage::disk('developer')->url($this->images[0]->url);
+            }
+        }
+
+        return substr( md5($this->full_name), 16 );
+    }
+
+    public function subjects()
+    {
+        $table = SchemaConstant::getRelationNameTable( SchemaConstant::SUBJECT_PROGRAM );
+
+        return $this->belongsToMany(Subject::class, $table, program_fk(), subject_fk())
+            ->withPivot(program_fk(), teacher_fk());
+    }
+
+    public function programs()
+    {
+        $table = SchemaConstant::getRelationNameTable( SchemaConstant::SUBJECT_PROGRAM );
+
+        return $this->belongsToMany(Program::class, $table, subject_fk(), program_fk())
+            ->withPivot(subject_fk(), teacher_fk());
+    }
+
+    public function extensions()
+    {
+        return $this->hasMany(Extension::class, student_fk(), 'id');
+    }
+
+    public function validations()
+    {
+        return $this->hasMany(Validation::class, student_fk(), 'id');
+    }
+
+    public function intersemestrals()
+    {
+        return $this->hasMany(IntersemestralStudents::class, student_fk(), 'id');
+    }
+
+    public function additionSubtraction()
+    {
+        return $this->hasMany( AdditionSubtraction::class, student_fk(), 'id' );
+    }
+
+    public function filesUploaded()
+    {
+        return $this->hasMany(File::class, user_fk(), 'id');
+    }
+
+    /**
+     * End Financial Relations
+     */
 
 }

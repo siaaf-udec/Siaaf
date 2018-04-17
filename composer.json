@@ -15,12 +15,15 @@
         "knplabs/knp-snappy": "^0.5.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "league/fractal": "^0.17.0",
         "maatwebsite/excel": "~2.1.0",
+        "mariuzzo/laravel-js-localization": "^1.4",
         "owen-it/laravel-auditing": "^4.1",
         "predis/predis": "^1.1",
         "styde/html": "~1.4",
         "tightenco/ziggy": "^0.6.0",
         "watson/active": "^2.0",
+        "yajra/laravel-datatables-fractal": "^1.0",
         "yajra/laravel-datatables-oracle": "8.*",
         "zizaco/entrust": "1.9.0-beta1"
     },
@@ -38,7 +41,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/Container/Financial/src/Helpers/financial-helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
