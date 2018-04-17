@@ -35,7 +35,7 @@ class Actividad extends Model
      *
      * @var array
      */
-    protected $fillable = ['CTVD_Nombre','CTVD_Descripcion','CTVD_Default'];
+    protected $fillable = ['CTVD_Nombre', 'CTVD_Descripcion', 'CTVD_Default'];
 
     /**
      * Atributos que con muteadas
@@ -43,6 +43,7 @@ class Actividad extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
     /*
 	*Función de relacion entre las tablas de Actividad y Documentos 
 	*por los campo de FK_TBL_Actividad_Id y PK_CTVD_IdActividad 

@@ -32,7 +32,7 @@ class Observaciones extends Model
      *
      * @var array
      */
-    protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_Id'];
+    protected $fillable = ['BVCS_Observacion', 'FK_TBL_Encargado_Id'];
 
 
     /*
@@ -46,7 +46,7 @@ class Observaciones extends Model
     {
         return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo')
             ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
-            ->with(['usuarios'=>function ($usuarios) {
+            ->with(['usuarios' => function ($usuarios) {
                 $usuarios->select('name', 'lastname', 'id');
             }]);
     }

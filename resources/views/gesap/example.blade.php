@@ -1,7 +1,8 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-    <link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}"
+          rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('title', '| Dashboard')
@@ -13,7 +14,7 @@
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Portlet'])
 
-    
+
     @endcomponent
 @endsection
 
@@ -24,11 +25,11 @@
 @endpush
 
 @push('functions')
-<script type="text/javascript">
-        jQuery(document).ready(function() {
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
 
         });
 
-</script>
+    </script>
 
 @endpush

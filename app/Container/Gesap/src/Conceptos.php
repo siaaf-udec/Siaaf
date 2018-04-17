@@ -32,7 +32,7 @@ class Conceptos extends Model
      *
      * @var array
      */
-    protected $fillable = ['CNPT_Concepto','CNPT_Tipo','FK_TBL_Encargado_Id'];
+    protected $fillable = ['CNPT_Concepto', 'CNPT_Tipo', 'FK_TBL_Encargado_Id'];
 
     /*
 	*Función de relacion entre las tablas de Conceptos y Encargados 
@@ -45,7 +45,7 @@ class Conceptos extends Model
     {
         return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo')
             ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
-            ->with(['usuarios'=>function ($usuarios) {
+            ->with(['usuarios' => function ($usuarios) {
                 $usuarios->select('name', 'lastname', 'id');
             }]);
     }

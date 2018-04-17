@@ -32,7 +32,7 @@ class Documentos extends Model
      *
      * @var array
      */
-    protected $fillable = ['FK_TBL_Actividad_Id','DMNT_Archivo','FK_TBL_Proyecto_Id'];
+    protected $fillable = ['FK_TBL_Actividad_Id', 'DMNT_Archivo', 'FK_TBL_Proyecto_Id'];
 
     /*
 	*Función de relacion entre las tablas de Documentos y proyecto 

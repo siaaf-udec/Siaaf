@@ -32,7 +32,7 @@ class Proyecto extends Model
      *
      * @var array
      */
-    protected $fillable = ['PRYT_Estado','FK_TBL_Anteproyecto_Id'];
+    protected $fillable = ['PRYT_Estado', 'FK_TBL_Anteproyecto_Id'];
 
     /*	
 	*Función de relacion entre las tablas de Proyecto y Anteproyecto 

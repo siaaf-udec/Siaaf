@@ -32,7 +32,7 @@ class Respuesta extends Model
      *
      * @var array
      */
-    protected $fillable = ['RPST_RMin','RPST_Requerimientos','FK_TBL_Radicacion_Id'];
+    protected $fillable = ['RPST_RMin', 'RPST_Requerimientos', 'FK_TBL_Radicacion_Id'];
 
     /*	
 	*Función de relacion entre las tablas de Respuesta y Observaciones 

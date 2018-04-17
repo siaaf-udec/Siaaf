@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\File;
@@ -26,7 +27,7 @@ use App\Container\Gesap\src\Encargados;
 class StudentController extends Controller
 {
 
-    private $path='gesap.Estudiante.';
+    private $path = 'gesap.Estudiante.';
     protected $connection = 'gesap';
 
     /*
@@ -39,7 +40,7 @@ class StudentController extends Controller
     public function proyecto(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path.'proponenteList');
+            return view($this->path . 'proponenteList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -57,7 +58,7 @@ class StudentController extends Controller
     public function proyectoajax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path.'proponenteList-ajax');
+            return view($this->path . 'proponenteList-ajax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -76,17 +77,17 @@ class StudentController extends Controller
     public function actividad($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $anteproyecto=Anteproyecto::select('*')
+            $anteproyecto = Anteproyecto::select('*')
                 ->where('PK_NPRY_IdMinr008', '=', $id)
                 ->with(['radicacion',
-                        'proyecto' => function ($proyecto) {
-                    $proyecto->with(['documentos'=> function ($documento) {
-                        $documento->with('actividad');
-                    }]);
-                }])
+                    'proyecto' => function ($proyecto) {
+                        $proyecto->with(['documentos' => function ($documento) {
+                            $documento->with('actividad');
+                        }]);
+                    }])
                 ->get();
 
-            return view($this->path.'actividades', [
+            return view($this->path . 'actividades', [
                 'id' => $id,
                 'anteproyecto' => $anteproyecto
             ]);
@@ -108,14 +109,14 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $date = Carbon::now();
-            $date= $date->format('his');
+            $date = $date->format('his');
             $files = $request->file('file');
-            $Ubicacion="gesap/proyecto/".$request->get('PK_actividad');
+            $Ubicacion = "gesap/proyecto/" . $request->get('PK_actividad');
             foreach ($files as $file) {
-                $nombre=$date."_".$file->getClientOriginalName();
+                $nombre = $date . "_" . $file->getClientOriginalName();
                 \Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
                 $documento = Documentos::findOrFail($request->get('PK_actividad'));
-                $documento->DMNT_Archivo =$nombre;
+                $documento->DMNT_Archivo = $nombre;
                 $documento->save();
             }
             return AjaxResponse::success(
@@ -141,19 +142,19 @@ class StudentController extends Controller
     {
         if ($request->isMethod('GET')) {
             $anteproyectos = Encargados::where(function ($query) {
-                $query->where('NCRD_Cargo', '=', "Estudiante 1")  ;
+                $query->where('NCRD_Cargo', '=', "Estudiante 1");
                 $query->orwhere('NCRD_Cargo', '=', "Estudiante 2");
             })
                 ->where('FK_Developer_User_Id', '=', $request->user()->id)
                 ->with(['anteproyecto' => function ($proyecto) {
                     $proyecto->with(['radicacion',
-                                     'director',
-                                     'jurado1',
-                                     'jurado2',
-                                     'estudiante1',
-                                     'estudiante2',
-                                     'conceptoFinal',
-                                     'proyecto']);
+                        'director',
+                        'jurado1',
+                        'jurado2',
+                        'estudiante1',
+                        'estudiante2',
+                        'conceptoFinal',
+                        'proyecto']);
                 }])
                 ->get();
 
@@ -163,30 +164,30 @@ class StudentController extends Controller
                 ->addColumn('NPRY_Estado', function ($users) {
                     if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
                         return "<span class='label label-sm label-warning'>"
-                            .$users->anteproyecto->NPRY_Estado."</span>";
+                            . $users->anteproyecto->NPRY_Estado . "</span>";
                     } else {
                         if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
                             return "<span class='label label-sm label-warning'>"
-                                .$users->anteproyecto->NPRY_Estado."</span>";
+                                . $users->anteproyecto->NPRY_Estado . "</span>";
                         } else {
                             if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
                                 return "<span class='label label-sm label-success'>"
-                                    .$users->anteproyecto->NPRY_Estado."</span>";
+                                    . $users->anteproyecto->NPRY_Estado . "</span>";
                             } else {
                                 if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
                                     return "<span class='label label-sm label-danger'>"
-                                        .$users->anteproyecto->NPRY_Estado."</span>";
+                                        . $users->anteproyecto->NPRY_Estado . "</span>";
                                 } else {
                                     if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
                                         return "<span class='label label-sm label-danger'>"
-                                            .$users->anteproyecto->NPRY_Estado."</span>";
+                                            . $users->anteproyecto->NPRY_Estado . "</span>";
                                     } else {
                                         if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
                                             return "<span class='label label-sm label-success'>"
-                                                .$users->anteproyecto->NPRY_Estado."</span>";
+                                                . $users->anteproyecto->NPRY_Estado . "</span>";
                                         } else {
                                             return "<span class='label label-sm label-info'>"
-                                                .$users->anteproyecto->NPRY_Estado."</span>";
+                                                . $users->anteproyecto->NPRY_Estado . "</span>";
                                         }
                                     }
                                 }
@@ -196,23 +197,23 @@ class StudentController extends Controller
                 })
                 ->addColumn('NPRY_Titulo', function ($title) {
                     $marca = "<!--corte-->";
-                    $largo=50;
-                    $titulo=$title->anteproyecto->NPRY_Titulo;
+                    $largo = 50;
+                    $titulo = $title->anteproyecto->NPRY_Titulo;
                     if (strlen($titulo) > $largo) {
                         $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
                         $titulo = explode($marca, $titulo);
                         $texto1 = $titulo[0];
                         unset($titulo[0]);
-                        $texto2= implode(' ', $titulo);
+                        $texto2 = implode(' ', $titulo);
                         return '<p><span class="texto-mostrado">'
-                            .$texto1
-                            .'<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
-                            .$texto2
-                            .'</span> <span class="boton_mas_info">Ver más</span></p>';
+                            . $texto1
+                            . '<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
+                            . $texto2
+                            . '</span> <span class="boton_mas_info">Ver más</span></p>';
                     }
-                    return '<p>'.$titulo.'</p>';
+                    return '<p>' . $titulo . '</p>';
                 })
-                ->rawColumns(['NPRY_Estado','NPRY_Titulo'])
+                ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
                 ->addIndexColumn()->make(true);
         }
         return AjaxResponse::fail(

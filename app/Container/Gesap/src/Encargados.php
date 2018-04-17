@@ -32,7 +32,7 @@ class Encargados extends Model
      *
      * @var array
      */
-    protected $fillable = ['FK_TBL_Anteproyecto_Id','FK_Developer_User_Id','NCRD_Cargo'];
+    protected $fillable = ['FK_TBL_Anteproyecto_Id', 'FK_Developer_User_Id', 'NCRD_Cargo'];
 
 
     /*

@@ -32,7 +32,7 @@ class Radicacion extends Model
      *
      * @var array
      */
-    protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_Id'];
+    protected $fillable = ['RDCN_Min', 'RDCN_Requerimientos', 'FK_TBL_Anteproyecto_Id'];
 
     /*	
 	*Función de relacion entre las tablas de Radicacion y Anteproyecto 

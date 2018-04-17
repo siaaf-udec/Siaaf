@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\File;
@@ -29,7 +30,7 @@ use Carbon\Carbon;
 class ReportController extends Controller
 {
 
-    private $path='gesap.Reportes';
+    private $path = 'gesap.Reportes';
 
     /*
      * Vista principal de generacion de reportes en PDF
@@ -40,8 +41,8 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->isMethod('GET')) {	
-            $docentes=User::orderBy('name', 'asc')
+        if ($request->isMethod('GET')) {
+            $docentes = User::orderBy('name', 'asc')
                 ->whereHas('roles', function ($e) {
                     $e->where('name', 'Coordinator_Gesap');
                     $e->orwhere('name', '=', 'Evaluator_Gesap');
@@ -49,8 +50,8 @@ class ReportController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            return view($this->path.'PDF.principalView', [
-                'docentes'=>$docentes
+            return view($this->path . 'PDF.principalView', [
+                'docentes' => $docentes
             ]);
         }
         return AjaxResponse::fail(
@@ -71,13 +72,13 @@ class ReportController extends Controller
         if ($request->isMethod('GET')) {
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $proyectos=Anteproyecto::
+            $proyectos = Anteproyecto::
             with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 ->get();
-            return view($this->path.'PDF.anteproyectosPDF', [
-                'proyectos'=>$proyectos,
-                'date'=>$date,
-                'time'=>$time
+            return view($this->path . 'PDF.anteproyectosPDF', [
+                'proyectos' => $proyectos,
+                'date' => $date,
+                'time' => $time
             ]);
         }
         return AjaxResponse::fail(
@@ -100,17 +101,17 @@ class ReportController extends Controller
             try {
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $proyectos=Anteproyecto::
+                $proyectos = Anteproyecto::
                 with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                     ->get();
 
-                return SnappyPdf::loadView($this->path.'PDF.AnteproyectosPDF', [
-                    'proyectos'=>$proyectos,
-                    'date'=>$date,
-                    'time'=>$time,
+                return SnappyPdf::loadView($this->path . 'PDF.AnteproyectosPDF', [
+                    'proyectos' => $proyectos,
+                    'date' => $date,
+                    'time' => $time,
                 ])->download('ReporteAnteproyectosGesap.pdf');
             } catch (Exception $e) {
-                $docentes=User::orderBy('name', 'asc')
+                $docentes = User::orderBy('name', 'asc')
                     ->whereHas('roles', function ($e) {
                         $e->where('name', 'Coordinator_Gesap');
                         $e->orwhere('name', '=', 'Evaluator_Gesap');
@@ -118,8 +119,8 @@ class ReportController extends Controller
                     ->get(['name', 'lastname', 'id'])
                     ->pluck('full_name', 'id')
                     ->toArray();
-                return view($this->path.'PDF.principalView', [
-                    'docentes'=>$docentes
+                return view($this->path . 'PDF.principalView', [
+                    'docentes' => $docentes
                 ]);
             }
         }
@@ -143,28 +144,28 @@ class ReportController extends Controller
             $date = date("d/m/Y");
             $time = date("h:i A");
             $proyectos = Encargados::where(function ($query) {
-                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                $query->where('NCRD_Cargo', '=', "Jurado 1");
                 $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
             })
                 ->where('FK_Developer_User_Id', '=', $jury)
                 ->with(['anteproyecto' => function ($proyecto) {
                     $proyecto->with(['radicacion',
-                                     'director',
-                                     'jurado1',
-                                     'jurado2',
-                                     'estudiante1',
-                                     'estudiante2',
-                                     'proyecto',
-                                     'conceptoFinal']);
+                        'director',
+                        'jurado1',
+                        'jurado2',
+                        'estudiante1',
+                        'estudiante2',
+                        'proyecto',
+                        'conceptoFinal']);
                 }])
                 ->get();
             $docente = User::find($jury);
-            return view($this->path.'PDF.proyectoDocentePDF', [
-                'proyectos'=>$proyectos,
-                'docente'=>$docente,
-                'date'=>$date,
-                'time'=>$time,
-                'cargo'=>"JURADO"
+            return view($this->path . 'PDF.proyectoDocentePDF', [
+                'proyectos' => $proyectos,
+                'docente' => $docente,
+                'date' => $date,
+                'time' => $time,
+                'cargo' => "JURADO"
             ]);
         }
         return AjaxResponse::fail(
@@ -188,55 +189,55 @@ class ReportController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $proyectos = Encargados::where(function ($query) {
-                    $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                    $query->where('NCRD_Cargo', '=', "Jurado 1");
                     $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
                 })
                     ->where('FK_Developer_User_Id', '=', $jury)
                     ->with(['anteproyecto' => function ($proyecto) {
                         $proyecto->with(['radicacion',
-                                         'director',
-                                         'jurado1',
-                                         'jurado2',
-                                         'estudiante1',
-                                         'estudiante2',
-                                         'proyecto',
-                                         'conceptoFinal']);
+                            'director',
+                            'jurado1',
+                            'jurado2',
+                            'estudiante1',
+                            'estudiante2',
+                            'proyecto',
+                            'conceptoFinal']);
                     }])
                     ->get();
                 $docente = User::find($jury);
-                return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
-                    'proyectos' =>  $proyectos,
-                    'docente'   =>  $docente,
-                    'date'      =>  $date,
-                    'time'      =>  $time,
-                    'cargo'     =>  "JURADO"
+                return SnappyPdf::loadView($this->path . 'PDF.ProyectoDocentePDF', [
+                    'proyectos' => $proyectos,
+                    'docente' => $docente,
+                    'date' => $date,
+                    'time' => $time,
+                    'cargo' => "JURADO"
                 ])->download('ReporteGesapJurado.pdf');
             } catch (Exception $e) {
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $proyectos = Encargados::where(function ($query) {
-                    $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                    $query->where('NCRD_Cargo', '=', "Jurado 1");
                     $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
                 })
                     ->where('FK_Developer_User_Id', '=', $jury)
                     ->with(['anteproyecto' => function ($proyecto) {
                         $proyecto->with(['radicacion',
-                                         'director',
-                                         'jurado1',
-                                         'jurado2',
-                                         'estudiante1',
-                                         'estudiante2',
-                                         'proyecto',
-                                         'conceptoFinal']);
+                            'director',
+                            'jurado1',
+                            'jurado2',
+                            'estudiante1',
+                            'estudiante2',
+                            'proyecto',
+                            'conceptoFinal']);
                     }])
                     ->get();
                 $docente = User::find($jury);
-                return view($this->path.'PDF.proyectoDocentePDF', [
-                    'proyectos'=>$proyectos,
-                    'docente'=>$docente,
-                    'date'=>$date,
-                    'time'=>$time,
-                    'cargo'=>"JURADO"
+                return view($this->path . 'PDF.proyectoDocentePDF', [
+                    'proyectos' => $proyectos,
+                    'docente' => $docente,
+                    'date' => $date,
+                    'time' => $time,
+                    'cargo' => "JURADO"
                 ]);
             }
         }
@@ -264,22 +265,22 @@ class ReportController extends Controller
                 ->where('FK_Developer_User_Id', '=', $director)
                 ->with(['anteproyecto' => function ($proyecto) {
                     $proyecto->with(['radicacion',
-                                     'director',
-                                     'jurado1',
-                                     'jurado2',
-                                     'estudiante1',
-                                     'estudiante2',
-                                     'proyecto',
-                                     'conceptoFinal']);
+                        'director',
+                        'jurado1',
+                        'jurado2',
+                        'estudiante1',
+                        'estudiante2',
+                        'proyecto',
+                        'conceptoFinal']);
                 }])
                 ->get();
             $docente = User::find($director);
-            return view($this->path.'PDF.proyectoDocentePDF', [
-                'proyectos'=>$proyectos,
-                'docente'=>$docente,
-                'date'=>$date,
-                'time'=>$time,
-                'cargo'=>"DIRECTOR"
+            return view($this->path . 'PDF.proyectoDocentePDF', [
+                'proyectos' => $proyectos,
+                'docente' => $docente,
+                'date' => $date,
+                'time' => $time,
+                'cargo' => "DIRECTOR"
             ]);
         }
         return AjaxResponse::fail(
@@ -303,28 +304,28 @@ class ReportController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $proyectos = Encargados::where(function ($query) {
-                    $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                    $query->where('NCRD_Cargo', '=', "Jurado 1");
                     $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
                 })
                     ->where('FK_Developer_User_Id', '=', $director)
                     ->with(['anteproyecto' => function ($proyecto) {
                         $proyecto->with(['radicacion',
-                                         'director',
-                                         'jurado1',
-                                         'jurado2',
-                                         'estudiante1',
-                                         'estudiante2',
-                                         'proyecto',
-                                         'conceptoFinal']);
+                            'director',
+                            'jurado1',
+                            'jurado2',
+                            'estudiante1',
+                            'estudiante2',
+                            'proyecto',
+                            'conceptoFinal']);
                     }])
                     ->get();
                 $docente = User::find($director);
-                return SnappyPdf::loadView($this->path.'PDF.ProyectoDocentePDF', [
-                    'proyectos'=>$proyectos,
-                    'docente'=>$docente,
-                    'date'=>$date,
-                    'time'=>$time,
-                    'cargo'=>"JURADO"
+                return SnappyPdf::loadView($this->path . 'PDF.ProyectoDocentePDF', [
+                    'proyectos' => $proyectos,
+                    'docente' => $docente,
+                    'date' => $date,
+                    'time' => $time,
+                    'cargo' => "JURADO"
                 ])->download('ReporteGesapDirector.pdf');
             } catch (Exception $e) {
 
@@ -334,22 +335,22 @@ class ReportController extends Controller
                     ->where('FK_Developer_User_Id', '=', $director)
                     ->with(['anteproyecto' => function ($proyecto) {
                         $proyecto->with(['radicacion',
-                                         'director',
-                                         'jurado1',
-                                         'jurado2',
-                                         'estudiante1',
-                                         'estudiante2',
-                                         'proyecto',
-                                         'conceptoFinal']);
+                            'director',
+                            'jurado1',
+                            'jurado2',
+                            'estudiante1',
+                            'estudiante2',
+                            'proyecto',
+                            'conceptoFinal']);
                     }])
                     ->get();
                 $docente = User::find($director);
-                return view($this->path.'PDF.proyectoDocentePDF', [
-                    'proyectos'=>$proyectos,
-                    'docente'=>$docente,
-                    'date'=>$date,
-                    'time'=>$time,
-                    'cargo'=>"DIRECTOR"
+                return view($this->path . 'PDF.proyectoDocentePDF', [
+                    'proyectos' => $proyectos,
+                    'docente' => $docente,
+                    'date' => $date,
+                    'time' => $time,
+                    'cargo' => "DIRECTOR"
                 ]);
             }
         }
@@ -369,36 +370,36 @@ class ReportController extends Controller
     public function graficos(Request $request)
     {
         if ($request->isMethod('GET')) {
-            $anteproyectos=Anteproyecto::all()->count();
+            $anteproyectos = Anteproyecto::all()->count();
 
-            $anteproyectosR=Anteproyecto::where('NPRY_Estado', '=', 'RECHAZADO')->count();
-            if ($anteproyectos==0) {
-                $anteproyectosRP=0;
+            $anteproyectosR = Anteproyecto::where('NPRY_Estado', '=', 'RECHAZADO')->count();
+            if ($anteproyectos == 0) {
+                $anteproyectosRP = 0;
             } else {
-                $anteproyectosRP=$anteproyectosR*100/$anteproyectos;
+                $anteproyectosRP = $anteproyectosR * 100 / $anteproyectos;
             }
-            $proyectos=Proyecto::all()->count();
-            if ($anteproyectos==0) {
-                $proyectosP=0;
+            $proyectos = Proyecto::all()->count();
+            if ($anteproyectos == 0) {
+                $proyectosP = 0;
             } else {
-                $proyectosP=$proyectos*100/$anteproyectos;
+                $proyectosP = $proyectos * 100 / $anteproyectos;
             }
 
-            $proyectosT=Proyecto::where('PRYT_Estado', '=', 'TERMINADO')->count();
-            if ($proyectos==0) {
-                $proyectosTP=0;
+            $proyectosT = Proyecto::where('PRYT_Estado', '=', 'TERMINADO')->count();
+            if ($proyectos == 0) {
+                $proyectosTP = 0;
             } else {
-                $proyectosTP=$proyectosT*100/$proyectos;
+                $proyectosTP = $proyectosT * 100 / $proyectos;
             }
 
             return view('gesap.Coordinador.graficos', [
-                'anteproyectos'=>$anteproyectos,
-                'anteproyectosR'=>$anteproyectosR,
-                'anteproyectosRP'=>$anteproyectosRP,
-                'proyectos'=>$proyectos,
-                'proyectosP'=>$proyectosP,
-                'proyectosT'=>$proyectosT,
-                'proyectosTP'=>$proyectosTP
+                'anteproyectos' => $anteproyectos,
+                'anteproyectosR' => $anteproyectosR,
+                'anteproyectosRP' => $anteproyectosRP,
+                'proyectos' => $proyectos,
+                'proyectosP' => $proyectosP,
+                'proyectosT' => $proyectosT,
+                'proyectosTP' => $proyectosTP
             ]);
         }
         return AjaxResponse::fail(
@@ -424,10 +425,10 @@ class ReportController extends Controller
                 ]);
 
 
-            if(!$stats->count()){
-                $aux["Estado"]="Sin Registros";
-                $aux['Value']=0; 
-                $stats[]=$aux;
+            if (!$stats->count()) {
+                $aux["Estado"] = "Sin Registros";
+                $aux['Value'] = 0;
+                $stats[] = $aux;
             }
 
             return AjaxResponse::success(
@@ -453,16 +454,15 @@ class ReportController extends Controller
     {
         if ($request->isMethod('GET')) {
             $stats = Proyecto::groupBy('Estado')
-
                 ->get([
                     'PRYT_Estado as Estado',
                     DB::raw('COUNT(*) as value')
                 ]);
 
-            if(!$stats->count()){
-                $aux["Estado"]="Sin Registros";
-                $aux['Value']=0; 
-                $stats[]=$aux;
+            if (!$stats->count()) {
+                $aux["Estado"] = "Sin Registros";
+                $aux['Value'] = 0;
+                $stats[] = $aux;
             }
 
             return AjaxResponse::success(
@@ -489,30 +489,29 @@ class ReportController extends Controller
     {
         if ($request->isMethod('GET')) {
             $stats = Encargados::where(function ($query) {
-                $query->where('NCRD_Cargo', '=', "Jurado 1")  ;
+                $query->where('NCRD_Cargo', '=', "Jurado 1");
                 $query->orwhere('NCRD_Cargo', '=', "Jurado 2");
             })
                 ->groupBy('FK_Developer_User_Id')
-                ->with(['usuarios'=> function ($user) {
+                ->with(['usuarios' => function ($user) {
                     $user->select('id', 'name', 'lastname');
                 }])
                 ->get([
                     'FK_Developer_User_Id',
                     DB::raw('COUNT(*) as value')
-                ])
-                ;
+                ]);
 
             foreach ($stats as $row) {
-                $row['Estado']=$row->usuarios->name;
-                $row['Apellido']=$row->usuarios->lastname;
+                $row['Estado'] = $row->usuarios->name;
+                $row['Apellido'] = $row->usuarios->lastname;
                 unset($row['FK_Developer_User_Id']);
                 unset($row['usuarios']);
             }
 
-            if(!$stats->count()){
-                $aux["Estado"]="Sin Registros";
-                $aux['Value']=0; 
-                $stats[]=$aux;
+            if (!$stats->count()) {
+                $aux["Estado"] = "Sin Registros";
+                $aux['Value'] = 0;
+                $stats[] = $aux;
             }
 
             return AjaxResponse::success(
@@ -540,26 +539,25 @@ class ReportController extends Controller
         if ($request->isMethod('GET')) {
             $stats = Encargados::where('NCRD_Cargo', '=', "Director")
                 ->groupBy('FK_Developer_User_Id')
-                ->with(['usuarios'=> function ($user) {
+                ->with(['usuarios' => function ($user) {
                     $user->select('id', 'name', 'lastname');
                 }])
                 ->get([
                     'FK_Developer_User_Id',
                     DB::raw('COUNT(*) as value')
-                ])
-                ;
+                ]);
 
             foreach ($stats as $row) {
-                $row['Estado']=$row->usuarios->name;
-                $row['Apellido']=$row->usuarios->lastname;
+                $row['Estado'] = $row->usuarios->name;
+                $row['Apellido'] = $row->usuarios->lastname;
                 unset($row['FK_Developer_User_Id']);
                 unset($row['usuarios']);
             }
 
-            if(!$stats->count()){
-                $aux["Estado"]="Sin Registros";
-                $aux['Value']=0; 
-                $stats[]=$aux;
+            if (!$stats->count()) {
+                $aux["Estado"] = "Sin Registros";
+                $aux['Value'] = 0;
+                $stats[] = $aux;
             }
             return AjaxResponse::success(
                 '¡Bien hecho!',
