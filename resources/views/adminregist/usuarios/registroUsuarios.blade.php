@@ -16,7 +16,6 @@
                 ])
         <div class="row">
             <div class="col-md-12">
-
                 {!! Form::open(['id' => 'form_create_user', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
                 <div class="form-body">
                     <div class="col-md-6">
@@ -50,11 +49,6 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group divcompany">
-                            <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::text('company', old('company'), ['max' => 25, 'label' => 'Empresa', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-building', 'help' => 'Ingrese la Empresa.']) !!}
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
                                 {!! Field::select(
@@ -84,7 +78,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="col-md-6 col-lg-offset-3 text-center">
                             <a href="javascript:;"
@@ -97,7 +90,6 @@
                         </div>
                     </div>
                 </div>
-
                 {!! Form::close() !!}
             </div>
         </div>
@@ -127,7 +119,6 @@
                     type: "POST"
                 }
             },
-            company: {maxlength: 25},
             number_phone: {minlength: 5, maxlength: 15, required: true},
             email: {email: true, required: true, maxlength: 80},
             type_user: {required: true},
@@ -142,15 +133,12 @@
             var tipo = $('select[name="type_user"]').val();
             if (tipo == 'Estudiante') {
                 $('.divcode').show();
-                $('.divcompany').hide();
             }
             if (tipo == 'Externo') {
                 $('.divcode').hide();
-                $('.divcompany').show();
             }
             if (tipo == 'Docente') {
                 $('.divcode').hide();
-                $('.divcompany').hide();
             }
         });
         var messages = {
@@ -174,7 +162,6 @@
                     formData.append('lastname', $('input[name="lastname"]').val());
                     formData.append('number_document', $('input[name="number_document"]').val());
                     formData.append('code', $('input[name="code"]').val());
-                    formData.append('company', $('input[name="company"]').val());
                     formData.append('number_phone', $('input[name="number_phone"]').val());
                     formData.append('email', $('input[name="email"]').val());
                     formData.append('type_user', $('select[name="type_user"]').val());

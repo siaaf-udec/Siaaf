@@ -108,22 +108,24 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Registrar Ingreso'])
             <div class="row">
-                <div class="col-md-4 col-lg-offset-3">
-                    <div class="alert alert-block alert-info fade in">
-                        <h4 class="alert-heading">Información!</h4>
-                        <p>Si no se encuentra registrado por favor presione el boton Registrarse o si tiene dudas
-                            presione
-                            el boton Ayuda donde lo llevara a una sesión de preguntas frecuentes: </p>
-                        <p>
-                            <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
-                                        class="fa fa-plus"></i>Registrarse</a>
-                            <a href="{{route('adminRegist.help.index.preguntas')}}"
-                               class="btn btn-simple dark btn-icon"><i
-                                        class="fa fa-plus"></i>Ayuda</a>
-                        </p>
+                <div class="col-md-12 col-lg-offset-1">
+                    <div class="col-md-4 col-lg-offset-3">
+                        <div class="alert alert-block alert-info fade in">
+                            <h4 class="alert-heading">Información!</h4>
+                            <p>Si no se encuentra registrado por favor presione el boton Registrarse o si tiene dudas
+                                presione
+                                el boton Ayuda donde lo llevara a una sesión de preguntas frecuentes: </p>
+                            <p>
+                                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
+                                            class="fa fa-plus"></i>Registrarse</a>
+                                <br>
+                                <a href="{{route('adminRegist.help.index.preguntas')}}"
+                                   class="btn btn-simple dark btn-icon"><i
+                                            class="fa fa-plus"></i>Preguntas Frecuentes</a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
+
 
                     {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
 

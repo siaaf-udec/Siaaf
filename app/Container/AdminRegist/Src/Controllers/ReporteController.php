@@ -15,7 +15,7 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista del formulario para realizar el reporte por fechas.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexFecha(Request $request)
     {
@@ -32,7 +32,7 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista del formulario para realizar el reporte por novedad.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexNovedad(Request $request)
     {
@@ -65,7 +65,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteFecha(Request $request)
     {
@@ -96,7 +96,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por fechas.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function descargarReporteFecha(Request $request, $fech1, $fech2)
     {
@@ -123,7 +123,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte por novedad con sus respectivos datos a mostrar.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteNovedad(Request $request)
     {
@@ -148,7 +148,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por novedad.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function descargarReporteNovedad(Request $request, $novedad)
     {
@@ -176,7 +176,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte general con sus respectivos datos a mostrar.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteGeneral(Request $request)
     {
@@ -200,7 +200,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte general de ingreso.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function descargarReporteGeneral(Request $request)
     {
@@ -226,7 +226,7 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista de los graficos los cuales se muestran por novedad, fecha, tipo de usuario y por sedes.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function charIndex(Request $request)
     {

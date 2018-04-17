@@ -13,7 +13,7 @@ class HelpController extends Controller
     /**
      *Función que redirecciona a la vista de la tabla donde se mostraran las preguntas y respuestas registradas.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request)
     {
@@ -30,8 +30,7 @@ class HelpController extends Controller
     /**
      *Función que muestra las preguntas y respuestas registradas por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {
@@ -76,7 +75,7 @@ class HelpController extends Controller
      * Función que redirecciona a la vista del formulario de registro de una nueva pregunta con su respuesta.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -120,7 +119,7 @@ class HelpController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)
     {
@@ -193,7 +192,7 @@ class HelpController extends Controller
     /**
      *Función que redirecciona a la vista donde se mostraran las preguntas y respuestas registradas.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexPreguntas(Request $request)
     {

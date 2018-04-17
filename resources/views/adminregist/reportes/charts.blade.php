@@ -8,93 +8,115 @@
           type="text/css"/>
 @endpush
 @section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabbable-line boxless tabbable-reversed">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_0" data-toggle="tab"> Fechas </a>
+                    </li>
+                    <li>
+                        <a href="#tab_1" data-toggle="tab"> Novedades </a>
+                    </li>
+                    <li>
+                        <a href="#tab_2" data-toggle="tab"> Sedes </a>
+                    </li>
+                    <li>
+                        <a href="#tab_3" data-toggle="tab"> Tipo de Usuario </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_0">
+                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráfico por Fechas'])
+                            <div id="chartFecha" style="height:400px;"></div>
+                        @endcomponent
+                    </div>
 
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráfico por Fechas'])
-        <div class="row">
-            <div class="col-md-12">
-                <div id="chartFecha" style="height:400px;"></div>
-            </div>
-        </div>
-
-    @endcomponent
-
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Novedades'])
-        <div class="row">
-            <div class="col-md-12">
-                <div id="chartNovedad" class="chart" style="height:400px;"></div>
-                <div class="well margin-top-20">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label class="text-left">Radio superior:</label>
-                            <input class="chart_5_chart_input" data-property="topRadius" type="range" min="0" max="1.5"
-                                   value="1" step="0.01"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Angulo:</label>
-                            <input class="chart_5_chart_input" data-property="angle" type="range" min="0" max="89"
-                                   value="30" step="1"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Profundidad:</label>
-                            <input class="chart_5_chart_input" data-property="depth3D" type="range" min="1" max="120"
-                                   value="40" step="1"/></div>
+                    <div class="tab-pane" id="tab_1">
+                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Novedades'])
+                            <div id="chartNovedad" class="chart" style="height:400px;"></div>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Radio superior:</label>
+                                        <input class="chart_5_chart_input" data-property="topRadius"
+                                               type="range"
+                                               min="0" max="1.5"
+                                               value="1" step="0.01"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Angulo:</label>
+                                        <input class="chart_5_chart_input" data-property="angle" type="range"
+                                               min="0"
+                                               max="89"
+                                               value="30" step="1"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Profundidad:</label>
+                                        <input class="chart_5_chart_input" data-property="depth3D" type="range"
+                                               min="1"
+                                               max="120"
+                                               value="40" step="1"/></div>
+                                </div>
+                            </div>
+                        @endcomponent
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Sedes'])
+                            <div id="chartSede" class="chart" style="height:400px;"></div>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Radio superior:</label>
+                                        <input class="chart_6_chart_input" data-property="topRadius"
+                                               type="range"
+                                               min="0" max="1.5"
+                                               value="1" step="0.01"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Angulo:</label>
+                                        <input class="chart_6_chart_input" data-property="angle" type="range"
+                                               min="0"
+                                               max="89"
+                                               value="30" step="1"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Profundidad:</label>
+                                        <input class="chart_6_chart_input" data-property="depth3D" type="range"
+                                               min="1"
+                                               max="120"
+                                               value="40" step="1"/></div>
+                                </div>
+                            </div>
+                        @endcomponent
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Tipo de Usuario'])
+                            <div id="chartTypeUser" class="chart" style="height:400px;"></div>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Radio superior:</label>
+                                        <input class="chart_7_chart_input" data-property="topRadius"
+                                               type="range"
+                                               min="0" max="1.5"
+                                               value="1" step="0.01"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Angulo:</label>
+                                        <input class="chart_7_chart_input" data-property="angle" type="range"
+                                               min="0"
+                                               max="89"
+                                               value="30" step="1"/></div>
+                                    <div class="col-sm-3">
+                                        <label class="text-left">Profundidad:</label>
+                                        <input class="chart_7_chart_input" data-property="depth3D" type="range"
+                                               min="1"
+                                               max="120"
+                                               value="40" step="1"/></div>
+                                </div>
+                            </div>
+                        @endcomponent
                     </div>
                 </div>
             </div>
         </div>
-
-    @endcomponent
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Sedes'])
-        <div class="row">
-            <div class="col-md-12">
-                <div id="chartSede" class="chart" style="height:400px;"></div>
-                <div class="well margin-top-20">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label class="text-left">Radio superior:</label>
-                            <input class="chart_6_chart_input" data-property="topRadius" type="range" min="0" max="1.5"
-                                   value="1" step="0.01"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Angulo:</label>
-                            <input class="chart_6_chart_input" data-property="angle" type="range" min="0" max="89"
-                                   value="30" step="1"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Profundidad:</label>
-                            <input class="chart_6_chart_input" data-property="depth3D" type="range" min="1" max="120"
-                                   value="40" step="1"/></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    @endcomponent
-
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Tipo de Usuario'])
-        <div class="row">
-            <div class="col-md-12">
-                <div id="chartTypeUser" class="chart" style="height:400px;"></div>
-                <div class="well margin-top-20">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label class="text-left">Radio superior:</label>
-                            <input class="chart_7_chart_input" data-property="topRadius" type="range" min="0" max="1.5"
-                                   value="1" step="0.01"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Angulo:</label>
-                            <input class="chart_7_chart_input" data-property="angle" type="range" min="0" max="89"
-                                   value="30" step="1"/></div>
-                        <div class="col-sm-3">
-                            <label class="text-left">Profundidad:</label>
-                            <input class="chart_7_chart_input" data-property="depth3D" type="range" min="1" max="120"
-                                   value="40" step="1"/></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    @endcomponent
-
-
+    </div>
 @endsection
 
 @push('plugins')
@@ -127,12 +149,12 @@
 
                 "dataProvider": [
                         @foreach($date as $info => $valor)
-                            {
-                                "date": "{{$info}}",
-                                "duration": {{$valor}},
-                                "lineColor": "#b7e021"
-                            },
-                        @endforeach],
+                    {
+                        "date": "{{$info}}",
+                        "duration": {{$valor}},
+                        "lineColor": "#b7e021"
+                    },
+                    @endforeach],
                 "balloon": {
                     "cornerRadius": 6
                 },
