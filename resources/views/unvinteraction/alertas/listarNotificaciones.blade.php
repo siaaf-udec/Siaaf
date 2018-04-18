@@ -61,7 +61,7 @@ jQuery(document).ready(function () {
                {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"PK_NTFC_Notificacion" },
                {data: 'NTFC_Titulo', searchable: true,name:"NTFC_Titulo" },
                {data: 'NTFC_Bandera', searchable: true,name:"NTFC_Bandera" },
-               {data:'action',className:'',searchable: false,
+               {data:'action',searchable: false,
                 name:'action',
                 title:'Acciones',
                 orderable: false,

@@ -15,7 +15,7 @@ class CreateTBLPreguntaTbl extends Migration
     {
         Schema::connection('unvinteraction')->create('TBL_Pregunta', function (Blueprint $table) {
             $table->increments('PK_PRGT_Pregunta');
-            $table->string('PRGT_Enunciado',120);
+            $table->text('PRGT_Enunciado');
             $table->integer('FK_TBL_Tipo_Pregunta_Id')->unsigned();
             $table->foreign('FK_TBL_Tipo_Pregunta_Id')->references('PK_TPPG_Tipo_Pregunta')->on('TBL_Tipo_Pregunta');
         });
@@ -29,5 +29,6 @@ class CreateTBLPreguntaTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Pregunta');
     }
 }

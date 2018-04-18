@@ -345,7 +345,7 @@
                             },
                             error: function(response, xhr, request) {
                                 UIToastr.init(xhr, 'usuario ya existente', 'el usuario a insertar ya esta en el convenio');
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
@@ -434,12 +434,13 @@
                             success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                    UIToastr.init(xhr, response.title, response.message);                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
 						});
@@ -492,9 +493,9 @@
                                 }
                             },
                             error: function(response, xhr, request) {
-                                 UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingresada ya se encuentra  o no existe');
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingrsada ya se encuentra  o no existe');
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });

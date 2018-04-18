@@ -39,7 +39,7 @@
                         
                         {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Razon social', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                         
                         {!! Field:: tel('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
                         
@@ -140,8 +140,9 @@ jQuery(document).ready(function () {
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

@@ -126,8 +126,8 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta"},
            {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
-           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
-           {data:'action',className:'',searchable: false,
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"pregunta_tipos_pregunta.TPPG_Tipo"},
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -197,8 +197,9 @@ jQuery(document).ready(function () {
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');  
                     }
                 }
                     });

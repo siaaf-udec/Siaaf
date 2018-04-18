@@ -32,6 +32,7 @@
     @endcomponent
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     ComponentsDateTimePickers.init();
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
@@ -62,11 +63,13 @@ jQuery(document).ready(function () {
                         var route = '{{route('reporte.reporte')}}/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
                         $(".content-ajax").load(route);
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });
@@ -83,12 +86,12 @@ jQuery(document).ready(function () {
         columns = [
            {data: 'DT_Row_Index'},
            {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
-           {data: 'evaluado.dato_usuario.name', searchable: true,name:"name"},
-           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"name"},
-           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"lastname"},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"name"},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"lastname"},
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"CVNO_Nombre"},
+           {data: 'evaluado.dato_usuario.name', searchable: true,name:"evaluado.dato_usuario.name"},
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"evaluado.dato_usuario.name"},
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"evaluado.dato_usuario.lastname"},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"evaluador.dato_usuario.name"},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"evaluador.dato_usuario.lastname"},
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"convenios_evaluacion.CVNO_Nombre"},
            {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final"},
            {data:'action',searchable: false,
             name:'action',

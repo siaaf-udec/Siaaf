@@ -17,7 +17,7 @@ class CreateTBLEmpresaParticipanteTbl extends Migration
             $table->increments('PK_EMPT_Empresa_Participante');
             $table->integer('FK_TBL_Convenio_Id')->unsigned();
             $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
-            $table->integer('FK_TBL_Empresa_Id')->unsigned();
+            $table->bigInteger('FK_TBL_Empresa_Id')->unsigned();
             $table->foreign('FK_TBL_Empresa_Id')->references('PK_EMPS_Empresa')->on('TBL_Empresa');
         });
     }
@@ -30,5 +30,6 @@ class CreateTBLEmpresaParticipanteTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Empresa_Participante');
     }
 }

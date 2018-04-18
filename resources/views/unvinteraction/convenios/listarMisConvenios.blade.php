@@ -122,18 +122,19 @@
 
     }();
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
             table = $('#Listar_Convenios');
             url = "{{ route('listarMisConvenios.listarMisConvenios') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"PK_CVNO_Convenio" },
-                {data: 'convenios_participante.CVNO_Nombre', searchable: true, name:"CVNO_Nombre"},
-                {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true, name:"CVNO_Fecha_Inicio"},
-                {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true, name:"CVNO_Fecha_Fin"},
-                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true, name:"ETAD_Estado"},
-                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true, name:"SEDE_Sede"},
-                {data:'action',className:'',searchable: false,
+                {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"convenios_participante.PK_CVNO_Convenio" },
+                {data: 'convenios_participante.CVNO_Nombre', searchable: true, name:"convenios_participante.CVNO_Nombre"},
+                {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true, name:"convenios_participante.CVNO_Fecha_Inicio"},
+                {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true, name:"convenios_participante.CVNO_Fecha_Fin"},
+                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true, name:"convenios_participante.convenio_estado.ETAD_Estado"},
+                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true, name:"convenios_participante.convenio_sede.SEDE_Sede"},
+                {data:'action',searchable: false,
                 name:'action',
                 title:'Acciones',
                 orderable: false,

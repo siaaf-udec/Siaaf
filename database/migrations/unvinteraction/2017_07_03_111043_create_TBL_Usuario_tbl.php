@@ -28,5 +28,6 @@ class CreateTBLUsuarioTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Usuario');
     }
 }

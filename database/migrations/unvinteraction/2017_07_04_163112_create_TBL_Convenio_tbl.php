@@ -15,7 +15,7 @@ class CreateTBLConvenioTbl extends Migration
     {
         Schema::connection('unvinteraction')->create('TBL_Convenio', function (Blueprint $table) {
             $table->increments('PK_CVNO_Convenio');
-            $table->string('CVNO_Nombre',120); 
+            $table->text('CVNO_Nombre'); 
             $table->date('CVNO_Fecha_Inicio'); 
             $table->date('CVNO_Fecha_Fin');
             $table->integer('FK_TBL_Estado_Id')->unsigned();
@@ -33,5 +33,6 @@ class CreateTBLConvenioTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Convenio');
     }
 }

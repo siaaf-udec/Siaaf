@@ -3,7 +3,6 @@ namespace App\Container\Unvinteraction\src\Controllers;
 
 use App\Container\Unvinteraction\src\Usuarios;
 use App\Container\Unvinteraction\src\Documentacion;
-use App\Container\Unvinteraction\src\Convenios;
 use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\DocumentacionExtra;
 use Illuminate\Http\Request;
@@ -13,7 +12,6 @@ use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
-use Validator;
 
 class DocumentosController extends Controller
 {

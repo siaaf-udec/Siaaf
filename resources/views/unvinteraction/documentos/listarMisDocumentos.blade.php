@@ -117,7 +117,7 @@ jQuery(document).ready(function () {
             {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"PK_DCET_Documentacion_Extra",className:'none' },
             {data: 'DCET_Nombre',searchable: true,name:"DCET_Nombre"},
             {data:'action',
-             className:'',
+             
              searchable: false,
              name:'action',
              title:'Acciones',

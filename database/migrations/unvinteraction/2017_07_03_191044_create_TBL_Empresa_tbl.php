@@ -14,11 +14,11 @@ class CreateTBLEmpresaTbl extends Migration
     public function up()
     {
         Schema::connection('unvinteraction')->create('TBL_Empresa', function (Blueprint $table) {
-            $table->bigIncrements('PK_EMPS_Empresa',12);
-            $table->string('EMPS_Nombre_Empresa',90);
-            $table->string('EMPS_Razon_Social',90);            
-            $table->string('EMPS_Telefono',30);
-            $table->string('EMPS_Direccion',90);
+            $table->bigIncrements('PK_EMPS_Empresa');
+            $table->text('EMPS_Nombre_Empresa');
+            $table->text('EMPS_Razon_Social');            
+            $table->text('EMPS_Telefono');
+            $table->text('EMPS_Direccion');
         });
     }
     /**
@@ -29,5 +29,6 @@ class CreateTBLEmpresaTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Empresa');
     }
 }

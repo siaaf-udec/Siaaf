@@ -32,5 +32,6 @@ class CreateTBLParticipantesTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Participantes');
     }
 }

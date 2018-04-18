@@ -54,9 +54,9 @@ jQuery(document).ready(function () {
         url = "{{ route('listarEstados.listarEstados') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_ETAD_Estado', "visible": true, name:"documento" },
-           {data: 'ETAD_Estado', searchable: true},
-           {data:'action',className:'',searchable: false,
+           {data: 'PK_ETAD_Estado', "visible": true, name:"PK_ETAD_Estado"  },
+           {data: 'ETAD_Estado', searchable: true,name:"ETAD_Estado"},
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -119,8 +119,9 @@ jQuery(document).ready(function () {
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

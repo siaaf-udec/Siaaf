@@ -97,7 +97,7 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_SEDE_Sede', "visible": true, name:"PK_SEDE_Sede" },
            {data: 'SEDE_Sede', searchable: true, name:"SEDE_Sede"},
-           {data:'action',className:'',searchable: false,
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -160,8 +160,9 @@ jQuery(document).ready(function () {
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

@@ -15,8 +15,8 @@ class CreateTBLDocumentacionExtraTbl extends Migration
     {
         Schema::connection('unvinteraction')->create('TBL_Documentacion_Extra', function (Blueprint $table) {
             $table->increments('PK_DCET_Documentacion_Extra');
-            $table->string('DCET_Ubicacion',120);
-            $table->string('DCET_Nombre',120);
+            $table->text('DCET_Ubicacion');
+            $table->text('DCET_Nombre');
             $table->integer('FK_TBL_Usuarios_Id')->unsigned();
             $table->foreign('FK_TBL_Usuarios_Id')->references('PK_USER_Usuario')->on('TBL_Usuario');
         });
@@ -30,5 +30,6 @@ class CreateTBLDocumentacionExtraTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Documentacion_Extra');
     }
 }

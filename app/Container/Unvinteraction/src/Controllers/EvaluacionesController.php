@@ -2,12 +2,9 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 use App\Container\Unvinteraction\src\TipoPregunta;
-use App\Container\Unvinteraction\src\Convenios;
 use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\EvaluacionPregunta;
 use App\Container\Unvinteraction\src\Pregunta;
-use App\Container\Unvinteraction\src\EmpresasParticipantes;
-use Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;

@@ -15,7 +15,7 @@ class CreateTBLEstadoTbl extends Migration
     {
         Schema::connection('unvinteraction')->create('TBL_Estado', function (Blueprint $table) {
             $table->increments('PK_ETAD_Estado');
-            $table->string('ETAD_Estado',20);          
+            $table->text('ETAD_Estado');          
         });
     }
 
@@ -27,5 +27,6 @@ class CreateTBLEstadoTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Estado');
     }
 }

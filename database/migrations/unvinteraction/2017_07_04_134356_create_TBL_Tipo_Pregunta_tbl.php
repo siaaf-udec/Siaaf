@@ -15,7 +15,7 @@ class CreateTBLTipoPreguntaTbl extends Migration
     {
         Schema::connection('unvinteraction')->create('TBL_Tipo_Pregunta', function (Blueprint $table) {
             $table->increments('PK_TPPG_Tipo_Pregunta');
-            $table->string('TPPG_Tipo',20);
+            $table->text('TPPG_Tipo');
         });
     }
 
@@ -27,5 +27,6 @@ class CreateTBLTipoPreguntaTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Tipo_Pregunta');
     }
 }

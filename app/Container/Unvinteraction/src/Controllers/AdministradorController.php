@@ -2,10 +2,6 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\Usuarios;
-use App\Container\Unvinteraction\src\Convenios;
-use App\Container\Unvinteraction\src\EvaluacionPreguntas;
-use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\Empresa;

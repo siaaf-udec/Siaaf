@@ -110,17 +110,18 @@
 @push('functions')
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Empresa');
         url = "{{ route('listarEvaluacionesEmpresas.listarEvaluacionesEmpresas') }}";
         columns = [
             {data: 'DT_Row_Index'},
            {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"name"},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"name"},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true, name:"lastname"},
-           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true, name:"EMPS_Nombre_Empresa"}, 
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true, name:"CVNO_Nombre"},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"evaluador.dato_usuario.name"},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"evaluador.dato_usuario.name"},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true, name:"evaluador.dato_usuario.lastname"},
+           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true, name:"evaluado_empresa.EMPS_Nombre_Empresa"}, 
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true, name:"convenios_evaluacion.CVNO_Nombre"},
            {data: 'VLCN_Nota_Final', searchable: true, name:"VLCN_Nota_Final"},
            {data:'action',searchable: false,
             name:'action',
@@ -150,18 +151,19 @@ jQuery(document).ready(function () {
 </script>
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Pasante');
         url = "{{ route('listarEvaluacionesUsuarios.listarEvaluacionesUsuarios') }}";
         columns = [
             {data: 'DT_Row_Index'},
            {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true,name:"PK_VLCN_Evaluacion" },
-           {data: 'evaluado.dato_usuario.name', searchable: true,name:"name" },
-           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"name" },
-           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"lastname" },
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"name" },
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"lastname" },
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"CVNO_Nombre" },
+           {data: 'evaluado.dato_usuario.name', searchable: true,name:"evaluado.dato_usuario.name" },
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"evaluado.dato_usuario.name" },
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"evaluado.dato_usuario.lastname" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"evaluador.dato_usuario.name" },
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"evaluador.dato_usuario.lastname" },
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"convenios_evaluacion.CVNO_Nombre" },
            {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final" },
            {data:'action',searchable: false,
             name:'action',

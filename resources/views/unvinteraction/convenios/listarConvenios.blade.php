@@ -59,9 +59,9 @@
                     <div class="form-wizard">
                         {!! Field:: text('CVNO_Nombre',['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
                         
-                        {!! Field::date('CVNO_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!} 
+                        {!! Field::date('CVNO_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!} 
                         
-                        {!! Field::date('CVNO_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+                        {!! Field::date('CVNO_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
                         
                         {!! Field::select('FK_TBL_Sede_Id',$sede,[ 'label' => 'Selecciona una sede','required' => 'required'])!!}
                         <div class="form-actions">
@@ -167,8 +167,8 @@
                 {data: 'CVNO_Nombre',searchable: true,name:"CVNO_Nombre"},
                 {data: 'CVNO_Fecha_Inicio',searchable: true,name:"CVNO_Fecha_Inicio"},
                 {data: 'CVNO_Fecha_Fin',searchable: true,name:"CVNO_Fecha_Fin"},
-                {data: 'convenio_estado.ETAD_Estado',searchable: true,name:"ETAD_Estado"},
-                {data: 'convenio_sede.SEDE_Sede',searchable: true,name:"SEDE_Sede"},
+                {data: 'convenio_estado.ETAD_Estado',searchable: true,name:"convenio_estado.ETAD_Estado"},
+                {data: 'convenio_sede.SEDE_Sede',searchable: true,name:"convenio_sede.SEDE_Sede"},
                 {
                     data: 'action',
                     className: '',
@@ -229,8 +229,9 @@
                             }
                         },
                         error: function(response, xhr, request) {
-                          if (request.status === 422 &&  xhr === 'success') {
+                          if (request.status === 422 &&  xhr === 'error') {
                               UIToastr.init(xhr, response.title, response.message);
+                              App.unblockUI('.portlet-form');
                           }
                         }
                     });

@@ -34,5 +34,6 @@ class CreateTBLEvaluacionTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Evaluacion');
     }
 }

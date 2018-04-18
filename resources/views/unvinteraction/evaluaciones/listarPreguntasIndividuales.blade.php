@@ -23,8 +23,8 @@ jQuery(document).ready(function () {
         url = "{{ route('listarPreguntaIndividual.listarPreguntaIndividual',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'pregunta_pregunta.PRGT_Enunciado', "visible": true, name:"documento" },
-            {data: 'VCPT_Puntuacion', searchable: true},
+            {data: 'pregunta_pregunta.PRGT_Enunciado', "visible": true, name:"pregunta_pregunta.PRGT_Enunciado" },
+            {data: 'VCPT_Puntuacion', searchable: true,name:"VCPT_Puntuacion"},
         ];
         dataTableServer.init(table, url, columns);
 });

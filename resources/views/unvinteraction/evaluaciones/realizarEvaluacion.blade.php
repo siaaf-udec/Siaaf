@@ -100,8 +100,9 @@ ComponentsSelect2.init();
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -168,8 +169,9 @@ ComponentsSelect2.init();
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
