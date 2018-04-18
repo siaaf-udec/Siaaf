@@ -34,9 +34,9 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'state' => 'Aprobado',
-        'cities_id' => 1,
-        'countries_id'  => 1,
-        'regions_id'    => 1,
+        'cities_id' => null,
+        'countries_id'  => null,
+        'regions_id'    => null,
     ];
 });
 

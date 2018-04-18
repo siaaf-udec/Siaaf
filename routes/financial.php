@@ -408,4 +408,8 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         return new App\Mail\Financial\FinancialExtensionGenerated($invoice);
     });
     */
+
+    Route::get('status', function () {
+        return \App\Container\Financial\src\Constants\ConstantStatus::all();
+    });
 });
