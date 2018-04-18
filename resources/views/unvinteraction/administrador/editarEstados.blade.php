@@ -5,7 +5,7 @@
                     <div class="form-body">
                             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Estado']) !!}
                             <div class="form-wizard">
-                                {!! Field:: text('ETAD_Estado',$estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
+                                {!! Field:: text('ETAD_Estado',$estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
                         
                                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
@@ -20,7 +20,7 @@
 
 <script>
 jQuery(document).ready(function () {
-    
+    App.unblockUI('.portlet-form');
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
             ETAD_Estado: {required: true}

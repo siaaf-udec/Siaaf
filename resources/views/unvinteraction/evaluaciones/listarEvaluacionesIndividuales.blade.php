@@ -2,8 +2,8 @@
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
 {!! Form::button('ATRAS', ['class' => 'btn red back']) !!}
     <div class="form-wizard">
-        
         {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+        
         {!! Field::date('Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
         {!! Form::submit('Filtrar', ['class' => 'btn blue']) !!}
     </div>      
@@ -81,15 +81,15 @@ jQuery(document).ready(function () {
         table = $('#Listar_Pasante');
         url = "{{ route('listarEvaluacionIndividual.listarEvaluacionIndividual',[$id]) }}";
         columns = [
-            {data: 'DT_Row_Index'},
-           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado.dato_usuario.name', searchable: true},
-           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
-           {data: 'VLCN_Nota_Final', searchable: true},
+           {data: 'DT_Row_Index'},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
+           {data: 'evaluado.dato_usuario.name', searchable: true,name:"name"},
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"name"},
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"lastname"},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"name"},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"lastname"},
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"CVNO_Nombre"},
+           {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final"},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',

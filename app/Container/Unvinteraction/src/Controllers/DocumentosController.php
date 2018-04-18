@@ -4,24 +4,18 @@ namespace App\Container\Unvinteraction\src\Controllers;
 use App\Container\Unvinteraction\src\Usuarios;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
-use App\Container\Unvinteraction\src\Empresa;
-use App\Container\Unvinteraction\src\Participantes;
+use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\DocumentacionExtra;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Users\Src\User;
-use App\Container\Overall\Src\Facades\UploadFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
 
-class ControllerDocumentos extends Controller
+class DocumentosController extends Controller
 {
     private $path='unvinteraction.documentos';
     /*funcion para subir el documento para los convenios
@@ -137,13 +131,10 @@ class ControllerDocumentos extends Controller
     *@param  \Illuminate\Http\Request
     *@return \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function documentoDescargaUsuario(Request $request, $id)
+    public function documentoDescargaUsuario(Request $request,$id)
     {
         if ($request->isMethod('GET')) {
-            $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
-            $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')
-                ->where('FK_TBL_Usuarios_Id', $request->user()->identity_no)
-                ->where('PK_DCET_Documentacion_Extra', $id)->get();
+            $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')->where('PK_DCET_Documentacion_Extra', $id)->get();
             foreach ($documento as $row) {
                 if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion."/".$row->DCET_Nombre)) {
                     return response()

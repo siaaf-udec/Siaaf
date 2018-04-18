@@ -59,21 +59,15 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        
                         {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-0">
-
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
-                                {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
+                        
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
+                        
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
+                        {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -123,16 +117,16 @@ var ComponentsSelect2 = function() {
 
     }();
 jQuery(document).ready(function () {
-        
+    App.unblockUI('.portlet-form');    
     ComponentsSelect2.init();
     var table, url, columns;
         table = $('#Listar_Preguntas');
         url = "{{ route('listarPregunta.listarPregunta') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_PRGT_Pregunta', "visible": true, name:"documento" },
-           {data: 'PRGT_Enunciado', searchable: true},
-           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true},
+           {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta"},
+           {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
            {data:'action',className:'',searchable: false,
             name:'action',
             title:'Acciones',
@@ -199,6 +193,7 @@ jQuery(document).ready(function () {
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
                         App.unblockUI('.portlet-form');
+                        
                     }
                 },
                 error: function (response, xhr, request) {

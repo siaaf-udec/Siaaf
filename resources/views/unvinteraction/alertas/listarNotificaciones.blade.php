@@ -58,9 +58,9 @@ jQuery(document).ready(function () {
         url = "{{ route('listarAlerta.listarAlerta') }}";
         columns = [
                {data: 'DT_Row_Index'},
-               {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"documento" },
-               {data: 'NTFC_Titulo', searchable: true},
-               {data: 'NTFC_Bandera', searchable: true},
+               {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"PK_NTFC_Notificacion" },
+               {data: 'NTFC_Titulo', searchable: true,name:"NTFC_Titulo" },
+               {data: 'NTFC_Bandera', searchable: true,name:"NTFC_Bandera" },
                {data:'action',className:'',searchable: false,
                 name:'action',
                 title:'Acciones',
@@ -76,7 +76,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/verAlerta/'+dataTable.PK_NTFC_Notificacion;
+                route_edit = '{{ route('verAlerta.verAlerta')}}/'+dataTable.PK_NTFC_Notificacion;
 
             $(".content-ajax").load(route_edit);
         });

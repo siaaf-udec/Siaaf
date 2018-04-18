@@ -5,13 +5,13 @@
         <div class="form-body">
             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Empresa']) !!}
             <div class="form-wizard">
-                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Telefono',$empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Telefono',$empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Direccion',$empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Direccion',$empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
                 
                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
@@ -26,7 +26,8 @@
 </div>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-  $('.portlet-form').attr("id", "form_wizard_1");
+    App.unblockUI('.portlet-form');
+    $('.portlet-form').attr("id", "form_wizard_1");
     var rules = {
             EMPS_Nombre_Empresa:{required: true},
             EMPS_Razon_Social:  {required: true},
@@ -57,11 +58,15 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                        beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+				        },
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );
                         var route = '{{ route('empresasAjax.empresasAjax') }}';
                         $(".content-ajax").load(route);
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {

@@ -3,29 +3,19 @@
 namespace App\Container\Unvinteraction\src\Controllers;
 
 use App\Container\Unvinteraction\src\Usuarios;
-use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
-use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\EvaluacionPreguntas;
 use App\Container\Unvinteraction\src\Preguntas;
 use App\Container\Unvinteraction\src\Sede;
 use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\Empresa;
-use App\Container\Unvinteraction\src\Participantes;
-use App\Container\Unvinteraction\src\DocumentacionExtra;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Users\Src\User;
-use Exception;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class ControllerAdministrador extends Controller
+class AdministradorController extends Controller
 {
     
     private $path='unvinteraction.administrador'; 

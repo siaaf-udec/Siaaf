@@ -2,30 +2,18 @@
 
 namespace App\Container\Unvinteraction\src\Controllers;
 use App\Container\Unvinteraction\src\TipoPregunta;
-use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Convenios;
 use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\EvaluacionPregunta;
 use App\Container\Unvinteraction\src\Pregunta;
-use App\Container\Unvinteraction\src\Sede;
-use App\Container\Unvinteraction\src\Estado;
 use App\Container\Unvinteraction\src\EmpresasParticipantes;
-use App\Container\Unvinteraction\src\Empresa;
-use App\Container\Unvinteraction\src\Participantes;
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Users\Src\User;
-use Barryvdh\Snappy\Facades\SnappyPdf;
-use Exception;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\File;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-class ControllerEvaluaciones extends Controller
+class EvaluacionesController extends Controller
 {
      private $path='unvinteraction.evaluaciones';
     //__________________EVALUACIONES___________
@@ -347,12 +335,12 @@ class ControllerEvaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response
     */
-    public function realizarEvaluacion(Request $request,$id,$convenio)
+    public function realizarEvaluacion(Request $request,$id,$convenio,$estado)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $pregunta1= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',1)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
             $pregunta2= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',2)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
-            return view($this->path.'.realizarEvaluacion',compact('pregunta1','id','pregunta2','convenio','n'));
+            return view($this->path.'.realizarEvaluacion',compact('pregunta1','id','pregunta2','convenio','n','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -408,12 +396,12 @@ class ControllerEvaluaciones extends Controller
     *@param \Illuminate\Http\Request
     *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
     */
-    public function realizarEvaluacionEmpresa(Request $request,$id,$convenio)
+    public function realizarEvaluacionEmpresa(Request $request,$id,$convenio,$estado)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $pregunta3= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',3)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
             $pregunta4= Pregunta::where('FK_TBL_Tipo_Pregunta_Id',4)->select('PK_PRGT_Pregunta','PRGT_Enunciado')->get() ;
-            return view($this->path.'.realizarEvaluacionEmpresa',compact('id','convenio','pregunta3','pregunta4'));
+            return view($this->path.'.realizarEvaluacionEmpresa',compact('id','convenio','pregunta3','pregunta4','estado'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

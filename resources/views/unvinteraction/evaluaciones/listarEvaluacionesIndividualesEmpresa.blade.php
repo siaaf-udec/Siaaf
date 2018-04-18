@@ -81,12 +81,12 @@ jQuery(document).ready(function () {
         url = "{{ route('listarEvaluacionIndividualEmpresa.listarEvaluacionIndividualEmpresa',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
-           {data: 'VLCN_Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
+           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true,name:"EMPS_Nombre_Empresa" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"name" },
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"lastname" },
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"CVNO_Nombre" },
+           {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final" },
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',

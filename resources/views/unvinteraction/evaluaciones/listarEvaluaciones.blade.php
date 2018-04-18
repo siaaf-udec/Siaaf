@@ -115,13 +115,13 @@ jQuery(document).ready(function () {
         url = "{{ route('listarEvaluacionesEmpresas.listarEvaluacionesEmpresas') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true}, 
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
-           {data: 'VLCN_Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"name"},
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true, name:"name"},
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true, name:"lastname"},
+           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true, name:"EMPS_Nombre_Empresa"}, 
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true, name:"CVNO_Nombre"},
+           {data: 'VLCN_Nota_Final', searchable: true, name:"VLCN_Nota_Final"},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -155,14 +155,14 @@ jQuery(document).ready(function () {
         url = "{{ route('listarEvaluacionesUsuarios.listarEvaluacionesUsuarios') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado.dato_usuario.name', searchable: true},
-           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
-           {data: 'VLCN_Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true,name:"PK_VLCN_Evaluacion" },
+           {data: 'evaluado.dato_usuario.name', searchable: true,name:"name" },
+           {data: 'evaluado.dato_usuario.name',className:'none', searchable: true,name:"name" },
+           {data: 'evaluado.dato_usuario.lastname', className:'none',searchable: true,name:"lastname" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"name" },
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"lastname" },
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"CVNO_Nombre" },
+           {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final" },
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -183,7 +183,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '/siaaf/public/index.php/interaccion-universitaria/listarPreguntaEvaluacion/'+dataTable.PK_VLCN_Evaluacion;
+                route_edit = '{{ route('listarPreguntaEvaluacion.listarPreguntaEvaluacion') }}/'+dataTable.PK_VLCN_Evaluacion;
      $(".content-ajax").load(route_edit);
         });
     

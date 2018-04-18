@@ -38,6 +38,7 @@
 jQuery(document).ready(function () {
     ComponentsDateTimePickers.init();
     ComponentsSelect2.init();
+    App.unblockUI('.portlet-form');
     $('.portlet-form').attr("id","form_wizard_1");
      var rules = {
             CVNO_Nombre: {required: true},
@@ -71,11 +72,15 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                         beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+						},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );
                         var route = '{{ route('conveniosAjax.conveniosAjax') }}';
                         $(".content-ajax").load(route);
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {

@@ -101,7 +101,7 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
 
                     </div>
                     <div class="modal-footer">
@@ -127,7 +127,7 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -144,6 +144,7 @@
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
     jQuery(document).ready(function() {
+         App.unblockUI('.portlet-form');
         var table, url, id;
         table = $('#Listar_Documentos');
         var documento = function () {
@@ -155,7 +156,6 @@
                 }
             }; 
         }
-        
         var route = '{{route('subirDocumentoConvenio.subirDocumentoConvenio',[$id])}}';
         var formatfile = '.pdf'; 
         var numfile = 1; 
@@ -166,10 +166,9 @@
         url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "documento",className: 'none'},
-                    {data: 'DOCU_Nombre',searchable: true},
-                    {
-                        data: 'action',
+                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "PK_DOCU_Documentacion",className: 'none'},
+                    {data: 'DOCU_Nombre',searchable: true,name: "DOCU_Nombre"},
+                    {data: 'action',
                         className: '',
                         searchable: false,
                         name: 'action',
@@ -206,14 +205,15 @@
 </script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+         App.unblockUI('.portlet-form');
         var table, url, columns;
         table = $('#Listar_Paticipantes');
         url = "{{ route('listarParticipantesConvenios.listarParticipantesConvenios',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "documento"},
-            {data: 'usuarios_participantes.dato_usuario.name',searchable: true},
-            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true},
+            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "identity_no"},
+            {data: 'usuarios_participantes.dato_usuario.name',searchable: true,name: "name"},
+            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true,name: "lastname"},
             {
                 data: 'action',
                 className: '',
@@ -223,20 +223,18 @@
                 orderable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '@permission(['INTE_EVA_EMPRESA']) @php if ($estado == 1){ @endphp<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a> @php } @endphp @endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver1" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission @permission(['INTE_DELET_PART']) @php if ($estado == 1){ @endphp <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a> @php } @endphp @endpermission'
+                defaultContent: '@permission(['INTE_EVA_EMPRESA']) @php if ($estado == 1){ @endphp<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a> @php } @endphp @endpermission @permission(['INTE_DES_DOC_USU'])<a href="#" class="btn btn-simple btn-success btn-icon doc1" title="Documentos usuario"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver1" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission @permission(['INTE_DELET_PART']) @php if ($estado == 1){ @endphp <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a> @php } @endphp @endpermission'
 
 
                     }
         ];
         dataTableServer.init(table, url, columns);
-            
-       
-            table = table.DataTable();
+        table = table.DataTable();
             table.on('click', '.evaluar1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp/@php echo $estado; @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.doc1', function(e) {
@@ -333,12 +331,16 @@
                             data: formData,
                             processData: false,
                             async: async,
+                            beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#participante').modal('hide');
                                     $('#form-Participante')[0].reset();
                                     table.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function(response, xhr, request) {
@@ -360,14 +362,15 @@
 </script>
 <script type="text/javascript">
         jQuery(document).ready(function() {
+             App.unblockUI('.portlet-form');
             var table, url, columns;
             table = $('#Listar_Empresas_Paticipantes');
             url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "documento"},
-                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true},
-                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true},
+                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "PK_EMPT_Empresa_Participante"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "PK_EMPS_Empresa"},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "EMPS_Nombre_Empresa"},
                 {
                         data: 'action',
                         className: '',
@@ -388,7 +391,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp/@php echo  $estado; @endphp';
 
                 $(".content-ajax").load(route_edit);
             });
@@ -476,12 +479,16 @@
                             data: formData,
                             processData: false,
                             async: async,
+                            beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#empresa').modal('hide');
                                     table.ajax.reload();
                                     $('#form-Empresas')[0].reset();
                                     UIToastr.init(xhr, response.title, response.message);
+                                     App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function(response, xhr, request) {

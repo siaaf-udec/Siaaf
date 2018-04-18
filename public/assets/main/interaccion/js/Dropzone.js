@@ -57,8 +57,6 @@ var FormDropzone = function () {
                              UIToastr.init( 'error','ERROR', 'El archivo que desea cargar no es permitido.');
                             myDropzone.removeFile(file);
                         }
-                       
-                        myDropzone.removeFile(file);
                     });
 
                     /*Antes de enviar cada archivo.*/
