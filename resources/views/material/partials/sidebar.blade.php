@@ -17,9 +17,11 @@
         @include('themes.menus.permisos-menu')
         @endpermission
         {{-- ESPACIOS ACADÉMICOS --}}
-        @permission('ACAD_MODULE')
+        @env('local')
+//      @permission('ACAD_MODULE')
         @include('themes.menus.espacios-academicos-menu')
-        @endpermission
+//      @endpermission
+        @endenv
         {{-- AUDIOVISUALES --}}
         @permission('AUDI_MODULE')
         @include('themes.menus.audiovisuales-menu')
