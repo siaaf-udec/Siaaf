@@ -294,6 +294,8 @@ class EvaluatorController extends Controller
 
             $documento = Documentos::findOrFail($id);
             $actividad = Actividad::withTrashed()->findOrFail($documento->FK_TBL_Actividad_Id);
+            $Ubicacion = "gesap/proyecto/" . $id;
+            Storage::disk('local')->deleteDirectory($Ubicacion);
             $documento->delete();
             if ($actividad->CTVD_Default == 0) {
                 $actividad->forceDelete();

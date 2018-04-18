@@ -320,7 +320,13 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
             $anteproyecto = Anteproyecto::findOrFail($id);
+            $radicacion = Radicacion::where('FK_TBL_Anteproyecto_Id', '=', $id)
+                ->select('RDCN_Min','RDCN_Requerimientos')
+                ->first();
+            Storage::delete($radicacion["RDCN_Min"]);
+            Storage::delete($radicacion["RDCN_Requerimientos"]);
             $anteproyecto->delete();
+            
             return AjaxResponse::success(
                 '¡Eliminacion Correcta!',
                 'Anteproyecto eliminado correctamente.'

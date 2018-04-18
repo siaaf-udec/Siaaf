@@ -53,6 +53,9 @@ var FormWizard = function () {
 					if ($(element).hasClass('select2-hidden-accessible')) {
 						$(element).next('span span .selection').closest('select2-selection--single').css('border-bottom','1px solid #e73d4a;');
 					} 
+					if ($(element).hasClass('other-file')) {
+						$(element).parent().parent().parent().parent().addClass('has-error');
+					} 
 					
 					$(element)
 						.closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
@@ -62,6 +65,9 @@ var FormWizard = function () {
 				},
 
 				unhighlight: function (element) { // revert the change done by hightlight
+					if ($(element).hasClass('other-file')) {
+						$(element).parent().parent().parent().parent().removeClass('has-error');
+					} 
 					$(element)
 						.closest('.form-group').removeClass('has-error'); // set error class to the control group
 				},

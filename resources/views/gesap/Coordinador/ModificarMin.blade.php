@@ -148,7 +148,7 @@
                                                     <span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
-												<input type="file" name="Min" class="" id="Min"> </span>
+												<input type="file" name="Min" class="other-file" id="Min"> </span>
                                                     <a href="javascript:;"
                                                        class="input-group-addon btn red fileinput-exists"
                                                        data-dismiss="fileinput"> Quitar </a>
@@ -171,7 +171,8 @@
                                                     <span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
-												<input type="file" name="Requerimientos" class="" id="Requerimientos"> 
+												<input type="file" name="Requerimientos" class="other-file" 
+                                                       id="Requerimientos"> 
 											</span>
                                                     <a href="javascript:;"
                                                        class="input-group-addon btn red fileinput-exists"

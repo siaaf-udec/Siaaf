@@ -19,7 +19,6 @@
 
 @section('page-title', 'Actividades')
 
-
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Actividades'])

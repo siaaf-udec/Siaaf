@@ -114,7 +114,7 @@ class StudentController extends Controller
             $Ubicacion = "gesap/proyecto/" . $request->get('PK_actividad');
             foreach ($files as $file) {
                 $nombre = $date . "_" . $file->getClientOriginalName();
-                \Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
+                Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
                 $documento = Documentos::findOrFail($request->get('PK_actividad'));
                 $documento->DMNT_Archivo = $nombre;
                 $documento->save();

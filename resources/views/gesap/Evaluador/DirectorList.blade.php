@@ -100,19 +100,19 @@
                         }
                     }, searchable: true
                 },
-                {data: 'NPRY_Titulo', searchable: true},
-                {data: 'anteproyecto.NPRY_Keywords', className: 'none', searchable: true},
-                {data: 'anteproyecto.NPRY_Duracion', searchable: true},
-                {data: 'anteproyecto.NPRY_FechaR', className: 'none', searchable: true},
-                {data: 'anteproyecto.NPRY_FechaL', className: 'none', searchable: true},
+                {data: 'NPRY_Titulo',name:'NPRY_Titulo', searchable: true},
+                {data: 'anteproyecto.NPRY_Keywords',name:'NPRY_Keywords', className: 'none', searchable: true},
+                {data: 'anteproyecto.NPRY_Duracion',name:'NPRY_Duracion', searchable: true},
+                {data: 'anteproyecto.NPRY_FechaR',name:'NPRY_FechaR', className: 'none', searchable: true},
+                {data: 'anteproyecto.NPRY_FechaL',name:'NPRY_FechaL', className: 'none', searchable: true},
                 {
-                    data: 'anteproyecto.radicacion.RDCN_Min', className: 'none',
+                    data: 'anteproyecto.radicacion.RDCN_Min',name:'RDCN_Min', className: 'none',
                     render: function (data, type, full, meta) {
                         return '<a class="document" href="{{ route('download.documento') }}/' + data + '">DESCARGAR MIN</a>';
                     }
                 },
                 {
-                    data: 'anteproyecto.radicacion.RDCN_Requerimientos', className: 'none', searchable: true,
+                    data: 'anteproyecto.radicacion.RDCN_Requerimientos',name:'RDCN_Requerimientos', className: 'none', searchable: true,
                     render: function (data, type, full, meta) {
                         if (data == "NO FILE") {
                             return "NO APLICA";
@@ -128,7 +128,7 @@
                         } else {
                             return "SIN ASIGNAR";
                         }
-                    }, className: 'none', searchable: true
+                    }, name:'director',className: 'none', searchable: true
                 },
                 {
                     data: function (data, type, dataToSet) {
@@ -137,7 +137,7 @@
                         } else {
                             return "SIN ASIGNAR"
                         }
-                    }, className: 'none', searchable: true
+                    }, name:'estudiante1',className: 'none', searchable: true
                 },
                 {
                     data: function (data, type, dataToSet) {
@@ -146,7 +146,7 @@
                         } else {
                             return "SIN ASIGNAR"
                         }
-                    }, className: 'none', searchable: true
+                    }, name:'estudiante2',className: 'none', searchable: true
                 },
                 {
                     data: function (data, type, dataToSet) {
@@ -155,7 +155,7 @@
                         } else {
                             return "SIN ASIGNAR"
                         }
-                    }, className: 'none', searchable: true
+                    }, name:'jurado1',className: 'none', searchable: true
                 },
                 {
                     data: function (data, type, dataToSet) {
@@ -164,10 +164,10 @@
                         } else {
                             return "SIN ASIGNAR"
                         }
-                    }, className: 'none', searchable: true
+                    }, name:'jurado2',className: 'none', searchable: true
                 },
 
-                {data: 'NPRY_Estado', searchable: true},
+                {data: 'NPRY_Estado',name:'NPRY_Estado', searchable: true},
 
                 {
                     data: 'action',
