@@ -2,26 +2,19 @@
 
 namespace App\Container\Gesap\src\Controllers;
 
-use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
-use Yajra\DataTables\DataTables;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
 
 use Illuminate\Support\Facades\DB;
 
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
-use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Users\Src\User;
 

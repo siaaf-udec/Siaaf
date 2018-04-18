@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
 use Yajra\DataTables\DataTables;

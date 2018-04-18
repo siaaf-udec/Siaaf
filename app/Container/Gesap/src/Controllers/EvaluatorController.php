@@ -7,10 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 use Yajra\DataTables\DataTables;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
 use Validator;
 use Carbon\Carbon;
@@ -29,7 +27,6 @@ use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Documentos;
 use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Conceptos;
-use App\Container\Users\Src\User;
 
 class EvaluatorController extends Controller
 {
