@@ -18,15 +18,15 @@ class UsuariosController extends UsersUdecController
      */
     public function index()
     {
-            return view('adminregist.usuarios.tablaUsuarios');
+        return view('adminregist.usuarios.tablaUsuarios');
     }
 
     /**
      * Función que redirecciona a la vista del formulario de registro de un nuevo usuario.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
-*/
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function create(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -41,8 +41,8 @@ class UsuariosController extends UsersUdecController
     /**
      *Función que muestra los usuarios registrados por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {

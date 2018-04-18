@@ -13,7 +13,8 @@ class HelpController extends Controller
     /**
      *Función que redirecciona a la vista de la tabla donde se mostraran las preguntas y respuestas registradas.
      *
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request)
     {
@@ -30,7 +31,8 @@ class HelpController extends Controller
     /**
      *Función que muestra las preguntas y respuestas registradas por medio de una petición ajax.
      *
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)
     {
@@ -74,8 +76,8 @@ class HelpController extends Controller
     /**
      * Función que redirecciona a la vista del formulario de registro de una nueva pregunta con su respuesta.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
     {
@@ -119,7 +121,7 @@ class HelpController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function edit(Request $request, $id)
     {
@@ -192,13 +194,14 @@ class HelpController extends Controller
     /**
      *Función que redirecciona a la vista donde se mostraran las preguntas y respuestas registradas.
      *
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexPreguntas(Request $request)
     {
         if ($request->isMethod('GET')) {
             $help = Help::all();
-            $help->pull('created_at','updated_at','PK_HE_IdHelp');
+            $help->pull('created_at', 'updated_at', 'PK_HE_IdHelp');
             return view('adminregist.help.indexHelp', compact('help'));
         } else {
             return AjaxResponse::fail(
