@@ -52,7 +52,14 @@ class CommentRepository extends Methods implements FinancialCommentInterface
         $this->intersemestralRepository = $intersemestralRepository;
     }
 
-    public function process( $model, $request )
+    /**
+     * Process comment data to store
+     *
+     * @param $model
+     * @param $request
+     * @return mixed
+     */
+    public function process($model, $request )
     {
         $comment = new Comment([
             comment()   =>  $request->comment,
@@ -61,25 +68,49 @@ class CommentRepository extends Methods implements FinancialCommentInterface
         return $model->comments()->save( $comment );
     }
 
-    public function saveExtensionComment( $request )
+    /**
+     * Store new comments for extensions
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function saveExtensionComment($request )
     {
         $extension = $this->extensionRepository->get([], $request->id );
         return $this->process( $extension, $request );
     }
 
-    public function saveAddSubComment( $request )
+    /**
+     * Store new comments for additions and subtractions
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function saveAddSubComment($request )
     {
         $additionSubtraction = $this->addSubRepository->get([], $request->id );
         return $this->process( $additionSubtraction, $request );
     }
 
-    public function saveValidationComment( $request )
+    /**
+     * Store new comments for validations
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function saveValidationComment($request )
     {
         $validation = $this->validationRepository->get([], $request->id );
         return $this->process( $validation, $request );
     }
 
-    public function saveIntersemestralComment( $request )
+    /**
+     * Store new comments for intersemestrals
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function saveIntersemestralComment($request )
     {
         $validation = $this->intersemestralRepository->get([], $request->id );
         return $this->process( $validation, $request );

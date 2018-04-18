@@ -6,8 +6,11 @@ namespace App\Container\Financial\src\Repository;
 use App\Container\Financial\src\CostService;
 use App\Container\Financial\src\Interfaces\Methods;
 use App\Container\Financial\src\Interfaces\FinancialCostServiceInterface;
+use App\Transformers\Financial\CostServiceTransformer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 
 class CostServiceRepository extends Methods implements FinancialCostServiceInterface
 {
@@ -33,21 +36,10 @@ class CostServiceRepository extends Methods implements FinancialCostServiceInter
      */
     public function actualCosts()
     {
+        $manager = new Manager;
         $costs = $this->getModel()->currentCost()->get();
-
-        if ( $costs ) {
-            foreach ($costs as $cost) {
-                $array[] = [
-                    'id'                => isset( $cost->{ primaryKey() } ) ? $cost->{ primaryKey() } : 0,
-                    'cost'              => isset( $cost->{ cost() } ) ? $cost->{ cost() } : 0,
-                    'cost_to_money'     => isset( $cost->{ 'cost_to_money' } ) ? $cost->{ 'cost_to_money' } : '$0',
-                    'cost_service_name' => isset( $cost->{ cost_service_name() } ) ? $cost->{ cost_service_name() } : trans('financial.generic.empty'),
-                    'cost_valid_until'  => isset( $cost->{ cost_valid_until() } ) ? $cost->{ cost_valid_until() } : today(),
-                ];
-            }
-        }
-
-        return isset( $array ) ? $array : [];
+        $costs = new Collection( $costs, new CostServiceTransformer() );
+        return $manager->createData( $costs )->toArray();
     }
 
     public function getId( $service )

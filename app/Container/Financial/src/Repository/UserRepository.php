@@ -20,26 +20,53 @@ class UserRepository extends Methods implements FinancialUserInterface
         $this->roleRepository = $roleRepository;
     }
 
+    /**
+     * Return a user with specific role
+     *
+     * @return array
+     */
     public function isTeacher()
     {
         return $this->whereRole( $this->roleRepository->isTeacher() );
     }
 
+    /**
+     * Return a user with specific role
+     *
+     * @return array
+     */
     public function isStudent()
     {
         return $this->whereRole( $this->roleRepository->isStudent() );
     }
 
+    /**
+     * Return a user with specific role
+     *
+     * @return array
+     */
     public function isAdmin()
     {
         return $this->whereRole( $this->roleRepository->isAdmin() );
     }
 
+    /**
+     * Return a user with specific role
+     *
+     * @return array
+     */
     public function isSecretary()
     {
         return $this->whereRole( $this->roleRepository->isSecretary() );
     }
 
+    /**
+     * Get user with role and relations
+     *
+     * @param null $role
+     * @param array $relations
+     * @return array
+     */
     public function whereRole($role = null, $relations = [])
     {
         $users = $this->getModel()->whereHas('roles', function ($query) use ($role) {
@@ -53,6 +80,11 @@ class UserRepository extends Methods implements FinancialUserInterface
         return ( isset( $array ) ) ? $array : [] ;
     }
 
+    /**
+     * Return teacher with options
+     *
+     * @return array
+     */
     public function teachersAsOptions()
     {
         $teachers = $this->getModel()->select('id', 'name', 'lastname')->whereHas('roles', function ($query) {
@@ -68,6 +100,13 @@ class UserRepository extends Methods implements FinancialUserInterface
         return ( isset( $array ) ) ? $array : [] ;
     }
 
+    /**
+     * Empty method but required
+     *
+     * @param $model
+     * @param $request
+     * @return mixed|void
+     */
     public function process($model, $request)
     {
         

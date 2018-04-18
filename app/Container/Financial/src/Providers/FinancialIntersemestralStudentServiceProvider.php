@@ -2,7 +2,6 @@
 
 namespace App\Container\Financial\src\Providers;
 
-
 use App\Container\Financial\src\Interfaces\FinancialIntersemestralStudentInterface;
 use App\Container\Financial\src\Repository\IntersemestralStudentRepository;
 use Illuminate\Support\ServiceProvider;

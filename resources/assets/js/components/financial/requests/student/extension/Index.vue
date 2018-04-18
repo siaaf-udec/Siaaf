@@ -39,6 +39,8 @@
 
 <script>
     import swal from 'sweetalert2';
+    import moment from "moment-with-locales-es6";
+    import {mixinMomentLocale} from "../../../../../mixins/moment";
     import {mixinHttpStatus} from "../../../../../mixins";
     import {mixinTootilps} from "../../../../../mixins/tooltip";
     import {mixinDataTable} from "../../../../../mixins/datatable";
@@ -46,7 +48,7 @@
 
     export default {
         name: "student-extension-request-index",
-        mixins: [mixinHttpStatus, mixinDataTable, mixinTootilps, mixinValidator],
+        mixins: [mixinHttpStatus, mixinDataTable, mixinTootilps, mixinValidator, mixinMomentLocale],
         data: function() {
             return {
                 portlet: {
@@ -64,27 +66,45 @@
                 id: 'datatable-extension',
                 columns: [
                     {name: '#', class: ''},
-                    {name: Lang.get('financial.extension.table.subject_code'), class: ''},
-                    {name: Lang.get('financial.extension.table.subject_name'), class: ''},
-                    {name: Lang.get('financial.extension.table.subject_credits'), class: 'none'},
-                    {name: Lang.get('financial.extension.table.cost'), class: 'none'},
-                    {name: Lang.get('financial.extension.table.total_cost'), class: ''},
-                    {name: Lang.get('financial.extension.table.created_at'), class: ''},
-                    {name: Lang.get('financial.extension.table.teacher'), class: 'none'},
-                    {name: Lang.get('financial.extension.table.status'), class: ''},
-                    {name: Lang.get('financial.extension.table.actions'), class: ''},
+                    {name: Lang.get('financial.generic.table.subject_code'), class: ''},
+                    {name: Lang.get('financial.generic.table.subject_name'), class: ''},
+                    {name: Lang.get('financial.generic.table.subject_credits'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.program_name'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.cost'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.total_cost'), class: ''},
+                    {name: Lang.get('financial.generic.table.created_at'), class: ''},
+                    {name: Lang.get('financial.generic.table.teacher_name'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.phone'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.email'), class: 'none'},
+                    {name: Lang.get('financial.generic.table.status_name'), class: ''},
+                    {name: Lang.get('financial.generic.table.actions'), class: ''},
                 ],
                 url: route('financial.api.datatables.extensions', {}, false),
                 source: [
-                    { data: 'pk_id',                            name: 'pk_id' },
-                    { data: 'subject.subject_code',             name: 'subject.subject_code' },
-                    { data: 'subject.subject_name',             name: 'subject.subject_name' },
-                    { data: 'subject.subject_credits',          name: 'subject.subject_credits' },
-                    { data: 'cost.cost',                        name: 'cost.cost' },
+                    { data: 'id',                               name: 'id' },
+                    { data: 'subject_code',                     name: 'subject_code' },
+                    { data: 'subject_name',                     name: 'subject_name' },
+                    { data: 'subject_credits',                  name: 'subject_credits' },
+                    { data: 'program_name',                     name: 'program_name' },
+                    { data: 'cost',                             name: 'cost' },
                     { data: 'total_cost',                       name: 'total_cost' },
-                    { data: 'created_at',                       name: 'created_at' },
-                    { data: 'subject.teachers[0].full_name',    name: 'subject.teachers[0].full_name' },
-                    { data: 'status.status_name',               name: 'status.status_name' },
+                    { data: 'created_at',                       name: 'created_at',
+                        render: function ( data, type, row ) {
+                            return data ? moment(data).format('ll') : null;
+                        }
+                    },
+                    { data: 'teacher_name',                     name: 'teacher_name' },
+                    { data: 'teacher_phone',                    name: 'teacher_phone',
+                        render: function (data, type, row) {
+                            return '<a href="tel:'+data+'">'+data+'</a>';
+                        }
+                    },
+                    { data: 'teacher_email',                    name: 'teacher_email',
+                        render: function (data, type, row) {
+                            return '<a href="mailto:'+data+'">'+data+'</a>';
+                        }
+                    },
+                    { data: 'status_label',                     name: 'status_label' },
                     { data: 'actions',                          name: 'actions' },
                 ],
             }

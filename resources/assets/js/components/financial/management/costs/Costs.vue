@@ -125,6 +125,8 @@
 
 <script>
     import swal from "sweetalert2"
+    import moment from "moment-with-locales-es6";
+    import {mixinMomentLocale} from "../../../../mixins/moment";
     import {mixinValidator} from "../../../../mixins/validation";
     import {mixinSelect2} from "../../../../mixins/select2";
     import {mixinLoading} from "../../../../mixins/loadingswal";
@@ -136,7 +138,7 @@
     import {mixinTootilps} from "../../../../mixins/tooltip";
     export default {
         name: "management-costs",
-        mixins: [mixinTootilps, mixinValidator, mixinSelect2, mixinLoading, mixinDate, mixinHttpStatus, mixinEditable, mixinFormatter, mixinDataTable],
+        mixins: [mixinTootilps, mixinValidator, mixinSelect2, mixinLoading, mixinDate, mixinHttpStatus, mixinEditable, mixinFormatter, mixinDataTable, mixinMomentLocale],
         data: function () {
             return {
                 portlet: {
@@ -184,10 +186,10 @@
                         value: null,
                         label: Lang.get('validation.attributes.service_name').capitalize(),
                         options: [
-                            { id: 'extension', text: Lang.get('validation.attributes.extension').capitalize() },
-                            { id: 'validation', text: Lang.get('validation.attributes.validation').capitalize() },
-                            { id: 'intersemester', text: Lang.get('validation.attributes.intersemester').capitalize() },
-                            { id: 'add_remove_subjects', text: Lang.get('validation.attributes.add_remove_subjects').capitalize() }
+                            { id: Lang.get('financial.status_type.extension'), text: Lang.get('validation.attributes.extension').capitalize() },
+                            { id: Lang.get('financial.status_type.validation'), text: Lang.get('validation.attributes.validation').capitalize() },
+                            { id: Lang.get('financial.status_type.intersemester'), text: Lang.get('validation.attributes.intersemester').capitalize() },
+                            { id: Lang.get('financial.status_type.addition_subtraction'), text: Lang.get('validation.attributes.add_remove_subjects').capitalize() }
                         ],
                         attributes: {
                             required: true,
@@ -222,9 +224,9 @@
                     ],
                     url: route('financial.api.datatables.cost', {}, false),
                     source: [
-                        { data: 'pk_id',         name: 'pk_id' },
-                        { data: 'cost_to_money', name: 'cost_to_money' },
-                        { data: 'cost_service_name', name: 'cost_service_name' },
+                        { data: 'id',                   name: 'id' },
+                        { data: 'cost_to_money',        name: 'cost_to_money' },
+                        { data: 'read_service_name',    name: 'read_service_name' },
                         {
                             data: 'cost_valid_until',
                             name: 'cost_valid_until',
@@ -276,6 +278,7 @@
                 $until.editable({
                     success: function () {
                         that.getData();
+                        that.setMomentLocale();
                     },
                     display: function (value) {
                         $(this).text( moment( value ).format('ll') );
@@ -329,6 +332,19 @@
             getData: function () {
                 axios.get( route('financial.api.editable.cost') )
                     .then( (response) => {
+
+                        this.table.sources = response.data.data.map( (cost) => {
+                            return {
+                                id: cost.id,
+                                url: route('financial.management.costs.update', {id: cost.id}),
+                                cost: cost.cost,
+                                money: cost.cost_to_money,
+                                service: cost.read_service_name,
+                                date:  ( cost.cost_valid_until ) ? moment( cost.cost_valid_until ).format('YYYY-MM-DD') : null,
+                            }
+                        });
+
+                        /*
                         let that = this;
                         function setUpdateValues( values ) {
                             that.table.sources = values.map( (cost) => {
@@ -350,6 +366,10 @@
                             await setUpdateValues(response.data);
                             await setNewValues();
                         })();
+                        */
+                    })
+                    .then(() => {
+                        this.handleEditable();
                     })
                     .catch( (error) => {
                         this.triggerSwal( error );

@@ -6,6 +6,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 use App\Container\Financial\src\Repository\SubjectRepository;
 use App\Container\Financial\src\Subject;
 use App\Http\Controllers\Controller;
+use App\Transformers\Financial\SubjectTransformer;
 use Yajra\DataTables\DataTables;
 
 class SubjectController extends Controller
@@ -46,7 +47,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Display a listing of the source
+     * Display a listing of the source in datatable format
      *
      * @return mixed
      * @throws \Exception
@@ -54,23 +55,7 @@ class SubjectController extends Controller
     public function datatable()
     {
         return $this->subjectRepository->dataTables()
-                        ->addColumn('actions', function (Subject $subject){
-                            $edit  = actionLink(
-                                'javascript:;',
-                                'btn btn-icon-only edit yellow',
-                                'fa fa-pencil',
-                                ['data-id' => $subject->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ]
-                            );
-
-                            $trash = actionLink(
-                                'javascript:;',
-                                'btn btn-icon-only red trash mt-ladda-btn ladda-button',
-                                'fa fa-trash',
-                                ['data-id' => $subject->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
-                            );
-                            return "$edit $trash";
-                        })
-                        ->rawColumns(['actions'])
+                        ->setTransformer( new SubjectTransformer )
                         ->toJson();
     }
 }

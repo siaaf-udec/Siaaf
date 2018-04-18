@@ -21,6 +21,11 @@ class ApprovalAdditionSubtractionController extends Controller
         $this->addSubRepository = $addSubRepository;
     }
 
+    /**
+     * Return a sidebar withs counts and status
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sidebar()
     {
         $status = $this->addSubRepository->availableStatus();
@@ -41,7 +46,13 @@ class ApprovalAdditionSubtractionController extends Controller
         return response()->json( isset($sidebar) ? $sidebar : [], 200 );
     }
 
-    public function additionsSubtractions( $status = null )
+    /**
+     * Get all additions and subtractions with paginate and status
+     *
+     * @param null $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function additionsSubtractions($status = null )
     {
         return response()->json(
             $this->addSubRepository->getAllPaginate( 10, $status ),

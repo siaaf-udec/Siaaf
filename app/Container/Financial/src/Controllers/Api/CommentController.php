@@ -55,48 +55,96 @@ class CommentController extends Controller
         $this->intersemestralRepository = $intersemestralRepository;
     }
 
-    public function getExtensionComments( $id )
+    /**
+     * Get all comments for specific resource
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getExtensionComments($id )
     {
         $comments = $this->extensionRepository->get(['comments.user:id,name,lastname'], $id);
         return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
     }
 
+    /**
+     * Store a comment for specific resource
+     *
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeExtensionComments( CommentRequest $request )
     {
         $status = ( $this->commentRepository->saveExtensionComment( $request )  ) ? 200 : 422;
         return response()->json(null, $status);
     }
 
+    /**
+     * Get all comments for specific resource
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAddSubComments($id)
     {
         $comments = $this->addSubRepository->get(['comments.user:id,name,lastname'], $id);
         return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
     }
 
-    public function storeAddSubComments( CommentRequest $request )
+    /**
+     * Store a comment for specific resource
+     *
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeAddSubComments(CommentRequest $request )
     {
         $status = ( $this->commentRepository->saveAddSubComment( $request )  ) ? 200 : 422;
         return response()->json(null, $status);
     }
 
+    /**
+     * Get all comments for specific resource
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getValidationComments($id)
     {
         $comments = $this->validationRepository->get(['comments.user:id,name,lastname'], $id);
         return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
     }
 
+    /**
+     * Store a comment for specific resource
+     *
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeValidationComments( CommentRequest $request )
     {
         $status = ( $this->commentRepository->saveValidationComment( $request )  ) ? 200 : 422;
         return response()->json(null, $status);
     }
 
+    /**
+     * Get all comments for specific resource
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getIntersemestralComments($id)
     {
         $comments = $this->intersemestralRepository->get(['comments.user:id,name,lastname'], $id);
         return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
     }
 
+    /**
+     * Store a comment for specific resource
+     *
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeIntersemestralComments( CommentRequest $request )
     {
         $status = ( $this->commentRepository->saveIntersemestralComment( $request )  ) ? 200 : 422;

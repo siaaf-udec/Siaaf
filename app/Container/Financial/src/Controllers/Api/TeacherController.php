@@ -22,7 +22,7 @@ class TeacherController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource in options format.
      *
      * @return \Illuminate\Http\Response
      */

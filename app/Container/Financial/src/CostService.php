@@ -97,7 +97,13 @@ class CostService extends Model
     * ---------------------------------------------------------
     */
 
-    public function scopeCurrentCost( $query )
+    /**
+     * Get a current cost
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeCurrentCost($query )
     {
         if ( isFirstSemester( today()->month ) ) {
             $query = $query->whereMonth( cost_valid_until(), '<=', 6 );

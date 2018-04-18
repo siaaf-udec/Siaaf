@@ -17,6 +17,8 @@ class StatusRequestRepository extends Methods implements FinancialStatusRequestI
     }
 
     /**
+     * Return Status request in a tree format
+     *
      * @param $type
      * @return mixed
      */
@@ -25,12 +27,25 @@ class StatusRequestRepository extends Methods implements FinancialStatusRequestI
         return $this->getModel()->where( status_type(), $type );
     }
 
+    /**
+     * Return an id of specific status
+     *
+     * @param $type
+     * @param $value
+     * @return mixed
+     */
     public function getId($type, $value)
     {
         return $this->getModel()->where( status_type(), $type )
                     ->where( status_name(), $value )->select( primaryKey() )->first();
     }
 
+    /**
+     * Return the name of an specific status
+     *
+     * @param $type
+     * @return mixed
+     */
     public function getNames( $type )
     {
         return $this->getModel()->where( status_type(), $type )
@@ -38,6 +53,8 @@ class StatusRequestRepository extends Methods implements FinancialStatusRequestI
     }
 
     /**
+     * Store a new status
+     *
      * @param $model
      * @param $request
      * @return mixed

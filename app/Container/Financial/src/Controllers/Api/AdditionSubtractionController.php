@@ -26,10 +26,14 @@ class AdditionSubtractionController extends Controller
      */
     public function __construct(AddSubRepository $addSubRepository)
     {
-
         $this->addSubRepository = $addSubRepository;
     }
 
+    /**
+     * Return additions and subtractions query from auth user
+     *
+     * @return mixed
+     */
     public function query()
     {
         return auth()->user()->additionSubtraction()
@@ -43,6 +47,12 @@ class AdditionSubtractionController extends Controller
             ])->orderBy(created_at(), 'DESC');
     }
 
+    /**
+     * Return a Datatable query format
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function datatable()
     {
         return DataTables::of( $this->query() )
@@ -50,6 +60,13 @@ class AdditionSubtractionController extends Controller
                         ->toJson();
     }
 
+    /**
+     * Return an specific source in datatable format
+     *
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
     public function show( $id )
     {
         $relation = [
@@ -76,6 +93,12 @@ class AdditionSubtractionController extends Controller
                         ->toJson();
     }
 
+    /**
+     * Return the subject primary keys relation to edit the source
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit( $id )
     {
         $status = $this->addSubRepository->getAuth( [], $id )->select( action_subject() )->first();

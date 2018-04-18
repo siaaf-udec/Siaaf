@@ -6,7 +6,7 @@ namespace App\Container\Financial\src\Helpers;
 class StringFormatter
 {
     /**
-     * The method to return upper string
+     * The method to return upper string including spanish chars
      *
      * @param null $string
      * @return mixed|string

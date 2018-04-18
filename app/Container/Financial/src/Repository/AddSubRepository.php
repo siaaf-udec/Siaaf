@@ -3,12 +3,10 @@
 namespace App\Container\Financial\src\Repository;
 
 use App\Container\Financial\src\AdditionSubtraction;
-use App\Container\Financial\src\Extension;
 use App\Container\Financial\src\Interfaces\FinancialAddSubInterface;
 use App\Container\Financial\src\Interfaces\Methods;
 use App\Container\Financial\src\SubjectProgram;
 use App\Transformers\Financial\AdditionSubtractionDataTableTransformer;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 
 class AddSubRepository extends Methods implements FinancialAddSubInterface
@@ -35,6 +33,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Store data in database
+     *
      * @param $model
      * @param $request
      * @return mixed
@@ -53,7 +53,14 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
         return $model->save();
     }
 
-    public function updateAdminAddSub( $request, $id )
+    /**
+     * Update status of the specific resource
+     *
+     * @param $request
+     * @param $id
+     * @return mixed
+     */
+    public function updateAdminAddSub($request, $id )
     {
         $approved = $this->statusRequestRepository->getId( 'ADD_REMOVE_SUBJECTS', 'APROBADO' );
         $model = $this->getModel()->find( $id );
@@ -68,6 +75,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Get a count data
+     *
      * @param array $status
      * @return mixed
      */
@@ -79,21 +88,25 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Get available status
+     *
      * @return mixed
      */
     public function availableStatus()
     {
-        return $this->statusRequestRepository->getNames( 'ADD_REMOVE_SUBJECTS' );
+        return $this->statusRequestRepository->getNames( status_type_addition_subtraction() );
     }
 
     /**
+     * Store a new student with initials status and cost
+     *
      * @param $request
      * @return mixed
      */
     public function storeStudentAddSub( $request )
     {
-        $status = $this->statusRequestRepository->getId( 'ADD_REMOVE_SUBJECTS', 'ENVIADO' );
-        $cost_service = $this->costServiceRepository->getId( 'ADD_REMOVE_SUBJECTS' );
+        $status = $this->statusRequestRepository->getId( status_type_addition_subtraction(), sent_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_addition_subtraction() );
         $model = $this->getModel();
         $model->{ action_subject() }        =  $request->action;
         $model->{ subject_fk() }            =  $request->subject_matter;
@@ -104,6 +117,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Update student request
+     *
      * @param $request
      * @param $id
      * @return mixed
@@ -117,6 +132,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Delete a student request
+     *
      * @param $id
      * @return bool
      */
@@ -127,6 +144,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Get subject relations stored
+     *
      * @param $id
      * @param bool $whitRelations
      * @return mixed
@@ -140,6 +159,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Get data paginate
+     *
      * @param int $quantity
      * @param null $status
      * @return Collection
@@ -189,6 +210,8 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     }
 
     /**
+     * Transform database collection
+     *
      * @param $model
      * @return array
      */

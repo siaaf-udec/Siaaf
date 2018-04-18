@@ -2,6 +2,7 @@
 
 
 use App\Container\Financial\src\Constants\ConstantRoles;
+use App\Container\Financial\src\Constants\ConstantStatus;
 use App\Container\Financial\src\Helpers\StringFormatter;
 use App\Container\Financial\src\Constants\ConstantLabelClasses;
 use App\Container\Financial\src\Constants\SchemaConstant;
@@ -277,14 +278,29 @@ function requestsList( $exceptKey = null, $pluck = false ) {
 | This functions return the fields name of the roles
 */
 
+/**
+ * @return string
+ */
 function student_role() { return ConstantRoles::FINANCIAL_STUDENT_ROLE; }
 
+/**
+ * @return string
+ */
 function admin_role() { return ConstantRoles::FINANCIAL_ADMIN_ROLE; }
 
+/**
+ * @return string
+ */
 function teacher_role() { return ConstantRoles::FINANCIAL_TEACHER_ROLE; }
 
+/**
+ * @return string
+ */
 function secretary_role() { return ConstantRoles::FINANCIAL_SECRETARY_ROLE; }
 
+/**
+ * @return array
+ */
 function access_roles() {
     return [
         admin_role(),
@@ -292,6 +308,89 @@ function access_roles() {
         secretary_role(),
     ];
 }
+
+/*
+|--------------------------------------------------------------------------
+| Status Helper
+|--------------------------------------------------------------------------
+|
+| This functions return the status name of the requests
+*/
+
+/**
+ * @return string
+ */
+function sent_status() { return ConstantStatus::SENT; }
+
+/**
+ * @return string
+ */
+function rejected_status() { return ConstantStatus::REJECTED; }
+
+/**
+ * @return string
+ */
+function waiting_pay_status() { return ConstantStatus::WAITING_PAY; }
+
+/**
+ * @return string
+ */
+function waiting_min_pay_status() { return ConstantStatus::WAITING_MIN_PAY; }
+
+/**
+ * @return string
+ */
+function approved_status() { return ConstantStatus::APPROVED; }
+
+/**
+ * @return string
+ */
+function paid_status() { return ConstantStatus::PAID; }
+
+/**
+ * @return string
+ */
+function pending_status() { return ConstantStatus::PENDING; }
+
+/**
+ * @return string
+ */
+function waiting_quota_status() { return ConstantStatus::WAITING_QUOTA; }
+
+/**
+ * @return string
+ */
+function checking_status() { return ConstantStatus::CHECKING; }
+
+/**
+ * @return string
+ */
+function canceled() { return ConstantStatus::CANCELED; }
+
+/**
+ * @return string
+ */
+function status_type_file() { return ConstantStatus::FILE; }
+
+/**
+ * @return string
+ */
+function status_type_extension() { return ConstantStatus::EXTENSION; }
+
+/**
+ * @return string
+ */
+function status_type_validation() { return ConstantStatus::VALIDATION; }
+
+/**
+ * @return string
+ */
+function status_type_intersemestral() { return ConstantStatus::INTERSEMESTER; }
+
+/**
+ * @return string
+ */
+function status_type_addition_subtraction() { return ConstantStatus::ADD_REMOVE_SUBJECTS; }
 
 /*
 |--------------------------------------------------------------------------

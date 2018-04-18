@@ -23,6 +23,11 @@ class ApprovalValidationController extends Controller
         $this->validationRepository = $validationRepository;
     }
 
+    /**
+     * Return a sidebar withs counts and status
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sidebar()
     {
         $status = $this->validationRepository->availableStatus();
@@ -43,6 +48,12 @@ class ApprovalValidationController extends Controller
         return response()->json( isset($sidebar) ? $sidebar : [], 200 );
     }
 
+    /**
+     * Get all validations with paginate and status
+     *
+     * @param null $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function validations( $status = null )
     {
         return response()->json(

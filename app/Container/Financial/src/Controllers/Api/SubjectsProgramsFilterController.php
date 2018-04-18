@@ -50,6 +50,8 @@ class SubjectsProgramsFilterController extends Controller
     }
 
     /**
+     * Get a list of programs in options format
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function programs()
@@ -59,30 +61,20 @@ class SubjectsProgramsFilterController extends Controller
     }
 
     /**
+     * Get a list of subjects in options format
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function subjects($id)
     {
-        /*
-        $options = $this->subjectRepository->options(
-            primaryKey(),
-            subject_name(),
-            false,
-            true,
-            'programs',
-            function ($query) use ($id) {
-                $query->where( program_fk(), $id);
-            }
-        );
-        */
-
         $options = $this->subjectRepository->subjectsInProgramAsOptions( $id );
-
         return response()->json($options, 200);
     }
 
     /**
+     * Get a list of teachers where has assigned subjects in options format
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */

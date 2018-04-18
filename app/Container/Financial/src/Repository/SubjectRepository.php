@@ -24,6 +24,11 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
         $this->subjectProgramTeacherRepository = $subjectProgramTeacherRepository;
     }
 
+    /**
+     * Return subjects in options format
+     *
+     * @return mixed
+     */
     public function optionsQuery()
     {
         return $this->getModel()
@@ -31,6 +36,8 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
     }
 
     /**
+     * Return unassigned subjects in options format
+     *
      * @return array
      */
     public function subjectsAsOptionsUnassigned()
@@ -41,7 +48,13 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
         return $this->subjectOptionsFormatted( $subjects );
     }
 
-    public function subjectsInProgramAsOptions( $programId )
+    /**
+     * Return subjects in options format where has programs assigned
+     *
+     * @param $programId
+     * @return array
+     */
+    public function subjectsInProgramAsOptions($programId )
     {
         $subjects = $this->optionsQuery()->whereHas('programs', function ($query) use ($programId) {
             $query->where( program_fk(), $programId);
@@ -50,7 +63,13 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
         return $this->subjectOptionsFormatted( $subjects );
     }
 
-    public function subjectOptionsFormatted( $subjects )
+    /**
+     * Return a formatted data in options
+     *
+     * @param $subjects
+     * @return array
+     */
+    public function subjectOptionsFormatted($subjects )
     {
         foreach ( $subjects->cursor() as $subject ) {
             $array[] = [
@@ -62,6 +81,11 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
         return isset( $array ) ? $array : [];
     }
 
+    /**
+     * Update status for options
+     * @param $id
+     * @return array
+     */
     public function subjectsAsOptionsUpdate( $id )
     {
         $subjects = $this->subjectsAsOptionsUnassigned();
@@ -76,6 +100,8 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
     }
 
     /**
+     * Store a new data
+     *
      * @param $model
      * @param $request
      * @return mixed

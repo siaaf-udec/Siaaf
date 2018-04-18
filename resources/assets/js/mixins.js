@@ -213,7 +213,7 @@ export const mixinFormatter = {
         toMoney: function ( currency ) {
             let formatter = new Intl.NumberFormat('es-CO', {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'COP',
                 minimumFractionDigits: 2,
             });
             return formatter.format( currency );

@@ -33,6 +33,8 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     }
 
     /**
+     * Store data in database
+     *
      * @param $model
      * @param $request
      * @return mixed
@@ -48,9 +50,16 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
         return $model->save();
     }
 
-    public function updateAdminExtension( $request, $id )
+    /**
+     * Update status of the specific resource
+     *
+     * @param $request
+     * @param $id
+     * @return mixed
+     */
+    public function updateAdminExtension($request, $id )
     {
-        $approved = $this->statusRequestRepository->getId( 'EXTENSION', 'APROBADO' );
+        $approved = $this->statusRequestRepository->getId( status_type_extension(), approved_status() );
         $model = $this->getModel()->find( $id );
         if ( $request->status == $approved->{ primaryKey() } ) {
             if ( !isset( $model->{ approval_date() } ) ) {
@@ -64,6 +73,8 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     }
 
     /**
+     * Get a count data
+     *
      * @param array $status
      * @return mixed
      */
@@ -72,19 +83,26 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
         return $this->getModel()->whereIn( status_fk(),  $status )->count();
     }
 
+    /**
+     * Get available status
+     *
+     * @return mixed
+     */
     public function availableStatus()
     {
-        return $this->statusRequestRepository->getNames( 'EXTENSION' );
+        return $this->statusRequestRepository->getNames( status_type_extension() );
     }
 
     /**
+     * Store a new student with initials status and cost
+     *
      * @param $request
      * @return mixed
      */
     public function storeStudentExtension( $request )
     {
-        $status = $this->statusRequestRepository->getId( 'EXTENSION', 'ENVIADO' );
-        $cost_service = $this->costServiceRepository->getId( 'EXTENSION' );
+        $status = $this->statusRequestRepository->getId( status_type_extension(), sent_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_extension() );
         $model = $this->getModel();
         $model->{ subject_fk() }    =  $request->subject_matter;
         $model->{ student_fk() }    =  auth()->user()->id;
@@ -94,6 +112,8 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     }
 
     /**
+     * Update student request
+     *
      * @param $request
      * @param $id
      * @return mixed
@@ -106,6 +126,8 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     }
 
     /**
+     * Delete a student request
+     *
      * @param $id
      * @return bool
      */
@@ -116,6 +138,8 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     }
 
     /**
+     * Get subject relations stored
+     *
      * @param $id
      * @param bool $whitRelations
      * @return mixed
@@ -128,7 +152,14 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
         return $extension->first();
     }
 
-    public function getAllPaginate( $quantity = 5, $status = null )
+    /**
+     * Get data paginate
+     *
+     * @param int $quantity
+     * @param null $status
+     * @return LengthAwarePaginator
+     */
+    public function getAllPaginate($quantity = 5, $status = null )
     {
         $items = $this->getModel()->with([
             'subject' => function ($q) {
@@ -195,7 +226,13 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
         ];
     }
 
-    public function fillPagination( $model )
+    /**
+     * Retrieve formatted data
+     *
+     * @param $model
+     * @return array
+     */
+    public function fillPagination($model )
     {
         return [
             'id'                =>  isset( $model->{ primaryKey() } ) ? $model->{ primaryKey() } : 0,

@@ -338,4 +338,12 @@ return [
             'button'    =>  'Revisar solicitud',
         ]
     ],
+
+    'status_type'   =>  [
+        'file'                  =>  status_type_file(),
+        'extension'             =>  status_type_extension(),
+        'validation'            =>  status_type_validation(),
+        'intersemester'         =>  status_type_intersemestral(),
+        'addition_subtraction'  =>  status_type_addition_subtraction(),
+    ],
 ];

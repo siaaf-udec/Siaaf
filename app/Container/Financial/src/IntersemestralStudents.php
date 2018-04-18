@@ -72,6 +72,11 @@ class IntersemestralStudents extends Model
      * ---------------------------------------------------------------------------------------
      */
 
+    /**
+     * Get intersemestral relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function subscribed()
     {
         return $this->belongsTo(Intersemestral::class,
@@ -79,6 +84,11 @@ class IntersemestralStudents extends Model
             SchemaConstant::PRIMARY_KEY);
     }
 
+    /**
+     * Get student relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function student()
     {
         return $this->hasOne(User::class,
@@ -93,6 +103,8 @@ class IntersemestralStudents extends Model
      */
 
     /**
+     * Get current subscribers in an intersemestral
+     *
      * @param $query
      * @return mixed
      */
@@ -108,6 +120,8 @@ class IntersemestralStudents extends Model
     }
 
     /**
+     * Get student where paid an intersemestral
+     *
      * @param $query
      * @return mixed
      */

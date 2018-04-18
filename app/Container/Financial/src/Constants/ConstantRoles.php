@@ -12,6 +12,11 @@ class ConstantRoles
     const FINANCIAL_SECRETARY_ROLE  = 'financial_secretary';
 
 
+    /**
+     * Return an array with roles names
+     *
+     * @return array
+     */
     public static function getRoleNames()
     {
         return [
@@ -22,6 +27,11 @@ class ConstantRoles
         ];
     }
 
+    /**
+     * Return the roles array tu use in Seeders
+     *
+     * @return array
+     */
     public static function getRoles()
     {
         return [

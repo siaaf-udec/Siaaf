@@ -8,6 +8,7 @@ class ConstantStatus
 
     const SENT              =   'ENVIADO';
     const APPROVED          =   'APROBADO';
+    const PENDING           =   'PENDIENTE';
     const REJECTED          =   'RECHAZADO';
     const WAITING_PAY       =   'EN ESPERA DE PAGO';
     const PAID              =   'PAGADO';

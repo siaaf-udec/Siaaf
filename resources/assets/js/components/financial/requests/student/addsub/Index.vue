@@ -108,7 +108,7 @@
                     { data: 'program_name',     name: 'program_name' },
                     { data: 'status_label',     name: 'status_label' },
                     { data: 'teacher_name',     name: 'teacher_name' },
-                    { data: 'teacher_phone', name: 'teacher_phone',
+                    { data: 'teacher_phone',    name: 'teacher_phone',
                         render: function (data, type, row) {
                             return '<a href="tel:'+data+'">'+data+'</a>';
                         }

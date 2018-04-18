@@ -8,8 +8,6 @@ use App\Container\Financial\src\Intersemestral;
 use App\Container\Financial\src\SubjectProgram;
 use App\Transformers\Financial\IntersemestralFeedTransformer;
 use App\Transformers\Financial\IntersemestralTransformer;
-use League\Fractal\Manager;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 
 class IntersemestralRepository extends Methods implements FinancialIntersemestralInterface
@@ -44,30 +42,32 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Store a new data in database
+     *
      * @param $model
      * @param $request
      * @return mixed
      */
     public function process( $model, $request )
     {
-        $status = $this->statusRequestRepository->getId( 'INTERSEMESTER', 'ENVIADO' );
-        $cost_service = $this->costServiceRepository->getId( 'INTERSEMESTER' );
-        //$model->{ approval_date() }     =   $request->approval_date;
+        $status = $this->statusRequestRepository->getId( status_type_intersemestral(), sent_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_intersemestral() );
         $model->{ student_fk() }        =   auth()->user()->id;
         $model->{ status_fk() }         =   $status->{ primaryKey() };
         $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
-        //$model->{ approved_by() }       =   auth()->user()->id;
         return $model->save();
     }
 
     /**
+     * Update status of the specific resource
+     *
      * @param $request
      * @param $id
      * @return mixed
      */
     public function updateAdminIntersemestral($request, $id )
     {
-        $approved = $this->statusRequestRepository->getId( 'INTERSEMESTER', 'APROBADO' );
+        $approved = $this->statusRequestRepository->getId( status_type_intersemestral(), approved_status() );
         $model = $this->getModel()->find( $id );
         if ( $request->status == $approved->{ primaryKey() } ) {
             if ( !isset( $model->{ approval_date() } ) ) {
@@ -81,6 +81,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Get a count data
+     *
      * @param array $status
      * @return mixed
      */
@@ -92,14 +94,18 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Get available status
+     *
      * @return mixed
      */
     public function availableStatus()
     {
-        return $this->statusRequestRepository->getNames( 'INTERSEMESTER' );
+        return $this->statusRequestRepository->getNames( status_type_intersemestral() );
     }
 
     /**
+     * Store a new student with initials status and cost
+     *
      * @param $request
      * @return mixed
      */
@@ -112,8 +118,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
             return $this->intersemestralStudentRepository->subscribe( $intersemestral->{ primaryKey() } );
         }
 
-        $status = $this->statusRequestRepository->getId( 'INTERSEMESTER', 'EN ESPERA DE COMPLETAR CUPO MÍNIMO' );
-        $cost_service = $this->costServiceRepository->getId( 'INTERSEMESTER' );
+        $status = $this->statusRequestRepository->getId( status_type_intersemestral(), waiting_quota_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_intersemestral() );
         $model = $this->getModel();
         $model->{ subject_fk() }        =  $request->subject_matter;
         $model->{ cost_service_fk() }   =  $cost_service->{ primaryKey() };
@@ -126,6 +132,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Subscribe a student in an intersemestral
+     *
      * @param $id
      * @return mixed
      */
@@ -135,6 +143,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Update paid status
+     *
      * @param $request
      * @return mixed
      */
@@ -144,6 +154,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Delete a student from intersemestral
+     *
      * @param $id
      * @return bool
      */
@@ -160,6 +172,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Get subject relations stored
+     *
      * @param $id
      * @param bool $whitRelations
      * @return mixed
@@ -173,6 +187,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Get data paginate
+     *
      * @param int $quantity
      * @param null $status
      * @return Collection
@@ -207,6 +223,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Get available data paginate
+     *
      * @param int $pagination
      * @return array
      */
@@ -232,7 +250,7 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
-     * Retrieve  the auth user intersemestral
+     * Retrieve the auth user intersemestral
      *
      * @return mixed
      */
@@ -265,6 +283,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Find if exist intersemestral request
+     *
      * @param $subject
      * @return bool
      */
@@ -276,6 +296,8 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     }
 
     /**
+     * Return data transformed
+     *
      * @param $model
      * @return array
      * @throws \Throwable

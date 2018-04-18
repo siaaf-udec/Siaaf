@@ -22,6 +22,12 @@ class StatusRequestController extends Controller
         $this->statusRequestRepository = $statusRequestRepository;
     }
 
+    /**
+     * Return a list of status in tree format
+     *
+     * @param $type
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function tree($type)
     {
         $status = $this->statusRequestRepository->tree( $type );

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 28/10/17
- * Time: 11:11 AM
- */
 
 namespace App\Container\Financial\src;
 
@@ -112,6 +106,11 @@ class Comment extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Get user relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class,

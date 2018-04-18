@@ -17,12 +17,14 @@ class ProgramRepository extends Methods implements FinancialRoleInterface
         parent::__construct(Program::class);
     }
 
-    public function assignedTeacher( $id )
-    {
-
-    }
-
-    public function process( $model , $request )
+    /**
+     * Store a new program
+     *
+     * @param $model
+     * @param $request
+     * @return mixed
+     */
+    public function process($model , $request )
     {
         $model->{ program_name() }          =  $request->program;
         return $model->save();

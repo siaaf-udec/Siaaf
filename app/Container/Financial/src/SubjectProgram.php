@@ -56,16 +56,31 @@ class SubjectProgram extends Model
         SchemaConstant::TEACHER_FOREIGN_KEY,
     ];
 
+    /**
+     * Get teacher relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function teachers()
     {
         return $this->hasMany(User::class, 'id', SchemaConstant::TEACHER_FOREIGN_KEY);
     }
 
+    /**
+     * Get program relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function programs()
     {
         return $this->hasMany(Program::class, SchemaConstant::PRIMARY_KEY, SchemaConstant::PROGRAM_FOREIGN_KEY);
     }
 
+    /**
+     * Get subjects relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subjects()
     {
         return $this->hasMany(Subject::class, SchemaConstant::PRIMARY_KEY, SchemaConstant::SUBJECT_FOREIGN_KEY);

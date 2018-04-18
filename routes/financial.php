@@ -400,16 +400,4 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
             })->name('financial.api.user.auth');
         });
     });
-
-    /*
-    Route::get('mailable', function () {
-        $invoice = \App\Container\Financial\src\Extension::find(11);
-
-        return new App\Mail\Financial\FinancialExtensionGenerated($invoice);
-    });
-    */
-
-    Route::get('status', function () {
-        return \App\Container\Financial\src\Constants\ConstantStatus::all();
-    });
 });

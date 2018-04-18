@@ -25,6 +25,11 @@ class ValidationController extends Controller
         $this->validationRepository = $validationRepository;
     }
 
+    /**
+     * Return a query of auth user validations
+     *
+     * @return mixed
+     */
     public function query()
     {
         return auth()->user()->validations()
@@ -42,12 +47,26 @@ class ValidationController extends Controller
             ])->orderBy(created_at(), 'DESC');
     }
 
+    /**
+     * Return a Datatable query format
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function datatable()
     {
         return DataTables::of( $this->query() )
                         ->setTransformer( new ValidationTransformer )
                         ->toJson();
     }
+
+    /**
+     * Return an specific source in datatable format
+     *
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
 
     public function show( $id )
     {
@@ -75,6 +94,12 @@ class ValidationController extends Controller
                         ->toJson();
     }
 
+    /**
+     * Return the subject primary keys relation to edit the source
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit( $id )
     {
         return response()->json( ( new SubjectProgramTransformer )->transform( $this->validationRepository->subjectRelation( $id ) ) , 200 );

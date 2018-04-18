@@ -2,7 +2,6 @@
 
 namespace App\Container\Financial\src\Controllers\Api;
 
-use App\Container\Financial\src\Constants\ConstantExtensionStatus;
 use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Http\Controllers\Controller;
 
@@ -22,6 +21,11 @@ class ApprovalExtensionController extends Controller
         $this->extensionRepository = $extensionRepository;
     }
 
+    /**
+     * Return a sidebar withs counts and status
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sidebar()
     {
         $status = $this->extensionRepository->availableStatus();
@@ -42,6 +46,12 @@ class ApprovalExtensionController extends Controller
         return response()->json( isset($sidebar) ? $sidebar : [], 200 );
     }
 
+    /**
+     * Get all extensions with paginate and status
+     *
+     * @param null $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function extensions( $status = null )
     {
         return response()->json(

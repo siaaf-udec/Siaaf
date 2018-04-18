@@ -78,6 +78,11 @@ class Program extends Model
      * ---------------------------------------------------------
      */
 
+    /**
+     * Get teacher relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function teacher()
     {
         $table = SchemaConstant::getRelationNameTable( SchemaConstant::SUBJECT_PROGRAM );
@@ -86,6 +91,11 @@ class Program extends Model
             ->withPivot(SchemaConstant::SUBJECT_FOREIGN_KEY, SchemaConstant::PROGRAM_FOREIGN_KEY);
     }
 
+    /**
+     * Get subject relation
+     *
+     * @return Program|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, SchemaConstant::SUBJECT_PROGRAM, SchemaConstant::PROGRAM_FOREIGN_KEY, SchemaConstant::SUBJECT_FOREIGN_KEY)

@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 5/02/18
- * Time: 8:50 PM
- */
 
 namespace App\Container\Financial\src\Repository;
 
 
-use App\Container\Financial\src\File;
 use App\Container\Financial\src\FileType;
 use App\Container\Financial\src\Interfaces\FinancialFileTypeInterface;
 use App\Container\Financial\src\Interfaces\Methods;
@@ -32,6 +25,8 @@ class FileTypeRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Get statistics by semester
+     *
      * @return mixed
      */
     public function stats()
@@ -48,8 +43,8 @@ class FileTypeRepository extends Methods implements FinancialFileTypeInterface
                         //Evaluate if the status is approved
                         $files = $files->whereHas('status', function ($query) {
                             $query->where([
-                                [status_name(), 'APROBADO'],
-                                [status_type(), 'FILE'],
+                                [status_name(), approved_status()],
+                                [status_type(), status_type_file()],
                             ]);
                         });
                         return $files;
@@ -58,6 +53,8 @@ class FileTypeRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Store new data in database
+     *
      * @param $model
      * @param $request
      * @return mixed

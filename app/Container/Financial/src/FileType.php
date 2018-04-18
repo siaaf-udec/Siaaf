@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 5/02/18
- * Time: 8:43 PM
- */
 
 namespace App\Container\Financial\src;
 
@@ -83,6 +77,11 @@ class FileType extends Model
      * ---------------------------------------------------------
      */
 
+    /**
+     * Get files relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function files()
     {
         return $this->hasMany( File::class, file_type_fk(), primaryKey() );

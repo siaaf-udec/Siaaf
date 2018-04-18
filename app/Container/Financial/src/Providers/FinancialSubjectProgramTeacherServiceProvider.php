@@ -2,7 +2,6 @@
 
 namespace App\Container\Financial\src\Providers;
 
-
 use App\Container\Financial\src\Interfaces\FinancialSubjectProgramTeacherInterface;
 use App\Container\Financial\src\Repository\SubjectProgramTeacherRepository;
 use Illuminate\Support\ServiceProvider;

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 11/10/17
- * Time: 11:33 AM
- */
 
 namespace App\Container\Financial\src\Constants;
 
@@ -19,37 +13,39 @@ class ConstantLabelClasses
     const DEFAULT_CLASS   = 'default';
 
     /**
+     * Return a bootstrap html class
+     *
      * @param $state
      * @return string
      */
     public static function className($state)
     {
         switch ($state) {
-            case 'RECHAZADO' :
+            case ConstantStatus::REJECTED :
                 return self::WARNING_CLASS;
                 break;
-            case 'EN ESPERA DE PAGO' :
+            case ConstantStatus::WAITING_PAY :
                 return self::WARNING_CLASS;
                 break;
-            case 'EN ESPERA DE COMPLETAR PAGO MÍNIMO' :
+            case ConstantStatus::WAITING_MIN_PAY :
                 return self::WARNING_CLASS;
                 break;
-            case 'APROBADO' :
+            case ConstantStatus::APPROVED :
                 return self::SUCCESS_CLASS;
                 break;
-            case 'PAGADO' :
+            case ConstantStatus::PAID :
                 return self::SUCCESS_CLASS;
                 break;
-            case 'PENDIENTE' :
+            case ConstantStatus::PENDING :
                 return self::INFO_CLASS;
                 break;
-            case 'EN ESPERA DE COMPLETAR CUPO MÍNIMO' :
+            case ConstantStatus::WAITING_QUOTA :
                 return self::INFO_CLASS;
                 break;
-            case 'EN REVISIÓN' :
+            case ConstantStatus::CHECKING :
                 return self::INFO_CLASS;
                 break;
-            case 'CANCELADO' :
+            case ConstantStatus::CANCELED :
                 return self::DANGER_CLASS;
                 break;
             default:

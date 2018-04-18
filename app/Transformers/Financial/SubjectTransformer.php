@@ -22,6 +22,31 @@ class SubjectTransformer extends TransformerAbstract
             'created_at'        =>  isset( $subject->{ created_at() } ) ? $subject->{ created_at() }->format('Y-m-d H:i:s') : null,
             'updated_at'        =>  isset( $subject->{ updated_at() } ) ? $subject->{ updated_at() }->format('Y-m-d H:i:s') : null,
             'deleted_at'        =>  isset( $subject->{ deleted_at() } ) ? $subject->{ deleted_at() }->format('Y-m-d H:i:s') : null,
+            'actions'           =>  $this->getActions( $subject ),
         ];
+    }
+
+    public function getActions( Subject $subject )
+    {
+        try {
+            $edit  = actionLink(
+                'javascript:;',
+                'btn btn-icon-only edit yellow',
+                'fa fa-pencil',
+                ['data-id' => $subject->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ]
+            );
+
+            $trash = actionLink(
+                'javascript:;',
+                'btn btn-icon-only red trash mt-ladda-btn ladda-button',
+                'fa fa-trash',
+                ['data-id' => $subject->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
+            );
+            return "$edit $trash";
+
+        } catch ( \Throwable $e ) {
+            report( $e );
+            return false;
+        }
     }
 }

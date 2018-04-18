@@ -19,6 +19,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Return subjects where are assigned
+     *
      * @return mixed
      */
     public function assignedSubjectsIds()
@@ -27,6 +29,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Return teachers id where has subjects assigneds
+     *
      * @param $id
      * @return mixed
      */
@@ -37,6 +41,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Return assigned subjects with teachers
+     *
      * @return mixed
      */
     public function assigned()
@@ -45,6 +51,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Update the request
+     *
      * @param Request $request
      * @return bool|mixed
      */
@@ -62,6 +70,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Destroy the request
+     *
      * @param Request $request
      * @return bool|mixed
      */
@@ -75,6 +85,8 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
     }
 
     /**
+     * Store a new data in database
+     *
      * @param $model
      * @param $request
      * @return mixed

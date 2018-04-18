@@ -42,6 +42,11 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
                     ->latest()->get();
     }
 
+    /**
+     * Get all files
+     *
+     * @return mixed
+     */
     public function allFiles()
     {
         $columnsFileType = primaryKey().','.file_types();
@@ -56,14 +61,23 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
                     ->latest();
     }
 
+    /**
+     *  Get query files by semester
+     *
+     * @param int $startMonth
+     * @param int $endMonth
+     * @param int $startYear
+     * @param int $endYear
+     * @return mixed
+     */
     public function bySemester($startMonth = 1, $endMonth = 6, $startYear = 2008, $endYear = 2018 )
     {
-        return $this->getModel()->whereRaw( "MONTH(created_at) BETWEEN $startMonth AND $endMonth" )
-            ->whereRaw( "YEAR(created_at) BETWEEN $startYear AND $endYear" )
+        return $this->getModel()->whereRaw( "MONTH(".created_at().") BETWEEN $startMonth AND $endMonth" )
+            ->whereRaw( "YEAR(".created_at().") BETWEEN $startYear AND $endYear" )
             ->whereHas('status', function ($query) {
                 $query->where([
-                    [status_name(), 'APROBADO'],
-                    [status_type(), 'FILE'],
+                    [status_name(), approved_status()],
+                    [status_type(), status_type_file()],
                 ]);
             });
     }
@@ -75,7 +89,7 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
      */
     public function studentUpload( $request )
     {
-        $status = $this->statusRequestRepository->getId( 'FILE', 'ENVIADO' );
+        $status = $this->statusRequestRepository->getId( status_type_file(), sent_status() );
         $model = $this->getModel();
         $model->{ file_name() }     = $request->file('file')->getClientOriginalName();
         $model->{ file_route() }    = $request->file('file')->store('', 'financial');
@@ -94,7 +108,7 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
         $columnsFileType = primaryKey().','.file_types();
         $columnsStatus = primaryKey().','.status_name();
 
-        if ( auth()->user()->hasRole( ConstantRoles::FINANCIAL_STUDENT_ROLE ) ) {
+        if ( auth()->user()->hasRole( student_role() ) ) {
             return auth()->user()->filesUploaded()->with([
                 "status:$columnsStatus",
                 "file_type:$columnsFileType",
@@ -109,6 +123,11 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
         ])->find( $id );
     }
 
+    /**
+     * Check if an user uploaded a file
+     *
+     * @return bool
+     */
     public function checkLatestRequest()
     {
         $files = auth()->user()->filesUploaded()->latest()->first();
@@ -119,6 +138,8 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Update student request
+     *
      * @param $request
      * @param $id
      * @return mixed
@@ -135,6 +156,8 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Update status requests
+     *
      * @param $request
      * @param $id
      * @return mixed
@@ -159,6 +182,8 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Comment a status file request
+     *
      * @param $request
      * @return mixed
      */
@@ -174,6 +199,8 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     }
 
     /**
+     * Store a new data
+     *
      * @param $model
      * @param $request
      * @return mixed

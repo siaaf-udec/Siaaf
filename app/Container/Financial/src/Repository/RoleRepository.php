@@ -16,7 +16,7 @@ class RoleRepository extends Methods implements FinancialRoleInterface
     }
 
     /**
-     * Return id that identify a role at the database
+     * Return id that identify a role in the database
      *
      * @return mixed
      */
@@ -27,6 +27,11 @@ class RoleRepository extends Methods implements FinancialRoleInterface
                     ->select('id')->get()->first()->id;
     }
 
+    /**
+     * Return id that identify a role at the database
+     *
+     * @return mixed
+     */
     public function isStudent()
     {
         return $this->getModel()
@@ -34,6 +39,11 @@ class RoleRepository extends Methods implements FinancialRoleInterface
             ->select('id')->get()->first()->id;
     }
 
+    /**
+     * Return id that identify a role at the database
+     *
+     * @return mixed
+     */
     public function isAdmin()
     {
         return $this->getModel()
@@ -41,6 +51,11 @@ class RoleRepository extends Methods implements FinancialRoleInterface
             ->select('id')->get()->first()->id;
     }
 
+    /**
+     * Return id that identify a role at the database
+     *
+     * @return mixed
+     */
     public function isSecretary()
     {
         return $this->getModel()
@@ -48,6 +63,11 @@ class RoleRepository extends Methods implements FinancialRoleInterface
             ->select('id')->get()->first()->id;
     }
 
+    /**
+     * Empty method but required
+     *
+     * @return mixed
+     */
     public function process( $model , $request )
     {
         

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 20/07/17
- * Time: 11:43 PM
- */
 
 namespace App\Container\Financial\src\Controllers\Requests\Student;
 
@@ -12,7 +6,6 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 use App\Container\Financial\src\Repository\ValidationRepository;
 use App\Container\Financial\src\Requests\Requests\Student\ValidationStudentRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ValidationRequestController extends Controller
 {

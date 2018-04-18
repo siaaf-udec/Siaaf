@@ -33,6 +33,8 @@ class IntersemestralController extends Controller
     }
 
     /**
+     * Return a Datatable query format
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -44,6 +46,8 @@ class IntersemestralController extends Controller
     }
 
     /**
+     * Return an specific auth user source format
+     *
      * @param $id
      * @return array
      * @throws \Throwable
@@ -55,6 +59,8 @@ class IntersemestralController extends Controller
     }
 
     /**
+     * Return an specific source format
+     *
      * @param $id
      * @return array
      * @throws \Throwable
@@ -87,10 +93,12 @@ class IntersemestralController extends Controller
     }
 
     /**
+     * Return the subject primary keys relation to edit the source
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id )
+    public function edit( $id )
     {
         return response()->json( ( new SubjectProgramTransformer )
                                     ->transform( $this->intersemestralRepository->subjectRelation( $id ) ) ,
@@ -98,6 +106,8 @@ class IntersemestralController extends Controller
     }
 
     /**
+     * Return the available intersemestral sources
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function available()

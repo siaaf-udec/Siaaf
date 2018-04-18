@@ -107,6 +107,11 @@ class Extension extends Model
      * ---------------------------------------------------------------------------------------
      */
 
+    /**
+     * Get a subject relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function subject()
     {
         return $this->hasOne(Subject::class,
@@ -114,6 +119,11 @@ class Extension extends Model
                              SchemaConstant::SUBJECT_FOREIGN_KEY);
     }
 
+    /**
+     * Get a student relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function student()
     {
         return $this->hasOne(User::class,
@@ -121,6 +131,11 @@ class Extension extends Model
                              SchemaConstant::STUDENT_FOREIGN_KEY );
     }
 
+    /**
+     * Get a secretary relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function secretary()
     {
         return $this->hasOne(User::class,
@@ -128,6 +143,11 @@ class Extension extends Model
                              SchemaConstant::APPROVED_BY );
     }
 
+    /**
+     * Get a status relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function status()
     {
         return $this->hasOne(StatusRequest::class,
@@ -135,6 +155,11 @@ class Extension extends Model
                              SchemaConstant::STATUS_FOREIGN_KEY);
     }
 
+    /**
+     * Get a cost relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function cost()
     {
         return $this->hasOne(CostService::class,

@@ -18,6 +18,8 @@ class IntersemestralStudentRepository extends Methods implements FinancialInters
     }
 
     /**
+     * Set paid status
+     *
      * @param $request
      * @return mixed
      */
@@ -29,6 +31,8 @@ class IntersemestralStudentRepository extends Methods implements FinancialInters
     }
 
     /**
+     * Subscribe student in an intersemestral
+     *
      * @param $intersemestral
      * @return mixed
      */
@@ -46,6 +50,8 @@ class IntersemestralStudentRepository extends Methods implements FinancialInters
     }
 
     /**
+     * Check if an intersemestral exist
+     *
      * @param $intersemestral
      * @return mixed
      */
@@ -62,6 +68,8 @@ class IntersemestralStudentRepository extends Methods implements FinancialInters
     }
 
     /**
+     * Store a new intersemestral
+     *
      * @param $model
      * @param $request
      * @return mixed

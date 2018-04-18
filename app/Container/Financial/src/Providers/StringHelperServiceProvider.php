@@ -2,7 +2,6 @@
 
 namespace App\Container\Financial\src\Providers;
 
-
 use App\Container\Financial\src\Helpers\StringFormatter;
 use Illuminate\Support\ServiceProvider;
 

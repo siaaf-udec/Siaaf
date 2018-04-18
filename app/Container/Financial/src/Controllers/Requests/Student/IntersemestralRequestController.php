@@ -5,8 +5,7 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 use App\Container\Financial\src\Repository\IntersemestralRepository;
 use App\Container\Financial\src\Requests\Requests\Student\IntersemestralStudentRequest;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;;
 
 class IntersemestralRequestController extends Controller
 {

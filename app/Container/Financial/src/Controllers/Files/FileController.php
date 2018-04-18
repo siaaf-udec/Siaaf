@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 20/07/17
- * Time: 1:58 PM
- */
 
 namespace App\Container\Financial\src\Controllers\Files;
 
@@ -12,8 +6,6 @@ namespace App\Container\Financial\src\Controllers\Files;
 use App\Container\Financial\src\Repository\FileRepository;
 use App\Container\Financial\src\Requests\File\StoreFileRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {

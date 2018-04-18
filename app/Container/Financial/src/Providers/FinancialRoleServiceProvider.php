@@ -2,7 +2,6 @@
 
 namespace App\Container\Financial\src\Providers;
 
-
 use App\Container\Financial\src\Interfaces\FinancialRoleInterface;
 use App\Container\Permissions\Src\Repository\RoleRepository;
 use Illuminate\Support\ServiceProvider;

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 5/04/18
- * Time: 11:04 AM
- */
 
 namespace App\Container\Financial\src\Constants;
 
@@ -35,6 +29,8 @@ class ConstantExtensionStatus
     }
 
     /**
+     * Return a list of all extension status
+     *
      * @return array
      */
     public function arrayForSelect()
@@ -42,12 +38,18 @@ class ConstantExtensionStatus
         return $this->statusRequestRepository->options( primaryKey(), status_name());
     }
 
+    /**
+     * Return a list of status except
+     *
+     * @param $name
+     * @return mixed
+     */
     public function arrayExcept( $name )
     {
         return $this->statusRequestRepository->getModel()
                     ->select( primaryKey().' AS id', status_name(). ' AS text' )
                     ->where( [
-                        [status_type(), 'EXTENSION'],
+                        [status_type(), status_type_extension() ],
                         [status_name(), $name]
                     ])-get()->toArray();
     }

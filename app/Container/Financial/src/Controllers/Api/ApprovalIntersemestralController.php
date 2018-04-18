@@ -18,10 +18,14 @@ class ApprovalIntersemestralController extends Controller
      */
     public function __construct(IntersemestralRepository $intersemestralRepository)
     {
-
         $this->intersemestralRepository = $intersemestralRepository;
     }
 
+    /**
+     * Return a sidebar withs counts and status
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sidebar()
     {
         $status = $this->intersemestralRepository->availableStatus();
@@ -42,6 +46,12 @@ class ApprovalIntersemestralController extends Controller
         return response()->json( isset($sidebar) ? $sidebar : [], 200 );
     }
 
+    /**
+     * Get all intersemestrals with paginate and status
+     *
+     * @param null $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function intersemestral( $status = null )
     {
         return response()->json(

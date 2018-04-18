@@ -3,10 +3,9 @@
 namespace App\Container\Financial\src\Controllers\Api;
 
 
-use App\Container\Financial\src\CostService;
 use App\Container\Financial\src\Repository\CostServiceRepository;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\DataTables;
+use App\Transformers\Financial\CostServiceTransformer;
 
 class CostServiceController extends Controller
 {
@@ -24,17 +23,25 @@ class CostServiceController extends Controller
         $this->costServiceRepository = $costServiceRepository;
     }
 
+    /**
+     * Return current available cost
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function valid()
     {
         return response()->json( $this->costServiceRepository->actualCosts(), 200);
     }
 
+    /**
+     * Get all service cost form database in datatable format
+     *
+     * @return mixed
+     */
     public function history()
     {
         return $this->costServiceRepository->dataTables()
-                        ->editColumn(cost_service_name(), function ( CostService $costService ) {
-                            return ucfirst( trans(strtolower("validation.attributes.{$costService->{cost_service_name()}}") ) );
-                        })
+                        ->setTransformer( new CostServiceTransformer )
                         ->toJson();
     }
 }

@@ -3,10 +3,9 @@
 namespace App\Container\Financial\src\Controllers\Api;
 
 
-use App\Container\Financial\src\Program;
 use App\Container\Financial\src\Repository\ProgramRepository;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\DataTables;
+use App\Transformers\Financial\ProgramTransformer;
 
 class ProgramsController extends Controller
 {
@@ -24,31 +23,15 @@ class ProgramsController extends Controller
         $this->programRepository = $programRepository;
     }
 
-    public function model()
-    {
-        return $this->programRepository->getModel();
-    }
-
+    /**
+     * Return a Datatable query format
+     *
+     * @return mixed
+     */
     public function datatable()
     {
         return $this->programRepository->dataTables()
-            ->addColumn('actions', function (Program $program){
-                $edit  = actionLink(
-                    'javascript:;',
-                    'btn btn-icon-only edit yellow',
-                    'fa fa-pencil',
-                    ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ]
-                );
-
-                $trash = actionLink(
-                    'javascript:;',
-                    'btn btn-icon-only red trash mt-ladda-btn ladda-button',
-                    'fa fa-trash',
-                    ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
-                );
-                return "$edit $trash";
-            })
-            ->rawColumns(['actions'])
-            ->toJson();
+                        ->setTransformer( new ProgramTransformer )
+                        ->toJson();
     }
 }

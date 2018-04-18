@@ -34,6 +34,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Store a new data
+     *
      * @param $model
      * @param $request
      * @return mixed
@@ -43,12 +45,10 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
         $status = $this->statusRequestRepository->getId( 'VALIDATION', 'ENVIADO' );
         $cost_service = $this->costServiceRepository->getId( 'VALIDATION' );
         $model->{ action_subject() }    =   $request->action;
-        //$model->{ approval_date() }     =   $request->approval_date;
         $model->{ subject_fk() }        =   $request->subject_matter;
         $model->{ student_fk() }        =   auth()->user()->id;
         $model->{ status_fk() }         =   $status->{ primaryKey() };
         $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
-        //$model->{ approved_by() }       =   auth()->user()->id;
         return $model->save();
     }
 
@@ -68,6 +68,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Get count data
+     *
      * @param array $status
      * @return mixed
      */
@@ -79,21 +81,25 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Get available status
+     *
      * @return mixed
      */
     public function availableStatus()
     {
-        return $this->statusRequestRepository->getNames( 'VALIDATION' );
+        return $this->statusRequestRepository->getNames( status_type_validation() );
     }
 
     /**
+     * Store a new student with initial status and cost
+     *
      * @param $request
      * @return mixed
      */
     public function storeStudentValidation( $request )
     {
-        $status = $this->statusRequestRepository->getId( 'VALIDATION', 'ENVIADO' );
-        $cost_service = $this->costServiceRepository->getId( 'VALIDATION' );
+        $status = $this->statusRequestRepository->getId( status_type_validation(), sent_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_validation() );
         $model = $this->getModel();
         $model->{ subject_fk() }    =  $request->subject_matter;
         $model->{ student_fk() }    =  auth()->user()->id;
@@ -103,6 +109,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Update status request
+     *
      * @param $request
      * @param $id
      * @return mixed
@@ -115,6 +123,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Delete status request
+     *
      * @param $id
      * @return bool
      */
@@ -125,6 +135,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Get subject relations stored
+     *
      * @param $id
      * @param bool $whitRelations
      * @return mixed
@@ -138,6 +150,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Get data paginate
+     *
      * @param int $quantity
      * @param null $status
      * @return Collection
@@ -187,6 +201,8 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * Get data transformed
+     *
      * @param $model
      * @return array
      */

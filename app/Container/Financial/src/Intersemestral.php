@@ -101,6 +101,8 @@ class Intersemestral extends Model
     }
 
     /**
+     * The attribute to get a html status bar
+     *
      * @return bool|string
      * @throws \Throwable
      */
@@ -110,6 +112,8 @@ class Intersemestral extends Model
     }
 
     /**
+     * The attribute to get a html status bar
+     *
      * @return bool|string
      * @throws \Throwable
      */
@@ -124,6 +128,11 @@ class Intersemestral extends Model
      * ---------------------------------------------------------------------------------------
      */
 
+    /**
+     * Get a subject relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function subject()
     {
         return $this->hasOne(Subject::class,
@@ -131,6 +140,11 @@ class Intersemestral extends Model
             SchemaConstant::SUBJECT_FOREIGN_KEY);
     }
 
+    /**
+     * Get a secretary relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function secretary()
     {
         return $this->hasOne(User::class,
@@ -138,6 +152,11 @@ class Intersemestral extends Model
             SchemaConstant::APPROVED_BY );
     }
 
+    /**
+     * Get a status relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function status()
     {
         return $this->hasOne(StatusRequest::class,
@@ -145,6 +164,11 @@ class Intersemestral extends Model
             SchemaConstant::STATUS_FOREIGN_KEY);
     }
 
+    /**
+     * Get a cost relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function cost()
     {
         return $this->hasOne(CostService::class,
@@ -152,6 +176,11 @@ class Intersemestral extends Model
             SchemaConstant::COST_FOREIGN_KEY);
     }
 
+    /**
+     * Get intersemestral students subscribed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscribed()
     {
         return $this->hasMany(IntersemestralStudents::class,
@@ -174,10 +203,12 @@ class Intersemestral extends Model
    */
 
     /**
+     * Get current intersemestral
+     *
      * @param $query
      * @return mixed
      */
-    public function scopeAvailableIntersemestrals($query )
+    public function scopeAvailableIntersemestrals( $query )
     {
         if ( isFirstSemester( today()->month ) ) {
             $query = $query->whereMonth( created_at(), '<=', 6 );

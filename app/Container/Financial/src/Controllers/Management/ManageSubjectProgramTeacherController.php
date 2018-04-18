@@ -6,8 +6,9 @@ namespace App\Container\Financial\src\Controllers\Management;
 use App\Container\Financial\src\Repository\SubjectProgramTeacherRepository;
 use App\Container\Financial\src\Requests\SubjectProgramTeacher\StoreSubjectProgramTeacherRequest;
 use App\Container\Financial\src\Requests\SubjectProgramTeacher\UpdateSubjectProgramTeacherRequest;
-use App\Container\Financial\src\SubjectProgram;
 use App\Http\Controllers\Controller;
+use App\Transformers\Financial\SubjectProgramTeacherTransform;
+use App\Transformers\Financial\SubjectProgramTeacherTransformer;
 use Yajra\DataTables\DataTables;
 
 class ManageSubjectProgramTeacherController extends Controller
@@ -35,32 +36,7 @@ class ManageSubjectProgramTeacherController extends Controller
     public function index()
     {
         return DataTables::of( $this->subjectProgramTeacherRepository->assigned() )
-                            ->addColumn('actions', function (SubjectProgram $subject){
-                                $edit  = actionLink(
-                                    'javascript:;',
-                                    'btn btn-icon-only edit yellow',
-                                    'fa fa-pencil',
-                                    [
-                                        'data-program' => $subject->{ program_fk() },
-                                        'data-teacher' => $subject->{ teacher_fk() },
-                                        'data-subject' => $subject->{ subject_fk() },
-                                        'data-original-title' => trans('javascript.tooltip.edit')
-                                    ]
-                                );
-                                $trash = actionLink(
-                                    'javascript:;',
-                                    'btn btn-icon-only red trash mt-ladda-btn ladda-button',
-                                    'fa fa-trash',
-                                    [
-                                        'data-program' => $subject->{ program_fk() },
-                                        'data-teacher' => $subject->{ teacher_fk() },
-                                        'data-subject' => $subject->{ subject_fk() },
-                                        'data-original-title' => trans('javascript.tooltip.delete')
-                                    ]
-                                );
-                                return "$edit $trash";
-                            })
-                            ->rawColumns(['actions'])
+                            ->setTransformer( new SubjectProgramTeacherTransformer )
                             ->toJson();
     }
 

@@ -30,9 +30,9 @@
                 ],
                 url: route('financial.api.datatables.programs', {}, false),
                 source: [
-                    { data: 'pk_id',        name: 'pk_id' },
+                    { data: 'id',           name: 'id' },
                     { data: 'program_name', name: 'program_name' },
-                    { data: 'actions', name: 'actions', searchable: false, orderable: false },
+                    { data: 'actions',      name: 'actions', searchable: false, orderable: false },
                 ],
                 btnText: Lang.get('financial.buttons.add'),
                 name: Lang.get('validation.attributes.program'),

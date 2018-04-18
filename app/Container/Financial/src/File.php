@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 5/02/18
- * Time: 8:43 PM
- */
 
 namespace App\Container\Financial\src;
 
@@ -80,16 +74,31 @@ class File extends Model
      * ---------------------------------------------------------
      */
 
+    /**
+     * Get a pdf url from the storage
+     *
+     * @return null
+     */
     public function getPdfUrlAttribute()
     {
         return isset( $this->{ file_route() } ) ? Storage::disk('financial')->url( $this->{ file_route() } ) : null;
     }
 
+    /**
+     * Get current semester
+     *
+     * @return string
+     */
     public function getSemesterAttribute()
     {
         return ( isFirstSemester( $this->{created_at()}->month ) ) ? "IPA {$this->{created_at()}->year}" : "IIPA {$this->{created_at()}->year}";
     }
 
+    /**
+     * Get dropzone status to validate if can or not upload files
+     *
+     * @return bool
+     */
     public function getDropzoneStatusAttribute()
     {
         if ( isFirstSemester( $this->{created_at()}->month )
@@ -110,6 +119,8 @@ class File extends Model
      */
 
     /**
+     * Get status relation
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function status()
@@ -118,6 +129,8 @@ class File extends Model
     }
 
     /**
+     * Get user relation
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -126,6 +139,8 @@ class File extends Model
     }
 
     /**
+     * Get file type relation
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function file_type()
