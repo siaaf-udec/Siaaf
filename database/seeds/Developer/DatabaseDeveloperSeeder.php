@@ -21,12 +21,13 @@ class DatabaseDeveloperSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(CountriesTableSeeder::class);
+        $this->call(RegionsTableSeeder::class);
+        $this->call(CitiesTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(ModulesTableSeeder::class);
         $this->call(PermissionTableSeeder::class);
-        $this->call(CountriesTableSeeder::class);
-        $this->call(RegionsTableSeeder::class);
-        $this->call(CitiesTableSeeder::class);
+
     }
 }
