@@ -6,6 +6,7 @@ export const mixinHttpStatus = {
     data: function () {
         return {
             message: {
+                code: null,
                 swalClass: null,
                 alertClass: null,
                 icon: null,
@@ -34,12 +35,12 @@ export const mixinHttpStatus = {
                     title = o.exception;
                     text = o.message;
                     errors = [ o.file, o.line ];
-                    this.handleMessage( title, text, errors, this.setStatusText( status ) );
+                    this.handleMessage( title, text, errors, this.setStatusText( status ), status );
                 } else if ( o.hasOwnProperty( 'title' ) ) {
                     title = o.title;
                     text = o.message;
                     errors = [];
-                    this.handleMessage( title, text, errors, this.setStatusText( status ) );
+                    this.handleMessage( title, text, errors, this.setStatusText( status ), status );
                 }
                 return this.message;
             } else if ( this.isResponse( objectText ) ) {
@@ -61,7 +62,7 @@ export const mixinHttpStatus = {
                         errors = objectText.data.errors ;
                     }
                 }
-                this.handleMessage( title, text, errors, this.setStatusText( status ));
+                this.handleMessage( title, text, errors, this.setStatusText( status ), status);
                 return this.message;
             } else if ( this.isErrorResponse( objectText ) ) {
                 // The request was made and the server responded with a status code
@@ -98,7 +99,7 @@ export const mixinHttpStatus = {
                     text = Lang.get('javascript.processed_fail');
                     errors = [];
                 }
-                this.handleMessage( title, text, errors, this.setStatusText( status ) );
+                this.handleMessage( title, text, errors, this.setStatusText( status ), status );
                 return this.message;
             } else if ( this.isErrorRequest( objectText ) ) {
                 // The request was made but no response was received
@@ -109,7 +110,7 @@ export const mixinHttpStatus = {
                 text = objectText.error.request || Lang.get('javascript.processed_fail');
                 errors = [];
                 this.setComponentClasses( status );
-                this.handleMessage( title, text, errors, this.setStatusText( status ) );
+                this.handleMessage( title, text, errors, this.setStatusText( status ), status );
                 return this.message;
             } else if ( this.isErrorMessage( objectText ) ) {
                 // Something happened in setting up the request that triggered an Error
@@ -118,7 +119,7 @@ export const mixinHttpStatus = {
                 text = objectText.message || Lang.get('javascript.processed_fail');
                 errors = [];
                 this.setComponentClasses( status );
-                this.handleMessage( title, text, errors, this.setStatusText( status ) );
+                this.handleMessage( title, text, errors, this.setStatusText( status ), status );
             }
         },
         isAjax: function ( response ) {
@@ -171,10 +172,11 @@ export const mixinHttpStatus = {
                 this.message.icon = 'fa fa-exclamation-triangle';
             }
         },
-        handleMessage: function ( title, text, errors, status ) {
+        handleMessage: function ( title, text, errors, status, code ) {
             this.message.title  = title;
             this.message.text   = text;
             this.message.errors = errors;
+            this.message.code = code;
             this.message.status = Lang.get( status );
         },
         triggerSwal: function ( data ) {
@@ -188,9 +190,18 @@ export const mixinHttpStatus = {
                 title: Lang.get('javascript.' + type),
                 type: type,
                 html: title + '<br>' + status + '<br>' + text,
-                showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: false,
+            }).then((result) => {
+                if (result.value) {
+                    if ( objStr.code === 404 ) {
+                        window.location.href = route('home');
+                    }
+                } else if (result.dismiss) {
+                    if ( objStr.code === 404 ) {
+                        window.location.href = route('home');
+                    }
+                }
             });
         }
     }

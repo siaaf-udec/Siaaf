@@ -396,7 +396,7 @@
                         type: "error",
                     }).then((result) => {
                         if (result.value) {
-                            this.ºtriggerSwal(xhr);
+                            this.triggerSwal(xhr);
                         }
                     })
                 }

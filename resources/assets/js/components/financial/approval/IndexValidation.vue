@@ -220,8 +220,8 @@
                                                         <div class="col-md-12">
                                                             <!-- Comments -->
                                                             <vue-todo-comments :id="view.id"
-                                                                               get="financial.api.extension.comments.index"
-                                                                               send="financial.api.extension.comments.store">
+                                                                               get="financial.api.validation.comments.index"
+                                                                               send="financial.api.validation.comments.store">
                                                             </vue-todo-comments>
                                                         </div>
                                                     </div>

@@ -86,16 +86,23 @@ class IntersemestralController extends Controller
         return isset( $model ) ? ( new IntersemestralTransformer )->transform( $model ) : [];
     }
 
-
-
-    public function edit( $id )
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id )
     {
-        return response()->json( ( new SubjectProgramTransformer )->transform( $this->intersemestralRepository->subjectRelation( $id ) ) , 200 );
+        return response()->json( ( new SubjectProgramTransformer )
+                                    ->transform( $this->intersemestralRepository->subjectRelation( $id ) ) ,
+                                200 );
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function available()
     {
-        $intersemestrals = $this->intersemestralRepository->getAvailable( 1 );
-        return response()->json( $intersemestrals, 200 );
+        return response()->json( $this->intersemestralRepository->getAvailable( 15 ),
+                                200 );
     }
 }

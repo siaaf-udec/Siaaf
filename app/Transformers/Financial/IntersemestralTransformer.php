@@ -55,6 +55,8 @@ class IntersemestralTransformer extends TransformerAbstract
             'subscribed_paid_count'  =>  isset( $intersemestral->subscribed_paid_count ) ? $intersemestral->subscribed_paid_count : 0,
             'subscribed_bar'    =>  isset( $intersemestral_bar ) ? $intersemestral_bar : progressBar( minSubscribedIntersemestral(), 0 ),
             'paid_bar'          =>  isset( $intersemestral->paid_bar ) ? $intersemestral->paid_bar : progressBar( minPaidIntersemestral(), 0),
+            'min_subscribed'    => minSubscribedIntersemestral(),
+            'min_paid'          => minPaidIntersemestral(),
             'comments_count'    =>  isset( $intersemestral->comments_count ) ? $intersemestral->comments_count : 0,
             'subscribed'        => $subscribers,
         ];

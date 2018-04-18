@@ -91,7 +91,36 @@
                                         </tr>
                                         <!-- content -->
                                         <tr>
-                                            <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;"> {{ isset( $body ) ? $body : '' }} </td>
+                                            <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;">
+                                                <p> {{ isset( $body ) ? $body : '' }} </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:30px;">
+
+                                                <table border="1">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><strong>Código</strong></th>
+                                                            <th><strong>Materia</strong></th>
+                                                            <th><strong>Programa</strong></th>
+                                                            <th><strong>Docente</strong></th>
+                                                            <th><strong>Costo</strong></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            @if( isset( $details ) )
+                                                                @forelse( $details as $detail )
+                                                                    <td><small> {{ $detail }} </small> <br></td>
+                                                                @empty
+                                                                    <td align="center" colspan="5">{{ __('financial.generic.empty') }}</td>
+                                                                @endforelse
+                                                            @endif
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                         <!-- end content -->
                                         <tr>

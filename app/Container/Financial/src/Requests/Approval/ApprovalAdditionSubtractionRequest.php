@@ -26,7 +26,6 @@ class ApprovalAdditionSubtractionRequest extends FormRequest
     {
         return [
             'status'   => 'required|numeric',
-            'date'     => 'required|date'
         ];
     }
 

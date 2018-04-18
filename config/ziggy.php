@@ -17,7 +17,7 @@ return [
         /**
          * All routes used on financial project
          */
-
+        'home',
         // Manage Approval
         'financial.management.programs.store',
         'financial.management.programs.update',
@@ -64,7 +64,7 @@ return [
         'financial.requests.student.add-sub.destroy',
         'financial.requests.student.add-sub.edit',
         //Approve Addition Subtraction
-        'financial.admin.approval.add-sub.update',
+        'financial.admin.approval.addition.subtraction.update',
         // Validation
         'financial.requests.student.validation.index',
         'financial.requests.student.validation.create',
@@ -82,6 +82,7 @@ return [
         'financial.requests.student.intersemestral.destroy',
         'financial.requests.student.intersemestral.edit',
         //Approve Intersemestral
+        'financial.admin.approval.intersemestral.store',
         'financial.admin.approval.intersemestral.update',
 
         //Api

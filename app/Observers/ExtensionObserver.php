@@ -4,7 +4,7 @@ namespace App\Observers;
 
 
 use App\Container\Financial\src\Extension;
-use App\Mail\WelcomeMail;
+use App\Mail\Financial\FinancialExtensionGenerated;
 use Illuminate\Support\Facades\Mail;
 
 class ExtensionObserver
@@ -16,6 +16,11 @@ class ExtensionObserver
 
     public function created(Extension $extension)
     {
-        return Mail::to( auth()->user()->email )->send( new WelcomeMail('Se ha creado una solicitud de Supletorio', $extension->subject->{ subject_name() }) );
+        return $this->sendMail( $extension );
+    }
+
+    public function sendMail( $extension )
+    {
+        return authUserHasEmail() ? Mail::to( auth()->user()->email )->send( new FinancialExtensionGenerated( $extension ) ) : false;
     }
 }

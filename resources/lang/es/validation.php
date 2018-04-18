@@ -177,6 +177,7 @@ return [
         'file_type'             => 'tipo de archivo',
         'actions'               => 'acciones',
         'all'                   => 'todo',
+        'paid'                  => 'pago',
         'created_at'            => 'creado',
         'updated_at'            => 'actualizado',
         'deleted_at'            => 'eliminado',

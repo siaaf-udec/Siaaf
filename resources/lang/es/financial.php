@@ -315,6 +315,7 @@ return [
         'delete'        =>  'Eliminar',
         'actions'       =>  'Accciones',
         'add'           =>  'Añadir',
+        'paid'          =>  'Actualizar Pago',
         'send'          =>  'Enviar',
         'edit'          =>  'Editar',
         'approve'       =>  'Aprobar',
@@ -329,6 +330,11 @@ return [
         'file'      =>  [
             'title'     =>  'Solicitud de aprobación de archivos',
             'message'   =>  'Se ha procesado el archivo :filename satisfactoriamente, recibirás una respuesta pronto con las instrucciones para continuar el proceso.',
+            'button'    =>  'Revisar solicitud',
+        ],
+        'request'   =>  [
+            'title'     =>  'Se ha creado una solicitud de :request',
+            'message'   =>  'A continuación los detalles de la solicitud:',
             'button'    =>  'Revisar solicitud',
         ]
     ],

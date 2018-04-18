@@ -73,6 +73,7 @@ return [
         'excel'     =>  'Exportar a Excel',
         'csv'       =>  'Exportar a CSV',
         'show'      =>  'Mostrar u ocultar columnas',
+        'paid'      =>  'Actualizar estado de pago',
         'reload'    =>  'Recargar',
         'comments'  =>  'Comentarios',
         'view'      =>  'Ver registro existente',

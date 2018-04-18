@@ -46,6 +46,7 @@ class FileUploaded extends Mailable implements ShouldQueue
                     ->with([
                         'title'     =>      __('financial.email.file.title'),
                         'body'      =>      __('financial.email.file.message', ['filename' => $this->file->{ file_name() } ]),
+                        'details'   =>      [],
                         'button'    =>      __('financial.email.file.button'),
                         'url'       =>      route('financial.files.show', ['id' => $this->file->{ primaryKey() }])
                     ]);

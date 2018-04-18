@@ -176,20 +176,6 @@
                                             </div>
 
                                             <form @submit.prevent="sendStatus" id="approval-form" :action="view.patch" method="post" class="form-horizontal">
-                                                <!-- TASK DUE DATE -->
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <div class="input-icon">
-                                                            <i class="fa fa-calendar"></i>
-                                                            <input type="text" required="required" readonly="readonly"
-                                                                   name="date"
-                                                                   autocomplete="off"
-                                                                   class="form-control datepicker date date-picker todo-taskbody-due"
-                                                                   :placeholder="table.realization_date"
-                                                                   v-model.trim="realization_date">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <!-- TASK TAGS -->
                                                 <div class="form-group">
                                                     <div class="col-md-12">
@@ -325,10 +311,6 @@
             initFormValidation: function() {
                 $('#approval-form').validate({
                     rules: {
-                        date: {
-                            required: true,
-                            date: true
-                        },
                         status: {
                             required: true,
                         }
@@ -337,11 +319,6 @@
             },
             initDatePickerAndSelect2: function () {
                 let that = this;
-                $('.date-picker').datepicker({
-                    format: 'yyyy-mm-dd',
-                }).on('changeDate', function () {
-                    that.realization_date = this.value;
-                });
                 $('.todo-taskbody-tags')
                     .select2({placeholder: that.status.option})
                     .on('change', function () {
@@ -403,7 +380,7 @@
                     })
             },
             getOptions: function () {
-                axios.get( route('financial.api.tree.status-request', {type: 'intersemester'}) )
+                axios.get( route('financial.api.tree.status-request', {type: 'add_remove_subjects'}) )
                     .then( (response) => {
                         this.status.options = response.data.children;
                     })
@@ -413,13 +390,12 @@
             },
             viewData: function ( data ) {
                 this.view = data;
-                this.realization_date = null;
                 this.status.value = null;
                 this.patch = route('financial.admin.approval.addition.subtraction.update', { id: this.view.id });
             },
             closeData: function () {
                 this.view = null;
-                this.realization_date = null;
+                this.patch = null;
                 this.status.value = null;
                 $('.date-picker').datepicker('destroy');
             },
@@ -440,12 +416,12 @@
                         showLoaderOnConfirm: true,
                         allowOutsideClick: false,
                         preConfirm: function () {
-                            return new Promise(function (resolve) {
-                                axios.patch( that.patch , {date: that.realization_date, status: that.status.value} )
-                                    .then(function() {
+                            return new Promise((resolve) => {
+                                axios.put( that.patch , {status: that.status.value} )
+                                    .then(() => {
                                         resolve();
                                     })
-                                    .catch(function (error) {
+                                    .catch( (error) => {
                                         that.triggerSwal( error );
                                     });
                             });
@@ -457,7 +433,6 @@
                     }).then( () => {
                         this.getBadges();
                         this.getSource();
-                        this.realization_date = null;
                         this.status.value = null;
                     });
                 }

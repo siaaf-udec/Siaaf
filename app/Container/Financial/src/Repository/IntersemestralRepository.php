@@ -129,9 +129,18 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
      * @param $id
      * @return mixed
      */
-    public function subscribeStudent($id )
+    public function subscribeStudent( $id )
     {
         return $this->intersemestralStudentRepository->subscribe( $id );
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function paid($request )
+    {
+        return $this->intersemestralStudentRepository->updatePaidStatus( $request );
     }
 
     /**
@@ -171,16 +180,15 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     public function getAllPaginate($quantity = 5, $status = null )
     {
         $items = $this->getModel()->with([
-            'subject' => function ($q) {
-                return $q->with([
-                    'programs',
-                    'teachers:id,name,lastname,phone,email'
-                ]);
-            },
+            'subject',
             'status',
-            'secretary:id,name,lastname,phone,email',
-            'student:id,name,lastname,phone,email',
-        ])->withCount('comments')->latest();
+        ])->withCount([
+            'subscribed',
+            'subscribed as subscribed_paid_count' => function ( $query ) {
+                return $query->whereHasPaid();
+            },
+            'comments'
+        ])->latest();
 
         if ( $status ) {
             $items = $items->whereHas('status', function ($query) use ($status) {
@@ -192,7 +200,7 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
 
         $resource = $items->getCollection()
             ->map(function($model) {
-                return ( new IntersemestralTransformer )->transform( $model );
+                return ( new IntersemestralFeedTransformer )->transform( $model );
             })->toArray();
 
         return customPagination( $resource,  $items);
