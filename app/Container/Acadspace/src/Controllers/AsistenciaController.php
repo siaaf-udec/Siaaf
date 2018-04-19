@@ -166,6 +166,7 @@ class AsistenciaController extends Controller
             $model = new Asistencia();
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
             $model->ASIS_Id_Carrera = $request['ASIS_Id_Carrera'];
+            $model->FK_ASIS_Id_Aula = $request['ASIS_Espacio'];
             $model->ASIS_Tipo_Practica = 1;
             $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
 
@@ -195,6 +196,7 @@ class AsistenciaController extends Controller
             $model->ASIS_Id_Identificacion = $request['ASIS_Id_Identificacion'];
             $model->ASIS_Id_Carrera = 0;
             $model->ASIS_Tipo_Practica = 1;
+            $model->FK_ASIS_Id_Aula = $request['ASIS_Espacio'];
             $model->FK_ASIS_Id_Espacio = $request['ASIS_Espacio_Academico'];
 
             $model->save();

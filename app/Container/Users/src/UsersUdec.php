@@ -5,6 +5,8 @@ namespace App\Container\Users\src;
 use App\Container\AdminRegist\Src\Registros;
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Administrative\Src\RegistroIngreso;
+use App\Container\Carpark\src\Motos;
+
 
 class UsersUdec extends Model
 {

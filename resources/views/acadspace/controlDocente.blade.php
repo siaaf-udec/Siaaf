@@ -25,7 +25,7 @@
 
                     <div class="form-body">
 
-                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],
                                                         ['help' => 'Digite la identificación','icon'=>'fa fa-credit-card'] ) !!}
 
 

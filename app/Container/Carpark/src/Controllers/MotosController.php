@@ -246,7 +246,6 @@ class MotosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $infoMoto = Motos::with('relacionMotosUsuarios')->where('PK_CM_IdMoto', $id)->get();
-
             return view('carpark.motos.perfilMoto',
                 [
                     'infoMoto' => $infoMoto,

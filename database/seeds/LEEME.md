@@ -33,4 +33,8 @@ SporCit
 $ php artisan db:seed --class=DatabaseSportCitSeeder
 Talento Humano
 $ php artisan db:seed --class=DatabaseTalentoHumanoSeeder
+Administrativo
+$ php artisan db:seed --class=DatabaseAdminisSeeder
+Admisiones y registro
+$ php artisan db:seed --class=DatabaseAdminRegistSeeder
 ```

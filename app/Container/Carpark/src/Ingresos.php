@@ -3,6 +3,7 @@
 namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Container\Users\src\UsersUdec;
 
 class Ingresos extends Model
 {
