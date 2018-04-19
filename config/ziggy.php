@@ -52,6 +52,7 @@ return [
         'financial.requests.student.extension.index',
         'financial.requests.student.extension.create',
         'financial.requests.student.extension.store',
+        'financial.requests.student.extension.update',
         'financial.requests.student.extension.destroy',
         'financial.requests.student.extension.edit',
         //Approve Extension

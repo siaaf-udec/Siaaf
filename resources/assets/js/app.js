@@ -71,6 +71,7 @@ Vue.component('file-management', require( financial.fileManagement + 'FileManage
 Vue.component('student-extension-request-index', require( financial.studentExtension + 'Index.vue'));
 Vue.component('student-extension-request-create', require( financial.studentExtension + 'Create.vue'));
 Vue.component('student-extension-request-show', require( financial.studentExtension + 'Show.vue'));
+Vue.component('student-extension-request-edit', require( financial.studentExtension + 'Edit.vue'));
 
 Vue.component('student-add-sub-request-index', require( financial.studentAddSub + 'Index.vue'));
 Vue.component('student-add-sub-request-create', require( financial.studentAddSub + 'Create.vue'));

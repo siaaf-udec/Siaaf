@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Container\Financial\src\Constants\ConstantPermissions;
 use App\Container\Financial\src\Constants\ConstantRoles;
 use App\Container\Financial\src\Constants\ConstantStatus;
 use App\Container\Financial\src\Helpers\StringFormatter;
@@ -311,6 +312,250 @@ function access_roles() {
 
 /*
 |--------------------------------------------------------------------------
+| Permissions Helper
+|--------------------------------------------------------------------------
+|
+| This functions return the permission name of the requests
+*/
+
+
+/**
+ * @return string
+ */
+function permission_financial () { return ConstantPermissions::FINANCIAL_MODULE; }
+
+/**
+ * @return string
+ */
+function permission_resources () { return ConstantPermissions::RESOURCE_MANAGEMENT; }
+
+/**
+ * @return string
+ */
+function permission_programs () { return ConstantPermissions::PROGRAMS; }
+
+/**
+ * @return string
+ */
+function permission_subjects () { return ConstantPermissions::SUBJECTS; }
+
+/**
+ * @return string
+ */
+function permission_costs () { return ConstantPermissions::COSTS; }
+
+/**
+ * @return string
+ */
+function permission_status () { return ConstantPermissions::STATUS; }
+
+/**
+ * @return string
+ */
+function permission_file_type () { return ConstantPermissions::FILE_TYPE; }
+
+/**
+ * @return string
+ */
+function permission_file_management () { return ConstantPermissions::FILES_MANAGEMENT; }
+
+/**
+ * @return string
+ */
+function permission_upload_files () { return ConstantPermissions::UPLOAD_FILES; }
+
+/**
+ * @return string
+ */
+function permission_approve_files () { return ConstantPermissions::APPROVE_FILES; }
+
+/**
+ * @return string
+ */
+function permission_request () { return ConstantPermissions::REQUESTS_MANAGEMENT; }
+
+/**
+ * @return string
+ */
+function permission_extension () { return ConstantPermissions::EXTENSION; }
+
+/**
+ * @return string
+ */
+function permission_validation () { return ConstantPermissions::VALIDATION; }
+
+/**
+ * @return string
+ */
+function permission_add_sub () { return ConstantPermissions::ADD_SUB_SUBJECTS; }
+
+/**
+ * @return string
+ */
+function permission_intersemestral () { return ConstantPermissions::INTERSEMESTRAL; }
+
+/**
+ * @return string
+ */
+function permission_approval () { return ConstantPermissions::APPROVALS_MANAGEMENT; }
+
+/**
+ * @return string
+ */
+function permission_extension_approval () { return ConstantPermissions::EXTENSION_APPROVAL; }
+
+/**
+ * @return string
+ */
+function permission_validation_approval () { return ConstantPermissions::VALIDATION_APPROVAL; }
+
+/**
+ * @return string
+ */
+function permission_add_sub_approval () { return ConstantPermissions::ADD_SUB_SUBJECTS_APPROVAL; }
+
+/**
+ * @return string
+ */
+function permission_intersemestral_approval () { return ConstantPermissions::INTERSEMESTRAL_APPROVAL; }
+
+/**
+ * @return array
+ */
+function module_approval_permissions() {
+    return [
+        permission_approval(),
+        permission_extension_approval(),
+        permission_validation_approval(),
+        permission_add_sub_approval(),
+        permission_intersemestral_approval(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function module_request_permissions() {
+    return [
+        permission_request(),
+        permission_extension(),
+        permission_validation(),
+        permission_add_sub(),
+        permission_intersemestral(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function module_files_permissions() {
+    return [
+        permission_file_management(),
+        permission_upload_files(),
+        permission_approve_files(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function module_resources_permissions() {
+    return [
+        permission_resources(),
+        permission_programs(),
+        permission_subjects(),
+        permission_costs(),
+        permission_status(),
+        permission_file_type(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function root_permissions () {
+    return [
+        permission_financial(),
+        permission_resources(),
+        permission_programs(),
+        permission_subjects(),
+        permission_costs(),
+        permission_status(),
+        permission_file_type(),
+        permission_file_management(),
+        permission_upload_files(),
+        permission_approve_files(),
+        permission_request(),
+        permission_extension(),
+        permission_validation(),
+        permission_add_sub(),
+        permission_intersemestral(),
+        permission_approval(),
+        permission_extension_approval(),
+        permission_validation_approval(),
+        permission_add_sub_approval(),
+        permission_intersemestral_approval(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function admin_permissions () {
+    return [
+        permission_financial(),
+        permission_resources(),
+        permission_programs(),
+        permission_subjects(),
+        permission_costs(),
+        permission_status(),
+        permission_file_type(),
+        permission_file_management(),
+        permission_approve_files(),
+        permission_approval(),
+        permission_extension_approval(),
+        permission_validation_approval(),
+        permission_add_sub_approval(),
+        permission_intersemestral_approval(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function secretary_permissions () {
+    return [
+        permission_financial(),
+        permission_resources(),
+        permission_programs(),
+        permission_subjects(),
+        permission_approval(),
+        permission_extension_approval(),
+        permission_validation_approval(),
+        permission_add_sub_approval(),
+        permission_intersemestral_approval(),
+    ];
+}
+
+/**
+ * @return array
+ */
+function student_permissions () {
+    return [
+        permission_financial(),
+        permission_file_management(),
+        permission_upload_files(),
+        permission_request(),
+        permission_extension(),
+        permission_validation(),
+        permission_add_sub(),
+        permission_intersemestral(),
+    ];
+}
+
+
+/*
+|--------------------------------------------------------------------------
 | Status Helper
 |--------------------------------------------------------------------------
 |
@@ -391,6 +636,24 @@ function status_type_intersemestral() { return ConstantStatus::INTERSEMESTER; }
  * @return string
  */
 function status_type_addition_subtraction() { return ConstantStatus::ADD_REMOVE_SUBJECTS; }
+
+/**
+ * Check if status is valid
+ *
+ * @param $status
+ * @return bool
+ */
+function isEditable ($status ) {
+    if ( $status ==  approved_status()       ||
+         $status ==  waiting_pay_status()    ||
+         $status ==  waiting_quota_status()  ||
+         $status ==  checking_status()       ||
+         $status ==  paid_status()           ||
+         $status ==  canceled() ) {
+        return false;
+    }
+    return true;
+}
 
 /*
 |--------------------------------------------------------------------------

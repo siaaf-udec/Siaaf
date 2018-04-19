@@ -6,6 +6,7 @@ use App\Container\Financial\src\Extension;
 use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Http\Controllers\Controller;
 use App\Transformers\Financial\ExtensionTransformer;
+use App\Transformers\Financial\SubjectProgramTransformer;
 use Yajra\DataTables\DataTables;
 
 class ExtensionController extends Controller
@@ -81,8 +82,19 @@ class ExtensionController extends Controller
         }
 
         $array = [];
-        $array[] = $this->extensionRepository->fillArray( $extension );
+        $array[] = $this->extensionRepository->fillArray( isset($extension) ? $extension : null );
 
         return DataTables::of( $array )->toJson();
+    }
+
+    /**
+     * Return the subject primary keys relation to edit the source
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit( $id )
+    {
+        return response()->json( ( new SubjectProgramTransformer )->transform( $this->extensionRepository->subjectRelation( $id ) ) , 200 );
     }
 }

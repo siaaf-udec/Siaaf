@@ -38,25 +38,16 @@ class CheckExtensionStatus
     public function handle($request, Closure $next)
     {
 
-        if ( auth()->user()->hasRole( student_role() ) ) {
-            $model = auth()->user()->extensions()
-                ->select( status_fk() )
-                ->find( $request->supletorio );
-        } elseif ( auth()->user()->hasRole( access_roles() ) ) {
-            $model = $this->extensionRepository->getModel()
-                        ->select( status_fk() )
-                        ->find( $request->supletorio );
-        }
+        $model = $this->extensionRepository->getModel()
+            ->select( status_fk() )
+            ->find( $request->id );
 
         if ( isset( $model->{ status_fk() } ) ) {
             $status = $this->statusRequestRepository->getModel()->select( status_name() )->find( $model->{ status_fk() } );
         }
 
         if ( isset( $status->{ status_name() } ) ) {
-            if ( $status->{ status_name() } == 'APROBADO'           ||
-                 $status->{ status_name() } == 'EN ESPERA DE PAGO'  ||
-                 $status->{ status_name() } == 'PAGADO'             ||
-                 $status->{ status_name() } == 'CANCELADO' ) {
+            if ( !isEditable( $status->{ status_name() } ) ) {
                 return response()->redirectToRoute( 'financial.requests.student.extension.index' );
             }
         }

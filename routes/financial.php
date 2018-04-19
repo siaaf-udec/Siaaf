@@ -3,14 +3,14 @@
  * Financiero.
  */
 
-Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
+Route::middleware( [ 'permission:'.permission_financial() ] )->group( function () {
 
     Route::namespace('Files')->prefix('gestion-de-archivos')->group(function () {
         Route::prefix('solicitudes')->group(function () {
             /**
              * File Upload by students
              */
-            Route::middleware(['role:financial_student'])->resource('estudiantes', 'FileController', [
+            Route::middleware([ 'permission:'.permission_upload_files() ])->resource('estudiantes', 'FileController', [
                 'only'  =>  ['index', 'store', 'update', 'show'],
                 'names' => [
                     'index'     =>  'financial.files.index',
@@ -23,7 +23,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
             /**
              * File management approves
              */
-            Route::middleware(['role:financial_administrator'])->resource('aprobaciones', 'ManagementController', [
+            Route::middleware([ 'permission:'.permission_approve_files() ])->resource('aprobaciones', 'ManagementController', [
                 'only'  =>  ['index', 'update'],
                 'names' => [
                     'index' => 'financial.files.request.index',
@@ -34,9 +34,11 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         });
     });
 
-    Route::namespace('Requests')->middleware(['role:financial_student'])->prefix('solicitudes')->group(function () {
+    Route::namespace('Requests')->prefix('solicitudes')->group(function () {
+
         Route::namespace('Student')->group(function () {
-            Route::resource('supletorios', 'ExtensionRequestController', [
+
+            Route::middleware([ 'permission:'.permission_extension() ])->resource('supletorios', 'ExtensionRequestController', [
                 'names' => [
                     'index'  => 'financial.requests.student.extension.index',
                     'create' => 'financial.requests.student.extension.create',
@@ -48,7 +50,8 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['supletorios' => 'id']
             ]);
-            Route::resource('adicion-cancelacion-de-materias', 'AddSubRequestController', [
+
+            Route::middleware([ 'permission:'.permission_add_sub() ])->resource('adicion-cancelacion-de-materias', 'AddSubRequestController', [
                 'names' => [
                     'index'  => 'financial.requests.student.add-sub.index',
                     'create' => 'financial.requests.student.add-sub.create',
@@ -60,7 +63,8 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['adicion-cancelacion-de-materias' => 'id']
             ]);
-            Route::resource('validacion', 'ValidationRequestController', [
+
+            Route::middleware([ 'permission:'.permission_validation() ])->resource('validacion', 'ValidationRequestController', [
                 'names' => [
                     'index'  => 'financial.requests.student.validation.index',
                     'create' => 'financial.requests.student.validation.create',
@@ -72,7 +76,8 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['validacion' => 'id']
             ]);
-            Route::resource('intersemestral', 'IntersemestralRequestController', [
+
+            Route::middleware([ 'permission:'.permission_intersemestral() ])->resource('intersemestral', 'IntersemestralRequestController', [
                 'names' => [
                     'index'  => 'financial.requests.student.intersemestral.index',
                     'create' => 'financial.requests.student.intersemestral.create',
@@ -94,9 +99,11 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         ]);
     });
 
-    Route::namespace('Approval')->middleware(['role:financial_administrator|financial_secretary'])->prefix('administrativo')->group( function () {
+    Route::namespace('Approval')->prefix('administrativo')->group( function () {
+
         Route::prefix('aprobaciones')->group(function () {
-            Route::resource('supletorios', 'ApprovalExtensionController', [
+
+            Route::middleware([ 'permission:'.permission_extension_approval() ])->resource('supletorios', 'ApprovalExtensionController', [
                 'only'  => ['index', 'update'],
                 'names' => [
                     'index'  => 'financial.admin.approval.extension.index',
@@ -104,7 +111,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['supletorios' => 'id']
             ]);
-            Route::resource('validaciones', 'ApprovalValidationController', [
+            Route::middleware([ 'permission:'.permission_validation_approval() ])->resource('validaciones', 'ApprovalValidationController', [
                 'only'  => ['index', 'update'],
                 'names' => [
                     'index'  => 'financial.admin.approval.validation.index',
@@ -112,7 +119,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['validaciones' => 'id']
             ]);
-            Route::resource('adicion-cancelacion', 'ApprovalAdditionSubtractionController', [
+            Route::middleware([ 'permission:'.permission_add_sub_approval() ])->resource('adicion-cancelacion', 'ApprovalAdditionSubtractionController', [
                 'only'  => ['index', 'update'],
                 'names' => [
                     'index'  => 'financial.admin.approval.addition.subtraction.index',
@@ -120,7 +127,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
                 ],
                 'parameters' => ['adicion-cancelacion' => 'id']
             ]);
-            Route::resource('intersemestral', 'ApprovalIntersemestralController', [
+            Route::middleware([ 'permission:'.permission_intersemestral_approval() ])->resource('intersemestral', 'ApprovalIntersemestralController', [
                 'only'  => ['index', 'update', 'store'],
                 'names' => [
                     'index'  => 'financial.admin.approval.intersemestral.index',
@@ -137,7 +144,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         /**
          * Approval Management
          */
-        Route::middleware(['role:financial_administrator|financial_secretary'])->resource('programas', 'ManageProgramsController', [
+        Route::middleware([ 'permission:'.permission_programs() ])->resource('programas', 'ManageProgramsController', [
             'only'  =>  ['index', 'store', 'update', 'destroy'],
             'names' => [
                 'index'     => 'financial.management.programs.index',
@@ -151,7 +158,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         /**
          * Approval Management
          */
-        Route::middleware(['role:financial_administrator|financial_secretary'])->resource('materias', 'ManageSubjectsController', [
+        Route::middleware([ 'permission:'.permission_subjects() ])->resource('materias', 'ManageSubjectsController', [
             'only'  =>  ['index', 'store', 'update', 'destroy'],
             'names' => [
                 'index'     => 'financial.management.subjects.index',
@@ -163,24 +170,24 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         ]);
 
         /**
-         * Approval, Subjects & Teachers Management
+         * Approval, Subjects & Teachers Management TODO
          */
-        Route::middleware(['role:financial_administrator|financial_secretary'])->resource('materias-programas-docentes', 'ManageSubjectProgramTeacherController', [
+        Route::middleware(['api.ajax'])->resource('materias-programas-docentes', 'ManageSubjectProgramTeacherController', [
             'only'  =>  ['index', 'store'],
             'names' => [
                 'index'     => 'financial.management.subjects.programs.teachers.index',
                 'store'     => 'financial.management.subjects.programs.teachers.store',
             ],
         ]);
-        Route::middleware(['role:financial_administrator|financial_secretary'])->put('materias-programas-docentes', 'ManageSubjectProgramTeacherController@update')
+        Route::middleware(['api.ajax'])->put('materias-programas-docentes', 'ManageSubjectProgramTeacherController@update')
             ->name('financial.management.subjects.programs.teachers.update');
-        Route::middleware(['role:financial_administrator|financial_secretary'])->delete('materias-programas-docentes', 'ManageSubjectProgramTeacherController@destroy')
+        Route::middleware(['api.ajax'])->delete('materias-programas-docentes', 'ManageSubjectProgramTeacherController@destroy')
             ->name('financial.management.subjects.programs.teachers.destroy');
 
         /**
          * Status Request Management
          */
-        Route::middleware(['role:financial_administrator'])->resource('estados-de-solicitudes', 'ManageStatusController', [
+        Route::middleware([ 'permission:'.permission_status() ])->resource('estados-de-solicitudes', 'ManageStatusController', [
             'only'  =>  ['index', 'store', 'update', 'destroy'],
             'names' =>  [
                 'index' =>  'financial.management.status.index',
@@ -194,7 +201,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         /**
          * Costs Management
          */
-        Route::middleware(['role:financial_administrator'])->resource('costos-solicitudes', 'ManageCostController', [
+        Route::middleware([ 'permission:'.permission_costs() ])->resource('costos-solicitudes', 'ManageCostController', [
             'only'  =>  ['index', 'store', 'update', 'destroy'],
             'names' =>  [
                 'index' =>  'financial.management.costs.index',
@@ -208,7 +215,7 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         /**
          * File Type Management
          */
-        Route::middleware(['role:financial_administrator'])->resource('tipos-de-archivos', 'ManageFileTypesController', [
+        Route::middleware([ 'permission:'.permission_file_type() ])->resource('tipos-de-archivos', 'ManageFileTypesController', [
             'only'  =>  ['index', 'store', 'update', 'destroy'],
             'names' =>  [
                 'index' =>  'financial.management.file.type.index',
@@ -339,10 +346,8 @@ Route::middleware( ['permission:FINAN_MODULE'] )->group( function () {
         Route::prefix('extension')->group( function () {
             Route::get('show/{id}', 'ExtensionController@show')
                 ->name('financial.api.extension.show');
-            /*
             Route::get('edit/{id}', 'ExtensionController@edit')
                 ->name('financial.api.extension.edit');
-            */
         });
 
         Route::prefix('addition-subtraction')->group( function () {

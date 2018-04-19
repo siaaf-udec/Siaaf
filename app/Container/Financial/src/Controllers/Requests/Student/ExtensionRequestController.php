@@ -77,8 +77,7 @@ class ExtensionRequestController extends Controller
      */
     public function edit( $id )
     {
-        $extension = $this->extensionRepository->subjectRelation( $id );
-        return view('financial.requests.student.extension.edit', compact('extension', 'id'));
+        return view('financial.requests.student.extension.edit', compact('id'));
     }
 
     /**
@@ -90,8 +89,9 @@ class ExtensionRequestController extends Controller
      */
     public function update(ExtensionStudentRequest $request, $id )
     {
-        $this->extensionRepository->updateStudentExtension( $request, $id );
-        return redirect()->route('financial.requests.student.extension.index')->with('success', 200);
+        return ( $this->extensionRepository->updateStudentExtension( $request, $id ) ) ?
+            jsonResponse('success', 'updated_done', 200) :
+            jsonResponse('error', 'updated_fail', 422);
     }
 
     /**
