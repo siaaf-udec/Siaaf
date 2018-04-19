@@ -17,7 +17,7 @@
                 </div>
                 {!! Field::hidden('Pregunta_'.$N1, $row->PK_PRGT_Pregunta) !!} 
                
-                {!! Field::select('Respuesta_'.$N1,['1' => 'Deficiente', '2' => 'Insuficioente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
+                {!! Field::select('Respuesta_'.$N1,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
         
             @endforeach
             {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
@@ -41,7 +41,7 @@
                     {{ $row->PRGT_Enunciado}}
                 </div>
                 {!! Field::hidden('2Pregunta_'.$N2, $row->PK_PRGT_Pregunta) !!} 
-                {!! Field::select('2Respuesta_'.$N2,['1' => 'Deficiente', '2' => 'Insuficioente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
+                {!! Field::select('2Respuesta_'.$N2,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
             @endforeach
             {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
             {{ Form::reset('Cancelar', ['class' => 'btn btn-danger atras']) }}
@@ -53,11 +53,12 @@
 @permission(['INTE_EVA_PRE3'])
 <script type="text/javascript">
    
-jQuery(document).ready(function () {  
+jQuery(document).ready(function () { 
+    App.unblockUI('.portlet-form');
     ComponentsSelect2.init();
     $('.atras').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio]) }}';
+            var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio,$estado]) }}';
             $(".content-ajax").load(route);
         });
     
@@ -88,17 +89,22 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                         beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+				        },
                         success: function(response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
-                                 var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio])}}';
+                                 var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio,$estado])}}';
                                 $(".content-ajax").load(route);
+                                App.unblockUI('.portlet-form');
                                 
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -118,9 +124,10 @@ jQuery(document).ready(function () {
    
 jQuery(document).ready(function () {  
 ComponentsSelect2.init();
+    App.unblockUI('.portlet-form');
   $('.atras').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio]) }}';
+            var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio,$estado]) }}';
             $(".content-ajax").load(route);
         });
     
@@ -152,16 +159,21 @@ ComponentsSelect2.init();
                         data: formData,
                         processData: false,
                         async: async,
+                         beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+				        },
                         success: function(response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
-                                var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio]) }}';
+                                var route = '{{ route('documentosConvenios.documentosConvenios',[$convenio,$estado]) }}';
                                 $(".content-ajax").load(route);
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });

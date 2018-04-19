@@ -21,7 +21,6 @@ class CreateKitsTable extends Migration
             $table->integer('KIT_Codigo')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

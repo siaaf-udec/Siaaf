@@ -13,14 +13,12 @@ class CreateTipoSolicitudTable extends Migration
      */
     public function up()
     {
-        Schema::connection('audiovisuals')->create('TBL_Tipos_solicitud', function (Blueprint $table) {
+        Schema::connection('audiovisuals')->create('TBL_Tipos_Solicitud', function (Blueprint $table) {
             $table->increments('id');
             $table->String('TPSOL_Tipo');
             $table->timestamps();
-
         });
     }
-
     /**
      * Reverse the migrations.
      *

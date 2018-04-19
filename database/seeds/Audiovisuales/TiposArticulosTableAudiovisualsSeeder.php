@@ -29,8 +29,6 @@ class TiposArticulosTableAudiovisualsSeeder extends Seeder
             $aux = new TipoArticulo();
             $aux->TPART_Nombre = $tipo['TPART_Nombre'];
 			$aux->TPART_Tiempo = $tipo['TPART_Tiempo'];
-
-
             $aux->save();
         }
     }

@@ -18,7 +18,6 @@
                 {{--DIVISION NAV--}}
                 <div class="col-md-7 col-md-offset-2">
                     <div class="panel-group accordion scrollable {{$i=0}}" id="accordion2">
-
                         @foreach($help as $info)
                             <div class="panel panel-default">
                                 <div class="panel-heading">

@@ -24,7 +24,7 @@
                     @slot('columns', [
                         '#',
                         'Nombre Usuario',
-                        'Código Usuario',
+                        'Documento Usuario',
                         'Placa',                            
                         'Código Motocicleta'
                     ])
@@ -45,9 +45,9 @@
         url = "{{ route('parqueadero.ingresosCarpark.tablaMotosDentro')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'CI_NombresUser', name: 'Nombre Usuario'},
-            {data: 'CI_CodigoUser', name: 'Código Usuario'},
-            {data: 'CI_Placa', name: 'Placa'},
+            {data: 'CI_NombresUser', name: 'CI_NombresUser'},
+            {data: 'CI_CodigoUser', name: 'CI_CodigoUser'},
+            {data: 'CI_Placa', name: 'CI_Placa'},
             {data: 'CI_CodigoMoto', name: 'PK_CI_IdIngreso'}
         ];
         dataTableServer.init(table, url, columns);

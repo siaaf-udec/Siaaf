@@ -1,4 +1,3 @@
-{{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Articulos'])
         <br>
@@ -6,16 +5,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="actions">
+                    @permission("AUDI_ART_CREATE")
                     <a class="btn btn-outline dark createArticulo" data-toggle="modal">
                         <i class="fa fa-plus">
                         </i>
                         Nuevo Artículo
                     </a>
+                    @endpermission
+                    @permission("AUDI_ART_TYPE_CREATE")
                     <a class="btn btn-outline dark createTipo" data-toggle="modal">
                         <i class="fa fa-plus">
                         </i>
                         Nuevo Tipo de Artículo
                     </a>
+                    @endpermission
                 </div>
             </div>
         </div>
@@ -39,8 +42,6 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="760" id="modal-create-art" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -97,11 +98,8 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL UPDATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="760" id="modal-edit-art" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -158,12 +156,10 @@
                       </div>
                     {!! Form::close() !!}
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
         </div>
     @endcomponent
 </div>
-{{-- END HTML SAMPLE --}}
 <script>
     var table, url, columns;
     var $seleccione_un_kit = $('select[name="FK_ART_Kit_id"]'),
@@ -171,7 +167,6 @@
     var ComponentsSelect2 = function () {
         return {
             init: function () {
-                /*Configuracion de Select*/
                 $.fn.select2.defaults.set("theme", "bootstrap");
                 $(".pmd-select2").select2({
                     placeholder: "Selecccionar",
@@ -211,8 +206,8 @@
             {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
             {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>' +
-                '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                                '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -271,12 +266,19 @@
                             contentType: false,
                             data: formData,
                             beforeSend: function () {
-
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     table.ajax.reload();
+                                    App.unblockUI('.portlet-form');
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });
@@ -290,7 +292,6 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             idEditarArticulo = parseInt(dataTable.id);
-            console.log(dataTable);
             if(dataTable.consulta_estado_articulo.EST_Descripcion != 'Creado'){
                 $('select[name="ART_Tipo_edit"]').prop('disabled', 'disabled');
             }else{
@@ -311,12 +312,18 @@
                 },
                 success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
-                        App.unblockUI('.portlet-form');
-                        console.log(response.data);
+
                         $(response.data).each(function (key, value) {
                             $('select[name="FK_ART_Kit_id_edit"]').append(new Option(value.KIT_Nombre, value.id));
                         });
                         $('select[name="FK_ART_Kit_id_edit"]').val(parseInt(dataTable.FK_ART_Kit_id));
+                        App.unblockUI('.portlet-form');
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'success') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -334,6 +341,13 @@
                             $('select[name="ART_Tipo_edit"]').append(new Option(value.TPART_Nombre, value.id));
                         });
                         $('select[name="ART_Tipo_edit"]').val(parseInt(dataTable.FK_ART_Tipo_id));
+                        App.unblockUI('.portlet-form');
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'success') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -357,6 +371,12 @@
                         });
                         $seleccione_un_kit.val([]);
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'success') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
             $seleccione_un_tipoArticulo.empty().append('whatever');
@@ -374,6 +394,12 @@
                             $seleccione_un_tipoArticulo.append(new Option(value.TPART_Nombre, value.id));
                         });
                         $seleccione_un_tipoArticulo.val([]);
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'success') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -399,6 +425,7 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
@@ -406,11 +433,13 @@
                                 $('#from_art_create')[0].reset(); //Limpia formulario
                                 table.ajax.reload();
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 && xhr === 'success') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -436,15 +465,12 @@
                     var route = '{{ route('articuloModificar') }}';
                     var type = 'POST';
                     var async = async || false;
-                    console.log('valor del select'+$('select[name="FK_ART_Kit_id_edit"]').val());
                     var formData = new FormData();
                     formData.append('id',idEditarArticulo);
                     formData.append('FK_ART_Tipo_id', $('select[name="ART_Tipo_edit"]').val());
                     formData.append('ART_Descripcion', $('#ART_Descripcion_edit').val());
                     formData.append('FK_ART_Kit_id', $('select[name="FK_ART_Kit_id_edit"]').val());
-                    //formData.append('FK_ART_Estado_id', $('input:text[name="FK_ART_Estado_id_edit"]').val());
                     formData.append('ART_Codigo', parseInt($('input:text[name="ART_Codigo_edit"]').val()));
-
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -455,7 +481,7 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
@@ -463,11 +489,13 @@
                                 $("#_ajax")[0].reset();
                                 UIToastr.init(xhr , response.title , response.message  );
                                 table.ajax.reload();
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });

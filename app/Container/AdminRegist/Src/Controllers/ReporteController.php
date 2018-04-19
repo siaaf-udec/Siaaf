@@ -15,7 +15,8 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista del formulario para realizar el reporte por fechas.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexFecha(Request $request)
     {
@@ -32,7 +33,8 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista del formulario para realizar el reporte por novedad.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexNovedad(Request $request)
     {
@@ -64,7 +66,7 @@ class ReporteController extends Controller
     /**
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteFecha(Request $request)
@@ -96,7 +98,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por fechas.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function descargarReporteFecha(Request $request, $fech1, $fech2)
     {
@@ -122,7 +124,7 @@ class ReporteController extends Controller
     /**
      * Función que redirecciona a la vista del reporte por novedad con sus respectivos datos a mostrar.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteNovedad(Request $request)
@@ -148,7 +150,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte por novedad.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function descargarReporteNovedad(Request $request, $novedad)
     {
@@ -175,7 +177,7 @@ class ReporteController extends Controller
     /**
      * Función que redirecciona a la vista del reporte general con sus respectivos datos a mostrar.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function reporteGeneral(Request $request)
@@ -200,7 +202,7 @@ class ReporteController extends Controller
      * Función que redirecciona a la vista del reporte con sus respectivos datos a mostrar, descargando así el reporte general de ingreso.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse | \Illuminate\Http\Response
      */
     public function descargarReporteGeneral(Request $request)
     {
@@ -226,13 +228,14 @@ class ReporteController extends Controller
     /**
      *Función que redirecciona a la vista de los graficos los cuales se muestran por novedad, fecha, tipo de usuario y por sedes.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function charIndex(Request $request)
     {
         if ($request->isMethod('GET')) {
             $novedades = Novedad::all();
-            $novedades->pull('created_at','updated_at');
+            $novedades->pull('created_at', 'updated_at');
             $registros = Registros::with('registro')->get();
             //foreach que se encarga de guardar el registro de la sede traida de la base de datos y contar cuantas veces se repite cada sede
             $daPlace = array();

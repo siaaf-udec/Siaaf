@@ -20,7 +20,7 @@ class Proyecto extends Model
      */
     protected $table = 'TBL_Proyecto';
 
- /**
+    /**
      * Nombre de columna primary_key de tabla .
      *
      * @var string
@@ -32,9 +32,9 @@ class Proyecto extends Model
      *
      * @var array
      */
-    protected $fillable = ['PRYT_Estado','FK_TBL_Anteproyecto_Id'];
+    protected $fillable = ['PRYT_Estado', 'FK_TBL_Anteproyecto_Id'];
 
-	/*	
+    /*	
 	*Función de relacion entre las tablas de Proyecto y Anteproyecto 
 	*por los campo de FK_TBL_Anteproyecto_Id y PK_NPRY_IdMinr008 
 	*para realizar las busquedas complementarias
@@ -43,8 +43,8 @@ class Proyecto extends Model
     {
         return $this->belongsto(Anteproyecto::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
-    
-	/*	
+
+    /*	
 	*Función de relacion entre las tablas de Proyecto y Documentos 
 	*por los campo de FK_TBL_Proyecto_Id y PK_PRYT_IdProyecto 
 	*para realizar las busquedas complementarias

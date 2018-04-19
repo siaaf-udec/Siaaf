@@ -7,9 +7,11 @@
                  ],
             ])
             <div class="form-group">
+                @permission('AUDI_REQUESTS_KIT_ART')
                 <div class="col-md-9" id="dd">
                     <input type="checkbox" class="make-switch" checked data-on-text = "PRESTAMO KIT"  data-off-text = "PRESTAMO ARTICULO" data-on-color="warning" data-off-color="success">
                 </div>
+                @endpermission
             </div>
             <br><br>
             <div class="row" id="articulo">
@@ -40,10 +42,12 @@
                     </div>
                     <br>
                     <div class="col-md-2">
+                        @permission('AUDI_REQUESTS_ASSIGN_ART')
                         <a class="btn btn-danger agregar_articulo" id="agregarArticulo" title="Quitar articulo"
                            data-id_articulo='+identificador+'>
                             Agregar
                         </a>
+                        @endpermission
                     </div>
                 {!! Form::close() !!}
             </div>
@@ -79,19 +83,22 @@
                     <br>
                     <div class="col-md-2">
                         <br><br><br><br>
+                        @permission('AUDI_REQUESTS_ASSIGN_KIT')
                         <a class="btn btn-danger agregar_articulo" id="agregarKit" title="Quitar articulo"
                            data-id_articulo='+identificador+'>
                             Agregar
                         </a>
+                        @endpermission
                     </div>
-
             </div>
             <div class="row">
                 <div class="col-md-3">
+                    @permission('AUDI_REQUESTS_CREATE')
                     <a class="btn btn-warning quitar_articulo" id="finalizar" title="Quitar articulo"
                        data-id_articulo='+identificador+'>
                         finalizar
                     </a>
+                    @endpermission
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -107,8 +114,6 @@
 <script type="text/javascript">
     var maximoCantidadArticulos = JSON.stringify({{$validaciones[0]['VAL_PRE_Valor']}});
     var maximoCantidadTipoArticulosRepetidos = JSON.stringify({{$validaciones[1]['VAL_PRE_Valor']}});
-    console.log('maximoCantidadArticulos '+maximoCantidadArticulos);
-    console.log('maximoCantidadTipoArticulosRepetidos '+maximoCantidadTipoArticulosRepetidos);
     var contadorMaximoCantidadArticulos = 0;
     var contadorMaximoCantidadTipoArticulosRepetidos = 0;
     var cantidadElementosKit =0;
@@ -133,6 +138,13 @@
                         $('#tipoKitsSelect').val([]);
                     }
                 }
+                ,
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
+                }
             });
         }
         function asignarKit(idKit){
@@ -152,6 +164,12 @@
                         $('#observacionEntregaKit').val('');
                         $('#ElementosKit').empty();
                         selectKitAjax();
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -180,6 +198,12 @@
                         selectKitAjax();
                         selectTipoArticuloAjax();
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         }
@@ -198,6 +222,12 @@
                             $('#tipoArticulosSelect').append(new Option(value.TPART_Nombre, value.id));
                         });
                         $('#tipoArticulosSelect').val([]);
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -220,6 +250,12 @@
                         $('#observacionEntrega').val('');
                         selectTipoArticuloAjax();
 
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -249,6 +285,12 @@
                         selectTipoArticuloAjax();
                         selectKitAjax();
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         }
@@ -261,11 +303,8 @@
             return -1;
         }
         function restarArticulos(array, llave, valor) {
-            console.log('entra busqueda');
             for (var i = 0; i < array.length; i++) {
                 if (array[i][llave] == valor) {
-                    console.log('numero articulos'+ (array[i][llave]));
-                    console.log('numero articulos'+ (array[i]['cantidadElementos']));
                     return (array[i]['cantidadElementos']);
                 }
             }
@@ -277,7 +316,6 @@
         selectKitAjax();
         selectTipoArticuloAjax();
         $('#articulo').hide();
-        //$('#kit').hide();
         $('#finalizar').hide();
         $('#tiempoKit').val([]);
         var objectForm = [];
@@ -371,8 +409,6 @@
                 }
             );
             contadorMaximoCantidadArticulos++;
-            console.log('numero que se lleva '+contadorMaximoCantidadArticulos);
-            console.log(conteoValidaciones);
             objectForm.push(
                 {
                     id: identificador,
@@ -405,8 +441,6 @@
             var valueTiempoKitId = $('select[name="tiempoKit"]').val();
             $(idTextTipoKit).val(valueTipokit);
             $(idTextTiempoKit).val(valueTiempoKit);
-            console.log(valueTiempoKitId);
-            console.log(valueTiempoKit);
             $(idTextObservacion).val(valueObservacionKit);
             $(idTextArea).val(valueElementos);
             contadorMaximoCantidadArticulos = contadorMaximoCantidadArticulos + cantidadElementosKit;
@@ -416,8 +450,6 @@
                     cantidadElementos :cantidadElementosKit
                 }
             );
-            console.log('numero que se lleva '+contadorMaximoCantidadArticulos);
-            console.log(conteoValidaciones);
             asignarKit(valueTipoKitId);
             objectForm.push(
                 {
@@ -476,13 +508,10 @@
             var num = $(this).data('id_articulo');
             var index = encontrarIdArticulo(objectForm,'id',num);
             var restarCantidadDeArticulos = restarArticulos(conteoValidaciones,'id',num);
-            console.log('cantidad para restar'+restarCantidadDeArticulos);
             contadorMaximoCantidadArticulos = contadorMaximoCantidadArticulos - restarCantidadDeArticulos;
             conteoValidaciones = conteoValidaciones.filter(function (el) {
                 return el.id != num;
             });
-            console.log('numero que se lleva '+contadorMaximoCantidadArticulos);
-            console.log(conteoValidaciones);
             var x =JSON.parse(JSON.stringify(objectForm[index]));
             if(x.kit){
 
@@ -509,16 +538,19 @@
                     App.blockUI({target: '.portlet-form', animate: true});
                 },
                 success :function (res, xhr, request){
-                    console.log(res.data);
                     if (request.status === 200 && xhr === 'success') {
                         App.unblockUI('.portlet-form');
-
                         $('#codigo').empty();
                         $(res.data).each(function (key, value) {
-
                             $('#codigo').append(new Option(value.ART_Codigo, value.id));
                         });
                         $('#codigo').val([]);
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -545,6 +577,12 @@
                         }
                         $('#tiempoArticulo').val([]);
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         });
@@ -569,6 +607,12 @@
                             cantidadElementosKit++;
                         });
 
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -595,10 +639,15 @@
                         }
                         $('#tiempoKit').val([]);
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         });
-        //btn_ingresar_identificacion
         $('#finalizar').on('click', function () {
             var routeCrearPrestamo = '{{ route('prestamoRepeat.crear') }}';
             var typeAjax = 'POST';
@@ -615,7 +664,9 @@
                 data: formDatas,
                 processData: false,
                 async: async,
-                beforeSend: function () {     },
+                beforeSend: function () {
+                    App.blockUI({target: '.portlet-form', animate: true});
+                },
                 success: function (response, xhr, request) {
                     UIToastr.init(xhr, response.title, response.message);
                     App.unblockUI('.portlet-form');
@@ -624,6 +675,7 @@
                 },
                 error: function (response, xhr, request) {
                     UIToastr.init(xhr, response.title, response.message);
+                    App.unblockUI('.portlet-form');
                 }
             });
         });

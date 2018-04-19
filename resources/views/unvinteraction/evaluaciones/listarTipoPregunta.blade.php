@@ -54,12 +54,12 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR TIPO PREGUNTA</h1>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Tipo-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('TPPG_Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
+                        {!! Field:: text('TPPG_Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'20','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
@@ -102,14 +102,15 @@
 @push('functions')
 <script>
 jQuery(document).ready(function () {
+     App.unblockUI('.portlet-form');
      var table, url, columns;
         table = $('#Listar_Convenios');
         url = "{{ route('listarTipoPregunta.listarTipoPregunta') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_TPPG_Tipo_Pregunta', "visible": true, name:"documento" },
-           {data: 'TPPG_Tipo', searchable: true},
-           {data:'action',className:'',searchable: false,
+           {data: 'PK_TPPG_Tipo_Pregunta', "visible": true, name:"PK_TPPG_Tipo_Pregunta" },
+           {data: 'TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -170,11 +171,13 @@ jQuery(document).ready(function () {
                         $('#form-Agregar-Tipo-Pregunta')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

@@ -11,5 +11,19 @@
   "/assets/pages/scripts/financial/identicon.min.js": "/assets/pages/scripts/financial/identicon.min.js",
   "/assets/pages/scripts/financial/pnglib.min.js": "/assets/pages/scripts/financial/pnglib.min.js",
   "/assets/pages/scripts/financial/financial-form-extension-validation.js.min.js": "/assets/pages/scripts/financial/financial-form-extension-validation.js.min.js",
-  "/assets/pages/scripts/financial/financial-form-extension-validation.min.js": "/assets/pages/scripts/financial/financial-form-extension-validation.min.js"
+  "/assets/pages/scripts/financial/financial-form-extension-validation.min.js": "/assets/pages/scripts/financial/financial-form-extension-validation.min.js",
+  "/assets/pages/scripts/financial/requests-filters-select2.min.js": "/assets/pages/scripts/financial/requests-filters-select2.min.js",
+  "/assets/pages/scripts/financial/edit-requests-filter-select2.min.js": "/assets/pages/scripts/financial/edit-requests-filter-select2.min.js",
+  "/assets/pages/scripts/financial/extension-show.min.js": "/assets/pages/scripts/financial/extension-show.min.js",
+  "/assets/pages/scripts/financial/maxlength.min.js": "/assets/pages/scripts/financial/maxlength.min.js",
+  "/assets/pages/scripts/financial/confirmation.min.js": "/assets/pages/scripts/financial/confirmation.min.js",
+  "/assets/pages/scripts/financial/datatables-extension.min.js": "/assets/pages/scripts/financial/datatables-extension.min.js",
+  "/assets/pages/scripts/financial/sweetalert2.all.min.js": "/assets/pages/scripts/financial/sweetalert2.all.min.js",
+  "/assets/pages/scripts/financial/sweetalert2.min.css": "/assets/pages/scripts/financial/sweetalert2.min.css",
+  "/assets/pages/scripts/financial/loading.min.js": "/assets/pages/scripts/financial/loading.min.js",
+  "/assets/pages/scripts/financial/loading.min.css": "/assets/pages/scripts/financial/loading.min.css",
+  "/assets/pages/scripts/financial/xhr.min.js": "/assets/pages/scripts/financial/xhr.min.js",
+  "/assets/pages/scripts/financial/tooltips.min.js": "/assets/pages/scripts/financial/tooltips.min.js",
+  "/assets/pages/scripts/financial/lang.dist.min.js": "/assets/pages/scripts/financial/lang.dist.min.js",
+  "/assets/pages/scripts/financial/pdfobject.min.js": "/assets/pages/scripts/financial/pdfobject.min.js"
 }

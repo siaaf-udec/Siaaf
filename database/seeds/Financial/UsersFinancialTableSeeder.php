@@ -10,8 +10,11 @@
  * Time: 11:31 AM
  */
 
+use App\Container\Financial\src\Constants\ConstantRoles;
+use App\Container\Permissions\Src\Role;
 use App\Container\Users\Src\User;
 use \Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersFinancialTableSeeder extends Seeder
 {
@@ -22,10 +25,92 @@ class UsersFinancialTableSeeder extends Seeder
      */
     public function run()
     {
-        factory( User::class, 1 )->create([
-            'name' => 'financial',
-            'email' => 'financial@app.com',
-            'password' => bcrypt('financial'),
-        ]);
+        $roles = ConstantRoles::getRoleNames();
+
+        /*
+         * Teacher Role
+         */
+        factory(User::class)->create([
+            'email' => 'teacher@app.com'
+        ])->each( function (User $user) {
+            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_TEACHER_ROLE)->first();
+            DB::connection('developer')
+                ->table('role_user')
+                ->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+        });
+
+        /*
+         * Student Role
+         */
+        factory(User::class)->create([
+            'email' => 'student@app.com'
+        ])->each( function (User $user) {
+            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_STUDENT_ROLE)->first();
+            DB::connection('developer')
+                ->table('role_user')
+                ->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+        });
+
+        /*
+         * Secretary Role
+         */
+        factory(User::class)->create([
+            'email' => 'secretary@app.com'
+        ])->each( function (User $user) {
+            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_SECRETARY_ROLE)->first();
+            DB::connection('developer')
+                ->table('role_user')
+                ->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+        });
+
+        /*
+         * Financial Admin Role
+         */
+        factory(User::class)->create([
+            'email' => 'admin@app.com'
+        ])->each( function (User $user) {
+            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_ADMIN_ROLE)->first();
+            DB::connection('developer')
+                ->table('role_user')
+                ->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+        });
+
+        /*
+         * Random User Roles
+         */
+        factory( User::class, 20 )->create()->each( function (User $user) use ( $roles ) {
+                $role = Role::select('id')->where('name', $roles[ rand(1, 4) ])->first();
+                DB::connection('developer')
+                    ->table('role_user')
+                    ->insert([
+                        'user_id' => $user->id,
+                        'role_id' => $role->id,
+                    ]);
+            });
+
+        /*
+         * Random Teachers
+         */
+        factory(User::class, 20)->create()->each( function (User $user) {
+            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_TEACHER_ROLE)->first();
+            DB::connection('developer')
+                ->table('role_user')
+                ->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+        });
     }
 }

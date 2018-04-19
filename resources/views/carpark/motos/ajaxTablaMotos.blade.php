@@ -20,7 +20,7 @@
                         '#',
                         'Placa',
                         'Marca',
-                        'Código Propietario',
+                        'Documento Propietario',
                         'Perfil',
                         'Acciones'
                     ])
@@ -40,9 +40,9 @@
         url = "{{ route('parqueadero.motosCarpark.tablaMotos')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'CM_Placa', name: 'Placa'},
-            {data: 'CM_Marca', name: 'Marca'},
-            {data: 'FK_CM_CodigoUser', name: 'Código Propietario'},
+            {data: 'CM_Placa', name: 'CM_Placa'},
+            {data: 'CM_Marca', name: 'CM_Marca'},
+            {data: 'FK_CM_CodigoUser', name: 'FK_CM_CodigoUser'},
             {
                 defaultContent: '@permission('PARK_SEE_MOTO')<a href="javascript:;" class="btn btn-success verPerfil"  title="Perfil" ><i class="fa fa-address-card"></i></a>@endpermission',
                 data: 'action',
@@ -134,7 +134,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.PK_CU_Codigo;
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.FK_CM_CodigoUser;
             $(".content-ajax").load(route_edit);
         });
 

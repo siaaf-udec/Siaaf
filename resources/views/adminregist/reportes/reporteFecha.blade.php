@@ -93,8 +93,6 @@
                 <td class="unit">{{$infoUsuario->registro->email}}</td>
                 <td class="desc">{{$infoUsuario->novedad->NOV_NombreNovedad}}</td>
                 <td class="unit">{{$infoUsuario->created_at}}</td>
-
-
             </tr>
             @endforeach
             </tbody>

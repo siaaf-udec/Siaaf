@@ -2,6 +2,7 @@
 
 namespace App\Container\Carpark\src\Controllers;
 
+use App\Container\Users\src\UsersUdec;
 use Illuminate\Http\Request;
 use Exception;
 use App\Container\Carpark\src\Dependencias;
@@ -89,14 +90,7 @@ class ReportesController extends Controller
             $cont = 1;
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $infoUsuarios = Usuarios::all();
-            foreach ($infoUsuarios as $infoUsuario) {
-                $Dependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuario->FK_CU_IdDependencia)
-                    ->get();
-
-                $infoUsuario->offsetSet('Dependencia', $Dependencia[0]['CD_Dependencia']);
-
-            }
+            $infoUsuarios = UsersUdec::all();
             return view('carpark.reportes.reporteUsuariosRegistrados',
                 compact('infoUsuarios', 'date', 'time', 'cont'));
         }
@@ -122,14 +116,7 @@ class ReportesController extends Controller
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $infoUsuarios = Usuarios::all();
-                foreach ($infoUsuarios as $infoUsuario) {
-                    $Dependencia = Dependencias::where('PK_CD_IdDependencia', $infoUsuario->FK_CU_IdDependencia)
-                        ->get();
-
-                    $infoUsuario->offsetSet('Dependencia', $Dependencia[0]['CD_Dependencia']);
-
-                }
+                $infoUsuarios = UsersUdec::all();
                 return SnappyPdf::loadView('carpark.reportes.reporteUsuariosRegistrados',
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf');
 
@@ -162,10 +149,10 @@ class ReportesController extends Controller
             $time = date("h:i A");
             $infoMotos = Motos::all();
             foreach ($infoMotos as $infoMoto) {
-                $Usuarios = Usuarios::where('PK_CU_Codigo', $infoMoto->FK_CM_CodigoUser)->get();
+                $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
 
-                $infoMoto->offsetSet('Nombre', $Usuarios[0]['CU_Nombre1']);
-                $infoMoto->offsetSet('Apellido', $Usuarios[0]['CU_Apellido1']);
+                $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
+                $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
 
             }
             return view('carpark.reportes.reporteMotosRegistradas',
@@ -194,10 +181,10 @@ class ReportesController extends Controller
                 $time = date("h:i A");
                 $infoMotos = Motos::all();
                 foreach ($infoMotos as $infoMoto) {
-                    $Usuarios = Usuarios::where('PK_CU_Codigo', $infoMoto->FK_CM_CodigoUser)->get();
+                    $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
 
-                    $infoMoto->offsetSet('Nombre', $Usuarios[0]['CU_Nombre1']);
-                    $infoMoto->offsetSet('Apellido', $Usuarios[0]['CU_Apellido1']);
+                    $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
+                    $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
 
                 }
                 return SnappyPdf::loadView('carpark.reportes.reporteMotosRegistradas',
@@ -526,7 +513,7 @@ class ReportesController extends Controller
             $cont = 1;
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $infoUsuarios = Usuarios::with('relacionUsuariosDependencia', 'relacionUsuariosEstado')->where('PK_CU_Codigo', $id)->get();
+            $infoUsuarios = UsersUdec::where('number_document', $id)->get();
 
             $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
             $total = count($infoHistoriales);
@@ -555,7 +542,7 @@ class ReportesController extends Controller
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $infoUsuarios = Usuarios::with('relacionUsuariosDependencia', 'relacionUsuariosEstado')->where('PK_CU_Codigo', $id)->get();
+                $infoUsuarios = UsersUdec::where('number_document', $id)->get();
 
                 $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
                 $total = count($infoHistoriales);
@@ -620,12 +607,10 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoMoto = Motos::find($id);
-                $infoUsuario = Usuarios::find($infoMoto['FK_CM_CodigoUser']);
+                $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
 
-                $infoMoto->offsetSet('Nombre1', $infoUsuario->CU_Nombre1);
-                $infoMoto->offsetSet('Nombre2', $infoUsuario->CU_Nombre2);
-                $infoMoto->offsetSet('Apellido1', $infoUsuario->CU_Apellido1);
-                $infoMoto->offsetSet('Apellido2', $infoUsuario->CU_Apellido2);
+                $infoMoto->offsetSet('Nombre', $infoUsuario->username);
+                $infoMoto->offsetSet('Apellido', $infoUsuario->lastname);
 
                 $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
 

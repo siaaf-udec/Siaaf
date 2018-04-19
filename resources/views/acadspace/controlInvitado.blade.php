@@ -24,7 +24,7 @@
                     {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
 
                     <div class="form-body">
-                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                        {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],
                                                                                 ['help' => 'Digite la identificación','icon'=>'fa fa-credit-card'] ) !!}
 
                         {!! Field::select('Espacio académico:',$espacios,
@@ -161,7 +161,7 @@
 
             var form_edit = $('#form_sol_create');
             var rules_edit = {
-                codigo: {required: true, number: true, minlength: 3, maxlength: 11},
+                codigo: {required: true, number: true, minlength: 5, maxlength: 12},
                 SOL_laboratorios: {required: true},
                 aula: {required: true}
             };

@@ -15,7 +15,7 @@ class CreateAsistenciasTable extends Migration
     {
         Schema::connection('acadspace')->create('TBL_Asistencias', function (Blueprint $table) {
             $table->increments('PK_ASIS_Id_Registro')->unsigned()->unique();
-            $table->integer('ASIS_Id_Identificacion')->unsigned();
+            $table->string('ASIS_Id_Identificacion');
             $table->string('ASIS_Tipo_Practica',50)->nullable();
             $table->integer('ASIS_Id_Carrera')->unsigned()->nullable();
             $table->string('ASIS_Nombre_Materia',50)->nullable();

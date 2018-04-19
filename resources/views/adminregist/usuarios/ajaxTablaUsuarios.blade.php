@@ -6,7 +6,8 @@
             <div class="col-md-12">
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
-                                class="fa fa-plus"></i>Registrar Usuario</a></div>
+                                class="fa fa-plus"></i>Registrar Usuario</a>
+                </div>
             </div>
             @endpermission
             <div class="clearfix"></div>

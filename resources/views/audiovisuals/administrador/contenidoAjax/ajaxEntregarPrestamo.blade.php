@@ -2,8 +2,6 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Acciones Solicitud Prestamo'])
         <div class="row">
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="360" id="modal-recibir-kit" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -33,19 +31,18 @@
                             </div>
                         </div>
                         <div class="modal-footer col-md-offset-3">
+                            @permission('AUDI_LENDING_KIT_GET')
                             {!! Form::submit('Recibir', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            @endpermission
                         </div>
                     </div>
                     {!! Form::close() !!}
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="760" id="modal-tiempo-prestamo" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -71,24 +68,22 @@
                                 ['label' => 'Tiempo Articulo'])
                                 !!}
                             </div>
-
                         </div>
 
                         <div class="modal-footer">
+                            @permission('AUDI_LENDING_EDIT')
                             {!! Form::submit('ACEPTAR', ['class' => 'btn blue']) !!}
                             {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            @endpermission
                         </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
 
         </div>
         <div class="row">
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="520" id="modal-observation-prestamo" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -111,21 +106,19 @@
 
                             </div>
                         </div>
-
                         <div class="modal-footer col-md-6 col-md-offset-3">
+                            @permission('AUDI_LENDING_GET_ALL')
                             {!! Form::submit('ACEPTAR', ['class' => 'btn blue']) !!}
                             {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            @endpermission
                         </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
                 <div class="modal fade" data-width="520" id="modal-advertencia-tiempo" tabindex="-1">
                     <div class="modal-header modal-header-success">
                         <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -135,7 +128,6 @@
                             </i>
                             Recibir Solicitud
                         </h2>
-
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -149,12 +141,9 @@
                         <div class="modal-footer col-md-2 col-md-offset-5">
                             {!! Form::button('ACEPTAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
-
                     </div>
                 </div>
-                {{-- END HTML MODAL CREATE--}}
             </div>
-
         </div>
         <div id="contentFormularioPrestamos">
             @foreach($prestamos as $articulos)
@@ -219,6 +208,7 @@
                             </div>
                         @endif
                         <div class="row">
+                            @permission('AUDI_LENDING_EDIT')
                                 @if($articulos['sancion']){{--No se presenta sacnicon por entrega --}}
                                 <div class="col-md-offset-1" >
                                 {!! Form::button('Aplicar Sancion', ['class' => 'btn btn-danger aplicar_sancion','data-id_articulo'=>$articulos['PRT_FK_Funcionario_id']]) !!}
@@ -232,6 +222,7 @@
                                     @else
                                     {!! Form::button('Recibir Articulo', ['class' => 'btn btn-success  recibir_articulo','data-id_articulo'=>$articulos['id']]) !!}
                                 @endif
+                            @endpermission
                             </div>
                         </div>
                     </div>
@@ -240,14 +231,16 @@
             @endforeach
             <br>
             <div class="row">
+                @permission('AUDI_LENDING_GET_ALL')
                 <div class="col-md-2 col-md-offset-5">
                     {!! Form::button('Recibir Todo', ['class' => 'btn btn-danger btn-lg getAll','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
                 </div>
+                @endpermission
             </div>
+        </div>
         </div>
     @endcomponent
 </div>
-
 <script type="text/javascript">
     var routeUpdate,idArticulo,idVal,observation,idArticuloTiempo,
         idPrestamoSolicitud;
@@ -274,7 +267,7 @@
             idVal = '#PRT_Observacion_Recibe'+idArticulo;
             observation = $(idVal).val();
             if(observation == ''){
-                console.log(true)
+
                 swal(
                     'Oops...',
                     'Debe agregar una observacion para poder recibir el articulo',
@@ -282,7 +275,6 @@
                 )
 
             }else{
-                console.log(false)
                 $(".fila_articulo[data-id_articulo='"+$(this).data('id_articulo')+"']").html('');
                 routeupdate = '{{ route('updatePrestamo') }}'+ '/'+ idArticulo+'/'+observation;
                 $.get( routeupdate, function(){});
@@ -313,9 +305,14 @@
                         });
                         $('#modal-recibir-kit').modal('toggle');
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
-
         });
         $('#contentFormularioPrestamos').on('click', '.aumentar_tiempo', function(){
             idPrestamo=$(this).data('id_articulo');
@@ -325,8 +322,7 @@
             $.get( routeupdate, function(info){
                 idVal='#textObser'+idPrestamo;
                 var tipoArticulo = $(idVal).val();
-               // var horas=5;
-                console.log(info.data);
+
                 if(info.data<=0){
                     $('#modal-advertencia-tiempo').modal('toggle');
                 }else{
@@ -361,7 +357,9 @@
                         data: formData,
                         processData: false,
                         async: async,
-                        beforeSend: function () { },
+                        beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
+                        },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-observation-prestamo').modal('hide');
@@ -369,11 +367,13 @@
                                 UIToastr.init(xhr , response.title , response.message  );
                                 var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
                                 $(".content-ajax").load(route);
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -403,9 +403,11 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
+                                App.unblockUI('.portlet-form');
                                 co = co-1;
                                 $('#from_kit_recibir')[0].reset();
                                 $('#modal-recibir-kit').modal('hide');
@@ -415,10 +417,13 @@
                                     $(".content-ajax").load(route);
                                 }
                                 $('#modal-recibir-kit').modal('hide');
+
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
 
@@ -449,9 +454,11 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
+                                App.unblockUI('.portlet-form');
                                 $('#modal-tiempo-prestamo').modal('hide');
                                 $('#from_tiempo_sumar')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr , response.title , response.message  );
@@ -462,6 +469,7 @@
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
 

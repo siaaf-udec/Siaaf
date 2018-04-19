@@ -1,19 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 20/07/17
- * Time: 11:43 PM
- */
 
 namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Container\Financial\src\Repository\IntersemestralRepository;
+use App\Container\Financial\src\Requests\Requests\Student\IntersemestralStudentRequest;
+use App\Http\Controllers\Controller;;
 
 class IntersemestralRequestController extends Controller
 {
+    /**
+     * @var IntersemestralRepository
+     */
+    private $intersemestralRepository;
+
+    /**
+     * IntersemestralRequestController constructor.
+     * @param IntersemestralRepository $intersemestralRepository
+     */
+    public function __construct(IntersemestralRepository $intersemestralRepository)
+    {
+        $this->intersemestralRepository = $intersemestralRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,52 +30,7 @@ class IntersemestralRequestController extends Controller
      */
     public function index()
     {
-        $programs = $this->returnProgram();
-        $teachers = $this->returnTeacher();
-        $subjects = $this->returnSubject();
-        return view('financial.requests.student.intersemestral.index', compact('programs', 'teachers', 'subjects'));
-    }
-
-    protected function returnProgram($id = null)
-    {
-        $program = [
-            0 => 'Ingeniería de Sistemas',
-            1 => 'Ingeniería de Agronómica',
-            2 => 'Ingeniería de Ambiental'
-        ];
-
-        if ( $id ) {
-            return $program[$id];
-        }
-        return $program;
-    }
-
-    protected function returnTeacher($id = null)
-    {
-        $teachers = [
-            0 => 'Alexander Espinosa',
-            1 => 'Francisco Lanza',
-            2 => 'Alejandro Ayure',
-        ];
-
-        if ( $id ) {
-            return $teachers[$id];
-        }
-        return $teachers;
-    }
-
-    protected function returnSubject($id = null)
-    {
-        $subjects = [
-            0 => 'Matemáticas',
-            1 => 'Biología',
-            2 => 'Robótica'
-        ];
-
-        if ( $id ) {
-            return $subjects[$id];
-        }
-        return $subjects;
+        return view('financial.requests.student.intersemestral.index');
     }
 
     /**
@@ -76,24 +40,20 @@ class IntersemestralRequestController extends Controller
      */
     public function create()
     {
-        //
+        return view('financial.requests.student.intersemestral.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param IntersemestralStudentRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IntersemestralStudentRequest $request)
     {
-        $program = $this->returnProgram($request->program);
-        $teacher = $this->returnTeacher($request->teacher);
-        $subject = $this->returnSubject($request->subject_matter);
-        return redirect()->route('financial.requests.student.inter.index')
-                ->with('program', $program)
-                ->with('teacher', $teacher)
-                ->with('subject', $subject);
+        return ( $this->intersemestralRepository->storeStudentIntersemestral( $request ) ) ?
+            jsonResponse() :
+            jsonResponse('error', 'messages.inter_processed_fail', 422);
     }
 
     /**
@@ -104,7 +64,7 @@ class IntersemestralRequestController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('financial.requests.student.intersemestral.show', compact('id'));
     }
 
     /**
@@ -113,31 +73,34 @@ class IntersemestralRequestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id )
     {
-        //
+        return view('financial.requests.student.intersemestral.edit', compact('id'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id )
     {
-        //
+        return ( $this->intersemestralRepository->subscribeStudent( $id ) ) ?
+            jsonResponse('success', 'subscribe_done', 200) :
+            jsonResponse('error', 'subscribe_fail', 422);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        return ( $this->intersemestralRepository->deleteStudentIntersemestral( $id ) ) ?
+            jsonResponse('success', 'unsubscribe_done', 200) :
+            jsonResponse('error', 'unsubscribe_fail', 422);
     }
 }

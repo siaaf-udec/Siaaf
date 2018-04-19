@@ -27,18 +27,22 @@
                     !!}
                 </div>
                 <br>
+                @permission("AUDI_KIT_EDIT")
                 <div class="col-md-2">
                     <a class="btn btn-success agregar_articulo" id="agregarArticulo" data-id_articulo=identificador>
                         Agregar
                     </a>
                 </div>
+                @endpermission
             </div>
         </div>
         <div >
             <div class="col-md-6">
+                @permission("AUDI_KIT_EDIT")
                 <a class="btn btn-warning finalizarKitBoton">
                     FINALIZAR MODIFICACION KIT
                 </a>
+                @endpermission
             </div>
         </div>
         <div class="clearfix"></div>
@@ -68,9 +72,11 @@
                     </div>
                     <br>
                     <div class="col-md-2">
+                        @permission("AUDI_KIT_EDIT")
                         <a class="btn btn-danger quitar_articulo" id="agregarArticulo" data-id_articulo= {{$elementos->id}}>
                             Remover
                         </a>
+                        @endpermission
                     </div>
                 </div>
             @endforeach
@@ -113,6 +119,13 @@
                         $('#tipoArticulosSelect').val([]);
                     }
                 }
+                ,
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
+                }
             });
         }
         function asignarArticuloAlkit(idArticulo,idKit){
@@ -132,6 +145,12 @@
                         $('#codigoSelect').empty();
                         $('#caracteristicaA').val('');
                         cargarSelect();
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -153,25 +172,26 @@
                         $('#caracteristicaA').val('');
                         cargarSelect();
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         }
         cargarSelect();
-        /////////////
-        //insertar los datos de los articulos
         $('#agregarArticulo').on('click',function(){
             $('#alerta').addClass("hide");
             var idArticuloSelect = $('select[name="codigoSelect"]').val();
             textTipoArticulo = '<div class="col-md-2"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textTipoArticuloC" id="textTipoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textTipoArticuloC'+identificador+'" type="text" disabled><label for="textTipoArticuloC'+identificador+'" class="control-label">Tipo :</label><i class=" fa fa-credit-briefcase "></i></div></div></div>';
             textCodigoArticulo = '<div class="col-md-2"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCodigoArticuloC" id="textCodigoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textCodigoArticuloC'+identificador+'" type="text" disabled><label for="textCodigoArticuloC'+identificador+'" class="control-label">Codigo :</label><i class=" fa fa-key "></i></div></div></div>';
             textCaracteristica = '<div class="col-md-6"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCaracteristicaC" id="textCaracteristica'+identificador+'" data-id_articulo='+identificador+'  name="textCaracteristicaC'+identificador+'" type="text" disabled><label for="textCaracteristicaC'+identificador+'" class="control-label">Caracteristica :</label><i class=" fa fa-keyboard-o"></i></div></div></div>';
-            boton_quitar = '<br><div class="col-md-2"><a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+idArticuloSelect+' >Remover</a> </div>';
+            boton_quitar = '<br><div class="col-md-2">@permission("AUDI_KIT_EDIT")<a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+idArticuloSelect+' >Remover</a>@endpermission </div>';
 
             idTextTipoArticulo = "#textTipoArticulo"+identificador,idTextCodigoArticulo = "#textCodigoArticulo"+identificador,idTextCaracteristica= "#textCaracteristica"+identificador;
             fila_completa = '<div class="row fila_articulo" data-id_articulo='+idArticuloSelect+'>'+textTipoArticulo+textCodigoArticulo+textCaracteristica+boton_quitar +'</div>';
-           /////
-           //////
-            //verificar si esta agregando
             $("#contentDiv").append(fila_completa);
             valueTipoArticulo = $("#tipoArticulosSelect option:selected").text();
             valueCodigoArticulo = $("#codigoSelect option:selected").text();
@@ -189,8 +209,6 @@
                 });
             identificador++;
         });
-        //////
-        //funciones de los selects ocultos
         $('#tipoArticulosSelect').on('change',function(){
             var idTipoArticuloVall = $(this).val();
             var routeCodigoArticulo = '{{ route('listarCodigoArticuloSele') }}' + '/' + idTipoArticuloVall;
@@ -209,6 +227,12 @@
                             $('#codigoSelect').append(new Option(value.ART_Codigo, value.id));
                         });
                         $('#codigoSelect').val([]);
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -229,6 +253,12 @@
                         App.unblockUI('.portlet-form');
                         $('#caracteristicaA').val(response.data[0]['ART_Descripcion']);
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 && xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         });
@@ -240,7 +270,6 @@
         });
         $(".finalizarKitBoton").on('click',function(){
             if(objectForm.length == 0){
-                console.log('no hay articulos ingresados en el kit');
                 swal(
                     {
                         title: "No ha ingrasados articulos al kit.",

@@ -63,12 +63,13 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
@@ -121,18 +122,19 @@
 
     }();
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
             table = $('#Listar_Convenios');
             url = "{{ route('listarMisConvenios.listarMisConvenios') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"documento" },
-                {data: 'convenios_participante.CVNO_Nombre', searchable: true},
-                {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true},
-                {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true},
-                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true},
-                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true},
-                {data:'action',className:'',searchable: false,
+                {data: 'convenios_participante.PK_CVNO_Convenio', "visible": true, name:"convenios_participante.PK_CVNO_Convenio" },
+                {data: 'convenios_participante.CVNO_Nombre', searchable: true, name:"convenios_participante.CVNO_Nombre"},
+                {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true, name:"convenios_participante.CVNO_Fecha_Inicio"},
+                {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true, name:"convenios_participante.CVNO_Fecha_Fin"},
+                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true, name:"convenios_participante.convenio_estado.ETAD_Estado"},
+                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true, name:"convenios_participante.convenio_sede.SEDE_Sede"},
+                {data:'action',searchable: false,
                 name:'action',
                 title:'Acciones',
                 orderable: false,
@@ -148,7 +150,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio;
+                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio+'/'+dataTable.convenios_participante.convenio_estado.PK_ETAD_Estado;
             $(".content-ajax").load(route_edit);
         });
    

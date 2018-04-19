@@ -1,10 +1,6 @@
 
-
-    {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Reservas'])
-
-        <br>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Reservas'])<br>
         <br>
         <div class="row">
             <div class="col-md-12">
@@ -18,16 +14,15 @@
                     </div>
                     <br>
                     <div class="col-md-3">
+                        @permission('AUDI_REQUESTS_ENTER')
                             {!! Form::submit('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
-
+                        @endpermission
                     </div>
                 {!! Form::close() !!}
             </div>
         </div>
             <div class="row">
                 <div class="col-md-12">
-                {{-- BEGIN HTML MODAL CREATE --}}
-                <!-- responsive -->
                     <div class="modal fade" data-width="760" id="modal-info-funcionario" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -75,22 +70,20 @@
                                        !!}
                                     </p>
                                     <div class="modal-footer">
+                                        @permission('AUDI_REQUESTS_ENTER')
                                         {!! Form::submit('INGRESAR PRESTAMO', ['class' => 'btn blue']) !!}
                                         {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                        @endpermission
                                     </div>
                                 </div>
-
                         </div>
-
                         {!! Form::close() !!}
                     </div>
-                    {{-- END HTML MODAL CREATE--}}
                 </div>
             </div>
         @endcomponent
         <div class="clearfix"></div>
     </div>
-    {{-- END HTML SAMPLE --}}
     <script type="text/javascript">
         var FormSelect2 = function () {
             return {
@@ -109,63 +102,17 @@
         }();
         var guardarPrograma=false,idFuncionarioD=null;
         jQuery(document).ready(function () {
-            FormSelect2.init();
-            {{--$( "#btn_ingresar_identificacion" ).on('click', function (e) {--}}
-                {{--e.preventDefault();--}}
-                {{--guardarPrograma=false;--}}
-                {{--var route = '{{ route('opcionPrestamoAjax') }}';--}}
-                {{--idfuncionarioD =$('#id_funcionario').val();--}}
-                {{--var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;--}}
-                {{--$.get( route_edit, function( info ) {--}}
-                    {{--var datas=info.data;--}}
-                    {{--idFuncionarioD=datas.id;--}}
-                    {{--if(datas.audiovisual!=null){--}}
-                        {{--$('#FK_FUNCIONARIO_Programa').empty();--}}
-                        {{--$('#FK_FUNCIONARIO_Programa').attr('disabled',true);--}}
-                        {{--$('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));--}}
-                    {{--}--}}
-                    {{--else{--}}
-                        {{--$('#FK_FUNCIONARIO_Programa').empty();--}}
-                        {{--$('#FK_FUNCIONARIO_Programa').attr('disabled',false);--}}
-                        {{--var listarProgramas= '{{ route('listarProgramas') }}';--}}
-                        {{--$.ajax({--}}
-                            {{--url: listarProgramas,--}}
-                            {{--type: 'GET',--}}
-                            {{--beforeSend: function () {--}}
-                                {{--App.blockUI({target: '.portlet-form', animate: true});--}}
-                            {{--},--}}
-                            {{--success: function (response, xhr, request) {--}}
-                                {{--if (request.status === 200 && xhr === 'success') {--}}
-                                    {{--App.unblockUI('.portlet-form');--}}
-                                    {{--console.log(response.data);--}}
-                                    {{--$(response.data).each(function (key,value) {--}}
-                                        {{--$('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));--}}
-                                    {{--});--}}
-                                    {{--$('#FK_FUNCIONARIO_Programa').val([])--}}
-                                {{--}--}}
-                            {{--}--}}
-                        {{--});--}}
-                        {{--guardarPrograma=true;//funcionario no tiene asignado un programa--}}
-                    {{--}--}}
-                    {{--$('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);--}}
-                    {{--$('#FUCNIONARIO_Correo').val(datas.email);--}}
-                    {{--$('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);--}}
-                    {{--$('#FUCNIONARIO_Telefono').val(datas.phone);--}}
-                    {{--$('#modal-info-funcionario').modal('toggle');--}}
-                {{--});--}}
-            {{--});--}}
+            ComponentsSelect2.init();
             var createPrograma = function () {
                 return{
                     init: function () {
-                        if(guardarPrograma==true){
-                            //console.log('crear programa');
+                        if( guardarPrograma == true ){
                             var route = '{{route('crearFuncionarioAdmin.storePrograma')}}';
                             var type = 'POST';
                             var async = async || false;
                             var formData = new FormData();
                             formData.append('FK_FUNCIONARIO_Programa', $('select[name="FK_FUNCIONARIO_Programa"]').val());
                             formData.append('idFuncionario', idFuncionarioD);
-                            //console.log( $('select[name="FK_FUNCIONARIO_Programa"]').val());
                             $.ajax({
                                 url: route,
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -176,19 +123,22 @@
                                 processData: false,
                                 async: async,
                                 beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
                                 },
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
+                                        App.unblockUI('.portlet-form');
                                         $('#modal-info-funcionario').modal('hide');
                                         $('#from_info_funcionario')[0].reset(); //Limpia formulario
-                                        //UIToastr.init(xhr , response.title , response.message  );
+                                        UIToastr.init(xhr , response.title , response.message  );
                                         var routeAjax = '{{route('opcionPrestamoAjax')}}';
                                         $(".content-ajax").load(routeAjax);
                                     }
                                 },
                                 error: function (response, xhr, request) {
-                                    if (request.status === 422 &&  xhr === 'success') {
+                                    if (request.status === 422 &&  xhr === 'error') {
                                         UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -203,25 +153,36 @@
             };
             var form_create = $('#from_info_funcionario');
             var rules_create = {
-
                 FK_FUNCIONARIO_Programa:{required: true}
             };
             FormValidationMd.init(form_create,rules_create,false,createPrograma());
-
             var createIngreso = function () {
                 return{
                     init: function () {
                         guardarPrograma=false;
                         var route = '{{ route('opcionPrestamoAjax') }}';
-                        idfuncionarioD =$('#id_funcionario').val();
-                        var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idfuncionarioD;
+                        idFuncionarioD = $('#id_funcionario').val();
+                        var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idFuncionarioD;
                         $.get( route_edit, function( info ) {
-                            var datas=info.data;
+                            var datas = info.data;
                             idFuncionarioD=datas.id;
                             if(datas.audiovisual!=null){
-                                $('#FK_FUNCIONARIO_Programa').empty();
-                                $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
-                                $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
+                                if(datas.numeroPrestamos){
+                                    swal(
+                                        'Oops...',
+                                        'Lo sentimos el usuario solo puede realizar un maximo de '+datas.numeroPrestamosMaximos+' prestamos!',
+                                        'error'
+                                    )
+                                }else{
+                                    $('#FK_FUNCIONARIO_Programa').empty();
+                                    $('#FK_FUNCIONARIO_Programa').attr('disabled',true);
+                                    $('#FK_FUNCIONARIO_Programa').append(new Option(datas.programa,datas.id_programa));
+                                    $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
+                                    $('#FUCNIONARIO_Correo').val(datas.email);
+                                    $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
+                                    $('#FUCNIONARIO_Telefono').val(datas.phone);
+                                    $('#modal-info-funcionario').modal('toggle');
+                                }
                             }
                             else{
                                 $('#FK_FUNCIONARIO_Programa').empty();
@@ -236,21 +197,26 @@
                                     success: function (response, xhr, request) {
                                         if (request.status === 200 && xhr === 'success') {
                                             App.unblockUI('.portlet-form');
-                                            console.log(response.data);
                                             $(response.data).each(function (key,value) {
                                                 $('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));
                                             });
                                             $('#FK_FUNCIONARIO_Programa').val([])
                                         }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 &&  xhr === 'error') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
+                                        }
                                     }
                                 });
                                 guardarPrograma=true;//funcionario no tiene asignado un programa
+                                $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
+                                $('#FUCNIONARIO_Correo').val(datas.email);
+                                $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
+                                $('#FUCNIONARIO_Telefono').val(datas.phone);
+                                $('#modal-info-funcionario').modal('toggle');
                             }
-                            $('input:text[name="FUCNIONARIO_Nombres"]').val(datas.name);
-                            $('#FUCNIONARIO_Correo').val(datas.email);
-                            $('input:text[name="FUCNIONARIO_Apellidos"]').val(datas.lastname);
-                            $('#FUCNIONARIO_Telefono').val(datas.phone);
-                            $('#modal-info-funcionario').modal('toggle');
                         });
                     }
                 }
@@ -269,7 +235,7 @@
                         url: "{{ route('identificacion.validar') }}",
                         type: "post"
                     }
-                },
+                }
             };
             var messages= {
                 id_funcionario: {
@@ -277,7 +243,6 @@
                 },
             };
             FormValidationMd.init(from_identificacion,rules_identificacion,messages,createIngreso());
-
             $("#form_identificacion").validate({
                 onkeyup: false //turn off auto validate while typing-pausa  validacion despues de escribir
             });

@@ -15,7 +15,7 @@ class CreateProyectoTable extends Migration
     {
         Schema::connection('gesap')->create('TBL_Proyecto', function (Blueprint $table) {
             $table->increments('PK_PRYT_IdProyecto');
-            $table->string('PRYT_Estado', 90)->default("EN CURSO");
+            $table->enum('PRYT_Estado', ['EN CURSO','TERMINADO'])->default('EN CURSO');
             $table->integer('FK_TBL_Anteproyecto_Id')->unsigned();
             $table->foreign('FK_TBL_Anteproyecto_Id')
                 ->references('PK_NPRY_IdMinr008')

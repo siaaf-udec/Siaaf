@@ -24,9 +24,6 @@ class TiposSolicitudTableAudiovisualsSeeder extends Seeder
         foreach ($tiposSol as $tipoSol ) {
             $aux = new TipoSolicitud;
             $aux->TPSOL_Tipo = $tipoSol['TPSOL_Tipo'];
-
-
-
             $aux->save();
         }
     }

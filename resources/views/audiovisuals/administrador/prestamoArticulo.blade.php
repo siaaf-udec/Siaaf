@@ -1,25 +1,4 @@
-{{--
-|--------------------------------------------------------------------------
-| Extends
-|--------------------------------------------------------------------------
-|
-| Hereda los estilos y srcipts de la de la plantilla original.
-| Es la base para todas las páginas que se deseen crear.
-|
---}}
 @extends('material.layouts.dashboard')
-
-{{--
-|--------------------------------------------------------------------------
-| Styles
-|--------------------------------------------------------------------------
-|
-| Inyecta CSS requerido ya sea por un JS o para un elemento específico
-|
-| @push('styles')
-|
-| @endpush
---}}
 @push('styles')
     <!-- STYLES SELECT -->
     <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet"
@@ -44,65 +23,9 @@
     <!-- Styles SWITCH  -->
     <link href="{{asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
-
-
-{{--
-|--------------------------------------------------------------------------
-| Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título de la página a la etiqueta <title></title> de la plantilla
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('title', $miVariable)
-| @section('title', 'Título')
---}}
 @section('title', '|Solicitud Prestamo')
-
-{{--
-|--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
 @section('page-title', 'Solicitud Prestamo')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
-
-@section('page-description', '')
-
-{{--
-|--------------------------------------------------------------------------
-| Content
-|--------------------------------------------------------------------------
-|
-| Inyecta el contenido HTML que se usará en la página
-|
-| @section('content')
-|
-| @endsection
---}}
 @section('content')
-    {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Realizar Prestamo'])
         <br>
@@ -112,21 +35,21 @@
                 {!! Form::open(['id' => 'form_identificacion', 'class' => '', 'url' => '/forms']) !!}
                     <div class="col-md-5">
                         {!! Field::text('id_funcionario',
-                            ['label' => 'Ingrese Identificacion:'],
+                            ['label' => 'Ingrese Identificación:'],
                             ['help' => 'Digite Numero de identificación valido', 'icon' => 'fa fa-credit-card'])
                         !!}
                     </div>
                     <br>
                     <div class="col-md-3">
+                        @permission('AUDI_REQUESTS_ENTER')
                         {!! Form::submit('Ingresar', ['class' => 'btn blue' ,'id'=>'btn_ingresar_identificacion']) !!}
+                        @endpermission
                     </div>
                 {!! Form::close() !!}
             </div>
         </div>
             <div class="row">
                 <div class="col-md-12">
-                {{-- BEGIN HTML MODAL CREATE --}}
-                <!-- responsive -->
                     <div class="modal fade" data-width="760" id="modal-info-funcionario" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -179,39 +102,19 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('AUDI_REQUESTS_ENTER')
                             {!! Form::submit('INGRESAR PRESTAMO', ['class' => 'btn blue']) !!}
                             {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            @endpermission
                         </div>
                         {!! Form::close() !!}
                     </div>
-                    {{-- END HTML MODAL CREATE--}}
                 </div>
-
             </div>
         @endcomponent
         <div class="clearfix"></div>
     </div>
-    {{-- END HTML SAMPLE --}}
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
     <!-- SCRIPT MODAL -->
     <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"
@@ -247,26 +150,7 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"
             type="text/javascript">
     </script>
-    <!-- SCRIPT SWITCH -->
-
 @endpush
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
@@ -281,7 +165,6 @@
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
     <!-- SWITCH-->
-
     <script type="text/javascript">
         var handleBootstrapSwitch = function() {
             if (!$().bootstrapSwitch) {
@@ -292,7 +175,6 @@
         var ComponentsSelect2 = function () {
             return {
                 init: function () {
-                    /*Configuracion de Select*/
                     $.fn.select2.defaults.set("theme", "bootstrap");
                     $(".pmd-select2").select2({
                         placeholder: "Selecccionar",
@@ -313,7 +195,6 @@
                 });
             }
             return {
-                //main function to initiate the module
                 init: function () {
                     handleBootstrapMaxlength();
                 }
@@ -341,7 +222,9 @@
                                 data: formData,
                                 processData: false,
                                 async: async,
-                                beforeSend: function () {},
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         $('#modal-info-funcionario').modal('hide');
@@ -349,11 +232,13 @@
                                         UIToastr.init(xhr , response.title , response.message  );
                                         var routeAjax = '{{route('opcionPrestamoAjax')}}';
                                         $(".content-ajax").load(routeAjax);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 },
                                 error: function (response, xhr, request) {
                                     if (request.status === 422 &&  xhr === 'error') {
                                         UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -380,11 +265,9 @@
                         var  route_edit = '{{route('validarInformacionFuncionario')}}'+ '/'+ idFuncionarioD;
                         $.get( route_edit, function( info ) {
                             var datas = info.data;
-                            console.log(datas.numeroPrestamos);
                             idFuncionarioD=datas.id;
                             if(datas.audiovisual!=null){
                                 if(datas.numeroPrestamos){
-                                    console.log('entra');
                                     swal(
                                         'Oops...',
                                         'Lo sentimos el usuario solo puede realizar un maximo de '+datas.numeroPrestamosMaximos+' prestamos!',
@@ -418,6 +301,12 @@
                                                 $('#FK_FUNCIONARIO_Programa').append(new Option(value.PRO_Nombre,value.id));
                                             });
                                             $('#FK_FUNCIONARIO_Programa').val([])
+                                        }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 &&  xhr === 'error') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
                                         }
                                     }
                                 });

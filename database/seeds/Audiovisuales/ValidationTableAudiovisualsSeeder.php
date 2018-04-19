@@ -16,7 +16,6 @@ class ValidationTableAudiovisualsSeeder extends Seeder
     public function run()
     {
         $preguntas = [
-
             ['VAL_PRE_Nombre' => ' ¿Número de horas máximas para tipo articulo con tiempo libre?', 'VAL_PRE_Valor' => '3' ],
             ['VAL_PRE_Nombre' => ' ¿Número de horas máximas para tipo articulo con tiempo asignado?', 'VAL_PRE_Valor' => '1' ],
             ['VAL_PRE_Nombre' => ' ¿Número de horas máximas para kit con tiempo libre?', 'VAL_PRE_Valor' => '1' ],
@@ -37,5 +36,4 @@ class ValidationTableAudiovisualsSeeder extends Seeder
             $aux->save();
         }
     }
-
 }

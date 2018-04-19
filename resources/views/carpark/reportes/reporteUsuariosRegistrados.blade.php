@@ -70,9 +70,7 @@
             <th class="unit"><b>Código</b></th>
             <th class="unit"><b>Nombres</b></th>
             <th class="unit"><b>Teléfono</b></th>
-            <th class="unit"><b>Dirección</b></th>
             <th class="unit"><b>Correo</b></th>
-            <th class="unit"><b>Dependencia</b></th>
 
         </tr>
         </thead>
@@ -80,12 +78,10 @@
             <tbody>
             <tr>
                 <td class="no">{{$cont++}}</td>
-                <td class="unit">{{$infoUsuario->PK_CU_Codigo}}</td>
-                <td class="desc">{{$infoUsuario->CU_Nombre1.' '.$infoUsuario->CU_Apellido1}}</td>
-                <td class="unit">{{$infoUsuario->CU_Telefono}}</td>
-                <td class="desc">{{$infoUsuario->CU_Direccion}}</td>
-                <td class="unit">{{$infoUsuario->CU_Correo}}</td>
-                <td class="desc">{{$infoUsuario->Dependencia}}</td>
+                <td class="unit">{{$infoUsuario->number_document}}</td>
+                <td class="desc">{{$infoUsuario->username.' '.$infoUsuario->lastname}}</td>
+                <td class="unit">{{$infoUsuario->number_phone}}</td>
+                <td class="unit">{{$infoUsuario->email}}</td>
 
 
             </tr>

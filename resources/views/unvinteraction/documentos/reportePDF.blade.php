@@ -30,7 +30,7 @@
 <body>
 <header class="clearfix">
     <div id="logo">
-        <img src="{{ asset('css/logo.png') }}">
+        <img src="{{ asset('css/logoUDEC.png') }}">
     </div>
     <div id="company">
         <h2 class="name">{{ env('APP_NAME') }}</h2>
@@ -54,7 +54,7 @@
             <div class="date">Fecha del reporte: {{$date}}</div>
             <div class="date">Hora del reporte: {{$time}}</div>
             <div>
-				<a class="noPrint" href="{{ route('descargarReporte.descargarReporte',[$id,$fecha_primera,$fecha_segunda])}}">
+				<a class="noPrint" href="{{ route('descargarReporte.descargarReporte',[$id,$fechaPrimera,$fechaSegunda])}}">
                 <i class="fa fa-download">
                 </i>Descargar reporte
             	</a>

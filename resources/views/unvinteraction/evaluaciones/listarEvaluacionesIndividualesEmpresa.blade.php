@@ -1,4 +1,5 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR EVALUACIONES REALIZADA A EMPRESAS '])
+{!! Form::button('ATRAS', ['class' => 'btn red back']) !!}
   {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
 <div class="form-wizard">
     {!! Field::date('Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'campo obligatorio', 'icon' => 'fa fa-calendar']) !!}
@@ -30,6 +31,7 @@
 
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     ComponentsDateTimePickers.init();
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
@@ -59,11 +61,13 @@ jQuery(document).ready(function () {
                         var route = '{{route('reporte.reporte')}}/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
                         $(".content-ajax").load(route);
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });
@@ -80,12 +84,12 @@ jQuery(document).ready(function () {
         url = "{{ route('listarEvaluacionIndividualEmpresa.listarEvaluacionIndividualEmpresa',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"documento" },
-           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true},
-           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true},
-           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true},
-           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true},
-           {data: 'VLCN_Nota_Final', searchable: true},
+           {data: 'PK_VLCN_Evaluacion', className:'none', "visible": true, name:"PK_VLCN_Evaluacion" },
+           {data: 'evaluado_empresa.EMPS_Nombre_Empresa', searchable: true,name:"evaluado_empresa.EMPS_Nombre_Empresa" },
+           {data: 'evaluador.dato_usuario.name',className:'none', searchable: true,name:"evaluador.dato_usuario.name" },
+           {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true,name:"evaluador.dato_usuario.lastname" },
+           {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true,name:"convenios_evaluacion.CVNO_Nombre" },
+           {data: 'VLCN_Nota_Final', searchable: true,name:"VLCN_Nota_Final" },
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
@@ -110,7 +114,11 @@ jQuery(document).ready(function () {
      $(".content-ajax").load(route_edit);
         });
     
-   
+   $('.back').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('documentosConvenios.documentosConvenios') }}'+'/@php echo $convenio @endphp/@php echo $estado @endphp';
+            $(".content-ajax").load(route);
+        });
     
   
 });

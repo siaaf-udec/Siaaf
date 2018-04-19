@@ -10,169 +10,149 @@
         <li>
             <a href="#tab_1_3" data-toggle="tab"> EMPRESAS </a>
         </li>
-
     </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="tab_1_1">
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab_1_1">
+        <div class="actions">
+            @permission(['INTE_ADD_DOC_CON']) @php if ($estado == 1){ @endphp
+            <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @php } @endphp @endpermission
+        </div>
+        <div class="row">
+            <div class="clearfix"> </div><br><br><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Entidad', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+            </div>
+        </div>
+    </div>
+    <!-- TABLAS  PARTICIPANTES -->
+    <div class="tab-pane fade" id="tab_1_2">
+        <div class="col-md-12">
+            @permission(['INTE_ADD_PARTI']) @php if ($estado == 1){ @endphp
             <div class="actions">
-                @permission(['INTE_ADD_DOC_CON'])
-                <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a> @endpermission
+                <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="row">
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) 
-                        @slot('columns', [ 
-                            '#' => ['style' => 'width:20px;'], 
-                            'ID', 
-                            'Entidad', 
-                            'Acciones' => ['style' => 'width:160px;'] 
-                        ])
-                    @endcomponent
-                </div>
+            @php } @endphp @endpermission
+        </div>
+
+        <div class="row">
+            <div class="clearfix"> </div><br><br><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'Identidicacion', 'Nombres', 'Apellidos', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
             </div>
         </div>
-        <!-- TABLAS  PARTICIPANTES -->
-        <div class="tab-pane fade" id="tab_1_2">
-            <div class="col-md-12">
-                @permission(['INTE_ADD_PARTI'])
-                <div class="actions">
-                    <a id="archivo2" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
-                @endpermission
-            </div>
+    </div>
+    <!-- TABLAS EMPRESAS PARTICIPANTES -->
+    <div class="tab-pane fade" id="tab_1_3">
 
-            <div class="row">
-
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes'])                  @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'Identidicacion',
-                            'Nombres',
-                            'Apellidos',
-                            'Acciones' => ['style' => 'width:160px;']
-                        ]) 
-                    @endcomponent
-                </div>
+        <div class="col-md-12">
+            @permission(['INTE_ADD_EMP_PARTY']) @php if ($estado == 1){ @endphp
+            <div class="actions">
+                <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
             </div>
+            @php } @endphp @endpermission
         </div>
-        <!-- TABLAS EMPRESAS PARTICIPANTES -->
-        <div class="tab-pane fade" id="tab_1_3">
 
+        <div class="row">
+
+            <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @permission(['INTE_ADD_EMP_PARTY'])
-                <div class="actions">
-                    <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                </div>
-                @endpermission
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Identificacion', 'Empresa', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
             </div>
-
-            <div class="row">
-
-                <div class="clearfix"> </div><br><br>
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ 
-                        '#' => ['style' => 'width:20px;'], 
-                        'ID',
-                        'Identificacion',
-                        'Empresa',
-                        'Acciones' => ['style' => 'width:160px;'] ]) 
-                    @endcomponent
-                </div>
-            </div>
-
         </div>
 
     </div>
+
+</div>
     @endcomponent
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="documento" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
+                    <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
+                    {!! Form::close() !!}
+                    <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AGREGAR PARTICIPANTE -->
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="participante" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Participante']) !!}
+                <div class="form-wizard">
                     <div class="modal-header modal-header-success">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> SUBIR ARCHIVO</h1>
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Form::open(['id' => 'my-dropzone', 'class' => 'dropzone dropzone-file-area', 'url'=>'/form']) !!}
-                        <h3 class="sbold">Arrastra o da click aquí para cargar archivos</h3>
-                        {!! Form::close() !!}
-                        <br>{!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
-                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                    </div>
+                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
 
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
-
-    <!-- AGREGAR PARTICIPANTE -->
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="participante" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Participante']) !!}
-                    <div class="form-wizard">
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
-                        </div>
-                        <div class="modal-body">
-                            {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
-
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
+</div>
+<!-- AGREGAR EMPRESA PARTICIPANTE -->
+<div class="col-md-12">
+    <!-- Modal -->
+    <div class="modal fade" id="empresa" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Empresas']) !!}
+                <div class="form-wizard">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
-                    {!! Form::close() !!}
+                    <div class="modal-body">
+                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
-    <!-- AGREGAR EMPRESA PARTICIPANTE -->
-    <div class="col-md-12">
-        <!-- Modal -->
-        <div class="modal fade" id="empresa" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Empresas']) !!}
-                    <div class="form-wizard">
-                        <div class="modal-header modal-header-success">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
-                        </div>
-                        <div class="modal-body">
-                            {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 <!-- FIN MODALS -->
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
     jQuery(document).ready(function() {
+         App.unblockUI('.portlet-form');
         var table, url, id;
         table = $('#Listar_Documentos');
-        var documento = function () { 
+        var documento = function () {
             return { 
                 init:function(){
-                    $('#documento').modal('hide'); 
+                    $('#documento').modal('hide');
+                    
+                    
                 }
             }; 
         }
@@ -186,10 +166,9 @@
         url = "{{ route('listarDocumentosConvenios.listarDocumentosConvenios',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "documento",className: 'none'},
-                    {data: 'DOCU_Nombre',searchable: true},
-                    {
-                        data: 'action',
+                    {data: 'PK_DOCU_Documentacion',"visible": true,name: "PK_DOCU_Documentacion",className: 'none'},
+                    {data: 'DOCU_Nombre',searchable: true,name: "DOCU_Nombre"},
+                    {data: 'action',
                         className: '',
                         searchable: false,
                         name: 'action',
@@ -226,14 +205,15 @@
 </script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+         App.unblockUI('.portlet-form');
         var table, url, columns;
         table = $('#Listar_Paticipantes');
         url = "{{ route('listarParticipantesConvenios.listarParticipantesConvenios',[$id]) }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "documento"},
-            {data: 'usuarios_participantes.dato_usuario.name',searchable: true},
-            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true},
+            {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "identity_no"},
+            {data: 'usuarios_participantes.dato_usuario.name',searchable: true,name: "name"},
+            {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true,name: "lastname"},
             {
                 data: 'action',
                 className: '',
@@ -243,34 +223,32 @@
                 orderable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '@permission(['INTE_EVA_EMPRESA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_EVA_EMPRESA'])<a href="#" class="btn btn-simple btn-success btn-icon doc1"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver1" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>@endpermission'
+                defaultContent: '@permission(['INTE_EVA_EMPRESA']) @php if ($estado == 1){ @endphp<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a> @php } @endphp @endpermission @permission(['INTE_DES_DOC_USU'])<a href="#" class="btn btn-simple btn-success btn-icon doc1" title="Documentos usuario"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver1" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission @permission(['INTE_DELET_PART']) @php if ($estado == 1){ @endphp <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a> @php } @endphp @endpermission'
 
 
                     }
         ];
         dataTableServer.init(table, url, columns);
-            
-       
-            table = table.DataTable();
+        table = table.DataTable();
             table.on('click', '.evaluar1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacion.realizarEvaluacion') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id; @endphp/@php echo $estado; @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.doc1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id;
+                    route_edit='{{route('documentoUsuario.documentoUsuario')}}'+'/'+dataTable.FK_TBL_Usuarios_Id+'/@php echo $id @endphp/@php echo $estado @endphp';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.ver1', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no;
+                    route_edit='{{route('listarEvaluacionesUsuario.listarEvaluacionesUsuario') }}'+'/'+dataTable.usuarios_participantes.dato_usuario.identity_no+'/@php echo $id @endphp/@php echo $estado @endphp ';
                 $(".content-ajax").load(route_edit);
             });
         
@@ -353,17 +331,21 @@
                             data: formData,
                             processData: false,
                             async: async,
+                            beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#participante').modal('hide');
                                     $('#form-Participante')[0].reset();
                                     table.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function(response, xhr, request) {
                                 UIToastr.init(xhr, 'usuario ya existente', 'el usuario a insertar ya esta en el convenio');
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             }
@@ -380,14 +362,15 @@
 </script>
 <script type="text/javascript">
         jQuery(document).ready(function() {
+             App.unblockUI('.portlet-form');
             var table, url, columns;
             table = $('#Listar_Empresas_Paticipantes');
             url = "{{ route('listarEmpresasParticipantesConvenios.listarEmpresasParticipantesConvenios',[$id]) }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "documento"},
-                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true},
-                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true},
+                {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "PK_EMPT_Empresa_Participante"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "PK_EMPS_Empresa"},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "EMPS_Nombre_Empresa"},
                 {
                         data: 'action',
                         className: '',
@@ -397,7 +380,7 @@
                         orderable: false,
                         exportable: false,
                         printable: false,
-                        defaultContent: '@permission(['INTE_EVA_PASANTE'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon ver2" title="Ver Evaluacion"><i class="icon-pencil"> VER </i></a>@endpermission @permission(['INTE_DELET_PART'])<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission'
+                        defaultContent: '@php if ($estado == 1){ @endphp @permission(['INTE_EVA_PASANTE'])  <a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @php } @endphp   @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver2" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission  @php if ($estado == 1){ @endphp @permission(['INTE_DELET_PART'])  <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission @php } @endphp'
                     }
         ];
         dataTableServer.init(table, url, columns);
@@ -408,7 +391,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp';
+                    route_edit = '{{ route('realizarEvaluacionEmpresa.realizarEvaluacionEmpresar') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo  $id; @endphp/@php echo  $estado; @endphp';
 
                 $(".content-ajax").load(route_edit);
             });
@@ -417,7 +400,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data(),
-                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa;
+                    route_edit = '{{ route('listarEvaluacionEmpresa.listarEvaluacionEmpresa') }}'+'/'+dataTable.patricipantes_empresas.PK_EMPS_Empresa+'/@php echo $id @endphp/@php echo $estado @endphp ';
                 $(".content-ajax").load(route_edit);
             });
             table.on('click', '.delete1', function(e) {
@@ -451,12 +434,13 @@
                             success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                    UIToastr.init(xhr, response.title, response.message);                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
 						});
@@ -496,18 +480,22 @@
                             data: formData,
                             processData: false,
                             async: async,
+                            beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#empresa').modal('hide');
                                     table.ajax.reload();
                                     $('#form-Empresas')[0].reset();
                                     UIToastr.init(xhr, response.title, response.message);
+                                     App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function(response, xhr, request) {
-                                 UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingresada ya se encuentra  o no existe');
-                                if (request.status === 422 && xhr === 'success') {
+                                if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, '!Lo sentimos¡', 'la empresa ingrsada ya se encuentra  o no existe');
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });

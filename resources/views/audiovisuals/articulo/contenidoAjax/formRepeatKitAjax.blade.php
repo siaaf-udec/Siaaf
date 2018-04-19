@@ -32,7 +32,9 @@
                 </div>
                 <br>
                 <div class="col-md-2">
+                    @permission("AUDI_KIT_CREATE")
                     {!! Form::submit('Crear', ['class' => 'btn blue','id' =>'botonCrear' ]) !!}
+                    @endpermission
                 </div>
             {!! Form::close() !!}
         </div>
@@ -68,9 +70,11 @@
             </div>
             <br>
             <div class="col-md-2">
+                @permission("AUDI_KIT_CREATE")
                 <a class="btn btn-danger agregar_articulo" id="agregarArticulo" data-id_articulo=identificador>
                     Agregar
                 </a>
+                @endpermission
             </div>
         </div>
     </div>
@@ -103,8 +107,6 @@
             }
             return -1;
         }
-        /////////////////////////////////
-        //crear Kit
         function selectTipoArticuloAjax(){
             var rutaCaragarTipoArticulo = '{{ route('cargar.tipoArticulos.selectKit') }}';
             $.ajax({
@@ -125,13 +127,13 @@
                 error: function (response, xhr, request) {
                     if (request.status === 422 && xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
 
             });
         }
         function asignarArticuloAlkit(idArticulo,idKit){
-            console.log("id articulo "+idArticulo+" id kit "+idKit);
             var rutaAsignarArticuloAlkit =
                 '{{ route('AsignarArticuloAlkit') }}'+ '/'+ idArticulo+ '/'+ idKit;
             $.ajax({
@@ -147,6 +149,12 @@
                         $('#codigoSelect').empty();
                         $('#caracteristica').val('');
                         selectTipoArticuloAjax();
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -167,6 +175,12 @@
                         $('#codigoSelect').empty();
                         $('#caracteristica').val(['']);
                         selectTipoArticuloAjax();
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
             });
@@ -192,7 +206,7 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
@@ -201,7 +215,6 @@
                                 $('#KIT_Codigo').attr('disabled','disabled');
                                 UIToastr.init(xhr , response.title , response.message  );
                                 idKitCreado = response.data;
-                                console.log('id ultimo kit creado'+idKitCreado);
                                 swal(
                                     {
                                         title: "¿ Desea Agregar Articulos al Kit ?",
@@ -228,11 +241,13 @@
                                         }
                                     }
                                 );
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -248,7 +263,15 @@
                     url: "{{ route('kit.validar') }}",
                     type: "post"
                 }
+            },
+            KIT_FK_Tiempo :{
+                required: true
+            },
+            KIT_Codigo:{
+                required: true,
+                minlength: 3
             }
+
         };
         var messagesKit = {
             KIT_Nombre: {
@@ -259,8 +282,6 @@
         $("#from_kit_create").validate({
             onkeyup: false //turn off auto validate whilst typing
         });
-        //////
-        //funciones de los selects ocultos
         $('#tipoArticulosSelect').on('change',function(){
             var idTipoArticuloVall = $(this).val();
             var routeCodigoArticulo = '{{ route('listarCodigoArticuloSele') }}' + '/' + idTipoArticuloVall;
@@ -273,12 +294,17 @@
                  success :function (res, xhr, request){
                      if (request.status === 200 && xhr === 'success') {
                          App.unblockUI('.portlet-form');
-                         console.log(res.data);
                          $('#codigoSelect').empty();
                          $(res.data).each(function (key, value) {
                              $('#codigoSelect').append(new Option(value.ART_Codigo, value.id));
                          });
                          $('#codigoSelect').val([]);
+                     }
+                 },
+                 error: function (response, xhr, request) {
+                     if (request.status === 422 &&  xhr === 'error') {
+                         UIToastr.init(xhr, response.title, response.message);
+                         App.unblockUI('.portlet-form');
                      }
                  }
              });
@@ -299,16 +325,20 @@
                         App.unblockUI('.portlet-form');
                         $('#caracteristica').val(response.data[0]['ART_Descripcion']);
                     }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
                 }
             });
         });
-        /////////////
-        //insertar los datos de los articulos
         $('#agregarArticulo').on('click',function(){
             textTipoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textTipoArticuloC" id="textTipoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textTipoArticuloC'+identificador+'" type="text" disabled><label for="textTipoArticuloC'+identificador+'" class="control-label">Tipo :</label><i class=" fa fa-briefcase"></i></div></div></div>';
             textCodigoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCodigoArticuloC" id="textCodigoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textCodigoArticuloC'+identificador+'" type="text" disabled><label for="textCodigoArticuloC'+identificador+'" class="control-label">Codigo :</label><i class=" fa fa-key"></i></div></div></div>';
             textCaracteristica = '<div class="col-md-3"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCaracteristicaC" id="textCaracteristica'+identificador+'" data-id_articulo='+identificador+'  name="textCaracteristicaC'+identificador+'" type="text" disabled><label for="textCaracteristicaC'+identificador+'" class="control-label">Caracteristica:</label><i class=" fa fa-keyboard-o"></i></div></div></div>';
-            boton_quitar = '<br><div class="col-md-1"><a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+identificador+' ><i class="icon-trash"></i></a> </div>';
+            boton_quitar = '<br><div class="col-md-1">@permission("AUDI_KIT_CREATE")<a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+identificador+' ><i class="icon-trash"></i></a>@endpermission</div>';
 
             idTextTipoArticulo = "#textTipoArticulo"+identificador,idTextCodigoArticulo = "#textCodigoArticulo"+identificador,idTextCaracteristica= "#textCaracteristica"+identificador;
             $('#contentFormularioArticulos').removeClass('hide');
@@ -329,7 +359,6 @@
                 });
             identificador++;
         });
-        /////remover articulo del kit
         $('#contentDiv').on('click', '.quitar_articulo', function(){
             var num = $(this).data('id_articulo');
             var index = encontrarIdArticulo(objectForm,'id',num);
@@ -341,11 +370,8 @@
             $(".fila_articulo[data-id_articulo='"+$(this).data('id_articulo')+"']").html('');
             removerArticuloKit(idArticuloRemover);
         });
-        //////////////////
-        //advertencias
         $(".finalizarKitBoton").on('click',function(){
             if(objectForm.length == 0){
-                console.log('no hay articulos ingresados en el kit');
                 swal(
                     {
                         title: "No ha ingrasados articulos al kit.",
@@ -370,7 +396,6 @@
                 $(".content-ajax").load(route);
             }
         });
-
         $('#link_cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('audiovisuales.gestionKits.indexAjax') }}';

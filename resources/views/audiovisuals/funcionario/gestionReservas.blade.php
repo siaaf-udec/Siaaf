@@ -1,28 +1,6 @@
-{{--
-|--------------------------------------------------------------------------
-| Extends
-|--------------------------------------------------------------------------
-|
-| Hereda los estilos y srcipts de la de la plantilla original.
-| Es la base para todas las páginas que se deseen crear.
-|
---}}
+
 @extends('material.layouts.dashboard')
-
-{{--
-|--------------------------------------------------------------------------
-| Styles
-|--------------------------------------------------------------------------
-|
-| Inyecta CSS requerido ya sea por un JS o para un elemento específico
-|
-| @push('styles')
-|
-| @endpush
- l
---}}
 @push('styles')
-
     <!--DATATIME -->
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Styles DATATABLE  -->
@@ -41,66 +19,10 @@
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
-
-
-{{--
-|--------------------------------------------------------------------------
-| Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título de la página a la etiqueta
-<title>
-</title>
-de la plantilla
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('title', $miVariable)
-| @section('title', 'Título')
---}}
 @section('title', '| Gestion Reservas')
 
-{{--
-|--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
 @section('page-title', 'Gestion Reservas')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
-
 @section('page-description', 'Solicita y Cancela una reserva')
-
-{{--
-|--------------------------------------------------------------------------
-| Content
-|--------------------------------------------------------------------------
-|
-| Inyecta el contenido HTML que se usará en la página
-|
-| @section('content')
-|
-| @endsection
---}}
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Reservas Realizadas'])
@@ -110,12 +32,13 @@ de la plantilla
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('AUDI_VIEW_CREATE_LENDING')
                         <a class="btn btn-outline dark reservaAjax" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             REALIZAR RESERVA
                         </a>
-
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -128,37 +51,15 @@ de la plantilla
                         'Funcionario',
                         'Fecha Entrega',
                         'Fecha Recibe',
-                        'Acciones' => ['style' => 'width:90px;']
+                        'Acciones' => ['style' => 'width:110px;']
                     ])
                 @endcomponent
             </div>
             <div class="clearfix"></div>
         @endcomponent
     </div>
-
     </br>
-    </div>
-    {{-- END HTML SAMPLE --}}
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
     <!-- TIEMPOS DATETIME -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
@@ -193,24 +94,6 @@ de la plantilla
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript">
     </script>
 @endpush
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
@@ -255,10 +138,8 @@ de la plantilla
                     return;
                 }
                 var fecha = new Date();
-                console.log(fecha);
                 var numHorasAnticipacion = horasHabiles/24;
                 fecha.setDate(fecha.getDate()+numHorasAnticipacion);
-                console.log('sad'+fecha);
                 $(".date-time-picker").datetimepicker({
                     autoclose: true,
                     daysOfWeekDisabled:[0],
@@ -316,7 +197,6 @@ de la plantilla
                 var  route_validar = '{{route('validarNumeroDeReservas')}}';
                 $.get( route_validar , function( info ) {
                     var numeroMaximoReservas = info.data;
-                    console.log(numeroMaximoReservas);
                     if(numeroMaximoReservas.numeroReservas){
                         swal(
                             'Oops...',
@@ -327,12 +207,8 @@ de la plantilla
                         var route = '{{ route('reserva.formRepeat.index') }}';
                         $(".content-ajax").load(route);
                     }
-
                 });
-
-
             });
         });
-
     </script>
 @endpush

@@ -1,28 +1,7 @@
-{{--
-|--------------------------------------------------------------------------
-| Extends
-|--------------------------------------------------------------------------
-|
-| Hereda los estilos y srcipts de la de la plantilla original.
-| Es la base para todas las páginas que se deseen crear.
-|
---}}
 @extends('material.layouts.dashboard')
 
-{{--
-|--------------------------------------------------------------------------
-| Styles
-|--------------------------------------------------------------------------
-|
-| Inyecta CSS requerido ya sea por un JS o para un elemento específico
-|
-| @push('styles')
-|
-| @endpush
---}}
 @push('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link href="{{-- asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') --}}" rel="stylesheet" type="text/css" />
     <!-- STYLES MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -54,67 +33,11 @@
     <link href="{{asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
-
-{{--
-|--------------------------------------------------------------------------
-| Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título de la página a la etiqueta
-<title>
-</title>
-de la plantilla
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('title', $miVariable)
-| @section('title', 'Título')
---}}
 @section('title', '| Gestion Artículo')
 
-{{--
-|--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
 @section('page-title', 'Gestión Artículo')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
 
-@section('page-description', '')
-
-{{--
-|--------------------------------------------------------------------------
-| Content
-|--------------------------------------------------------------------------
-|
-| Inyecta el contenido HTML que se usará en la página
-|
-| @section('content')
-|
-| @endsection
---}}
 @section('content')
-    {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Artículos'])
             <br>
@@ -122,21 +45,26 @@ de la plantilla
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission("AUDI_ART_CREATE")
                         <a class="btn btn-outline dark createArticulo" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Nuevo Artículo
                         </a>
+                        @endpermission
+                        @permission("AUDI_ART_TYPE_VIEW")
                         <a class="btn btn-outline dark createTipo" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Nuevo Tipo de Artículo
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
             <div class="clearfix">
             </div>
+            <br>
             <br>
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
@@ -155,8 +83,6 @@ de la plantilla
             </div>
             <div class="row">
                 <div class="col-md-12">
-                {{-- BEGIN HTML MODAL CREATE --}}
-                <!-- responsive -->
                     <div class="modal fade" data-width="760" id="modal-create-art" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -213,11 +139,8 @@ de la plantilla
                         {!! Form::close() !!}
                         </div>
                     </div>
-                    {{-- END HTML MODAL CREATE--}}
                 </div>
                 <div class="col-md-12">
-                {{-- BEGIN HTML MODAL UPDATE --}}
-                <!-- responsive -->
                     <div class="modal fade" data-width="760" id="modal-edit-art" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -272,32 +195,11 @@ de la plantilla
                         </div>
                         {!! Form::close() !!}
                     </div>
-                    {{-- END HTML MODAL CREATE--}}
                 </div>
             </div>
         @endcomponent
     </div>
-    {{-- END HTML SAMPLE --}}
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
     <script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
@@ -315,7 +217,6 @@ de la plantilla
     <script src="{{ asset('assets/global/plugins/bootstrap-typeahead/bootstrap3-typeahead.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT SELECT -->
-
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
     </script>
     <!-- SCRIPT DATATABLE -->
@@ -357,24 +258,6 @@ de la plantilla
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript">
     </script>
 @endpush
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
@@ -393,7 +276,6 @@ de la plantilla
         var ComponentsSelect2 = function () {
             return {
                 init: function () {
-                    /*Configuracion de Select*/
                     $.fn.select2.defaults.set("theme", "bootstrap");
                     $(".pmd-select2").select2({
                         placeholder: "Selecccionar",
@@ -414,7 +296,6 @@ de la plantilla
                 });
             }
             return {
-                //main function to initiate the module
                 init: function () {
                     handleBootstrapMaxlength();
                 }
@@ -433,8 +314,8 @@ de la plantilla
                 {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
                 {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>' +
-                                    '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>',
+                    defaultContent: '@permission("AUDI_ART_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                                    '@permission("AUDI_ART_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -493,26 +374,31 @@ de la plantilla
                                 contentType: false,
                                 data: formData,
                                 beforeSend: function () {
-
+                                    App.blockUI({target: '.portlet-form', animate: true});
                                 },
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
                                         UIToastr.init(xhr, response.title, response.message);
                                         table.ajax.reload();
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
                         }
-                    });
-
-
+                    }
+                );
             });
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
                 idEditarArticulo = parseInt(dataTable.id);
-                console.log(dataTable);
                 if(dataTable.consulta_estado_articulo.EST_Descripcion != 'Creado'){
                     $('select[name="ART_Tipo_edit"]').prop('disabled', 'disabled');
                 }else{
@@ -533,12 +419,17 @@ de la plantilla
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            App.unblockUI('.portlet-form');
-                            console.log(response.data);
                             $(response.data).each(function (key, value) {
                                 $('select[name="FK_ART_Kit_id_edit"]').append(new Option(value.KIT_Nombre, value.id));
                             });
                             $('select[name="FK_ART_Kit_id_edit"]').val(parseInt(dataTable.FK_ART_Kit_id));
+                            App.unblockUI('.portlet-form');
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -551,11 +442,18 @@ de la plantilla
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            App.unblockUI('.portlet-form');
+
                             $(response.data).each(function (key, value) {
                                 $('select[name="ART_Tipo_edit"]').append(new Option(value.TPART_Nombre, value.id));
                             });
                             $('select[name="ART_Tipo_edit"]').val(parseInt(dataTable.FK_ART_Tipo_id));
+                            App.unblockUI('.portlet-form');
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -572,11 +470,17 @@ de la plantilla
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            App.unblockUI('.portlet-form');
                             $(response.data).each(function (key, value) {
                                 $seleccione_un_kit.append(new Option(value.KIT_Nombre, value.id));
                             });
                             $seleccione_un_kit.val([]);
+                            App.unblockUI('.portlet-form');
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -590,7 +494,6 @@ de la plantilla
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
-                            App.unblockUI('.portlet-form');
                             if( _.size(response.data)==0){
                                 swal("No hay Tipos de Artículos!", "Debe Crear un Tipo!", "warning");
 
@@ -601,6 +504,13 @@ de la plantilla
                                 $seleccione_un_tipoArticulo.append(new Option(value.TPART_Nombre, value.id));
                             });
                             $seleccione_un_tipoArticulo.val([]);
+                            App.unblockUI('.portlet-form');
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -626,18 +536,21 @@ de la plantilla
                             processData: false,
                             async: async,
                             beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#modal-create-art').modal('hide');
-                                    $('#from_art_create')[0].reset(); //Limpia formulario
+                                    $('#from_art_create')[0].reset();
                                     table.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 && xhr === 'success') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });
@@ -659,13 +572,11 @@ de la plantilla
                         var route = '{{ route('articuloModificar') }}';
                         var type = 'POST';
                         var async = async || false;
-                        console.log('valor del select'+$('select[name="FK_ART_Kit_id_edit"]').val());
                         var formData = new FormData();
                         formData.append('id',idEditarArticulo);
                         formData.append('FK_ART_Tipo_id', $('select[name="ART_Tipo_edit"]').val());
                         formData.append('ART_Descripcion', $('#ART_Descripcion_edit').val());
                         formData.append('FK_ART_Kit_id', $('select[name="FK_ART_Kit_id_edit"]').val());
-                        //formData.append('FK_ART_Estado_id', $('input:text[name="FK_ART_Estado_id_edit"]').val());
                         formData.append('ART_Codigo', parseInt($('input:text[name="ART_Codigo_edit"]').val()));
 
                         $.ajax({
@@ -678,7 +589,7 @@ de la plantilla
                             processData: false,
                             async: async,
                             beforeSend: function () {
-
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
@@ -686,11 +597,13 @@ de la plantilla
                                     $("#from_art_update")[0].reset();
                                     UIToastr.init(xhr , response.title , response.message  );
                                     table.ajax.reload();
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });
@@ -699,7 +612,6 @@ de la plantilla
             };
             var from_art_edit = $('#from_art_update');
             var rules_arti_edit = {
-
                 FK_ART_Kit_id_edit :{ required: true},
                 ART_Tipo_edit :{ required: true},
                 ART_Descripcion_edit:{minlength: 3, required: true},
@@ -712,7 +624,6 @@ de la plantilla
                 var route = '{{ route('audiovisuales.gestionTipoArticuloAjax') }}';
                 $(".content-ajax").load(route);
             })
-
         });
     </script>
 @endpush

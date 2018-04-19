@@ -37,10 +37,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        <a class="btn btn-outline dark create" data-toggle="modal">
+                        <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
-                            Registrar
+                            Registrar Procedencia
                         </a>
                     </div>
                 </div>
@@ -49,13 +49,13 @@
             </div>
             <br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
+                table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
                     'id_procedencia',
-                    '  ',
                     '#',
                     'Nombre procedencia',
-                    'Acciones' => ['style' => 'width:45px;']
+                    'Acciones' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
             </div>
@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                 {{-- BEGIN HTML MODAL CREATE --}}
                 <!-- responsive -->
-                    <div class="modal fade" data-width="760" id="modal-create-soft" tabindex="-1">
+                    <div class="modal fade" data-width="760" id="modal-create-proc" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                             </button>
@@ -76,7 +76,7 @@
                             </h2>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(['id' => 'form_soft', 'class' => '', 'url'=>'/forms']) !!}
+                            {!! Form::open(['id' => 'form_proc', 'class' => '', 'url'=>'/forms']) !!}
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -146,14 +146,7 @@
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
-    <script id="details-template" type="text/x-handlebars-template">
-        <table class="table">
-            <tr>
-                <td>Fecha:</td>
-                <td>@{{created_at}}</td>
-            </tr>
-        </table>
-    </script>
+    <script id="details-template" type="text/x-handlebars-template"></script>
     <script>
         $(document).ready(function () {
             //inicializar select
@@ -173,17 +166,10 @@
             url = "{{ route('espacios.academicos.procedencia.data') }}"; //url para cargar datos
             columns = [
                 {data: 'pk_id_procedencia', name: 'id_procedencia', "visible": false},
-                {
-                    "className": 'details-control',
-                    "orderable": false,
-                    "searchable": false,
-                    "data": null,
-                    "defaultContent": ''
-                },
                 {data: 'DT_Row_Index'},
                 {data: 'tipo_procedencia', name: 'Nombre procedencia'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -191,7 +177,6 @@
                     searchable: false,
                     exportable: false,
                     printable: false,
-                    className: 'text-right',
                     render: null,
                     responsivePriority: 2
                 }
@@ -235,26 +220,10 @@
 
             });
 
-            /*Inicio detalles desplegables*/
-            $('#art-table-ajax tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-                var row = table.row(tr);
-                if (row.child.isShown()) {
-                    // This row is already open - close it
-                    tr.removeClass('details');
-                    row.child.hide();
-                } else {
-                    // Open this row
-                    tr.addClass('details');
-                    row.child(template(row.data())).show();
-                }
-            });
-            /*Fin detalles de solicitud*/
-
             /*ABRIR MODAL*/
             $(".create").on('click', function (e) {
                 e.preventDefault();
-                $('#modal-create-soft').modal('toggle');
+                $('#modal-create-proc').modal('toggle');
             });
             /*CREAR PROCEDENCIA CON VALIDACIONES*/
             var createPermissions = function () {
@@ -282,8 +251,8 @@
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
-                                    $('#modal-create-soft').modal('hide');
-                                    $('#form_soft')[0].reset(); //Limpia formulario
+                                    $('#modal-create-proc').modal('hide');//Esconder el formulario
+                                    $('#form_proc')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -297,12 +266,12 @@
                 }
             };
 
-            var form_edit = $('#form_soft');
+            var form_edit = $('#form_proc');
+            /*CONCATENAR EL CAMPO Y LAS OPCIONES DE VALIDACIÓN*/
             var rules_edit = {
-                id_persona: {minlength: 8, required: true, number: true},
-                descripcion: {required: true, minlength: 5, maxlength: 200},
-                espacios: {required: true}
+                tipo_procedencia: {required: true, minlength:1, maxlength: 20}
             };
+            /*ENVIAR A FORMULARIO JS PARA VALIDAR*/
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
         });
 

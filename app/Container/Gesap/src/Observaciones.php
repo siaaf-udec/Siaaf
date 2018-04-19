@@ -32,10 +32,10 @@ class Observaciones extends Model
      *
      * @var array
      */
-    protected $fillable = ['BVCS_Observacion','FK_TBL_Encargado_Id'];
-    
-    
-	/*
+    protected $fillable = ['BVCS_Observacion', 'FK_TBL_Encargado_Id'];
+
+
+    /*
 	*Función de relacion entre las tablas de Observaciones y Encargados 
 	*por los campo de FK_TBL_Encargado_Id y PK_NCRD_IdCargo 
 	*seleccionando los campos PK_NCRD_IdCargo, FK_TBL_Anteproyecto_Id, FK_Developer_User_Id, NCRD_Cargo
@@ -46,12 +46,12 @@ class Observaciones extends Model
     {
         return $this->belongsTo(Encargados::class, 'FK_TBL_Encargado_Id', 'PK_NCRD_IdCargo')
             ->select("PK_NCRD_IdCargo", "FK_TBL_Anteproyecto_Id", "FK_Developer_User_Id", "NCRD_Cargo")
-            ->with(['usuarios'=>function ($usuarios) {
-                            $usuarios->select('name', 'lastname', 'id');
+            ->with(['usuarios' => function ($usuarios) {
+                $usuarios->select('name', 'lastname', 'id');
             }]);
     }
-	
-	/*
+
+    /*
 	*Función de relacion entre las tablas de Observaciones y respuesta 
 	*por los campo de FK_TBL_Observaciones_Id y PK_BVCS_IdObservacion 
 	*seleccionando los campos PK_RPST_IdMinr008, RPST_RMin, RPST_Requerimientos, FK_TBL_Observaciones_Id
@@ -62,8 +62,8 @@ class Observaciones extends Model
         return $this->hasOne(Respuesta::class, 'FK_TBL_Observaciones_Id', 'PK_BVCS_IdObservacion')
             ->select("PK_RPST_IdMinr008", "RPST_RMin", "RPST_Requerimientos", "FK_TBL_Observaciones_Id");
     }
-	
-	/*
+
+    /*
 	*Función de relacion entre las tablas de Observaciones y checkObservaciones 
 	*por los campo de FK_TBL_Observaciones_Id y PK_BVCS_IdObservacion 
 	*para realizar las busquedas complementarias

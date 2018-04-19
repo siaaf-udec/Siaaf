@@ -1,140 +1,135 @@
 
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Tipo Artículo'])
-        @slot('actions', [
-          'link_cancel' => [
-          'link' => '',
-          'icon' => 'fa fa-arrow-left',
-         ],
-        ])
-        <div class="row">
-            <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
-                <div class="modal fade" data-width="760" id="modal-create-tipo" tabindex="-1">
-                    <div class="modal-header modal-header-success">
-                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                        </button>
-                        <h2 class="modal-title">
-                            <i class="glyphicon glyphicon-user">
-                            </i>
-                            Detalles Tipo Artículo
-                        </h2>
-                    </div>
-                    <div class="modal-body">
-                        {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
-                        <div class="row">
-                            <div class="col-md-6">
-                                {!! Field::text('TPART_Nombre',
-                                       ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
-                                       ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
-                                   !!}
-                            </div>
-                            <div class="col-md-6">
-                                {!! Field::select('TPART_Tiempo',
-                                         [
-                                    2 => 'Asignado',
-                                    1 => 'Libre'
-                                 ],
-                                    ['label' => 'Seleccione una Opcion'])
-                                 !!}
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-8">
-                                    {!! Form::submit('CREAR', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                                </div>
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-                {{-- END HTML MODAL CREATE--}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-            {{-- BEGIN HTML MODAL CREATE --}}
-            <!-- responsive -->
-                <div class="modal fade" data-width="760" id="modal-edit-tipo" tabindex="-1">
-                    <div class="modal-header modal-header-success">
-                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                        </button>
-                        <h2 class="modal-title">
-                            <i class="glyphicon glyphicon-user">
-                            </i>
-                            Detalles Tipo Artículo
-                        </h2>
-                    </div>
-                    <div class="modal-body">
-                        {!! Form::open(['id' => 'from_art_tipo_edit', 'class' => '', 'url' => '/forms']) !!}
-                        <div class="row">
-                            <div class="col-md-6">
-                                {!! Field::text('TPART_Nombre_Edit',
-                                       ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
-                                       ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
-                                   !!}
-                            </div>
-                            <div class="col-md-6">
-                                {!! Field::select('TPART_Tiempo_Edit',
-                                         [
-                                    2 => 'Asignado',
-                                    1 => 'Libre'
-                                 ],
-                                    ['label' => 'Seleccione una Opcion'])
-                                 !!}
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-8">
-                                    {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                                </div>
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-                {{-- END HTML MODAL CREATE--}}
-            </div>
-        </div>
-        <br>
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="actions">
-                    <a class="btn btn-outline dark createTipoArticulo" data-toggle="modal">
-                        <i class="fa fa-plus">
-                        </i>
-                        Crear Tipo Artículo
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <br>
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Tipo Artículo'])
+    @slot('actions', [
+      'link_cancel' => [
+      'link' => '',
+      'icon' => 'fa fa-arrow-left',
+     ],
+    ])
+    <div class="row">
         <div class="col-md-12">
-            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
-                @slot('columns', [
-                    '#' => ['style' => 'width:20px;'],
-                    'Tipo',
-                    'Cantidad Artículos',
-                    'Tiempo',
-                    'Acciones' => ['style' => 'width:90px;']
-                ])
-            @endcomponent
+            <div class="modal fade" data-width="760" id="modal-create-tipo" tabindex="-1">
+                <div class="modal-header modal-header-success">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                    </button>
+                    <h2 class="modal-title">
+                        <i class="glyphicon glyphicon-user">
+                        </i>
+                        Detalles Tipo Artículo
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {!! Field::text('TPART_Nombre',
+                                   ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                               !!}
+                        </div>
+                        <div class="col-md-6">
+                            {!! Field::select('TPART_Tiempo',
+                                     [
+                                2 => 'Asignado',
+                                1 => 'Libre'
+                             ],
+                                ['label' => 'Seleccione una Opcion'])
+                             !!}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-8">
+                                {!! Form::submit('CREAR', ['class' => 'btn blue']) !!}
+                                {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            {{-- END HTML MODAL CREATE--}}
         </div>
-        <div class="clearfix"></div>
-    @endcomponent
-
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal fade" data-width="760" id="modal-edit-tipo" tabindex="-1">
+                <div class="modal-header modal-header-success">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                    </button>
+                    <h2 class="modal-title">
+                        <i class="glyphicon glyphicon-user">
+                        </i>
+                        Detalles Tipo Artículo
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id' => 'from_art_tipo_edit', 'class' => '', 'url' => '/forms']) !!}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {!! Field::text('TPART_Nombre_Edit',
+                                   ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
+                               !!}
+                        </div>
+                        <div class="col-md-6">
+                            {!! Field::select('TPART_Tiempo_Edit',
+                                     [
+                                2 => 'Asignado',
+                                1 => 'Libre'
+                             ],
+                                ['label' => 'Seleccione una Opcion'])
+                             !!}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-8">
+                                {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
+                                {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            @permission("AUDI_ART_TYPE_CREATE")
+            <div class="actions">
+                <a class="btn btn-outline dark createTipoArticulo" data-toggle="modal">
+                    <i class="fa fa-plus">
+                    </i>
+                    Crear Tipo Artículo
+                </a>
+            </div>
+            @endpermission
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <br>
+    <div class="col-md-12">
+        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
+            @slot('columns', [
+                '#' => ['style' => 'width:20px;'],
+                'Tipo',
+                'Cantidad Artículos',
+                'Tiempo',
+                'Acciones' => ['style' => 'width:90px;']
+            ])
+        @endcomponent
+    </div>
+    <div class="clearfix"></div>
+@endcomponent
 <script>
     var table, url, columns;
     var ComponentsSelect2 = function () {
         return {
             init: function () {
-                /*Configuracion de Select*/
                 $.fn.select2.defaults.set("theme", "bootstrap");
                 $(".pmd-select2").select2({
                     placeholder: "Selecccionar",
@@ -166,14 +161,26 @@
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         table = $('#tipoArt-table-ajax');
-        {{--url = "{{ route('listarArticulo.data') }}";--}}
-            url ="{{ route('listarTipoArticulos.data') }}";
+        url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
             {data: 'TPART_Nombre' , name: 'Tipo'},
             {data: 'consultar_articulos_count' , name: 'Cantidad Artículos'},
             {data: 'Tiempo' , name: 'Tiempo'},
-            {data: 'Acciones', name: 'Acciones'}
+            {
+                defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                                '@permission("AUDI_ART_TYPE_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-right',
+                render: null,
+                responsivePriority: 2
+            }
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
@@ -206,6 +213,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
+            console.log(dataTable);
             $('#TPART_Nombre_Edit').val(dataTable.TPART_Nombre);
             if(dataTable.consultar_articulos_count!=0){
                 $("#TPART_Nombre_Edit").prop("disabled", true);
@@ -214,53 +222,60 @@
             }
             idTipoArticulo = parseInt(dataTable.id);
             $('#modal-edit-tipo').modal('toggle');
-            console.log(dataTable);
-
         });
         table.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            swal({
-                    title: "Esta Seguro De eliminar?",
-                    text: "Este Tipo De Artículo será eliminado!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "si",
-                    cancelButtonText: "No",
-                    closeOnConfirm: true
-                },
-                function(isConfirm){
-                    if(isConfirm){
-                        var route = '{{ route('tipoArticuloEliminarA') }}'+'/'+dataTable.id;
-                        var type = 'POST';
-                        var async = async || false;
-                        $.ajax({
-                            url: route,
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            beforeSend: function () {
+            if(parseInt((dataTable.consultar_articulos_count))==0){
+                swal({
+                        title: "Esta Seguro De eliminar?",
+                        text: "Este Tipo De Artículo será eliminado!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            var route = '{{ route('tipoArticuloEliminarA') }}'+'/'+dataTable.id;
+                            var type = 'POST';
+                            var async = async || false;
+                            $.ajax({
+                                url: route,
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                cache: false,
+                                type: type,
+                                contentType: false,
+                                processData: false,
+                                async: async,
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        table.ajax.reload();
+                                        UIToastr.init(xhr , response.title , response.message  );
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 &&  xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                                }
+                            });
+                        }
+                    });
 
-                            },
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr , response.title , response.message  );
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 &&  xhr === 'success') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            }
-                        });
-                    }
-                });
+            }else{
+                swal(
+                    'Oops...',
+                    'Lo sentimos este tipo de articulo tiene relacion con una cierta cantidad de articulos crados!',
+                    'error'
+                )
+            }
         });
         var modificarTipo = function () {
             return{
@@ -283,23 +298,26 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-                            swal(
-                                "Modificar!",
-                                "los artículos que se encuentran en alguna solicitud ," +
-                                " se actualizarán en la siguiente solicitud", "success"
-                            );
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
+                                swal(
+                                    "Modificar!",
+                                    "los artículos que se encuentran en alguna solicitud ," +
+                                    " se actualizarán en la siguiente solicitud", "success"
+                                );
                                 $('#modal-edit-tipo').modal('hide');
                                 UIToastr.init(xhr , response.title , response.message  );
                                 $('#from_art_tipo_edit')[0].reset();
                                 table.ajax.reload();
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });
@@ -344,7 +362,7 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
@@ -352,11 +370,13 @@
                                 $('#from_art_tipo_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
                                 table.ajax.reload();
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });

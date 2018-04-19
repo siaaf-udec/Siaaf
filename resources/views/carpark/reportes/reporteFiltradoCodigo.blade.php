@@ -66,7 +66,7 @@
         <thead>
         <tr>
             <th class="no">#</th>
-            <th class="unit"><b>Código</b></th>
+            <th class="unit"><b>Documento</b></th>
             <th class="unit"><b>Nombre</b></th>
             <th class="unit"><b>Placa</b></th>
             <th class="unit"><b>Fecha/Hora Ingreso</b></th>

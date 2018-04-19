@@ -17,10 +17,7 @@ class CreateUsuarioAudiovisualesTable extends Migration
 			$table->increments('id');
 			$table->integer('USER_FK_User')->unsigned()->unique()->nullable();
             $table->integer('USER_FK_Programa')->unsigned()->nullable();
-
             $table->foreign('USER_FK_Programa')->references('id')->on('TBL_Programas');
-
-
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
                     <div class="form-body">
                             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Pregunta']) !!}
                             <div class="form-wizard">
-                            {!! Field:: text('TPPG_Tipo',$pregunta->TPPG_Tipo,['label'=>'Tipo de pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el tipo de pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                            {!! Field:: text('TPPG_Tipo',$pregunta->TPPG_Tipo,['label'=>'Tipo de pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'20', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el tipo de pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
                             
                             <div class="form-actions">
                               <div class="row">
@@ -25,7 +25,7 @@
 
 <script>
 jQuery(document).ready(function () {
-    
+     App.unblockUI('.portlet-form');
     $('.portlet-form').attr("id","form_wizard_1");
     var rules = {
             TPPG_Tipo: {required: true},
@@ -51,16 +51,21 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                         beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );
                         var route = '{{ route('tipoPreguntaAjax.tipoPreguntaAjax') }}';
-                        $(".content-ajax").load(route);
+                        $(".content-ajax").load(route); 
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

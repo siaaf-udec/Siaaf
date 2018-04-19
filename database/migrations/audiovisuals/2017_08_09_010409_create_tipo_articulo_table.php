@@ -13,12 +13,11 @@ class CreateTipoArticuloTable extends Migration
      */
     public function up()
     {
-        Schema::connection('audiovisuals')->create('TBL_Tipo_articulos', function (Blueprint $table) {
+        Schema::connection('audiovisuals')->create('TBL_Tipo_Articulos', function (Blueprint $table) {
             $table->increments('id');
             $table->String('TPART_Nombre');
 			$table->integer('TPART_Tiempo')->unsigned()->nullable();
             $table->timestamps();
-
         });
     }
 

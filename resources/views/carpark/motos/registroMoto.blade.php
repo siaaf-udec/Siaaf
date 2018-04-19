@@ -177,14 +177,14 @@
         };
         var form = $('#form_moto_create');
         var formRules = {
-            CM_UrlFoto: {required: true, extension: "jpg|png"},
+            CM_UrlFoto: {required: false, extension: "jpg|png"},
             CM_Placa: {minlength: 5, maxlength: 6, required: true, noSpecialCharacters:true},
             CM_Marca: {required: true, minlength: 5, maxlength: 50, noSpecialCharacters:true},
             CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
             CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
             CM_FechaSoat: {required: true},
-            CM_UrlPropiedad: {required: true, extension: "jpg|png"},
-            CM_UrlSoat: {required: true, extension: "jpg|png"},
+            CM_UrlPropiedad: {required: false, extension: "jpg|png"},
+            CM_UrlSoat: {required: false, extension: "jpg|png"},
         };
         var formMessage = {
             CM_Placa: {noSpecialCharacters: 'Existen caracteres que no son válidos'},

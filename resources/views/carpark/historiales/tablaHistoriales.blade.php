@@ -37,7 +37,7 @@
                         @permission('PARK_REPORT_HISTOCODIGO')<a href="javascript:;"
                                                                     class="btn btn-simple btn-success btn-icon reporteCodigo"
                                                                     title="Reporte"><i
-                                    class="glyphicon glyphicon-list-alt"></i>Reporte Por Código</a>@endpermission
+                                    class="glyphicon glyphicon-list-alt"></i>Reporte Por Documento</a>@endpermission
                         @permission('PARK_REPORT_HISTOPLACA')<a href="javascript:;"
                                                                    class="btn btn-simple btn-success btn-icon reportePlaca"
                                                                    title="Reporte"><i
@@ -54,7 +54,7 @@
                         @slot('columns', [
                             '#',
                             'Nombre Usuario',
-                            'Código Usuario',
+                            'Documento Usuario',
                             'Placa',                            
                             'Fecha/Hora Entrada',
                             'Fecha/Hora Salida'
@@ -101,11 +101,11 @@
         url = "{{ route('parqueadero.dependenciasCarpark.tablaHistoriales')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'CH_NombresUser', name: 'Nombre Usuario'},
-            {data: 'CH_CodigoUser', name: 'Código Usuario'},
-            {data: 'CH_Placa', name: 'Placa'},
-            {data: 'CH_FHentrada', name: 'Fecha/Hora Entrada'},
-            {data: 'CH_FHsalida', name: 'Fecha/Hora Salida'}
+            {data: 'CH_NombresUser', name: 'CH_NombresUser'},
+            {data: 'CH_CodigoUser', name: 'CH_CodigoUser'},
+            {data: 'CH_Placa', name: 'CH_Placa'},
+            {data: 'CH_FHentrada', name: 'CH_FHentrada'},
+            {data: 'CH_FHsalida', name: 'CH_FHsalida'}
         ];
         dataTableServer.init(table, url, columns);
 

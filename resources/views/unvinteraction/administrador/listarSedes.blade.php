@@ -47,7 +47,7 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Sede']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
+                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -89,14 +89,15 @@
 @push('functions')
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Convenios');
         url = "{{ route('listarSedes.listarSedes') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_SEDE_Sede', "visible": true, name:"documento" },
-           {data: 'SEDE_Sede', searchable: true},
-           {data:'action',className:'',searchable: false,
+           {data: 'PK_SEDE_Sede', "visible": true, name:"PK_SEDE_Sede" },
+           {data: 'SEDE_Sede', searchable: true, name:"SEDE_Sede"},
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -155,11 +156,13 @@ jQuery(document).ready(function () {
                         $('#form-Agregar-Sede')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

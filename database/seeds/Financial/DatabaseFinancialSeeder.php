@@ -21,6 +21,9 @@ class DatabaseFinancialSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UsersFinancialTableSeeder::class);
+        $this->call(RolePermissionFinancialTableSeeder::class);
+        $this->call(UsersFinancialTableSeeder::class);
+        $this->call(StatusFinancialTableSeeder::class);
+        $this->call(FileTypeFinancialTableSeeder::class);
     }
 }

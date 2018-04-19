@@ -35,15 +35,15 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('PK_EMPS_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el nunemero de indentificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
-
-                        {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                         {!! Field:: text('PK_EMPS_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required','maxlength'=>'10','autocomplete'=>'off'], ['help' => 'Digitar el nunemero de indentificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                         
-                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: tel('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
+                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Razon social', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: text('EMPS_Direccion',null,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-tree'] ) !!}
+                        {!! Field:: tel('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
+                        
+                        {!! Field:: text('EMPS_Direccion',null,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-tree'] ) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -58,34 +58,17 @@
 
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Empresas');
         url = "{{ route('listarEmpresas.listarEmpresas') }}";
         columns = [
-            {
-                    data: 'DT_Row_Index'
-                },
-                {
-                    data: 'PK_EMPS_Empresa',
-                    "visible": true,
-                    name: "documento"
-                },
-                {
-                    data: 'EMPS_Nombre_Empresa',
-                    searchable: true
-                },
-                {
-                    data: 'EMPS_Razon_Social',
-                    searchable: true
-                },
-                {
-                    data: 'EMPS_Telefono',
-                    searchable: true
-                },
-                {
-                    data: 'EMPS_Direccion',
-                    searchable: true
-                },
+                { data: 'DT_Row_Index'},
+                {data: 'PK_EMPS_Empresa',"visible": true,name: "PK_EMPS_Empresa"},
+                {data: 'EMPS_Nombre_Empresa',searchable: true,name: "EMPS_Nombre_Empresa"},
+                {data: 'EMPS_Razon_Social',searchable: true,name: "EMPS_Razon_Social"},
+                {data: 'EMPS_Telefono',searchable: true,name: "EMPS_Telefono"},
+                {data: 'EMPS_Direccion',searchable: true,name: "EMPS_Direccion"},
                 {data: 'action',
                     className: '',
                     searchable: false,
@@ -153,11 +136,13 @@ jQuery(document).ready(function () {
                         $('#form-Agregar-Empresa')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

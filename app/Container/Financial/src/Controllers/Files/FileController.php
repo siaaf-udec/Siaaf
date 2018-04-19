@@ -1,19 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 20/07/17
- * Time: 1:58 PM
- */
 
 namespace App\Container\Financial\src\Controllers\Files;
 
 
+use App\Container\Financial\src\Repository\FileRepository;
+use App\Container\Financial\src\Requests\File\StoreFileRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    /**
+     * @var FileRepository
+     */
+    private $fileRepository;
+
+    /**
+     * FileController constructor.
+     * @param FileRepository $fileRepository
+     */
+    public function __construct(FileRepository $fileRepository)
+    {
+        $this->fileRepository = $fileRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,76 +34,43 @@ class FileController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return true;
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param Request|\Illuminate\Http\Request $request
+     * @param StoreFileRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFileRequest $request)
     {
-        try {
-
-            $path = $request->file('file')->store('financial');
-            Storage::delete($path);
-            return response($path, 200);
-        } catch (\Exception $e) {
-            Storage::delete($path);
-            return response('', 422);
+        if ( !$this->fileRepository->checkLatestRequest() ) {
+            return $this->fileRepository->studentUpload( $request ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
         }
+        return jsonResponse('warning', 'messages.request_in_process', 422);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show( $id )
     {
-        return true;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return true;
+        return view('financial.files.upload.show', compact('id') );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request|\Illuminate\Http\Request $request
+     * @param StoreFileRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreFileRequest $request, $id)
     {
-        return true;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        return true;
+        return $this->fileRepository->studentUpdate( $request, $id ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
     }
 }

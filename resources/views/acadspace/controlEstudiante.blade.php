@@ -25,7 +25,7 @@
                         {!! Form::open(['id' => 'form_sol_create', 'class' => '', 'url'=>'/forms']) !!}
                         <div class="form-wizard">
                             <div class="form-body">
-                                {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                {!! Field:: text('codigo',null,['label'=>'Identificación:', 'class'=> 'form-control', 'autofocus', '', 'maxlength'=>'12','autocomplete'=>'off'],
                                                                 ['help' => 'Digité el identificación','icon'=>'fa fa-credit-card'] ) !!}
 
                                 {!! Field::select('SOL_carrera',
@@ -130,7 +130,7 @@
             var form_edit = $('#form_sol_create');
             var rules_edit = {
                 codigo: {
-                    required: true, number:true, remote: {
+                    required: true, number:true, minlength: 5, maxlength: 12, remote: {
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         url: '{{ route('espacios.academicos.asist.verificarEstudiante') }}',
                         type: "POST"

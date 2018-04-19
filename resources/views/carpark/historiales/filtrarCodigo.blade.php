@@ -13,7 +13,7 @@
 
                 <div class="form-body">
 
-                    {!! Field:: text('CodigoUsuario',null,['label'=>'Código del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],['help' => 'Digite el código del usuario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: text('CodigoUsuario',null,['label'=>'Código del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite el código del usuario.','icon'=>'fa fa-user']) !!}
 
                     <div class="form-actions">
                         <div class="row">
@@ -57,8 +57,8 @@
                     CodigoUsuario: {
                         required: true,
                         number: true,
-                        minlength: 9,
-                        maxlength: 9
+                        minlength: 5,
+                        maxlength: 12
                     }
 
 

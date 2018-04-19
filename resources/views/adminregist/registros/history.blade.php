@@ -23,7 +23,8 @@
 @push('styles')
     <!-- Datatables Styles -->
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}"
+          rel="stylesheet"
           type="text/css"/>
     <!-- toastr Styles -->
     <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
@@ -220,7 +221,7 @@
     {-- bootstrap-toastr Scripts --}
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <!-- Datatables Scripts -->
-    <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
+    <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             App.unblockUI();

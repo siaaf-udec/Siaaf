@@ -14,7 +14,7 @@ class UsuariosController extends UsersUdecController
     /**
      *Función que redirecciona a la vista donde se encuentra la tabla de registro de usuarios.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class UsuariosController extends UsersUdecController
     /**
      * Función que redirecciona a la vista del formulario de registro de un nuevo usuario.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function create(Request $request)
@@ -41,7 +41,7 @@ class UsuariosController extends UsersUdecController
     /**
      *Función que muestra los usuarios registrados por medio de una petición ajax.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexAjax(Request $request)

@@ -1,28 +1,5 @@
-{{--
-|--------------------------------------------------------------------------
-| Extends
-|--------------------------------------------------------------------------
-|
-| Hereda los estilos y srcipts de la de la plantilla original.
-| Es la base para todas las páginas que se deseen crear.
-|
---}}
 @extends('material.layouts.dashboard')
-
-{{--
-|--------------------------------------------------------------------------
-| Styles
-|--------------------------------------------------------------------------
-|
-| Inyecta CSS requerido ya sea por un JS o para un elemento específico
-|
-| @push('styles')
-|
-| @endpush
- l
---}}
 @push('styles')
-
     <!--DATATIME -->
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Styles DATATABLE  -->
@@ -42,66 +19,9 @@
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
-
-
-{{--
-|--------------------------------------------------------------------------
-| Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título de la página a la etiqueta
-<title>
-</title>
-de la plantilla
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('title', $miVariable)
-| @section('title', 'Título')
---}}
-@section('title', '| Solicitudes Prestamo')
-
-{{--
-|--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
-@section('page-title', 'Solicitudes Prestamos')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
-
-@section('page-description', 'Consulta y Finaliza prestamos')
-
-{{--
-|--------------------------------------------------------------------------
-| Content
-|--------------------------------------------------------------------------
-|
-| Inyecta el contenido HTML que se usará en la página
-|
-| @section('content')
-|
-| @endsection
---}}
+@section('title', '| Solicitudes Prestamo-Reservas')
+@section('page-title', 'Solicitudes Prestamos-Reservas')
+@section('page-description', 'Consulta y Finaliza prestamos-reservas')
 @section('content')
     <div class="clearfix"></div>
     <div class="col-md-12">
@@ -113,14 +33,15 @@ de la plantilla
             <br>
             <div class="row">
                 <div class="col-md-12">
+                    @permission('AUDI_REQUESTS_VIEW_RESERVATION')
                     <div class="actions">
                         <a class="btn btn-outline dark reservaAjax" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Reservas
                         </a>
-
                     </div>
+                    @endpermission
                 </div>
             </div>
             <div class="clearfix">
@@ -143,30 +64,8 @@ de la plantilla
             <div class="clearfix"></div>
         @endcomponent
     </div>
-
-            </br>
-    </div>
-    {{-- END HTML SAMPLE --}}
+    </br>
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
     <!-- TIEMPOS DATETIME -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
@@ -201,24 +100,6 @@ de la plantilla
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript">
     </script>
 @endpush
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
@@ -251,7 +132,6 @@ de la plantilla
                 }
             };
         }();
-
         jQuery(document).ready(function () {
             ComponentsSelect2.init();
             var idFuncionario;
@@ -270,7 +150,7 @@ de la plantilla
                 {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'Tipo Identificacion'},
                 {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'Numero'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Finalizar Prestamo</i></a>',
+                    defaultContent: '@permission("AUDI_REQUESTS_VIEW_LENDING")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Finalizar Prestamo</i></a>@endpermission',
                     data:'action',
                     name:'action',
                     title:'Acciones',
@@ -297,9 +177,6 @@ de la plantilla
                 var route = '{{ route('reserva.index') }}';
                 $(".content-ajax").load(route);
             });
-
-
         });
-
     </script>
 @endpush

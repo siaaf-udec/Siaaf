@@ -51,13 +51,15 @@
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12">
+                @permission("AUDI_KIT_VIEW_CREATE")
                 <div class="actions">
                     <a class="btn btn-outline dark createKit" data-toggle="modal">
                         <i class="fa fa-plus">
                         </i>
-                        Nuevo Kit
+                        Crear Kit
                     </a>
                 </div>
+                @endpermission
             </div>
         </div>
         <div class="clearfix"></div>
@@ -119,9 +121,9 @@
             {data: 'KIT_Codigo' , name: 'Codigo'},
             {
                 defaultContent:
-                '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>' +
-                '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>'+
-                '<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>',
+                    '@permission("AUDI_KIT_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                    '@permission("AUDI_KIT_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
+                    '@permission("AUDI_KIT_ASSIGN")<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -167,7 +169,6 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-
             if(dataTable.KIT_FK_Estado_id == 1){
                 swal(
                     {
@@ -194,11 +195,19 @@
                                 },
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
-                                        App.unblockUI('.portlet-form');
+
                                         UIToastr.init(xhr , response.title , response.message  );
                                         table.ajax.reload();
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 &&  xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
+
                             });
                         }
                     }
@@ -228,9 +237,16 @@
                                 },
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
-                                        App.unblockUI('.portlet-form');
+
                                         UIToastr.init(xhr , response.title , response.message  );
                                         table.ajax.reload();
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 &&  xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -261,18 +277,20 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
+                            App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
                                 $('#modal-info-kit').modal('hide');
                                 UIToastr.init(xhr , response.title , response.message  );
                                 table.ajax.reload();
+                                App.unblockUI('.portlet-form');
                             }
                         },
                         error: function (response, xhr, request) {
                             if (request.status === 422 &&  xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });

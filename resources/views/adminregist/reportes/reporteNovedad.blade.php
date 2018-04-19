@@ -91,8 +91,6 @@
                 <td class="desc">{{$infoUsuario->registro->place}}</td>
                 <td class="unit">{{$infoUsuario->registro->email}}</td>
                 <td class="unit">{{$infoUsuario->created_at}}</td>
-
-
             </tr>
             @endforeach
             </tbody>

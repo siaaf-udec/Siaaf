@@ -7,24 +7,37 @@ use App\Container\Audiovisuals\src\Validaciones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-
 class ValidacionController extends Controller
 {
     /**
+     * Funcion que muestra las preguntas de validacion para las solicitudes de prestamos y reservas
+     *
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response| \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $preguntas = Validaciones::select()
-            ->orderBy('id')
-            ->get();
-        return view('audiovisuals.validacion.tablaValidaciones')
-            ->with('dato',$preguntas);
+        if ($request->isMethod('GET')) {
+            $preguntas = Validaciones::select()
+                ->orderBy('id')
+                ->get();
+            return view('audiovisuals.validacion.tablaValidaciones')
+                ->with('dato',$preguntas);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
+
+    /**
+     * Funcion que modifca el valor de las preguntas de la tabla de validaciones
+     *
+     * @param Request $request
+     * @param Validaciones $task
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
     public function edit(Request $request, Validaciones $task)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -34,12 +47,11 @@ class ValidacionController extends Controller
                 '¡Bien hecho!',
                 'Datos modificados correc ,mtamente.'
             );
-        } else {
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
         }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
 }

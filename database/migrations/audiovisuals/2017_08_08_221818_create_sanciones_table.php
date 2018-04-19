@@ -19,9 +19,7 @@ class CreateSancionesTable extends Migration
             $table->integer('FK_SNS_UsuarioPrestamo_id')->unsigned()->nullable();
             $table->integer('FK_SNS_UsuarioSancion_id')->unsigned()->nullable();
             $table->date('fecha');
-
             $table->timestamps();
-
             $table->foreign('FK_SNS_Tipo')->references('id')->on('TBL_Tipo_Sanciones');
             $table->foreign('FK_SNS_UsuarioPrestamo_id')->references('id')->on('TBL_Usuario_Audiovisuales');
             $table->foreign('FK_SNS_UsuarioSancion_id')->references('id')->on('TBL_Usuario_Audiovisuales');

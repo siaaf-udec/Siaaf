@@ -1,25 +1,4 @@
-{{--
-|--------------------------------------------------------------------------
-| Extends
-|--------------------------------------------------------------------------
-|
-| Hereda los estilos y srcipts de la de la plantilla original.
-| Es la base para todas las páginas que se deseen crear.
-|
---}}
 @extends('material.layouts.dashboard')
-
-{{--
-|--------------------------------------------------------------------------
-| Styles
-|--------------------------------------------------------------------------
-|
-| Inyecta CSS requerido ya sea por un JS o para un elemento específico
-|
-| @push('styles')
-|
-| @endpush
---}}
 @push('styles')
     <!-- STYLES SELECT -->
     <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet"
@@ -42,73 +21,11 @@
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
-
-
-{{--
-|--------------------------------------------------------------------------
-| Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título de la página a la etiqueta
-<title>
-</title>
-de la plantilla
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('title', $miVariable)
-| @section('title', 'Título')
---}}
 @section('title', '| Gestion Kit')
-
-{{--
-|--------------------------------------------------------------------------
-| Page Title
-|--------------------------------------------------------------------------
-|
-| Inyecta el título a la sección del contenido de página.
-| Recibe texto o variables de los controladores
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-title', $miVariable)
-| @section('page-title', 'Título')
-|
-|
---}}
 @section('page-title', 'Gestion kits')
-{{--
-|--------------------------------------------------------------------------
-| Page Description
-|--------------------------------------------------------------------------
-|
-| Inyecta una breve descripción a la sección del contenido de página.
-| Recibe texto o variables de los controladores o se puede dejar sin datos
-| Sin embargo, también se puede usar de la siguiente forma
-|
-| @section('page-description', $miVariable)
-| @section('page-description', 'Título')
---}}
-
-@section('page-description', '')
-
-{{--
-|--------------------------------------------------------------------------
-| Content
-|--------------------------------------------------------------------------
-|
-| Inyecta el contenido HTML que se usará en la página
-|
-| @section('content')
-|
-| @endsection
---}}
 @section('content')
-    {{-- BEGIN HTML SAMPLE --}}
-    {{-- BEGIN HTML MODAL CREATE --}}
     <div class="row">
         <div class="col-md-12">
-        {{-- BEGIN HTML MODAL CREATE --}}
-        <!-- responsive -->
             <div class="modal fade" data-width="760" id="modal-info-kit" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
@@ -149,7 +66,6 @@ de la plantilla
                 </div>
                 {!! Form::close() !!}
             </div>
-            {{-- END HTML MODAL CREATE--}}
         </div>
     </div>
     <div class="col-md-12">
@@ -158,13 +74,15 @@ de la plantilla
             <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-12">
+                    @permission("AUDI_KIT_VIEW_CREATE")
                     <div class="actions">
                         <a class="btn btn-outline dark createKit" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
-                            Nuevo Kit
+                            Crear Kit
                         </a>
                     </div>
+                    @endpermission
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -182,31 +100,9 @@ de la plantilla
             <div class="clearfix"></div>
         @endcomponent
     </div>
-
-    {{-- END HTML SAMPLE --}}
 @endsection
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts necesarios para usar plugins
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
-
 @push('plugins')
     <!-- SCRIPT SELECT -->
-
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
     </script>
     <!-- SCRIPT DATATABLE -->
@@ -248,24 +144,6 @@ de la plantilla
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript">
     </script>
 @endpush
-
-{{--
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| Inyecta scripts para inicializar componentes Javascript como
-| > Tablas
-| > Checkboxes
-| > Radios
-| > Mapas
-| > Notificaciones
-| > Validaciones de Formularios por JS
-| > Entre otros
-| @push('functions')
-|
-| @endpush
---}}
 @push('functions')
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
@@ -276,7 +154,6 @@ de la plantilla
     <!-- Estandar Datatable -->
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript">
     </script>
-
     <script>
         var table, url, columns;
         var idEditarKit;
@@ -314,7 +191,6 @@ de la plantilla
             ComponentsBootstrapMaxlength.init();
             ComponentsSelect2.init();
             table = $('#kit-table-ajax');
-            {{--url = "{{ route('listarArticulo.data') }}";--}}
             url ="{{ route('listarKit.data') }}";
             columns = [
                 {data: 'DT_Row_Index'},
@@ -322,9 +198,9 @@ de la plantilla
                 {data: 'KIT_Codigo' , name: 'Codigo'},
                 {
                     defaultContent:
-                    '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>' +
-                    '<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>'+
-                    '<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>',
+                    '@permission("AUDI_KIT_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                    '@permission("AUDI_KIT_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
+                    '@permission("AUDI_KIT_ASSIGN")<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -348,7 +224,6 @@ de la plantilla
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                console.log(dataTable);
                 if(dataTable.KIT_FK_Estado_id!=5){
                     $('#KIT_Codigo').attr('disabled','disabled');
                 }else{
@@ -363,7 +238,6 @@ de la plantilla
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                console.log(dataTable);
                 if(dataTable.KIT_FK_Estado_id == 1){
                     swal(
                         {
@@ -381,7 +255,6 @@ de la plantilla
                             if (isConfirm) {
                                 var rutaRemoverArticuloKit =
                                     '{{ route('EliminarKit') }}'+ '/'+ dataTable.id;
-                                console.log('este es el codigo del kit a eliminar'+dataTable.id);
                                 $.ajax({
                                     url: rutaRemoverArticuloKit,
                                     type: 'GET',
@@ -390,9 +263,15 @@ de la plantilla
                                     },
                                     success: function (response, xhr, request) {
                                         if (request.status === 200 && xhr === 'success') {
-                                            App.unblockUI('.portlet-form');
                                             UIToastr.init(xhr , response.title , response.message  );
                                             table.ajax.reload();
+                                            App.unblockUI('.portlet-form');
+                                        }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'error') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
                                         }
                                     }
                                 });
@@ -424,9 +303,15 @@ de la plantilla
                                     },
                                     success: function (response, xhr, request) {
                                         if (request.status === 200 && xhr === 'success') {
-                                            App.unblockUI('.portlet-form');
                                             UIToastr.init(xhr , response.title , response.message  );
                                             table.ajax.reload();
+                                            App.unblockUI('.portlet-form');
+                                        }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'error') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
                                         }
                                     }
                                 });
@@ -465,18 +350,20 @@ de la plantilla
                             processData: false,
                             async: async,
                             beforeSend: function () {
-
+                                App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     $('#modal-info-kit').modal('hide');
                                     UIToastr.init(xhr , response.title , response.message  );
                                     table.ajax.reload();
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 &&  xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             }
                         });

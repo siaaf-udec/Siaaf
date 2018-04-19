@@ -22,6 +22,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @permission("AUDI_UPDATE_VALIDATIONS")
                         @foreach($dato as $datos)
                             <tr>
                                 <td class="text-center">{{$datos->id}}</td>
@@ -31,6 +32,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @endpermission
                         </tbody>
                     </table>
                 </div>

@@ -14,7 +14,8 @@ class RegistrosController extends Controller
     /**
      *Función que redirecciona a la vista donde se encuentra el formulario de registro de ingreso.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function index(Request $request)
     {
@@ -31,7 +32,8 @@ class RegistrosController extends Controller
     /**
      *Función que redirecciona a la vista donde se encuentra el formulario de registro de ingreso.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function indexRegistro(Request $request)
     {
@@ -117,7 +119,8 @@ class RegistrosController extends Controller
     /**
      *Función que redirecciona a la vista donde se encuentra la tabla de registro de ingreso.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
     public function history(Request $request)
     {

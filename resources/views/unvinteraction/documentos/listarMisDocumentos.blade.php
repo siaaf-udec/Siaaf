@@ -12,6 +12,7 @@
 <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Lista de Documentos')
@@ -27,15 +28,13 @@
 <!-- TABLAS DOCUMENTOS DEL CONVENIO -->
    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'MIS DOCUMENTOS'])
 <div class="col-md-12">
-                    <div class="actions">
-                        <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
- 
-      <div class="row">
-        
-        <div class="clearfix"> </div><br><br>
-        <div class="col-md-12">
+    <div class="actions">
+        <a id="archivo1" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+<div class="row">
+    <div class="clearfix"> </div><br><br>
+    <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos'])
             
                 @slot('columns', [
@@ -45,8 +44,8 @@
                     'Acciones' => ['style' => 'width:160px;']
                 ])
             @endcomponent
-        </div>
     </div>
+</div>
 
 @endcomponent
 <!-- TABLAS  PARTICIPANTES -->
@@ -97,51 +96,59 @@
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
 
+<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
 @endpush
 @push('functions')
 <script>
 jQuery(document).ready(function () {
     Dropzone.autoDiscover = false;
-   
-    
-    
-        var table, url, columns;
+     App.unblockUI('.portlet-form');
+    var table, url, columns;
         table = $('#Listar_Documentos');
         url = "{{ route('listarMisDocumentos.listarMisDocumentos') }}";
         columns = [
             {data: 'DT_Row_Index'},
-           {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"documento",className:'none' },
-           {data: 'DCET_Nombre',searchable: true},
-           {   data:"PK_DCET_Documentacion_Extra",
-               name:'action',
-               title:'Acciones',
-               orderable: false,
-               searchable: false,
-               exportable: false,
-               printable: false,
-               className: '',   
-               render: function ( data, type, full, meta ) {
-                 return '<a href="/siaaf/public/index.php/interaccion-universitaria/descargaUsuario/'+data+'" target="_blank" class="btn btn-simple "><i class="fa fa-cloud-download"></i></a>';
-                },
-                responsivePriority:2
-                
-               
-           }
+            {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"PK_DCET_Documentacion_Extra",className:'none' },
+            {data: 'DCET_Nombre',searchable: true,name:"DCET_Nombre"},
+            {data:'action',
+             
+             searchable: false,
+             name:'action',
+             title:'Acciones',
+             orderable: false,
+             exportable: false,
+             printable: false,
+             defaultContent: '@permission(['INTE_DES_DOC_USU'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
+            }
         ];
         dataTableServer.init(table, url, columns);
     
         
+        table.on('click', '.descargar', function(e) {
+            table = $('#Listar_Documentos').DataTable();
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({
+                    type: "GET",
+                    url: '',
+                    dataType: "html",
+                }).done(function(data) {
+                    window.location.href = '{{ route('documentoDescargaUsuario.documentoDescargaUsuario') }}'+'/'+dataTable.PK_DCET_Documentacion_Extra;
+            });
+        });
+    
     $("#archivo1").on('click', function (e) {
             e.preventDefault();
             $('#documento').modal('toggle');
         });
+    
     table = $('#Listar_Documentos');
         var documento = function () { 
             return { 
@@ -153,6 +160,7 @@ jQuery(document).ready(function () {
         }
         
         var route = '{{route('subirDocumentoUsuario.subirDocumentoUsuario')}}';
+        
         var formatfile = '.pdf'; 
         var numfile = 1; 
     

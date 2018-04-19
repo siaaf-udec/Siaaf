@@ -214,6 +214,27 @@ return [
         App\Container\Administrative\Src\Providers\RegistroIngresoServiceProvider::class,
 
         /*
+         * Financial Service Providers...
+         */
+        App\Container\Financial\src\Providers\FinancialUserServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialRoleServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialProgramServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialSubjectServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialExtensionServiceProvider::class,
+        \App\Container\Financial\src\Providers\FinancialValidationServiceProvider::class,
+        \App\Container\Financial\src\Providers\FinancialIntersemestralServiceProvider::class,
+        \App\Container\Financial\src\Providers\FinancialIntersemestralStudentServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialAddSubServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialStatusRequestServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialCostServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialCommentServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialSubjectProgramTeacherServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialFileTypeServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialFileServiceProvider::class,
+        Tightenco\Ziggy\ZiggyServiceProvider::class,
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,

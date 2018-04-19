@@ -20,21 +20,21 @@ class Radicacion extends Model
      */
     protected $table = 'TBL_Radicacion';
 
- /**
+    /**
      * Nombre de columna primary_key de tabla .
      *
      * @var string
      */
     protected $primaryKey = 'PK_RDCN_IdRadicacion';
 
- /**
+    /**
      * Atributos que son asignables.
      *
      * @var array
      */
-    protected $fillable = ['RDCN_Min','RDCN_Requerimientos','FK_TBL_Anteproyecto_Id'];
-    
-	/*	
+    protected $fillable = ['RDCN_Min', 'RDCN_Requerimientos', 'FK_TBL_Anteproyecto_Id'];
+
+    /*	
 	*Función de relacion entre las tablas de Radicacion y Anteproyecto 
 	*por los campo de FK_TBL_Anteproyecto_Id y PK_NPRY_IdMinr008 
 	*para realizar las busquedas complementarias

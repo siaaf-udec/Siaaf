@@ -5,7 +5,7 @@
             <div class="form-body">
                 {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Convenio']) !!}
                 <div class="form-wizard">
-                    {!! Field:: text('SEDE_Sede',$sede->SEDE_Sede,['label'=>'Sede', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
+                    {!! Field:: text('SEDE_Sede',$sede->SEDE_Sede,['label'=>'Sede', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
                     
                     {{ Form::submit('Editar', ['class' => 'btn blue']) }} {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                 </div>
@@ -14,12 +14,12 @@
             </div>
         </div>
     </div>
-
     @endcomponent
 </div>
 
 <script>
     jQuery(document).ready(function() {
+        App.unblockUI('.portlet-form');
         $('.portlet-form').attr("id", "form_wizard_1");
         var rules = {
             SEDE_Sede: {required: true}
@@ -53,8 +53,9 @@
                             }
                         },
                         error: function(response, xhr, request) {
-                            if (request.status === 422 && xhr === 'success') {
+                            if (request.status === 422 && xhr === 'error') {
                                 UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
                             }
                         }
                     });

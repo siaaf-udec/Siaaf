@@ -8,9 +8,9 @@
                         <div class="form-wizard">
                             {!! Field:: text('CVNO_Nombre',$convenio->CVNO_Nombre,['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
                         
-                            {!! Field::date('CVNO_Fecha_Inicio',$convenio->CVNO_Fecha_Inicio,['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CVNO_Fecha_Inicio',$convenio->CVNO_Fecha_Inicio,['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
                         
-                            {!! Field::date('CVNO_Fecha_Fin',$convenio->CVNO_Fecha_Fin,['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'Digita tu dirección web.', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CVNO_Fecha_Fin',$convenio->CVNO_Fecha_Fin,['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
                             
                             {!! Field::select('FK_TBL_Estado_Id',$estado,$convenio->FK_TBL_Estado_Id,[ 'label' => 'Selecciona un estado'])!!}
                         
@@ -38,6 +38,7 @@
 jQuery(document).ready(function () {
     ComponentsDateTimePickers.init();
     ComponentsSelect2.init();
+    App.unblockUI('.portlet-form');
     $('.portlet-form').attr("id","form_wizard_1");
      var rules = {
             CVNO_Nombre: {required: true},
@@ -71,16 +72,21 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                         beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+						},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );
                         var route = '{{ route('conveniosAjax.conveniosAjax') }}';
                         $(".content-ajax").load(route);
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
                     }
                 }
                     });

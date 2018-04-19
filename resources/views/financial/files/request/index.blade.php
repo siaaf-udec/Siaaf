@@ -1,122 +1,55 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
-
+    <link href="{{ asset('assets/global/plugins/morris/morris.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Select2 Style -->
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Loading Styles -->
+    <link href="{{ mix('assets/pages/scripts/financial/loading.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
-@section('title', ' | Aprobación de Archivos')
+@section('title', trans('financial.files.management.title'))
 
-@section('page-title', 'Aprobar Archivos')
+@section('page-title', trans('financial.files.management.index.title'))
 
-@section('page-description', 'para validación y aprobación de archivos Icetex y Apoyo Financiero')
+@section('page-description', trans('financial.files.management.index.description'))
 
 @section('content')
-    <div class="col-md-12">
-        <div class="portlet light ">
-            <div class="portlet-title tabbable-line">
-                <div class="caption">
-                    <i class=" icon-social-twitter font-dark hide"></i>
-                    <span class="caption-subject font-dark bold uppercase">Aprobar Archivos</span>
-                </div>
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab_actions_pending" data-toggle="tab"> Pendiente </a>
-                    </li>
-                    <li>
-                        <a href="#tab_actions_completed" data-toggle="tab"> Aprobado </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="portlet-body">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_actions_pending">
-                    @php $faker = Faker\Factory::create('es_ES'); @endphp
-                        <!-- BEGIN: Actions -->
-                        <div class="mt-actions">
-                            @for($i = 0; $i <= 5; $i++)
-                                <div class="mt-action">
-                                    <div class="mt-action-img"> <img class="hash-avatar" src=""> </div>
-                                    <div class="mt-action-body">
-                                        <div class="mt-action-row">
-                                            <div class="mt-action-info ">
-                                                <div class="mt-action-icon ">
-                                                    <i class="icon-action-redo"></i>
-                                                </div>
-                                                <div class="mt-action-details ">
-                                                    <span class="mt-action-author">{{ $faker->name }}</span>
-                                                    <p class="mt-action-desc">{{ $faker->sentence }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action-datetime ">
-                                                <span class="mt-action-date">{{ $faker->dayOfMonth .' '. $faker->monthName }} </span>
-                                                <span class="mt-action-dot bg-{{ $faker->randomElement(['red', 'green']) }}"></span>
-                                                <span class="mt=action-time">{{ $faker->time($format = 'H:i') }}-{{ $faker->time($format = 'H:i') }}</span>
-                                            </div>
-                                            <div class="mt-action-buttons ">
-                                                <div class="btn-group btn-group-circle">
-                                                    <button type="button" class="btn btn-outline green btn-sm">Appove</button>
-                                                    <button type="button" class="btn btn-outline red btn-sm">Reject</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endfor
-                        </div>
-                        <!-- END: Actions -->
-                    </div>
-                    <div class="tab-pane" id="tab_actions_completed">
-                        <!-- BEGIN:Completed-->
-                        <div class="mt-actions">
-                            @for($i = 0; $i <= 3; $i++)
-                                <div class="mt-action">
-                                    <div class="mt-action-img"> <img class="hash-avatar" src=""> </div>
-                                    <div class="mt-action-body">
-                                        <div class="mt-action-row">
-                                            <div class="mt-action-info ">
-                                                <div class="mt-action-icon ">
-                                                    <i class="icon-action-redo"></i>
-                                                </div>
-                                                <div class="mt-action-details ">
-                                                    <span class="mt-action-author">{{ $faker->name }}</span>
-                                                    <p class="mt-action-desc">{{ $faker->sentence }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action-datetime ">
-                                                <span class="mt-action-date">{{ $faker->dayOfMonth .' '. $faker->monthName }} </span>
-                                                <span class="mt-action-dot bg-{{ $faker->randomElement(['red', 'green']) }}"></span>
-                                                <span class="mt=action-time">{{ $faker->time($format = 'H:i') }}-{{ $faker->time($format = 'H:i') }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endfor
-                            <!-- END: Completed -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-12" id="app">
+        <file-management></file-management>
     </div>
 @endsection
 
 
 
 @push('plugins')
-<script src="{{ asset('assets/pages/scripts/financial/md5.min.js') }}" type="text/javascript"></script>
-<script src="{{ mix('assets/pages/scripts/financial/pnglib.min.js') }}" type="text/javascript"></script>
-<script src="{{ mix('assets/pages/scripts/financial/identicon.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/highcharts/js/highcharts.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/highcharts/js/highcharts-3d.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/highcharts/js/highcharts-more.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/highcharts/js/modules/exporting.js') }}" type="text/javascript"></script>
+
+    <!-- Waypoints Scripts -->
+    <script src="{{ asset('assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript"></script>
+    <!-- Counter Up Scripts -->
+    <script src="{{ asset('assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript"></script>
+    <!-- Maxlength Scripts -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+    <!-- Validation Scripts -->
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_'.config('app.locale').'.js') }}" type="text/javascript"></script>
+    <!-- PDF Scripts -->
+    <script src="{{ asset('assets/pages/scripts/financial/pdfobject.min.js') }}" type="text/javascript"></script>
+    <!-- Select2 Scripts -->
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/i18n/'.config('app.locale').'.js') }}"></script>
+    <!-- Loading Scripts -->
+    <script src="{{ mix('assets/pages/scripts/financial/loading.min.js') }}" type="text/javascript"></script>
 @endpush
 
 
 @push('functions')
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        var hash = md5('#'+Math.floor(Math.random()*16777215).toString(16));
-        $('.hash-avatar').each(function () {
-            var data = new Identicon(hash, 45).toString();
-            $(this).attr('src', 'data:image/png;base64,' + data);
-        });
-    });
-</script>
+    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 @endpush

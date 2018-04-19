@@ -16,7 +16,7 @@ class CreateTBLSedeTbl extends Migration
         //
           Schema::connection('unvinteraction')->create('TBL_Sede', function (Blueprint $table) {
               $table->increments('PK_SEDE_Sede');
-              $table->string('SEDE_Sede',20);
+              $table->text('SEDE_Sede');
           });
     }
 
@@ -28,5 +28,6 @@ class CreateTBLSedeTbl extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('TBL_Sede');
     }
 }

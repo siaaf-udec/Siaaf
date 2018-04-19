@@ -5,14 +5,14 @@
             <div class="col-md-12">
                 <div class="actions">
                     @permission('PARK_CREATE_USER')<a href="javascript:;"
-                                                         class="btn btn-simple btn-success btn-icon create"
-                                                         title="Registar nuevo usuario">
+                                                      class="btn btn-simple btn-success btn-icon create"
+                                                      title="Registar nuevo usuario">
                         <i class="fa fa-plus">
                         </i>Nuevo
                     </a>@endpermission
                     @permission('PARK_REPORT_USER')<a href="javascript:;"
-                                                         class="btn btn-simple btn-success btn-icon reports"
-                                                         title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
+                                                      class="btn btn-simple btn-success btn-icon reports"
+                                                      title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                         de Usuarios</a>@endpermission
                     <br>
                 </div>
@@ -23,14 +23,13 @@
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                     @slot('columns', [
-                        '#',
-                        'Código',
-                        'Nombre',
-                        'Apellido',
-                        'Correo',
-                        'Perfil',
-                        'Vehículo',
-                        'Acciones'
+                            'Documento',
+                            'Nombre',
+                            'Apellido',
+                            'Perfil',
+                            'Correo',
+                            'Vehículo',
+                            'Acciones'
                     ])
                 @endcomponent
             </div>
@@ -47,25 +46,11 @@
         table = $('#listaUsuarios');
         url = "{{ route('parqueadero.usuariosCarpark.tablaUsuarios')}}";
         columns = [
-            {data: 'DT_Row_Index'},
-            {data: 'PK_CU_Codigo', name: 'Código'},
-            {data: 'CU_Nombre1', name: 'Nombre'},
-            {data: 'CU_Apellido1', name: 'Apellido'},
-            {data: 'CU_Correo', name: 'Correo'},
-            {
-                defaultContent: '@permission('PARK_SEE_USER')<a href="javascript:;" class="btn btn-success verPerfil"  title="Perfil" ><i class="fa fa-address-card"></i></a>@endpermission',
-                data: 'action',
-                name: 'Perfil',
-                title: 'Perfil',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            },
+            {data: 'number_document', name: 'number_document'},
+            {data: 'username', name: 'username'},
+            {data: 'lastname', name: 'lastname'},
+            {data: 'type_user', name: 'type_user'},
+            {data: 'email', name: 'email'},
             {
                 defaultContent: '@permission('PARK_CREATE_MOTO')<a href="javascript:;" class="btn btn-success RegistrarMoto"  title="Vehículo" ><i class="fa fa-motorcycle"></i></a>@endpermission',
                 data: 'action',
@@ -81,7 +66,7 @@
                 responsivePriority: 2
             },
             {
-                defaultContent: '@permission('PARK_REPORT_USER')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('PARK_UPDATE_USER') <a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a> @endpermission @permission('PARK_DELETE_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('PARK_REPORT_USER')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('PARK_UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission('PARK_DELETE_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -102,7 +87,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.PK_CU_Codigo;
+            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.number_document;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -149,7 +134,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.usuariosCarpark.verPerfil') }}' + '/' + dataTable.PK_CU_Codigo;
+                route_edit = '{{ route('parqueadero.usuariosCarpark.verPerfil') }}' + '/' + dataTable.number_document;
             $(".content-ajax").load(route_edit);
         });
 
@@ -157,7 +142,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.PK_CU_Codigo;
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.number_document;
             $(".content-ajax").load(route_edit);
         });
 
@@ -165,7 +150,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.PK_CU_Codigo;
+                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.number_document;
             $(".content-ajax").load(route_edit);
         });
 
@@ -180,7 +165,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuario') }}' + '/' + dataTable.PK_CU_Codigo, '_blank');
+                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuario') }}' + '/' + dataTable.number_document, '_blank');
             });
         });
 

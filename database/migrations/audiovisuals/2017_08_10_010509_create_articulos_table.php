@@ -21,11 +21,9 @@ class CreateArticulosTable extends Migration
             $table->integer('FK_ART_Estado_id')->unsigned()->nullable();
             $table->String('ART_Codigo');
             $table->timestamps();
-
             $table->foreign('FK_ART_Tipo_id')->references('id')->on('TBL_Tipo_articulos');
             $table->foreign('FK_ART_Kit_id')->references('id')->on('TBL_Kits');
             $table->foreign('FK_ART_Estado_id')->references('id')->on('TBL_Estados');
-
             $table->softDeletes();
         });
     }

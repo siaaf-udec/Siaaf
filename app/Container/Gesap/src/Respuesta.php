@@ -20,21 +20,21 @@ class Respuesta extends Model
      */
     protected $table = 'TBL_Respuesta';
 
- /**
+    /**
      * Nombre de columna primary_key de tabla .
      *
      * @var string
      */
     protected $primaryKey = 'PK_RPST_IdMinr008';
 
- /**
+    /**
      * Atributos que son asignables.
      *
      * @var array
      */
-    protected $fillable = ['RPST_RMin','RPST_Requerimientos','FK_TBL_Radicacion_Id'];
-    
-	/*	
+    protected $fillable = ['RPST_RMin', 'RPST_Requerimientos', 'FK_TBL_Radicacion_Id'];
+
+    /*	
 	*Función de relacion entre las tablas de Respuesta y Observaciones 
 	*por los campo de FK_TBL_Observaciones_Id y PK_BVCS_IdObservacion 
 	*para realizar las busquedas complementarias

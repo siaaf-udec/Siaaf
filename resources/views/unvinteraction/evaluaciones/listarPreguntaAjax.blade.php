@@ -30,7 +30,6 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-
                 <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PREGUNTA</h1>
@@ -38,23 +37,15 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
                         
                         {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
-
-
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-12 col-md-offset-0">
-
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
+                        
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
+                        
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
+                        {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -63,16 +54,17 @@
 <script>
 
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     ComponentsSelect2.init();
    var table, url, columns;
         table = $('#Listar_Preguntas');
         url = "{{ route('listarPregunta.listarPregunta') }}";
         columns = [
-            {data: 'DT_Row_Index'},
-           {data: 'PK_PRGT_Pregunta', "visible": true, name:"documento" },
-           {data: 'PRGT_Enunciado', searchable: true},
-           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true},
-           {data:'action',className:'',searchable: false,
+           {data: 'DT_Row_Index'},
+           {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta" },
+           {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
+           {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
@@ -131,11 +123,13 @@ jQuery(document).ready(function () {
                         $('#form-Agregar-Pregunta')[0].reset();
                         table.ajax.reload();
                         UIToastr.init(xhr , response.title , response.message  );
+                        App.unblockUI('.portlet-form');
                     }
                 },
                 error: function (response, xhr, request) {
-                    if (request.status === 422 &&  xhr === 'success') {
+                    if (request.status === 422 &&  xhr === 'error') {
                         UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');  
                     }
                 }
                     });
@@ -147,6 +141,10 @@ jQuery(document).ready(function () {
         
     FormValidationMd.init( form, rules, messages , crearConvenio());
     
+    $("#archivo3").on('click', function (e) {
+            e.preventDefault();
+            $('#agregar').modal('toggle');
+        });
   
 });
 </script>

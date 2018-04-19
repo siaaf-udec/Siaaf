@@ -314,201 +314,201 @@ class UsersGesapTableSeeder extends Seeder
              'state' => 'aprobado',
              'email' => 'brayanbip37@gmail.com',
              'password' => bcrypt('123456')]
-            ]);
+        ]);
 
 
-			$role1 = Role:: where('name' , 'Administrator_Gesap')->get(['id'])->first();
-			$role2 = Role:: where('name' , 'Coordinator_Gesap')->get(['id'])->first();
-			$role3 = Role:: where('name' , 'Evaluator_Gesap')->get(['id'])->first();
-			$role4 = Role:: where('name' , 'Student_Gesap')->get(['id'])->first();
-		
-            $user = User::where('lastname', '=', 'Admin')->first();
-            $user->roles()->sync($role1);
+        $role1 = Role:: where('name' , 'Administrator_Gesap')->get(['id'])->first();
+        $role2 = Role:: where('name' , 'Coordinator_Gesap')->get(['id'])->first();
+        $role3 = Role:: where('name' , 'Evaluator_Gesap')->get(['id'])->first();
+        $role4 = Role:: where('name' , 'Student_Gesap')->get(['id'])->first();
 
+        $user = User::where('lastname', '=', 'Admin')->first();
+        $user->roles()->sync($role1);
 
 
-            $user = User::where('lastname', '=', 'Coordinador')->first();
-            $user->roles()->sync($role2);
 
-            $user = User::where('lastname', '=', 'Valenzuela')->first();
-            $user->roles()->sync($role2);
+        $user = User::where('lastname', '=', 'Coordinador')->first();
+        $user->roles()->sync($role2);
 
-            $user = User::where('lastname', '=', 'Morales')->first();
-            $user->roles()->sync($role2);
+        $user = User::where('lastname', '=', 'Valenzuela')->first();
+        $user->roles()->sync($role2);
 
+        $user = User::where('lastname', '=', 'Morales')->first();
+        $user->roles()->sync($role2);
 
 
-            $user = User::where('lastname', '=', 'evaluador')->first();
-            $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'Barahona Rodriguez')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'evaluador')->first();
+        $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'Lanza Rodriguez')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'Barahona Rodriguez')->first();
+        $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'Andrade Ramírez')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'Lanza Rodriguez')->first();
+        $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'moreno')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'Andrade Ramírez')->first();
+        $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'Espinosa')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'moreno')->first();
+        $user->roles()->sync($role3);
 
-            $user = User::where('lastname', '=', 'Morera Zarate')->first();
-            $user->roles()->sync($role3);
+        $user = User::where('lastname', '=', 'Espinosa')->first();
+        $user->roles()->sync($role3);
 
+        $user = User::where('lastname', '=', 'Morera Zarate')->first();
+        $user->roles()->sync($role3);
 
 
-            $user = User::where('lastname', '=', 'Avendaño Puin')->first();
-            $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Reyes')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Avendaño Puin')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Correa Laverde')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Reyes')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Monroy')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Correa Laverde')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Castrillon')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Monroy')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Canon')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Castrillon')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Linares')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Canon')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'ACOSTA LATORRE')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Linares')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'perez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'ACOSTA LATORRE')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Clavijo')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'perez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Zambrano Romero')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Clavijo')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Arias Rojas')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Zambrano Romero')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Bernal Hernandez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Arias Rojas')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Ramirez Forero')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Bernal Hernandez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Poveda Galvis')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Ramirez Forero')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Valero Corzo')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Poveda Galvis')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Chavez Ortiz')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Valero Corzo')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Poveda Galvis')->where('name', '=', 'Jorge ALexis')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Chavez Ortiz')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Chia Rodriguez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Poveda Galvis')->where('name', '=', 'Jorge ALexis')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Millan Morales')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Chia Rodriguez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Marquez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Millan Morales')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'cortez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Marquez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Suárez Campos')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'cortez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Novoa Tellez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Suárez Campos')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Gomez Pinzon')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Novoa Tellez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Gomez Rubio')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Gomez Pinzon')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Gutierrez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Gomez Rubio')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Camacho')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Gutierrez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'osorio franco')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Camacho')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Vergara Serrato')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'osorio franco')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Rodriguez Joya')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Vergara Serrato')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Sanchez Romero')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Rodriguez Joya')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Castellanos')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Sanchez Romero')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'gallego henao')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Castellanos')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Prado Mendoza')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'gallego henao')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Leyva Osorio')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Prado Mendoza')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Marquez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Leyva Osorio')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Jojoa Cabrera')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Marquez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Jaramillo Ramos')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Jojoa Cabrera')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Chavez Gomez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Jaramillo Ramos')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'castellanos aguilar')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Chavez Gomez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Rodríguez Fajardo')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'castellanos aguilar')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'velasquez velasquez')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Rodríguez Fajardo')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Carranza Rivera')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'velasquez velasquez')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Riaño Gamboa')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Carranza Rivera')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'RODRIGUEZ MORENO')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Riaño Gamboa')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Gomez Ochoa')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'RODRIGUEZ MORENO')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Ortiz Osorio')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Gomez Ochoa')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Medina Arango')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Ortiz Osorio')->first();
+        $user->roles()->sync($role4);
 
-            $user = User::where('lastname', '=', 'Amortegui')->first();
-            $user->roles()->sync($role4);
+        $user = User::where('lastname', '=', 'Medina Arango')->first();
+        $user->roles()->sync($role4);
+
+        $user = User::where('lastname', '=', 'Amortegui')->first();
+        $user->roles()->sync($role4);
     }
 }

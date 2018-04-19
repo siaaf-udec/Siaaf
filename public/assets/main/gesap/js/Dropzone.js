@@ -2,7 +2,7 @@ var FormDropzone = function () {
     return {
         //main function to initiate the module
         init: function (route, formatfile, numfile, method, params, comeback) {
-            
+
             Dropzone.options.autoDiscover = false;
             Dropzone.options.myDropzone = {
                 url: route,
@@ -64,7 +64,7 @@ var FormDropzone = function () {
 
                     /*Archivo agregado*/
                     myDropzone.on("addedfile", function(file, xhr, formData) {
-                        
+
                     });
 
                     /*Se llama a cada archivo que se ha rechazado porque el número de archivos excede el límite*/
@@ -79,19 +79,19 @@ var FormDropzone = function () {
                 complete: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', 'Carga Satisfactoria',
-                            'El archivo se ha procesado satisfactoriamente.'
-                        );
+                                      'El archivo se ha procesado satisfactoriamente.'
+                                     );
                         $('#modal_documento').modal('hide');
                         route_index = comeback;
                         $(".content-ajax").load(route_index);
-                        
+
                     }
                 },
                 error: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', '¡Ocurrió un Error!',
-                            'El archivo se ha procesado satisfactoriamente.'
-                        );
+                                      'El archivo se ha procesado satisfactoriamente.'
+                                     );
                     }
                 }
             };

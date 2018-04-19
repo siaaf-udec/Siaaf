@@ -39,13 +39,6 @@
                 <span class="title">Ver Historiales Del Parqueadero</span>
             </a>        
         </li>
-
-        <li class="nav-item {{ active(['parqueaderos.dependenciasCarpark.*'], 'start active open') }}">
-    	    <a href="{{ route('parqueadero.dependenciasCarpark.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-bars"></i>
-                <span class="title">Ver Dependencias</span>
-            </a>    	
-        </li>
         @endpermission
         @permission('FUNC_CARPARK')
         <li class="nav-item {{ active(['parqueadero.correosCarpark.*'], 'start active open') }}">        

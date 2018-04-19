@@ -1,7 +1,4 @@
-
     <div class="col-md-12">
-    {{-- BEGIN HTML MODAL CREATE --}}
-    <!-- static -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
             <div class="modal-header modal-header-success">
                 <h3 class="modal-title">
@@ -10,11 +7,8 @@
                     Seleccionar Programa
                 </h3>
             </div>
-
             <div class="modal-body">
-
                 {!! Form::open(['id' => 'from_programa', 'class' => '', 'url' => '/forms']) !!}
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="note note-success">
@@ -22,7 +16,6 @@
                             <p> Debe seleccionar un programa academico. </p>
                         </div>
                     </div>
-
                     <div class="col-md-12">
                         <p>
                             {!! Field::select('Seleccione Programa',$programas,
@@ -39,16 +32,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-
             </div>
             {!! Form::close() !!}
-
         </div>
-        {{-- END HTML MODAL CREATE--}}
     </div>
     <div class="col-md-12">
-    {{-- BEGIN HTML MODAL CREATE --}}
-    <!-- static -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal-fecha-reserva" tabindex="-1">
             <div class="modal-header modal-header-success">
                 <h3 class="modal-title">
@@ -57,7 +45,6 @@
                     Fecha Reserva
                 </h3>
             </div>
-
             <div class="modal-body">
                 {!! Form::open(['id' => 'form_fecha', 'class' => '', 'url' => '/forms']) !!}
                 <div class="row">
@@ -76,7 +63,6 @@
                             !!}
                         </p>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">
@@ -85,7 +71,6 @@
             </div>
             {!! Form::close() !!}
         </div>
-        {{-- END HTML MODAL CREATE--}}
     </div>
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Asignar Reserva'])
@@ -96,10 +81,11 @@
                  ],
             ])
             <div class="form-group">
+                @permission('AUDI_LENDING_KIT_ART')
                 <div class="col-md-9" id="dd">
                     <input type="checkbox" class="make-switch" checked data-on-text = "PRESTAMO KIT"  data-off-text = "PRESTAMO ARTICULO" data-on-color="warning" data-off-color="success">
                 </div>
-
+                @endpermission
             </div>
             <br><br>
             <div class="row" id="articulo">
@@ -123,10 +109,12 @@
                     !!}
                 </div>
                 <div class="col-md-2">
+                    @permission('AUDI_LENDING_ASSIGN_ART')
                     <a class="btn btn-danger agregar_articulo" id="agregarArticulo" title="Quitar articulo"
                        data-id_articulo='+identificador+'>
                         Agregar
                     </a>
+                    @endpermission
                 </div>
                 {!! Form::close() !!}
             </div>
@@ -155,19 +143,23 @@
                 <br>
                 <div class="col-md-2">
                     <br><br><br><br>
+                    @permission('AUDI_LENDING_ASSIGN_KIT')
                     <a class="btn btn-danger agregar_articulo" id="agregarKit" title="Quitar articulo"
                        data-id_articulo='+identificador+'>
                         Agregar
                     </a>
+                    @endpermission
                 </div>
                 {!! Form::close() !!}
             </div>
             <div class="row">
                 <div class="col-md-3">
+                    @permission('AUDI_LENDING_CREATE')
                     <a class="btn btn-warning quitar_articulo" id="finalizar" title="Quitar articulo"
                        data-id_articulo='+identificador+'>
                         finalizar Reserva
                     </a>
+                    @endpermission
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -205,7 +197,6 @@
                 boton_quitar, idTextCodigo, idTextTipoArticulo, idTextTiempo, idTextObservacion, fila_completa,
                 valueTipoArticulo, valueTiempo, valueObservacion ,textCodigo ,valueCodigo;
             function selectKitAjax(){
-                console.log('fecha inicial de la reserva = '+fechaInicialReserva);
                 var rutaCaragarKits = '{{ route('cargar.kits.selectKit.reserva') }}'+'/'+fechaInicialReserva;
                 $.ajax({
                     url: rutaCaragarKits,
@@ -223,6 +214,12 @@
                                 $('#tipoKitsSelect').append(new Option(value.KIT_Nombre, value.id));
                             });
                             $('#tipoKitsSelect').val([]);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -244,6 +241,12 @@
                             $('#ElementosKit').empty();
                             selectKitAjax();
                         }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
+                        }
                     }
                 });
             }
@@ -259,17 +262,19 @@
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             App.unblockUI('.portlet-form');
-                            /////CAMPOS ARTICULO
                             $('#tipoArticulosSelect').empty();
                             $('#tiempoArticulo').empty();
-
-                            ////////////CAMPOS KIT
                             $('#tipoKitsSelect').empty();
                             $('#tiempoKit').empty();
-
                             $('#ElementosKit').empty();
                             selectKitAjax();
                             selectTipoArticuloAjax();
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -290,12 +295,16 @@
                             });
                             $('#tipoArticulosSelect').val([]);
                         }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
+                        }
                     }
                 });
             }
             function asignarArticulo(idArticulo,fechaInicial,tiempoAsignar, numeroDeOrdenL){
-                console.log('variables');
-                console.log(idArticulo,fechaInicial,tiempoAsignar, numeroDeOrdenL);
                 var idSolicitud;
                 var rutaRemoverArticulo =
                     '{{ route('asignarArticuloReserva') }}'+ '/'+ idArticulo+'/'+fechaInicial+'/'+tiempoAsignar+'/'+numeroDeOrdenL;
@@ -312,12 +321,15 @@
                             $('#tipoArticulosSelect').empty();
                             $('#codigo').empty();
                             $('#tiempoArticulo').empty();
-
                             selectTipoArticuloAjax();
                             idSolicitud = response.data;
-                            console.log(idSolicitud);
                         }
-
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
+                        }
                     }
                 });
                 return idSolicitud;
@@ -334,28 +346,27 @@
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             App.unblockUI('.portlet-form');
-                            /////CAMPOS ARTICULO
                             $('#tipoArticulosSelect').empty();
                             $('#tiempoArticulo').empty();
-
-                            ////////////CAMPOS KIT
                             $('#tipoKitsSelect').empty();
                             $('#codigo').empty();
                             $('#tiempoKit').val('');
-
                             $('#ElementosKit').empty();
                             selectTipoArticuloAjax();
                             selectKitAjax();
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
             }
             function restarArticulos(array, llave, valor) {
-                console.log('entra busqueda');
                 for (var i = 0; i < array.length; i++) {
                     if (array[i][llave] == valor) {
-                        console.log('numero articulos'+ (array[i][llave]));
-                        console.log('numero articulos'+ (array[i]['cantidadElementos']));
                         return (array[i]['cantidadElementos']);
                     }
                 }
@@ -528,12 +539,15 @@
                                                 }
                                             );
                                             contadorMaximoCantidadArticulos++;
-                                            console.log('numero que se lleva ' + contadorMaximoCantidadArticulos);
-                                            console.log(conteoValidaciones);
+                                        }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'success') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
                                         }
                                     }
                                 });
-
                             });
                         }else{
                             swal(
@@ -583,12 +597,16 @@
                                             }
                                         );
                                         contadorMaximoCantidadArticulos++;
-                                        console.log('numero que se lleva ' + contadorMaximoCantidadArticulos);
-                                        console.log(conteoValidaciones);
                                         $('#tipoArticulosSelect').empty();
                                         $('#codigo').empty();
                                         $('#tiempoArticulo').empty();
                                         selectTipoArticuloAjax();
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -616,7 +634,6 @@
                                 numeroDeOrden = info.data;
                                 var valueArticuloId = $('select[name="tipoKitsSelect"]').val();
                                 var valueTiempoId = parseInt($('select[name="tiempoKit"]').val());
-                                console.log('valores del kit '+valueArticuloId + ' - ' + valueTiempoId);
                                 var kitArticulo = 'kit';
                                 var rutaRemoverArticulo =
                                     '{{ route('asignarArticuloReserva') }}' + '/' + valueArticuloId + '/' + fechaInicialReserva + '/' + valueTiempoId + '/' + numeroDeOrden + '/' + kitArticulo;
@@ -657,8 +674,12 @@
                                                     cantidadElementos: cantidadElementosKit
                                                 }
                                             );
-                                            console.log('numero que se lleva ' + contadorMaximoCantidadArticulos);
-                                            console.log(conteoValidaciones);
+                                        }
+                                    },
+                                    error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'success') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
                                         }
                                     }
                                 });
@@ -674,7 +695,6 @@
                         if((contadorMaximoCantidadArticulos + cantidadElementosKit )<= maximoCantidadArticulos) {
                             var valueArticuloId = $('select[name="tipoKitsSelect"]').val();
                             var valueTiempoId = parseInt($('select[name="tiempoKit"]').val());
-                            console.log(valueArticuloId + '/' + valueTiempoId);
                             var kitArticulo = 'kit';
                             var rutaRemoverArticulo =
                                 '{{ route('asignarArticuloReserva') }}' + '/' + valueArticuloId + '/' + fechaInicialReserva + '/' + valueTiempoId + '/' + numeroDeOrden + '/' + kitArticulo;
@@ -715,8 +735,12 @@
                                                 cantidadElementos: cantidadElementosKit
                                             }
                                         );
-                                        console.log('numero que se lleva ' + contadorMaximoCantidadArticulos);
-                                        console.log(conteoValidaciones);
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -745,15 +769,11 @@
                 $(".fila_articulo[data-id_articulo='" + $(this).data('id_articulo') + "']").html('');
                 var num = $(this).data('id_articulo');
                 var restarCantidadDeArticulos = restarArticulos(conteoValidaciones,'id',num);
-                console.log('cantidad para restar'+restarCantidadDeArticulos);
                 contadorMaximoCantidadArticulos = contadorMaximoCantidadArticulos - restarCantidadDeArticulos;
                 conteoValidaciones = conteoValidaciones.filter(function (el) {
                     return el.id != num;
                 });
-                console.log('numero que se lleva '+contadorMaximoCantidadArticulos);
-                console.log(conteoValidaciones);
                 removerArticulo(num);
-
             });
             //cambio de select de articulos tiempo
             $('#tipoArticulosSelect').on('change', function () {
@@ -773,6 +793,12 @@
                                 $('#codigo').append(new Option(value.ART_Codigo, value.id));
                             });
                             $('#codigo').val([]);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
@@ -799,6 +825,12 @@
                             }
                             $('#tiempoArticulo').val([]);
                         }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
+                        }
                     }
                 });
             });
@@ -821,9 +853,13 @@
                                 $('#ElementosKit').append(value.consulta_tipo_articulo.TPART_Nombre);
                                 $('#ElementosKit').append('\n');
                                 cantidadElementosKit++;
-                                console.log(value.consulta_tipo_articulo.TPART_Nombre);
                             });
-
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'success') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });

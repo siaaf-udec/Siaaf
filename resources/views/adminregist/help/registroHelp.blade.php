@@ -16,9 +16,7 @@
                 ])
         <div class="row">
             <div class="col-md-12">
-
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
-
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
                         {!! Field::textarea('pregunta', old('pregunta'), ['required','label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Pregunta.','size' => '30']) !!}
@@ -73,7 +71,7 @@
 
                     $.ajax({
                         url: route,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')                                },
                         cache: false,
                         type: type,
                         contentType: false,
