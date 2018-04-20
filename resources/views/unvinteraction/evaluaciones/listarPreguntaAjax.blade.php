@@ -63,14 +63,14 @@ jQuery(document).ready(function () {
            {data: 'DT_Row_Index'},
            {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta" },
            {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
-           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
+           {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"pregunta_tipos_pregunta.TPPG_Tipo"},
            {data:'action',searchable: false,
             name:'action',
             title:'Acciones',
             orderable: false,
             exportable: false,
             printable: false,
-            defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"></i></a>'
+            defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"></i></a></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
 
             
         }
@@ -146,5 +146,51 @@ jQuery(document).ready(function () {
             $('#agregar').modal('toggle');
         });
   
+    table.on('click', '.delete', function(e) {
+                e.preventDefault();
+				$tr = $(this).closest('tr');
+				var o = table.row($tr).data();
+				var route = '{{route('eliminarPregunta.eliminarPregunta')}}/'+o.PK_PRGT_Pregunta;
+				var type = 'DELETE';
+				var async = async || false;
+				swal({
+					title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+					 function(isConfirm){
+					if (isConfirm) {
+						$.ajax({
+							url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+						});
+						swal.close();
+					} else {
+                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                    }
+                });
+            });
 });
 </script>

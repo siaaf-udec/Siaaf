@@ -54,7 +54,7 @@ var FormDropzone = function () {
                         if(file.status=='success'){
                             myDropzone.removeFile(file);
                         }else{
-                             UIToastr.init( 'error','ERROR', 'El archivo que desea cargar no es permitido.');
+                            UIToastr.init( 'error','ERROR', 'El usuarios debe estar en un convenio y la extencion del archivo debe ser PDF');
                             myDropzone.removeFile(file);
                         }
                     });

@@ -52,7 +52,7 @@ class EvaluacionPregunta extends Model
     */ 
     public function evaluacionPregunta()
     {
-        return $this->belongsto(Evaluacion::class, 'FK_TBL_Evaluacion_Id','PK_VLCN_Evaluacion');
+        return $this->belongsto(Evaluacion::class, 'FK_TBL_Evaluacion_Id','PK_VLCN_Evaluacion')->withTrashed();
     }
     
     /*
@@ -62,6 +62,6 @@ class EvaluacionPregunta extends Model
     */ 
     public function preguntaPregunta()
     {
-        return $this->belongsto(Pregunta::class, 'FK_TBL_Pregunta_Id', 'PK_PRGT_Pregunta');
+        return $this->belongsto(Pregunta::class, 'FK_TBL_Pregunta_Id', 'PK_PRGT_Pregunta')->withTrashed();
     }
 }

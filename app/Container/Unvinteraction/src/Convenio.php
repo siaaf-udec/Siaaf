@@ -44,7 +44,7 @@ class Convenio extends Model
     */
     public function convenioSede()
     {
-        return $this->belongsto(Sede::class, 'FK_TBL_Sede_Id', 'PK_SEDE_Sede');
+        return $this->belongsto(Sede::class, 'FK_TBL_Sede_Id', 'PK_SEDE_Sede')->withTrashed();
     }
 
     /*
@@ -54,7 +54,7 @@ class Convenio extends Model
     */
     public function convenioEstado()
     {
-        return $this->belongsto(Estado::class, 'FK_TBL_Estado_Id', 'PK_ETAD_Estado');
+        return $this->belongsto(Estado::class, 'FK_TBL_Estado_Id', 'PK_ETAD_Estado')->withTrashed();
     }
 
     /*

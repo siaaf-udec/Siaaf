@@ -17,6 +17,7 @@ class CreateTBLSedeTbl extends Migration
           Schema::connection('unvinteraction')->create('TBL_Sede', function (Blueprint $table) {
               $table->increments('PK_SEDE_Sede');
               $table->text('SEDE_Sede');
+              $table->softDeletes();
           });
     }
 

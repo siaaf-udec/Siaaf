@@ -246,7 +246,7 @@ class ConveniosController extends Controller
     */
     public function listarEmpresasParticipantesConvenios(Request $request,$id)
     {
-        if ($request->ajax() && $request->isMethod('GET')) {
+        if ($request->isMethod('GET')) {
             $participante =  EmpresaParticipante::where('FK_TBL_Convenio_Id', '=', $id)->select('PK_EMPT_Empresa_Participante','FK_TBL_Empresa_Id')
                 ->with([
                         'patricipantesEmpresas'=>function ($query) {
@@ -271,20 +271,24 @@ class ConveniosController extends Controller
        if ($request->ajax() && $request->isMethod('POST')) {
            $ident=$request->FK_TBL_Empresa;
             $conve =$id;
-            // saber si el usuario se encuentra en el convenio
-           if($empresa= EmpresaParticipante::where('FK_TBL_Empresa_Id','=',$ident)->where('FK_TBL_Convenio_Id','=',$conve)->count()){
-               return AjaxResponse::fail('¡Lo sentimos!', 'El usuario ya pertenece ael convenio.');
-            }else{
-               //insertamos la empresa en el convenio
-               $empresa= new EmpresaParticipante();
-               $empresa->FK_TBL_Convenio_Id=$conve;
-               $empresa->FK_TBL_Empresa_Id=$ident;
-               $empresa->save();
-               return AjaxResponse::success('¡Bien hecho!', 'Empresa agregada correctamente.');
+           if(!$empresa= Empresa::where('PK_EMPS_Empresa','=',$ident)->count()){
+               return AjaxResponse::success('¡Lo sentimos!', 'Empresa agregada no existe.');
+           }else{
+               // saber si el usuario se encuentra en el convenio
+               if($empresa= EmpresaParticipante::where('FK_TBL_Empresa_Id','=',$ident)->where('FK_TBL_Convenio_Id','=',$conve)->count()){
+                   return AjaxResponse::success('¡Lo sentimos!', 'la empresa ya pertenece ael convenio.');
+               }else{
+                   //insertamos la empresa en el convenio
+                   $empresa= new EmpresaParticipante();
+                   $empresa->FK_TBL_Convenio_Id=$conve;
+                   $empresa->FK_TBL_Empresa_Id=$ident;
+                   $empresa->save();
+                   return AjaxResponse::success('¡Bien hecho!', 'Empresa agregada correctamente.');
+               } 
            }
-         } else {
-            return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
-        }
+       } else {
+           return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
+       }
     }
     /*funcion para agregar particioantes del convenio
     *@param int id
@@ -315,7 +319,7 @@ class ConveniosController extends Controller
                 }else{
                     // saber si el usuario se encuentra en el convenio
                     if($participante= Participantes::where('FK_TBL_Usuarios_Id','=',$identi)->where('FK_TBL_Convenio_Id','=',$conve)->count()){
-                        return AjaxResponse::fail('¡Lo sentimos!', 'El usuario ya pertenece ael convenio.');
+                        return AjaxResponse::success('¡Lo sentimos!', 'El usuario ya pertenece ael convenio.');
                     }else{
                         $participante= new Participantes();
                         $participante->FK_TBL_Convenio_Id=$conve;
@@ -325,7 +329,7 @@ class ConveniosController extends Controller
                     }
                 }
             }else{
-                return AjaxResponse::fail('¡Lo sentimos!', 'El usuario no se encuentra registrado.');
+                return AjaxResponse::success('¡Lo sentimos!', 'El usuario no se encuentra registrado.');
             }
         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');

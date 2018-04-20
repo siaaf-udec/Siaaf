@@ -149,8 +149,14 @@
                                 $('#agregar').modal('hide');
                                 $('#form-Agregar-Convenio')[0].reset();
                                 table.ajax.reload();
-                                UIToastr.init(xhr, response.title, response.message);
-                                App.unblockUI('.portlet-form');
+                                if(response.title == '¡Lo sentimos!'){
+                                   UIToastr.init('error', response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }else{
+                                   UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }
+                                
                             }
                         },
                         error: function(response, xhr, request) {

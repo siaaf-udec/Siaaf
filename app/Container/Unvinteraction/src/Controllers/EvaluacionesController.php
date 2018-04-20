@@ -119,6 +119,27 @@ class EvaluacionesController extends Controller
         }
        
     }
+    /*funcion para eliminar los datos de tipo de pregunta
+    *@param int id
+    *@param  \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+     public function  eliminarTipoPregunta(Request $request, $id)
+    {
+         if($request->ajax() && $request->isMethod('DELETE')){
+             $pregunta= TipoPregunta::findOrFail($id);
+             $pregunta->delete();
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede eeliminada correctamente.'
+             );
+         }
+         return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+         );
+       
+    }
     /*funcion para mostrar la vista principal de las preguntas
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
@@ -232,6 +253,29 @@ class EvaluacionesController extends Controller
             return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
         }
     }
+    
+    /*funcion para eliminar los datos de pregunta
+    *@param int id
+    *@param  \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+     public function  eliminarPregunta(Request $request, $id)
+    {
+         if($request->ajax() && $request->isMethod('DELETE')){
+             $pregunta= Pregunta::findOrFail($id);
+             $pregunta->delete();
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede eeliminada correctamente.'
+             );
+         }
+         return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+         );
+       
+    }
+    
     /*funcion para mostrar la vista principal de las evaluaciones
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 

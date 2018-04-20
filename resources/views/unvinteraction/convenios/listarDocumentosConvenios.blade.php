@@ -20,7 +20,14 @@
         <div class="row">
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Entidad', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos'])
+                    @slot('columns', 
+                        [ '#' => ['style' => 'width:20px;'],
+                        'ID',
+                        'Entidad',
+                        'Acciones' => ['style' => 'width:160px;'] 
+                    ])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -37,7 +44,14 @@
         <div class="row">
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'Identidicacion', 'Nombres', 'Apellidos', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) 
+                    @slot('columns', [ '#' => ['style' => 'width:20px;'],
+                    'Identidicacion',
+                    'Nombres',
+                    'Apellidos',
+                    'Acciones' => ['style' => 'width:160px;']
+                    ])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -56,7 +70,14 @@
 
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Identificacion', 'Empresa', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes'])
+                    @slot('columns', [ '#' => ['style' => 'width:20px;'],
+                        'ID',
+                        'Identificacion', 
+                        'Empresa',
+                        'Acciones' => ['style' => 'width:160px;']
+                    ]) 
+                @endcomponent
             </div>
         </div>
 
@@ -105,7 +126,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} 
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -130,7 +152,8 @@
                         {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                     </div>
                     <div class="modal-footer">
-                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -336,11 +359,16 @@
 							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    $('#participante').modal('hide');
-                                    $('#form-Participante')[0].reset();
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
+                                    if(response.title == '¡Lo sentimos!'){ 
+                                        UIToastr.init('error', response.title,response.message);
+                                        App.unblockUI('.portlet-form'); 
+                                    }else{ 
+                                        $('#participante').modal('hide');
+                                        $('#form-Participante')[0].reset();
+                                        table.ajax.reload();
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 }
                             },
                             error: function(response, xhr, request) {
@@ -369,8 +397,8 @@
             columns = [
                 {data: 'DT_Row_Index'},
                 {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "PK_EMPT_Empresa_Participante"},
-                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "PK_EMPS_Empresa"},
-                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "EMPS_Nombre_Empresa"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "patricipantes_empresas.PK_EMPS_Empresa"},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "patricipantes_empresas.EMPS_Nombre_Empresa"},
                 {
                         data: 'action',
                         className: '',
@@ -485,11 +513,16 @@
 							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    $('#empresa').modal('hide');
-                                    table.ajax.reload();
-                                    $('#form-Empresas')[0].reset();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                     App.unblockUI('.portlet-form');
+                                    if(response.title == '¡Lo sentimos!'){ 
+                                        UIToastr.init('error', response.title,response.message);
+                                        App.unblockUI('.portlet-form'); 
+                                    }else{ 
+                                        $('#empresa').modal('hide');
+                                        table.ajax.reload();
+                                        $('#form-Empresas')[0].reset();
+                                        UIToastr.init(xhr, response.title,response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 }
                             },
                             error: function(response, xhr, request) {
