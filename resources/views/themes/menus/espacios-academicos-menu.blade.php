@@ -191,8 +191,8 @@
                             <span class="title">Procedencia</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ active(['espacios.academicos.marcas.index'], 'start active open') }}">
-                        <a href="{{ route('espacios.academicos.procedencia.index') }}" class="nav-link nav-toggle">
+                    <li class="nav-item {{ active(['espacios.academicos.marca.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.marca.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-wrench"></i>
                             <span class="title">Marcas</span>
                         </a>

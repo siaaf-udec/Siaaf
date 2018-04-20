@@ -431,6 +431,34 @@ Route::group(['middleware' => ['auth']], function () {
         
     /*FIN FUNCIONALIDAD PROCEDENCIA*/
 
+    /*RUTAS FUNCIONALIDAD MARCA*/
+    
+    Route::group(['prefix' => 'marca', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+    
+        Route::get('index', [
+            'uses' => $controller . 'MarcaController@index',
+            'as' => 'espacios.academicos.marca.index'
+        ]);
+    
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'MarcaController@data',
+            'as' => 'espacios.academicos.marca.data'
+        ]);
+    
+        Route::post('regisMarca', [ //Registrar Marca
+            'uses' => $controller . 'MarcaController@regisMarca',
+            'as' => 'espacios.academicos.marca.regisMarca',
+        ]);
+    
+        Route::delete('delete/{id?}', [ //Eliminar Marca
+            'uses' => $controller . 'MarcaController@destroy',
+            'as' => 'espacios.academicos.marca.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
+        
+    /*FIN FUNCIONALIDAD MARCA*/
+
 });
 
 
