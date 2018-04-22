@@ -28,13 +28,20 @@
                                !!}
                         </div>
                         <div class="col-md-6">
-                            {!! Field::select('TPART_Tiempo',
+                            {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
                                 1 => 'Libre'
                              ],
-                                ['label' => 'Seleccione una Opcion'])
+                                ['name' => 'TPART_Tiempo'])
+
                              !!}
+                        </div>
+                        <div class="col-md-12">
+                            {!! Field::Text('TPART_HorasMantenimiento',
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
+                            !!}
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-md-offset-8">
@@ -73,13 +80,19 @@
                                !!}
                         </div>
                         <div class="col-md-6">
-                            {!! Field::select('TPART_Tiempo_Edit',
+                            {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
                                 1 => 'Libre'
                              ],
-                                ['label' => 'Seleccione una Opcion'])
+                                ['name' => 'TPART_Tiempo_Edit'])
                              !!}
+                        </div>
+                        <div class="col-md-12">
+                            {!! Field::Text('TPART_HorasMantenimiento_Edit',
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
+                            !!}
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-md-offset-8">
@@ -119,6 +132,7 @@
                 'Tipo',
                 'Cantidad Artículos',
                 'Tiempo',
+                'Horas Mantenimiento',
                 'Acciones' => ['style' => 'width:90px;']
             ])
         @endcomponent
@@ -167,6 +181,7 @@
             {data: 'TPART_Nombre' , name: 'Tipo'},
             {data: 'consultar_articulos_count' , name: 'Cantidad Artículos'},
             {data: 'Tiempo' , name: 'Tiempo'},
+            {data: 'TPART_HorasMantenimiento' , name: 'Horas Mantenimiento'},
             {
                 defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
                                 '@permission("AUDI_ART_TYPE_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
@@ -215,6 +230,9 @@
             var dataTable = table.row($tr).data();
             console.log(dataTable);
             $('#TPART_Nombre_Edit').val(dataTable.TPART_Nombre);
+            $('select[name="TPART_Tiempo_edit"]').val(1);
+
+            $('#TPART_HorasMantenimiento_Edit').val(dataTable.TPART_HorasMantenimiento);
             if(dataTable.consultar_articulos_count!=0){
                 $("#TPART_Nombre_Edit").prop("disabled", true);
             }else{
@@ -287,7 +305,9 @@
                     var formData = new FormData();
                     formData.append('id',idTipoArticulo);
                     formData.append('TPART_Nombre', $('input:text[name="TPART_Nombre_Edit"]').val());
-                    formData.append('TPART_Tiempo', parseInt($('select[name="TPART_Tiempo_Edit"]').val()));
+                    formData.append('TPART_Tiempo', $('select[name="TPART_Tiempo_Edit"]').val());
+
+
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -333,7 +353,9 @@
                     type: "post"
                 }
             },
-            TPART_Tiempo: {required: true}
+            TPART_Tiempo: {required: true},
+            TPART_HorasMantenimiento_Edit: {required: true}
+
 
         };
         var messages = {
@@ -352,6 +374,7 @@
                     var formData = new FormData();
                     formData.append('TPART_Nombre', $('input:text[name="TPART_Nombre"]').val());
                     formData.append('TPART_Tiempo', $('select[name="TPART_Tiempo"]').val());
+                    formData.append('TPART_HorasMantenimiento', $('input:text[name="TPART_HorasMantenimiento"]').val());
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -392,7 +415,8 @@
                     type: "post"
                 }
             },
-            TPART_Tiempo: {required: true}
+            TPART_Tiempo: {required: true},
+            TPART_HorasMantenimiento: {required: true}
 
         };
         var messages = {

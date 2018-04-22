@@ -17,6 +17,8 @@ class CreateTipoArticuloTable extends Migration
             $table->increments('id');
             $table->String('TPART_Nombre');
 			$table->integer('TPART_Tiempo')->unsigned()->nullable();
+            $table->integer('TPART_HorasMantenimiento')->unsigned()->nullable();
+
             $table->timestamps();
         });
     }

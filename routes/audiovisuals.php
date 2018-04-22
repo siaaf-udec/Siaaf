@@ -141,6 +141,11 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => $controller . 'ValidacionController@edit',
                 'as' => 'validaciones.edit',                                //ruta que conduce al controlador donde se modifica la validacion
             ]);
+        //rutas manejo mantenimiento articulos
+            Route::get('mantenimientos', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@index',
+                'as' => 'audiovisuales.mantenimientos.index',                 //ruta que conduce al controlador donde muestra las preguntas de validacion
+            ]);
     });
     //RUTAS GESTION ADMINISTRADOR(crear, modificar , consultar solicitudes de prestamos o reservas)
     //menu -> gestion prestamos
