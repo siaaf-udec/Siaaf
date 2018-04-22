@@ -86,6 +86,12 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.registros.data',
         ]);
 
+        Route::get('listNovedad', [
+            'middleware' => ['permission:ADMINREGIST_REINGRE'],
+            'uses' => $controller . 'NovedadesController@listarNovedades',
+            'as' => 'adminRegist.registros.listNovedades'
+        ]);
+
     });
 
     Route::group(['prefix' => 'help', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
@@ -209,4 +215,87 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
     });
 
+    Route::group(['prefix' => 'novedad', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
+        $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
+
+        //ruta que conduce al controlador para mostrar el registro de usuarios
+        Route::get('index', [
+            'middleware' => ['permission:ADMINREGIST_ADNOV'],
+            'uses' => $controller . 'NovedadesController@index',
+            'as' => 'adminRegist.novedad.index',
+        ]);
+
+        Route::get('data', [
+            'middleware' => ['permission:ADMINREGIST_ADNOV'],
+            'uses' => $controller . 'NovedadesController@data',
+            'as' => 'adminRegist.novedad.data',
+        ]);
+
+        Route::get('index/ajax', [
+            'middleware' => ['permission:ADMINREGIST_ADNOV'],
+            'uses' => $controller . 'NovedadesController@indexAjax',
+            'as' => 'adminRegist.novedad.index.ajax'
+        ]);
+
+        Route::get('create', [
+            'middleware' => ['permission:ADMINREGIST_NOV_CREATE'],
+            'uses' => $controller . 'NovedadesController@create',
+            'as' => 'adminRegist.novedad.create'
+        ]);
+
+        Route::post('store',[
+            'middleware' => ['permission:ADMINREGIST_NOV_CREATE'],
+            'uses' => $controller . 'NovedadesController@store',
+            'as' => 'adminRegist.novedad.store'
+        ]);
+
+        Route::get('editar/{id?}', [
+            'middleware' => ['permission:ADMINREGIST_NOV_UPDATE'],
+            'uses' => $controller . 'NovedadesController@edit',
+            'as' => 'adminRegist.novedad.edit'
+        ]);
+
+        Route::post('update', [
+            'middleware' => ['permission:ADMINREGIST_NOV_UPDATE'],
+            'uses' => $controller . 'NovedadesController@update',
+            'as' => 'adminRegist.novedad.update'
+        ]);
+
+        Route::delete('destroy/{id?}', [
+            'middleware' => ['permission:ADMINREGIST_NOV_DELETE'],
+            'uses' => $controller . 'NovedadesController@destroy',
+            'as' => 'adminRegist.novedad.destroy'
+        ]);
+
+    });
+
+    Route::group(['prefix' => 'sugerencia', 'middleware' => ['permission:ADMINREGIST_MODULE']], function (){
+        $controller = "\\App\\Container\\AdminRegist\\Src\\Controllers\\";
+
+        //ruta que conduce al controlador para mostrar el registro de usuarios
+        Route::get('index', [
+            'middleware' => ['permission:ADMINREGIST_ADSU'],
+            'uses' => $controller . 'SugerenciaController@index',
+            'as' => 'adminRegist.sugerencia.index',
+        ]);
+
+        Route::get('data', [
+            'middleware' => ['permission:ADMINREGIST_ADSU'],
+            'uses' => $controller . 'SugerenciaController@data',
+            'as' => 'adminRegist.sugerencia.data',
+        ]);
+
+        Route::post('store',[
+            'middleware' => ['permission:ADMINREGIST_SU_CREATE'],
+            'uses' => $controller . 'SugerenciaController@store',
+            'as' => 'adminRegist.sugerencia.store'
+        ]);
+
+        Route::delete('destroy/{id?}', [
+            'middleware' => ['permission:ADMINREGIST_SU_DELETE'],
+            'uses' => $controller . 'SugerenciaController@destroy',
+            'as' => 'adminRegist.sugerencia.destroy'
+        ]);
+
+    });
 });

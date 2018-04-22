@@ -130,5 +130,61 @@ class PermissionsAdminRegist extends Seeder
         $permissionAdminRegist->description = 'Acceso para actualizar preguntas y respuestas de admisiones y registro.';
         $permissionAdminRegist->module_id = 11;
         $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_ADNOV';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso a la administración de novedades de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_NOV_CREATE';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso para crear novedades de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_NOV_DELETE';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso para eliminar novedades de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_NOV_UPDATE';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso para actualizar novedades de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_ADSU';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso a la administración de preguntas sugeridas de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_SU_CREATE';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso para crear preguntas sugeridas de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
+
+        //Inicio De Permisos Generales De Los Roles
+        $permissionAdminRegist = new Permission;
+        $permissionAdminRegist->name = 'ADMINREGIST_SU_DELETE';
+        $permissionAdminRegist->display_name = 'Admisiones y registro';
+        $permissionAdminRegist->description = 'Acceso para eliminar preguntas sugeridas de admisiones y registro.';
+        $permissionAdminRegist->module_id = 11;
+        $permissionAdminRegist->save();
     }
 }   

@@ -137,8 +137,7 @@
                     <div class="form-group">
                         <div class="col-md-4 col-lg-offset-3 text-left">
                             {!! Field::select(
-                            'novedad',
-                            ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
+                            'novedad',null,
                             ['required','label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                         </div>
                     </div>
@@ -227,6 +226,20 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
+
+            /* Configuración del Select cargado de la BD */
+
+            var $widget_select_SelectNovedad = $('select[name="novedad"]');
+
+            var route_Dependencia = '{{ route('adminRegist.registros.listNovedades') }}';
+            $.get(route_Dependencia, function (response, status) {
+                $(response.data).each(function (key, value) {
+                    $widget_select_SelectNovedad.append(new Option(value.NOV_NombreNovedad, value.PK_NOV_IdNovedad));
+                });
+                $widget_select_SelectDependencia.val([]);
+                $('#PK_NOV_IdNovedad').val(1);
+            });
+
             var $form = $('#form_register');
 
             var form_rules = {

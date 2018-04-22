@@ -54,7 +54,7 @@
                                 {!! Field::select(
                                 'place',
                                 ['Fusagasugá' => 'Fusagasugá', 'Girardot' => 'Girardot', 'Ubaté' => 'Ubaté', 'Chia' => 'Chia', 'Chocontá' => 'Chocontá', 'Facatativá' => 'Facatativá', 'Soacha' => 'Soacha', 'Zipaquirá' => 'Zipaquirá', 'Ninguna' => 'Ninguna'],null,
-                                ['required', 'label' => 'Sede' , 'autofocus', 'auto' => 'off']) !!}
+                                ['required', 'label' => 'Sede o Extensión' , 'autofocus', 'auto' => 'off']) !!}
                             </div>
                         </div>
                         <div class="form-group">
