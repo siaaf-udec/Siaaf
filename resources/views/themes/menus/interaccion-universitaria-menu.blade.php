@@ -1,4 +1,12 @@
 {{-- MENÚ DE EJEMPLO --}}
+@permission(['INTE_VER_NOTI_ADMIN'])
+            <li class="nav-item {{ active(['notificacionesAdmin.notificacionesAdmin'], 'start active open') }}">
+                <a href="{{ route('notificacionesAdmin.notificacionesAdmin') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-bell"></i>
+                        <span class="title">TODAS LAS NOTIFICACIONES</span>
+                    </a>
+                </li>
+@endpermission
 @permission(['INTE_VER_NOTI'])
             <li class="nav-item {{ active(['alerta.alerta'], 'start active open') }}">
                 <a href="{{ route('alerta.alerta') }}" class="nav-link nav-toggle">

@@ -313,6 +313,8 @@ class ConveniosController extends Controller
                     $participante= new Participantes();
                     $participante->FK_TBL_Convenio_Id=$conve;
                     $participante->FK_TBL_Usuarios_Id=$identi;
+                    $participante->PTPT_Fecha_Inicio=$request->PTPT_Fecha_Inicio;
+                    $participante->PTPT_Fecha_Fin=$request->PTPT_Fecha_Fin;
                     $participante->save();
                     return AjaxResponse::success('¡Bien hecho!', 'Usuario agregado correctamente.');
 
@@ -324,6 +326,8 @@ class ConveniosController extends Controller
                         $participante= new Participantes();
                         $participante->FK_TBL_Convenio_Id=$conve;
                         $participante->FK_TBL_Usuarios_Id=$identi;
+                        $participante->PTPT_Fecha_Inicio=$request->PTPT_Fecha_Inicio;
+                        $participante->PTPT_Fecha_Fin=$request->PTPT_Fecha_Fin;
                         $participante->save();
                         return AjaxResponse::success('¡Bien hecho!', 'Usuario agregado correctamente.');
                     }

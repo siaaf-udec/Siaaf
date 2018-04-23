@@ -9,6 +9,11 @@ class PermisosInteraccionSeeder extends Seeder
     public function run()
     {
          Permission::insert([
+             
+             ['name'=>'INTE_VER_NOTI_ADMIN',
+             'display_name'=>'agregar con',
+             'description'=>'premite al usuario la manipulación de los convenios',
+             'module_id'=>'5'],
             ['name'=>'INTE_ADD_CONVENIO',
              'display_name'=>'agregar con',
              'description'=>'premite al usuario la manipulación de los convenios',

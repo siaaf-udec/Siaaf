@@ -123,6 +123,10 @@
                     </div>
                     <div class="modal-body">
                         {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+                        
+                        {!! Field::date('PTPT_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!} 
+                        
+                        {!! Field::date('PTPT_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
 
                     </div>
                     <div class="modal-footer">
@@ -166,7 +170,40 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
+     var ComponentsDateTimePickers = function () {
+            var handleDatePickers = function () {
+                if (jQuery().datepicker) {
+                    $('.date-picker').datepicker({
+                        rtl: App.isRTL(),
+                        orientation: "left",
+                        autoclose: true,
+                        regional: 'es',
+                        closeText: 'Cerrar',
+                        prevText: '<Ant',
+                        nextText: 'Sig>',
+                        currentText: 'Hoy',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+                        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+                        weekHeader: 'Sm',
+                        dateFormat: 'yyyy-mm-dd',
+                        firstDay: 1,
+                        yearSuffix: '',
+                        startDate: null,
+                       
+                    });
+                }
+            }
+            return {
+                init: function () {
+                    handleDatePickers();
+                }
+            };
+        }();
     jQuery(document).ready(function() {
+        ComponentsDateTimePickers.init();
          App.unblockUI('.portlet-form');
         var table, url, id;
         table = $('#Listar_Documentos');
@@ -342,6 +379,8 @@
 
                         var formData = new FormData();
                         formData.append('identity_no', $('#identity_no').val());
+                        formData.append('PTPT_Fecha_Inicio', $('#PTPT_Fecha_Inicio').val());
+                        formData.append('PTPT_Fecha_Fin', $('#PTPT_Fecha_Fin').val());
 
                         $.ajax({
                             url: route,

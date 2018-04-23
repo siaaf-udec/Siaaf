@@ -20,6 +20,9 @@ class CreateTBLParticipantesTbl extends Migration
             $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
             $table->integer('FK_TBL_Usuarios_Id')->unsigned();
             $table->foreign('FK_TBL_Usuarios_Id')->references('PK_USER_Usuario')->on('TBL_Usuario');
+            $table->date('PTPT_Fecha_Inicio'); 
+            $table->date('PTPT_Fecha_Fin');
+            $table->softDeletes();
 
         });
     }

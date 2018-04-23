@@ -3,9 +3,11 @@
 namespace App\Container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Participantes extends Model
 {
+     use SoftDeletes;
     /**
      * desactivar opcion de  rellenar casilla update y create date
      *
@@ -43,8 +45,14 @@ class Participantes extends Model
      *
      * @var string
      */
-    protected $fillable = ['FK_TBL_Convenio_Id','FK_TBL_Usuarios_Id'];
+    protected $fillable = ['FK_TBL_Convenio_Id','FK_TBL_Usuarios_Id','PTPT_Fecha_Inicio','PTPT_Fecha_Fin'];
     
+    /**
+     * Atributos que con muteadas
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
     /*
     *Función de conexión entre las tablas de TBL_Participantes y TTBL_Convenio
     *por los campo de FK_TBL_Convenios y PK_Convenios

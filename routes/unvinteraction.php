@@ -329,6 +329,10 @@ Route::get('alerta',['middleware' => ['permission:INTE_VER_NOTI'],
     'as' => 'alerta.alerta',
     'uses' => $controller.'AlertasController@alerta'
 ]);
+Route::get('listarNotificacionesAdmin',['middleware' => ['permission:INTE_VER_NOTI_ADMIN'],    
+    'as' => 'listarNotificacionesAdmin.listarNotificacionesAdmin',
+    'uses' => $controller.'AlertasController@listarNotificacionesAdmin'
+]);
 Route::get('alertaAjax',['middleware' => ['permission:INTE_VER_NOTI'],    
     'as' => 'alertaAjax.alertaAjax',
     'uses' => $controller.'AlertasController@alertaAjax'
@@ -340,6 +344,10 @@ Route::get('listarAlerta',['middleware' => ['permission:INTE_VER_NOTI'],
 Route::get('verAlerta/{id?}',['middleware' => ['permission:INTE_VER_NOTI'],    
     'as' => 'verAlerta.verAlerta',
     'uses' => $controller.'AlertasController@verAlerta'
+]);
+Route::get('notificacionesAdmin',['middleware' => ['permission:INTE_VER_NOTI_ADMIN'],    
+    'as' => 'notificacionesAdmin.notificacionesAdmin',
+    'uses' => $controller.'AlertasController@notificacionesAdmin'
 ]);
 //__________________________END_ALERTAS____________________
 Route::get('reporte/{id?}/{fechaPrimera?}/{fechaSegunda?}',['middleware' => ['permission:INTE_VER_EVA'],   

@@ -43,7 +43,7 @@ class Notificaciones extends Model
      *
      * @var string
      */
-    protected $fillable = ['NTFC_Titulo','NTFC_Mensaje','NTFC_Bandera','FK_TBL_Usuarios_Id'];
+    protected $fillable = ['NTFC_Titulo','NTFC_Mensaje','NTFC_Bandera','NTFC_Fecha_Vista','FK_TBL_Usuarios_Id'];
     
     /*
     *Función de conexión entre las tablas de TBL_Notificacione y Usuario
