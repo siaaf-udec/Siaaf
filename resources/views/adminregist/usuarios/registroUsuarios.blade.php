@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-lg-offset-3 text-left">
-                                {!! Field::checkbox('acceptTeminos', '1', ['label' => 'Acepta términos y condiciones de la ley de protección de datos 1581 de 2012.','required']) !!}
+                                {!! Field::checkbox('acceptTeminos', '1', ['required','label' => 'Acepta términos y condiciones de la ley de protección de datos 1581 de 2012.','required']) !!}
                             </div>
                         </div>
                         <div class="form-group">

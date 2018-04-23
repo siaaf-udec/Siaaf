@@ -106,7 +106,7 @@
 
                                     {!! Field::text('username', old('username'), ['min'=>'5','max' =>'50','required','label' => 'Nombre del Usuario', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-user', 'help' => 'Ingrese su Nombre.','size' => '30']) !!}
 
-                                    {!! Field::email('email', old('email'), ['required', 'max' => 80, 'label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
+                                    {!! Field::email('email', old('email'), ['required', 'max' => 80, 'type' => 'email','label' => 'E-mail', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Ingrese el correo electrónico.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -162,6 +162,7 @@
 @push('functions')
     {-- bootstrap-toastr Scripts --}
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -183,6 +184,17 @@
                 $('.text-menos-res').hide();
             });
 
+            var $form = $('#from_sugerencia');
+
+            var form_rules = {
+                pregunta: {
+                    minlength: 5, maxlength: 300, required: true
+                },
+                username: {required: true, maxlength: 30},
+                email: {required: true, maxlength: 80, email: true}
+            };
+            var messages = {};
+
             $('.sugerir').on('click', function (e) {
                 e.preventDefault();
                 document.getElementById("from_sugerencia").reset();
@@ -190,39 +202,45 @@
             });
 
             $(".regist_sugerencia").on('click', function (e) {
-                e.preventDefault();
-                var formData = new FormData();
-                formData.append('SU_Pregunta', $('input[name="pregunta"]').val());
-                formData.append('SU_Username', $('input[name="username"]').val());
-                formData.append('SU_Email', $('input[name="email"]').val());
-                var route = '{{ route('adminRegist.sugerencia.store') }}';
-                var type = 'POST';
-                var async = async || false;
-                App.blockUI();
-                $.ajax({
-                    url: route,
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    cache: false,
-                    type: type,
-                    contentType: false,
-                    data: formData,
-                    processData: false,
-                    async: async,
-                    success: function (response, xhr, request) {
-                        if (request.status === 200 && xhr === 'success') {
-                            UIToastr.init(xhr, response.title, response.message);
-                            document.getElementById("from_sugerencia").reset();
-                            $("#Modal-sugerir").modal('hide');
-                            App.unblockUI();
-                        }
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 && xhr === 'error') {
-                            UIToastr.init(xhr, response.title, response.message);
-                            App.unblockUI();
+                var register = function () {
+                    return {
+                        init: function () {
+                            var formData = new FormData();
+                            formData.append('SU_Pregunta', $('input[name="pregunta"]').val());
+                            formData.append('SU_Username', $('input[name="username"]').val());
+                            formData.append('SU_Email', $('input[name="email"]').val());
+                            var route = '{{ route('adminRegist.sugerencia.store') }}';
+                            var type = 'POST';
+                            var async = async || false;
+                            App.blockUI();
+                            $.ajax({
+                                url: route,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                cache: false,
+                                type: type,
+                                contentType: false,
+                                data: formData,
+                                processData: false,
+                                async: async,
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        document.getElementById("from_sugerencia").reset();
+                                        $("#Modal-sugerir").modal('hide');
+                                        App.unblockUI();
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI();
+                                    }
+                                }
+                            });
                         }
                     }
-                });
+                };
+                FormValidationMd.init($form, form_rules, messages, register());
             });
         });
     </script>

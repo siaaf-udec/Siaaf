@@ -19,7 +19,7 @@
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::text('NOV_NombreNovedad', old('NOV_NombreNovedad'), ['required','label' => 'Novedad', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Novedad.','size' => '30']) !!}
+                        {!! Field::text('NOV_NombreNovedad', old('NOV_NombreNovedad'), ['required', 'max' => 300, 'min' => '3','label' => 'Novedad', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Novedad.','size' => '30']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
         var $form = $('#form_register');
 
         var form_rules = {
-            NOV_NombreNovedad: {required: true}
+            NOV_NombreNovedad: {required: true,maxlength: 300}
 
         };
         var messages = {};

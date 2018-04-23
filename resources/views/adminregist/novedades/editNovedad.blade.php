@@ -21,7 +21,7 @@
                 {!! Field::hidden('id',$novedad->PK_NOV_IdNovedad) !!}
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::text('NOV_NombreNovedad', $novedad->NOV_NombreNovedad, ['required','label' => 'Novedad', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Novedad.','size' => '30']) !!}
+                        {!! Field::text('NOV_NombreNovedad', $novedad->NOV_NombreNovedad, ['required', 'max' => 300, 'min' => '3','label' => 'Novedad', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Edite la Novedad.','size' => '30']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
         var $form = $('#form_update');
 
         var form_rules = {
-            NOV_NombreNovedad: {required: true}
+            NOV_NombreNovedad: {required: true,maxlength: 300}
 
         };
         var messages = {};

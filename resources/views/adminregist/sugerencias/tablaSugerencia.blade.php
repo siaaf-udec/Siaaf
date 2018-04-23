@@ -221,7 +221,7 @@
             columns = [
                 {data: 'PK_SU_IdSugerencia', name: 'PK_SU_IdSugerencia', "visible": false, searchable: false},
                 {data: 'SU_Pregunta', name: 'SU_Pregunta'},
-                {data: 'SU_Username', name: 'SU_Username', "visible": false, searchable: false},
+                {data: 'SU_Username', name: 'SU_Username'},
                 {data: 'SU_Email', name: 'SU_Email'},
                 {
                     defaultContent: '@permission('ADMINREGIST_SU_DELETE')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>@endpermission',
