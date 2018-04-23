@@ -171,6 +171,7 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         var idTipoArticulo;
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
@@ -260,7 +261,6 @@
                         if(isConfirm){
                             var route = '{{ route('tipoArticuloEliminarA') }}'+'/'+dataTable.id;
                             var type = 'POST';
-                            var async = async || false;
                             $.ajax({
                                 url: route,
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -268,7 +268,6 @@
                                 type: type,
                                 contentType: false,
                                 processData: false,
-                                async: async,
                                 beforeSend: function () {
                                     App.blockUI({target: '.portlet-form', animate: true});
                                 },
@@ -276,11 +275,13 @@
                                     if (request.status === 200 && xhr === 'success') {
                                         table.ajax.reload();
                                         UIToastr.init(xhr , response.title , response.message  );
+                                        App.unblockUI('.portlet-form');
                                     }
                                 },
                                 error: function (response, xhr, request) {
                                     if (request.status === 422 &&  xhr === 'success') {
                                         UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });

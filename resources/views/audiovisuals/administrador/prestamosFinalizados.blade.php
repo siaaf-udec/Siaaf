@@ -87,6 +87,7 @@
     </script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
+            App.unblockUI('.portlet-form');
             var idFuncionario;
             var table, url, columns;
             table = $('#usuarios-table');

@@ -31,9 +31,9 @@
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
                     <h2 class="modal-title">
-                        <i class="glyphicon glyphicon-user">
+                        <i class="glyphicon glyphicon-pencil">
                         </i>
-                        Detalles Kit
+                        Modificar detalles Kit
                     </h2>
                 </div>
                 <div class="modal-body">
@@ -42,20 +42,20 @@
                         <div class="col-md-6">
                             {!! Field::text('KIT_Nombre',
                                ['label' => 'Nombre Kit', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                               ['help' => 'Nombre del Kit', 'icon' => 'fa fa-user'])
+                               ['help' => 'Nombre del Kit', 'icon' => 'fa fa-pencil'])
                             !!}
                             {!! Field::select('KIT_FK_Tiempo',
                                  [
                                     4 => 'Asignado',
                                     3 => 'Libre'
                                  ],
-                                ['label' => 'Tipo Tiempo'])
+                                ['label' => 'Tipo Tiempo','required'])
                             !!}
                         </div>
                         <div class="col-md-6">
                             {!! Field::text('KIT_Codigo',
                                 ['label' => 'Codigo', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
-                                ['help' => 'Codigo Del Kit', 'icon' => 'fa fa-user'])
+                                ['help' => 'Codigo Del Kit', 'icon' => 'fa fa-key'])
                             !!}
                         </div>
                     </div>
@@ -188,6 +188,7 @@
             };
         }();
         $(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
             ComponentsSelect2.init();
             table = $('#kit-table-ajax');
@@ -198,9 +199,9 @@
                 {data: 'KIT_Codigo' , name: 'Codigo'},
                 {
                     defaultContent:
-                    '@permission("AUDI_KIT_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
-                    '@permission("AUDI_KIT_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
-                    '@permission("AUDI_KIT_ASSIGN")<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
+                    '@permission("AUDI_KIT_EDIT")<a title="Editar Kit" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                    '@permission("AUDI_KIT_DELETE")<a title="Eliminar Kit" href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
+                    '@permission("AUDI_KIT_ASSIGN")<a title="Asignar Articulos" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -224,13 +225,16 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
+                console.log(dataTable);
                 if(dataTable.KIT_FK_Estado_id!=5){
                     $('#KIT_Codigo').attr('disabled','disabled');
                 }else{
                     $('#KIT_Codigo').removeAttr('disabled');
                 }
+                //$('#KIT_FK_TiempoN').value(3);
                 $('#KIT_Nombre').val(dataTable.KIT_Nombre);
                 $('#KIT_Codigo').val(dataTable.KIT_Codigo);
+
                 idEditarKit=dataTable.id;
                 $('#modal-info-kit').modal('toggle');
             });

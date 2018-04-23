@@ -102,6 +102,7 @@
         }();
         var guardarPrograma=false,idFuncionarioD=null;
         jQuery(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsSelect2.init();
             var createPrograma = function () {
                 return{

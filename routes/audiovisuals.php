@@ -286,6 +286,29 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AdministradorGestionController@dataListarFuncionariosSolicitudesFinalizadas',
             'as' => 'listarFuncionariosSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde consulta las solicitudes finalizadas
         ]);
+
+        Route::get('entregasReservas/{id_articulo?}/{observation?}/{grupo?}',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@entregarSolocitudReserva',
+            'as' => 'solicitud.reserva.entregas',                                       //ruta que conduce al controlador para actualizar la solicitud de reserva(entrega)
+        ]);
+
+        Route::post('registrarSancionR/{id_Funcionario?}/{asignacion?}',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
+            'uses' => $controller . 'AdministradorGestionController@RegistrarSancion',
+            'as' => 'registrar.sancion',                                       //ruta que conduce al controlador para registra la sancion(es)
+        ]);
+        Route::get('indexSanciones',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
+            'uses' => $controller . 'AdministradorGestionController@indexSanciones',
+            'as' => 'audiovisuales.gestionPrestamos.sanciones',                //ruta que conduce al controlador para mostrar las solcitudes generadas
+        ]);
+        Route::get('listarSancionesR',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@dataSancionesListar',
+            'as' => 'listarSancionesSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde consulta las solicitudes finalizadas
+        ]);
+        Route::post('anularSancionR',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@anularSancion',
+            'as' => 'audiovisuales.anular.sancion',                                       //ruta que conduce al controlador para registra la sancion(es)
+        ]);
+
     });
     // RUTAS FUNCIONARIO gestion reservas (registro , consulta , finalizacion de la solicitud)
     //menu->gestion de reservas
@@ -340,6 +363,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('listarCodigoArticuloSeleReservaR/{idTipoArticuloVall?}/{fechaInicial?}',['middleware' => ['permission:AUDI_MODULE'],
             'uses' => $controller . 'FuncionarioController@codigoArticuloSelectReserva',
             'as' => 'listarCodigoArticuloSeleReserva',                      //ruta que conduce al controlador donde consulta los articulos disponibles para la fecha de la solicitud
+        ]);
+
+
+
+        Route::get('indexSolicitudReserva/{numOrden?}',['middleware' => ['permission:AUDI_REQUESTS_CLERK'],
+            'uses' => $controller . 'FuncionarioController@indexSolictudReserAsignadaAjax',
+            'as' => 'ver.solictud.reserva.index',            //ruta que conduce al controlador donde se muestra la gestion de la solicitud reserva
+        ]);
+        Route::get('cancelarSolicitudReserva/{numOrden?}/{accion?}',['middleware' => ['permission:AUDI_REQUESTS_CLERK'],
+            'uses' => $controller . 'FuncionarioController@cancelarSolictudReserva',
+            'as' => 'cancelar.solictud.reserva',            //ruta que conduce al controlador donde se cancela la solicitud reserva
         ]);
 
     });

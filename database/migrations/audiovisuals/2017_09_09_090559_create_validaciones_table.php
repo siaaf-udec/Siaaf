@@ -15,7 +15,7 @@ class CreateValidacionesTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Validaciones', function (Blueprint $table) {
         	$table->increments('id');
-            $table->string('VAL_PRE_Nombre');
+            $table->text('VAL_PRE_Nombre');
             $table->integer('VAL_PRE_Valor')->unsigned()->nullable();
             $table->timestamps();
         });

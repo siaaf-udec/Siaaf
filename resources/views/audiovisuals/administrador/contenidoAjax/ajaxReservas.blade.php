@@ -57,9 +57,9 @@
         };
     }();
     jQuery(document).ready(function() {
+        App.unblockUI('.portlet-form');
         ComponentsBootstrapMaxlength.init();
         var $text_area_Elementos_kit = $('#PRT_Informacion_Kit');
-        ComponentsDateTimePickers.init();
         var table, url, columns;
         table = $('#reservas-table-ajax');
         url = "{{ route('gestionReserva.dataTable') }}";

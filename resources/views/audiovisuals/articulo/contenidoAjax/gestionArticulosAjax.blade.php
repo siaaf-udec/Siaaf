@@ -194,6 +194,7 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         table = $('#art-table-ajax');

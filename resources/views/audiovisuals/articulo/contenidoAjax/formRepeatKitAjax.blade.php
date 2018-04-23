@@ -49,6 +49,7 @@
     <div class="clearfix"></div>
     <br><br>
     <div id="contentAgregarArticulos" class="hide">
+        {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url' => '/forms']) !!}
         <div class="row" id="articulo">
             <div class="col-md-2">
                 {!! Field::select('tipoArticulosSelect',
@@ -64,7 +65,7 @@
             </div>
             <div class="col-md-6">
                 {!! Field::text('caracteristica',
-                ['label' => 'Caracteristica:', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
+                ['disabled','label' => 'Caracteristica:', 'max' => '240', 'min' => '2', 'required', 'auto' => 'off'],
                 ['icon' => 'fa fa-keyboard-o'])
                 !!}
             </div>
@@ -77,6 +78,7 @@
                 @endpermission
             </div>
         </div>
+        {!! Form::close() !!}
     </div>
     <div id="contentFormularioArticulos" class="hide">
         <div class="col-md-12" id="contentDiv">
@@ -90,6 +92,7 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
+        App.unblockUI('.portlet-form');
         var objectForm=[];
         var identificador = 0;
         var textTipoArticulo , textCodigoArticulo ,textCaracteristica,boton_quitar;
@@ -334,30 +337,56 @@
                 }
             });
         });
-        $('#agregarArticulo').on('click',function(){
-            textTipoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textTipoArticuloC" id="textTipoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textTipoArticuloC'+identificador+'" type="text" disabled><label for="textTipoArticuloC'+identificador+'" class="control-label">Tipo :</label><i class=" fa fa-briefcase"></i></div></div></div>';
-            textCodigoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCodigoArticuloC" id="textCodigoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textCodigoArticuloC'+identificador+'" type="text" disabled><label for="textCodigoArticuloC'+identificador+'" class="control-label">Codigo :</label><i class=" fa fa-key"></i></div></div></div>';
-            textCaracteristica = '<div class="col-md-3"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCaracteristicaC" id="textCaracteristica'+identificador+'" data-id_articulo='+identificador+'  name="textCaracteristicaC'+identificador+'" type="text" disabled><label for="textCaracteristicaC'+identificador+'" class="control-label">Caracteristica:</label><i class=" fa fa-keyboard-o"></i></div></div></div>';
-            boton_quitar = '<br><div class="col-md-1">@permission("AUDI_KIT_CREATE")<a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+identificador+' ><i class="icon-trash"></i></a>@endpermission</div>';
+        var validatorArticulo = $("#form_articulo").validate({
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            ignore: "",
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
 
-            idTextTipoArticulo = "#textTipoArticulo"+identificador,idTextCodigoArticulo = "#textCodigoArticulo"+identificador,idTextCaracteristica= "#textCaracteristica"+identificador;
-            $('#contentFormularioArticulos').removeClass('hide');
-            fila_completa = '<div class="row fila_articulo" data-id_articulo='+identificador+'>'+textTipoArticulo+textCodigoArticulo+textCaracteristica+boton_quitar +'</div>';
-            $("#contentDiv").append(fila_completa);
-            valueTipoArticulo = $("#tipoArticulosSelect option:selected").text();
-            valueCodigoArticulo = $("#codigoSelect option:selected").text();
-            valueCaracteristicaArticulo = $('input:text[name="caracteristica"]').val();
-            $(idTextTipoArticulo).val(valueTipoArticulo);
-            $(idTextCodigoArticulo).val(valueCodigoArticulo);
-            $(idTextCaracteristica).val(valueCaracteristicaArticulo);
-            var idArticuloSelect = $('select[name="codigoSelect"]').val();
-            asignarArticuloAlkit(idArticuloSelect,idKitCreado);
-            objectForm.push(
-                {
-                    id:identificador,
-                    idArticuloObj:idArticuloSelect
-                });
-            identificador++;
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            }
+        });
+        $('#agregarArticulo').on('click',function(){
+            if ((validatorArticulo.element("#tipoArticulosSelect") == true) && (validatorArticulo.element("#caracteristica") == true) && (validatorArticulo.element("#codigoSelect") == true) ){
+                textTipoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textTipoArticuloC" id="textTipoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textTipoArticuloC'+identificador+'" type="text" disabled><label for="textTipoArticuloC'+identificador+'" class="control-label">Tipo :</label><i class=" fa fa-briefcase"></i></div></div></div>';
+                textCodigoArticulo = '<div class="col-md-4"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCodigoArticuloC" id="textCodigoArticulo'+identificador+'" data-id_articulo='+identificador+' name="textCodigoArticuloC'+identificador+'" type="text" disabled><label for="textCodigoArticuloC'+identificador+'" class="control-label">Codigo :</label><i class=" fa fa-key"></i></div></div></div>';
+                textCaracteristica = '<div class="col-md-3"><div class="form-group form-md-line-input"><div class="input-icon"><input class="form-control textCaracteristicaC" id="textCaracteristica'+identificador+'" data-id_articulo='+identificador+'  name="textCaracteristicaC'+identificador+'" type="text" disabled><label for="textCaracteristicaC'+identificador+'" class="control-label">Caracteristica:</label><i class=" fa fa-keyboard-o"></i></div></div></div>';
+                boton_quitar = '<br><div class="col-md-1">@permission("AUDI_KIT_CREATE")<a class="btn btn-danger quitar_articulo" href="#" title="Quitar articulo" data-id_articulo='+identificador+' ><i class="icon-trash"></i></a>@endpermission</div>';
+                idTextTipoArticulo = "#textTipoArticulo"+identificador,idTextCodigoArticulo = "#textCodigoArticulo"+identificador,idTextCaracteristica= "#textCaracteristica"+identificador;
+                $('#contentFormularioArticulos').removeClass('hide');
+                fila_completa = '<div class="row fila_articulo" data-id_articulo='+identificador+'>'+textTipoArticulo+textCodigoArticulo+textCaracteristica+boton_quitar +'</div>';
+                $("#contentDiv").append(fila_completa);
+                valueTipoArticulo = $("#tipoArticulosSelect option:selected").text();
+                valueCodigoArticulo = $("#codigoSelect option:selected").text();
+                valueCaracteristicaArticulo = $('input:text[name="caracteristica"]').val();
+                $(idTextTipoArticulo).val(valueTipoArticulo);
+                $(idTextCodigoArticulo).val(valueCodigoArticulo);
+                $(idTextCaracteristica).val(valueCaracteristicaArticulo);
+                var idArticuloSelect = $('select[name="codigoSelect"]').val();
+                asignarArticuloAlkit(idArticuloSelect,idKitCreado);
+                objectForm.push(
+                    {
+                        id:identificador,
+                        idArticuloObj:idArticuloSelect
+                    });
+                identificador++;
+            }else{
+                validatorArticulo.element("#tipoArticulosSelect");
+                validatorArticulo.element("#caracteristica");
+                validatorArticulo.element("#codigoSelect");
+            }
+
         });
         $('#contentDiv').on('click', '.quitar_articulo', function(){
             var num = $(this).data('id_articulo');

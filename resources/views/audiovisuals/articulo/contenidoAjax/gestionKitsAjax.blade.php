@@ -110,11 +110,11 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         table = $('#kit-table-ajax');
-        {{--url = "{{ route('listarArticulo.data') }}";--}}
-            url ="{{ route('listarKit.data') }}";
+        url ="{{ route('listarKit.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
             {data: 'KIT_Nombre' , name: 'Nombre'},

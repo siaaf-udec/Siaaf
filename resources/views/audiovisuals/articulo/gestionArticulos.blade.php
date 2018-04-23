@@ -300,13 +300,14 @@
             };
         }();
         $(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
             ComponentsSelect2.init();
             table = $('#art-table-ajax');
             url = "{{ route('listarArticulo.data') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
+                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'consulta_tipo_articulo.TPART_Nombre'},
                 {data: 'ART_Descripcion', name: 'Descripción'},
                 {data: 'ART_Codigo', name: 'Codigo'},
                 {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},

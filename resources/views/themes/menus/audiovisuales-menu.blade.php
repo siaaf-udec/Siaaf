@@ -67,6 +67,12 @@
                             <span class="title">Listar Prestamos</span>
                         </a>
                     </li>
+                    <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.sanciones'], 'start active open') }}">
+                        <a href="{{ route('audiovisuales.gestionPrestamos.sanciones') }}" class="nav-link nav-toggle">
+                            <i class="icon-book-open"></i>
+                            <span class="title">Listar Sanciones</span>
+                        </a>
+                    </li>
                     <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.finalizados'], 'start active open') }}">
                         <a href="{{ route('audiovisuales.gestionPrestamos.finalizados') }}" class="nav-link nav-toggle">
                             <i class="icon-book-open"></i>

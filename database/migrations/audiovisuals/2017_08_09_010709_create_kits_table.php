@@ -15,7 +15,7 @@ class CreateKitsTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Kits', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('KIT_Nombre');
+            $table->text('KIT_Nombre');
 			$table->integer('KIT_FK_Estado_id')->unsigned();
             $table->integer('KIT_FK_Tiempo')->unsigned()->nullable();
             $table->integer('KIT_Codigo')->unsigned()->nullable();

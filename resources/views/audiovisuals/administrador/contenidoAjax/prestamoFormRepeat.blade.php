@@ -118,6 +118,7 @@
     var contadorMaximoCantidadTipoArticulosRepetidos = 0;
     var cantidadElementosKit =0;
     jQuery(document).ready(function () {
+        App.unblockUI('.portlet-form');
         var textArticulo, textTiempo, textObservacion,
             boton_quitar, idTextCodigo, idTextTipoArticulo, idTextTiempo, idTextObservacion, fila_completa,
             valueTipoArticulo, valueTiempo, valueObservacion ,textCodigo ,valueCodigo;
@@ -480,7 +481,6 @@
                 validatorArticulo.element("#codigo");
             }
         });
-
         $('#agregarKit').on('click', function (e) {
             if ((validatorKit.element("#tipoKitsSelect") == true) && (validatorKit.element("#ElementosKit") == true) && (validatorKit.element("#observacionEntregaKit") == true)) {
                 if((contadorMaximoCantidadArticulos + cantidadElementosKit )<= maximoCantidadArticulos){
@@ -655,6 +655,7 @@
             var formDatas = new FormData();
             formDatas.append('infoPrestamo', JSON.stringify(objectForm));
             formDatas.append('idFuncionario', idFuncionarioD);
+            console.log(formDatas);
             $.ajax({
                 url: routeCrearPrestamo,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

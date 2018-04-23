@@ -34,6 +34,7 @@ class ArticuloController extends Controller
             //dd($fecha->diffInHours($fecha2)); // 24
 
             if ($request->isMethod('GET')) {
+
                 return view('audiovisuals.articulo.gestionArticulos');
             }
             return AjaxResponse::fail(

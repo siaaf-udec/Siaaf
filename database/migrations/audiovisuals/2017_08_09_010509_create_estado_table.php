@@ -15,7 +15,7 @@ class CreateEstadoTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Estados', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('EST_Descripcion');
+            $table->text('EST_Descripcion');
             $table->timestamps();
         });
     }
