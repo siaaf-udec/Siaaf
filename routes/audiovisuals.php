@@ -144,8 +144,13 @@ Route::group(['middleware' => ['auth']], function () {
         //rutas manejo mantenimiento articulos
             Route::get('mantenimientos', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
                 'uses' => $controller . 'MantenimientoController@index',
-                'as' => 'audiovisuales.mantenimientos.index',                 //ruta que conduce al controlador donde muestra las preguntas de validacion
+                'as' => 'audiovisuales.mantenimientos.index',                 //ruta que conduce al controlador donde muestra articulos para realizar un mantenimiento
             ]);
+            Route::get('indexTipoArtciuloAjaxR',['middleware' => ['permission:AUDI_RECORD_MAINTENANCE_VIEW'],
+                'uses' => $controller . 'MantenimientoController@gestionMantenimientoAjax',
+                'as' => 'audiovisuales.gestionMantenimientoAjax',            //ruta que conduce al controlador donde se muestra la gestion de mantenimientos en articulos
+            ]);
+
     });
     //RUTAS GESTION ADMINISTRADOR(crear, modificar , consultar solicitudes de prestamos o reservas)
     //menu -> gestion prestamos

@@ -7,15 +7,9 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css"/>
 
-    <link href="{{ asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" rel="stylesheet" type="text/css"/>
+
     <link href="{{ asset('assets/global/plugins/bootstrap-editable/inputs-ext/address/address.css') }}" rel="stylesheet" type="text/css"/>
-    <!-- STYLES SELECT -->
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
-          type="text/css"/>
+
     <!-- STYLES MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -271,21 +265,7 @@
         var idEditarArticulo;
         var $seleccione_un_kit = $('select[name="FK_ART_Kit_id"]'),
             $seleccione_un_tipoArticulo = $('select[name="FK_ART_Tipo_id"]');
-        var ComponentsSelect2 = function () {
-            return {
-                init: function () {
-                    $.fn.select2.defaults.set("theme", "bootstrap");
-                    $(".pmd-select2").select2({
-                        placeholder: "Selecccionar",
-                        allowClear: true,
-                        width: 'auto',
-                        escapeMarkup: function (m) {
-                            return m;
-                        }
-                    });
-                }
-            }
-        }();
+
         var ComponentsBootstrapMaxlength = function () {
             var handleBootstrapMaxlength = function () {
                 $("input[maxlength], textarea[maxlength]").maxlength({
@@ -302,7 +282,7 @@
         $(document).ready(function () {
             App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
-            ComponentsSelect2.init();
+
             table = $('#art-table-ajax');
             url = "{{ route('listarArticulo.data') }}";
             columns = [

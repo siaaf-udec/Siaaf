@@ -37,4 +37,20 @@ class MantenimientoController extends Controller
         );
     }
 
+    /**
+     * Funcion que muestra todas las solicitudes de mantenimiento de articulos registrados por medio de una petición ajax.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View|\App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function gestionMantenimientoAjax(Request $request){
+        if($request->ajax() && $request->isMethod('GET')) {
+            return view('audiovisuals.articulo.contenidoAjax.gestionMantenimientoAjax');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
 }

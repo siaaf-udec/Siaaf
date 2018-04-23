@@ -45,8 +45,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission("AUDI_MAINTENANCE_CREATE")
-                        <a class="btn btn-outline dark createArticulo" data-toggle="modal">
+                        @permission("AUDI_REQUEST_MAINTENANCE_VIEW")
+                        <a class="btn btn-outline dark requestMaintenance" data-toggle="modal">
                             <i class="fa fa-wrench">
                             </i>
                             Mantenimiento Artículos
@@ -64,10 +64,10 @@
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'mtn-table-ajax'])
                         @slot('columns', [
                             '#' => ['style' => 'width:20px;'],
-                            'Tipo',
+                            'Nombre',
                             'Codigo',
-                            'Fecha Creacion',
-                            'Horas Uso',
+                            'Hora Ultimo Mantenimiento',
+                            'Horas Total Uso',
                             'Cantidad Mantenimientos',
                             'Acciones' => ['style' => 'width:100px;']
                         ])
@@ -189,7 +189,7 @@
                 {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
                 {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
                 {
-                    defaultContent: '@permission("AUDI_REQUEST_MAINTENANCE")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' ,
+                    defaultContent: '@permission("AUDI_MAINTENANCE_CREATE")<a title="Solicitar Mantenimiento" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' ,
 
                     data: 'action',
                     name: 'action',
@@ -269,6 +269,12 @@
                     }
                 });
             });
+
+            $('.requestMaintenance').on('click',function(e){
+                e.preventDefault();
+                var route = '{{ route('audiovisuales.gestionMantenimientoAjax') }}';
+                $(".content-ajax").load(route);
+            })
 
         });
     </script>

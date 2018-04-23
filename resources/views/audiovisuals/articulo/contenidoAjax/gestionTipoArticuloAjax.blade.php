@@ -60,7 +60,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="modal fade" data-width="760" id="modal-edit-tipo" tabindex="-1">
+            <div class="modal fade" data-width="380" id="modal-edit-tipo" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
@@ -73,13 +73,13 @@
                 <div class="modal-body">
                     {!! Form::open(['id' => 'from_art_tipo_edit', 'class' => '', 'url' => '/forms']) !!}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::text('TPART_Nombre_Edit',
                                    ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                    ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
                                !!}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
@@ -94,12 +94,13 @@
                                    ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
                             !!}
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-8">
+                        <div class="col-md-12" align="center">
+
                                 {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
                                 {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            </div>
+
                         </div>
+
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -141,21 +142,7 @@
 @endcomponent
 <script>
     var table, url, columns;
-    var ComponentsSelect2 = function () {
-        return {
-            init: function () {
-                $.fn.select2.defaults.set("theme", "bootstrap");
-                $(".pmd-select2").select2({
-                    placeholder: "Selecccionar",
-                    allowClear: true,
-                    width: 'auto',
-                    escapeMarkup: function (m) {
-                        return m;
-                    }
-                });
-            }
-        }
-    }();
+
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function () {
             $("input[maxlength], textarea[maxlength]").maxlength({
@@ -174,7 +161,7 @@
         App.unblockUI('.portlet-form');
         var idTipoArticulo;
         ComponentsBootstrapMaxlength.init();
-        ComponentsSelect2.init();
+
         table = $('#tipoArt-table-ajax');
         url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
@@ -231,8 +218,7 @@
             var dataTable = table.row($tr).data();
             console.log(dataTable);
             $('#TPART_Nombre_Edit').val(dataTable.TPART_Nombre);
-            $('select[name="TPART_Tiempo_edit"]').val(1);
-
+            $('select[name="TPART_Tiempo_Edit"]').val(dataTable.TPART_Tiempo);
             $('#TPART_HorasMantenimiento_Edit').val(dataTable.TPART_HorasMantenimiento);
             if(dataTable.consultar_articulos_count!=0){
                 $("#TPART_Nombre_Edit").prop("disabled", true);
