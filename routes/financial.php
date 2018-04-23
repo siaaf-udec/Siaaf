@@ -225,6 +225,18 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
             ],
             'parameters' => ['tipos-de-archivos' => 'id']
         ]);
+
+        /**
+         * Available Modules Management
+         */
+        Route::middleware([ 'permission:'.permission_available_module() ])->resource('disponibilidad-de-modulos', 'ManageAvailableModulesController', [
+            'only'  =>  ['index', 'store'],
+            'names' =>  [
+                'index' =>  'financial.management.available.modules.index',
+                'store' =>  'financial.management.available.modules.store',
+            ],
+            'parameters' => ['disponibilidad-de-modulos' => 'id']
+        ]);
     });
 
     /*
@@ -403,6 +415,11 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
             Route::get('auth', function () {
                 return response()->json( auth()->user(), 200 );
             })->name('financial.api.user.auth');
+        });
+
+        Route::prefix('available-modules')->group( function () {
+            Route::get('', 'AvailableModuleController@modules')
+                    ->name('financial.api.available.modules');
         });
     });
 });

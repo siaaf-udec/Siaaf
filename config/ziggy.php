@@ -43,6 +43,9 @@ return [
         'financial.management.file.type.store',
         'financial.management.file.type.update',
         'financial.management.file.type.destroy',
+        //Manage Available Modules
+        'financial.management.available.modules.index',
+        'financial.management.available.modules.store',
         //File Student Upload,
         'financial.files.store',
         'financial.files.update',

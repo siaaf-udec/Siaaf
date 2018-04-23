@@ -220,6 +220,7 @@ return [
         App\Container\Financial\src\Providers\FinancialRoleServiceProvider::class,
         App\Container\Financial\src\Providers\FinancialProgramServiceProvider::class,
         App\Container\Financial\src\Providers\FinancialSubjectServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialAvailableModuleServiceProvider::class,
         App\Container\Financial\src\Providers\FinancialExtensionServiceProvider::class,
         \App\Container\Financial\src\Providers\FinancialValidationServiceProvider::class,
         \App\Container\Financial\src\Providers\FinancialIntersemestralServiceProvider::class,

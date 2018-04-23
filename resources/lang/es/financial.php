@@ -81,6 +81,13 @@ return [
                 'actions'           =>  'Acciones',
             ]
         ],
+        'modules'   => [
+            'title' =>  '| Gestión de Módulos',
+            'index' => [
+                'title'         => 'Módulos',
+                'description'   => 'gestiona la disponibilidad de los módules durante el semestra.',
+            ],
+        ]
     ],
 
     'files'         =>  [
@@ -293,6 +300,7 @@ return [
         'program'           =>  'Escribe el nombre del programa aquí.',
         'cost'              =>  'Escribe el costo aquí.',
         'valid_until'       =>  'Escribe la fecha válida hasta.',
+        'valid_from'        =>  'Escribe la fecha válida desde.',
         'status'            =>  'Escribe el nombre del estado aquí.',
         'subject'           =>  'Escribe el nombre de la materia aquí.',
         'code'              =>  'Escribe el código de la materia aquí.',

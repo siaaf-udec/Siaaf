@@ -21,7 +21,8 @@ class ExtensionRequestController extends Controller
      */
     public function __construct(ExtensionRepository $extensionRepository)
     {
-        $this->middleware( 'extension.status', ['only' => ['edit'] ] );
+        $this->middleware( 'request.status:'.status_type_extension(), ['only' => ['edit'] ] );
+        $this->middleware( 'check.available:'.status_type_extension(), ['only' => ['create', 'store', 'edit', 'update', 'destroy'] ] );
         $this->extensionRepository = $extensionRepository;
     }
 

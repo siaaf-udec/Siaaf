@@ -25,5 +25,6 @@ class DatabaseFinancialSeeder extends Seeder
         $this->call(UsersFinancialTableSeeder::class);
         $this->call(StatusFinancialTableSeeder::class);
         $this->call(FileTypeFinancialTableSeeder::class);
+        $this->call(AvailableModulesTableSeeder::class);
     }
 }

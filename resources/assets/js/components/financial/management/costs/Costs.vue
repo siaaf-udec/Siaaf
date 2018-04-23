@@ -343,30 +343,6 @@
                                 date:  ( cost.cost_valid_until ) ? moment( cost.cost_valid_until ).format('YYYY-MM-DD') : null,
                             }
                         });
-
-                        /*
-                        let that = this;
-                        function setUpdateValues( values ) {
-                            that.table.sources = values.map( (cost) => {
-                                return {
-                                    id: cost.id,
-                                    url: route('financial.management.costs.update', {id: cost.id}),
-                                    cost: cost.cost,
-                                    money: cost.cost_to_money,
-                                    service: Lang.get('validation.attributes.' + cost.cost_service_name.toLowerCase() ).capitalize(),
-                                    date: moment(cost.cost_valid_until.date).format('YYYY-MM-DD'),
-                                }
-                            });
-                        };
-                        function setNewValues() {
-                            that.handleEditable();
-                        };
-
-                        (async function initEditblesData() {
-                            await setUpdateValues(response.data);
-                            await setNewValues();
-                        })();
-                        */
                     })
                     .then(() => {
                         this.handleEditable();

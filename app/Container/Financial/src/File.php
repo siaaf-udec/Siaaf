@@ -101,15 +101,23 @@ class File extends Model
      */
     public function getDropzoneStatusAttribute()
     {
-        if ( isFirstSemester( $this->{created_at()}->month )
-            && $this->{created_at()}->year == today()->year ) {
-            return true;
-        } elseif ( !isFirstSemester( $this->{created_at()}->month )
-            && $this->{created_at()}->year == today()->year ) {
-            return true;
-        } else {
-            return false;
+        $available = AvailableModules::ofType( status_type_file() )->first();
+
+        if ( isset( $available->{ available_from() } ) &&
+             isset( $available->{ available_until() } ) &&
+             isset( $this->{created_at()} ) ) {
+            if ( $this->{created_at()}->format("Y-m-d H:i:s") < $available->{ available_from() }->format("Y-m-d H:i:s") ) {
+                return false;
+            } elseif ( $this->{created_at()}->format("Y-m-d H:i:s") >  $available->{ available_until() }->format("Y-m-d H:i:s") ) {
+                return true;
+            } elseif ( $this->{created_at()}->format("Y-m-d H:i:s") >= $available->{ available_from() }->format("Y-m-d H:i:s") &&
+                       $this->{created_at()}->format("Y-m-d H:i:s") <=  $available->{ available_until() }->format("Y-m-d H:i:s")) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     /*

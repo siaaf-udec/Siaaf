@@ -113,6 +113,14 @@ class RolePermissionFinancialTableSeeder extends Seeder
         $file_types->module_id    =  $module->id;
         $file_types->save();
 
+        $permission = ConstantPermissions::getModulePermission( 'resource_management', 'available_module' );
+        $available_module = new Permission;
+        $available_module->name         = $permission['name'];
+        $available_module->display_name = $permission['display_name'];
+        $available_module->description  = $permission['description'];
+        $available_module->module_id    =  $module->id;
+        $available_module->save();
+
         $permission = ConstantPermissions::getModulePermission( 'files_management' );
         $files_management = new Permission;
         $files_management->name         = $permission['name'];
@@ -229,6 +237,7 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $costs,
             $status,
             $file_types,
+            $available_module,
             //
             $files_management,
             $upload_files,
@@ -259,6 +268,7 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $costs,
             $status,
             $file_types,
+            $available_module,
             //
             $files_management,
             $approve_files,

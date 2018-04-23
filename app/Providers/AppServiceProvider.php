@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         View::share( 'permission_costs', permission_costs() );
         View::share( 'permission_status', permission_status() );
         View::share( 'permission_file_type', permission_file_type() );
+        View::share( 'permission_available_module', permission_available_module() );
         View::share( 'permission_file_management', permission_file_management() );
         View::share( 'permission_upload_files', permission_upload_files() );
         View::share( 'permission_approve_files', permission_approve_files() );

@@ -20,6 +20,7 @@ class FileController extends Controller
      */
     public function __construct(FileRepository $fileRepository)
     {
+        $this->middleware( 'check.available:'.status_type_file(), ['only' => ['store', 'update'] ] );
         $this->fileRepository = $fileRepository;
     }
 

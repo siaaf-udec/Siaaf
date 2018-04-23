@@ -55,6 +55,14 @@
                             </a>
                         </li>
                     @endpermission
+                    @permission( $permission_available_module )
+                        <li class="nav-item {{ active(['financial.management.available.modules.*'], 'start active open') }}">
+                            <a href="{{ route('financial.management.available.modules.index') }}" class="nav-link nav-toggle">
+                                <i class="fa fa-clock-o"></i>
+                                <span class="title">Disponibilidad de Módulos</span>
+                            </a>
+                        </li>
+                    @endpermission
                 </ul>
             </li>
         @endpermission

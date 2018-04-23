@@ -24,6 +24,7 @@ class ConstantPermissions
      * Costs
      * Status
      * File Type
+     * Available Modules
      *
      * -----------------------------------------
      */
@@ -34,6 +35,7 @@ class ConstantPermissions
     const COSTS                 =       'FINANCIAL_COSTS_MANAGEMENT_MODULE';
     const STATUS                =       'FINANCIAL_STATUS_MANAGEMENT_MODULE';
     const FILE_TYPE             =       'FINANCIAL_FILE_TYPE_MANAGEMENT_MODULE';
+    const AVAILABLE_MODULES     =       'FINANCIAL_AVAILABLE_MODULES_MANAGEMENT_MODULE';
 
     /*
      * -----------------------------------------
@@ -130,6 +132,11 @@ class ConstantPermissions
                         'name'          =>  self::FILE_TYPE,
                         'display_name'  =>  'Gestión de Tipos de Archivos',
                         'description'   =>  'Permite acceder a las herramientas de gestión de tipos de archivos del módulo financero.',
+                    ],
+                    'available_module'    =>  [
+                        'name'          =>  self::AVAILABLE_MODULES,
+                        'display_name'  =>  'Gestión de Disponibilidad de Módulos',
+                        'description'   =>  'Permite acceder a las herramientas de gestión de fechas disponibles para uso de cada módulo financiaro.',
                     ],
                 ]
             ],

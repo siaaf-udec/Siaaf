@@ -357,6 +357,11 @@ function permission_file_type () { return ConstantPermissions::FILE_TYPE; }
 /**
  * @return string
  */
+function permission_available_module () { return ConstantPermissions::AVAILABLE_MODULES; }
+
+/**
+ * @return string
+ */
 function permission_file_management () { return ConstantPermissions::FILES_MANAGEMENT; }
 
 /**
@@ -742,6 +747,27 @@ function file_type_fk(){ return SchemaConstant::FILE_TYPE_FOREIGN_KEY; }
  * @return string
  */
 function extension_fk(){ return SchemaConstant::EXTENSION_FOREIGN_KEY; }
+
+/**
+ * Return Module Name Text
+ *
+ * @return string
+ */
+function module_name(){ return SchemaConstant::MODULE_NAME; }
+
+/**
+ * Return Available From Text
+ *
+ * @return string
+ */
+function available_from(){ return SchemaConstant::AVAILABLE_FROM; }
+
+/**
+ * Return Available Until Text
+ *
+ * @return string
+ */
+function available_until(){ return SchemaConstant::AVAILABLE_UNTIL; }
 
 /**
  * Return Status Field Text

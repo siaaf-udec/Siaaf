@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielprado
- * Date: 28/10/17
- * Time: 2:14 PM
- */
 
 namespace App\Container\Financial\src\Repository;
 

@@ -116,6 +116,7 @@ return [
         '408'           =>  'Se agotó el tiempo de espera de la conexión.',
         '409'           =>  'La solicitud no pudo ser procesada debido a un conflicto con el estado actual del recurso.',
         '410'           =>  'El recurso solicitado ya no está disponible y no lo estará de nuevo.',
+        '413'           =>  'Archivo demasiado grande para cargar.',
         '419'           =>  'Tiempo de espera de autenticación agotado.',
         '422'           =>  'La solicitud está bien formada pero no fue imposible seguirla debido a errores semánticos.',
         '500'           =>  'Error Interno del Servidor.',
