@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
         // rutas manejo tipo de articulo
             Route::get('indexTipoArtciuloAjaxR',['middleware' => ['permission:AUDI_ART_KIT'],
                 'uses' => $controller . 'ArticuloController@indexTipoArtciuloAjax',
-                'as' => 'audiovisuales.gestionTipoArticuloAjax',            //ruta que conduce al controlador donde se muestra la gestion de los tipos de articulos
+                'as' => 'audiovisuales.gestionTipoArticulosAjax',            //ruta que conduce al controlador donde se muestra la gestion de los tipos de articulos
             ]);
             Route::get('listarTipoArticulosdataR',['middleware' => ['permission:AUDI_MODULE'],
                 'uses' => $controller . 'ArticuloController@dataTableTipoArticulos',
@@ -146,7 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => $controller . 'MantenimientoController@index',
                 'as' => 'audiovisuales.mantenimientos.index',                 //ruta que conduce al controlador donde muestra articulos para realizar un mantenimiento
             ]);
-            Route::get('indexTipoArtciuloAjaxR',['middleware' => ['permission:AUDI_RECORD_MAINTENANCE_VIEW'],
+            Route::get('gestionMantenimientoAjax',['middleware' => ['permission:AUDI_RECORD_MAINTENANCE_VIEW'],
                 'uses' => $controller . 'MantenimientoController@gestionMantenimientoAjax',
                 'as' => 'audiovisuales.gestionMantenimientoAjax',            //ruta que conduce al controlador donde se muestra la gestion de mantenimientos en articulos
             ]);

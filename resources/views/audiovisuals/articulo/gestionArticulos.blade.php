@@ -600,7 +600,7 @@
             FormValidationMd.init(from_art_edit,rules_arti_edit,false,modificarArticulo());
             $('.createTipo').on('click',function(e){
                 e.preventDefault();
-                var route = '{{ route('audiovisuales.gestionTipoArticuloAjax') }}';
+                var route = '{{ route('audiovisuales.gestionTipoArticulosAjax') }}';
                 $(".content-ajax").load(route);
             })
         });
