@@ -71,7 +71,7 @@
     </br>
 @endsection
 @push('plugins')
-
+    <script src="{{ asset('assets/global/plugins/icheck/icheck.js') }}" type="text/javascript"></script>
    <!-- TIEMPOS DATETIME -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATETIME -->

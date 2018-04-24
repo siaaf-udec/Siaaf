@@ -107,6 +107,7 @@ class Solicitudes extends Model
 			TipoArticulo::class,'PRT_FK_Articulos_id','id'
 		);
 	}
+
     /**
      * Función que retorna la relación entre la tabla 'TBL_Prestamos' y la tabla 'TBL_Usuario_Audiovisuales'
      * a través de la llave foránea 'PRT_FK_Funcionario_id' y la llave 'id'

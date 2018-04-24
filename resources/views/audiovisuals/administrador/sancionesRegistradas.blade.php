@@ -1,6 +1,9 @@
 
 @extends('material.layouts.dashboard')
 @push('styles')
+    <!-- STYLES ICHECK-->
+    <link href="{{asset('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css"/>
+
     <!-- Styles SWEETALERT  -->
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
@@ -79,6 +82,7 @@
     </script>
 @endpush
 @push('functions')
+    <script src="{{ asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
@@ -153,6 +157,7 @@
                             formDatas.append('SNS_Sancion_General',dataTable.SNS_Sancion_General);
                             formDatas.append('SNS_Numero_Orden',dataTable.SNS_Numero_Orden);
                             formDatas.append('FK_SNS_Id_Solicitud',dataTable.FK_SNS_Id_Solicitud);
+                            formDatas.append('id_Sancion',dataTable.id);
                             formDatas.append('accion','anulacionGeneral');
                             console.log(formDatas);
                             $.ajax({
@@ -169,7 +174,9 @@
                                 },
                                 success: function (response, xhr, request) {
                                     UIToastr.init(xhr, response.title, response.message);
+                                    table.ajax.reload();
                                     App.unblockUI('.portlet-form');
+
                                 },
                                 error: function (response, xhr, request) {
                                     UIToastr.init(xhr, response.title, response.message);
@@ -179,6 +186,13 @@
                         }
                     }
                 );
+            });
+            table.on('click', '.ver', function (e){
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var route = '{{ route('audiovisuales.listar.sanciones.asignadas.gestion') }}'+'/'+dataTable.SNS_Numero_Orden;
+                $(".content-ajax").load(route);
             });
         });
     </script>

@@ -545,8 +545,8 @@ class AdministradorGestionController extends Controller
                         ]
                     );
                 }])->where([
-                    ['PRT_FK_Tipo_Solicitud','=',2]
-                    //['PRT_FK_Estado','!=',3]
+                    ['PRT_FK_Tipo_Solicitud','=',2],
+                    ['PRT_FK_Estado','!=',5]
                 ])->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
                 $array = array();
@@ -1120,7 +1120,7 @@ class AdministradorGestionController extends Controller
         );
     }
 
-        public function RegistrarSancion(Request $request,$idFuncionario,$sancnionGeneralSolicitudes)
+        public function registrarSancion(Request $request,$idFuncionario,$sancnionGeneralSolicitudes)
         {
             if ($request->ajax() && $request->isMethod('POST')) {
                 $infoSancion = json_decode($request->get('inSancion'));
@@ -1144,7 +1144,7 @@ class AdministradorGestionController extends Controller
                     ]);
                     $solicitudAsignada = $sancion->idReserva;
                 }
-                if($sancnionGeneralSolicitudes = 0){
+                if($sancnionGeneralSolicitudes == 0){
                     $solicitudes =  Solicitudes::find($solicitudAsignada);
                     $solicitudes->PRT_FK_Estado = 5 ;//estado sancion
                     $solicitudes->save();
@@ -1165,7 +1165,37 @@ class AdministradorGestionController extends Controller
         public function indexSanciones(Request $request)
         {
             if ($request->isMethod('GET')) {
+                $sanciones = Sanciones::with([
+                    'consultarSolicitud'=> function($query){
+                        return
+                            $query->select('id','PRT_FK_Articulos_id','PRT_FK_Kits_id')
+                                ->with(['consultaTipoArticulo'=>function($query){
+                                    return $query->select(
+                                        'id','TPART_Nombre' );
+                                }]);
+                    },'consultarSolicituds'=> function($query){
+                        return
+                            $query->select('id','PRT_FK_Articulos_id','PRT_FK_Kits_id')
+                                ->with(['consultaKitArticulo'=>function($query){
+                                    return $query->select(
+                                        'id','KIT_Nombre' );
+
+                                }]);
+                    }
+                ])->where('SNS_Numero_Orden','=',1)->get();
+                //dd($sanciones);
                 return view('audiovisuals.administrador.sancionesRegistradas');
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+        public function indexSancionesAjax(Request $request)
+        {
+            if ($request->isMethod('GET')) {
+
+                return view('audiovisuals.administrador.contenidoAjax.sancionesRegistradasAjax');
             }
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -1189,7 +1219,7 @@ class AdministradorGestionController extends Controller
                         },'conultarAdministradorEntrega'
                     ]
                 )->get();
-                $sanciones =($sanciones)->groupBy('PRT_Num_Orden');
+                $sanciones =($sanciones)->groupBy('SNS_Numero_Orden');
                 $array = array();
                 foreach ($sanciones as $le) {
                     array_push($array, $le[0]);
@@ -1209,8 +1239,8 @@ class AdministradorGestionController extends Controller
                 //SNS_Sancion_General-> 1 numero orden , 0 id solicitud
                 //SNS_Numero_Orden-> numero orden tbl sanciones
                 //FK_SNS_Id_Solicitud->idsolicitud o idnumero de orden solicitud
-                if($request->get('anulacionGeneral')=='anulacionGeneral'){
-                    Sanciones::where('SNS_Numero_Orden','=',$request->get('SNS_Sancion_General'))
+                if($request->get('accion')=='anulacionGeneral'){
+                    Sanciones::where('SNS_Numero_Orden','=',$request->get('SNS_Numero_Orden'))
                         ->delete();
                     if($request->get('SNS_Sancion_General')== 1){
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
@@ -1243,12 +1273,17 @@ class AdministradorGestionController extends Controller
                         Solicitudes::where('id','=',$request->get('FK_SNS_Id_Solicitud'))
                         ->delete();
                     }
-                }else{
-                    Sanciones::where('id','=',$request->get('id'))
+
+                }
+                if($request->get('accion')=='anulacionIndividual'){
+                    Sanciones::where('id','=',$request->get('id_Sancion'))
                         ->delete();
-                    if($request->get('SNS_Sancion_General')== 1){
+                }
+                if($request->get('accion')=='anulacionFinal'){
+                    $sancionF = Sanciones::find($request->get('id_Sancion'));
+                    if($sancionF->SNS_Sancion_General == 1){
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
-                            ->where('PRT_Num_Orden', '=', $request->get('FK_SNS_Id_Solicitud'))->get();
+                            ->where('PRT_Num_Orden', '=', $sancionF->FK_SNS_Id_Solicitud)->get();
                         foreach ($articulo as $id){
                             if($id->PRT_FK_Kits_id == 1 || $id->PRT_FK_Kits_id == 0){
                                 Articulo::where('id','=',$id->PRT_FK_Articulos_id)
@@ -1259,11 +1294,13 @@ class AdministradorGestionController extends Controller
                                 Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
-                        Solicitudes::where('PRT_Num_Orden','=',$request->get('FK_SNS_Id_Solicitud'))
+                        Solicitudes::where('PRT_Num_Orden','=',$sancionF->FK_SNS_Id_Solicitud)
+                            ->delete();
+                        Sanciones::where('id','=',$request->get('id_Sancion'))
                             ->delete();
                     }else{
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
-                            ->where('id', '=', $request->get('FK_SNS_Id_Solicitud'))->get();
+                            ->where('id', '=', $sancionF->FK_SNS_Id_Solicitud)->get();
                         foreach ($articulo as $id){
                             if($id->PRT_FK_Kits_id == 1 || $id->PRT_FK_Kits_id == 0){
                                 Articulo::where('id','=',$id->PRT_FK_Articulos_id)
@@ -1274,18 +1311,57 @@ class AdministradorGestionController extends Controller
                                 Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
-                        Solicitudes::where('id','=',$request->get('FK_SNS_Id_Solicitud'))
+                        Sanciones::where('id','=',$request->get('id_Sancion'))
+                            ->delete();
+                        Solicitudes::where('id','=',$sancionF->FK_SNS_Id_Solicitud)
                             ->delete();
                     }
                 }
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Sanciones an.'
+                    'Sancion anulada.'
                 );
             }
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar la solicitud.'
+            );
+        }
+        public function sancionesGestionCancelar(Request $request,$numOrdenSancion)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $sanciones = Sanciones::with([
+                    'consultarSolicitud'
+                ])->where('SNS_Numero_Orden','=',$numOrdenSancion)->get();
+                $array = array();
+                $array2 = array();
+                foreach ($sanciones as $relacion) {
+                    $array = array();
+                    if($relacion['consultarSolicitud']['PRT_FK_Kits_id'] == 0 || $relacion['consultarSolicitud']['PRT_FK_Kits_id'] == 1){
+                        $articuloKit = Articulo::with('consultaTipoArticulo')
+                            ->where('id','=',$relacion['consultarSolicitud']['PRT_FK_Articulos_id'])
+                            ->get();
+                        $array = array_add($array, 'relacion', $articuloKit);
+                        $array = array_add($array, 'sancion', $relacion);
+                        array_push($array2,$array);
+
+                    }else{
+                        $articuloKit = Kit::where('id','=',$relacion['consultarSolicitud']['PRT_FK_Kits_id'])->get();
+                        $array = array_add($array, 'relacion', $articuloKit);
+                        $array = array_add($array, 'sancion', $relacion);
+                        array_push($array2,$array);
+                    }
+                }
+                return view('audiovisuals.administrador.contenidoAjax.cancelacionSancionesAjax',
+                    [
+                        'sanciones'=>$array2,
+                        'contador'=>0,
+                    ]
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
             );
         }
 
