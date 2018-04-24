@@ -23,6 +23,7 @@ class CreateTBLParticipantesTbl extends Migration
             $table->date('PTPT_Fecha_Inicio'); 
             $table->date('PTPT_Fecha_Fin');
             $table->softDeletes();
+            $table->timestamps();
 
         });
     }

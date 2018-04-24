@@ -20,6 +20,7 @@ class CreateTBLEvaluacionPreguntaTbl extends Migration
             $table->foreign('FK_TBL_Evaluacion_Id')->references('PK_VLCN_Evaluacion')->on('TBL_Evaluacion');
             $table->integer('FK_TBL_Pregunta_Id')->unsigned();
             $table->foreign('FK_TBL_Pregunta_Id')->references('PK_PRGT_Pregunta')->on('TBL_Pregunta');
+            $table->timestamps();
              }); 
             
     }

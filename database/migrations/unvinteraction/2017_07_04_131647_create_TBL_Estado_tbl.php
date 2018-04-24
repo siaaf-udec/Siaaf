@@ -16,6 +16,7 @@ class CreateTBLEstadoTbl extends Migration
         Schema::connection('unvinteraction')->create('TBL_Estado', function (Blueprint $table) {
             $table->increments('PK_ETAD_Estado');
             $table->text('ETAD_Estado');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

@@ -19,6 +19,7 @@ class CreateTBLDocumentacionTbl extends Migration
             $table->text('DOCU_Ubicacion'); 
             $table->integer('FK_TBL_Convenio_Id')->unsigned();
             $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
+            $table->timestamps();
         });
     }
     /**
