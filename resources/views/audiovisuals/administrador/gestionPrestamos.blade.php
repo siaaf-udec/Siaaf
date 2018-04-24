@@ -147,15 +147,7 @@
 
         jQuery(document).ready(function () {
             App.unblockUI('.portlet-form');
-            //$('input').iCheck('disabled');
-
             handleiCheck();
-
-            //checkedClass :  ' checked ' ,
-            //$('#c').on('ifChecked', function(event){
-            //  alert(event.type + ' callback');
-            //});
-            //$('#c').iCheck('toggle');
             ComponentsSelect2.init();
             var idFuncionario;
             var table, url, columns;

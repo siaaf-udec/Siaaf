@@ -46,11 +46,17 @@ class PermissionAudiovisualsSeeder extends Seeder
             ['name'=>'AUDI_LENDING_ASSIGN_KIT','display_name'=>'Asigna kit','description'=>'Acceso de asignacion de kit a la reserva a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_LENDING_CREATE','display_name'=>'Crear Solicitud reserva ','description'=>'Acceso de Creacion de solicitud reserva a el modulo de audiovisuales.','module_id'=>'2'],
 
+            ['name'=>'AUDI_VIEW_SANCTION','display_name'=>'Vista sanciones ','description'=>'Acceso a ver las sanciones asignadas en el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'AUDI_CANCEL_SANCTION','display_name'=>'Anular sanciones','description'=>'Acceso a anular sanciones en el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'AUDI_REQUESTS_CREATE_ASSENT','display_name'=>'Asignacion sancion','description'=>'Acceso a realizar sanciones en el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'AUDI_LENDING_CREATE_ASSENT','display_name'=>'Asignacion sancion','description'=>'Acceso a realizar sanciones en el modulo de audiovisuales.','module_id'=>'2'],
+
             ['name'=>'AUDI_MAINTENANCE_ART','display_name'=>'Mantenimiento articulos ','description'=>'Acceso al mantenimiento de articulos en el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_MAINTENANCE_CREATE','display_name'=>'Crear Solicitud Mantenimiento ','description'=>'Acceso de visualizar las solicitudes de mantenimientos a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_REQUEST_MAINTENANCE_VIEW','display_name'=>'Visualiza Mantenimientos ','description'=>'Acceso de creacion solicitud mantenimiento a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_RECORD_MAINTENANCE_VIEW','display_name'=>'Gestion Mantenimientos ','description'=>'Acceso a la vista de solicitudes de mantenimientos a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_END_MAINTENANCE','display_name'=>'Finalizar Mantenimiento ','description'=>'Acceso de finalizacion de mantenimiento a un articulo a el modulo de audiovisuales.','module_id'=>'2'],
+
 
         ];
 

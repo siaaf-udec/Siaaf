@@ -292,34 +292,35 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'listarFuncionariosSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde consulta las solicitudes finalizadas
         ]);
 
+
         Route::get('entregasReservas/{id_articulo?}/{observation?}/{grupo?}',['middleware' => ['permission:AUDI_MODULE'],
             'uses' => $controller . 'AdministradorGestionController@entregarSolocitudReserva',
             'as' => 'solicitud.reserva.entregas',                                       //ruta que conduce al controlador para actualizar la solicitud de reserva(entrega)
         ]);
-
+        //rutas sanciones
         Route::post('registrarSancionR/{id_Funcionario?}/{asignacion?}',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@registrarSancion',
             'as' => 'registrar.sancion',                                       //ruta que conduce al controlador para registra la sancion(es)
-        ]);
+        ]);//-
         Route::get('indexSanciones',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@indexSanciones',
-            'as' => 'audiovisuales.gestionPrestamos.sanciones',                //ruta que conduce al controlador para mostrar las solcitudes generadas
-        ]);
+            'as' => 'audiovisuales.gestionPrestamos.sanciones',                //ruta que conduce al controlador para mostrar las sanciones generadas
+        ]);//-
         Route::get('listarSancionesR',['middleware' => ['permission:AUDI_MODULE'],
             'uses' => $controller . 'AdministradorGestionController@dataSancionesListar',
-            'as' => 'listarSancionesSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde consulta las solicitudes finalizadas
-        ]);
+            'as' => 'listarSancionesSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde lista las sanciones asignadas
+        ]);//-
         Route::post('anularSancionR',['middleware' => ['permission:AUDI_MODULE'],
             'uses' => $controller . 'AdministradorGestionController@anularSancion',
-            'as' => 'audiovisuales.anular.sancion',                                       //ruta que conduce al controlador para registra la sancion(es)
-        ]);
+            'as' => 'audiovisuales.anular.sancion',                                       //ruta que conduce al controlador para anular la sancion(es)
+        ]);//-
         Route::get('sancionesGestionCancelar/{numeroOrdenSancion?}',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@sancionesGestionCancelar',
-            'as' => 'audiovisuales.listar.sanciones.asignadas.gestion',       //ruta que conduce al controlador donde consulta las solicitudes finalizadas
-        ]);
+            'as' => 'audiovisuales.listar.sanciones.asignadas.gestion',       //ruta que conduce al controlador donde gestiona las sanciones asignadas
+        ]);//-
         Route::get('indexSancionesAjax',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@indexSancionesAjax',
-            'as' => 'audiovisuales.gestionPrestamos.sanciones.ajax',                //ruta que conduce al controlador para mostrar las solcitudes generadas
+            'as' => 'audiovisuales.gestionPrestamos.sanciones.ajax',                //ruta que conduce al controlador para mostrar las sanciones
         ]);
 
     });

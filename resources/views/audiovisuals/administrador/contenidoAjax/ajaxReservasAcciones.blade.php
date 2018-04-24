@@ -124,8 +124,10 @@
                             <br>
                         @endforeach
                         <div class="modal-footer col-md-offset-3">
+                            @permission('AUDI_REQUESTS_CREATE_ASSENT')
                             {!! Form::button('Continuar', ['class' => 'btn blue','id'=>'aplicarSancion']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            @endpersmission
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -255,10 +257,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4" >
+                                        @permission('AUDI_REQUESTS_CREATE_ASSENT')
                                         <div>
                                             {!! Form::button('Recibir', ['class' => 'btn btn-success  recibir_articulo','data-id_articulo'=>$articulos['id']]) !!}
                                             {!! Form::button('aplicar sancion', ['class' => 'btn btn-warning  aplicar_sancion','data-id_sancion'=>$articulos['id']]) !!}
                                         </div>
+                                        @endpermission
                                     </div>
                                 </div>
                             @endif
@@ -329,15 +333,12 @@
         ComponentsSelect2.init();
         ComponentsBootstrapMaxlength.init();
         $('#contentFormularioPrestamos').on('click', '.recibir_articulo', function(){
-            idArticulo = $(this).data('id_articulo');//id del prestamo
-            console.log('id'+idArticulo);
+            idArticulo = $(this).data('id_articulo');
             var idValE = '#PRT_Observacion_Entrega'+idArticulo;
             var idValR = '#PRT_Observacion_Recibe'+idArticulo;
             var observationRecibe = $(idValR).val();
             var observationEntrega = $(idValE).val();
             var observation;
-            console.log(typeof(observationRecibe));
-            console.log(observationRecibe);
             if(observationRecibe == '' && observationEntrega == ''){
                 swal(
                     'Oops...',
@@ -396,7 +397,6 @@
             sancionGeneral = 0;
             $('#from_sancion')[0].reset();
             $('#modal-asignacion-sancion').modal('toggle');
-            console.log('por individual'+idSolicitud);
         });
         $('#aplicarSancion').on('click',  function(){
             $('#modal-asignacion-sancion').modal('hide');
@@ -431,9 +431,7 @@
                                 App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
-                                //co = co-1;
                                 datosSanciones = [];
-                                console.log(xhr);
                                 var route = '{{ route('reserva.index') }}';
                                 if(sancionGeneral == 1){
                                     $(".content-ajax").load(route);
@@ -478,10 +476,8 @@
         $ ('.icheck' ).on( 'ifClicked' , function ( event ) {
             var idSancion = $(this).data('id_checked');
             if(!$('.box'+idSancion).is(':checked') ){
-                console.log('.selecionado'+idSancion);
                 if ((validatorSancion.element("#observacion"+idSancion) == true) && (validatorSancion.element("#costo"+idSancion) == true)) {
                     $('.icheck').iCheck('uncheck');
-                    console.log('seleccionado' + idSancion);
                     var observacion = '#observacion' + idSancion;
                     var costo = '#costo' + idSancion;
                     observacion = $(observacion).val();
@@ -523,8 +519,6 @@
                 datosSanciones = datosSanciones.filter(function (el) {
                     return el.id != idSancion;
                 });
-                console.log(datosSanciones);
-                console.log('des seleccionado'+idSancion);
             }
         });
         $('.getAll').on('click',function(){
@@ -536,8 +530,6 @@
             sancionGeneral = 1;
             $('#from_sancion')[0].reset();
             $('#modal-asignacion-sancion').modal('toggle');
-            console.log('abrio modal');
-
         });
         var updateGeneralS = function(){
             return {

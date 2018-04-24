@@ -115,8 +115,8 @@
                 {data: 'SNS_Fecha', name: 'Fecha'},
                 {
                     defaultContent:
-                            '<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>' +
-                            '<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>',
+                            '@permission("AUDI_CANCEL_SANCTION")<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>@endpersmission' +
+                            '@permission("AUDI_VIEW_SANCTION")<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>@endpersmission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

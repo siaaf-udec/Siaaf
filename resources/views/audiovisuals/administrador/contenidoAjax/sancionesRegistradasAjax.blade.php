@@ -43,8 +43,8 @@
             {data: 'SNS_Fecha', name: 'Fecha'},
             {
                 defaultContent:
-                '<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>' +
-                '<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>',
+                '@permission("AUDI_CANCEL_SANCTION")<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>@endpermission' +
+                '@permission("AUDI_VIEW_SANCTION")<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -63,7 +63,6 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            console.log(dataTable);
             swal(
                 {
                     title: "Anular Sanciones",
@@ -87,7 +86,6 @@
                         formDatas.append('FK_SNS_Id_Solicitud',dataTable.FK_SNS_Id_Solicitud);
                         formDatas.append('id_Sancion',dataTable.id);
                         formDatas.append('accion','anulacionGeneral');
-                        console.log(formDatas);
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

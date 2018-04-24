@@ -117,7 +117,6 @@
                         var typeAjax = 'POST';
                         var async = async || false;
                         formDatas.append('id_Sancion',idTblSancion);
-                        console.log(formDatas);
                         if(contador != 0){
                             formDatas.append('accion','anulacionIndividual');
                             $.ajax({
