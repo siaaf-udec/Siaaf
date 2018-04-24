@@ -95,31 +95,29 @@
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_edit-activity', 'class' => '', 'url' => '/forms']) !!}
-                        {!! Field::hidden('PK_CTVD_IdActividad') !!}
-
-                        <div class="modal-header modal-header-success">
+                     <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h1><i class="glyphicon glyphicon-pencil"></i> Editar actividad predeterminada</h1>
                         </div>
+                        
+
+                        
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
+                                 {!! Form::open(['id' => 'from_edit-activity', 'class' => '', 'url' => '/forms']) !!}
+                        {!! Field::hidden('PK_CTVD_IdActividad') !!}
                                     {!! Field::textarea('nombre', null,
                                     ['label'=>'Nombre', 'required', 'auto' => 'off','rows' => '1','max' => '50', 'min' => '5','id'=>'nombreUpdate'],
                                     [ 'help'=>'Nombre de actividad','icon' => 'fa fa-user']) !!}
-                                </div>
-                                <div class="col-md-12">
+                                
                                     {!! Field::textarea('descripcion', null,
                                     ['label'=>'Descripción','required', 'auto' => 'off','rows' => '3','max' => '100', 'min' => '1','id'=>'descripcionUpdate'],
                                     [ 'help'=>'Descripcion','icon' => 'fa fa-book']) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
+                                
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                        </div>
+                        
                         {!! Form::close() !!}
                     </div>
                 </div>

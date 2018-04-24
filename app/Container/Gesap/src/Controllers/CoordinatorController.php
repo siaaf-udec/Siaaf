@@ -5,7 +5,7 @@ namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use app\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -16,12 +16,12 @@ use Yajra\DataTables\DataTables;
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
 
-use App\Container\Gesap\src\Anteproyecto;
-use App\Container\Gesap\src\Proyecto;
-use App\Container\Gesap\src\Actividad;
-use App\Container\Gesap\src\Radicacion;
-use App\Container\Gesap\src\Encargados;
-use App\Container\Users\src\User;
+use app\Container\Gesap\src\Anteproyecto;
+use app\Container\Gesap\src\Proyecto;
+use app\Container\Gesap\src\Actividad;
+use app\Container\Gesap\src\Radicacion;
+use app\Container\Gesap\src\Encargados;
+use app\Container\Users\src\User;
 
 use Carbon\Carbon;
 
@@ -40,7 +40,7 @@ class CoordinatorController extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'anteproyectoList');
+            return view($this->path . 'AnteproyectoList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -58,7 +58,7 @@ class CoordinatorController extends Controller
     public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path . 'anteproyectoList-ajax');
+            return view($this->path . 'AnteproyectoList-ajax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -76,7 +76,7 @@ class CoordinatorController extends Controller
     public function indexProject(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'proyectoList');
+            return view($this->path . 'ProyectoList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -103,7 +103,7 @@ class CoordinatorController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            return view($this->path . 'registroMin', [
+            return view($this->path . 'RegistroMin', [
                 'estudiantes' => $estudiantes
             ]);
         }
@@ -135,7 +135,7 @@ class CoordinatorController extends Controller
             $anteproyecto->NPRY_FechaL = $request->get('FechaL');
             $anteproyecto->save();
 
-            $idanteproyecto = $anteproyecto->PK_NPRY_IdMinr008;
+            $idAnteproyecto = $anteproyecto->PK_NPRY_IdMinr008;
 
             $radicacion = new Radicacion();
             $nombre = $date . "_" . $request['Min']->getClientOriginalName();
@@ -148,18 +148,18 @@ class CoordinatorController extends Controller
                 $radicacion->RDCN_Requerimientos = $nombre;
                 \Storage::disk('local')->put($nombre, \File::get($request->file('Requerimientos')));
             }
-            $radicacion->FK_TBL_Anteproyecto_Id = $idanteproyecto;
+            $radicacion->FK_TBL_Anteproyecto_Id = $idAnteproyecto;
             $radicacion->save();
 
             Encargados::create([
-                'FK_TBL_Anteproyecto_Id' => $idanteproyecto,
+                'FK_TBL_Anteproyecto_Id' => $idAnteproyecto,
                 'FK_Developer_User_Id' => $request->get('estudiante1'),
                 'NCRD_Cargo' => "Estudiante 1"
             ]);
 
             if ($request->get('estudiante2') != 0) {
                 Encargados::create([
-                    'FK_TBL_Anteproyecto_Id' => $idanteproyecto,
+                    'FK_TBL_Anteproyecto_Id' => $idAnteproyecto,
                     'FK_Developer_User_Id' => $request->get('estudiante2'),
                     'NCRD_Cargo' => "Estudiante 2"
                 ]);
@@ -212,7 +212,7 @@ class CoordinatorController extends Controller
                 ->get();
 
 
-            return view($this->path . 'modificarMin', [
+            return view($this->path . 'ModificarMin', [
                 "anteproyecto" => $anteproyecto,
                 "estudiante12" => $estudiante12,
                 "estudiantes" => $estudiantes
@@ -374,7 +374,7 @@ class CoordinatorController extends Controller
                 }])
                 ->get();
 
-            return view($this->path . 'asignarDocente', [
+            return view($this->path . 'AsignarDocente', [
                 'anteproyectos' => $anteproyectos,
                 'docentes' => $docentes,
                 'encargados' => $encargados]);
@@ -459,7 +459,7 @@ class CoordinatorController extends Controller
     public function activityDefault(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'actividadDefault');
+            return view($this->path . 'ActividadDefault');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -532,7 +532,6 @@ class CoordinatorController extends Controller
     public function destroyActividadDefault($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-
             $actividad = Actividad::findOrFail($id);
             $actividad->delete();
             return AjaxResponse::success(
@@ -544,8 +543,6 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
-
     }
 
 

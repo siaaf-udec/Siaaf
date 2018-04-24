@@ -3,7 +3,7 @@
 namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use app\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -13,12 +13,12 @@ use Validator;
 use Carbon\Carbon;
 
 
-use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
+use app\Container\Overall\Src\Facades\AjaxResponse;
+use app\Container\Overall\Src\Facades\UploadFile;
 
-use App\Container\Gesap\src\Anteproyecto;
-use App\Container\Gesap\src\Documentos;
-use App\Container\Gesap\src\Encargados;
+use app\Container\Gesap\src\Anteproyecto;
+use app\Container\Gesap\src\Documentos;
+use app\Container\Gesap\src\Encargados;
 
 class StudentController extends Controller
 {
@@ -36,7 +36,7 @@ class StudentController extends Controller
     public function proyecto(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'proponenteList');
+            return view($this->path . 'ProponenteList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -51,10 +51,10 @@ class StudentController extends Controller
 	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function proyectoajax(Request $request)
+    public function proyectoAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path . 'proponenteList-ajax');
+            return view($this->path . 'ProponenteList-ajax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -83,7 +83,7 @@ class StudentController extends Controller
                     }])
                 ->get();
 
-            return view($this->path . 'actividades', [
+            return view($this->path . 'Actividades', [
                 'id' => $id,
                 'anteproyecto' => $anteproyecto
             ]);
@@ -107,10 +107,10 @@ class StudentController extends Controller
             $date = Carbon::now();
             $date = $date->format('his');
             $files = $request->file('file');
-            $Ubicacion = "gesap/proyecto/" . $request->get('PK_actividad');
+            $ubicacion = "gesap/proyecto/" . $request->get('PK_actividad');
             foreach ($files as $file) {
                 $nombre = $date . "_" . $file->getClientOriginalName();
-                Storage::disk('local')->putFileAs($Ubicacion, $file, $nombre);
+                Storage::disk('local')->putFileAs($ubicacion, $file, $nombre);
                 $documento = Documentos::findOrFail($request->get('PK_actividad'));
                 $documento->DMNT_Archivo = $nombre;
                 $documento->save();

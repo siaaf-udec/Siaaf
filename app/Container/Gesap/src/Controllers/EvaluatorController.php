@@ -4,7 +4,7 @@ namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use app\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -14,19 +14,19 @@ use Validator;
 use Carbon\Carbon;
 
 
-use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
+use app\Container\Overall\Src\Facades\AjaxResponse;
+use app\Container\Overall\Src\Facades\UploadFile;
 
-use App\Container\Gesap\src\Anteproyecto;
-use App\Container\Gesap\src\Radicacion;
-use App\Container\Gesap\src\Encargados;
-use App\Container\Gesap\src\Observaciones;
-use App\Container\Gesap\src\CheckObservaciones;
-use App\Container\Gesap\src\Respuesta;
-use App\Container\Gesap\src\Proyecto;
-use App\Container\Gesap\src\Documentos;
-use App\Container\Gesap\src\Actividad;
-use App\Container\Gesap\src\Conceptos;
+use app\Container\Gesap\src\Anteproyecto;
+use app\Container\Gesap\src\Radicacion;
+use app\Container\Gesap\src\Encargados;
+use app\Container\Gesap\src\Observaciones;
+use app\Container\Gesap\src\CheckObservaciones;
+use app\Container\Gesap\src\Respuesta;
+use app\Container\Gesap\src\Proyecto;
+use app\Container\Gesap\src\Documentos;
+use app\Container\Gesap\src\Actividad;
+use app\Container\Gesap\src\Conceptos;
 
 class EvaluatorController extends Controller
 {
@@ -44,7 +44,7 @@ class EvaluatorController extends Controller
     public function jury(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'juradoList');
+            return view($this->path . 'JuradoList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -76,9 +76,9 @@ class EvaluatorController extends Controller
             $observacion->FK_TBL_Encargado_Id = $jurado->PK_NCRD_IdCargo;
             $observacion->save();
 
-            $checkobservacion = new CheckObservaciones();
-            $checkobservacion->FK_TBL_Observaciones_Id = $observacion->PK_BVCS_IdObservacion;
-            $checkobservacion->save();
+            $checkObservacion = new CheckObservaciones();
+            $checkObservacion->FK_TBL_Observaciones_Id = $observacion->PK_BVCS_IdObservacion;
+            $checkObservacion->save();
             $date = Carbon::now();
             $date = $date->format('his');
 
@@ -291,8 +291,8 @@ class EvaluatorController extends Controller
 
             $documento = Documentos::findOrFail($id);
             $actividad = Actividad::withTrashed()->findOrFail($documento->FK_TBL_Actividad_Id);
-            $Ubicacion = "gesap/proyecto/" . $id;
-            Storage::disk('local')->deleteDirectory($Ubicacion);
+            $ubicacion = "gesap/proyecto/" . $id;
+            Storage::disk('local')->deleteDirectory($ubicacion);
             $documento->delete();
             if ($actividad->CTVD_Default == 0) {
                 $actividad->forceDelete();
@@ -320,7 +320,7 @@ class EvaluatorController extends Controller
     public function director(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view($this->path . 'directorList');
+            return view($this->path . 'DirectorList');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -338,7 +338,7 @@ class EvaluatorController extends Controller
     public function directorAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path . 'directorList-ajax');
+            return view($this->path . 'DirectorList-ajax');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -358,7 +358,7 @@ class EvaluatorController extends Controller
     public function show($id, Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path . 'showObservation', [
+            return view($this->path . 'ShowObservation', [
                 'id' => $id
             ]);
         }
@@ -699,7 +699,7 @@ class EvaluatorController extends Controller
                 $url = storage_path('app/gesap/proyecto/' . $actividad . '/' . $archivo);
                 return response()->download($url);
             } catch (Exception $e) {
-                return view($this->path . 'directorList');
+                return view($this->path . 'DirectorList');
             }
         }
         return AjaxResponse::fail(

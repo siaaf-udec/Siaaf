@@ -1,8 +1,8 @@
 <?php
 
-use App\Container\Permissions\Src\Permission;
+use app\Container\Permissions\src\Permission;
 use \Illuminate\Database\Seeder;
-use App\Container\Permissions\Src\Role;
+use app\Container\Permissions\src\Role;
 
 class PermissionGesapSeeder extends Seeder
 {
