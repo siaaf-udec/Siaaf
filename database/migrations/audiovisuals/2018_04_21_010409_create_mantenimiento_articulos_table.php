@@ -16,10 +16,8 @@ class CreateMantenimientoArticulosTable extends Migration
         Schema::connection('audiovisuals')->create('TBL_Mantenimiento_Articulos', function (Blueprint $table) {
             $table->increments('TMT_Id');
             $table->integer('TMT_FK_Id_Articulo');
-            $table->integer('TMT_Hora_Ultimo_Mantenimiento');
-            $table->integer('TMT_Hora_Total_Uso');
             $table->integer('TMT_Cantidad_Mantenimiento');
-
+            $table->String('TMT_Observacion');
 
             $table->timestamps();
         });

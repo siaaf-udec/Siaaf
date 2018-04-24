@@ -14,7 +14,7 @@ class DatabaseAudiovisualesSeeder extends Seeder
        // $this->call(PermissionAudiovisualsSeeder::class);
         $this->call(ProgramasTableAudiovisualsSeeder::class);
         $this->call(EstadosTableAudiovisualsSeeder::class);
-       $this->call(PermissionAudiovisualsSeeder::class);
+        $this->call(PermissionAudiovisualsSeeder::class);
         $this->call(RoleAudiovisualsSeeder::class);
         $this->call(TiposSolicitudTableAudiovisualsSeeder::class);
         $this->call(KitsTableAudiovisualsSeeder::class);
@@ -23,6 +23,8 @@ class DatabaseAudiovisualesSeeder extends Seeder
         $this->call(ValidationTableAudiovisualsSeeder::class);
         $this->call(ArticulosTableAudiovisualsSeeder::class);
         $this->call(TiposSancionesTableAudiovisualsSeeder::class);
+        $this->call(PrestamosTableAudiovisualsSeeder::class);
+
 
 
 

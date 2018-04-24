@@ -24,7 +24,7 @@ class MantenimientoArticulos extends Model
      * @var array
      */
 	protected $fillable = [
-		'TMT_FK_Id_Articulo','TMT_Hora_Ultimo_Mantenimiento','TMT_Hora_Total_Uso','TMT_Cantidad_Mantenimiento'
+		'TMT_FK_Id_Articulo','TMT_Cantidad_Mantenimiento','TMT_Observacion'
 	];
 
 

@@ -66,9 +66,9 @@
                             '#' => ['style' => 'width:20px;'],
                             'Nombre',
                             'Codigo',
-                            'Hora Ultimo Mantenimiento',
+                            'Horas Mantenimiento Preventivo',
                             'Horas Total Uso',
-                            'Cantidad Mantenimientos',
+
                             'Acciones' => ['style' => 'width:100px;']
                         ])
                     @endcomponent
@@ -180,14 +180,13 @@
             ComponentsBootstrapMaxlength.init();
             ComponentsSelect2.init();
             table = $('#mtn-table-ajax');
-            url = "{{ route('listarArticulo.data') }}";
+            url = "{{ route('listarMantenimientos.data') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
-                {data: 'ART_Descripcion', name: 'Descripción'},
-                {data: 'ART_Codigo', name: 'Codigo'},
-                {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
-                {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
+                {data: 'consulta_articulos.consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
+                {data: 'consulta_articulos.ART_Codigo', name: 'Codigo'},
+                {data: 'consulta_articulos.consulta_tipo_articulo.TPART_HorasMantenimiento', name: 'HorasMantenimiento'},
+                {data: 'horasUso', name: 'Kit'},
                 {
                     defaultContent: '@permission("AUDI_MAINTENANCE_CREATE")<a title="Solicitar Mantenimiento" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' ,
 
@@ -205,6 +204,70 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+            table.on('click', '.remove', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var formData = new FormData();
+                var mensaje ;
+                var tipo;
+                formData.append('id', dataTable.id);
+                if(dataTable.FK_ART_Estado_id == 1){
+                    mensaje = 'Este artículo no ha realizado ninguna solicitud,'+
+                        ' ¿Desea elminar este artículo?';
+                    tipo = 'warning';
+                    formData.append('softdelete', false);
+                }else{
+                    mensaje = 'Este artículo sera eliminado y el codigo podrá ser '+
+                        'reutlizado.';
+                    tipo = 'info';
+                    formData.append('softdelete', true);
+                }
+                swal({
+                        title: "Esta seguro?",
+                        text: mensaje,
+                        type: tipo,
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Continuar",
+                        cancelButtonText: "Cancelar",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            var route_elimarArticulo = '{{route('elimarArticulo') }}';
+                            var async = async || false;
+                            $.ajax({
+                                url: route_elimarArticulo,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                cache: false,
+                                processData: false,
+                                async: async,
+                                type: 'POST',
+                                contentType: false,
+                                data: formData,
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
+                                success: function (response, xhr, request) {
+                                    if (request.status === 200 && xhr === 'success') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        table.ajax.reload();
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                },
+                                error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                }
+                            });
+                        }
+                    }
+                );
+            });
             table.on('click', '.edit', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');

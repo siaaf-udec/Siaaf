@@ -31,7 +31,7 @@ class Articulo extends Model
      */
     protected $fillable = [
 		'FK_ART_Tipo_id','ART_Descripcion','FK_ART_Kit_id', 'FK_ART_Estado_id' ,
-		'ART_Codigo'
+		'ART_Codigo','ART_Cantidad_Mantenimiento'
     ];
 
     /**

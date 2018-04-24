@@ -150,6 +150,10 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => $controller . 'MantenimientoController@gestionMantenimientoAjax',
                 'as' => 'audiovisuales.gestionMantenimientoAjax',            //ruta que conduce al controlador donde se muestra la gestion de mantenimientos en articulos
             ]);
+            Route::get('listarMantenimientos', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@dataTableMantenimientos',
+                'as' => 'listarMantenimientos.data',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
 
     });
     //RUTAS GESTION ADMINISTRADOR(crear, modificar , consultar solicitudes de prestamos o reservas)
