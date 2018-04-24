@@ -112,7 +112,7 @@
                     return data.conultar_administrador_entrega.name +" "
                         +data.conultar_administrador_entrega.lastname;
                 },name:'Administrador Entrega'},
-                {data: 'SNS_Fecha', name: 'Fecha'},
+                {data: 'SNS_Fecha', name: 'SNS_Fecha'},
                 {
                     defaultContent:
                             '@permission("AUDI_CANCEL_SANCTION")<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>@endpersmission' +

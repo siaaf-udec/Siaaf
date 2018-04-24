@@ -108,10 +108,10 @@
                     return data.conultar_administrador_recibe.name +" "
                         +data.conultar_administrador_recibe.lastname;
                 },name:'Administrador Recibe'},
-                {data: 'PRT_Observacion_Entrega', name: 'Observacion Entrega'},
-                {data: 'PRT_Observacion_Recibe', name: 'Observacion Recibe'},
-                {data: 'PRT_Fecha_Inicio', name: 'Fecha Entrega'},
-                {data: 'PRT_Fecha_Fin', name: 'Fecha Recibe'}
+                {data: 'PRT_Observacion_Entrega', name: 'PRT_Observacion_Entrega'},
+                {data: 'PRT_Observacion_Recibe', name: 'PRT_Observacion_Recibe'},
+                {data: 'PRT_Fecha_Inicio', name: 'PRT_Fecha_Inicio'},
+                {data: 'PRT_Fecha_Fin', name: 'PRT_Fecha_Fin'}
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();

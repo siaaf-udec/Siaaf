@@ -68,7 +68,6 @@
                             'Codigo',
                             'Horas Mantenimiento Preventivo',
                             'Horas Total Uso',
-
                             'Acciones' => ['style' => 'width:100px;']
                         ])
                     @endcomponent

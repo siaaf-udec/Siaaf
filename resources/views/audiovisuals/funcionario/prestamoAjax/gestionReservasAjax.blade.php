@@ -99,8 +99,8 @@
                 return data.consulta_usuario_audiovisuales.user.name +" "
                     +data.consulta_usuario_audiovisuales.user.lastname;
             },name:'Funcionario'},
-            {data: 'PRT_Fecha_Inicio', name: 'Fecha Entrega'},
-            {data: 'PRT_Fecha_Fin', name: 'Fecha Recibe'},
+            {data: 'PRT_Fecha_Inicio', name: 'PRT_Fecha_Inicio'},
+            {data: 'PRT_Fecha_Fin', name: 'PRT_Fecha_Fin'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon cancelar">cancelar </a>'
                 +'<a href="javascript:;" class="btn btn-simple btn-success btn-icon ver">Ver</i></a>',

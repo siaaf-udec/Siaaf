@@ -70,9 +70,9 @@
                 return data.consulta_usuario_audiovisuales.user.name +" "
                     +data.consulta_usuario_audiovisuales.user.lastname;
             },name:'PRT_Fecha_Inicio'},
-            {data: 'consulta_usuario_audiovisuales.user.email', name: 'Correo Electronico'},
-            {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'Tipo Identificacion'},
-            {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'Numero'},
+            {data: 'consulta_usuario_audiovisuales.user.email', name: 'consulta_usuario_audiovisuales.user.email'},
+            {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'consulta_usuario_audiovisuales.user.identity_type'},
+            {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'consulta_usuario_audiovisuales.user.identity_no'},
             {
                 defaultContent: '@permission("AUDI_REQUESTS_VIEW_LENDING")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Finalizar Prestamo</i></a>@endpermission',
                 data:'action',

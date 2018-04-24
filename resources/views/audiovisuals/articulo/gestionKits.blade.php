@@ -195,8 +195,8 @@
             url ="{{ route('listarKit.data') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'KIT_Nombre' , name: 'Nombre'},
-                {data: 'KIT_Codigo' , name: 'Codigo'},
+                {data: 'KIT_Nombre' , name: 'KIT_Nombre'},
+                {data: 'KIT_Codigo' , name: 'KIT_Codigo'},
                 {
                     defaultContent:
                     '@permission("AUDI_KIT_EDIT")<a title="Editar Kit" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +

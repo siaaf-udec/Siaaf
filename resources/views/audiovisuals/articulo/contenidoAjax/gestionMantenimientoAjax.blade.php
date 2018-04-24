@@ -52,11 +52,11 @@
         url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'TPART_Nombre' , name: 'Tipo'},
-            {data: 'consultar_articulos_count' , name: 'Cantidad Artículos'},
+            {data: 'TPART_Nombre' , name: 'TPART_Nombre'},
+            {data: 'consultar_articulos_count' , name: 'consultar_articulos_count'},
             {data: 'Tiempo' , name: 'Tiempo'},
-            {data: 'TPART_HorasMantenimiento' , name: 'Horas Mantenimiento'},
-            {data: 'TPART_HorasMantenimiento' , name: 'Horas Mantenimiento'},
+            {data: 'TPART_HorasMantenimiento' , name: 'TPART_HorasMantenimiento'},
+            {data: 'TPART_HorasMantenimiento' , name: 'TPART_HorasMantenimiento'},
             {
                 defaultContent: '@permission("AUDI_END_MAINTENANCE")<a title="Finalizar Mantenimiento" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission',
 
