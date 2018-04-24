@@ -28,6 +28,8 @@ class FuncionarioController extends Controller
      */
     public function solicitudReserva(Request $request){
         if ($request->isMethod('GET')) {
+
+
             return view('audiovisuals.funcionario.gestionReservas');
         }
         return AjaxResponse::fail(
@@ -419,6 +421,101 @@ class FuncionarioController extends Controller
         );
     }
     /**
+     * Funcion que muestra la solicitud de la reserva del usuario
+     *
+     * @param Request $request
+     * @param $idNumOrden
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function indexSolictudReserAsignadaAjax(Request $request, $idNumOrden)    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $prestamos = Solicitudes::with(['consultaArticulos'=> function($query){
+                return $query->select('id','FK_ART_Tipo_id','ART_Codigo')
+                    ->with([
+                        'consultaTipoArticulo'=>function($query){
+                            return $query->select(
+                                'id','TPART_Nombre' );
+                        }
+                    ]);
+            },'consultaKitArticulo'])->where([
+                ['PRT_Num_Orden','=',$idNumOrden],
+                ['PRT_FK_Tipo_Solicitud','=',1]//reservas
+            ])->get();
+            $array2 = array();
+            foreach ($prestamos as $fila) {
+                $fechaEntrega = new Carbon();
+                $fechaEntrega = Carbon::parse($fila['PRT_Fecha_Fin']);
+                $fechaActual = new Carbon();
+                $fechaActual = Carbon::now();
+                $diferenciaSegundos = $fechaEntrega->diffInSeconds($fechaActual);
+                $diferenciaSegundos = floor($diferenciaSegundos/3600).gmdate(":i:s",$diferenciaSegundos % 3600);
+                $array = array_add($fila, 'tiemporestante', $diferenciaSegundos);
+                $array = array_add($array, 'sancion',($fechaEntrega > $fechaActual));
+                array_push($array2,$array);
+            }
+            return view('audiovisuals.funcionario.prestamoAjax.accionesSolicitudReservaFormRepeatAjax',[
+                'prestamos'=>$array2,
+                'contador'=>0
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Funcion que consulta la fecha de reserva y la actual para determinar que accion realizar
+     * (cancelar solicitud reserva)
+     *
+     * @param Request $request
+     * @param $idNumOrden
+     * @param $accion
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelarSolictudReserva(Request $request, $idNumOrden, $accion)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            if($accion == 'validar'){
+                $prestamos = Solicitudes::where([
+                    ['PRT_Num_Orden','=',$idNumOrden]
+                ])->get();
+                $numHorasCancelar = Validaciones::select('VAL_PRE_Valor')->where('id','=',10)->get();
+                $fechaEntrega = new Carbon();
+                $fechaEntrega = Carbon::parse($prestamos[0]['PRT_Fecha_Inicio']);
+                $fechaActual = new Carbon();
+                $fechaActual = Carbon::now();
+                if($fechaActual<$fechaEntrega){
+                    $fechaActual->addHour($numHorasCancelar[0]['VAL_PRE_Valor']);
+                    if($fechaActual>$fechaEntrega){
+                        $accionn = 'NOCANCELAR';
+                    }else{
+                        $accionn = 'CANCELAR';
+                    }
+                }else{
+                    $accionn = 'SANCION';
+                }
+                return AjaxResponse::success(
+                    '¡datos consultados !',
+                    'correctamente.',
+                        $accionn
+                );
+
+            }else{
+                Solicitudes::where('PRT_Num_Orden','=',$idNumOrden)->forcedelete();
+                return AjaxResponse::success(
+                    '¡Solicitud eliminada !',
+                    'correctamente.'
+                );
+            }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
+    /**
      * Funcion que consultar y retorna informaicon del usuario logueado
      *
      * @return int
@@ -433,4 +530,6 @@ class FuncionarioController extends Controller
         }
         return $bandera;
     }
+
+
 }

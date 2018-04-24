@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Yajra\DataTables\DataTables;
 use Exception;
 use Validator;

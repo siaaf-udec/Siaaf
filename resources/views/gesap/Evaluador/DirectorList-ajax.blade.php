@@ -131,16 +131,16 @@
                     render: function (data, type, full, meta) {
                         if (full.anteproyecto.NPRY_Estado == "APROBADO") {
                             if (full.anteproyecto.proyecto == null) {
-                                return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("APROVED_PROJECT_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>@endpermission';
+                                return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" title="Ver observaciones" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("APROVED_PROJECT_GESAP")<a href="#" title="Aprobar proyecto" class="btn btn-simple btn-success btn-icon" id="proyecto"><i class="icon-check"></i></a>@endpermission';
                             } else {
                                 if (full.anteproyecto.proyecto.PRYT_Estado == "TERMINADO") {
-                                    return '<center>@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission</center>';
+                                    return '<center>@permission("SEE_OBSERVATIONS_GESAP")<a href="#" title="Ver observaciones" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" title="Ver actiividades" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission</center>';
                                 } else {
-                                    return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission @permission("CLOSE_PROJECT_GESAP")<a href="#" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>@endpermission';
+                                    return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" title="Ver observaciones" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i></a>@endpermission @permission("SEE_ACTIVITY_GESAP")<a href="#" title="Ver actividad" class="btn btn-simple btn-success btn-icon " id="actividades"><i class="icon-list"></i></a>@endpermission @permission("CLOSE_PROJECT_GESAP")<a href="#" title="Cerrar proyecto" class="btn btn-simple btn-success btn-icon delete "  id="close"><i class="icon-lock"></i></a>@endpermission';
                                 }
                             }
                         } else {
-                            return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>@endpermission';
+                            return '@permission("SEE_OBSERVATIONS_GESAP")<a href="#" title="Ver observaciones" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-eye"></i>Ver Observaciones</a>@endpermission';
                         }
                     },
                 }

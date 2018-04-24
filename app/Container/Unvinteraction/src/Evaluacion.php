@@ -61,7 +61,7 @@ class Evaluacion extends Model
     */    
     public function evaluacionPreguntas()
     {
-        return $this->hasMany(EvaluacionPregunta::class, 'FK_TBL_Evaluacion_Id', 'PK_VLCN_Evaluacion');
+        return $this->hasMany(EvaluacionPregunta::class, 'FK_TBL_Evaluacion_Id', 'PK_VLCN_Evaluacion')->withTrashed();
     }
     
     /*

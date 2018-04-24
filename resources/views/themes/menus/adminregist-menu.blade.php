@@ -16,11 +16,19 @@
             </a>
         </li>
         @endpermission
+        @permission('ADMINREGIST_ADNOV')
+        <li class="nav-item {{ active(['adminRegist.novedad.*'], 'start active open') }}">
+            <a href="{{route('adminRegist.novedad.index')}}" class="nav-link nav-toggle">
+                <i class="fa fa-gears"></i>
+                <span class="title">Administrar Novedades</span>
+            </a>
+        </li>
+        @endpermission
         @permission('ADMINREGIST_HISNOV')
         <li class="nav-item {{ active(['adminRegist.registros.*'], 'start active open') }}">
             <a href="{{route('adminRegist.registros.history')}}" class="nav-link nav-toggle">
                 <i class="fa fa-desktop"></i>
-                <span class="title">Historial Novedades</span>
+                <span class="title">Historial Ingreso</span>
             </a>
         </li>
         @endpermission
@@ -29,6 +37,14 @@
             <a href="{{route('adminRegist.registros.registro.index')}}" class="nav-link nav-toggle">
                 <i class="fa fa-newspaper-o"></i>
                 <span class="title">Registrar Ingreso</span>
+            </a>
+        </li>
+        @endpermission
+        @permission('ADMINREGIST_ADSU')
+        <li class="nav-item {{ active(['adminRegist.sugerencia.*'], 'start active open') }}">
+            <a href="{{route('adminRegist.sugerencia.index')}}" class="nav-link nav-toggle">
+                <i class="fa fa-gears"></i>
+                <span class="title">Preguntas Sugeridas</span>
             </a>
         </li>
         @endpermission

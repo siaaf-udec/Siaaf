@@ -15,8 +15,10 @@ class CreateTipoArticuloTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Tipo_Articulos', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('TPART_Nombre');
+            $table->text('TPART_Nombre');
 			$table->integer('TPART_Tiempo')->unsigned()->nullable();
+            $table->integer('TPART_HorasMantenimiento')->unsigned()->nullable();
+
             $table->timestamps();
         });
     }

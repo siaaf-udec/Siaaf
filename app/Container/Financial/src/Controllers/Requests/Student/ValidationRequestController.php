@@ -20,6 +20,8 @@ class ValidationRequestController extends Controller
      */
     public function __construct(ValidationRepository $validationRepository )
     {
+        $this->middleware( 'request.status:'.status_type_validation(), ['only' => ['edit'] ] );
+        $this->middleware( 'check.available:'.status_type_validation(), ['only' => ['create', 'store', 'edit', 'update', 'destroy'] ] );
         $this->validationRepository = $validationRepository;
     }
 

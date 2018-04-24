@@ -18,6 +18,9 @@
 
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
+    <!-- STYLES ICHECK-->
+    <link href="{{asset('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css"/>
+
 @endpush
 @section('title', '| Solicitudes Prestamo-Reservas')
 @section('page-title', 'Solicitudes Prestamos-Reservas')
@@ -32,6 +35,7 @@
             <br>
             <br>
             <div class="row">
+
                 <div class="col-md-12">
                     @permission('AUDI_REQUESTS_VIEW_RESERVATION')
                     <div class="actions">
@@ -67,7 +71,8 @@
     </br>
 @endsection
 @push('plugins')
-    <!-- TIEMPOS DATETIME -->
+    <script src="{{ asset('assets/global/plugins/icheck/icheck.js') }}" type="text/javascript"></script>
+   <!-- TIEMPOS DATETIME -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT DATETIME -->
     <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
@@ -99,8 +104,12 @@
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript">
     </script>
+   <script src="{{ asset('assets/global/plugins/icheck/icheck.js') }}" type="text/javascript"></script>
 @endpush
 @push('functions')
+
+    <script src="{{ asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
+
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
     </script>
@@ -132,7 +141,13 @@
                 }
             };
         }();
+        var handleiCheck = function() {
+
+        };
+
         jQuery(document).ready(function () {
+            App.unblockUI('.portlet-form');
+            handleiCheck();
             ComponentsSelect2.init();
             var idFuncionario;
             var table, url, columns;
@@ -146,9 +161,9 @@
                     return data.consulta_usuario_audiovisuales.user.name +" "
                         +data.consulta_usuario_audiovisuales.user.lastname;
                 },name:'PRT_Fecha_Inicio'},
-                {data: 'consulta_usuario_audiovisuales.user.email', name: 'Correo Electronico'},
-                {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'Tipo Identificacion'},
-                {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'Numero'},
+                {data: 'consulta_usuario_audiovisuales.user.email', name: 'consulta_usuario_audiovisuales.user.email'},
+                {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'consulta_usuario_audiovisuales.user.identity_type'},
+                {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'consulta_usuario_audiovisuales.user.identity_no'},
                 {
                     defaultContent: '@permission("AUDI_REQUESTS_VIEW_LENDING")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Finalizar Prestamo</i></a>@endpermission',
                     data:'action',

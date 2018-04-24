@@ -12,6 +12,7 @@
 <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', '| Lista de Tipos De Preguntas')
@@ -65,15 +66,17 @@
                                 <div class="col-md-12 col-md-offset-0">
                                 </div>
                                 <div class="modal-footer">
-                                    {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                    {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                                 </div>
-                                  </div>
-                                {!! Form::close() !!}
                             </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -94,6 +97,7 @@
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+ <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>           
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
@@ -116,7 +120,7 @@ jQuery(document).ready(function () {
             orderable: false,
             exportable: false,
             printable: false,
-            defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>'
+            defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
 
             
         }
@@ -189,7 +193,52 @@ jQuery(document).ready(function () {
         
     FormValidationMd.init( form, rules, messages , crearConvenio());
      
-    
+    table.on('click', '.delete', function(e) {
+                e.preventDefault();
+				$tr = $(this).closest('tr');
+				var o = table.row($tr).data();
+				var route = '{{route('eliminarTipoPregunta.eliminarTipoPregunta')}}/'+o.PK_TPPG_Tipo_Pregunta;
+				var type = 'DELETE';
+				var async = async || false;
+				swal({
+					title: "¿Esta seguro?",
+                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+					 function(isConfirm){
+					if (isConfirm) {
+						$.ajax({
+							url: route,
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+								if (request.status === 200 && xhr === 'success') {
+									table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 &&  xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+						});
+						swal.close();
+					} else {
+                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                    }
+                });
+            });
   
 });
 </script>

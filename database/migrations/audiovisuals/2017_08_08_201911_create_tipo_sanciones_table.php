@@ -15,9 +15,10 @@ class CreateTipoSancionesTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Tipo_Sanciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('TIPO_Nombre');
-            $table->string('TIPO_Costo');
+            $table->text('TIPO_Nombre');
+            $table->text('TIPO_Descripcion');
             $table->timestamps();
+
         });
     }
 

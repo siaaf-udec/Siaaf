@@ -28,13 +28,20 @@
                                !!}
                         </div>
                         <div class="col-md-6">
-                            {!! Field::select('TPART_Tiempo',
+                            {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
                                 1 => 'Libre'
                              ],
-                                ['label' => 'Seleccione una Opcion'])
+                                ['name' => 'TPART_Tiempo'])
+
                              !!}
+                        </div>
+                        <div class="col-md-12">
+                            {!! Field::Text('TPART_HorasMantenimiento',
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
+                            !!}
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-md-offset-8">
@@ -53,7 +60,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="modal fade" data-width="760" id="modal-edit-tipo" tabindex="-1">
+            <div class="modal fade" data-width="380" id="modal-edit-tipo" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
@@ -66,27 +73,34 @@
                 <div class="modal-body">
                     {!! Form::open(['id' => 'from_art_tipo_edit', 'class' => '', 'url' => '/forms']) !!}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::text('TPART_Nombre_Edit',
                                    ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                    ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
                                !!}
                         </div>
-                        <div class="col-md-6">
-                            {!! Field::select('TPART_Tiempo_Edit',
+                        <div class="col-md-12">
+                            {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
                                 1 => 'Libre'
                              ],
-                                ['label' => 'Seleccione una Opcion'])
+                                ['name' => 'TPART_Tiempo_Edit'])
                              !!}
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-8">
+                        <div class="col-md-12">
+                            {!! Field::Text('TPART_HorasMantenimiento_Edit',
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
+                            !!}
+                        </div>
+                        <div class="col-md-12" align="center">
+
                                 {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
                                 {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            </div>
+
                         </div>
+
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -119,6 +133,7 @@
                 'Tipo',
                 'Cantidad Artículos',
                 'Tiempo',
+                'Horas Mantenimiento',
                 'Acciones' => ['style' => 'width:90px;']
             ])
         @endcomponent
@@ -127,21 +142,7 @@
 @endcomponent
 <script>
     var table, url, columns;
-    var ComponentsSelect2 = function () {
-        return {
-            init: function () {
-                $.fn.select2.defaults.set("theme", "bootstrap");
-                $(".pmd-select2").select2({
-                    placeholder: "Selecccionar",
-                    allowClear: true,
-                    width: 'auto',
-                    escapeMarkup: function (m) {
-                        return m;
-                    }
-                });
-            }
-        }
-    }();
+
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function () {
             $("input[maxlength], textarea[maxlength]").maxlength({
@@ -157,16 +158,18 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         var idTipoArticulo;
         ComponentsBootstrapMaxlength.init();
-        ComponentsSelect2.init();
+
         table = $('#tipoArt-table-ajax');
         url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'TPART_Nombre' , name: 'Tipo'},
-            {data: 'consultar_articulos_count' , name: 'Cantidad Artículos'},
+            {data: 'TPART_Nombre' , name: 'TPART_Nombre'},
+            {data: 'consultar_articulos_count' , name: 'consultar_articulos_count'},
             {data: 'Tiempo' , name: 'Tiempo'},
+            {data: 'TPART_HorasMantenimiento' , name: 'TPART_HorasMantenimiento'},
             {
                 defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
                                 '@permission("AUDI_ART_TYPE_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
@@ -215,6 +218,8 @@
             var dataTable = table.row($tr).data();
             console.log(dataTable);
             $('#TPART_Nombre_Edit').val(dataTable.TPART_Nombre);
+            $('select[name="TPART_Tiempo_Edit"]').val(dataTable.TPART_Tiempo);
+            $('#TPART_HorasMantenimiento_Edit').val(dataTable.TPART_HorasMantenimiento);
             if(dataTable.consultar_articulos_count!=0){
                 $("#TPART_Nombre_Edit").prop("disabled", true);
             }else{
@@ -242,7 +247,6 @@
                         if(isConfirm){
                             var route = '{{ route('tipoArticuloEliminarA') }}'+'/'+dataTable.id;
                             var type = 'POST';
-                            var async = async || false;
                             $.ajax({
                                 url: route,
                                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -250,7 +254,6 @@
                                 type: type,
                                 contentType: false,
                                 processData: false,
-                                async: async,
                                 beforeSend: function () {
                                     App.blockUI({target: '.portlet-form', animate: true});
                                 },
@@ -258,11 +261,13 @@
                                     if (request.status === 200 && xhr === 'success') {
                                         table.ajax.reload();
                                         UIToastr.init(xhr , response.title , response.message  );
+                                        App.unblockUI('.portlet-form');
                                     }
                                 },
                                 error: function (response, xhr, request) {
                                     if (request.status === 422 &&  xhr === 'success') {
                                         UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
                                     }
                                 }
                             });
@@ -287,7 +292,9 @@
                     var formData = new FormData();
                     formData.append('id',idTipoArticulo);
                     formData.append('TPART_Nombre', $('input:text[name="TPART_Nombre_Edit"]').val());
-                    formData.append('TPART_Tiempo', parseInt($('select[name="TPART_Tiempo_Edit"]').val()));
+                    formData.append('TPART_Tiempo', $('select[name="TPART_Tiempo_Edit"]').val());
+
+
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -333,7 +340,9 @@
                     type: "post"
                 }
             },
-            TPART_Tiempo: {required: true}
+            TPART_Tiempo: {required: true},
+            TPART_HorasMantenimiento_Edit: {required: true}
+
 
         };
         var messages = {
@@ -352,6 +361,7 @@
                     var formData = new FormData();
                     formData.append('TPART_Nombre', $('input:text[name="TPART_Nombre"]').val());
                     formData.append('TPART_Tiempo', $('select[name="TPART_Tiempo"]').val());
+                    formData.append('TPART_HorasMantenimiento', $('input:text[name="TPART_HorasMantenimiento"]').val());
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -392,7 +402,8 @@
                     type: "post"
                 }
             },
-            TPART_Tiempo: {required: true}
+            TPART_Tiempo: {required: true},
+            TPART_HorasMantenimiento: {required: true}
 
         };
         var messages = {

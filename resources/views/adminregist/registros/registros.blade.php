@@ -2,34 +2,35 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Registrar Novedad'])
 
         <div class="row">
+            <div class="col-md-4 col-lg-offset-9">
+                <a href="{{route('adminRegist.help.index.preguntas')}}"
+                   class="btn btn-simple dark btn-icon"><i
+                            class="fa fa-plus"></i>Preguntas Frecuentes</a>
+            </div>
             <div class="col-md-12 col-lg-offset-1">
                 <div class="col-md-4 col-lg-offset-3">
                     <div class="alert alert-block alert-info fade in">
                         <h4 class="alert-heading">Información!</h4>
-                        <p>Si no se encuentra registrado por favor presione el boton Registrarse o si tiene dudas
-                            presione
-                            el boton Ayuda donde lo llevara a una sesión de preguntas frecuentes: </p>
-                        <p>
-                            <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
-                                        class="fa fa-plus"></i>Registrarse</a>
+                        <p>Si no se encuentra registrado por favor presione el boton Registrarse: </p>
+                        <div class="col-lg-offset-3">
                             <br>
-                            <a href="{{route('adminRegist.help.index.preguntas')}}"
-                               class="btn btn-simple dark btn-icon"><i
-                                        class="fa fa-plus"></i>Preguntas Frecuentes</a>
-                        </p>
+                                <a href="javascript:;" class="btn btn-simple btn-success btn-icon btn-center create"><i
+                                            class="fa fa-plus"></i>Registrarse</a>
+                                <br>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-left">
-                        {!! Field::text('number_document', old('number_document'), ['required', 'max' => 13, 'min' => '5','label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
+                        {!! Field::text('number_document', old('number_document'), ['required', 'max' => 13, 'min' => '5', 'type' => 'number','label' => 'Numero de Documento', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese el Numero.']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-4 col-lg-offset-3 text-left">
                         {!! Field::select(
-                        'novedad',
-                        ['1' => 'Matricula','2' => 'Estudiantes Matriculados', '3' => 'Aplicación Transferencias Internas','4' => 'Modificación Situación Estudiante', '5' => 'Aplicación Cancelación de Materia', '6' => 'Aplicación Traslado', '7' => 'Aplicación Homologaciones', '8' => 'Validaciones y Habilitaciones', '9' => 'Modificación de Notas', '10' => 'Otros'],null,
+                        'novedad',null,
                         ['required', 'label' => 'Novedades' , 'autofocus', 'auto' => 'off']) !!}
                     </div>
                 </div>
@@ -50,6 +51,20 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
+
+        /* Configuración del Select cargado de la BD */
+
+        var $widget_select_SelectNovedad = $('select[name="novedad"]');
+
+        var route_Dependencia = '{{ route('adminRegist.registros.listNovedades') }}';
+        $.get(route_Dependencia, function (response, status) {
+            $(response.data).each(function (key, value) {
+                $widget_select_SelectNovedad.append(new Option(value.NOV_NombreNovedad, value.PK_NOV_IdNovedad));
+            });
+            $widget_select_SelectDependencia.val([]);
+            $('#PK_NOV_IdNovedad').val(1);
+        });
+
 
         var $form = $('#form_register');
 

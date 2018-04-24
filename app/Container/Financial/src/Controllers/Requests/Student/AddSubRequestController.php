@@ -20,6 +20,8 @@ class AddSubRequestController extends Controller
      */
     public function __construct(AddSubRepository $addSubRepository)
     {
+        $this->middleware( 'request.status:'.status_type_addition_subtraction(), ['only' => ['edit'] ] );
+        $this->middleware( 'check.available:'.status_type_addition_subtraction(), ['only' => ['create', 'store', 'edit', 'update', 'destroy'] ] );
         $this->addSubRepository = $addSubRepository;
     }
 

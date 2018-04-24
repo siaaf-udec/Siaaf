@@ -16,6 +16,7 @@ class CreateTBLTipoPreguntaTbl extends Migration
         Schema::connection('unvinteraction')->create('TBL_Tipo_Pregunta', function (Blueprint $table) {
             $table->increments('PK_TPPG_Tipo_Pregunta');
             $table->text('TPPG_Tipo');
+            $table->softDeletes();
         });
     }
 

@@ -19,12 +19,12 @@
                 {!! Form::open(['id' => 'form_register', 'class' => 'form-horizontal', 'url' => '/forms']) !!}
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('pregunta', old('pregunta'), ['required','label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Pregunta.','size' => '30']) !!}
+                        {!! Field::textarea('pregunta', old('pregunta'), ['required', 'max' => 500, 'min' => '3','label' => 'Pregunta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Pregunta.','size' => '30']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-lg-offset-3 text-left">
-                        {!! Field::textarea('respuesta', old('respuesta'), ['required','label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Respuesta.']) !!}
+                        {!! Field::textarea('respuesta', old('respuesta'), ['required', 'max' => 500, 'min' => '3','label' => 'Respuesta', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-sort-numeric-asc', 'help' => 'Ingrese la Respuesta.']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,8 +53,8 @@
         var $form = $('#form_register');
 
         var form_rules = {
-            pregunta: {required: true},
-            respuesta: {required: true}
+            pregunta: {required: true,maxlength: 500},
+            respuesta: {required: true,maxlength: 500}
 
         };
         var messages = {};

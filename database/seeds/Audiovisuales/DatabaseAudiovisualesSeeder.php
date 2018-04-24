@@ -22,6 +22,9 @@ class DatabaseAudiovisualesSeeder extends Seeder
         $this->call(TiposArticulosTableAudiovisualsSeeder::class);
         $this->call(ValidationTableAudiovisualsSeeder::class);
         $this->call(ArticulosTableAudiovisualsSeeder::class);
+        $this->call(TiposSancionesTableAudiovisualsSeeder::class);
+        $this->call(PrestamosTableAudiovisualsSeeder::class);
+
 
 
 

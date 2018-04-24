@@ -3,12 +3,12 @@ namespace App\Container\Unvinteraction\src\Controllers;
 use App\Container\Unvinteraction\src\Usuarios;
 use App\Container\Unvinteraction\src\Participantes;
 use App\Container\Unvinteraction\src\Notificaciones;
+use App\Container\Users\src\User;
 use Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
-
 
 class AlertasController extends Controller
 {
@@ -44,10 +44,41 @@ class AlertasController extends Controller
                         $notificacion->NTFC_Titulo='Finalizacion convenio '.$row->conveniosParticipante->CVNO_Nombre;
                         $notificacion->NTFC_Mensaje='El siguiente mensaje es para avisar que el convenio '.$row->conveniosParticipante->CVNO_Nombre.' en el cual se encuentra como participante esta a punto de finalizar, porfavor realizar las respectivas evaluaciones';
                         $notificacion->NTFC_Bandera = 'NO VISTO';
+                        $notificacion->NTFC_Fecha_Vista = $carbon->now();
                         $notificacion->FK_TBL_Usuarios_Id  = $request->user()->identity_no;
                         $notificacion->save();
                     }
-                } 
+                }
+                $participante = Participantes::where('FK_TBL_Convenio_Id',$row->FK_TBL_Convenio_Id)->select('PK_PTPT_Participantes','FK_TBL_Usuarios_Id','PTPT_Fecha_Fin')->with(['usuariosParticipantes'=>function ($query) {
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('id','name','lastname','identity_no');
+                        }
+                    ]);
+                }
+                ])->get();
+                 $user= User::where('id',$request->user()->id)->select('id')->with([
+                        'roles'=>function ($query) {
+                            $query->select('id','name');
+                        }
+                ])->get();
+                if($user[0]->roles[0]->name != 'Pasante_uni'){
+                    foreach($participante as $row2){
+                        $fecha = $carbon->createFromFormat('Y-m-d H',$row2->PTPT_Fecha_Fin.'00');
+                        $diferencia2 = $fecha->diffInDays($dtVancouver,false);
+                        //notificacion a punto de terminar
+                        if($estado == 1 && $diferencia2 >= -15  && $diferencia2 <= 0  ){
+                            $notificacion = new Notificaciones();
+                            $notificacion->NTFC_Titulo='usuario por finalizar al pasantia';
+                            $notificacion->NTFC_Mensaje=' el usuario '.$row2->usuariosParticipantes->datoUsuario->name.' '.$row2->usuariosParticipantes->datoUsuario->lastname.' esta por finalizar su pasantia, Recuerda  realizar la evaluacion pertinente.';
+                            $notificacion->NTFC_Bandera = 'NO VISTO';
+                            $notificacion->NTFC_Fecha_Vista = $carbon->now();
+                            $notificacion->FK_TBL_Usuarios_Id  = $request->user()->identity_no;
+                            $notificacion->save();
+                        }
+                    } 
+                }
+                
             }
             return view($this->path.'.listarNotificaciones');
         }
@@ -95,8 +126,10 @@ class AlertasController extends Controller
     public function verAlerta(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+            $carbon = new \Carbon\Carbon();
             $bandera = Notificaciones::findOrFail($id);
             $bandera->NTFC_Bandera = 'VISTO';
+            $bandera->NTFC_Fecha_Vista = $carbon->now();
             $bandera->save();
             $notificacion = Notificaciones::findOrFail($id);
             return view($this->path.'.verNotificacion', compact('notificacion'));
@@ -107,4 +140,41 @@ class AlertasController extends Controller
         );
     }
    
+    /*funcion para la vista completa de las noticiaciones administrador
+    *@param int id
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function notificacionesAdmin (Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            return view($this->path.'.verNotificacionAdmin');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    /*funcion para listar todas las noticiaciones administrador
+    *@param int id
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function listarNotificacionesAdmin (Request $request)
+    {
+        if ( $request->isMethod('GET')) {
+            $notificacion=Notificaciones::select('PK_NTFC_Notificacion','NTFC_Titulo','NTFC_Bandera','FK_TBL_Usuarios_Id','NTFC_Fecha_Vista')->with(['usuario'=>function ($query) {
+                    $query->select('PK_USER_Usuario','USER_FK_Users')->with([
+                        'datoUsuario'=>function ($query) {
+                            $query->select('id','name','lastname','identity_no');
+                        }
+                    ]);
+                }
+                ])->get();
+           return Datatables::of($notificacion)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 }

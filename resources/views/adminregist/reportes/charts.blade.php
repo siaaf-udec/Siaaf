@@ -19,10 +19,13 @@
                         <a href="#tab_1" data-toggle="tab"> Novedades </a>
                     </li>
                     <li>
-                        <a href="#tab_2" data-toggle="tab"> Sedes </a>
+                        <a href="#tab_2" data-toggle="tab"> Sedes o Extensión </a>
                     </li>
                     <li>
                         <a href="#tab_3" data-toggle="tab"> Tipo de Usuario </a>
+                    </li>
+                    <li>
+                        <a href="#tab_4" data-toggle="tab"> Gráficos Generales </a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -60,7 +63,7 @@
                         @endcomponent
                     </div>
                     <div class="tab-pane" id="tab_2">
-                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Sedes'])
+                        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos por Sedes o Extensión'])
                             <div id="chartSede" class="chart" style="height:400px;"></div>
                             <div class="well margin-top-20">
                                 <div class="row">
@@ -113,6 +116,81 @@
                             </div>
                         @endcomponent
                     </div>
+                    <div class="tab-pane" id="tab_4">
+                    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Gráficos Generales'])
+                        <!-- BEGIN ROW -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- BEGIN CHART PORTLET-->
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="icon-bar-chart font-green-haze"></i>
+                                                <span class="caption-subject bold uppercase font-green-haze"> Sedes o Extensión</span>
+                                            </div>
+                                            <div class="tools">
+                                                <a href="javascript:;" class="collapse"> </a>
+                                                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                                                <a href="javascript:;" class="reload"> </a>
+                                                <a href="javascript:;" class="fullscreen"> </a>
+                                                <a href="javascript:;" class="remove"> </a>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div id="chart_general_sedes" class="chart" style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- END CHART PORTLET-->
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- BEGIN CHART PORTLET-->
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="icon-bar-chart font-green-haze"></i>
+                                                <span class="caption-subject bold uppercase font-green-haze"> Tipos de Usuario</span>
+                                            </div>
+                                            <div class="tools">
+                                                <a href="javascript:;" class="collapse"> </a>
+                                                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                                                <a href="javascript:;" class="reload"> </a>
+                                                <a href="javascript:;" class="fullscreen"> </a>
+                                                <a href="javascript:;" class="remove"> </a>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div id="chart_general_user" class="chart" style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- END CHART PORTLET-->
+                                </div>
+                                <div>
+                                    <!-- BEGIN CHART PORTLET-->
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <i class="icon-bar-chart font-green-haze"></i>
+                                                <span class="caption-subject bold uppercase font-green-haze"> Novedades</span>
+                                            </div>
+                                            <div class="tools">
+                                                <a href="javascript:;" class="collapse"> </a>
+                                                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                                                <a href="javascript:;" class="reload"> </a>
+                                                <a href="javascript:;" class="fullscreen"> </a>
+                                                <a href="javascript:;" class="remove"> </a>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div id="chart_general_novedades" class="chart"
+                                                 style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- END CHART PORTLET-->
+                                </div>
+                            </div>
+                            <!-- END ROW -->
+                        @endcomponent
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,10 +199,12 @@
 
 @push('plugins')
     {{--Amcharts--}}
+    <script src="{{ asset('assets/global/plugins/amcharts/amcharts/amcharts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/amcharts/amstockcharts/amcharts.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/amcharts/amstockcharts/serial.js') }}"
             type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/amcharts/amcharts/pie.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/amcharts/amstockcharts/amstock.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/amcharts/amstockcharts/lang/es.js') }}"
@@ -431,6 +511,96 @@
 
             $('#chartTypeUser').closest('.portlet').find('.fullscreen').click(function () {
                 chartTypeUser.invalidateSize();
+            });
+
+            var chartGeneralUser = AmCharts.makeChart("chart_general_user", {
+                "type": "pie",
+                "theme": "light",
+
+                "fontFamily": 'Open Sans',
+
+                "color": '#888',
+
+                "dataProvider": [
+                        @foreach($typeUser as $info => $valor)
+                    {
+                        "type": "{{$info}}",
+                        "valor": {{$valor}},
+                    },
+                    @endforeach
+                ],
+                "outlineAlpha": 0.4,
+                "depth3D": 15,
+                "valueField": "valor",
+                "titleField": "type",
+                "angle": 30,
+                "export": {
+                    "enabled": true
+                }
+            });
+
+            $('#chart_general_user').closest('.portlet').find('.fullscreen').click(function () {
+                chartGeneralUser.invalidateSize();
+            });
+
+            var chartGeneralNovedades = AmCharts.makeChart("chart_general_novedades", {
+                "type": "pie",
+                "theme": "light",
+
+                "fontFamily": 'Open Sans',
+
+                "color": '#888',
+
+                "dataProvider": [
+                        @foreach($novedades as $info)
+                    {
+                        "novedad": "{{$info->NOV_NombreNovedad}}",
+                        "registro": {{$info->num_novedad}}
+                    },
+                    @endforeach
+                ],
+                "outlineAlpha": 0.4,
+                "depth3D": 15,
+                "valueField": "registro",
+                "titleField": "novedad",
+                "angle": 30,
+                "export": {
+                    "enabled": true
+                }
+            });
+
+            $('#chart_general_novedades').closest('.portlet').find('.fullscreen').click(function () {
+                chartGeneralNovedades.invalidateSize();
+            });
+
+            var chartGeneralSedes = AmCharts.makeChart("chart_general_sedes", {
+                "type": "pie",
+                "theme": "light",
+
+                "fontFamily": 'Open Sans',
+
+                "color": '#888',
+
+                "dataProvider": [
+                        @foreach($place as $info => $valor)
+                    {
+                        "place": "{{$info}}",
+                        "valor": {{$valor}}
+                    },
+                    @endforeach
+                ],
+                "outlineAlpha": 0.4,
+                "depth3D": 15,
+                "valueField": "valor",
+                "titleField": "place",
+                "angle": 30,
+                "export": {
+                    "enabled": true
+                }
+            });
+
+            $('#chart_general_sedes').closest('.portlet').find('.fullscreen').click(function () {
+                chartGeneralSedes.invalidateSize();
             });
         });
     </script>

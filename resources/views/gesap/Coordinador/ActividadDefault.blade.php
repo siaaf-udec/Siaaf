@@ -173,7 +173,7 @@
                 {data: 'CTVD_Nombre', name: 'CTVD_Nombre', searchable: true},
                 {data: 'CTVD_Descripcion', name: 'CTVD_Descripcion', searchable: true},
                 {
-                    defaultContent: '@permission("EDIT_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: '@permission("EDIT_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" title="Editar actividad" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" title="Eliminar actividad" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',

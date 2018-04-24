@@ -13,6 +13,7 @@ class CreateTBLNotificacionTbl extends Migration
             $table->text('NTFC_Titulo');       
             $table->text('NTFC_Mensaje');
             $table->text('NTFC_Bandera',11);
+            $table->date('NTFC_Fecha_Vista'); 
             $table->integer('FK_TBL_Usuarios_Id')->unsigned();
             $table->foreign('FK_TBL_Usuarios_Id')->references('PK_USER_Usuario')->on('TBL_Usuario');
         });

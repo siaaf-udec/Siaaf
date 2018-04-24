@@ -15,7 +15,7 @@ class CreateProgramasTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Programas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('PRO_Nombre');
+            $table->text('PRO_Nombre');
             $table->timestamps();
         });
     }

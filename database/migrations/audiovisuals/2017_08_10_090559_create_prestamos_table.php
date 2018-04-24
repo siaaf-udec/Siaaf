@@ -20,8 +20,8 @@ class CreatePrestamosTable extends Migration
             $table->integer('PRT_FK_Kits_id')->unsigned(); //->id kits
             $table->dateTime('PRT_Fecha_Inicio'); //reserva y prestamo
             $table->dateTime('PRT_Fecha_Fin'); //reserva y prestamo
-            $table->string('PRT_Observacion_Entrega');
-            $table->string('PRT_Observacion_Recibe');
+            $table->text('PRT_Observacion_Entrega');
+            $table->text('PRT_Observacion_Recibe');
 			$table->integer('PRT_Num_Orden')->unsigned(); //identificar de prestamo
 			$table->integer('PRT_Cantidad')->unsigned(); //Numero de Elementos solicitados
             $table->integer('PRT_FK_Estado')->unsigned(); // pendiente aprobado o rechazado

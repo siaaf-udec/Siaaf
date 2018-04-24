@@ -96,7 +96,7 @@
                     ['label' => 'Tipo Articulo','required'])
                     !!}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {!! Field::select('codigo',
                          null,
                     ['label' => 'Codigo','required'])
@@ -108,7 +108,7 @@
                     ['label' => 'Tiempo','required'])
                     !!}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     @permission('AUDI_LENDING_ASSIGN_ART')
                     <a class="btn btn-danger agregar_articulo" id="agregarArticulo" title="Quitar articulo"
                        data-id_articulo='+identificador+'>
@@ -120,7 +120,7 @@
             </div>
             <div class="row" id="kit">
                 {!! Form::open(['id' => 'form_kit', 'class' => '', 'url' => '/forms']) !!}
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <br><br><br><br>
                     {!! Field::select('tipoKitsSelect',
                          null,
@@ -133,7 +133,7 @@
                         ['help' => 'Elementos del kit.', 'icon' => 'fa fa-quote-right'])
                     !!}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <br><br><br><br>
                     {!! Field::select('tiempoKit',
                          null,
@@ -183,6 +183,7 @@
         var numeroDeOrden;
         var tipoSolicitud = 'reserva';
         jQuery(document).ready(function() {
+            App.unblockUI('.portlet-form');
             ComponentsDateTimePickers.init();
             ComponentsSelect2.init();
             var abrirModal = JSON.stringify({{$numero}});

@@ -44,4 +44,8 @@ class UsuarioAudiovisuales extends Model
 	{
 		return $this->belongsTo('App\Container\Users\Src\User', 'USER_FK_User');
 	}
+    public function userUdec()
+    {
+        return $this->belongsTo('App\Container\Users\Src\UsersUdec', 'USER_FK_User');
+    }
 }

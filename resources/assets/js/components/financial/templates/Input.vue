@@ -14,6 +14,7 @@
                    :placeholder="label"
                    :value="value"
                    :name="name"
+                   :id="name"
                    :type="type" @input="handleValue( $event.target.value )">
             <label v-show="showLabel" :for="name" class="control-label" v-text="label"></label>
             <span class="help-block" v-text="help"></span>

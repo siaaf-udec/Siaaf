@@ -120,6 +120,27 @@ class AdministradorController extends Controller
          );
        
     }
+    /*funcion para eliminar los datos dela sede
+    *@param int id
+    *@param  \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+     public function  eliminarSedes(Request $request, $id)
+    {
+         if($request->ajax() && $request->isMethod('DELETE')){
+             $sede= Sede::findOrFail($id);
+             $sede->delete();
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede eeliminada correctamente.'
+             );
+         }
+         return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+         );
+       
+    }
     
     //______________________END_SEDES_________
     //________________________EMPRESAS____________________
@@ -180,17 +201,25 @@ class AdministradorController extends Controller
     {
          if($request->ajax() && $request->isMethod('POST'))
         {
-            $empresa = new Empresa();
-            $empresa->PK_EMPS_Empresa = $request->PK_EMPS_Empresa;
-            $empresa->EMPS_Nombre_Empresa= $request->EMPS_Nombre_Empresa;
-            $empresa->EMPS_Razon_Social = $request->EMPS_Razon_Social;
-            $empresa->EMPS_Telefono = $request->EMPS_Telefono;
-            $empresa->EMPS_Direccion = $request->EMPS_Direccion;
-            $empresa->save();
-          return AjaxResponse::success(
-                '¡Bien hecho!',
-                'empresa agregada correctamente.'
-            );
+             if(!$empresa= Empresa::where('PK_EMPS_Empresa',$request->PK_EMPS_Empresa)->count()){
+                $empresa = new Empresa();
+                $empresa->PK_EMPS_Empresa = $request->PK_EMPS_Empresa;
+                $empresa->EMPS_Nombre_Empresa= $request->EMPS_Nombre_Empresa;
+                $empresa->EMPS_Razon_Social = $request->EMPS_Razon_Social;
+                $empresa->EMPS_Telefono = $request->EMPS_Telefono;
+                $empresa->EMPS_Direccion = $request->EMPS_Direccion;
+                $empresa->save();
+                 return AjaxResponse::success(
+                     '¡Bien hecho!',
+                     'empresa agregada correctamente.'
+                 ); 
+             }else{
+                 return AjaxResponse::success(
+                     '¡Lo sentimos!',
+                     'ya existe una empresa con esa identificacion.'
+                 );
+             }
+            
         }
         return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -346,6 +375,27 @@ class AdministradorController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
+    /*funcion para eliminar los datos del estado
+    *@param int id
+    *@param  \Illuminate\Http\Request
+    *@return App\Container\Overall\Src\Facades\AjaxResponse
+    */
+     public function  eliminarEstado(Request $request, $id)
+    {
+         if($request->ajax() && $request->isMethod('DELETE')){
+             $estado= Estado::findOrFail($id);
+             $estado->delete();
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede eeliminada correctamente.'
+             );
+         }
+         return AjaxResponse::fail(
+                 '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+         );
+       
+    }
     //_________________END___ESTADOS______________________
    
     

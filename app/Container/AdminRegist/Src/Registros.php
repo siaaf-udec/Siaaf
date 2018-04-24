@@ -29,9 +29,4 @@ class Registros extends Model
         return $this->belongsTo(Novedad::class,'FK_RE_Novedad');
     }
 
-
-
-
-
-
 }

@@ -3,9 +3,10 @@
 namespace App\Container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class TipoPregunta extends Model
 {
+     use SoftDeletes;
     /**
      * desactivar opcion de  rellenar casilla update y create date
      *
@@ -45,6 +46,12 @@ class TipoPregunta extends Model
      */
     protected $fillable = ['TPPG_Tipo'];
     
+    /**
+     * Atributos que con muteadas
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
     /*
     *Función de conexión entre las tablas de TBL_Tipo_Pregunta y TBL_Preguntas
     *por los campo de FK_TBL_Tipo_Pregunta_Id y PK_TPPG_Tipo_Pregunta

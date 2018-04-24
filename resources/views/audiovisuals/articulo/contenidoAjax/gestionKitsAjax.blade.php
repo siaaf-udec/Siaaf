@@ -110,20 +110,20 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         table = $('#kit-table-ajax');
-        {{--url = "{{ route('listarArticulo.data') }}";--}}
-            url ="{{ route('listarKit.data') }}";
+        url ="{{ route('listarKit.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'KIT_Nombre' , name: 'Nombre'},
-            {data: 'KIT_Codigo' , name: 'Codigo'},
+            {data: 'KIT_Nombre' , name: 'KIT_Nombre'},
+            {data: 'KIT_Codigo' , name: 'KIT_Codigo'},
             {
                 defaultContent:
-                    '@permission("AUDI_KIT_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
-                    '@permission("AUDI_KIT_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
-                    '@permission("AUDI_KIT_ASSIGN")<a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
+                    '@permission("AUDI_KIT_EDIT")<a title="Editar Kit" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                    '@permission("AUDI_KIT_DELETE")<a title="Eliminar Kit" href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission'+
+                    '@permission("AUDI_KIT_ASSIGN")<a  title="Asignar Articulos" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

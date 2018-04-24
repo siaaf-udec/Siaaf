@@ -3,19 +3,13 @@
 @push('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- STYLES MODAL -->
-    <link href="{{ asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" rel="stylesheet" type="text/css"/>
+
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/pluginsbootstrap-editable/bootstrap-editable/css/bootstrap-editable.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" rel="stylesheet" type="text/css"/>
+
+
     <link href="{{ asset('assets/global/plugins/bootstrap-editable/inputs-ext/address/address.css') }}" rel="stylesheet" type="text/css"/>
-    <!-- STYLES SELECT -->
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
-          type="text/css"/>
+
     <!-- STYLES MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -203,17 +197,15 @@
 @push('plugins')
     <script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
     <!-- SCRIPT DATATABLE -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}" type="text/javascript">
-    </script>
-    <script src="{{ asset('assets/global/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}" type="text/javascript">
-    </script>
+
+
     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery.mockjax.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-editable/inputs-ext/address/address.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js') }}" type="text/javascript"></script>
+
     <script src="{{ asset('assets/global/plugins/bootstrap-typeahead/bootstrap3-typeahead.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <!-- SCRIPT SELECT -->
@@ -273,21 +265,7 @@
         var idEditarArticulo;
         var $seleccione_un_kit = $('select[name="FK_ART_Kit_id"]'),
             $seleccione_un_tipoArticulo = $('select[name="FK_ART_Tipo_id"]');
-        var ComponentsSelect2 = function () {
-            return {
-                init: function () {
-                    $.fn.select2.defaults.set("theme", "bootstrap");
-                    $(".pmd-select2").select2({
-                        placeholder: "Selecccionar",
-                        allowClear: true,
-                        width: 'auto',
-                        escapeMarkup: function (m) {
-                            return m;
-                        }
-                    });
-                }
-            }
-        }();
+
         var ComponentsBootstrapMaxlength = function () {
             var handleBootstrapMaxlength = function () {
                 $("input[maxlength], textarea[maxlength]").maxlength({
@@ -302,20 +280,21 @@
             };
         }();
         $(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
-            ComponentsSelect2.init();
+
             table = $('#art-table-ajax');
             url = "{{ route('listarArticulo.data') }}";
             columns = [
                 {data: 'DT_Row_Index'},
-                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
-                {data: 'ART_Descripcion', name: 'Descripción'},
-                {data: 'ART_Codigo', name: 'Codigo'},
-                {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
-                {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
+                {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'consulta_tipo_articulo.TPART_Nombre'},
+                {data: 'ART_Descripcion', name: 'ART_Descripcion'},
+                {data: 'ART_Codigo', name: 'ART_Codigo'},
+                {data: 'consulta_kit_articulo.KIT_Nombre', name: 'consulta_kit_articulo.KIT_Nombre'},
+                {data: 'consulta_estado_articulo.EST_Descripcion', name: 'consulta_estado_articulo.EST_Descripcion'},
                 {
-                    defaultContent: '@permission("AUDI_ART_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
-                                    '@permission("AUDI_ART_DELETE")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: '@permission("AUDI_ART_EDIT")<a title="Editar Articulo" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                                    '@permission("AUDI_ART_DELETE")<a title="Eliminar Articulo" href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -621,7 +600,7 @@
             FormValidationMd.init(from_art_edit,rules_arti_edit,false,modificarArticulo());
             $('.createTipo').on('click',function(e){
                 e.preventDefault();
-                var route = '{{ route('audiovisuales.gestionTipoArticuloAjax') }}';
+                var route = '{{ route('audiovisuales.gestionTipoArticulosAjax') }}';
                 $(".content-ajax").load(route);
             })
         });

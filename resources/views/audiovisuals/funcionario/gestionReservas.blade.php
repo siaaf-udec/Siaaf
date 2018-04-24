@@ -51,7 +51,7 @@
                         'Funcionario',
                         'Fecha Entrega',
                         'Fecha Recibe',
-                        'Acciones' => ['style' => 'width:110px;']
+                        'Acciones' => ['style' => 'width:140px;']
                     ])
                 @endcomponent
             </div>
@@ -164,6 +164,7 @@
             };
         }();
         jQuery(document).ready(function () {
+            App.unblockUI('.portlet-form');
             var table, url, columns;
             table = $('#usuarios-table');
             url = "{{ route('listarFuncionarios.reservas.dataTable') }}";
@@ -174,10 +175,11 @@
                     return data.consulta_usuario_audiovisuales.user.name +" "
                         +data.consulta_usuario_audiovisuales.user.lastname;
                 },name:'Funcionario'},
-                {data: 'PRT_Fecha_Inicio', name: 'Fecha Entrega'},
-                {data: 'PRT_Fecha_Fin', name: 'Fecha Recibe'},
+                {data: 'PRT_Fecha_Inicio', name: 'PRT_Fecha_Inicio'},
+                {data: 'PRT_Fecha_Fin', name: 'PRT_Fecha_Fin'},
                 {
-                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Cancelar Reserva</i></a>',
+                    defaultContent: '<a href="javascript:;" class="btn btn-simple btn-warning btn-icon cancelar">cancelar </a>'
+                                    +'<a href="javascript:;" class="btn btn-simple btn-success btn-icon ver">Ver</i></a>',
                     data:'action',
                     name:'action',
                     title:'Acciones',
@@ -192,6 +194,102 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+            table.on('click', '.ver', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var route = '{{ route('ver.solictud.reserva.index') }}'+'/'+dataTable.PRT_Num_Orden;
+                $(".content-ajax").load(route);
+            });
+            table.on('click', '.cancelar', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var accion = 'validar';
+                var route = '{{ route('cancelar.solictud.reserva') }}'+'/'+dataTable.PRT_Num_Orden + '/'+accion;
+                $.ajax({
+                    url: route,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    cache: false,
+                    type: 'GET',
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+                            console.log(response.data);
+                            if(response.data == 'SANCION'){
+                                swal(
+                                    'Oops...Presenta Sancion',
+                                    'Debe dirigirse al administrador de audiovisuales para verificar la solicitud',
+                                    'warning'
+                                )
+                            }
+                            if(response.data == 'NOCANCELAR'){
+                                swal(
+                                    'Oops...',
+                                    'La reserva no puede ser cancelada por motivos de anticipacion de cancelacion',
+                                    'info'
+                                )
+                            }
+                            if(response.data == 'CANCELAR') {
+                                swal({
+                                        title: "INFORMACION",
+                                        text: "se eliminara la solicitud reserva" +
+                                        " esta seguro de continuar",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonClass: "btn-danger",
+                                        confirmButtonText: "Eliminar",
+                                        cancelButtonText: "cancelar",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    },
+                                    function (isConfirm) {
+                                        if (isConfirm) {
+                                            var accion = 'eliminar';
+                                            var route = '{{ route('cancelar.solictud.reserva') }}' + '/' + dataTable.PRT_Num_Orden + '/' + accion;
+                                            $.ajax({
+                                                url: route,
+                                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                                cache: false,
+                                                type: 'GET',
+                                                contentType: false,
+                                                processData: false,
+                                                beforeSend: function () {
+                                                    App.blockUI({target: '.portlet-form', animate: true});
+                                                },
+                                                success: function (response, xhr, request) {
+                                                    if (request.status === 200 && xhr === 'success') {
+                                                        UIToastr.init(xhr, response.title, response.message);
+                                                        table.ajax.reload();
+                                                        App.unblockUI('.portlet-form');
+                                                    }
+                                                },
+                                                error: function (response, xhr, request) {
+                                                    if (request.status === 422 && xhr === 'error') {
+                                                        UIToastr.init(xhr, response.title, response.message);
+                                                        App.unblockUI('.portlet-form');
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
+                        }
+                    }
+                });
+            });
             $( ".reservaAjax" ).on('click', function (e) {
                 e.preventDefault();
                 var  route_validar = '{{route('validarNumeroDeReservas')}}';

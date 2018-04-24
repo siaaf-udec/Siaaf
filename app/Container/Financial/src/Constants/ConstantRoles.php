@@ -10,6 +10,7 @@ class ConstantRoles
     const FINANCIAL_TEACHER_ROLE    = 'financial_teacher';
     const FINANCIAL_STUDENT_ROLE    = 'financial_student';
     const FINANCIAL_SECRETARY_ROLE  = 'financial_secretary';
+    const FINANCIAL_ROOT_ROLE       = 'financial_root';
 
 
     /**
@@ -51,6 +52,10 @@ class ConstantRoles
               'name' => self::FINANCIAL_SECRETARY_ROLE,
               'display_name' => 'Secretaria',
               'description' => 'Acceso administrativo al Módulo Financiero.',
+          ], [
+              'name' => self::FINANCIAL_ROOT_ROLE,
+              'display_name' => 'Master',
+              'description' => 'Acceso total al Módulo Financiero.',
           ],
         ];
     }

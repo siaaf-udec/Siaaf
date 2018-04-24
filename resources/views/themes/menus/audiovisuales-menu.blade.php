@@ -67,6 +67,12 @@
                             <span class="title">Listar Prestamos</span>
                         </a>
                     </li>
+                    <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.sanciones'], 'start active open') }}">
+                        <a href="{{ route('audiovisuales.gestionPrestamos.sanciones') }}" class="nav-link nav-toggle">
+                            <i class="icon-book-open"></i>
+                            <span class="title">Listar Sanciones</span>
+                        </a>
+                    </li>
                     <li class="nav-item {{ active(['audiovisuales.gestionPrestamos.finalizados'], 'start active open') }}">
                         <a href="{{ route('audiovisuales.gestionPrestamos.finalizados') }}" class="nav-link nav-toggle">
                             <i class="icon-book-open"></i>
@@ -91,6 +97,17 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+            @endpermission
+            @permission('AUDI_MAINTENANCE_ART')
+            <li class="nav-item {{ active(['audiovisuales.mantenimientos.index'], 'start active open') }}">
+                <a class="nav-link" href="{{ route('audiovisuales.mantenimientos.index') }}">
+                    <i class="icon-check">
+                    </i>
+                    <span class="title">
+                            Mantenimiento Articulos
+                    </span>
+                </a>
             </li>
             @endpermission
         @endpermission

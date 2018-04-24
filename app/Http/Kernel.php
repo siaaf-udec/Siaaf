@@ -65,7 +65,8 @@ class Kernel extends HttpKernel
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         //Financial Middelware
-        'extension.status'  =>  \App\Container\Financial\src\Middleware\CheckExtensionStatus::class,
+        'request.status'  =>  \App\Container\Financial\src\Middleware\CheckStatus::class,
         'api.ajax'  =>  \App\Container\Financial\src\Middleware\ApiRequestStatus::class,
+        'check.available'  =>  \App\Container\Financial\src\Middleware\CheckIfAvailable::class,
     ];
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Container\Unvinteraction\src\Controllers;
 
-use App\Container\Unvinteraction\src\Usuarios;
+use App\Container\Unvinteraction\src\Usuario;
 use App\Container\Unvinteraction\src\Documentacion;
 use App\Container\Unvinteraction\src\Evaluacion;
 use App\Container\Unvinteraction\src\DocumentacionExtra;
@@ -104,19 +104,39 @@ class DocumentosController extends Controller
     public function subirDocumentoUsuario(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $carbon = new \Carbon\Carbon();
-            $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
-            $files = $request->file('file');
-            foreach ($files as $file) {
-                $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+            if(!$usuario = Usuario::where('PK_USER_Usuario','=',$request->user()->identity_no)->count()){
+               
+                $usuario = new Usuario();
+                $usuario->PK_USER_Usuario =$request->user()->identity_no;
+                $usuario->USER_FK_Users   =$request->user()->identity_no;
+                $usuario->save();
+                
+                $carbon = new \Carbon\Carbon();
+                $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+                $files = $request->file('file');
+                foreach ($files as $file) {
+                    $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+                }
+                $doc = new DocumentacionExtra();
+                $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
+                $doc->DCET_Ubicacion = $ubicacion ;
+                $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
+                $doc->save();
+                return $request->get('name'); 
+            }else{
+                $carbon = new \Carbon\Carbon();
+                $ubicacion="unvinteraction/usuario/".$request->user()->identity_no;
+                $files = $request->file('file');
+                foreach ($files as $file) {
+                    $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
+                }
+                $doc = new DocumentacionExtra();
+                $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
+                $doc->DCET_Ubicacion = $ubicacion ;
+                $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
+                $doc->save();
+                return $request->get('name');   
             }
-            $doc = new DocumentacionExtra();
-            $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-            $doc->DCET_Ubicacion = $ubicacion ;
-            $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
-            $doc->save();
-            return $request->get('name');
-            
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

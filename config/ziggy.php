@@ -43,6 +43,9 @@ return [
         'financial.management.file.type.store',
         'financial.management.file.type.update',
         'financial.management.file.type.destroy',
+        //Manage Available Modules
+        'financial.management.available.modules.index',
+        'financial.management.available.modules.store',
         //File Student Upload,
         'financial.files.store',
         'financial.files.update',
@@ -52,6 +55,7 @@ return [
         'financial.requests.student.extension.index',
         'financial.requests.student.extension.create',
         'financial.requests.student.extension.store',
+        'financial.requests.student.extension.update',
         'financial.requests.student.extension.destroy',
         'financial.requests.student.extension.edit',
         //Approve Extension

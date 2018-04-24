@@ -120,8 +120,7 @@ class AulasController extends Controller
      * @param $id
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function destroy(Request $request, $id)
-    {
+    public function destroy(Request $request, $id){
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
             $aulas = Aulas::find($id);

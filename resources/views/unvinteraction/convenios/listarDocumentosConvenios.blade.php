@@ -20,7 +20,14 @@
         <div class="row">
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Entidad', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Documentos'])
+                    @slot('columns', 
+                        [ '#' => ['style' => 'width:20px;'],
+                        'ID',
+                        'Entidad',
+                        'Acciones' => ['style' => 'width:160px;'] 
+                    ])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -37,7 +44,14 @@
         <div class="row">
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'Identidicacion', 'Nombres', 'Apellidos', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) 
+                    @slot('columns', [ '#' => ['style' => 'width:20px;'],
+                    'Identidicacion',
+                    'Nombres',
+                    'Apellidos',
+                    'Acciones' => ['style' => 'width:160px;']
+                    ])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -56,7 +70,14 @@
 
             <div class="clearfix"> </div><br><br><br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes']) @slot('columns', [ '#' => ['style' => 'width:20px;'], 'ID', 'Identificacion', 'Empresa', 'Acciones' => ['style' => 'width:160px;'] ]) @endcomponent
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Empresas_Paticipantes'])
+                    @slot('columns', [ '#' => ['style' => 'width:20px;'],
+                        'ID',
+                        'Identificacion', 
+                        'Empresa',
+                        'Acciones' => ['style' => 'width:160px;']
+                    ]) 
+                @endcomponent
             </div>
         </div>
 
@@ -102,10 +123,15 @@
                     </div>
                     <div class="modal-body">
                         {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+                        
+                        {!! Field::date('PTPT_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!} 
+                        
+                        {!! Field::date('PTPT_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
 
                     </div>
                     <div class="modal-footer">
-                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} 
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -130,7 +156,8 @@
                         {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                     </div>
                     <div class="modal-footer">
-                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
+                        {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -143,7 +170,40 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
+     var ComponentsDateTimePickers = function () {
+            var handleDatePickers = function () {
+                if (jQuery().datepicker) {
+                    $('.date-picker').datepicker({
+                        rtl: App.isRTL(),
+                        orientation: "left",
+                        autoclose: true,
+                        regional: 'es',
+                        closeText: 'Cerrar',
+                        prevText: '<Ant',
+                        nextText: 'Sig>',
+                        currentText: 'Hoy',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+                        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+                        weekHeader: 'Sm',
+                        dateFormat: 'yyyy-mm-dd',
+                        firstDay: 1,
+                        yearSuffix: '',
+                        startDate: null,
+                       
+                    });
+                }
+            }
+            return {
+                init: function () {
+                    handleDatePickers();
+                }
+            };
+        }();
     jQuery(document).ready(function() {
+        ComponentsDateTimePickers.init();
          App.unblockUI('.portlet-form');
         var table, url, id;
         table = $('#Listar_Documentos');
@@ -319,6 +379,8 @@
 
                         var formData = new FormData();
                         formData.append('identity_no', $('#identity_no').val());
+                        formData.append('PTPT_Fecha_Inicio', $('#PTPT_Fecha_Inicio').val());
+                        formData.append('PTPT_Fecha_Fin', $('#PTPT_Fecha_Fin').val());
 
                         $.ajax({
                             url: route,
@@ -336,11 +398,16 @@
 							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    $('#participante').modal('hide');
-                                    $('#form-Participante')[0].reset();
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
+                                    if(response.title == '¡Lo sentimos!'){ 
+                                        UIToastr.init('error', response.title,response.message);
+                                        App.unblockUI('.portlet-form'); 
+                                    }else{ 
+                                        $('#participante').modal('hide');
+                                        $('#form-Participante')[0].reset();
+                                        table.ajax.reload();
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 }
                             },
                             error: function(response, xhr, request) {
@@ -369,8 +436,8 @@
             columns = [
                 {data: 'DT_Row_Index'},
                 {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "PK_EMPT_Empresa_Participante"},
-                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "PK_EMPS_Empresa"},
-                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "EMPS_Nombre_Empresa"},
+                {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "patricipantes_empresas.PK_EMPS_Empresa"},
+                {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "patricipantes_empresas.EMPS_Nombre_Empresa"},
                 {
                         data: 'action',
                         className: '',
@@ -485,11 +552,16 @@
 							},
                             success: function(response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    $('#empresa').modal('hide');
-                                    table.ajax.reload();
-                                    $('#form-Empresas')[0].reset();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                     App.unblockUI('.portlet-form');
+                                    if(response.title == '¡Lo sentimos!'){ 
+                                        UIToastr.init('error', response.title,response.message);
+                                        App.unblockUI('.portlet-form'); 
+                                    }else{ 
+                                        $('#empresa').modal('hide');
+                                        table.ajax.reload();
+                                        $('#form-Empresas')[0].reset();
+                                        UIToastr.init(xhr, response.title,response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 }
                             },
                             error: function(response, xhr, request) {

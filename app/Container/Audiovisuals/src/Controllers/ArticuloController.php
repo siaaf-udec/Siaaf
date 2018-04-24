@@ -8,6 +8,7 @@ use App\Container\Audiovisuals\Src\TipoArticulo;
 use App\Container\Audiovisuals\src\Validaciones;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -28,7 +29,12 @@ class ArticuloController extends Controller
          */
         public function indexArticulo(Request $request)
         {
+            //$fecha = Carbon::create(2018,4,21,16,35,0);
+            //$fecha2 = Carbon::create(2018,4,22,16,45,0);
+            //dd($fecha->diffInHours($fecha2)); // 24
+
             if ($request->isMethod('GET')) {
+
                 return view('audiovisuals.articulo.gestionArticulos');
             }
             return AjaxResponse::fail(
@@ -307,9 +313,11 @@ class ArticuloController extends Controller
         {
             if ($request->ajax() && $request->isMethod('POST')) {
                 $tiempo =((int)($request['TPART_Tiempo']));
+                $TPART_HorasMantenimiento = ((int)($request['TPART_HorasMantenimiento']));
                 TipoArticulo::create([
                     'TPART_Nombre' => $request['TPART_Nombre'],
                     'TPART_Tiempo'=> $tiempo,
+                    'TPART_HorasMantenimiento'=>$TPART_HorasMantenimiento,
 
                 ]);
                 return AjaxResponse::success(

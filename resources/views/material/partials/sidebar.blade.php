@@ -29,7 +29,7 @@
         @include('themes.menus.parqueaderos-menu')
         @endpermission
         {{-- FINANCIERO --}}
-        @permission('FINAN_MODULE')
+        @permission( 'FINANCIAL_MODULE' )
         @include('themes.menus.financiero-menu')
         @endpermission
         {{-- INTERACCIÓN UNIVERSITARIA --}}

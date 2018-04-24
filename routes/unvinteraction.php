@@ -106,6 +106,10 @@ Route::post('modificarSedes/{id?}',['middleware' => ['permission:INTE_VER_SEDES'
     'as' => 'modificarSedes.modificarSedes',
     'uses' => $controller.'AdministradorController@modificarSedes'
 ]);
+Route::delete('eliminarSedes/{id?}',['middleware' => ['permission:INTE_VER_SEDES'],
+    'as' => 'eliminarSedes.eliminarSedes',
+    'uses' => $controller.'AdministradorController@eliminarSedes'
+]);
 ///____________________ESTADOS_________________________
 Route::get('estados',['middleware' => ['permission:INTE_VER_ESTADOS'],
     'as' => 'estados.estados',
@@ -130,6 +134,10 @@ Route::get('editarEstado/{id?}',['middleware' => ['permission:INTE_VER_ESTADOS']
 Route::post('modificarEstados/{id?}',['middleware' => ['permission:INTE_VER_ESTADOS'],
     'as' => 'modificarEstados.modificarEstados',
     'uses' => $controller.'AdministradorController@modificarEstados'
+]);
+Route::delete('eliminarEstado/{id?}',['middleware' => ['permission:INTE_VER_ESTADOS'],
+    'as' => 'eliminarEstado.eliminarEstado',
+    'uses' => $controller.'AdministradorController@eliminarEstado'
 ]);
 //______________________EMPRESAS________________________
 Route::get('empresas',['middleware' => ['permission:INTE_VER_EMPRESAS'],
@@ -231,6 +239,10 @@ Route::post('modificarTipoPregunta/{id?}',['middleware' => ['permission:INTE_VER
     'as' => 'modificarTipoPregunta.modificarTipoPregunta', 
     'uses' => $controller.'EvaluacionesController@modificarTipoPregunta'
 ]);
+Route::delete('eliminarTipoPregunta/{id?}',['middleware' => ['permission:INTE_VER_TIPO_PREG'],
+    'as' => 'eliminarTipoPregunta.eliminarTipoPregunta',
+    'uses' => $controller.'EvaluacionesController@eliminarTipoPregunta'
+]);
 Route::get('pregunta',['middleware' => ['permission:INTE_VER_PREG'],    
     'as' => 'pregunta.pregunta', 
     'uses' => $controller.'EvaluacionesController@Pregunta'
@@ -247,6 +259,11 @@ Route::post('modificarPregunta/{id?}',['middleware' => ['permission:INTE_VER_PRE
     'as' => 'modificarPregunta.modificarPregunta', 
     'uses' => $controller.'EvaluacionesController@modificarPregunta'
 ]);
+Route::delete('eliminarPregunta/{id?}',['middleware' => ['permission:INTE_VER_PREG'],
+    'as' => 'eliminarPregunta.eliminarPregunta',
+    'uses' => $controller.'EvaluacionesController@eliminarPregunta'
+]);
+
 Route::post('agregarPregunta',['middleware' => ['permission:INTE_VER_PREG'],   
     'as' => 'agregarPregunta.agregarPregunta', 
     'uses' => $controller.'EvaluacionesController@agregarPregunta'
@@ -312,6 +329,10 @@ Route::get('alerta',['middleware' => ['permission:INTE_VER_NOTI'],
     'as' => 'alerta.alerta',
     'uses' => $controller.'AlertasController@alerta'
 ]);
+Route::get('listarNotificacionesAdmin',['middleware' => ['permission:INTE_VER_NOTI_ADMIN'],    
+    'as' => 'listarNotificacionesAdmin.listarNotificacionesAdmin',
+    'uses' => $controller.'AlertasController@listarNotificacionesAdmin'
+]);
 Route::get('alertaAjax',['middleware' => ['permission:INTE_VER_NOTI'],    
     'as' => 'alertaAjax.alertaAjax',
     'uses' => $controller.'AlertasController@alertaAjax'
@@ -323,6 +344,10 @@ Route::get('listarAlerta',['middleware' => ['permission:INTE_VER_NOTI'],
 Route::get('verAlerta/{id?}',['middleware' => ['permission:INTE_VER_NOTI'],    
     'as' => 'verAlerta.verAlerta',
     'uses' => $controller.'AlertasController@verAlerta'
+]);
+Route::get('notificacionesAdmin',['middleware' => ['permission:INTE_VER_NOTI_ADMIN'],    
+    'as' => 'notificacionesAdmin.notificacionesAdmin',
+    'uses' => $controller.'AlertasController@notificacionesAdmin'
 ]);
 //__________________________END_ALERTAS____________________
 Route::get('reporte/{id?}/{fechaPrimera?}/{fechaSegunda?}',['middleware' => ['permission:INTE_VER_EVA'],   

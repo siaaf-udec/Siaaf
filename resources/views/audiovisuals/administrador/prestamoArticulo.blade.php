@@ -35,7 +35,8 @@
                 {!! Form::open(['id' => 'form_identificacion', 'class' => '', 'url' => '/forms']) !!}
                     <div class="col-md-5">
                         {!! Field::text('id_funcionario',
-                            ['label' => 'Ingrese Identificación:'],
+
+                            ['label' => 'Ingrese Identificación:', 'auto' => 'off', 'max' => '10'],
                             ['help' => 'Digite Numero de identificación valido', 'icon' => 'fa fa-credit-card'])
                         !!}
                     </div>
@@ -202,6 +203,7 @@
         }();
         var guardarPrograma = false,idFuncionarioD = null;
         jQuery(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsSelect2.init();
             var createPrograma = function () {
                 return{
@@ -329,12 +331,15 @@
             });
             var from_identificacion = $('#form_identificacion');
             var rules_identificacion = {
+                //name_edit: {minlength: 5, required: true},
                 id_funcionario: {
+                    minlength: 3,
                     required: true,
                     remote: {
                         url: "{{ route('identificacion.validar') }}",
                         type: "post"
                     }
+
                 }
             };
             var messages= {

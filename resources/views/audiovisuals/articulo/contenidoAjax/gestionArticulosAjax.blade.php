@@ -194,20 +194,21 @@
         };
     }();
     $(document).ready(function () {
+        App.unblockUI('.portlet-form');
         ComponentsBootstrapMaxlength.init();
         ComponentsSelect2.init();
         table = $('#art-table-ajax');
         url = "{{ route('listarArticulo.data') }}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
-            {data: 'ART_Descripcion', name: 'Descripcion'},
-            {data: 'ART_Codigo', name: 'Codigo'},
-            {data: 'consulta_kit_articulo.KIT_Nombre', name: 'Kit'},
-            {data: 'consulta_estado_articulo.EST_Descripcion', name: 'Estado'},
+            {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'consulta_tipo_articulo.TPART_Nombre'},
+            {data: 'ART_Descripcion', name: 'ART_Descripcion'},
+            {data: 'ART_Codigo', name: 'ART_Codigo'},
+            {data: 'consulta_kit_articulo.KIT_Nombre', name: 'consulta_kit_articulo.KIT_Nombre'},
+            {data: 'consulta_estado_articulo.EST_Descripcion', name: 'consulta_estado_articulo.EST_Descripcion'},
             {
-                defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
-                                '@permission("AUDI_ART_TYPE_EDIT")<a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission("AUDI_ART_TYPE_EDIT")<a title="Editar Articulo" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' +
+                                '@permission("AUDI_ART_TYPE_EDIT")<a title="Eliminar Articulo" href="javascript:;" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

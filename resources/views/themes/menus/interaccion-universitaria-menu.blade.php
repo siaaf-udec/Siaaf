@@ -1,4 +1,12 @@
 {{-- MENÚ DE EJEMPLO --}}
+@permission(['INTE_VER_NOTI_ADMIN'])
+            <li class="nav-item {{ active(['notificacionesAdmin.notificacionesAdmin'], 'start active open') }}">
+                <a href="{{ route('notificacionesAdmin.notificacionesAdmin') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-bell"></i>
+                        <span class="title">TODAS LAS NOTIFICACIONES</span>
+                    </a>
+                </li>
+@endpermission
 @permission(['INTE_VER_NOTI'])
             <li class="nav-item {{ active(['alerta.alerta'], 'start active open') }}">
                 <a href="{{ route('alerta.alerta') }}" class="nav-link nav-toggle">
@@ -82,10 +90,4 @@
                     </a>
                 </li>
 
-<li class="nav-item {{ active(['interacion.universitaria.*'], 'start active open') }}">
-    <a href="{{ route('interaccion.universitaria.index') }}" class="nav-link">
-        <i class="icon-feed"></i>
-        <span class="title">Interacción Universitaria</span>
-    </a>
-</li>
 @endpermission
