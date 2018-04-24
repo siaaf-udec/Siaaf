@@ -46,7 +46,7 @@
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Paticipantes']) 
                     @slot('columns', [ '#' => ['style' => 'width:20px;'],
-                    'Identidicacion',
+                    'Identificacion',
                     'Nombres',
                     'Apellidos',
                     'Acciones' => ['style' => 'width:160px;']

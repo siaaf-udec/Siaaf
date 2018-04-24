@@ -13,7 +13,7 @@
                     '#' => ['style' => 'width:20px;'],
                     'documento',
                     'Nombre',
-                    'Razonsocial',
+                    'Tipo',
                     'Telefono',
                     'Direccion',
                     'Acciones' => ['style' => 'width:160px;']
@@ -39,7 +39,7 @@
                         
                         {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Razon social', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Tipo de empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                         
                         {!! Field:: tel('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
                         
