@@ -89,6 +89,10 @@
                                     {!! Field:: text('id_persona',null,
                                     ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                     ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
+                                    
+                                    {!! Field:: text('codigo_articulo',null,
+                                    ['label'=>'Codigo Articulo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                    ['help' => 'Digite el código del articulo','icon'=>'fa fa-laptop'] ) !!}
 
                                     {!! Field::select('Espacio académico:',$espacios,
                                         ['id' => 'espacios', 'name' => 'espacios'])

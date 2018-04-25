@@ -19,6 +19,8 @@ class CreateTBLEmpresaParticipanteTbl extends Migration
             $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
             $table->bigInteger('FK_TBL_Empresa_Id')->unsigned();
             $table->foreign('FK_TBL_Empresa_Id')->references('PK_EMPS_Empresa')->on('TBL_Empresa');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

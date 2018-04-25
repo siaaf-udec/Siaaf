@@ -18,6 +18,7 @@ class CreateTBLPreguntaTbl extends Migration
             $table->text('PRGT_Enunciado');
             $table->integer('FK_TBL_Tipo_Pregunta_Id')->unsigned();
             $table->foreign('FK_TBL_Tipo_Pregunta_Id')->references('PK_TPPG_Tipo_Pregunta')->on('TBL_Tipo_Pregunta');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

@@ -157,7 +157,7 @@ class AlertasController extends Controller
     
     /*funcion para listar todas las noticiaciones administrador
     *@param int id
-    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    *@return Yajra\DataTables\DataTable  | \App\Container\Overall\Src\Facades\AjaxResponse
     */
     public function listarNotificacionesAdmin (Request $request)
     {

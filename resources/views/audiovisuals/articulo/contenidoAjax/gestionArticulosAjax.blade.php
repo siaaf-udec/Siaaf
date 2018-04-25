@@ -515,7 +515,7 @@
         FormValidationMd.init(from_art_edit_ajax,rules_arti_edit_ajax,false,modificarArticulo());
         $('.createTipo').on('click',function(e){
             e.preventDefault();
-            var route = '{{ route('audiovisuales.gestionTipoArticuloAjax') }}';
+            var route = '{{ route('audiovisuales.gestionTipoArticulosAjax') }}';
             $(".content-ajax").load(route);
         })
 

@@ -6,12 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Documentacion extends Model
 {
-    /**
-     * desactivar opcion de  rellenar casilla update y create date
-     *
-     * @var string
-     */
-    public $timestamps    = false;
+    
     
     /**
      * Conexión de la base de datos usada por el modelo

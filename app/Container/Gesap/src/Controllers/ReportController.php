@@ -3,7 +3,7 @@
 namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use app\Http\Controllers\Controller;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exception;
@@ -13,10 +13,10 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 
 use Illuminate\Support\Facades\DB;
 
-use App\Container\Gesap\src\Anteproyecto;
-use App\Container\Gesap\src\Proyecto;
-use App\Container\Gesap\src\Encargados;
-use App\Container\Users\Src\User;
+use app\Container\Gesap\src\Anteproyecto;
+use app\Container\Gesap\src\Proyecto;
+use app\Container\Gesap\src\Encargados;
+use app\Container\Users\src\User;
 
 use Carbon\Carbon;
 
@@ -43,7 +43,7 @@ class ReportController extends Controller
                 ->get(['name', 'lastname', 'id'])
                 ->pluck('full_name', 'id')
                 ->toArray();
-            return view($this->path . 'PDF.principalView', [
+            return view($this->path . 'PDF.PrincipalView', [
                 'docentes' => $docentes
             ]);
         }
@@ -68,7 +68,7 @@ class ReportController extends Controller
             $proyectos = Anteproyecto::
             with(['radicacion', 'director', 'jurado1', 'jurado2', 'estudiante1', 'estudiante2'])
                 ->get();
-            return view($this->path . 'PDF.anteproyectosPDF', [
+            return view($this->path . 'PDF.AnteproyectosPDF', [
                 'proyectos' => $proyectos,
                 'date' => $date,
                 'time' => $time
@@ -112,7 +112,7 @@ class ReportController extends Controller
                     ->get(['name', 'lastname', 'id'])
                     ->pluck('full_name', 'id')
                     ->toArray();
-                return view($this->path . 'PDF.principalView', [
+                return view($this->path . 'PDF.PrincipalView', [
                     'docentes' => $docentes
                 ]);
             }
@@ -153,7 +153,7 @@ class ReportController extends Controller
                 }])
                 ->get();
             $docente = User::find($jury);
-            return view($this->path . 'PDF.proyectoDocentePDF', [
+            return view($this->path . 'PDF.ProyectoDocentePDF', [
                 'proyectos' => $proyectos,
                 'docente' => $docente,
                 'date' => $date,
@@ -225,7 +225,7 @@ class ReportController extends Controller
                     }])
                     ->get();
                 $docente = User::find($jury);
-                return view($this->path . 'PDF.proyectoDocentePDF', [
+                return view($this->path . 'PDF.ProyectoDocentePDF', [
                     'proyectos' => $proyectos,
                     'docente' => $docente,
                     'date' => $date,
@@ -268,7 +268,7 @@ class ReportController extends Controller
                 }])
                 ->get();
             $docente = User::find($director);
-            return view($this->path . 'PDF.proyectoDocentePDF', [
+            return view($this->path . 'PDF.ProyectoDocentePDF', [
                 'proyectos' => $proyectos,
                 'docente' => $docente,
                 'date' => $date,
@@ -338,7 +338,7 @@ class ReportController extends Controller
                     }])
                     ->get();
                 $docente = User::find($director);
-                return view($this->path . 'PDF.proyectoDocentePDF', [
+                return view($this->path . 'PDF.ProyectoDocentePDF', [
                     'proyectos' => $proyectos,
                     'docente' => $docente,
                     'date' => $date,
@@ -385,7 +385,7 @@ class ReportController extends Controller
                 $proyectosTP = $proyectosT * 100 / $proyectos;
             }
 
-            return view('gesap.Coordinador.graficos', [
+            return view('gesap.Coordinador.Graficos', [
                 'anteproyectos' => $anteproyectos,
                 'anteproyectosR' => $anteproyectosR,
                 'anteproyectosRP' => $anteproyectosRP,

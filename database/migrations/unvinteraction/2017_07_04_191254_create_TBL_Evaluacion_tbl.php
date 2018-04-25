@@ -22,6 +22,7 @@ class CreateTBLEvaluacionTbl extends Migration
             $table->foreign('FK_TBL_Convenio_Id')->references('PK_CVNO_Convenio')->on('TBL_Convenio');
             $table->float('VLCN_Nota_Final');
             $table->integer('VLCN_Tipo_Evaluacion')->unsigned();
+            $table->timestamps();
 
         }); 
     }

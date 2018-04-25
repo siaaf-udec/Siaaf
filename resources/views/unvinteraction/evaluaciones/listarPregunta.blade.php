@@ -109,6 +109,7 @@ var ComponentsSelect2 = function() {
             $(".pmd-select2").select2({
                 width: null,
                 placeholder: "Selecccionar",
+                allowClear: true,
             });
         }
         return {

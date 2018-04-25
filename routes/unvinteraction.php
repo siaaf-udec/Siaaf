@@ -94,9 +94,17 @@ Route::get('listarSedes',['middleware' => ['permission:INTE_VER_SEDES'],
     'as' => 'listarSedes.listarSedes',
     'uses' => $controller.'AdministradorController@listarSedes'
 ]);
+Route::get('listarSedesEliminadas',['middleware' => ['permission:INTE_VER_SEDES'],
+    'as' => 'listarSedesEliminadas.listarSedesEliminadas',
+    'uses' => $controller.'AdministradorController@listarSedesEliminadas'
+]);
 Route::post('resgistrarSedes',['middleware' => ['permission:INTE_VER_SEDES'],
     'as' => 'resgistrarSedes.resgistrarSedes',
     'uses' => $controller.'AdministradorController@resgistrarSedes'
+]);
+Route::post('resetSedes/{id?}',['middleware' => ['permission:INTE_VER_SEDES'],
+    'as' => 'resetSedes.resetSedes',
+    'uses' => $controller.'AdministradorController@resetSedes'
 ]);
 Route::get('editarSedes/{id?}',['middleware' => ['permission:INTE_VER_SEDES'],
     'as' => 'editarSedes.editarSedes',
@@ -138,6 +146,14 @@ Route::post('modificarEstados/{id?}',['middleware' => ['permission:INTE_VER_ESTA
 Route::delete('eliminarEstado/{id?}',['middleware' => ['permission:INTE_VER_ESTADOS'],
     'as' => 'eliminarEstado.eliminarEstado',
     'uses' => $controller.'AdministradorController@eliminarEstado'
+]);
+Route::get('listarEstadosEliminadas',['middleware' => ['permission:INTE_VER_ESTADOS'],
+    'as' => 'listarEstadosEliminadas.listarEstadosEliminadas',
+    'uses' => $controller.'AdministradorController@listarEstadosEliminadas'
+]);
+Route::post('resetEstados/{id?}',['middleware' => ['permission:INTE_VER_ESTADOS'],
+    'as' => 'resetEstados.resetEstados',
+    'uses' => $controller.'AdministradorController@resetEstados'
 ]);
 //______________________EMPRESAS________________________
 Route::get('empresas',['middleware' => ['permission:INTE_VER_EMPRESAS'],

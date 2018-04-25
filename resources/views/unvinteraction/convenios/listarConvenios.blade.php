@@ -144,6 +144,7 @@
             $(".pmd-select2").select2({
                 width: null,
                 placeholder: "Selecccionar",
+                allowClear: true,
             });
         }
         return {
@@ -183,13 +184,24 @@
                 }
         ];
         dataTableServer.init(table, url, columns);
-        
+        //Validador de Fecha
+        $.validator.addMethod("minDate", function (value, element) {
+            var fechIni = $("#CVNO_Fecha_Inicio").val();
+            var fechFin = $("#CVNO_Fecha_Fin").val();
+            if (fechFin > fechIni)
+                return true;
+            return false;
+        }, "Fecha Invalida!");  
+        // error message
         var form = $('#form-Agregar-Convenio');
         var wizard = $('#form_wizard_1');
         var rules = {
             CVNO_Nombre: {required: true},
             CVNO_Fecha_Inicio: {required: true},
-            CVNO_Fecha_Fin: {min :$("#CVNO_Fecha_Inicio").val(),required: true},
+            CVNO_Fecha_Fin: {
+                required: true,
+                minDate: true
+            },
             FK_TBL_Sede_Id: {required: true}
             
         };

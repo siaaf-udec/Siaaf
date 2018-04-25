@@ -1,7 +1,6 @@
 <?php
 
-$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
-
+$controller = "\\app\\Container\\Gesap\\src\\Controllers\\";
 
 	Route::get('min/', [
 		'uses' => $controller.'CoordinatorController@index',
@@ -171,7 +170,7 @@ $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 	])->middleware('permission:STUDENT_LIST_GESAP');
 	Route::get('evaluar/ver/proyecto/ajax', [
 		'as' => 'anteproyecto.index.studentList.ajax',
-		'uses' => $controller.'StudentController@proyectoajax'
+		'uses' => $controller.'StudentController@proyectoAjax'
 	])->middleware('permission:STUDENT_LIST_GESAP');
 	Route::post('actividades/documento', [
 		'as' => 'proyecto.actividades.upload',

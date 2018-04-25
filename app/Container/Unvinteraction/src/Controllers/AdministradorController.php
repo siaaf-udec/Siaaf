@@ -65,6 +65,23 @@ class AdministradorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+     /*funcion para envio de los datos para la tabla de datos
+    * @param  \Illuminate\Http\Request
+    *
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
+    * 
+    */
+    public function listarSedesEliminadas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $sedes=Sede::onlyTrashed();
+            return Datatables::of($sedes)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
    
     /*funcion para registrar una nueva sede
     *@param \Illuminate\Http\Request
@@ -84,7 +101,23 @@ class AdministradorController extends Controller
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
-    
+    /*funcion para buscar una sede y reseta la informacion 
+    *@param int id 
+    *@param  \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function resetSedes(Request $request,$id)
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            $sede=Sede::withTrashed()->find($id);
+            $sede->restore();
+            return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede restaurada correctamente.'
+             );
+        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
+    }
     /*funcion para buscar una sede y enviar la informacion 
     *@param int id 
     *@param  \Illuminate\Http\Request
@@ -395,6 +428,41 @@ class AdministradorController extends Controller
                 'No se pudo completar tu solicitud.'
          );
        
+    }
+     /*funcion para envio de los datos para la tabla de datos
+    * @param  \Illuminate\Http\Request
+    *
+    * @return \App\Container\Overall\Src\Facades\AjaxResponse | Yajra\DataTables\DataTable
+    * 
+    */
+    public function listarEstadosEliminadas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Estados=Estado::onlyTrashed();
+            return Datatables::of($Estados)->addIndexColumn()->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+   
+/*funcion para buscar un estado y reseta la informacion 
+    *@param int id 
+    *@param  \Illuminate\Http\Request
+    *@return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function resetEstados(Request $request,$id)
+    {
+        if($request->ajax() && $request->isMethod('POST')) {
+            $estado=Estado::withTrashed()->find($id);
+            $estado->restore();
+            return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Sede editada correctamente.'
+             );
+        }
+        return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');
     }
     //_________________END___ESTADOS______________________
    

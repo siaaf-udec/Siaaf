@@ -1,8 +1,8 @@
 <?php
 
-use App\Container\Users\Src\User;
+use app\Container\Users\src\User;
 use \Illuminate\Database\Seeder;
-use App\Container\Permissions\Src\Role;
+use app\Container\Permissions\src\Role;
 
 class UsersGesapTableSeeder extends Seeder
 {
