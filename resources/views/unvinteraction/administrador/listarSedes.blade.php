@@ -17,21 +17,48 @@
 @section('page-description', 'Sedes registradas')
 @section('content')
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR SEDES'])
-<div class="col-md-12">
-    <div class="actions">
-        <a id="abrir" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus" title="Agregar Sede"></i></a>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#tab_1_1" data-toggle="tab"> SEDES </a>
+    </li>
+    <li>
+        <a href="#tab_1_2" data-toggle="tab"> SEDES ELIMINADAS </a>
+    </li>
+
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab_1_1">
+        <div class="col-md-12">
+            <div class="actions">
+                <a id="abrir" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus" title="Agregar Sede"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="clearfix"> </div><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios'])
+                @slot('columns', [ 
+                    '#' => ['style' => 'width:20px;'],
+                    'Codigo',
+                    'Nombre',
+                    'Acciones' => ['style' => 'width:160px;'] ]) 
+                @endcomponent
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="clearfix"> </div><br><br>
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios'])
-        @slot('columns', [ 
-            '#' => ['style' => 'width:20px;'],
-            'Codigo',
-            'Nombre',
-            'Acciones' => ['style' => 'width:160px;'] ]) 
-        @endcomponent
+    <div class="tab-pane fade " id="tab_1_2">
+        <div class="row">
+            <div class="clearfix"> </div><br><br><br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Listar_Convenios2'])
+                @slot('columns', [ 
+                    '#' => ['style' => 'width:20px;'],
+                    'Codigo',
+                    'Nombre',
+                    'Acciones' => ['style' => 'width:160px;'] ]) 
+                @endcomponent
+            </div>
+        </div>
     </div>
 </div>
 <!-- AGREGAR SEDE -->
@@ -111,6 +138,7 @@ jQuery(document).ready(function () {
         dataTableServer.init(table, url, columns);
         table.on('click', '.delete', function(e) {
                 e.preventDefault();
+                table = $('#Listar_Convenios').DataTable();
 				$tr = $(this).closest('tr');
 				var o = table.row($tr).data();
 				var route = '{{route('eliminarSedes.eliminarSedes')}}/'+o.PK_SEDE_Sede;
@@ -159,9 +187,8 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $('#sede').modal('toggle');
         });
-    
-     table = table.DataTable();
     table.on('click', '.editar', function (e) {
+            table = $('#Listar_Convenios').DataTable();
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
@@ -178,13 +205,12 @@ jQuery(document).ready(function () {
     var crearConvenio = function () {
             return{
                 init: function () {
+                    table = $('#Listar_Convenios').DataTable();
                     var route = '{{ route('resgistrarSedes.resgistrarSedes') }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
                     formData.append('SEDE_Sede', $('#SEDE_Sede').val());
-                    
                     $.ajax({
                         url: route,
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -219,6 +245,54 @@ jQuery(document).ready(function () {
     var messages = {};
     FormValidationMd.init( form, rules, messages , crearConvenio());
     
+    var table, url, columns;
+        table = $('#Listar_Convenios2');
+        url = "{{ route('listarSedesEliminadas.listarSedesEliminadas') }}";
+        columns = [
+            {data: 'DT_Row_Index'},
+           {data: 'PK_SEDE_Sede', "visible": true, name:"PK_SEDE_Sede" },
+           {data: 'SEDE_Sede', searchable: true, name:"SEDE_Sede"},
+           {data:'action',searchable: false,
+            name:'action',
+            title:'Acciones',
+            orderable: false,
+            exportable: false,
+            printable: false,
+            defaultContent: '<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon reset" title="resetear"><i class="icon-plus"></i></a>'
+           }
+        ];
+        dataTableServer.init(table, url, columns);
+    
+    $('#Listar_Convenios2').on('click', '.reset', function(e) {
+                table = $('#Listar_Convenios2').DataTable();
+                e.preventDefault();
+				$tr = $(this).closest('tr');
+				var o =  table.row($tr).data();
+				var route = '{{route('resetSedes.resetSedes')}}/'+o.PK_SEDE_Sede;
+				var type = 'POST';
+				var async = async || false;
+                $.ajax({
+                    url: route,
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);           
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 &&  xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+    });
+          
 });
 </script>
 @endpush

@@ -108,13 +108,25 @@
     jQuery(document).ready(function() {
         ComponentsDateTimePickers.init();
         ComponentsSelect2.init();
+        //Validador de Fecha
+        $.validator.addMethod("minDate", function (value, element) {
+            var fechIni = $("#CVNO_Fecha_Inicio").val();
+            var fechFin = $("#CVNO_Fecha_Fin").val();
+            if (fechFin > fechIni)
+                return true;
+            return false;
+        }, "Fecha Invalida!");  
+        // error message
         App.unblockUI('.portlet-form');
         var form = $('#form-Agregar-Convenio');
         var wizard = $('#form_wizard_1');
         var rules = {
             CVNO_Nombre: {required: true},
             CVNO_Fecha_Inicio: {required: true},
-            CVNO_Fecha_Fin: {required: true},
+            CVNO_Fecha_Fin: {
+                required: true,
+                minDate: true
+            },
             FK_TBL_Sede_Id: {required: true}
             
         };
