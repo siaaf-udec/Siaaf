@@ -1,6 +1,6 @@
 <?php
 
-$controller = "\\app\\Container\\Gesap\\src\\Controllers\\";
+$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 	Route::get('min/', [
 		'uses' => $controller.'CoordinatorController@index',

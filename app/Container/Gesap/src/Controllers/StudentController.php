@@ -3,7 +3,7 @@
 namespace App\Container\Gesap\src\Controllers;
 
 use Illuminate\Http\Request;
-use app\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -13,12 +13,12 @@ use Validator;
 use Carbon\Carbon;
 
 
-use app\Container\Overall\Src\Facades\AjaxResponse;
-use app\Container\Overall\Src\Facades\UploadFile;
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Overall\Src\Facades\UploadFile;
 
-use app\Container\Gesap\src\Anteproyecto;
-use app\Container\Gesap\src\Documentos;
-use app\Container\Gesap\src\Encargados;
+use App\Container\Gesap\src\Anteproyecto;
+use App\Container\Gesap\src\Documentos;
+use App\Container\Gesap\src\Encargados;
 
 class StudentController extends Controller
 {

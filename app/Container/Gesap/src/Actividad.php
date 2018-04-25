@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Container\Gesap\src;
+namespace App\Container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
