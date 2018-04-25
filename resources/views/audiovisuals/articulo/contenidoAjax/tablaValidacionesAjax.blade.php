@@ -68,7 +68,7 @@
         });
         $('#link_cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('audiovisuales.gestionTipoArticuloAjax') }}';
+            var route = '{{ route('audiovisuales.gestionTipoArticulosAjax') }}';
             $(".content-ajax").load(route);
         });
     });

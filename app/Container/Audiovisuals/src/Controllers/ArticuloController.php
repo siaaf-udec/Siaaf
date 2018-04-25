@@ -271,6 +271,8 @@ class ArticuloController extends Controller
                 $tipo = TipoArticulo::find($request['id']);
                 $tipo->TPART_Nombre = $request['TPART_Nombre'];
                 $tipo->TPART_Tiempo = $request['TPART_Tiempo'];
+                $tipo->TPART_HorasMantenimiento = $request['TPART_HorasMantenimiento'];
+
                 $tipo->save();
                 return AjaxResponse::success(
                     '¡Bien hecho!',

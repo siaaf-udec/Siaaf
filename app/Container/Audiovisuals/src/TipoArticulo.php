@@ -27,7 +27,7 @@ class TipoArticulo extends Model
     protected $fillable = [
         'TPART_Nombre',
 		'TPART_Tiempo',
-        'TPART_HorasMantenimiento'
+        'TPART_HorasMantenimiento',
     ];
 
     /**

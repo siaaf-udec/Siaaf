@@ -8,7 +8,7 @@
     ])
     <div class="row">
         <div class="col-md-12">
-            <div class="modal fade" data-width="760" id="modal-create-tipo" tabindex="-1">
+            <div class="modal fade" data-width="380" id="modal-create-tipo" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
@@ -21,13 +21,13 @@
                 <div class="modal-body">
                     {!! Form::open(['id' => 'from_art_tipo_create', 'class' => '', 'url' => '/forms']) !!}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::text('TPART_Nombre',
                                    ['label' => 'Tipo Artículo:', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                    ['help' => 'Ingrese Tipo artículo ejemplo: Computador, Cable', 'icon' => 'fa fa-info'])
                                !!}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::select('Seleccione una Opcion',
                                      [
                                 2 => 'Asignado',
@@ -39,12 +39,12 @@
                         </div>
                         <div class="col-md-12">
                             {!! Field::Text('TPART_HorasMantenimiento',
-                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '10', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                    ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
                             !!}
                         </div>
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-8">
+                            <div class="col-md-12" align="center">
                                 {!! Form::submit('CREAR', ['class' => 'btn blue']) !!}
                                 {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                             </div>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-md-12">
                             {!! Field::Text('TPART_HorasMantenimiento_Edit',
-                                   ['label' => 'Horas Mantenimiento:', 'max' => '5', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
+                                   ['label' => 'Horas Mantenimiento:', 'max' => '10', 'min' => '2', 'required', 'auto' => 'off','tabindex'=>'1'],
                                    ['help' => 'Ingrese Horas de mantenimiento presupuestadas para el articulo', 'icon' => 'fa fa-info'])
                             !!}
                         </div>
@@ -293,7 +293,7 @@
                     formData.append('id',idTipoArticulo);
                     formData.append('TPART_Nombre', $('input:text[name="TPART_Nombre_Edit"]').val());
                     formData.append('TPART_Tiempo', $('select[name="TPART_Tiempo_Edit"]').val());
-
+                    formData.append('TPART_HorasMantenimiento', $('input:text[name="TPART_HorasMantenimiento_Edit"]').val());
 
                     $.ajax({
                         url: route,
@@ -333,20 +333,20 @@
         };
         var form_art_tipo_edit = $('#from_art_tipo_edit');
         var rules_art_tipo_create = {
-            TPART_Nombre: {
+            TPART_Nombre_Edit: {
                 minlength: 3, required: true, remote: {
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     url: "{{ route('tipoArticulo.validar') }}",
                     type: "post"
                 }
             },
-            TPART_Tiempo: {required: true},
-            TPART_HorasMantenimiento_Edit: {required: true}
+            TPART_Tiempo_Edit: {required: true},
+            TPART_HorasMantenimiento_Edit: {required: true, number: true,maxlength: 10},
 
 
         };
         var messages = {
-            TPART_Nombre: {
+            TPART_Nombre_Edit: {
                 remote: 'El Nombre de Tipo de Artículo ya está en uso.'
             }
         };
@@ -403,7 +403,7 @@
                 }
             },
             TPART_Tiempo: {required: true},
-            TPART_HorasMantenimiento: {required: true}
+            TPART_HorasMantenimiento: {required: true, number: true,maxlength: 10}
 
         };
         var messages = {

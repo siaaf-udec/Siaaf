@@ -32,6 +32,25 @@ class AdministradorGestionController extends Controller
          */
         public function index(Request $request)
         {
+            $funcionarios = Solicitudes::with(['consultaUsuarioAudiovisuales'=> function($query){
+                return $query->select('id','USER_FK_User')->with(['user'=>function($query){
+                        return $query->select(
+                            'id','name','lastname','email','identity_type',
+                            'identity_no'
+                        );
+                    }
+                    ]
+                );
+            }])->where([
+                ['PRT_FK_Tipo_Solicitud','=',2],
+                ['PRT_FK_Estado','!=',5]
+            ])->get();//2=prestamos
+            $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
+            $array = array();
+            foreach ($funcionarios as $le) {
+                array_push($array, $le[0]);
+            }
+            //dd($array );
             if ($request->isMethod('GET')) {
                 return view('audiovisuals.administrador.prestamoArticulo');
             }
