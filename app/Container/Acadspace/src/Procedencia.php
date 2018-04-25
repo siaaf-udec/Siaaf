@@ -19,19 +19,19 @@ class Procedencia extends Model
      * Tabla utilizada por el modelo.
      * @var string
      */
-    protected $table = 'tbl_procedencias';
+    protected $table = 'TBL_Procedencias';
 
     /**
      * Llave primaria usada por el modelo
      */
-    protected $primaryKey = 'pk_id_procedencia';
+    protected $primaryKey = 'PK_PRO_Id_Procedencia';
 
     /**
      * Atributos que son asignables.
      * @var array
      */
     protected $fillable = [
-        'tipo_procedencia'         
+        'PRO_Nombre'         
     ];
     /**
      *  Función que retorna la relación entre la tabla 'tbl_procedencias' y la tabla
@@ -40,7 +40,7 @@ class Procedencia extends Model
      */
     public function articulo()
     {
-        return $this->hasMany(Articulo::class, 'fk_id_procedencia', 'pk_id_procedencia');
+        return $this->hasMany(Articulo::class, 'FK_ART_Id_Procedencia', 'PK_PRO_Id_Procedencia');
     }
    
    
