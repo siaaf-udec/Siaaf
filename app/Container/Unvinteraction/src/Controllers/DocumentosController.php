@@ -118,8 +118,8 @@ class DocumentosController extends Controller
                     $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
                 }
                 $doc = new DocumentacionExtra();
-                $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-                $doc->DCET_Ubicacion = $ubicacion ;
+                $doc->DCET_Nombre = $file->getClientOriginalName();
+                $doc->DCET_Ubicacion = $ubicacion.'/'.$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
                 $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
                 $doc->save();
                 return $request->get('name'); 
@@ -131,8 +131,8 @@ class DocumentosController extends Controller
                     $url = Storage::disk('developer')->putFileAs($ubicacion, $file,$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName());
                 }
                 $doc = new DocumentacionExtra();
-                $doc->DCET_Nombre = $carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName();
-                $doc->DCET_Ubicacion = $ubicacion ;
+                $doc->DCET_Nombre = $file->getClientOriginalName();
+                $doc->DCET_Ubicacion = $ubicacion.'/'.$carbon->now()->format('y-m-d-h-m-s').$file->getClientOriginalName() ;
                 $doc->FK_TBL_Usuarios_Id=$request->user()->identity_no ;
                 $doc->save();
                 return $request->get('name');   
@@ -154,9 +154,9 @@ class DocumentosController extends Controller
         if ($request->isMethod('GET')) {
             $documento=DocumentacionExtra::select('DCET_Ubicacion', 'DCET_Nombre')->where('PK_DCET_Documentacion_Extra', $id)->get();
             foreach ($documento as $row) {
-                if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion."/".$row->DCET_Nombre)) {
+                if ($exists = Storage::disk('developer')->exists($row->DCET_Ubicacion)) {
                     return response()
-                        ->download(storage_path()."/app/public/developer/".$row->DCET_Ubicacion."/".$row->DCET_Nombre,$row->DCET_Nombre);
+                        ->download(storage_path()."/app/public/developer/".$row->DCET_Ubicacion,$row->DCET_Nombre);
                     return AjaxResponse::success('¡Bien hecho!', 'documento descargado correctamente.');
                 } else {
                     return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
