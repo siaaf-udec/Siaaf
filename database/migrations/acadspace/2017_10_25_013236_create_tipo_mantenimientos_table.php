@@ -13,10 +13,10 @@ class CreatetipoMantenimientosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_tipo_mantenimientos', function (Blueprint $table) {
-            $table->increments('pk_id_tipo_mantenimiento')->unsigned()->unique();
-            $table->string('nombre_mantenimiento',50);
-            $table->string('descripcion_tipo_mantenimiento',450);                        
+        Schema::connection('acadspace')->create('TBL_Tipo_Mantenimientos', function (Blueprint $table) {
+            $table->increments('PK_MAN_Id_Tipo')->unsigned()->unique();
+            $table->string('MAN_Nombre',50);
+            $table->string('MAN_Descripcion',450);                        
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreatetipoMantenimientosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_tipo_mantenimiento');
+        Schema::dropIfExists('TBL_Tipo_Mantenimientos');
     }
 }

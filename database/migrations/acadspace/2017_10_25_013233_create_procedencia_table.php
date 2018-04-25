@@ -13,9 +13,9 @@ class CreateProcedenciaTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_procedencias', function (Blueprint $table) {
-            $table->increments('pk_id_procedencia')->unsigned()->unique();
-            $table->string('tipo_procedencia',50);
+        Schema::connection('acadspace')->create('TBL_Procedencias', function (Blueprint $table) {
+            $table->increments('PK_PRO_Id_Procedencia')->unsigned()->unique();
+            $table->string('PRO_Nombre',50);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateProcedenciaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_procedencias');
+        Schema::dropIfExists('TBL_Procedencias');
     }
 }

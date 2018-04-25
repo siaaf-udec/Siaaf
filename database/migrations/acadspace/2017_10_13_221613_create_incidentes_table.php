@@ -17,7 +17,7 @@ class CreateIncidentesTable extends Migration
             $table->increments('PK_INC_Id_Incidente')->unique();
             $table->integer('FK_INC_Id_User')->unsigned();
             $table->integer('FK_INC_Id_Espacio')->unsigned();
-            $table->integer('fk_id_articulo')->unsigned();
+            $table->integer('FK_INC_Id_Articulo')->unsigned();
             $table->string('INC_Descripcion',255);
             $table->timestamps();
         });

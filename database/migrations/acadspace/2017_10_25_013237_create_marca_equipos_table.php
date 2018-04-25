@@ -13,9 +13,9 @@ class CreateMarcaEquiposTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_marca_equipos', function (Blueprint $table) {
-            $table->increments('pk_id_marca_equipo')->unsigned()->unique();
-            $table->string('tipo_marca',120);                        
+        Schema::connection('acadspace')->create('TBL_Marca', function (Blueprint $table) {
+            $table->increments('PK_MAR_Id_Marca')->unsigned()->unique();
+            $table->string('MAR_Nombre',120);                        
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateMarcaEquiposTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_marca_equipos');
+        Schema::dropIfExists('TBL_Marca');
     }
 }

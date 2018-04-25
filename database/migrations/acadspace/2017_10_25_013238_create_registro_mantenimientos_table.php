@@ -13,15 +13,15 @@ class CreateRegistroMantenimientosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_registro_mantenimientos', function (Blueprint $table) {
-            $table->increments('pk_id_registro_mantenimiento')->unsigned()->unique();
-            $table->datetime('fecha_inicio')->useCurrent();
-            $table->datetime('fecha_fin')->nullable();
-            $table->text('descripcion_mantenimiento')->nullable();
-            $table->text('descripcion_errores')->nullable();
-            $table->string('nombre_tecnico',120);
-            $table->integer('fk_id_hojavida')->unsigned();
-            $table->integer('fk_id_tipo_mantenimiento')->unsigned();
+        Schema::connection('acadspace')->create('TBL_Registro_Mantenimientos', function (Blueprint $table) {
+            $table->increments('PK_MANT_Id_Registro')->unsigned()->unique();
+            $table->datetime('MANT_Fecha_Inicio')->useCurrent();
+            $table->datetime('MANT_Fecha_Fin')->nullable();
+            $table->text('MANT_Descripcion')->nullable();
+            $table->text('MANT_Descripcion_Errores')->nullable();
+            $table->string('MANT_Nombre_Tecnico',120);
+            $table->integer('FK_MANT_Id_Hojavida')->unsigned();
+            $table->integer('FK_MANT_Id_Tipo')->unsigned();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateRegistroMantenimientosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_registro_mantenimientos');
+        Schema::dropIfExists('TBL_Registro_Mantenimientos');
     }
 }
