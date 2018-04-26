@@ -43,12 +43,17 @@ jQuery(document).ready(function () {
            {data: 'evaluador.dato_usuario.lastname', className:'none',searchable: true, name:"evaluador.dato_usuario.lastname"},
            {data: 'convenios_evaluacion.CVNO_Nombre', searchable: true, name:"convenios_evaluacion.CVNO_Nombre"},
            {data: 'VLCN_Nota_Final', searchable: true, name:"VLCN_Nota_Final"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" title="ver preguntas" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"> VER </i></a>'
            }
      ];

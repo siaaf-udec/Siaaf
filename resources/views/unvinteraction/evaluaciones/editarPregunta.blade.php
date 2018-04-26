@@ -1,5 +1,5 @@
 <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DE ESTADOS'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'EDICION  DE PREGUNTA'])
     <div class="row">
         <div class="col-md-7 col-md-offset-2">
             <div class="form-body">
@@ -19,7 +19,8 @@
     </div>
     @endcomponent
 </div>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
      App.unblockUI('.portlet-form');

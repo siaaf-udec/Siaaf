@@ -53,7 +53,6 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
 <!-- Validation Plugins -->
 <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -67,12 +66,13 @@
 <script src="{{ asset('assets/pages/scripts/form-dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
     var ComponentsDateTimePickers = function () {
             var handleDatePickers = function () {
@@ -135,13 +135,18 @@ jQuery(document).ready(function () {
                 {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true, name:"convenios_participante.CVNO_Fecha_Fin"},
                 {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true, name:"convenios_participante.convenio_estado.ETAD_Estado"},
                 {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true, name:"convenios_participante.convenio_sede.SEDE_Sede"},
-                {data:'action',searchable: false,
-                name:'action',
-                title:'Acciones',
+                {data: 'action',
+                 name: 'action',
+                title: 'Acciones',
                 orderable: false,
+                searchable: false,
                 exportable: false,
                 printable: false,
-                defaultContent: '<a href="#" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"> VER</i></a>'
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2,
+                defaultContent: '<a href="#" title="Documentos e informacion del Convenio" class="btn btn-simple btn-success btn-icon editar2"><i class="icon-notebook"></i></a>'
                 }
         ];
         dataTableServer.init(table, url, columns);

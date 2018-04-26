@@ -167,7 +167,9 @@
 </div>
 </div>
 <!-- FIN MODALS -->
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script>   
 <script type="text/javascript">
      var ComponentsDateTimePickers = function () {
@@ -229,13 +231,16 @@
                     {data: 'PK_DOCU_Documentacion',"visible": true,name: "PK_DOCU_Documentacion",className: 'none'},
                     {data: 'DOCU_Nombre',searchable: true,name: "DOCU_Nombre"},
                     {data: 'action',
-                        className: '',
-                        searchable: false,
-                        name: 'action',
-                        title: 'Acciones',
-                        orderable: false,
-                        exportable: false,
-                        printable: false,
+                    name: 'action',
+                    title: 'Acciones',
+                    orderable: false,
+                    searchable: false,
+                    exportable: false,
+                    printable: false,
+                    className: 'text-center',
+                    render: null,
+                    serverSide: false,
+                    responsivePriority: 2,
                         defaultContent: ' @permission(['INTE_DES_DOC_CON'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
                     }
         ];
@@ -274,15 +279,17 @@
             {data: 'usuarios_participantes.dato_usuario.identity_no',"visible": true,name: "identity_no"},
             {data: 'usuarios_participantes.dato_usuario.name',searchable: true,name: "name"},
             {data: 'usuarios_participantes.dato_usuario.lastname', searchable: true,name: "lastname"},
-            {
-                data: 'action',
-                className: '',
-                searchable: false,
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                exportable: false,
-                printable: false,
+            {data: 'action',
+            name: 'action',
+            title: 'Acciones',
+            orderable: false,
+            searchable: false,
+            exportable: false,
+            printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
                 defaultContent: '@permission(['INTE_EVA_EMPRESA']) @php if ($estado == 1){ @endphp<a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar1" title="Evaluar Usuario"><i class="icon-pencil"> EVALUAR </i></a> @php } @endphp @endpermission @permission(['INTE_DES_DOC_USU'])<a href="#" class="btn btn-simple btn-success btn-icon doc1" title="Documentos usuario"><i class="icon-notebook"></i></a>@endpermission @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver1" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission @permission(['INTE_DELET_PART']) @php if ($estado == 1){ @endphp <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a> @php } @endphp @endpermission'
 
 
@@ -438,15 +445,17 @@
                 {data: 'PK_EMPT_Empresa_Participante',"visible": true, name: "PK_EMPT_Empresa_Participante"},
                 {data: 'patricipantes_empresas.PK_EMPS_Empresa',searchable: true,name: "patricipantes_empresas.PK_EMPS_Empresa"},
                 {data: 'patricipantes_empresas.EMPS_Nombre_Empresa',searchable: true,name: "patricipantes_empresas.EMPS_Nombre_Empresa"},
-                {
-                        data: 'action',
-                        className: '',
-                        searchable: false,
-                        name: 'action',
-                        title: 'Acciones',
-                        orderable: false,
-                        exportable: false,
-                        printable: false,
+                {data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2,
                         defaultContent: '@php if ($estado == 1){ @endphp @permission(['INTE_EVA_PASANTE'])  <a href="#" target="_blank" class="btn btn-simple btn-warning btn-icon evaluar2" title="Evaluar Empresa"><i class="icon-pencil"> EVALUAR </i></a>@endpermission @php } @endphp   @permission(['INTE_VER_EVA'])<a href="#" target="_blank" class="btn btn-simple btn-info btn-icon ver2" title="Ver Evaluacion"><i class="icon-eye"> VER </i></a>@endpermission  @php if ($estado == 1){ @endphp @permission(['INTE_DELET_PART'])  <a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete1" title="eliminar"><i class="icon-close"></i></a>@endpermission @php } @endphp'
                     }
         ];

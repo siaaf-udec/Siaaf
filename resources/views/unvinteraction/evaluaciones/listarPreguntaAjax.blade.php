@@ -64,12 +64,17 @@ jQuery(document).ready(function () {
            {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta" },
            {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
            {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"pregunta_tipos_pregunta.TPPG_Tipo"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"></i></a></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
 
             
@@ -155,7 +160,7 @@ jQuery(document).ready(function () {
 				var async = async || false;
 				swal({
 					title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    text: "¿Esta seguro de eliminar la pregunta seleccionada?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -188,7 +193,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ninguna pregunta", "error");
                     }
                 });
             });

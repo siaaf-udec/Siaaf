@@ -5,7 +5,7 @@
         <div class="form-body">
             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Empresa']) !!}
             <div class="form-wizard">
-                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el nombre de la empresa','icon'=>'fa fa-user'] ) !!}
                 
                 {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                 
@@ -25,7 +25,8 @@
     @endcomponent
 </div>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');

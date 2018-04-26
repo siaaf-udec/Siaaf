@@ -86,7 +86,7 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+
 <!-- Validation Plugins -->
 <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -98,12 +98,13 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
  <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>           
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
      App.unblockUI('.portlet-form');
@@ -114,12 +115,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_TPPG_Tipo_Pregunta', "visible": true, name:"PK_TPPG_Tipo_Pregunta" },
            {data: 'TPPG_Tipo', searchable: true,name:"TPPG_Tipo"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
 
             
@@ -202,7 +208,7 @@ jQuery(document).ready(function () {
 				var async = async || false;
 				swal({
 					title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    text: "¿Esta seguro de eliminar el tipo de pregunta seleccionado?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -235,7 +241,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ningun tipo de pregunta", "error");
                     }
                 });
             });

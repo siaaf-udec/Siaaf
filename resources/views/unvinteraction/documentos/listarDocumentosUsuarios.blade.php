@@ -15,7 +15,9 @@
 </div>
 
 @endcomponent
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
  <script>
 jQuery(document).ready(function () {
      App.unblockUI('.portlet-form');
@@ -26,14 +28,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_DCET_Documentacion_Extra', "visible": true,name:"PK_DCET_Documentacion_Extra",className:'none' },
            {data: 'DCET_Nombre',searchable: true,name:"DCET_Nombre"},
-           { data: 'action',
-            className: '',
-            searchable: false,
+           {data: 'action',
             name: 'action',
             title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '@permission(['INTE_DES_DOC_USU'])<a href="#" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'},
         ];
     dataTableServer.init(table, url, columns);

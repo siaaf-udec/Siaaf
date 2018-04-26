@@ -131,7 +131,7 @@ class EvaluacionesController extends Controller
              $pregunta->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'tipo de pregunta eliminado correctamente.'
              );
          }
          return AjaxResponse::fail(
@@ -266,7 +266,7 @@ class EvaluacionesController extends Controller
              $pregunta->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'Pregunta eliminada correctamente.'
              );
          }
          return AjaxResponse::fail(
