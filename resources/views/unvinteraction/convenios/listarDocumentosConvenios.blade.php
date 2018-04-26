@@ -122,7 +122,7 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR PARTICIPANTE</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
+                        {!! Field:: text('identity_no',null,['label'=>'Numero Documento','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de cedula.','icon'=>'fa fa-credit-card']) !!}
                         
                         {!! Field::date('PTPT_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!} 
                         
@@ -153,7 +153,7 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                        {!! Field:: text('FK_TBL_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'10','autocomplete'=>'off'],['help' => 'Digita el nunemero de identificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}

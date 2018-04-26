@@ -23,11 +23,11 @@
 @section('content')
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'LISTAR PREGUNTAS'])
 @permission(['INTE_ADD_CONVENIO'])
- <div class="col-md-12">
-                    <div class="actions">
-                        <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
+<div class="col-md-12">
+    <div class="actions">
+        <a id="archivo3" href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Agregar un convenio"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
  @endpermission
 
     <div class="row">
@@ -60,9 +60,9 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
                         
-                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
+                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta','required'])!!}
                         
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
                         
@@ -96,12 +96,13 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 var ComponentsSelect2 = function() {
         var handleSelect = function() {

@@ -57,13 +57,13 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('CVNO_Nombre',['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
+                        {!! Field:: text('CVNO_Nombre',['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
                         
                         {!! Field::date('CVNO_Fecha_Inicio',['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!} 
                         
                         {!! Field::date('CVNO_Fecha_Fin',['label'=>'Fecha Final','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
                         
-                        {!! Field::select('FK_TBL_Sede_Id',$sede,[ 'label' => 'Selecciona una sede','required' => 'required'])!!}
+                        {!! Field::select('FK_TBL_Sede_Id',$sede,[ 'label' => 'Selecciona una sede','required'])!!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="modal-footer">

@@ -75,7 +75,7 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Sede']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
+                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}

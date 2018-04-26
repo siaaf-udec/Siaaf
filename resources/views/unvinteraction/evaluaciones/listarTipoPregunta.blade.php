@@ -60,7 +60,7 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Tipo-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('TPPG_Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'20','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
+                        {!! Field:: text('TPPG_Tipo',['label'=>'Tipo','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'20','autocomplete'=>'off'],['help' => 'Agregar el tipo','icon'=>'fa fa-line-chart'] ) !!}
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
