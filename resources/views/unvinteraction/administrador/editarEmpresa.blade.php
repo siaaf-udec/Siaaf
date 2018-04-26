@@ -24,6 +24,8 @@
     </div>
     @endcomponent
 </div>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript">
 <script type="text/javascript">
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');
