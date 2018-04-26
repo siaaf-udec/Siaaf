@@ -3,6 +3,8 @@
 namespace App\Container\Financial\src\Constants;
 
 
+use App\Container\Financial\src\Check;
+
 class ConstantLabelClasses
 {
 
@@ -47,6 +49,12 @@ class ConstantLabelClasses
                 break;
             case ConstantStatus::CANCELED :
                 return self::DANGER_CLASS;
+                break;
+            case Check::UNDELIVERED :
+                return self::DANGER_CLASS;
+                break;
+            case Check::DELIVERED :
+                return self::SUCCESS_CLASS;
                 break;
             default:
                 return self::DEFAULT_CLASS;

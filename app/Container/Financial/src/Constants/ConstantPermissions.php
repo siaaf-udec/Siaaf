@@ -90,6 +90,19 @@ class ConstantPermissions
     const ADD_SUB_SUBJECTS_APPROVAL      =       'FINANCIAL_ADDITION_APPROVAL_SUBTRACTION_MANAGEMENT_MODULE';
     const INTERSEMESTRAL_APPROVAL        =       'FINANCIAL_INTERSEMESTRAL_APPROVAL_MANAGEMENT_MODULE';
 
+    /*
+     * -----------------------------------------
+     *
+     * Financial
+     *
+     * Petty Cash
+     * Checks
+     *
+     * -----------------------------------------
+     */
+    const PETTY_CASH                    =       'FINANCIAL_PETTY_CASH_MODULE';
+    const CHECKS                        =       'FINANCIAL_CHECKS_MODULE';
+
     /**
      * Retrieve an array with all ordered permissions
      *
@@ -210,6 +223,16 @@ class ConstantPermissions
                         'description'   =>  'Permite acceder a las herramientas de gestión de aprobaciones de intersemestrales del módulo financero.',
                     ],
                 ]
+            ],
+            'petty_cash'                =>  [
+                'name'          =>  self::PETTY_CASH,
+                'display_name'  =>  'Gestion de Caja Menor',
+                'description'   =>  'Permite acceder a las herramientas de gestión de caja menor del módulo financiero.',
+            ],
+            'checks'                    =>  [
+                'name'          =>  self::CHECKS,
+                'display_name'  =>  'Gestion de Cheques',
+                'description'   =>  'Permite acceder a las herramientas de gestión de cheques del módulo financiero.',
             ],
         ];
     }

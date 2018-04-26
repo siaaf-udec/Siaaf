@@ -215,6 +215,14 @@ return [
         ],
     ],
 
+    'check'    =>  [
+        'title'             =>  ' | Cheques',
+        'index'             => [
+            'title'         => 'Cheques',
+            'description'   => 'gestión de entregas de cheques.',
+        ],
+    ],
+
     'intersemestral'    =>  [
         'title'             =>  ' | Intersemestral',
         'index'             => [
@@ -261,6 +269,8 @@ return [
 
             'subscribed'        =>  'Inscritos',
             'paid_bar'          =>  'Pagado',
+            'pay_to'            =>  'Pagar a',
+            'check'             =>  'Cheque',
 
             'paid'              =>  'Estado del pago',
 
@@ -297,6 +307,8 @@ return [
     ],
 
     'help-text'     =>  [
+        'check'             =>  'Escribe el número del cheque aquí.',
+        'pay_to'            =>  'Escribe el nombre a quien se dirige cheque aquí.',
         'program'           =>  'Escribe el nombre del programa aquí.',
         'cost'              =>  'Escribe el costo aquí.',
         'valid_until'       =>  'Escribe la fecha válida hasta.',

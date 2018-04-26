@@ -425,6 +425,16 @@ function permission_add_sub_approval () { return ConstantPermissions::ADD_SUB_SU
 function permission_intersemestral_approval () { return ConstantPermissions::INTERSEMESTRAL_APPROVAL; }
 
 /**
+ * @return string
+ */
+function permission_petty_cash () { return ConstantPermissions::PETTY_CASH; }
+
+/**
+ * @return string
+ */
+function permission_checks () { return ConstantPermissions::CHECKS; }
+
+/**
  * @return array
  */
 function module_approval_permissions() {
@@ -500,6 +510,8 @@ function root_permissions () {
         permission_validation_approval(),
         permission_add_sub_approval(),
         permission_intersemestral_approval(),
+        permission_petty_cash(),
+        permission_checks()
     ];
 }
 
@@ -522,6 +534,8 @@ function admin_permissions () {
         permission_validation_approval(),
         permission_add_sub_approval(),
         permission_intersemestral_approval(),
+        permission_petty_cash(),
+        permission_checks()
     ];
 }
 
@@ -747,6 +761,21 @@ function file_type_fk(){ return SchemaConstant::FILE_TYPE_FOREIGN_KEY; }
  * @return string
  */
 function extension_fk(){ return SchemaConstant::EXTENSION_FOREIGN_KEY; }
+
+/**
+ * Return Check Text
+ *
+ * @return string
+ */
+function check(){ return SchemaConstant::CHECK; }
+
+/**
+ * Return Pay To Text
+ *
+ * @return string
+ */
+function pay_to(){ return SchemaConstant::PAY_TO; }
+
 
 /**
  * Return Module Name Text

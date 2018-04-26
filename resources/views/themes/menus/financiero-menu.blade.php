@@ -182,5 +182,23 @@
                 </ul>
             </li>
         @endpermission
+        {{--
+        @permission( $permission_petty_cash )
+            <li class="nav-item {{ active(['financial.admin.*'], 'start active open') }}">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="title">Caja Menor</span>
+                </a>
+            </li>
+        @endpermission
+        --}}
+        @permission( $permission_checks )
+            <li class="nav-item {{ active(['financial.money.checks.*'], 'start active open') }}">
+                <a href="{{ route('financial.money.checks.index') }}" class="nav-link nav-toggle">
+                    <i class="fa fa-money"></i>
+                    <span class="title">Cheques</span>
+                </a>
+            </li>
+        @endpermission
     </ul>
 </li>

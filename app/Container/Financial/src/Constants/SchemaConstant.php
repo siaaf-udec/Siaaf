@@ -19,6 +19,7 @@ class SchemaConstant
     /*
      * Index table name
      */
+    const CHECKS                    = 'checks';
     const AVAILABLE_MODULES         = 'available_modules';
     const INTERSEMESTRAL_STUDENT    = 'intersemestral_students';
     const INTERSEMESTRAL            = 'intersemestrals';
@@ -52,11 +53,11 @@ class SchemaConstant
      * Table Fields
      */
     const STATUS            = 'status';
-
     const MODULE_NAME       = 'module_name';
     const AVAILABLE_FROM    = 'available_from';
     const AVAILABLE_UNTIL   = 'available_until';
-
+    const CHECK             = 'check';
+    const PAY_TO            = 'pay_to';
     const COST              = 'cost';
     const PAID              = 'paid';
     const COST_SERVICE_NAME = 'cost_service_name';

@@ -225,6 +225,22 @@ class RolePermissionFinancialTableSeeder extends Seeder
         $intersemestral_approval->module_id    =  $module->id;
         $intersemestral_approval->save();
 
+        $permission = ConstantPermissions::getModulePermission( 'petty_cash' );
+        $petty_cash = new Permission;
+        $petty_cash->name         = $permission['name'];
+        $petty_cash->display_name = $permission['display_name'];
+        $petty_cash->description  = $permission['description'];
+        $petty_cash->module_id    =  $module->id;
+        $petty_cash->save();
+
+        $permission = ConstantPermissions::getModulePermission( 'checks' );
+        $checks = new Permission;
+        $checks->name         = $permission['name'];
+        $checks->display_name = $permission['display_name'];
+        $checks->description  = $permission['description'];
+        $checks->module_id    =  $module->id;
+        $checks->save();
+
         /*
          * Root permissions
          */
@@ -254,6 +270,9 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $validation_approval,
             $add_sub_approval,
             $intersemestral_approval,
+            //
+            $petty_cash,
+            $checks
         ];
 
         /*
@@ -278,6 +297,9 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $validation_approval,
             $add_sub_approval,
             $intersemestral_approval,
+            //
+            $petty_cash,
+            $checks
         ];
 
         /*

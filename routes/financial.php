@@ -92,11 +92,24 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
         });
     });
 
-    Route::namespace('Cash')->prefix('caja-menor')->group( function () {
-        Route::get('', [
+    Route::namespace('Cash')->prefix('dineros')->group( function () {
+
+        Route::middleware([ 'permission:'.permission_petty_cash() ])->get('caja-menor', [
             'as'    => 'financial.cash.index',
             'uses'  => 'PettyCashController@index'
         ]);
+
+        Route::middleware([ 'permission:'.permission_checks() ])->resource('cheques', 'CheckController', [
+            'except'    =>  ['create', 'edit', 'show'],
+            'names' => [
+                'index'  => 'financial.money.checks.index',
+                'store'  => 'financial.money.checks.store',
+                'update' => 'financial.money.checks.update',
+                'destroy'=> 'financial.money.checks.destroy',
+            ],
+            'parameters' => ['cheques' => 'id']
+        ]);
+
     });
 
     Route::namespace('Approval')->prefix('administrativo')->group( function () {
@@ -240,9 +253,9 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
     });
 
     /*
-     * Financial API
+     * Financial API ->middleware(['api.ajax'])
      */
-    Route::namespace('Api')->middleware(['api.ajax'])->prefix('api')->group( function () {
+    Route::namespace('Api')->prefix('api')->group( function () {
 
         Route::prefix('options')->group( function () {
             Route::prefix('programs')->group( function () {
@@ -298,6 +311,9 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
                 ->name('financial.api.datatables.cost');
             Route::get('file-types', 'FileTypeController@datatable')
                 ->name('financial.api.datatables.file-type');
+
+            Route::middleware([ 'permission:'.permission_checks() ])->get('checks', 'CheckController@datatable')
+                ->name('financial.api.datatables.checks');
         });
 
         Route::prefix('comments')->group( function () {
@@ -417,7 +433,7 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
             })->name('financial.api.user.auth');
         });
 
-        Route::prefix('available-modules')->group( function () {
+        Route::middleware([ 'permission:'.permission_available_module() ])->prefix('available-modules')->group( function () {
             Route::get('', 'AvailableModuleController@modules')
                     ->name('financial.api.available.modules');
         });

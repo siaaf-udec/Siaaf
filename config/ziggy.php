@@ -88,7 +88,11 @@ return [
         //Approve Intersemestral
         'financial.admin.approval.intersemestral.store',
         'financial.admin.approval.intersemestral.update',
-
+        //Checks
+        'financial.money.checks.index',
+        'financial.money.checks.store',
+        'financial.money.checks.update',
+        'financial.money.checks.destroy',
         //Api
         'financial.api.*',
     ],
