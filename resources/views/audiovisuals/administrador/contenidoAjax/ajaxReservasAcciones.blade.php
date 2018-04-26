@@ -127,7 +127,7 @@
                             @permission('AUDI_REQUESTS_CREATE_ASSENT')
                             {!! Form::button('Continuar', ['class' => 'btn blue','id'=>'aplicarSancion']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            @endpersmission
+                            @endpermission
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -390,7 +390,6 @@
                     }
                 }
             });
-
         });
         $('#contentFormularioPrestamos').on('click', '.aplicar_sancion', function(){
             idSolicitud = $(this).data('id_sancion');
@@ -467,7 +466,6 @@
                 $(element)
                     .closest('.form-group').removeClass('has-error'); // set error class to the control group
             },
-
             success: function (label) {
                 label
                     .closest('.form-group').removeClass('has-error'); // set success class to the control group

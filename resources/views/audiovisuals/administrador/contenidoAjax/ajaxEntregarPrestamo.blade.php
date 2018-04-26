@@ -300,6 +300,7 @@
             </div>
         </div>
     </div>
+
     @endcomponent
 
 <script type="text/javascript">

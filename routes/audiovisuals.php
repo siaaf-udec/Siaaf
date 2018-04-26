@@ -314,7 +314,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AdministradorGestionController@dataSancionesListar',
             'as' => 'listarSancionesSolicitudesFinalizadas.dataTable',       //ruta que conduce al controlador donde lista las sanciones asignadas
         ]);//-
-        Route::post('anularSancionR',['middleware' => ['permission:AUDI_MODULE'],
+        Route::post('anularSancionR/{accion?}/{id_sancion?}',['middleware' => ['permission:AUDI_MODULE'],
             'uses' => $controller . 'AdministradorGestionController@anularSancion',
             'as' => 'audiovisuales.anular.sancion',                                       //ruta que conduce al controlador para anular la sancion(es)
         ]);//-

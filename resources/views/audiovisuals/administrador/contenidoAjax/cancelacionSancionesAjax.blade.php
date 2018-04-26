@@ -6,6 +6,7 @@
             @foreach($sanciones as $tipoSancion)
                 <div class="container-fluid fila_articulo" data-id_sancion={{$tipoSancion['sancion']['id']}}>
                     <div class="row">
+                        @if($articulo == true)
                         <div class="col-md-3">
                             <br>
                             <br><br>
@@ -21,6 +22,23 @@
                                 ['help' => 'codigo del articulo', 'icon' => 'fa fa-quote-right'])
                             !!}
                         </div>
+                        @else
+                            <div class="col-md-3">
+                                <br>
+                                <br><br>
+                                {!! Field::text('nombre',$tipoSancion['relacion'][0]['KIT_Nombre'],
+                                     ['label' => 'Nombre Kit', 'required', 'auto' => 'off', 'max' => '255','disabled'],
+                                     ['icon' => 'fa fa-hourglass-half'])
+                                !!}
+                            </div>
+                            <div class="col-md-3">
+                                <br><br><br>
+                                {!! Field::text('codigo',$tipoSancion['relacion'][0]['KIT_Codigo'],
+                                    ['disabled','label' => 'Codigo', 'required', 'auto' => 'off', 'max' => '255'],
+                                    ['help' => 'codigo del Kit', 'icon' => 'fa fa-quote-right'])
+                                !!}
+                            </div>
+                        @endif
                         <div class="col-md-4">
                             {!! Field::textarea('observacion',$tipoSancion['sancion']['SNS_Descripcion'],
                                 ['disabled','label' => 'Observacion', 'required', 'auto' => 'off', 'max' => '255', "rows" => '4'],
@@ -56,7 +74,7 @@
 </div>
 @endcomponent
 <script type="text/javascript">
-    var contador = JSON.stringify({{$contador}});
+    var contador = parseInt(JSON.stringify({{$contador}}));
     var idTblSancion;
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
@@ -71,33 +89,12 @@
             }
         };
     }();
-    var handleiCheck = function() {
-        if (!$().iCheck) {
-            return;
-        }
-        $('.icheck').each(function() {
-            var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-grey';
-            var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-grey';
-
-            if (checkboxClass.indexOf('_line') > -1 || radioClass.indexOf('_line') > -1) {
-                $(this).iCheck({
-                    checkboxClass: checkboxClass,
-                    radioClass: radioClass,
-                    insert: '<div class="icheck_line-icon"></div>' + $(this).attr("data-label")
-                });
-            } else {
-                $(this).iCheck({
-                    checkboxClass: checkboxClass,
-                    radioClass: radioClass
-                });
-            }
-        });
-    };
     jQuery(document).ready(function () {
-        handleiCheck();
+
         App.unblockUI('.portlet-form');
         $('#contentFormularioPrestamos').on('click', '.anular_sancion', function(){
             idTblSancion = $(this).data('id_sancion');
+            console.log('idSancion'+ idTblSancion);
             swal(
                 {
                     title: "Desea anular la sancion",
@@ -112,12 +109,13 @@
                 function(isConfirm){
                     if (isConfirm) {
                         contador--;
-                        var route = '{{ route('audiovisuales.anular.sancion') }}';
-                        var formDatas = new FormData();
-                        var typeAjax = 'POST';
-                        var async = async || false;
-                        formDatas.append('id_Sancion',idTblSancion);
+                        console.log(contador);
                         if(contador != 0){
+                            var route = '{{ route('audiovisuales.anular.sancion') }}'+'/'+'anulacionIndividual'+'/'+idTblSancion;
+                            var formDatas = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            formDatas.append('id_Sancion',idTblSancion);
                             formDatas.append('accion','anulacionIndividual');
                             $.ajax({
                                 url: route,
@@ -143,14 +141,23 @@
                                 }
                             });
                         }else{
-                            formDatas.append('accion','anulacionFinal');
+                            var route = '{{ route('audiovisuales.anular.sancion') }}'+'/'+'anulacionFinal'+'/'+idTblSancion;
+                            var formDatas = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            var formDatas2 = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            formDatas2.append('id_Sancion',idTblSancion);
+                            formDatas2.append('accion','anulacionFinal');
+                            console.log('idSancionFinal '+idTblSancion);
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                                 cache: false,
                                 type: typeAjax,
                                 contentType: false,
-                                data: formDatas,
+                                data: formDatas2,
                                 processData: false,
                                 async: async,
                                 beforeSend: function () {

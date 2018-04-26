@@ -42,7 +42,6 @@
             <div class="clearfix"></div>
         @endcomponent
     </div>
-    </br>
 @endsection
 @push('plugins')
     <!-- SCRIPT Confirmacion Sweetalert -->
@@ -82,7 +81,7 @@
     </script>
 @endpush
 @push('functions')
-    <script src="{{ asset('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
+
     <!-- Estandar Validacion -->
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript">
     </script>
@@ -114,9 +113,10 @@
                 },name:'Administrador Entrega'},
                 {data: 'SNS_Fecha', name: 'SNS_Fecha'},
                 {
+
                     defaultContent:
-                            '@permission("AUDI_CANCEL_SANCTION")<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>@endpersmission' +
-                            '@permission("AUDI_VIEW_SANCTION")<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>@endpersmission',
+                            '@permission("AUDI_CANCEL_SANCTION")<a title="Anular sancion" href="javascript:;" class="btn btn-simple btn-danger btn-icon anular"><i class="icon-trash"></i></a>@endpermission' +
+                            '@permission("AUDI_VIEW_SANCTION")<a title="Ver Sancion" href="javascript:;" class="btn btn-simple btn-success btn-icon ver"><i class="icon-eye"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -135,7 +135,6 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                console.log(dataTable);
                 swal(
                     {
                         title: "Anular Sanciones",
@@ -150,7 +149,7 @@
                     },
                     function(isConfirm){
                         if (isConfirm) {
-                            var route = '{{ route('audiovisuales.anular.sancion') }}';
+                            var route = '{{ route('audiovisuales.anular.sancion') }}'+'/'+'anulacionGeneral'+'/'+dataTable.id;
                             var formDatas = new FormData();
                             var typeAjax = 'POST';
                             var async = async || false;
@@ -191,8 +190,8 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('audiovisuales.listar.sanciones.asignadas.gestion') }}'+'/'+dataTable.SNS_Numero_Orden;
-                $(".content-ajax").load(route);
+                var router = '{{ route('audiovisuales.listar.sanciones.asignadas.gestion') }}'+'/'+ dataTable.SNS_Numero_Orden;
+                $(".content-ajax").load(router);
             });
         });
     </script>
