@@ -14,7 +14,7 @@
                             
                             {!! Field::select('FK_TBL_Estado_Id',$estado,$convenio->FK_TBL_Estado_Id,[ 'label' => 'Selecciona un estado'])!!}
                         
-                            {!! Field::select('FK_TBL_Sede_Id',$sede,$convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede,'required'
+                            {!! Field::select('FK_TBL_Sede_Id',$sede,$convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede','required'])!!}
                         <div class="form-actions">
                               <div class="row">
                                 <div class="col-md-12 col-md-offset-0">

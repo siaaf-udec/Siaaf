@@ -16,7 +16,7 @@
                     {{ $row->PRGT_Enunciado}}
                 </div>
                 {!! Field::hidden('Pregunta_'.$N1, $row->PK_PRGT_Pregunta) !!}
-                {!! Field::select('Respuesta_'.$N1,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente','required'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
+                {!! Field::select('Respuesta_'.$N1,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente','required'],[ 'label' => 'Selecciona una opcion de respuesta'])!!}
             @endforeach
             {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
             {{ Form::reset('Cancelar', ['class' => 'btn btn-danger atras']) }}
@@ -39,7 +39,7 @@
                     {{ $row->PRGT_Enunciado}}
                 </div>
                 {!! Field::hidden('2Pregunta_'.$N2, $row->PK_PRGT_Pregunta) !!}
-                {!! Field::select('2Respuesta_'.$N2,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente','required'],[ 'label' => 'Selecciona una opcion de respuesta','required'])!!}
+                {!! Field::select('2Respuesta_'.$N2,['1' => 'Deficiente', '2' => 'Insuficiente','3' => 'Aceptable', '4' =>'Sobresaliente','5' => 'Excelente','required'],[ 'label' => 'Selecciona una opcion de respuesta'])!!}
             @endforeach
             {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
             {{ Form::reset('Cancelar', ['class' => 'btn btn-danger atras']) }}

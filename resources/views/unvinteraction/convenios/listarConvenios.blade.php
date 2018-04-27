@@ -52,7 +52,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
+                    <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR CONVENIO</h1>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Convenio']) !!}
