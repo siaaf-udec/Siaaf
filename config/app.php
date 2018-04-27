@@ -233,6 +233,7 @@ return [
         App\Container\Financial\src\Providers\FinancialFileTypeServiceProvider::class,
         App\Container\Financial\src\Providers\FinancialFileServiceProvider::class,
         App\Container\Financial\src\Providers\FinancialCheckServiceProvider::class,
+        App\Container\Financial\src\Providers\FinancialCashServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 

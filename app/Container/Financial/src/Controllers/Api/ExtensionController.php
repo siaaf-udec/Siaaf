@@ -75,9 +75,9 @@ class ExtensionController extends Controller
             'secretary:id,name,lastname',
             'student:id,name,lastname,phone,email',
         ];
-        if ( auth()->user()->hasRole( student_role() ) ) {
+        if ( auth()->user()->hasRole( student_role() ) || auth()->user()->can( permission_extension() ) ) {
             $extension = $this->extensionRepository->getAuth( $relation, $id );
-        } else if ( auth()->user()->hasRole( access_roles() ) ) {
+        } else if ( auth()->user()->hasRole( access_roles() ) || auth()->user()->can( permission_extension_approval() ) ) {
             $extension = $this->extensionRepository->get( $relation, $id );
         }
 

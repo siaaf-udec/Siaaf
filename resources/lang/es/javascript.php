@@ -41,9 +41,14 @@ return [
     'updated_done'  => 'Se ha actualizado satisfactoriamente.',
     'updated_fail'  => 'No se pudo actualizar, intenta de nuevo.',
 
+    'updated_fail_status'  => 'No se puede modificar un estado por defecto de la plataforma.',
+
     'ask_if_delete' => '¿Desea eliminar los datos seleccionados?',
     'deleted_done'  => 'Se ha eliminado satisfactoriamente.',
     'deleted_fail'  => 'No se pudo eliminar, intenta de nuevo.',
+
+    'deleted_fail_status'  => 'No se puede eliminar el registro por que ha sido entregado.',
+    'destroy_fail_status'  => 'No se puede eliminar un estado por defecto de la plataforma.',
 
     'ask_if_unsubscribe'=> '¿Desea desinscribirse de esta solicitud?',
     'unsubscribe_done'  => 'Se ha desinscrito satisfactoriamente.',

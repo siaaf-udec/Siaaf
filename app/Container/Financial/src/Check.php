@@ -45,7 +45,16 @@ class Check extends Model
         SchemaConstant::CHECK,
         SchemaConstant::PAY_TO,
         SchemaConstant::STATUS,
+        SchemaConstant::DELIVERED_AT,
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [ SchemaConstant::DELETED_AT, SchemaConstant::DELIVERED_AT ];
+
 
     /**
      * The accessors to append to the model's array form.

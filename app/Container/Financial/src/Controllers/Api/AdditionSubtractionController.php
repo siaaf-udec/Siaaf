@@ -80,13 +80,13 @@ class AdditionSubtractionController extends Controller
             'secretary:id,name,lastname,phone,email',
             'student:id,name,lastname,phone,email',
         ];
-        if ( auth()->user()->hasRole( student_role() ) ) {
+        if ( auth()->user()->hasRole( student_role() ) || auth()->user()->can( permission_add_sub() ) ) {
             $additionSubtraction = $this->addSubRepository->getAuth( $relation, $id );
-        } else if ( auth()->user()->hasRole( access_roles() ) ) {
+        } else if ( auth()->user()->hasRole( access_roles() ) || auth()->user()->can( permission_add_sub_approval() ) ) {
             $additionSubtraction = $this->addSubRepository->get( $relation, $id );
         }
 
-        $array[] = $additionSubtraction;
+        $array[] = isset($additionSubtraction) ? $additionSubtraction : [];
 
         return DataTables::of( $array )
                         ->setTransformer( new AdditionSubtractionDataTableTransformer )

@@ -32,6 +32,17 @@ class CheckRepository extends Methods implements FinancialCheckInterface
     }
 
     /**
+     * Check if status is delivered
+     *
+     * @param $id
+     * @return bool
+     */
+    public function checkStatus($id )
+    {
+        return $this->getModel()->find( $id )->{ status() } === Check::DELIVERED;
+    }
+
+    /**
      * Store data in database
      *
      * @param $model

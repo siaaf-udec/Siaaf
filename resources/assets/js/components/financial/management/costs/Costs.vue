@@ -25,7 +25,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <vue-select2 :label="formCost.serviceName.label"
-                                                         v-model="formCost.serviceName.value"
+                                                         v-model.trim="formCost.serviceName.value"
                                                          :value="formCost.serviceName.value"
                                                          :attributes="formCost.serviceName.attributes"
                                                          :options="formCost.serviceName.options"

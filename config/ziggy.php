@@ -93,6 +93,11 @@ return [
         'financial.money.checks.store',
         'financial.money.checks.update',
         'financial.money.checks.destroy',
+        //Petty Cash
+        'financial.money.cash.index',
+        'financial.money.cash.store',
+        'financial.money.cash.update',
+        'financial.money.cash.destroy',
         //Api
         'financial.api.*',
     ],

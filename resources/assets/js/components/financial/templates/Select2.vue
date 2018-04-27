@@ -6,6 +6,7 @@
                     :required="attributes.required"
                     :disabled="attributes.disabled"
                     ref="select2Input"
+                    :id="name"
                     :name="name">
                 <option value="" selected="selected" v-text="option"></option>
                 <slot></slot>

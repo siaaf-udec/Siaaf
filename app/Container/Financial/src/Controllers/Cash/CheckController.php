@@ -68,6 +68,9 @@ class CheckController extends Controller
      */
     public function destroy($id)
     {
+        if ( $this->checkRepository->checkStatus( $id ) ) {
+            return jsonResponse('error', 'deleted_fail_status', 422);
+        }
         return ( $this->checkRepository->destroy( $id ) ) ?
             jsonResponse('success', 'deleted_done', 200) :
             jsonResponse('error', 'deleted_fail', 422);

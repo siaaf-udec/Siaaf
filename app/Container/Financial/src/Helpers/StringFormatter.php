@@ -13,12 +13,12 @@ class StringFormatter
      */
     public static function toUpper( $string = null )
     {
-        return mb_convert_case( strtolower( trim( $string ) ), MB_CASE_UPPER, 'UTF-8');
+        return mb_convert_case( strtolower( trim( strip_tags( $string ) ) ), MB_CASE_UPPER, 'UTF-8');
     }
 
     public static function toMoney( $currency = 0 )
     {
-        return '$ '.number_format($currency, 2, ',', '.');
+        return '$ '.number_format( strip_tags( $currency ), 2, ',', '.');
     }
 
     public static function htmlAttributes( $attributes )

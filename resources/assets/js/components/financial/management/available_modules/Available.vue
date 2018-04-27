@@ -11,7 +11,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <vue-select2 :label="formAvailable.module_name.label"
-                                                             v-model="formAvailable.module_name.value"
+                                                             v-model.trim="formAvailable.module_name.value"
                                                              :value="formAvailable.module_name.value"
                                                              :attributes="formAvailable.module_name.attributes"
                                                              :options="formAvailable.module_name.options"
@@ -224,25 +224,27 @@
                 }
             },
             setAvailable: function () {
-                let data = {
-                    module_name:    this.formAvailable.module_name.value,
-                    available_from: this.formAvailable.available_from.value,
-                    available_until:    this.formAvailable.available_until.value,
-                };
-                this.vueLoading();
-                axios.post( route('financial.management.available.modules.store'), qs.stringify( data ) )
-                    .then((response) => {
-                        swal.close();
-                        this.setNull();
-                        this.triggerSwal( response );
-                    })
-                    .then(() => {
-                        this.getSources();
-                    })
-                    .catch((error) => {
-                        swal.close();
-                        this.triggerSwal( error );
-                    })
+                if ($( this.$refs.form_modules ).valid()) {
+                    let data = {
+                        module_name:    this.formAvailable.module_name.value,
+                        available_from: this.formAvailable.available_from.value,
+                        available_until:    this.formAvailable.available_until.value,
+                    };
+                    this.vueLoading();
+                    axios.post( route('financial.management.available.modules.store'), qs.stringify( data ) )
+                        .then((response) => {
+                            swal.close();
+                            this.setNull();
+                            this.triggerSwal( response );
+                        })
+                        .then(() => {
+                            this.getSources();
+                        })
+                        .catch((error) => {
+                            swal.close();
+                            this.triggerSwal( error );
+                        })
+                }
             },
             getSources: function () {
                 axios.get( route('financial.api.available.modules') )

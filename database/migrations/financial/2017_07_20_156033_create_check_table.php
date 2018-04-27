@@ -23,6 +23,8 @@ class CreateCheckTable extends Migration
                     ->comment('Campo que contiene el nombre de la persona a quien pertenece el cheque.');
             $table->unsignedTinyInteger( SchemaConstant::STATUS )
                     ->comment('Campo que contiene el estado del cheque si es entregado o no.');
+            $table->dateTime( SchemaConstant::DELIVERED_AT )->nullable()
+                    ->comment('Campo que contiene la fecha de entrega del cheque.');
             $table->timestamps();
             $table->softDeletes();
         });

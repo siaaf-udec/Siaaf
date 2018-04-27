@@ -129,19 +129,21 @@
                     .catch( (error) => { this.triggerSwal(error); })
             },
             editRequest: function () {
-                this.vueLoading();
-                axios.put( route('financial.requests.student.extension.update', { id: $('#app').data('source') } ) , {
-                    subject_matter: this.subject,
-                    program: this.program,
-                    teacher: this.teacher,
-                } )
-                    .then( (response) => {
-                        this.setNull();
-                        this.triggerSwal( response );
-                    })
-                    .catch( (error) => {
-                        this.triggerSwal( error );
-                    })
+                if ($('#financial-form-request').valid()) {
+                    this.vueLoading();
+                    axios.put( route('financial.requests.student.extension.update', { id: $('#app').data('source') } ) , {
+                        subject_matter: this.subject,
+                        program: this.program,
+                        teacher: this.teacher,
+                    } )
+                        .then( (response) => {
+                            this.setNull();
+                            this.triggerSwal( response );
+                        })
+                        .catch( (error) => {
+                            this.triggerSwal( error );
+                        })
+                }
             },
             setNull: function () {
                 this.subject = null;

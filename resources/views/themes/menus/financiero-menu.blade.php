@@ -184,8 +184,8 @@
         @endpermission
         {{--
         @permission( $permission_petty_cash )
-            <li class="nav-item {{ active(['financial.admin.*'], 'start active open') }}">
-                <a href="javascript:;" class="nav-link nav-toggle">
+            <li class="nav-item {{ active(['financial.money.cash.*'], 'start active open') }}">
+                <a href="{{ route('financial.money.cash.index') }}" class="nav-link nav-toggle">
                     <i class="fa fa-bell-o"></i>
                     <span class="title">Caja Menor</span>
                 </a>

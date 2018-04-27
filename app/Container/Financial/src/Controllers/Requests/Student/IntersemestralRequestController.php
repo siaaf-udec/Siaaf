@@ -20,7 +20,7 @@ class IntersemestralRequestController extends Controller
      */
     public function __construct(IntersemestralRepository $intersemestralRepository)
     {
-        $this->middleware( 'request.status:'.status_type_intersemestral(), ['only' => ['edit'] ] );
+        //$this->middleware( 'request.status:'.status_type_intersemestral(), ['only' => ['edit'] ] );
         $this->middleware( 'check.available:'.status_type_intersemestral(), ['only' => ['create', 'store', 'edit', 'update', 'destroy'] ] );
         $this->intersemestralRepository = $intersemestralRepository;
     }

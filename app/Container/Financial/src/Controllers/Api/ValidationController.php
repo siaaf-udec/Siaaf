@@ -81,13 +81,13 @@ class ValidationController extends Controller
             'secretary:id,name,lastname',
             'student:id,name,lastname,phone,email',
         ];
-        if ( auth()->user()->hasRole( student_role() ) ) {
+        if ( auth()->user()->hasRole( student_role() ) || auth()->user()->can( permission_validation() )) {
             $model = $this->validationRepository->getAuth( $relation, $id );
-        } else if ( auth()->user()->hasRole( access_roles() ) ) {
+        } else if ( auth()->user()->hasRole( access_roles() ) || auth()->user()->can( permission_validation_approval() ) ) {
             $model = $this->validationRepository->get( $relation, $id );
         }
 
-        $array[] = $model;
+        $array[] = isset($model) ? $model : [];
 
         return DataTables::of( $array )
                         ->setTransformer( new ValidationTransformer )

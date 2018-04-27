@@ -64,6 +64,20 @@
                                 </vue-select2>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="delivered_at"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="formCheck.delivered_at.value"
+                                           :value="formCheck.delivered_at.value"
+                                           :help="formCheck.delivered_at.help"
+                                           :hasError="formCheck.delivered_at.hasError"
+                                           :errors="formCheck.delivered_at.errors"
+                                           :attributes="formCheck.delivered_at.attributes"
+                                           :label="formCheck.delivered_at.label">
+                                </vue-input>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
@@ -82,7 +96,7 @@
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <vue-input name="check"
+                                <vue-input name="check_update"
                                            type="text"
                                            icon="fa fa-money"
                                            v-model.trim="formCheck.check.value"
@@ -97,7 +111,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <vue-input name="pay_to"
+                                <vue-input name="pay_to_update"
                                            icon="fa fa-user"
                                            v-model.trim="formCheck.pay_to.value"
                                            :value="formCheck.pay_to.value"
@@ -116,8 +130,22 @@
                                              :value="formCheck.status.value"
                                              :attributes="formCheck.status.attributes"
                                              :options="formCheck.status.options"
-                                             name="status">
+                                             name="status_update">
                                 </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="delivered_at_update"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="formCheck.delivered_at.value"
+                                           :value="formCheck.delivered_at.value"
+                                           :help="formCheck.delivered_at.help"
+                                           :hasError="formCheck.delivered_at.hasError"
+                                           :errors="formCheck.delivered_at.errors"
+                                           :attributes="formCheck.delivered_at.attributes"
+                                           :label="formCheck.delivered_at.label">
+                                </vue-input>
                             </div>
                         </div>
                     </div>
@@ -145,10 +173,11 @@
     import {mixinValidator} from "../../../mixins/validation";
     import {mixinSelect2} from "../../../mixins/select2";
     import {mixinLoading} from "../../../mixins/loadingswal";
+    import {mixinDate} from "../../../mixins/datepicker";
 
     export default {
         name: "check",
-        mixins: [mixinMomentLocale, mixinHttpStatus, mixinDataTable, mixinTootilps, mixinValidator, mixinSelect2, mixinLoading],
+        mixins: [mixinMomentLocale, mixinHttpStatus, mixinDataTable, mixinTootilps, mixinValidator, mixinSelect2, mixinLoading, mixinDate],
         data: () => {
             return {
                 portlet: {
@@ -162,6 +191,7 @@
                         {name: Lang.get('financial.generic.table.check'), class: ''},
                         {name: Lang.get('financial.generic.table.pay_to'), class: ''},
                         {name: Lang.get('financial.generic.table.status_name'), class: ''},
+                        {name: Lang.get('financial.generic.table.delivered_at'), class: ''},
                         {name: Lang.get('financial.generic.table.created_at'), class: ''},
                         {name: Lang.get('financial.generic.table.actions'), class: ''},
                     ],
@@ -171,6 +201,11 @@
                         { data: 'check',        name: 'check' },
                         { data: 'pay_to',       name: 'pay_to' },
                         { data: 'status_label', name: 'status_label' },
+                        { data: 'delivered_at',   name: 'delivered_at',
+                            render: function ( data, type, row ) {
+                                return data ? moment(data).format('ll') : null;
+                            }
+                        },
                         { data: 'created_at',   name: 'created_at',
                             render: function ( data, type, row ) {
                                 return data ? moment(data).format('ll') : null;
@@ -218,6 +253,19 @@
                             disabled: false,
                         }
                     },
+                    delivered_at: {
+                        value: null,
+                        help: Lang.get('financial.help-text.delivered_at'),
+                        label: Lang.get('validation.attributes.delivered_at').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: false,
+                            autocomplete: 'off',
+                            class: 'date date-picker',
+                            readonly: true,
+                        }
+                    }
                 },
                 buttons: {
                     send: Lang.get('financial.buttons.send'),
@@ -229,6 +277,7 @@
         mounted: function() {
             this.initDatatable();
             this.initFormValidation();
+            this.handleDatePicker();
         },
         methods: {
             initDatatable: function () {
@@ -250,8 +299,33 @@
                 this.deleteCheck( table );
             },
             initFormValidation: function() {
-                $('#form-check').validate();
-                $('#form-check-update').validate();
+                let that = this;
+                $('#form-check').validate({
+                    rules: {
+                        delivered_at: {
+                            required: function( element ) { return ( that.formCheck.status.value === '2') },
+                            date: true
+                        }
+                    }
+                });
+                $('#form-check-update').validate({
+                    rules: {
+                        delivered_at_update: {
+                            required: function( element ) { return ( that.formCheck.status.value === '2') },
+                            date: true
+                        }
+                    }
+                });
+            },
+            handleDatePicker: function() {
+                let that = this;
+                if (jQuery().datepicker) {
+                    $('.date-picker').datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        that.formCheck.delivered_at.value = this.value;
+                    });
+                }
             },
             createCheck: function () {
                 if ( $('#form-check').valid() ) {
@@ -261,6 +335,7 @@
                         check: this.formCheck.check.value,
                         pay_to: this.formCheck.pay_to.value,
                         status: this.formCheck.status.value,
+                        delivered_at: this.formCheck.delivered_at.value,
                     };
                     axios.post( route('financial.money.checks.store'), qs.stringify( data ) )
                         .then( (response) => {
@@ -292,6 +367,7 @@
                     that.formCheck.check.value  = data.check;
                     that.formCheck.pay_to.value = data.pay_to;
                     that.formCheck.status.value = data.status;
+                    that.formCheck.delivered_at.value = data.delivered_at;
                     $modal.modal('show');
                 });
             },
@@ -304,6 +380,7 @@
                         check: this.formCheck.check.value,
                         pay_to: this.formCheck.pay_to.value,
                         status: this.formCheck.status.value,
+                        delivered_at: this.formCheck.delivered_at.value,
                     };
                     axios.put( route('financial.money.checks.update', { id: this.id }), put )
                         .then( (response) => {

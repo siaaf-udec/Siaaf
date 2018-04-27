@@ -55,9 +55,13 @@ class ManageStatusController extends Controller
      */
     public function update(StoreStatusRequestsRequest $request, $id)
     {
-        return ( $this->statusRequestRepository->update( $request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        $status = $this->statusRequestRepository->getModel()->find( $id );
+        if ( isset( $status->{ status_name() } ) && isEditableStatus( $status->{ status_name() }  ) ) {
+            return ( $this->statusRequestRepository->update( $request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+        }
+        return jsonResponse('error', 'updated_fail_status', 422);
     }
 
     /**
@@ -68,8 +72,13 @@ class ManageStatusController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->statusRequestRepository->destroy($id) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        $status = $this->statusRequestRepository->getModel()->find( $id );
+        if ( isset( $status->{ status_name() } ) && isEditableStatus( $status->{ status_name() }  ) ) {
+            return ($this->statusRequestRepository->destroy($id)) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
+        }
+
+        return jsonResponse('error', 'destroy_fail_status', 422);
     }
 }

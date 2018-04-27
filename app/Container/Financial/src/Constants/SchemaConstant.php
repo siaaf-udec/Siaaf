@@ -19,6 +19,7 @@ class SchemaConstant
     /*
      * Index table name
      */
+    const PETTY_CASH                = 'petty_cash';
     const CHECKS                    = 'checks';
     const AVAILABLE_MODULES         = 'available_modules';
     const INTERSEMESTRAL_STUDENT    = 'intersemestral_students';
@@ -52,6 +53,8 @@ class SchemaConstant
     /*
      * Table Fields
      */
+    const CONCEPT           = 'concept';
+    const SUPPORT           = 'support';
     const STATUS            = 'status';
     const MODULE_NAME       = 'module_name';
     const AVAILABLE_FROM    = 'available_from';
@@ -80,6 +83,7 @@ class SchemaConstant
     const CREATED_AT        = 'created_at';
     const UPDATED_AT        = 'updated_at';
     const DELETED_AT        = 'deleted_at';
+    const DELIVERED_AT      = 'delivered_at';
 
     /**
      * Retrieve full table name with connection name,

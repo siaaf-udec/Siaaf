@@ -20,6 +20,7 @@ class CheckTransformer extends TransformerAbstract
             'status_label'  =>  isset( $check->{ 'status_label' } ) ? $check->{ 'status_label' } : null,
             'created_at'    =>  isset( $check->{ created_at() } ) ? $check->{ created_at() }->format('Y-m-d H:i:s') : null,
             'updated_at'    =>  isset( $check->{ updated_at() } ) ? $check->{ updated_at() }->format('Y-m-d H:i:s') : null,
+            'delivered_at'  =>  isset( $check->{ delivered_at() } ) ? $check->{ delivered_at() }->format('Y-m-d H:i:s') : null,
             'deleted_at'    =>  isset( $check->{ deleted_at() } ) ? $check->{ deleted_at() }->format('Y-m-d H:i:s') : null,
             'actions'       =>  $this->getActions( $check )
         ];

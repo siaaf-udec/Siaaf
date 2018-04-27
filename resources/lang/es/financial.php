@@ -223,6 +223,14 @@ return [
         ],
     ],
 
+    'cash'    =>  [
+        'title'             =>  ' | Caja Menor',
+        'index'             => [
+            'title'         => 'Caja Menor',
+            'description'   => 'registro de estradas y salidas de dinero.',
+        ],
+    ],
+
     'intersemestral'    =>  [
         'title'             =>  ' | Intersemestral',
         'index'             => [
@@ -266,37 +274,32 @@ return [
         'requests_data'         =>  'Datos de la Solicitud',
         'table'                 =>  [
             'id'                =>  '#',
-
             'subscribed'        =>  'Inscritos',
             'paid_bar'          =>  'Pagado',
             'pay_to'            =>  'Pagar a',
             'check'             =>  'Cheque',
-
+            'concept'           =>  'Concepto',
+            'support'           =>  'Soporte',
             'paid'              =>  'Estado del pago',
-
             'subject_action'    =>  'Adición/Cancelación',
             'subject_code'      =>  'Código Materia',
             'subject_name'      =>  'Nombre Materia',
             'subject_credits'   =>  'Créditos',
-
             'program_name'      =>  'Programa',
             'status_name'       =>  'Estado',
-
             'teacher_name'      =>  'Docente',
             'secretary_name'    =>  'Aprobado por',
             'student_name'      =>  'Estudiante',
             'phone'             =>  'Teléfono',
             'email'             =>  'E-mail',
-
             'cost'              =>  'Costo Unitario',
             'total_cost'        =>  'Costo Total',
-
             'approval_date'     =>  'Fecha de Aprobación',
             'realization_date'  =>  'Fecha de Realización',
             'created_at'        =>  'Fecha de Solicitud',
             'updated_at'        =>  'Fecha de Actualización',
             'deleted_at'        =>  'Fecha de Eliminación',
-
+            'delivered_at'      =>  'Fecha de Entrega',
             'actions'           =>  'Acciones',
         ]
     ],
@@ -309,10 +312,13 @@ return [
     'help-text'     =>  [
         'check'             =>  'Escribe el número del cheque aquí.',
         'pay_to'            =>  'Escribe el nombre a quien se dirige cheque aquí.',
+        'concept'           =>  'Escribe el concepto de la transacción.',
+        'support'           =>  'Añade un archivo de soporte aquí.',
         'program'           =>  'Escribe el nombre del programa aquí.',
         'cost'              =>  'Escribe el costo aquí.',
         'valid_until'       =>  'Escribe la fecha válida hasta.',
         'valid_from'        =>  'Escribe la fecha válida desde.',
+        'delivered_at'      =>  'Escribe la fecha válida de entrega.',
         'status'            =>  'Escribe el nombre del estado aquí.',
         'subject'           =>  'Escribe el nombre de la materia aquí.',
         'code'              =>  'Escribe el código de la materia aquí.',

@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Constants;
 
 
 use App\Container\Financial\src\Check;
+use App\Container\Financial\src\PettyCash;
 
 class ConstantLabelClasses
 {
@@ -54,6 +55,12 @@ class ConstantLabelClasses
                 return self::DANGER_CLASS;
                 break;
             case Check::DELIVERED :
+                return self::SUCCESS_CLASS;
+                break;
+            case PettyCash::OUT :
+                return self::DANGER_CLASS;
+                break;
+            case PettyCash::IN :
                 return self::SUCCESS_CLASS;
                 break;
             default:

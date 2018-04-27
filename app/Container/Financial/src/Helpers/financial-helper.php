@@ -673,6 +673,27 @@ function isEditable ($status ) {
     }
     return true;
 }
+/**
+ * Check if status is valid
+ *
+ * @param $status
+ * @return bool
+ */
+function isEditableStatus ($status ) {
+    if ( $status ==  approved_status()        ||
+         $status ==  sent_status()            ||
+         $status ==  pending_status()         ||
+         $status ==  rejected_status()        ||
+         $status ==  waiting_pay_status()     ||
+         $status ==  paid_status()            ||
+         $status ==  waiting_quota_status()   ||
+         $status ==  checking_status()        ||
+         $status ==  waiting_min_pay_status() ||
+         $status ==  canceled() ) {
+        return false;
+    }
+    return true;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -775,6 +796,20 @@ function check(){ return SchemaConstant::CHECK; }
  * @return string
  */
 function pay_to(){ return SchemaConstant::PAY_TO; }
+
+/**
+ * Return Concept Text
+ *
+ * @return string
+ */
+function concept(){ return SchemaConstant::CONCEPT; }
+
+/**
+ * Return Support Text
+ *
+ * @return string
+ */
+function support(){ return SchemaConstant::SUPPORT; }
 
 
 /**
@@ -951,3 +986,10 @@ function updated_at(){ return SchemaConstant::UPDATED_AT; }
  * @return string
  */
 function deleted_at(){ return SchemaConstant::DELETED_AT; }
+
+/**
+ * Return Delivered At Field Text
+ *
+ * @return string
+ */
+function delivered_at(){ return SchemaConstant::DELIVERED_AT; }

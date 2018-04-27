@@ -41,15 +41,13 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
      */
     public function process($model, $request )
     {
-        $status = $this->statusRequestRepository->getId( 'ADD_REMOVE_SUBJECTS', 'ENVIADO' );
-        $cost_service = $this->costServiceRepository->getId( 'ADD_REMOVE_SUBJECTS' );
+        $status = $this->statusRequestRepository->getId( status_type_addition_subtraction(), sent_status() );
+        $cost_service = $this->costServiceRepository->getId( status_type_addition_subtraction() );
         $model->{ action_subject() }    =   $request->action;
-        //$model->{ approval_date() }     =   $request->approval_date;
         $model->{ subject_fk() }        =   $request->subject_matter;
         $model->{ student_fk() }        =   auth()->user()->id;
         $model->{ status_fk() }         =   $status->{ primaryKey() };
         $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
-        //$model->{ approved_by() }       =   auth()->user()->id;
         return $model->save();
     }
 
@@ -62,7 +60,7 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
      */
     public function updateAdminAddSub($request, $id )
     {
-        $approved = $this->statusRequestRepository->getId( 'ADD_REMOVE_SUBJECTS', 'APROBADO' );
+        $approved = $this->statusRequestRepository->getId( status_type_addition_subtraction(), approved_status() );
         $model = $this->getModel()->find( $id );
         if ( $request->status == $approved->{ primaryKey() } ) {
             if ( !isset( $model->{ approval_date() } ) ) {
@@ -140,7 +138,7 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     public function deleteStudentAddSub( $id )
     {
         $model = $this->getAuth(['status'], $id);
-        return ( $model && $model->status->{ status_name() } == 'PENDIENTE' || $model->status->{ status_name() } == 'ENVIADO' ) ? $model->forceDelete() : false;
+        return ( $model && $model->status->{ status_name() } == pending_status() || $model->status->{ status_name() } == sent_status() ) ? $model->forceDelete() : false;
     }
 
     /**

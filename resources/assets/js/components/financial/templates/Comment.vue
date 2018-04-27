@@ -25,6 +25,18 @@
                 </a>
             </div>
         </div>
+        <hr>
+        <div class="form-group" v-if="errors">
+            <hr>
+            <vue-alert :type="errors.alertClass"
+                       :dismiss="false"
+                       :heading="errors.title"
+                       :icon="errors.icon"
+                       :text="errors.text"
+                       :status="errors.status"
+                       :errors="errors.errors">
+            </vue-alert>
+        </div>
     </div>
 </template>
 
@@ -33,9 +45,11 @@
     import PNGlib from 'identicon.js/pnglib';
     import Identicon from 'identicon.js/identicon';
     import {mixinLoading} from "../../../mixins/loadingswal";
+    import {mixinHttpStatus} from "../../../mixins";
+
     export default {
         name: "vue-comments",
-        mixins: [mixinLoading],
+        mixins: [mixinLoading, mixinHttpStatus],
         props: {
             styleObject: {
                 type: [Array, Object],
@@ -62,6 +76,7 @@
                 comment: null,
                 placeholder: Lang.get('financial.placeholder.comment'),
                 leave_a_comment: Lang.get('financial.generic.leave_a_comment'),
+                errors: null
             }
         },
         methods: {
@@ -75,6 +90,8 @@
                             this.getComments();
                         })
                         .catch( (error) => {
+                            this.comment = null;
+                            this.errors = this.httpStatus( error );
                             this.setLoading();
                         })
                 }
@@ -88,6 +105,7 @@
                         this.comments = response.data;
                     })
                     .catch( (error) => {
+                        this.errors = this.httpStatus( error );
                         this.setLoading();
                     })
             },

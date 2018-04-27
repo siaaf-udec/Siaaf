@@ -20,6 +20,7 @@ const eventBus = new Vue();
 let financial = {
     templates: "./components/financial/templates/",
     check: "./components/financial/check/",
+    cash: "./components/financial/cash/",
     studentExtension: "./components/financial/requests/student/extension/",
     studentAddSub: "./components/financial/requests/student/addsub/",
     studentValidation: "./components/financial/requests/student/validation/",
@@ -100,9 +101,10 @@ Vue.component("approval-index-add-sub", require( financial.approval + "IndexAddS
 Vue.component("approval-index-intersemestral", require( financial.approval + "IndexIntersemestral.vue" ) );
 
 /**
- * Checks Management
+ * Checks and Petty Cash Management
  */
 Vue.component("check", require( financial.check + "Check.vue" ) );
+Vue.component("cash", require( financial.cash + "Cash.vue" ) );
 
 
 String.prototype.capitalize = function() {

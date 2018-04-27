@@ -180,8 +180,11 @@
                                                     <div class="col-md-12">
                                                         <div class="input-icon">
                                                             <i class="fa fa-calendar"></i>
-                                                            <input type="text" required="required" readonly="readonly"
+                                                            <input type="text" :required="required" readonly="readonly"
+                                                                   minlength="10"
+                                                                   maxlength="10"
                                                                    name="date"
+                                                                   id="date"
                                                                    autocomplete="off"
                                                                    class="form-control datepicker date date-picker todo-taskbody-due"
                                                                    :placeholder="table.realization_date"
@@ -192,7 +195,7 @@
                                                 <!-- TASK TAGS -->
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <select name="status" required="required" class="form-control todo-taskbody-tags" v-model.number="status.value">
+                                                        <select name="status" id="status" required="required" class="form-control todo-taskbody-tags" v-model.number="status.value">
                                                             <option value="" v-text="status.option"></option>
                                                             <option v-for="opt in status.options" :value="opt.id" v-text="opt.text"></option>
                                                         </select>
@@ -313,6 +316,7 @@
                 },
                 filter_query: null,
                 patch: '',
+                required: false,
             }
         },
         mounted: function () {
@@ -326,7 +330,6 @@
                 $('#approval-form').validate({
                     rules: {
                         date: {
-                            required: true,
                             date: true
                         },
                         status: {
@@ -429,6 +432,11 @@
             sendStatus: function () {
                 let that = this;
                 if ( $('#approval-form').valid() ) {
+
+                    if ( !that.required )  {
+                        that.realization_date = moment().format('YYYY-MM-DD');
+                    }
+
                     swal({
                         title: Lang.get('javascript.warning'),
                         html: Lang.get('javascript.ask_if_update'),
@@ -474,9 +482,11 @@
                 this.getSource();
                 this.setActive( status );
             },
-            status: function ( status ) {
-                console.log(status);
-                $('.todo-taskbody-tags').select2().val(status.value).trigger('change')
+            statusSelected: function ( status ) {
+                let data = $('#status').select2('data');
+                data = ( data ) ? data[0].text : null;
+                this.required = ( data === 'APROBADO' );
+                $('.todo-taskbody-tags').select2().val(status).trigger('change')
             }
         },
         computed: {
@@ -512,6 +522,9 @@
                         comments_count: source.comments_count
                     }
                 })
+            },
+            statusSelected: function() {
+                return this.status.value;
             }
         }
     }

@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-input name="code"
-                                                   v-model="formCreate.code.value"
+                                                   v-model.trim="formCreate.code.value"
                                                    :value="formCreate.code.value"
                                                    :attributes="formCreate.code.attributes"
                                                    :help="formCreate.code.help"
@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-input name="credits"
-                                                   v-model="formCreate.credits.value"
+                                                   v-model.number.trim="formCreate.credits.value"
                                                    :value="formCreate.credits.value"
                                                    :attributes="formCreate.credits.attributes"
                                                    :help="formCreate.credits.help"
@@ -51,7 +51,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-input name="subject"
-                                                   v-model="formCreate.subject.value"
+                                                   v-model.trim="formCreate.subject.value"
                                                    :value="formCreate.subject.value"
                                                    :attributes="formCreate.subject.attributes"
                                                    :help="input.help"
@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-select2 name="program"
-                                                     v-model.number="formAssign.program.value"
+                                                     v-model.number.trim="formAssign.program.value"
                                                      :options="programs"
                                                      :value="formAssign.program.value"
                                                      :label="formAssign.select.program">
@@ -104,7 +104,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-select2 name="teacher"
-                                                     v-model.number="formAssign.teacher.value"
+                                                     v-model.number.trim="formAssign.teacher.value"
                                                      :options="teachers"
                                                      :value="formAssign.teacher.value"
                                                      :label="formAssign.select.teacher">
@@ -114,7 +114,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <vue-select2 name="subject"
-                                                     v-model.number="formAssign.subject.value"
+                                                     v-model.number.trim="formAssign.subject.value"
                                                      :options="subjects"
                                                      :value="formAssign.subject.value"
                                                      :label="input.label">
@@ -332,8 +332,8 @@
                     }
                     let data = table.row( row ).data();
                     that.method = 'PUT';
-                    if (data.hasOwnProperty('pk_id')) {
-                        that.url = route('financial.management.subjects.update', {id: data.pk_id});
+                    if (data.hasOwnProperty('id')) {
+                        that.url = route('financial.management.subjects.update', {id: data.id});
                     }
                     if (data.hasOwnProperty('subject_code')) {
                         that.formCreate.code.value = data.subject_code;

@@ -3,6 +3,7 @@
 namespace App\Container\Financial\src\Requests\Check;
 
 
+use App\Container\Financial\src\Check;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CheckRequest extends FormRequest
@@ -28,6 +29,7 @@ class CheckRequest extends FormRequest
             'check'     => 'required|max:191',
             'pay_to'    => 'required|max:191',
             'status'    => 'required|numeric',
+            'delivered_at'    => 'required_if:status,'.Check::DELIVERED,
         ];
     }
 

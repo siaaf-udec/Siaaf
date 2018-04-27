@@ -3,7 +3,7 @@
  * Financiero.
  */
 
-Route::middleware( [ 'permission:'.permission_financial() ] )->group( function () {
+Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->group( function () {
 
     Route::namespace('Files')->prefix('gestion-de-archivos')->group(function () {
         Route::prefix('solicitudes')->group(function () {
@@ -94,9 +94,15 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
 
     Route::namespace('Cash')->prefix('dineros')->group( function () {
 
-        Route::middleware([ 'permission:'.permission_petty_cash() ])->get('caja-menor', [
-            'as'    => 'financial.cash.index',
-            'uses'  => 'PettyCashController@index'
+        Route::middleware([ 'permission:'.permission_petty_cash() ])->resource('caja-menor', 'PettyCashController', [
+            'except'    =>  ['create', 'edit', 'show'],
+            'names' => [
+            'index'  => 'financial.money.cash.index',
+            'store'  => 'financial.money.cash.store',
+            'update' => 'financial.money.cash.update',
+            'destroy'=> 'financial.money.cash.destroy',
+        ],
+            'parameters' => ['caja-menor' => 'id']
         ]);
 
         Route::middleware([ 'permission:'.permission_checks() ])->resource('cheques', 'CheckController', [
@@ -253,9 +259,9 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
     });
 
     /*
-     * Financial API ->middleware(['api.ajax'])
+     * Financial API
      */
-    Route::namespace('Api')->prefix('api')->group( function () {
+    Route::namespace('Api')->middleware(['api.ajax'])->prefix('api')->group( function () {
 
         Route::prefix('options')->group( function () {
             Route::prefix('programs')->group( function () {
@@ -314,6 +320,9 @@ Route::middleware( [ 'permission:'.permission_financial() ] )->group( function (
 
             Route::middleware([ 'permission:'.permission_checks() ])->get('checks', 'CheckController@datatable')
                 ->name('financial.api.datatables.checks');
+
+            Route::middleware([ 'permission:'.permission_petty_cash() ])->get('petty-cash', 'CashController@datatable')
+                ->name('financial.api.datatables.cash');
         });
 
         Route::prefix('comments')->group( function () {
