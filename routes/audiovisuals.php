@@ -318,13 +318,61 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'AdministradorGestionController@anularSancion',
             'as' => 'audiovisuales.anular.sancion',                                       //ruta que conduce al controlador para anular la sancion(es)
         ]);//-
-        Route::get('sancionesGestionCancelar/{numeroOrdenSancion?}',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
+        Route::get('sancionesGestionCancelarR/{numeroOrdenSancion?}',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@sancionesGestionCancelar',
             'as' => 'audiovisuales.listar.sanciones.asignadas.gestion',       //ruta que conduce al controlador donde gestiona las sanciones asignadas
         ]);//-
         Route::get('indexSancionesAjax',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
             'uses' => $controller . 'AdministradorGestionController@indexSancionesAjax',
             'as' => 'audiovisuales.gestionPrestamos.sanciones.ajax',                //ruta que conduce al controlador para mostrar las sanciones
+        ]);
+        Route::get('indexSancionesCanceladasAjax',['middleware' => ['permission:AUDI_REQUESTS_ADMIN'],
+            'uses' => $controller . 'AdministradorGestionController@indexSancionesCanceladas',
+            'as' => 'sanciones.canceladas.index',                //ruta que conduce al controlador para mostrar las sanciones canceladas
+        ]);
+        Route::get('usuariosSancionesDataTableR',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@usuariosSancionesDataTable',
+            'as' => 'lisatar.usuarios.sanciones.dataTable',                                 //ruta que que conduce al controlador donde realiza la consulta de las sanciones canceladas
+        ]);
+        Route::post('aplicarSancionR/{accion?}/{id_sancion?}',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@aplicarRegistroSancion',
+            'as' => 'audiovisuales.aplicar.sancion',                                       //ruta que conduce al controlador para anular la sancion(es)
+        ]);//-
+
+        Route::get('listarSancionesCanceladasR',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@dataSancionesCanceladas',
+            'as' => 'listarSancionesCanceladas.dataTable',       //ruta que conduce al controlador donde lista las sanciones canceladas asignadas
+        ]);//-
+        Route::get('validarFechaInicioReservaR/{fecha?}',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@validarFechaInicioReserva',
+            'as' => 'valida.fecha.inicio.reserva',       //ruta que conduce al controlador donde lista las sanciones canceladas asignadas
+        ]);//-
+    /// reporte
+        Route::get('reportes',['middleware' => ['permission:AUDI_MODULE'],
+            'uses' => $controller . 'AdministradorGestionController@reportes',
+            'as'   => 'audiovisuales.reportes.index',//ruta que conduce al controladr para mostrar la gestion de los reportes
+        ]);
+        Route::get('pdfCarreras', [
+            'uses' => $controller . 'AdministradorGestionController@reporteTipoArticuloGrafica',
+            'as' => 'audiovisuales.pdfCarreras'             //ruta que conduce al controlador para mostrar  el reporte referente a la cantidad de tipos de articulos prestados
+        ]);
+        Route::get('pdfCarrerasPrestamosSolicitados', [
+            'uses' => $controller . 'AdministradorGestionController@reporteSolicitudesGrafica',
+            'as' => 'audiovisuales.pdfCarrerasPrestamos.solicitados'             //ruta que conduce al controlador para mostrar  el reporte referente a la cantidad de solicitudes por carrera
+        ]);
+
+
+        Route::get('DownloadPdfCarreras/{anio?}/{mes?}', [
+            'uses' => $controller . 'AdministradorGestionController@downloadCarreras',
+            'as' => 'audiovisuales.DownloadPdfCarreras'             //ruta que conduce al controlador para descargar el reporte de contacto
+        ]);
+        Route::get('pdfTiempoUso', [
+            'uses' => $controller . 'AdministradorGestionController@reporteTiempoUso',
+            'as' => 'audiovisuales.pdfTiempoUso'             //ruta que conduce al controlador para mostrar  el reporte referente a los datos de contacto de los empleados
+        ]);
+        Route::get('DownloadPdfTiempoUso', [
+            'uses' => $controller . 'AdministradorGestionController@downloadTiempoUso',
+            'as' => 'audiovisuales.DownloadTiempoUso'             //ruta que conduce al controlador para descargar el reporte de contacto
         ]);
 
     });

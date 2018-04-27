@@ -63,7 +63,6 @@
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                     @slot('columns', [
-                        '#' => ['style' => 'width:20px;'],
                         'Tipo',
                         'Descripción',
                         'Codigo',
@@ -82,7 +81,7 @@
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                             </button>
                             <h2 class="modal-title">
-                                <i class="glyphicon glyphicon-tv">
+                                <i class="glyphicon glyphicon-edit">
                                 </i>
                                 Registrar Artículo
                             </h2>
@@ -282,11 +281,9 @@
         $(document).ready(function () {
             App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
-
             table = $('#art-table-ajax');
             url = "{{ route('listarArticulo.data') }}";
             columns = [
-                {data: 'DT_Row_Index'},
                 {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'consulta_tipo_articulo.TPART_Nombre'},
                 {data: 'ART_Descripcion', name: 'ART_Descripcion'},
                 {data: 'ART_Codigo', name: 'ART_Codigo'},
@@ -439,6 +436,7 @@
             });
             $(".createArticulo").on('click', function (e) {
                 e.preventDefault();
+                $('#from_art_create')[0].reset();
                 $seleccione_un_kit.empty().append('whatever');
                 var route_cargar_kits = '{{route('cargar.kits.select') }}';
                 $.ajax({

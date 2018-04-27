@@ -28,11 +28,9 @@
 @section('content')
     <div class="clearfix"></div>
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizadas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizados'])
             <div class="clearfix">
             </div>
-            <br>
-            <br>
             <br>
             <div class="row">
 

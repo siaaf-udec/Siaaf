@@ -1,5 +1,11 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Acciones Solicitud Prestamo'])
+        @slot('actions', [
+          'link_cancel' => [
+          'link' => '',
+          'icon' => 'fa fa-arrow-left',
+         ],
+        ])
         <div class="row">
             <div class="col-md-12">
                 <div class="modal fade" data-width="360" id="modal-recibir-kit" tabindex="-1">
@@ -294,7 +300,6 @@
             <br>
             <div class="col-md-offset-4">
                 @permission('AUDI_LENDING_GET_ALL')
-                    {!! Form::button('Aplicar Sancion General', ['class' => 'btn btn-warning  getAllSancion','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
                     {!! Form::button('Recibir Todo', ['class' => 'btn btn-success  getAll','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
                 @endpermission
             </div>
@@ -360,7 +365,7 @@
 
                 swal(
                     'Oops...',
-                    'Debe agregar una observacion para poder recibir el articulo',
+                    'Debe agregar una observación para poder recibir el artículo',
                     'warning'
                 )
 
@@ -428,12 +433,12 @@
         $('#contentFormularioPrestamos').on('click', '.aplicar_sancion', function(){
             idSancionSolicitud = $(this).data('id_sancion');
             sancionGeneral = 0;
+            $('.icheck').iCheck('uncheck');
             $('#from_sancion')[0].reset();
             $('#modal-asignacion-sancion').modal('toggle');
 
         });
         $('#aplicarSancion').on('click',  function(){
-
             if(contadorSancion == 0){
                 $('#modal-asignacion-sancion').modal('hide');
                 swal("Opsss..!", "No ha asignado sanciones!", "warning");
@@ -455,7 +460,7 @@
                 $('#modal-asignacion-sancion').modal('hide');
                 swal({
                         title: "¿ Esta seguro ?",
-                        text: 'Se aplicara las Sanciones seleccionadas',
+                        text: 'Se aplicará las Sanciones seleccionadas',
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonClass: "btn-danger",
@@ -537,7 +542,6 @@
             var idSancion = $(this).data('id_checked');
             if(!$('.box'+idSancion).is(':checked') ){
                 contadorSancion++;
-
                 if ((validatorSancion.element("#observacion"+idSancion) == true) && (validatorSancion.element("#costo"+idSancion) == true)) {
 
                     var observacion = '#observacion' + idSancion;
@@ -560,8 +564,8 @@
                     validatorSancion.element("#costo"+idSancion);
                     $('#modal-asignacion-sancion').modal('hide');
                     swal({
-                            title: "¿ Asiganacion ?",
-                            text: 'Para asianar la sancion debe completar los campos',
+                            title: "¿ Asiganación ?",
+                            text: 'Para asignar la sanción debe completar los campos',
                             type: 'warning',
                             showCancelButton: true,
                             confirmButtonClass: "btn-danger",
@@ -740,5 +744,10 @@
             tiempoSelect : {required: true}
         };
         FormValidationMd.init(form_sumar,rule_sumar,false,moreTime());
+        $('#link_cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('audiovisuales.ListarPrestamo2.index') }}';
+            $(".content-ajax").load(route);
+        });
     });
 </script>

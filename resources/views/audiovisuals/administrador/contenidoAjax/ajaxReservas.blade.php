@@ -33,6 +33,8 @@
                         'Correo Electronico',
                         'Tipo Identificacion',
                         'Numero',
+                        'Fecha Inicio',
+                        'Fecha Fin',
                         'Acciones' => ['style' => 'width:90px;']
                     ])
             @endcomponent
@@ -41,6 +43,7 @@
     @endcomponent
 </div>
 <script type="text/javascript">
+
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function() {
             $("input[maxlength], textarea[maxlength]").maxlength({
@@ -74,6 +77,8 @@
             {data: 'consulta_usuario_audiovisuales.user.email', name: 'consulta_usuario_audiovisuales.user.email'},
             {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'consulta_usuario_audiovisuales.user.identity_type'},
             {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'consulta_usuario_audiovisuales.user.identity_no'},
+            {data: 'PRT_Fecha_Inicio', name: 'PRT_Fecha_Inicio'},
+            {data: 'PRT_Fecha_Fin', name: 'PRT_Fecha_Fin'},
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-simple btn-success btn-icon edit">Ver Reserva</i></a>',
                 data:'action',
@@ -94,8 +99,37 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('audiovisuales.ListarReservasAcciones') }}'+'/'+dataTable.PRT_Num_Orden;
-            $(".content-ajax").load(route);
+            console.log(dataTable.PRT_Fecha_Inicio);
+            var route = '{{ route('valida.fecha.inicio.reserva') }}'+'/'+dataTable.PRT_Fecha_Inicio;
+            $.ajax({
+                url: route,
+                type: 'GET',
+                beforeSend: function () {
+                    App.blockUI({target: '.portlet-form', animate: true});
+                },
+                success: function (response, xhr, request) {
+                    if (request.status === 200 && xhr === 'success') {
+                        if(response.data == true){
+                             var route = '{{ route('audiovisuales.ListarReservasAcciones') }}'+'/'+dataTable.PRT_Num_Orden;
+                             $(".content-ajax").load(route);
+                        }else{
+                            swal(
+                                'Oops...',
+                                'No se puede entregar la reserva ,todavía no ha llegado la hora de su entrega',
+                                'warning'
+                            )
+                        }
+                        App.unblockUI('.portlet-form');
+                    }
+                },
+                error: function (response, xhr, request) {
+                    if (request.status === 422 &&  xhr === 'error') {
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                    }
+                }
+            });
+
         });
         $('#link_cancel').on('click', function (e) {
             e.preventDefault();

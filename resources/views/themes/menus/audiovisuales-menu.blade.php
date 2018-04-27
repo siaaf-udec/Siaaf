@@ -16,7 +16,7 @@
                     <i class="icon-screen-desktop">
                     </i>
                     <span class="title">
-                        Gestion Articulos
+                        Gestión Artículos
                     </span>
                     <span class="arrow {{ active(['audiovisuales.articulo.*'], 'open') }}"></span>
                 </a>
@@ -24,7 +24,7 @@
                     <li class="nav-item {{ active(['audiovisuales.articulo.indexArticulo'], 'start active open') }}">
                         <a href="{{  route('audiovisuales.articulo.indexArticulo') }}" class="nav-link nav-toggle">
                             <i class="icon-plus"></i>
-                            <span class="title">Articulo</span>
+                            <span class="title">Artículo</span>
                         </a>
                     </li>
                     <li class="nav-item {{ active(['audiovisuales.articulo.indexKit'], 'start active open') }}">
@@ -79,6 +79,15 @@
                             <span class="title">Listar Prestamos Finalizados</span>
                         </a>
                     </li>
+                    <li class="nav-item {{ active(['audiovisuales.reportes.index'], 'start active open') }}">
+                        <a class="nav-link" href="{{ route('audiovisuales.reportes.index') }}">
+                            <i class="icon-bar-chart">
+                            </i>
+                            <span class="title">
+                                Reportes
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endpermission
@@ -105,7 +114,7 @@
                     <i class="icon-check">
                     </i>
                     <span class="title">
-                            Mantenimiento Articulos
+                            Mantenimiento Artículos
                     </span>
                 </a>
             </li>

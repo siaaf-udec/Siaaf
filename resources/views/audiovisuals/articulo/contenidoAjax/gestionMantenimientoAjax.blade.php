@@ -14,7 +14,6 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
             @slot('columns', [
-                '#' => ['style' => 'width:20px;'],
                 'Nombre',
                 'Codigo',
                 'Hora Ultimo Mantenimiento',
@@ -51,7 +50,6 @@
         table = $('#tipoArt-table-ajax');
         url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
-            {data: 'DT_Row_Index'},
             {data: 'TPART_Nombre' , name: 'TPART_Nombre'},
             {data: 'consultar_articulos_count' , name: 'consultar_articulos_count'},
             {data: 'Tiempo' , name: 'Tiempo'},

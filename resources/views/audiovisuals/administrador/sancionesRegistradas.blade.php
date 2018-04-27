@@ -22,9 +22,26 @@
     <div class="clearfix"></div>
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Sanciones'])
+            <br>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{--@permission('AUDI_REQUESTS_VIEW_CANCELED_SANCTION')--}}
+                    <div class="actions">
+                        <a class="btn btn-outline dark sancionesCanceladas" data-toggle="modal">
+                            <i class="fa fa-plus">
+                            </i>
+                            Consultar Sanciones Canceladas
+                        </a>
+                    </div>
+                    {{--@endpermission--}}
+                </div>
+            </div>
             <div class="clearfix">
             </div>
-            <br><br><br>
+            <br>
+
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'usuarios-table'])
                     @slot('columns', [
@@ -190,8 +207,15 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
+                console.log(dataTable.SNS_Numero_Orden);
                 var router = '{{ route('audiovisuales.listar.sanciones.asignadas.gestion') }}'+'/'+ dataTable.SNS_Numero_Orden;
                 $(".content-ajax").load(router);
+
+            });
+            $( ".sancionesCanceladas" ).on('click', function (e) {
+                e.preventDefault();
+                var route = '{{ route('sanciones.canceladas.index') }}';
+                $(".content-ajax").load(route);
             });
         });
     </script>

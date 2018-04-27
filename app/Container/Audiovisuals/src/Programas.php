@@ -24,4 +24,14 @@ class Programas extends Model
      * @var array
      */
 	protected $fillable   = ['id', 'PRO_Nombre'];
+
+    /**
+     * Función que retorna la relación entre la tabla 'TBL_Prestamos' y la tabla 'TBL_Usuario_Audiovisuales'
+     * a través de la llave foránea 'PRT_FK_Funcionario_id' y la llave 'USER_FK_User'
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function consultaUsuarioAudiovisuales()
+    {
+        return $this->belongsTo(UsuarioAudiovisuales::class,'id','USER_FK_Programa');
+    }
 }

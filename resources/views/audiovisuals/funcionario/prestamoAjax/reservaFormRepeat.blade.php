@@ -2,7 +2,7 @@
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="static" tabindex="-1">
             <div class="modal-header modal-header-success">
                 <h3 class="modal-title">
-                    <i class="glyphicon glyphicon-user">
+                    <i class="glyphicon glyphicon-book">
                     </i>
                     Seleccionar Programa
                 </h3>
@@ -40,7 +40,7 @@
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal-fecha-reserva" tabindex="-1">
             <div class="modal-header modal-header-success">
                 <h3 class="modal-title">
-                    <i class="glyphicon glyphicon-user">
+                    <i class="glyphicon glyphicon-time">
                     </i>
                     Fecha Reserva
                 </h3>

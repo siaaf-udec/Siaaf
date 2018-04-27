@@ -1,7 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Reservas Realizadas'])
-        <br>
-        <br>
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'SOLICITUDES PRESTAMOS REALIZADOS'])
         <br>
         <div class="row">
             <div class="col-md-12">

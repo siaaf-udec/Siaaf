@@ -20,7 +20,7 @@ class CreateArticulosTable extends Migration
             $table->integer('FK_ART_Kit_id')->unsigned()->nullable();
             $table->integer('FK_ART_Estado_id')->unsigned()->nullable();
             $table->String('ART_Codigo');
-            $table->String('ART_Cantidad_Mantenimiento');
+            $table->integer('ART_Cantidad_Mantenimiento')->unsigned()->nullable();;
             $table->timestamps();
             $table->foreign('FK_ART_Tipo_id')->references('id')->on('TBL_Tipo_Articulos');
             $table->foreign('FK_ART_Kit_id')->references('id')->on('TBL_Kits');

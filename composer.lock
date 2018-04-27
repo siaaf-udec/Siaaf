@@ -69,16 +69,16 @@
         },
         {
             "name": "caouecs/laravel-lang",
-            "version": "3.0.46",
+            "version": "3.0.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caouecs/Laravel-lang.git",
-                "reference": "6d7d0bf583a63cf091728f50067880f122e24fbd"
+                "reference": "9d618e137c4fd4a8e4556a69ab884aa0c413417c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/6d7d0bf583a63cf091728f50067880f122e24fbd",
-                "reference": "6d7d0bf583a63cf091728f50067880f122e24fbd",
+                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/9d618e137c4fd4a8e4556a69ab884aa0c413417c",
+                "reference": "9d618e137c4fd4a8e4556a69ab884aa0c413417c",
                 "shasum": ""
             },
             "require-dev": {
@@ -107,7 +107,7 @@
                 "laravel",
                 "lpm"
             ],
-            "time": "2018-03-29T11:49:02+00:00"
+            "time": "2018-04-24T11:50:34+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1769,16 +1769,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.26.4",
+            "version": "1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e3d9014279133a3cccc01f6a691322a2d5a6a87b"
+                "reference": "ef81c39b67200dcd7401c24363dcac05ac3a4fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e3d9014279133a3cccc01f6a691322a2d5a6a87b",
-                "reference": "e3d9014279133a3cccc01f6a691322a2d5a6a87b",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ef81c39b67200dcd7401c24363dcac05ac3a4fe9",
+                "reference": "ef81c39b67200dcd7401c24363dcac05ac3a4fe9",
                 "shasum": ""
             },
             "require": {
@@ -1813,7 +1813,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-04-17T15:35:42+00:00"
+            "time": "2018-04-23T09:02:57+00:00"
         },
         {
             "name": "nikic/php-parser",

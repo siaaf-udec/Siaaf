@@ -19,9 +19,9 @@
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
-@section('title', '| Gestion Reservas')
+@section('title', '| Gestión Reservas')
 
-@section('page-title', 'Gestion Reservas')
+@section('page-title', 'Gestión Reservas')
 @section('page-description', 'Solicita y Cancela una reserva')
 @section('content')
     <div class="col-md-12">
@@ -95,6 +95,9 @@
     </script>
 @endpush
 @push('functions')
+
+    <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js') }}" type="text/javascript">
+    </script>
     <!-- SCRIPT Confirmacion Sweetalert -->
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript">
     </script>
@@ -140,7 +143,9 @@
                 var fecha = new Date();
                 var numHorasAnticipacion = horasHabiles/24;
                 fecha.setDate(fecha.getDate()+numHorasAnticipacion);
+
                 $(".date-time-picker").datetimepicker({
+
                     autoclose: true,
                     daysOfWeekDisabled:[0],
                     hoursDisabled: '0,1,2,3,4,5,6,23,24',
@@ -153,8 +158,10 @@
                     startDate: fecha,//Fecha Actual pero sin la hora
                     //endDate: fecha2,//Fecha Actual + 5 dias
                     showMeridian: true, // HORA EN 24 HORAS
+                    language: 'es',
                     pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-right"),
                 });
+
             }
             return {
                 //main function to initiate the module
@@ -164,7 +171,12 @@
             };
         }();
         jQuery(document).ready(function () {
-            App.unblockUI('.portlet-form');
+
+            $(".date-time-picker").datetimepicker({
+
+                language: 'es'
+            });
+                    App.unblockUI('.portlet-form');
             var table, url, columns;
             table = $('#usuarios-table');
             url = "{{ route('listarFuncionarios.reservas.dataTable') }}";
@@ -298,7 +310,7 @@
                     if(numeroMaximoReservas.numeroReservas){
                         swal(
                             'Oops...',
-                            'Lo sentimos el usuario solo puede realizar un maximo de '+numeroMaximoReservas.numeroMaximo+' reservas!',
+                            'Lo sentimos el usuario solo puede realizar un máximo de '+numeroMaximoReservas.numeroMaximo+' reservas!',
                             'error'
                         )
                     }else{

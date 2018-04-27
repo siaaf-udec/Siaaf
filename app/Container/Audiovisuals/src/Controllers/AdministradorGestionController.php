@@ -12,6 +12,7 @@ use App\Container\Audiovisuals\src\TipoSancion;
 use App\Container\Audiovisuals\src\UsuarioAudiovisuales;
 use App\Container\Audiovisuals\src\Validaciones;
 use App\Container\Users\Src\User;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -997,7 +998,7 @@ class AdministradorGestionController extends Controller
                                     );
                             },'conultarAdministradorEntrega','conultarAdministradorRecibe'
                         ]
-                    )->where('PRT_FK_Tipo_Solicitud','=',2)
+                    )
                     ->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
                 $array = array();
@@ -1050,7 +1051,7 @@ class AdministradorGestionController extends Controller
                             }else{
                                 Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
                                     ->update(['FK_ART_Estado_id'=>2]);//prestado
-                                Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>2]);
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>2]);
                             }
                         }
                     } else {
@@ -1072,9 +1073,12 @@ class AdministradorGestionController extends Controller
                             }else{
                                 Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
                                     ->update(['FK_ART_Estado_id'=>4]);//disponible
-                                Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
+                        Solicitudes::where(
+                            'id', '=', $idSolicitud
+                        )->delete();
                     }
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -1102,7 +1106,7 @@ class AdministradorGestionController extends Controller
                             }else{
                                 Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
                                     ->update(['FK_ART_Estado_id'=>2]);//prestado
-                                Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>2]);
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>2]);
                             }
                         }
                     } else {
@@ -1124,9 +1128,12 @@ class AdministradorGestionController extends Controller
                             }else{
                                 Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
                                     ->update(['FK_ART_Estado_id'=>4]);//disponible
-                                Kit::where('id','=',$id->$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
+                        Solicitudes::where(
+                            'PRT_Num_Orden', '=', $idSolicitud
+                        )->delete();
                     }
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -1168,6 +1175,7 @@ class AdministradorGestionController extends Controller
                         'FK_SNS_Id_Solicitud'=>$sancion->idReserva,
                         'SNS_Sancion_General'=>$sancion->sancionGeneral,
                         'SNS_Numero_Orden'=>$numOrden,
+                        'SNS_Estado_Cancelacion'=>0//sin cancelar
 
                     ]);
                     $solicitudAsignada = $sancion->idReserva;
@@ -1231,7 +1239,7 @@ class AdministradorGestionController extends Controller
          * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
          */
         public function indexSancionesAjax(Request $request)
-            {
+        {
             if ($request->isMethod('GET')) {
 
                 return view('audiovisuals.administrador.contenidoAjax.sancionesRegistradasAjax');
@@ -1263,7 +1271,7 @@ class AdministradorGestionController extends Controller
                                 );
                         },'conultarAdministradorEntrega'
                     ]
-                )->get();
+                )->where('SNS_Estado_Cancelacion','=',0)->get();
                 $sanciones =($sanciones)->groupBy('SNS_Numero_Orden');
                 $array = array();
                 foreach ($sanciones as $le) {
@@ -1294,7 +1302,7 @@ class AdministradorGestionController extends Controller
                     $sancion = Sanciones::where('id','=',$idTblSancion)
                         ->get();
                     Sanciones::where('SNS_Numero_Orden','=',$sancion[0]['SNS_Numero_Orden'])
-                        ->delete();
+                        ->forceDelete();
                     if($request->get('SNS_Sancion_General')== 1){
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('PRT_Num_Orden', '=',$sancion[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1329,7 +1337,7 @@ class AdministradorGestionController extends Controller
                 }
                 if($request->get('accion')=='anulacionIndividual'){
                     Sanciones::where('id','=',$idTblSancion)
-                        ->delete();
+                        ->forceDelete();
                 }
                 if($accion == 'anulacionFinal'){
                     $sancionF = Sanciones::select('SNS_Sancion_General','FK_SNS_Id_Solicitud')->where('id','=',$idTblSancion)->get();
@@ -1349,7 +1357,7 @@ class AdministradorGestionController extends Controller
                         Solicitudes::where('PRT_Num_Orden','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
                             ->delete();
                         Sanciones::where('id','=',$idTblSancion)
-                            ->delete();
+                            ->forceDelete();
                     }else{
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('id', '=', $sancionF[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1364,7 +1372,72 @@ class AdministradorGestionController extends Controller
                             }
                         }
                         Sanciones::where('id','=',$idTblSancion)
+                            ->forceDelete();
+                        Solicitudes::where('id','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
                             ->delete();
+                    }
+                }
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Sancion anulada.'
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+        /**
+     * Funcion que elimina las sanciones registradas
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+        public function aplicarRegistroSancion(Request $request,$accion,$idTblSancion)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                //SNS_Sancion_General-> 1 numero orden , 0 id solicitud
+                //SNS_Numero_Orden-> numero orden tbl sanciones
+                //FK_SNS_Id_Solicitud->idsolicitud o idnumero de orden solicitud
+
+                if($accion =='cancelacionIndividual'){
+                    Sanciones::where('id','=',$idTblSancion)
+                        ->update(['SNS_Estado_Cancelacion'=>1]);
+                }
+                if($accion == 'cancelacionFinal'){
+                    $sancionF = Sanciones::select('SNS_Sancion_General','FK_SNS_Id_Solicitud')->where('id','=',$idTblSancion)->get();
+                    if($sancionF[0]['SNS_Sancion_General'] == 1){
+                        $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
+                            ->where('PRT_Num_Orden', '=', $sancionF[0]['FK_SNS_Id_Solicitud'])->get();
+                        foreach ($articulo as $id){
+                            if($id->PRT_FK_Kits_id == 1 || $id->PRT_FK_Kits_id == 0){
+                                Articulo::where('id','=',$id->PRT_FK_Articulos_id)
+                                    ->update(['FK_ART_Estado_id'=>4]);//disponible
+                            }else{
+                                Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
+                                    ->update(['FK_ART_Estado_id'=>4]);//disponible
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
+                            }
+                        }
+                        Solicitudes::where('PRT_Num_Orden','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
+                            ->delete();
+                        Sanciones::where('id','=',$idTblSancion)
+                            ->update(['SNS_Estado_Cancelacion'=>1]);
+                    }else{
+                        $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
+                            ->where('id', '=', $sancionF[0]['FK_SNS_Id_Solicitud'])->get();
+                        foreach ($articulo as $id){
+                            if($id->PRT_FK_Kits_id == 1 || $id->PRT_FK_Kits_id == 0){
+                                Articulo::where('id','=',$id->PRT_FK_Articulos_id)
+                                    ->update(['FK_ART_Estado_id'=>4]);//disponible
+                            }else{
+                                Articulo::where('FK_ART_Kit_id','=',$id->PRT_FK_Kits_id)
+                                    ->update(['FK_ART_Estado_id'=>4]);//disponible
+                                Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
+                            }
+                        }
+                        Sanciones::where('id','=',$idTblSancion)
+                            ->update(['SNS_Estado_Cancelacion'=>1]);
                         Solicitudes::where('id','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
                             ->delete();
                     }
@@ -1388,16 +1461,15 @@ class AdministradorGestionController extends Controller
          */
         public function sancionesGestionCancelar(Request $request, $numOrdenSancion)
         {
-            if ($request->ajax() && $request->isMethod('GET')) {
-                //opcion 1 si la solicitud fue por individual relacione con el id de la tabla Prestamos
-                //opcion 2 sino relacione con el id de la
-                    //opcion 1
-                $articulo = false;
+            if ($request->ajax() && $request->isMethod('GET'))
+            {
+                if ($request->ajax() && $request->isMethod('GET')) {
                     $sanciones = Sanciones::with([
                         'consultarSolicitud'
                     ])->where('SNS_Numero_Orden','=',$numOrdenSancion)->get();
                     $array = array();
                     $array2 = array();
+                    $articulo = false;
                     foreach ($sanciones as $relacion) {
                         $array = array();
                         if($relacion['consultarSolicitud']['PRT_FK_Kits_id'] == 0 || $relacion['consultarSolicitud']['PRT_FK_Kits_id'] == 1){
@@ -1407,28 +1479,355 @@ class AdministradorGestionController extends Controller
                             $array = array_add($array, 'relacion', $articuloKit);
                             $array = array_add($array, 'sancion', $relacion);
                             array_push($array2,$array);
-                            $articulo=true;
+                            $articulo = true;
 
                         }else{
                             $articuloKit = Kit::where('id','=',$relacion['consultarSolicitud']['PRT_FK_Kits_id'])->get();
                             $array = array_add($array, 'relacion', $articuloKit);
                             $array = array_add($array, 'sancion', $relacion);
                             array_push($array2,$array);
-                            $articulo=false;
+                            $articulo = false;
                         }
                     }
-                return view('audiovisuals.administrador.contenidoAjax.cancelacionSancionesAjax',
-                    [
-                        'sanciones'=>$array2,
-                        'articulo'=>$articulo,
-                        'contador'=>0,
-                    ]
+                    return view('audiovisuals.administrador.contenidoAjax.cancelacionSancionesAjax',
+                        [
+                            'sanciones'=>$array2,
+                            'contador'=>0,
+                            'articulo'=>$articulo
+                        ]
+                    );
+                }
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
                 );
             }
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
             );
+        }
+        ///cambiar metodo de consulta al estado de cancelacion de la sancion
+        /**
+     * Funcion que muestra las sanciones canceladas
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+        public function indexSancionesCanceladas(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+
+                return view('audiovisuals.administrador.contenidoAjax.sancionesCanceladasAjax'
+
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+        /**
+         * Funcion que lista las sanciones canceladas y los envía al datatable correspondiente.
+         *
+         * @param Request $request
+         * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+         */
+        public function usuariosSancionesDataTable(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+
+                $funcionarios = Solicitudes::with(['consultaUsuarioAudiovisuales'=> function($query){
+                    return $query->select('id','USER_FK_User')->with(['user'=>function($query){
+                            return $query->select(
+                                'id','name','lastname','email','identity_type',
+                                'identity_no'
+                            );
+                        }
+                        ]
+                    );
+                }])->where([
+                    ['PRT_FK_Tipo_Solicitud','=',1],
+                    ['PRT_FK_Estado','!=',5]//sancion
+                ])->get();//2=prestamos
+                $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
+                $array = array();
+                foreach ($funcionarios as $le) {
+                    array_push($array, $le[0]);
+                }
+                return DataTables::of($array)
+                    ->addIndexColumn()
+                    ->make(true);
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+        /**
+         * Fucion que registra las sanciones canceladas
+         *
+         * @param Request $request
+         * @return \Illuminate\Http\Response
+         */
+        public function dataSancionesCanceladas(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+                $sanciones = Sanciones::with([
+                        'consultaUsuarioAudiovisuales'=> function($query){
+                            return $query->select('id','USER_FK_User')
+                                ->with(['user'=>function($query){
+                                        return $query->select(
+                                            'id','name','lastname','email','identity_type',
+                                            'identity_no'
+                                        );
+                                    }
+                                    ]
+                                );
+                        },'conultarAdministradorEntrega'
+                    ]
+                )->where('SNS_Estado_Cancelacion','=',1)->get();
+                $sanciones =($sanciones)->groupBy('SNS_Numero_Orden');
+                $array = array();
+                foreach ($sanciones as $le) {
+                    array_push($array, $le[0]);
+                }
+                return DataTables::of($array)
+                    ->addIndexColumn()
+                    ->make(true);
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+        public function validarFechaInicioReserva(Request $request, $fecha)
+        {
+            if ($request->ajax() && $request->isMethod('GET'))
+            {
+                $fechaInicial = new Carbon;
+                $fechaInicial = Carbon::parse($fecha);
+                $fechaActual = new Carbon();
+                $fechaActual = Carbon::now();
+                $permitirEntregarReserva = false;
+                if($fechaActual >=  $fechaInicial){
+                    $permitirEntregarReserva = true;
+                }
+                $permitirEntregarReserva = true;
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Sancion anulada.',
+                    $permitirEntregarReserva
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    //reportes
+        /**
+         * Funcion que muestra la vista de los reportes
+         *
+         * @param Request $request
+         * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+         */
+        public function reportes(Request $request)
+        {
+            if ($request->isMethod('GET')) {
+                return view('audiovisuals.reporte.gestionReportes');
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+        /**
+         * Funcion que muestra el reporte en grafica de la cantidad de tipos de articulos prestados
+         *
+         * @param Request $request
+         * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+         */
+        public function reporteTipoArticuloGrafica(Request $request)   {
+            if ($request->isMethod('GET')) {
+                $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+                $carreras = Programas::all()->pluck('PRO_Nombre');
+                $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+                $varTiposArticulos = Articulo::
+                with('consultaTipoArticulo')->get();
+                $varTiposArticulos = $varTiposArticulos->groupBy('FK_ART_Tipo_id');
+                $array = array();
+                $array2 = array();
+                $nombreTipo = '';
+                $sumadorTipo = 0;
+                foreach ($varTiposArticulos as $articulo) {
+                    $nombreTipo = $articulo[0]['consultaTipoArticulo']['TPART_Nombre'];
+                    $array = array_add($array, 'name', $nombreTipo);
+                    $sumadorTipo = 0;
+                    foreach ($articulo as $articuloSolicitud) {
+                        $suma = Solicitudes::where('PRT_FK_Articulos_id', '=', $articuloSolicitud['id'])->count();
+                        $sumadorTipo = $sumadorTipo + $suma;
+                    }
+                    $array = array_add($array, 'data', array($sumadorTipo));
+                    array_push($array2, $array);
+                    $array = array();
+                }
+                return view('audiovisuals.reporte.ReporteCarreras',
+                    [
+                        'serie' => $array2,
+                        'carreras' => $carreras->toArray(),
+                        'tipoArticulo' => $tipoArticulo->toArray(),
+                    ]
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+        /**
+         * Funcion que muestra el reporte en grafica de la cantidad de solicitudes registradas por carrera
+         *
+         * @param Request $request
+         * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+         */
+        public function reporteSolicitudesGrafica(Request $request)   {
+            if ($request->isMethod('GET')) {
+                $carreras = Programas::all()->pluck('PRO_Nombre');
+                $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+                $varUsuarios = UsuarioAudiovisuales::
+                with('consultarPrograma')->get();
+                $varUsuarios = $varUsuarios->groupBy('USER_FK_Programa');
+                $array = array();
+                $array2 = array();
+                $nombreTipo = '';
+                $sumadorTipo = 0;
+                foreach ($varUsuarios as $articulo) {
+                    $nombreTipo = $articulo[0]['consultarPrograma']['PRO_Nombre'];
+                    $array = array_add($array, 'name', $nombreTipo);
+                    $sumadorTipo = 0;
+                    foreach ($articulo as $articuloSolicitud) {
+                        $suma = Solicitudes::where('PRT_FK_Funcionario_id', '=', $articuloSolicitud['USER_FK_User'])->count();
+                        $sumadorTipo = $sumadorTipo + $suma;
+                    }
+                    $array = array_add($array, 'data', array($sumadorTipo));
+                    array_push($array2, $array);
+                    $array = array();
+                }
+                return view('audiovisuals.reporte.reporteGraficaPrestamosProgramas',
+                    [
+                        'serie' => $array2,
+                        'carreras' => $carreras->toArray(),
+                        'tipoArticulo' => $tipoArticulo->toArray(),
+                    ]
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+
+
+
+        public function reporteCarreras(Request $request)   {
+            if ($request->isMethod('GET')) {
+                $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+                $carreras = Programas::all()->pluck('PRO_Nombre');
+                $tipoArticulo = TipoArticulo::all()->pluck('TPART_Nombre');
+                $varTiposArticulos = Articulo::
+                with('consultaTipoArticulo')->get();
+                $varTiposArticulos = $varTiposArticulos->groupBy('FK_ART_Tipo_id');
+                $array = array();
+                $array2 = array();
+                $nombreTipo = '';
+                $sumadorTipo = 0;
+                foreach ($varTiposArticulos as $articulo) {
+                    $nombreTipo = $articulo[0]['consultaTipoArticulo']['TPART_Nombre'];
+                    $array = array_add($array, 'name', $nombreTipo);
+                    $sumadorTipo = 0;
+                    foreach ($articulo as $articuloSolicitud) {
+                        $suma = Solicitudes::where('PRT_FK_Articulos_id', '=', $articuloSolicitud['id'])->count();
+                        $sumadorTipo = $sumadorTipo + $suma;
+                    }
+                    $array = array_add($array, 'data', array($sumadorTipo));
+                    array_push($array2, $array);
+                    $array = array();
+                }
+                return view('audiovisuals.reporte.ReporteCarreras',
+                    [
+                        'serie' => $array2,
+                        'carreras' => $carreras->toArray(),
+                        'tipoArticulo' => $tipoArticulo->toArray(),
+                    ]
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar la solicitud.'
+            );
+        }
+        public function downloadCarreras($anio,$mes)
+        {
+            $nombremes= array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+            $total = count($empleados);
+            $cont = 1;
+            $pdf = SnappyPdf::loadView('audiovisuals.reporte.ReporteCarreras',
+                [
+                    'empleados'=>$empleados->toArray(),
+                    'date'=>$date ,
+                    'time'=>$time   ,
+                    'total'=>$total   ,
+                    'cont'=>$cont,
+                    'anio'=>$anio,
+                    'mes'=>$mes,
+                    'nombremes'=>$nombremes,
+                    'pruba'=>1,
+                ]
+            );
+            $pdf->setOption('javascript-delay', 13000);
+            return $pdf->download('ReporteCarreras.pdf');
+        }
+        public function reporteTiempoUso()
+        {
+            $anio = date("Y");
+            $mes = date("m");
+            $nombremes = array('EN','FE','MA','ABR','MAY','JUN','JUL','AGO','SEP','OCTU','NO','DIC');
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+            $total = count($empleados);
+            $cont = 1;
+            return view('audiovisuals.reporte.TiempoUsoArticulos',
+                compact('empleados', 'date', 'time', 'cont'),
+                [
+                    'total'=>$total,
+                ]
+            );
+        }
+        public function downloadTiempoUso()
+        {
+            $anio = date("Y");
+            $mes = date("m");
+            $nombremes = array('ENERO','FEBRERO','MARZO','ABRRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $empleados = Articulo::whereNotNull('created_at', null)->orderBy('ART_Descripcion', 'asc')->get();
+            $total = count($empleados);
+            $cont = 1;
+            $pdf = SnappyPdf::loadView ('audiovisuals.reporte.TiempoUsoArticulos',
+                compact('empleados', 'date', 'time', 'cont'),
+                [
+                    'total'=>$total ,
+                ]
+            );
+            $pdf->setOption('javascript-delay', 13000);
+            return $pdf->download('ReporteCarreras.pdf');
+
+
         }
 
 }

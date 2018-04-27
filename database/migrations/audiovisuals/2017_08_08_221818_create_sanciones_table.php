@@ -24,7 +24,9 @@ class CreateSancionesTable extends Migration
             $table->integer('FK_SNS_Id_Solicitud')->unsigned()->nullable();
             $table->integer('SNS_Sancion_General')->unsigned()->nullable();
             $table->integer('SNS_Numero_Orden')->unsigned()->nullable();
+            $table->integer('SNS_Estado_Cancelacion')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
 
 
             //$table->foreign('FK_SNS_Tipo')->references('id')->on('TBL_Tipo_Sanciones');

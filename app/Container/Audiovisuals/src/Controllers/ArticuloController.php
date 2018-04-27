@@ -29,9 +29,7 @@ class ArticuloController extends Controller
          */
         public function indexArticulo(Request $request)
         {
-            //$fecha = Carbon::create(2018,4,21,16,35,0);
-            //$fecha2 = Carbon::create(2018,4,22,16,45,0);
-            //dd($fecha->diffInHours($fecha2)); // 24
+
 
             if ($request->isMethod('GET')) {
 

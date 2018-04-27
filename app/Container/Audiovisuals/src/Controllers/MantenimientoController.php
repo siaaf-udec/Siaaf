@@ -75,7 +75,6 @@ class MantenimientoController extends Controller
                     ]);
             }
             ])->get();
-            //dd($articulos);
             $articulos = $articulos->groupBy('PRT_FK_Articulos_id');
             $cont =0;
             $sumador=0;
@@ -95,14 +94,12 @@ class MantenimientoController extends Controller
                 }
                 $array = array_add($b[0], 'horasUso', $sumador);
                 array_push($array2,$array);
-                //dd($array2);
             }
             return DataTables::of($array2)
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
-            //dd($array2);
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

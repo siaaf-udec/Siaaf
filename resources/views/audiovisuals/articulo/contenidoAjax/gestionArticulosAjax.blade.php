@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Articulos'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Artículos'])
         <br>
         <div class="clearfix"></div>
         <div class="row">
@@ -28,7 +28,6 @@
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax'])
                 @slot('columns', [
-                    '#' => ['style' => 'width:20px;'],
                     'Tipo',
                     'Descripcion',
                     'Codigo',
@@ -200,7 +199,6 @@
         table = $('#art-table-ajax');
         url = "{{ route('listarArticulo.data') }}";
         columns = [
-            {data: 'DT_Row_Index'},
             {data: 'consulta_tipo_articulo.TPART_Nombre', name: 'consulta_tipo_articulo.TPART_Nombre'},
             {data: 'ART_Descripcion', name: 'ART_Descripcion'},
             {data: 'ART_Codigo', name: 'ART_Codigo'},

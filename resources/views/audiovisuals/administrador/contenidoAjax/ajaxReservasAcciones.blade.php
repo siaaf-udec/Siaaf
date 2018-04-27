@@ -275,8 +275,8 @@
             <br>
             <div>
                 <div class="col-md-12 col-md-offset-4">
-                    {!! Form::button('Recibir Observacion General', ['class' => 'btn btn-warning  getAll','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
-                    {!! Form::button('Aplicar Sanción General', ['class' => 'btn btn-danger  sancionGeneral','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
+                    {!! Form::button('Diligenciar Observacion General', ['class' => 'btn btn-warning  getAll','data-id_articulo'=>$articulos['PRT_Num_Orden']]) !!}
+
                 </div>
             </div>
         </div>
@@ -327,6 +327,7 @@
     jQuery(document).ready(function () {
         App.unblockUI('.portlet-form');
         handleiCheck();
+        var numOrdenReserva;
         var kitId;
         var observationKit,
             idSolicitud;
@@ -365,6 +366,7 @@
         });
         $('#contentFormularioPrestamos').on('click', '.recibir_kit', function(){
             idArticulo = $(this).data('id_kit');
+            console.log(idArticulo);
             var routeArticulos = '{{ route('listarArticulosKitEntregaAdministrador') }}' +'/' + idArticulo ;
             $('#elementosKit').empty();
             $.ajax({
@@ -520,7 +522,10 @@
             }
         });
         $('.getAll').on('click',function(){
-            numOrdenReserva=$(this).data('id_articulo');
+            numOrdenReserva = $(this).data('id_articulo');
+            console.log( numOrdenReserva);
+
+
             $('#modal-observation-prestamo').modal('toggle');
         });
         $('.sancionGeneral').on('click',function(){
@@ -535,7 +540,7 @@
                     var recibir = 'General';
                     observationKit = $('#observacionGeneral').val();
                     var routeupdate = '{{ route('solicitud.reserva.entregas') }}'+ '/'+ numOrdenReserva +'/'+observationKit+'/'+recibir;
-                    var route =  '{{ route('updatesPrestamoGeneral') }}'+'/'+ idArticulo;
+
                     $.get( routeupdate, function(){});
                     $('#modal-observation-prestamo').modal('hide');
                     $('#from_observation')[0].reset(); //Limpia formulario
@@ -554,7 +559,7 @@
                 init:function(){
                     var recibir ='individual';
                     observationKit = $('#observacionKit').val();
-                    routeupdate = '{{ route('solicitud.reserva.entregas') }}'+ '/'+ kitId+'/'+observationKit+'/'+recibir;
+                    routeupdate = '{{ route('solicitud.reserva.entregas') }}'+ '/'+ idArticulo+'/'+observationKit+'/'+recibir;
                     $(".fila_articulo[data-id_articulo='"+kitId+"']").html('');
                     $.get( routeupdate, function(){});
                     $('#modal-recibir-kit').modal('hide');

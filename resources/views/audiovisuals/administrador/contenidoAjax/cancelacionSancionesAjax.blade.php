@@ -180,6 +180,94 @@
                 }
             );
         });
+        $('#contentFormularioPrestamos').on('click', '.aplicar_sancion', function(){
+            idTblSancion = $(this).data('id_sancion');
+            console.log('idSancion'+ idTblSancion);
+            swal(
+                {
+                    title: "Registrar",
+                    text: "se registrará la cancelacion de la sancion",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        contador--;
+                        console.log(contador);
+                        if(contador != 0){
+                            var route = '{{ route('audiovisuales.aplicar.sancion') }}'+'/'+'cancelacionIndividual'+'/'+idTblSancion;
+                            var formDatas = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            formDatas.append('id_Sancion',idTblSancion);
+                            formDatas.append('accion','anulacionIndividual');
+                            $.ajax({
+                                url: route,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                cache: false,
+                                type: typeAjax,
+                                contentType: false,
+                                data: formDatas,
+                                processData: false,
+                                async: async,
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
+                                success: function (response, xhr, request) {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    $(".fila_articulo[data-id_sancion='"+idTblSancion+"']").html('');
+                                    App.unblockUI('.portlet-form');
+
+                                },
+                                error: function (response, xhr, request) {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }
+                            });
+                        }else{
+                            var route = '{{ route('audiovisuales.aplicar.sancion') }}'+'/'+'cancelacionFinal'+'/'+idTblSancion;
+                            var formDatas = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            var formDatas2 = new FormData();
+                            var typeAjax = 'POST';
+                            var async = async || false;
+                            formDatas2.append('id_Sancion',idTblSancion);
+                            formDatas2.append('accion','anulacionFinal');
+                            console.log('idSancionFinal '+idTblSancion);
+                            $.ajax({
+                                url: route,
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                cache: false,
+                                type: typeAjax,
+                                contentType: false,
+                                data: formDatas2,
+                                processData: false,
+                                async: async,
+                                beforeSend: function () {
+                                    App.blockUI({target: '.portlet-form', animate: true});
+                                },
+                                success: function (response, xhr, request) {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    var route = '{{ route('audiovisuales.gestionPrestamos.sanciones.ajax') }}';
+                                    $(".content-ajax").load(route);
+                                    App.unblockUI('.portlet-form');
+
+                                },
+                                error: function (response, xhr, request) {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }
+                            });
+                        }
+                    }
+                }
+            );
+        });
         $('.regresar').on('click', function(){
             var route = '{{ route('audiovisuales.gestionPrestamos.sanciones.ajax') }}';
             $(".content-ajax").load(route);

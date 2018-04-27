@@ -9,8 +9,11 @@
 namespace App\Container\Audiovisuals\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Sanciones extends Model
 {
+    use SoftDeletes;
     /**
      * Conexión de la base de datos usada por el modelo
      *
@@ -46,6 +49,7 @@ class Sanciones extends Model
         'FK_SNS_Id_Solicitud',
         'SNS_Sancion_General',
         'SNS_Numero_Orden',
+        'SNS_Estado_Cancelacion',
     ];
     /**
      * Función que retorna la relación entre la tabla 'TBL_Prestamos' y la tabla 'TBL_Usuario_Audiovisuales'

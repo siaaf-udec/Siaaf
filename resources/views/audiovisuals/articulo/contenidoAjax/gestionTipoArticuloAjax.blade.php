@@ -13,7 +13,7 @@
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
                     <h2 class="modal-title">
-                        <i class="glyphicon glyphicon-user">
+                        <i class="glyphicon glyphicon-edit">
                         </i>
                         Detalles Tipo Artículo
                     </h2>
@@ -60,14 +60,14 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="modal fade" data-width="380" id="modal-edit-tipo" tabindex="-1">
+            <div class="modal fade" data-width="500" id="modal-edit-tipo" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
                     <h2 class="modal-title">
-                        <i class="glyphicon glyphicon-user">
+                        <i class="glyphicon glyphicon-edit">
                         </i>
-                        Detalles Tipo Artículo
+                        Detalles Tipo Artículo Editar
                     </h2>
                 </div>
                 <div class="modal-body">
@@ -129,7 +129,6 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
             @slot('columns', [
-                '#' => ['style' => 'width:20px;'],
                 'Tipo',
                 'Cantidad Artículos',
                 'Tiempo',
@@ -165,7 +164,6 @@
         table = $('#tipoArt-table-ajax');
         url ="{{ route('listarTipoArticulos.data') }}";
         columns = [
-            {data: 'DT_Row_Index'},
             {data: 'TPART_Nombre' , name: 'TPART_Nombre'},
             {data: 'consultar_articulos_count' , name: 'consultar_articulos_count'},
             {data: 'Tiempo' , name: 'Tiempo'},
@@ -203,6 +201,7 @@
                 },
                 function(isConfirm) {
                     if (isConfirm) {
+                        $('#from_art_tipo_create')[0].reset();
                         $('#modal-create-tipo').modal('toggle');
 
                     } else {
