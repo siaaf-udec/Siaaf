@@ -2,7 +2,21 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Sanciones'])
         <div class="clearfix">
         </div>
-        <br><br><br>
+        <br>
+        <div class="row">
+                <div class="col-md-12">
+                        {{--@permission('AUDI_REQUESTS_VIEW_CANCELED_SANCTION')--}}
+                        <div class="actions">
+                                <a class="btn btn-outline dark sancionesCanceladas" data-toggle="modal">
+                                        <i class="fa fa-plus">
+                                        </i>
+                                        Consultar Registro Sanciones
+                                </a>
+                        </div>
+                        {{--@endpermission--}}
+                </div>
+        </div>
+        <br>
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'usuarios-table'])
                 @slot('columns', [
@@ -37,8 +51,8 @@
             {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'consulta_usuario_audiovisuales.user.identity_no'},
             {data: 'consulta_usuario_audiovisuales.user.email', name: 'consulta_usuario_audiovisuales.user.email'},
             {data: function(data){
-                return data.conultar_administrador_entrega.name +" "
-                    +data.conultar_administrador_entrega.lastname;
+                return data.consultar_administrador_entrega.user.name +" "
+                    +data.consultar_administrador_entrega.user.lastname;
             },name:'Administrador Entrega'},
             {data: 'SNS_Fecha', name: 'SNS_Fecha'},
             {
@@ -118,6 +132,11 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             var route = '{{ route('audiovisuales.listar.sanciones.asignadas.gestion') }}'+'/'+dataTable.SNS_Numero_Orden;
+            $(".content-ajax").load(route);
+        });
+        $( ".sancionesCanceladas" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('sanciones.canceladas.index') }}';
             $(".content-ajax").load(route);
         });
     });

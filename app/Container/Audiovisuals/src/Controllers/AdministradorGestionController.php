@@ -44,14 +44,14 @@ class AdministradorGestionController extends Controller
                 );
             }])->where([
                 ['PRT_FK_Tipo_Solicitud','=',2],
-                ['PRT_FK_Estado','!=',5]
+                ['PRT_FK_Estado','!=',5],//mantenimineto
+                ['PRT_FK_Estado','!=',7]//finalizado
             ])->get();//2=prestamos
             $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
             $array = array();
             foreach ($funcionarios as $le) {
                 array_push($array, $le[0]);
             }
-            //dd($array );
             if ($request->isMethod('GET')) {
                 return view('audiovisuals.administrador.prestamoArticulo');
             }
@@ -107,7 +107,8 @@ class AdministradorGestionController extends Controller
                     $funcionarios = Solicitudes::where([
                         ['PRT_FK_Tipo_Solicitud','=',2],
                         ['PRT_FK_Funcionario_id','=',$infoFuncionario->id],
-                        ['PRT_FK_Estado','!=',3]
+                        ['PRT_FK_Estado','!=',3],
+                        ['PRT_FK_Estado','!=',7]
 
                     ])->get();//2=prestamos
                     $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
@@ -558,7 +559,8 @@ class AdministradorGestionController extends Controller
                     );
                 }])->where([
                     ['PRT_FK_Tipo_Solicitud','=',2],
-                    ['PRT_FK_Estado','!=',5]
+                    ['PRT_FK_Estado','!=',5],
+                    ['PRT_FK_Estado','!=',7]
                 ])->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
                 $array = array();
@@ -635,10 +637,10 @@ class AdministradorGestionController extends Controller
                     ->update( [
                         'PRT_Observacion_Recibe' => $dataObservation,
                         'PRT_FK_Administrador_Recibe_id' => $id,
-                        'PRT_FK_Estado' => 3
+                        'PRT_FK_Estado' => 7//finalizado
                     ]);
-                $solicitudEliminar = Solicitudes::find($idSolicitud);
-                $solicitudEliminar -> delete();
+                //$solicitudEliminar = Solicitudes::find($idSolicitud);
+                //$solicitudEliminar -> delete();
                 Articulo::where('id','=',$idArt[0]['PRT_FK_Articulos_id'])->update(['FK_ART_Estado_id'=>4]);
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -767,7 +769,7 @@ class AdministradorGestionController extends Controller
                     ->update( [
                         'PRT_Observacion_Recibe' => $request->get('observacion'),
                         'PRT_FK_Administrador_Recibe_id' => $id,
-                        'PRT_FK_Estado' => 3
+                        'PRT_FK_Estado' => 7//finalizado
                     ]);
                 $consulta = Solicitudes::where('PRT_Num_Orden',"=",$idOrden)->get();
                 foreach ($consulta as $row){
@@ -781,10 +783,10 @@ class AdministradorGestionController extends Controller
                             ->update(['FK_ART_Estado_id'=>4]);
                     }
                 }
-                Solicitudes::where([
+                /*Solicitudes::where([
                     ['PRT_Num_Orden',"=",$idOrden],
                     ['PRT_FK_Tipo_Solicitud',"=",2]
-                ])->delete();
+                ])->delete();*/
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Devolución Correcta.'
@@ -810,11 +812,11 @@ class AdministradorGestionController extends Controller
                     ->update( [
                         'PRT_Observacion_Recibe' => $request->get('observacionKit'),
                         'PRT_FK_Administrador_Recibe_id' => $id,
-                        'PRT_FK_Estado' => 3
+                        'PRT_FK_Estado' => 7//finalizado
                     ]);
                 $kitId = Solicitudes::select('PRT_FK_Kits_id')->where('id','=',$idSolicitud)->get();
-                $solicitudEliminar = Solicitudes::find($idSolicitud);
-                $solicitudEliminar -> delete();
+                //$solicitudEliminar = Solicitudes::find($idSolicitud);
+                //$solicitudEliminar -> delete();
                 Kit::where('id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['KIT_FK_Estado_id'=>4]);
                 Articulo::where('FK_ART_Kit_id','=',$kitId[0]['PRT_FK_Kits_id'])->update(['FK_ART_Estado_id'=>4]);
                 return AjaxResponse::success(
@@ -895,7 +897,8 @@ class AdministradorGestionController extends Controller
                     );
                 }])->where([
                     ['PRT_FK_Tipo_Solicitud','=',1],
-                    ['PRT_FK_Estado','!=',5]//sancion
+                    ['PRT_FK_Estado','!=',5],//sancion
+                    ['PRT_FK_Estado','!=',7]
                 ])->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
                 $array = array();
@@ -984,8 +987,8 @@ class AdministradorGestionController extends Controller
         public function dataListarFuncionariosSolicitudesFinalizadas(Request $request)
         {
             if ($request->ajax() && $request->isMethod('GET')) {
-                $funcionarios = Solicitudes::onlyTrashed()
-                    ->with([
+                $funcionarios = Solicitudes::
+                    with([
                             'consultaUsuarioAudiovisuales'=> function($query){
                                 return $query->select('id','USER_FK_User')
                                     ->with(['user'=>function($query){
@@ -996,9 +999,30 @@ class AdministradorGestionController extends Controller
                                         }
                                         ]
                                     );
-                            },'conultarAdministradorEntrega','conultarAdministradorRecibe'
+                            },'consultarAdministradorEntrega'=> function($query){
+                                return $query->select('id','USER_FK_User')
+                                    ->with(['user'=>function($query){
+                                            return $query->select(
+                                                'id','name','lastname','email','identity_type',
+                                                'identity_no'
+                                            );
+                                        }
+                                        ]
+                                    );
+                            }
+                            ,'consultarAdministradorRecibe'=> function($query){
+                                return $query->select('id','USER_FK_User')
+                                    ->with(['user'=>function($query){
+                                            return $query->select(
+                                                'id','name','lastname','email','identity_type',
+                                                'identity_no'
+                                            );
+                                        }
+                                        ]
+                                    );
+                            }
                         ]
-                    )
+                    )->where('PRT_FK_Estado','=',7)
                     ->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
                 $array = array();
@@ -1061,7 +1085,7 @@ class AdministradorGestionController extends Controller
                             [
                                 'PRT_Observacion_Recibe' => $dataObservation,
                                 'PRT_FK_Administrador_Recibe_id' => $idAdmin,
-                                'PRT_FK_Estado' => 3
+                                'PRT_FK_Estado' => 7//finalizado
                             ]
                         );
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
@@ -1076,9 +1100,9 @@ class AdministradorGestionController extends Controller
                                 Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
-                        Solicitudes::where(
+                       /* Solicitudes::where(
                             'id', '=', $idSolicitud
-                        )->delete();
+                        )->delete();*/
                     }
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -1116,7 +1140,7 @@ class AdministradorGestionController extends Controller
                             [
                                 'PRT_Observacion_Recibe' => $dataObservation,
                                 'PRT_FK_Administrador_Recibe_id' => $idAdmin,
-                                'PRT_FK_Estado' => 3
+                                'PRT_FK_Estado' => 7//finalizado
                             ]
                         );
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
@@ -1131,9 +1155,7 @@ class AdministradorGestionController extends Controller
                                 Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
-                        Solicitudes::where(
-                            'PRT_Num_Orden', '=', $idSolicitud
-                        )->delete();
+
                     }
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -1269,9 +1291,21 @@ class AdministradorGestionController extends Controller
                                     }
                                     ]
                                 );
-                        },'conultarAdministradorEntrega'
+                        },'consultarAdministradorEntrega'=> function($query){
+                            return $query->select('id','USER_FK_User')
+                                ->with(['user'=>function($query){
+                                        return $query->select(
+                                            'id','name','lastname','email','identity_type',
+                                            'identity_no'
+                                        );
+                                    }
+                                    ]
+                                );
+                        }
                     ]
-                )->where('SNS_Estado_Cancelacion','=',0)->get();
+                )->where('SNS_Estado_Cancelacion','=',0)
+                    ->where('SNS_FK_Id_Estado','=',null)
+                    ->get();
                 $sanciones =($sanciones)->groupBy('SNS_Numero_Orden');
                 $array = array();
                 foreach ($sanciones as $le) {
@@ -1301,8 +1335,10 @@ class AdministradorGestionController extends Controller
                 if($accion == 'anulacionGeneral'){
                     $sancion = Sanciones::where('id','=',$idTblSancion)
                         ->get();
-                    Sanciones::where('SNS_Numero_Orden','=',$sancion[0]['SNS_Numero_Orden'])
-                        ->forceDelete();
+                    Sanciones::
+                        where('SNS_Numero_Orden','=',$sancion[0]['SNS_Numero_Orden'])
+                        ->update(['SNS_FK_Id_Estado'=>8]);//anulado
+                    //->forceDelete();
                     if($request->get('SNS_Sancion_General')== 1){
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('PRT_Num_Orden', '=',$sancion[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1316,8 +1352,10 @@ class AdministradorGestionController extends Controller
                                 Kit::where('id','=',$id->PRT_FK_Kits_id)->update(['KIT_FK_Estado_id'=>4]);
                             }
                         }
-                        Solicitudes::where('PRT_Num_Orden','=',$sancion[0]['FK_SNS_Id_Solicitud'])
-                        ->delete();
+                        //SNS_FK_Id_Estado
+                        Solicitudes::
+                        where('PRT_Num_Orden','=',$sancion[0]['FK_SNS_Id_Solicitud'])
+                            ->update(['PRT_FK_Estado'=>7]);//finalizado
                     }else{
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('id', '=',$sancion[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1332,15 +1370,17 @@ class AdministradorGestionController extends Controller
                             }
                         }
                         Solicitudes::where('id','=',$sancion[0]['FK_SNS_Id_Solicitud'])
-                        ->delete();
+                        ->update(['PRT_FK_Estado'=>7]);
                     }
                 }
                 if($request->get('accion')=='anulacionIndividual'){
                     Sanciones::where('id','=',$idTblSancion)
-                        ->forceDelete();
+                        ->update(['SNS_FK_Id_Estado'=>8]);
                 }
                 if($accion == 'anulacionFinal'){
-                    $sancionF = Sanciones::select('SNS_Sancion_General','FK_SNS_Id_Solicitud')->where('id','=',$idTblSancion)->get();
+                    $sancionF =
+                        Sanciones::select('SNS_Sancion_General','FK_SNS_Id_Solicitud')
+                            ->where('id','=',$idTblSancion)->get();
                     if($sancionF[0]['SNS_Sancion_General'] == 1){
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('PRT_Num_Orden', '=', $sancionF[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1355,9 +1395,9 @@ class AdministradorGestionController extends Controller
                             }
                         }
                         Solicitudes::where('PRT_Num_Orden','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
-                            ->delete();
+                            ->update(['PRT_FK_Estado'=>7]);
                         Sanciones::where('id','=',$idTblSancion)
-                            ->forceDelete();
+                            ->update(['SNS_FK_Id_Estado'=>8]);
                     }else{
                         $articulo = Solicitudes::select('PRT_FK_Articulos_id','PRT_FK_Kits_id')
                             ->where('id', '=', $sancionF[0]['FK_SNS_Id_Solicitud'])->get();
@@ -1372,9 +1412,9 @@ class AdministradorGestionController extends Controller
                             }
                         }
                         Sanciones::where('id','=',$idTblSancion)
-                            ->forceDelete();
+                            ->update(['SNS_FK_Id_Estado'=>8]);
                         Solicitudes::where('id','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
-                            ->delete();
+                            ->update(['PRT_FK_Estado'=>7]);
                     }
                 }
                 return AjaxResponse::success(
@@ -1420,7 +1460,7 @@ class AdministradorGestionController extends Controller
                             }
                         }
                         Solicitudes::where('PRT_Num_Orden','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
-                            ->delete();
+                            ->update(['PRT_FK_Estado'=>7]);
                         Sanciones::where('id','=',$idTblSancion)
                             ->update(['SNS_Estado_Cancelacion'=>1]);
                     }else{
@@ -1439,7 +1479,7 @@ class AdministradorGestionController extends Controller
                         Sanciones::where('id','=',$idTblSancion)
                             ->update(['SNS_Estado_Cancelacion'=>1]);
                         Solicitudes::where('id','=',$sancionF[0]['FK_SNS_Id_Solicitud'])
-                            ->delete();
+                            ->update(['PRT_FK_Estado'=>7]);
                     }
                 }
                 return AjaxResponse::success(
@@ -1517,9 +1557,7 @@ class AdministradorGestionController extends Controller
         public function indexSancionesCanceladas(Request $request)
         {
             if ($request->ajax() && $request->isMethod('GET')) {
-
                 return view('audiovisuals.administrador.contenidoAjax.sancionesCanceladasAjax'
-
                 );
             }
             return AjaxResponse::fail(
@@ -1547,7 +1585,7 @@ class AdministradorGestionController extends Controller
                         ]
                     );
                 }])->where([
-                    ['PRT_FK_Tipo_Solicitud','=',1],
+                   // ['PRT_FK_Tipo_Solicitud','=',1],
                     ['PRT_FK_Estado','!=',5]//sancion
                 ])->get();//2=prestamos
                 $funcionarios =($funcionarios)->groupBy('PRT_Num_Orden');
@@ -1584,15 +1622,43 @@ class AdministradorGestionController extends Controller
                                     }
                                     ]
                                 );
-                        },'conultarAdministradorEntrega'
+                        },'consultarAdministradorEntrega'=> function($query){
+                            return $query->select('id','USER_FK_User')
+                                ->with(['user'=>function($query){
+                                        return $query->select(
+                                            'id','name','lastname','email','identity_type',
+                                            'identity_no'
+                                        );
+                                    }
+                                    ]
+                                );
+                        }
                     ]
-                )->where('SNS_Estado_Cancelacion','=',1)->get();
+                )->where('SNS_Estado_Cancelacion','=',1)->
+                orWhere('SNS_FK_Id_Estado','=',8)-> get();
                 $sanciones =($sanciones)->groupBy('SNS_Numero_Orden');
                 $array = array();
                 foreach ($sanciones as $le) {
                     array_push($array, $le[0]);
                 }
                 return DataTables::of($array)
+                    ->addColumn('Estado', function ($sancionEstado) {
+                        if ($sancionEstado->SNS_FK_Id_Estado == 8) {
+                            return "Anulado";
+
+                        } else {
+                            return  "Cancelado";
+                        }
+                    })
+                    ->addColumn('Costo', function ($sancionEstado) {
+                        if ($sancionEstado->SNS_FK_Id_Estado == 8) {
+
+                            return  "0";
+
+                        } else {
+                            return $sancionEstado->SNS_Costo;
+                        }
+                    })
                     ->addIndexColumn()
                     ->make(true);
             }
@@ -1665,7 +1731,9 @@ class AdministradorGestionController extends Controller
                     $array = array_add($array, 'name', $nombreTipo);
                     $sumadorTipo = 0;
                     foreach ($articulo as $articuloSolicitud) {
-                        $suma = Solicitudes::where('PRT_FK_Articulos_id', '=', $articuloSolicitud['id'])->count();
+                        $suma = Solicitudes::where('PRT_FK_Articulos_id', '=', $articuloSolicitud['id'])
+                            ->where('PRT_FK_Estado', '=', 7)//solicitud finalizada
+                            ->count();
                         $sumadorTipo = $sumadorTipo + $suma;
                     }
                     $array = array_add($array, 'data', array($sumadorTipo));
@@ -1707,7 +1775,9 @@ class AdministradorGestionController extends Controller
                     $array = array_add($array, 'name', $nombreTipo);
                     $sumadorTipo = 0;
                     foreach ($articulo as $articuloSolicitud) {
-                        $suma = Solicitudes::where('PRT_FK_Funcionario_id', '=', $articuloSolicitud['USER_FK_User'])->count();
+                        $suma = Solicitudes::where('PRT_FK_Funcionario_id', '=', $articuloSolicitud['USER_FK_User'])
+                            ->where('PRT_FK_Estado', '=', 7)
+                            ->count();
                         $sumadorTipo = $sumadorTipo + $suma;
                     }
                     $array = array_add($array, 'data', array($sumadorTipo));

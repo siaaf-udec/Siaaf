@@ -23,8 +23,6 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Sanciones'])
             <br>
-            <br>
-            <br>
             <div class="row">
                 <div class="col-md-12">
                     {{--@permission('AUDI_REQUESTS_VIEW_CANCELED_SANCTION')--}}
@@ -32,7 +30,7 @@
                         <a class="btn btn-outline dark sancionesCanceladas" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
-                            Consultar Sanciones Canceladas
+                            Consultar Registro Sanciones
                         </a>
                     </div>
                     {{--@endpermission--}}
@@ -41,7 +39,6 @@
             <div class="clearfix">
             </div>
             <br>
-
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'usuarios-table'])
                     @slot('columns', [
@@ -125,8 +122,8 @@
                 {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'C.C'},
                 {data: 'consulta_usuario_audiovisuales.user.email', name: 'Correo'},
                 {data: function(data){
-                    return data.conultar_administrador_entrega.name +" "
-                        +data.conultar_administrador_entrega.lastname;
+                    return data.consultar_administrador_entrega.user.name +" "
+                        +data.consultar_administrador_entrega.user.lastname;
                 },name:'Administrador Entrega'},
                 {data: 'SNS_Fecha', name: 'SNS_Fecha'},
                 {

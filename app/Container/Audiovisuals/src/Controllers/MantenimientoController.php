@@ -80,7 +80,9 @@ class MantenimientoController extends Controller
             $sumador=0;
             $array2 = array();
             foreach ($articulos as $b) {
-                $tiempo = Solicitudes::where('PRT_FK_Articulos_id','=',$b[0]['PRT_FK_Articulos_id'])
+                $tiempo = Solicitudes::
+                where('PRT_FK_Articulos_id','=',$b[0]['PRT_FK_Articulos_id'])
+                    ->where('PRT_FK_Estado','=',7)
                     ->get();
                 $horas=0;
                 $sumador=0;

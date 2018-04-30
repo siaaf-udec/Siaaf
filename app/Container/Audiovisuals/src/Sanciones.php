@@ -50,6 +50,7 @@ class Sanciones extends Model
         'SNS_Sancion_General',
         'SNS_Numero_Orden',
         'SNS_Estado_Cancelacion',
+        'SNS_FK_Id_Estado',
     ];
     /**
      * Función que retorna la relación entre la tabla 'TBL_Prestamos' y la tabla 'TBL_Usuario_Audiovisuales'
@@ -65,8 +66,8 @@ class Sanciones extends Model
      * a través de la llave foránea 'PRT_FK_Administrador_Entrega_id' y la llave 'id'
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function	conultarAdministradorEntrega(){
-        return $this->belongsTo('App\Container\Users\Src\User','FK_SNS_Id_Administrador');
+    public function	consultarAdministradorEntrega(){
+        return $this->belongsTo(UsuarioAudiovisuales::class,'FK_SNS_Id_Administrador','USER_FK_User');
     }
     /**
      * Función que retorna la relación entre la tabla 'TBL_Prestamos' y la tabla 'users'

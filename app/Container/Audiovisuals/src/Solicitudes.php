@@ -73,8 +73,8 @@ class Solicitudes extends Model
      * a través de la llave foránea 'PRT_FK_Administrador_Entrega_id' y la llave 'id'
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function	conultarAdministradorEntrega(){
-        return $this->belongsTo('App\Container\Users\Src\User','PRT_FK_Administrador_Entrega_id','id');
+    public function	consultarAdministradorEntrega(){
+        return $this->belongsTo(UsuarioAudiovisuales::class,'PRT_FK_Administrador_Entrega_id','USER_FK_User');
     }
 
     /**
@@ -82,8 +82,8 @@ class Solicitudes extends Model
      * a través de la llave foránea 'PRT_FK_Administrador_Recibe_id' y la llave 'id'
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function	conultarAdministradorRecibe(){
-        return $this->belongsTo('App\Container\Users\Src\User','PRT_FK_Administrador_Recibe_id','id');
+    public function	consultarAdministradorRecibe(){
+        return $this->belongsTo(UsuarioAudiovisuales::class,'PRT_FK_Administrador_Recibe_id','USER_FK_User');
     }
 
     /**
