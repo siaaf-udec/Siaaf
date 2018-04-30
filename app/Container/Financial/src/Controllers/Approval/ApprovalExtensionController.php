@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Approval;
 
 use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Container\Financial\src\Requests\Approval\ApprovalExtensionRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ApprovalExtensionController extends Controller
@@ -29,7 +30,10 @@ class ApprovalExtensionController extends Controller
      */
     public function index()
     {
-        return view('financial.approval.extension.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.approval.extension.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -41,8 +45,11 @@ class ApprovalExtensionController extends Controller
      */
     public function update(ApprovalExtensionRequest $request, $id)
     {
-        return ( $this->extensionRepository->updateAdminExtension($request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->extensionRepository->updateAdminExtension($request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 }

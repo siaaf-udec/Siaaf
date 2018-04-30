@@ -50,7 +50,7 @@
                     return {
                         required: true,
                         autocomplete: 'off',
-                        maxlength: 191,
+                        maxlength: 60,
                         minlength: 2,
                         disabled: false,
                         readonly: false,

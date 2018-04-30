@@ -52,10 +52,15 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     {
         $status = $this->statusRequestRepository->getId( status_type_intersemestral(), sent_status() );
         $cost_service = $this->costServiceRepository->getId( status_type_intersemestral() );
-        $model->{ student_fk() }        =   auth()->user()->id;
-        $model->{ status_fk() }         =   $status->{ primaryKey() };
-        $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
-        return $model->save();
+
+        if ( isset( $status->{ primaryKey() } ) && isset( $cost_service->{ primaryKey() } ) ) {
+            $model->{student_fk()} = auth()->user()->id;
+            $model->{status_fk()} = $status->{primaryKey()};
+            $model->{cost_service_fk()} = $cost_service->{primaryKey()};
+            return $model->save();
+        }
+
+        return false;
     }
 
     /**
@@ -69,15 +74,19 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     {
         $approved = $this->statusRequestRepository->getId( status_type_intersemestral(), approved_status() );
         $model = $this->getModel()->find( $id );
-        if ( $request->status == $approved->{ primaryKey() } ) {
-            if ( !isset( $model->{ approval_date() } ) ) {
-                $model->{ approval_date() } = now();
-                $model->{ approved_by() }   = auth()->user()->id;
+
+        if ( isset( $approved->{ primaryKey() }, $model ) ) {
+            if ($request->status == $approved->{primaryKey()}) {
+                if (!isset($model->{approval_date()})) {
+                    $model->{approval_date()} = now();
+                    $model->{approved_by()} = auth()->user()->id;
+                }
+                $model->{realization_date()} = $request->date;
             }
-            $model->{ realization_date() }  =   $request->date;
+            $model->{status_fk()} = $request->status;
+            return $model->save();
         }
-        $model->{ status_fk() }         =   $request->status;
-        return $model->save();
+        return false;
     }
 
     /**
@@ -120,12 +129,16 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
 
         $status = $this->statusRequestRepository->getId( status_type_intersemestral(), waiting_quota_status() );
         $cost_service = $this->costServiceRepository->getId( status_type_intersemestral() );
-        $model = $this->getModel();
-        $model->{ subject_fk() }        =  $request->subject_matter;
-        $model->{ cost_service_fk() }   =  $cost_service->{ primaryKey() };
-        $model->{ status_fk() }         =  $status->{ primaryKey() };
-        if ( $model->save() ) {
-            return $this->intersemestralStudentRepository->subscribe( $model->{ primaryKey() } );
+        if ( isset( $status->{ primaryKey() } ) && isset( $cost_service->{ primaryKey() } ) ) {
+            $model = $this->getModel();
+            $model->{subject_fk()} = $request->subject_matter;
+            $model->{cost_service_fk()} = $cost_service->{primaryKey()};
+            $model->{status_fk()} = $status->{primaryKey()};
+            if ($model->save()) {
+                return $this->intersemestralStudentRepository->subscribe($model->{primaryKey()});
+            }
+
+            return false;
         }
 
         return false;
@@ -181,7 +194,7 @@ class IntersemestralRepository extends Methods implements FinancialIntersemestra
     public function subjectRelation($id, $whitRelations = false )
     {
         $model = $this->getAuth( [], $id );
-        $model = SubjectProgram::where( subject_fk() , $model->{ subject_fk() } );
+        $model = SubjectProgram::where( subject_fk() , isset($model->{ subject_fk() }) ? $model->{ subject_fk() } : 0 );
         $model = $whitRelations ? $model->with(['programs', 'subjects', 'teachers:id,name,lastname,phone,email']) : $model;
         return $model->first();
     }

@@ -100,7 +100,7 @@ return [
                     'description'   =>  'Antes de realizar la respectiva entrega física de los documentos, 
                                          recuerda adjuntar en un archivo PDF los documentos requeridos para
                                          la opción seleccionada que encontrarás en el siguiente link.',
-                    'icon'          => asset('assets/pages/scripts/financial/images/pdf.png'),
+                    'icon'          => '/assets/pages/scripts/financial/images/pdf.png',
                 ],
             ]
         ],
@@ -350,6 +350,7 @@ return [
         'yes'           =>  'Si',
         'no'            =>  'No',
         'ok'            =>  'Ok',
+        'actions'       =>  'Acciones',
     ],
 
     'email'         =>  [

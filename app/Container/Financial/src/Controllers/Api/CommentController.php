@@ -9,6 +9,7 @@ use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Container\Financial\src\Repository\IntersemestralRepository;
 use App\Container\Financial\src\Repository\ValidationRepository;
 use App\Container\Financial\src\Requests\Comments\CommentRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
@@ -59,95 +60,119 @@ class CommentController extends Controller
      * Get all comments for specific resource
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getExtensionComments($id )
     {
-        $comments = $this->extensionRepository->get(['comments.user:id,name,lastname'], $id);
-        return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
+        if (request()->isMethod('GET')) {
+            $comments = $this->extensionRepository->get(['comments.user:id,name,lastname'], $id);
+            return response()->json((isset($comments->comments)) ? $comments->comments : [], 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Store a comment for specific resource
      *
      * @param CommentRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function storeExtensionComments( CommentRequest $request )
     {
-        $status = ( $this->commentRepository->saveExtensionComment( $request )  ) ? 200 : 422;
-        return response()->json(null, $status);
+        if (request()->isMethod('POST')) {
+            $status = ($this->commentRepository->saveExtensionComment($request)) ? 200 : 422;
+            return response()->json(null, $status);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
      * Get all comments for specific resource
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getAddSubComments($id)
     {
-        $comments = $this->addSubRepository->get(['comments.user:id,name,lastname'], $id);
-        return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
+        if (request()->isMethod('GET')) {
+            $comments = $this->addSubRepository->get(['comments.user:id,name,lastname'], $id);
+            return response()->json((isset($comments->comments)) ? $comments->comments : [], 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Store a comment for specific resource
      *
      * @param CommentRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function storeAddSubComments(CommentRequest $request )
     {
-        $status = ( $this->commentRepository->saveAddSubComment( $request )  ) ? 200 : 422;
-        return response()->json(null, $status);
+        if (request()->isMethod('POST')) {
+            $status = ($this->commentRepository->saveAddSubComment($request)) ? 200 : 422;
+            return response()->json(null, $status);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
      * Get all comments for specific resource
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getValidationComments($id)
     {
-        $comments = $this->validationRepository->get(['comments.user:id,name,lastname'], $id);
-        return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
+        if (request()->isMethod('GET')) {
+            $comments = $this->validationRepository->get(['comments.user:id,name,lastname'], $id);
+            return response()->json((isset($comments->comments)) ? $comments->comments : [], 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Store a comment for specific resource
      *
      * @param CommentRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function storeValidationComments( CommentRequest $request )
     {
-        $status = ( $this->commentRepository->saveValidationComment( $request )  ) ? 200 : 422;
-        return response()->json(null, $status);
+        if (request()->isMethod('POST')) {
+            $status = ($this->commentRepository->saveValidationComment($request)) ? 200 : 422;
+            return response()->json(null, $status);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
      * Get all comments for specific resource
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getIntersemestralComments($id)
     {
-        $comments = $this->intersemestralRepository->get(['comments.user:id,name,lastname'], $id);
-        return response()->json( ( isset( $comments->comments ) ) ? $comments->comments : [] , 200 );
+        if (request()->isMethod('GET')) {
+            $comments = $this->intersemestralRepository->get(['comments.user:id,name,lastname'], $id);
+            return response()->json((isset($comments->comments)) ? $comments->comments : [], 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Store a comment for specific resource
      *
      * @param CommentRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function storeIntersemestralComments( CommentRequest $request )
     {
-        $status = ( $this->commentRepository->saveIntersemestralComment( $request )  ) ? 200 : 422;
-        return response()->json(null, $status);
+        if (request()->isMethod('POST')) {
+            $status = ($this->commentRepository->saveIntersemestralComment($request)) ? 200 : 422;
+            return response()->json(null, $status);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 }

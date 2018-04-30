@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 use App\Container\Financial\src\Repository\ValidationRepository;
 use App\Container\Financial\src\Requests\Requests\Student\ValidationStudentRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ValidationRequestController extends Controller
@@ -32,7 +33,10 @@ class ValidationRequestController extends Controller
      */
     public function index()
     {
-        return view('financial.requests.student.validation.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.validation.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,7 +46,10 @@ class ValidationRequestController extends Controller
      */
     public function create()
     {
-        return view('financial.requests.student.validation.create');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.validation.create');
+
+        return abort( 405 );
     }
 
     /**
@@ -53,9 +60,12 @@ class ValidationRequestController extends Controller
      */
     public function store(ValidationStudentRequest $request)
     {
-        return ( $this->validationRepository->storeStudentValidation( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->validationRepository->storeStudentValidation( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -66,7 +76,10 @@ class ValidationRequestController extends Controller
      */
     public function show($id)
     {
-        return view('financial.requests.student.validation.show', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.validation.show', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -77,7 +90,10 @@ class ValidationRequestController extends Controller
      */
     public function edit( $id )
     {
-        return view('financial.requests.student.validation.edit', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.validation.edit', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -89,9 +105,12 @@ class ValidationRequestController extends Controller
      */
     public function update(ValidationStudentRequest $request, $id )
     {
-        return ( $this->validationRepository->updateStudentValidation( $request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->validationRepository->updateStudentValidation( $request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -102,9 +121,11 @@ class ValidationRequestController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->validationRepository->deleteStudentValidation( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->validationRepository->deleteStudentValidation( $id ) ) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
 
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

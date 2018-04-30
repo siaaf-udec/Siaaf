@@ -5,6 +5,7 @@ use App\Container\Financial\src\Constants\ConstantRoles;
 use App\Container\Permissions\Src\Module;
 use App\Container\Permissions\Src\Permission;
 use App\Container\Permissions\Src\Role;
+use App\Container\Users\Src\User;
 use Illuminate\Database\Seeder;
 
 class RolePermissionFinancialTableSeeder extends Seeder
@@ -339,5 +340,26 @@ class RolePermissionFinancialTableSeeder extends Seeder
         $teacher->attachPermission( $financial );
         $student->attachPermission( $student_permissions );
         $secretary->attachPermission( $secretary_permissions );
+
+        factory(User::class)->create([
+            'email' => 'student@app.com'
+        ])->attachRole($student);
+
+        factory(User::class)->create([
+            'email' => 'secretary@app.com'
+        ])->attachRole($secretary);
+
+        factory(User::class)->create([
+            'email' => 'admin@app.com'
+        ])->attachRole($admin);
+
+        factory(User::class)->create([
+            'email' => 'teacher@app.com'
+        ])->attachRole($teacher);
+
+        $userRoot = User::where('email', 'root@app.com')->first();
+        if ( isset( $root->id ) ) {
+            $userRoot->attachRole($root);
+        }
     }
 }

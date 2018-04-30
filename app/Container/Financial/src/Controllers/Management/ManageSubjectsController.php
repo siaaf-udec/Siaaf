@@ -6,6 +6,7 @@ namespace App\Container\Financial\src\Controllers\Management;
 
 use App\Container\Financial\src\Repository\SubjectRepository;
 use App\Container\Financial\src\Requests\Subject\StoreSubjectRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ManageSubjectsController extends Controller
@@ -31,20 +32,26 @@ class ManageSubjectsController extends Controller
      */
     public function index()
     {
-        return view('financial.management.subjects.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.management.subjects.index');
+
+        return abort( 405 );
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreSubjectRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreSubjectRequest $request)
     {
-        return ( $this->subjectRepository->store( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->subjectRepository->store( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -56,9 +63,12 @@ class ManageSubjectsController extends Controller
      */
     public function update(StoreSubjectRequest $request, $id)
     {
-        return ( $this->subjectRepository->update($request, $id) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->subjectRepository->update($request, $id) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -69,8 +79,11 @@ class ManageSubjectsController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->subjectRepository->destroy( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->subjectRepository->destroy( $id ) ) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

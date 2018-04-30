@@ -9,6 +9,7 @@ use App\Container\Financial\src\Repository\SubjectProgramTeacherRepository;
 use App\Container\Financial\src\Repository\SubjectRepository;
 use App\Container\Financial\src\Repository\UserRepository;
 use App\Container\Financial\src\SubjectProgram;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class SubjectsProgramsFilterController extends Controller
@@ -52,47 +53,56 @@ class SubjectsProgramsFilterController extends Controller
     /**
      * Get a list of programs in options format
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function programs()
     {
-        $options = $this->programRepository->options( primaryKey(), program_name());
-        return response()->json($options, 200);
+        if ( request()->isMethod('GET') ) {
+            $options = $this->programRepository->options(primaryKey(), program_name());
+            return response()->json($options, 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Get a list of subjects in options format
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function subjects($id)
     {
-        $options = $this->subjectRepository->subjectsInProgramAsOptions( $id );
-        return response()->json($options, 200);
+        if ( request()->isMethod('GET') ) {
+            $options = $this->subjectRepository->subjectsInProgramAsOptions($id);
+            return response()->json($options, 200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
      * Get a list of teachers where has assigned subjects in options format
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function teachers($id)
     {
-        $teacher = $this->subjectProgramTeacherRepository->teachersIdsWhereHasSubject( $id );
+        if ( request()->isMethod('GET') ) {
+            $teacher = $this->subjectProgramTeacherRepository->teachersIdsWhereHasSubject($id);
 
-        $options = $this->userRepository->getModel()
-                        ->select('id', 'name', 'lastname')
-                        ->whereIn('id', $teacher);
+            $options = $this->userRepository->getModel()
+                ->select('id', 'name', 'lastname')
+                ->whereIn('id', $teacher);
 
-        foreach ($options->cursor() as $option) {
-            $items[] = [
-                'id'    => $option->id,
-                'text'  => $option->full_name
-            ];
+            foreach ($options->cursor() as $option) {
+                $items[] = [
+                    'id' => $option->id,
+                    'text' => $option->full_name
+                ];
+            }
+
+            return response()->json((isset($items)) ? $items : [], 200);
         }
-
-        return response()->json( ( isset($items) ) ? $items : [] , 200);
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

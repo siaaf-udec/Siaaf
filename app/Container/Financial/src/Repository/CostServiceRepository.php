@@ -31,6 +31,21 @@ class CostServiceRepository extends Methods implements FinancialCostServiceInter
         return $cost->save();
     }
 
+    public function checkAndSave( $request )
+    {
+        $cost = $this->getModel()->currentCost()
+                     ->where( cost_service_name(), $request->service_name )
+                     ->latest( cost_valid_until() )->first();
+        if ( isset( $cost->{ cost_valid_until() } ) ) {
+            if ( $cost->{ cost_valid_until() } >= today()  ) {
+                return false;
+            } else {
+                return $this->process( $this->getModel(), $request );
+            }
+        }
+        return $this->process( $this->getModel(), $request );
+    }
+
     /**
      * @return array
      */

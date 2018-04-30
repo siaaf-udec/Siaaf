@@ -31,18 +31,20 @@ class ProgramTransformer extends TransformerAbstract
         try {
             $edit  = actionLink(
                 'javascript:;',
-                'btn btn-icon-only edit yellow',
+                'edit',
                 'fa fa-pencil',
-                ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ]
+                ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ],
+                __('financial.buttons.edit')
             );
 
             $trash = actionLink(
                 'javascript:;',
-                'btn btn-icon-only red trash mt-ladda-btn ladda-button',
+                'trash',
                 'fa fa-trash',
-                ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
+                ['data-id' => $program->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ],
+                __('financial.buttons.delete')
             );
-            return "$edit $trash";
+            return createDropdown( [$edit, $trash] );
 
         } catch ( \Throwable $e ) {
             report( $e );

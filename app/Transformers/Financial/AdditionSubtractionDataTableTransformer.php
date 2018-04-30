@@ -55,41 +55,44 @@ class AdditionSubtractionDataTableTransformer extends TransformerAbstract
         try {
             $edit  = actionLink(
                 route('financial.requests.student.add-sub.edit', [ 'id' => $additionSubtraction->{ primaryKey() }]),
-                'btn btn-icon-only yellow',
+                '',
                 'fa fa-pencil',
-                [ 'data-original-title' => trans('javascript.tooltip.edit') ]
+                [ 'data-original-title' => trans('javascript.tooltip.edit') ],
+                __('financial.buttons.edit')
             );
 
             $trash = actionLink(
                 'javascript:;',
-                'btn btn-icon-only red trash mt-ladda-btn ladda-button',
+                'trash',
                 'fa fa-trash',
-                ['data-id' => $additionSubtraction->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
+                ['data-id' => $additionSubtraction->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ],
+                __('financial.buttons.delete')
             );
 
             $view = actionLink(
                 route('financial.requests.student.add-sub.show', [ 'id' => $additionSubtraction->{ primaryKey() }]),
-                'btn btn-icon-only green',
+                '',
                 'fa fa-eye',
-                [ 'data-original-title' => trans('javascript.tooltip.view') ]
+                [ 'data-original-title' => trans('javascript.tooltip.view') ],
+                __('financial.buttons.view')
             );
 
 
             $comments = actionLink(
                 route('financial.requests.student.add-sub.show', [ 'id' => $additionSubtraction->{ primaryKey() }]),
-                'btn btn-icon-only blue',
+                '',
                 'fa fa-comments',
                 [ 'data-original-title' => trans('javascript.tooltip.comments') ],
-                $additionSubtraction->comments->count()
+                trans_choice( 'financial.generic.comments', $additionSubtraction->comments->count(), [ 'num' => $additionSubtraction->comments->count() ] )
             );
 
             if ( isset( $additionSubtraction->status->{ status_name() } ) ) {
                 if ( $additionSubtraction->status->{ status_name() } == 'PENDIENTE' || $additionSubtraction->status->{ status_name() } == 'ENVIADO' ) {
-                    return $view.' '.$edit.' '.$trash.' '.$comments;
+                    return createDropdown( [$view, $edit, $trash, $comments] );
                 } elseif ( $additionSubtraction->status->{ status_name() } == 'RECHAZADO' ) {
-                    return $view.' '.$edit.' '.$comments;
+                    return createDropdown( [$view, $edit, $comments] );
                 } else {
-                    return $view.' '.$comments;
+                    return createDropdown( [$view, $comments] );
                 }
             }
         } catch (\Throwable $e) {

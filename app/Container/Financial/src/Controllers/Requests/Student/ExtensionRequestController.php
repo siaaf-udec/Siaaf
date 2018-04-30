@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Container\Financial\src\Requests\Requests\Student\ExtensionStudentRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,8 @@ class ExtensionRequestController extends Controller
      */
     public function index()
     {
-        return view('financial.requests.student.extension.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.extension.index');
     }
 
     /**
@@ -43,7 +45,8 @@ class ExtensionRequestController extends Controller
      */
     public function create()
     {
-        return view('financial.requests.student.extension.create');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.extension.create');
     }
 
     /**
@@ -54,9 +57,12 @@ class ExtensionRequestController extends Controller
      */
     public function store(ExtensionStudentRequest $request)
     {
-        return ( $this->extensionRepository->storeStudentExtension( $request ) ) ?
-                jsonResponse() :
-                jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->extensionRepository->storeStudentExtension( $request ) ) ?
+                    jsonResponse() :
+                    jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -67,7 +73,10 @@ class ExtensionRequestController extends Controller
      */
     public function show($id)
     {
-        return view('financial.requests.student.extension.show', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.extension.show', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -78,7 +87,10 @@ class ExtensionRequestController extends Controller
      */
     public function edit( $id )
     {
-        return view('financial.requests.student.extension.edit', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.extension.edit', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -90,9 +102,12 @@ class ExtensionRequestController extends Controller
      */
     public function update(ExtensionStudentRequest $request, $id )
     {
-        return ( $this->extensionRepository->updateStudentExtension( $request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->extensionRepository->updateStudentExtension( $request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -104,19 +119,22 @@ class ExtensionRequestController extends Controller
      */
     public function destroy(Request $request ,$id)
     {
-        if ( $this->extensionRepository->deleteStudentExtension( $id ) ) {
-            if ( $request->ajax() ) {
-                return response()->json(null, 200);
+        if ( request()->isMethod('DELETE') ) {
+            if ($this->extensionRepository->deleteStudentExtension($id)) {
+                if ($request->ajax()) {
+                    return response()->json(null, 200);
+                }
+                return redirect()->route('financial.requests.student.extension.index')->with('success', 200);
             }
-            return redirect()->route('financial.requests.student.extension.index')->with('success', 200);
+
+            $message = ['message' => trans('javascript.deleted_fail')];
+
+            if ($request->ajax()) {
+                return response()->json($message, 422);
+            }
+            return redirect()->back()->withErrors($message);
         }
 
-        $message = ['message' => trans('javascript.deleted_fail') ];
-
-        if ( $request->ajax() ) {
-            return response()->json($message, 422);
-        }
-        return redirect()->back()->withErrors($message);
-
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

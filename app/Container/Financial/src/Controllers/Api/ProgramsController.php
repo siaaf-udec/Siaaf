@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 
 
 use App\Container\Financial\src\Repository\ProgramRepository;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use App\Transformers\Financial\ProgramTransformer;
 
@@ -30,8 +31,11 @@ class ProgramsController extends Controller
      */
     public function datatable()
     {
-        return $this->programRepository->dataTables()
-                        ->setTransformer( new ProgramTransformer )
-                        ->toJson();
+        if ( request()->isMethod( 'GET' ) ) {
+            return $this->programRepository->dataTables()
+                            ->setTransformer( new ProgramTransformer )
+                            ->toJson();
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

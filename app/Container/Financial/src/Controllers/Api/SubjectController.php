@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 
 use App\Container\Financial\src\Repository\SubjectRepository;
 use App\Container\Financial\src\Subject;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use App\Transformers\Financial\SubjectTransformer;
 use Yajra\DataTables\DataTables;
@@ -32,7 +33,10 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return response()->json( $this->subjectRepository->subjectsAsOptionsUnassigned(), 200 );
+        if ( request()->isMethod('GET') )
+            return response()->json( $this->subjectRepository->subjectsAsOptionsUnassigned(), 200 );
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
@@ -43,7 +47,10 @@ class SubjectController extends Controller
      */
     public function show($id)
     {
-        return response()->json( $this->subjectRepository->subjectsAsOptionsUpdate( $id ), 200 );
+        if ( request()->isMethod('GET') )
+            return response()->json( $this->subjectRepository->subjectsAsOptionsUpdate( $id ), 200 );
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
@@ -54,8 +61,11 @@ class SubjectController extends Controller
      */
     public function datatable()
     {
-        return $this->subjectRepository->dataTables()
+        if (request()->isMethod('GET'))
+            return $this->subjectRepository->dataTables()
                         ->setTransformer( new SubjectTransformer )
                         ->toJson();
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

@@ -20,7 +20,7 @@ class CheckTransformer extends TransformerAbstract
             'status_label'  =>  isset( $check->{ 'status_label' } ) ? $check->{ 'status_label' } : null,
             'created_at'    =>  isset( $check->{ created_at() } ) ? $check->{ created_at() }->format('Y-m-d H:i:s') : null,
             'updated_at'    =>  isset( $check->{ updated_at() } ) ? $check->{ updated_at() }->format('Y-m-d H:i:s') : null,
-            'delivered_at'  =>  isset( $check->{ delivered_at() } ) ? $check->{ delivered_at() }->format('Y-m-d H:i:s') : null,
+            'delivered_at'  =>  isset( $check->{ delivered_at() } ) ? $check->{ delivered_at() }->format('Y-m-d') : null,
             'deleted_at'    =>  isset( $check->{ deleted_at() } ) ? $check->{ deleted_at() }->format('Y-m-d H:i:s') : null,
             'actions'       =>  $this->getActions( $check )
         ];
@@ -36,18 +36,20 @@ class CheckTransformer extends TransformerAbstract
 
             $edit  = actionLink(
                 'javascript:;',
-                'btn btn-icon-only edit yellow',
+                'edit',
                 'fa fa-pencil',
-                ['data-id' => $check->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ]
+                ['data-id' => $check->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ],
+                __('financial.buttons.edit')
             );
 
             $trash = actionLink(
                 'javascript:;',
-                'btn btn-icon-only red trash mt-ladda-btn ladda-button',
+                'trash',
                 'fa fa-trash',
-                ['data-id' => $check->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ]
+                ['data-id' => $check->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ],
+                __('financial.buttons.delete')
             );
-            return "$edit $trash";
+            return createDropdown( [$edit, $trash] );
 
         } catch ( \Throwable $e ) {
             report( $e );

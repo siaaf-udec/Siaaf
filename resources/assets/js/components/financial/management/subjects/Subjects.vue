@@ -190,7 +190,7 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 50,
+                            maxlength: 20,
                             minlength: 3,
                             class: null,
                             min: null,
@@ -206,8 +206,8 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: null,
-                            minlength: null,
+                            maxlength: 1,
+                            minlength: 1,
                             class: null,
                             min: 1,
                             max: 5,
@@ -220,7 +220,7 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 191,
+                            maxlength: 50,
                             minlength: 1,
                             class: null,
                             min: null,
@@ -386,8 +386,7 @@
                         },
                     }).then( (result) => {
                         if ( result.value ) {
-                            $tr.remove();
-                            that.handleTooltips();
+                            table.ajax.reload(that.handleTooltips(), false);
                             swal(Lang.get('javascript.success'), Lang.get('javascript.deleted_done'), "success");
                         }
                     }).catch(swal.noop);
@@ -543,9 +542,8 @@
                         },
                     }).then( (result) => {
                         if ( result.value ) {
-                            $tr.remove();
                             that.getSubjects();
-                            that.handleTooltips();
+                            table.ajax.reload(that.handleTooltips(), false);
                             swal(Lang.get('javascript.success'), Lang.get('javascript.deleted_done'), "success");
                         }
                     }).catch(swal.noop);

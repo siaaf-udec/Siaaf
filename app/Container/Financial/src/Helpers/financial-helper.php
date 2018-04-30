@@ -7,6 +7,7 @@ use App\Container\Financial\src\Constants\ConstantStatus;
 use App\Container\Financial\src\Helpers\StringFormatter;
 use App\Container\Financial\src\Constants\ConstantLabelClasses;
 use App\Container\Financial\src\Constants\SchemaConstant;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -88,11 +89,26 @@ function actionLink( $route, $class = '', $icon = 'fa fa-square', $attributes = 
                 'link'       => $route,
                 'class'      => $class,
                 'icon'       => $icon,
-                'text'       => $text,
+                'text'       => strip_tags($text),
                 'attributes' => htmlAttributes($attributes),
             ]
         )->render();
     }catch (Exception $e) {
+        report($e);
+        return false;
+    }
+}
+
+/**
+ * @param array $actions
+ * @return bool|string
+ * @throws Throwable
+ */
+function createDropdown( $actions = [] )
+{
+    try {
+        return view('financial.templates.actions.dropdown', ['actions' => $actions])->render();
+    } catch (Exception $e) {
         report($e);
         return false;
     }
@@ -159,14 +175,10 @@ function progressBar( $max, $now ) {
  * @param string $title
  * @param string $message
  * @param int $status
- * @return \Illuminate\Http\JsonResponse
+ * @return \Illuminate\Http\Response
  */
 function jsonResponse($title = 'success', $message = 'processed', $status = 200 ) {
-    $message = [
-        'title'     =>  trans("javascript.$title"),
-        'message'   =>  trans("javascript.$message")
-    ];
-    return response()->json($message, $status);
+    return AjaxResponse::make( trans("javascript.$title"), trans("javascript.$message"), '', $status);
 }
 
 /**

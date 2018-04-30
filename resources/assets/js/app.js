@@ -44,6 +44,7 @@ Vue.component("vue-modal", require( financial.templates + "Modal.vue"));
 Vue.component("vue-alert", require( financial.templates + "Alert.vue"));
 Vue.component("vue-select2", require( financial.templates + "Select2.vue"));
 Vue.component("vue-input", require( financial.templates + "Input.vue"));
+Vue.component("vue-input-empty", require( financial.templates + "VueInput.vue"));
 Vue.component("vue-ribbon", require( financial.templates + "Ribbon.vue"));
 Vue.component("portlet-actions", require( financial.templates + "PortletActions.vue"));
 Vue.component("empty-sortable-portlet", require( financial.templates + "EmptySortablePortlet.vue"));
@@ -112,6 +113,13 @@ String.prototype.capitalize = function() {
 };
 
 import {mixinAuthUser} from "./mixins";
+import {Ziggy} from "./ziggy";
+
+Vue.mixin({
+    methods: {
+        route: route
+    }
+});
 
 const app = new Vue({
     el: "#app",

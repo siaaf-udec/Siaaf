@@ -153,7 +153,7 @@
                     },
                     { data:'view',  name: 'view',
                         render: function (data, type, row) {
-                            return `<a class="btn btn-success btn-small" href="${data}"><i class="fa fa-eye"></i></a>`;
+                            return `<a class="btn btn-success btn-small" href="${data}"><i class="fa fa-eye"> ${ Lang.get('financial.buttons.view') }</i></a>`;
                         }
                     },
                 ],

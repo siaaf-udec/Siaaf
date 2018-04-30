@@ -22,9 +22,8 @@ class RoleRepository extends Methods implements FinancialRoleInterface
      */
     public function isTeacher()
     {
-        return $this->getModel()
-                    ->where('name', ConstantRoles::FINANCIAL_TEACHER_ROLE )
-                    ->select('id')->get()->first()->id;
+        $teacher = $this->getModel()->where('name', teacher_role() )->select('id')->first();
+        return isset( $teacher->id ) ? $teacher->id : 0;
     }
 
     /**
@@ -34,9 +33,8 @@ class RoleRepository extends Methods implements FinancialRoleInterface
      */
     public function isStudent()
     {
-        return $this->getModel()
-            ->where('name', ConstantRoles::FINANCIAL_STUDENT_ROLE )
-            ->select('id')->get()->first()->id;
+        $student = $this->getModel()->where('name', student_role() )->select('id')->first();
+        return isset($student->id) ? $student->id : 0;
     }
 
     /**
@@ -46,9 +44,8 @@ class RoleRepository extends Methods implements FinancialRoleInterface
      */
     public function isAdmin()
     {
-        return $this->getModel()
-            ->where('name', ConstantRoles::FINANCIAL_ADMIN_ROLE )
-            ->select('id')->get()->first()->id;
+        $admin = $this->getModel()->where('name', admin_role() )->select('id')->first();
+        return isset( $admin->id ) ? $admin->id : 0;
     }
 
     /**
@@ -58,9 +55,8 @@ class RoleRepository extends Methods implements FinancialRoleInterface
      */
     public function isSecretary()
     {
-        return $this->getModel()
-            ->where('name', ConstantRoles::FINANCIAL_SECRETARY_ROLE )
-            ->select('id')->get()->first()->id;
+        $secretary = $this->getModel()->where('name', secretary_role() )->select('id')->first();
+        return isset( $secretary->id ) ? $secretary->id : 0;
     }
 
     /**

@@ -37,9 +37,9 @@ class CheckRepository extends Methods implements FinancialCheckInterface
      * @param $id
      * @return bool
      */
-    public function checkStatus($id )
+    public function checkStatus( $id )
     {
-        return $this->getModel()->find( $id )->{ status() } === Check::DELIVERED;
+        return isset( $this->getModel()->find( $id )->{ status() } ) && $this->getModel()->find( $id )->{ status() } === Check::DELIVERED;
     }
 
     /**
@@ -54,6 +54,11 @@ class CheckRepository extends Methods implements FinancialCheckInterface
         $model->{ check() }         =   $request->check;
         $model->{ pay_to() }        =   $request->pay_to;
         $model->{ status() }        =   $request->status;
+        if ( (int) $request->status === Check::DELIVERED ) {
+            $model->{delivered_at()} = isset($request->delivered_at) ? $request->delivered_at : null;
+        } else {
+            $model->{delivered_at()} = null;
+        }
         return $model->save();
     }
 }

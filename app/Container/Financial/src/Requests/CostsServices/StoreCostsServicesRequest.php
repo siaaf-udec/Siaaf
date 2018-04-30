@@ -25,7 +25,7 @@ class StoreCostsServicesRequest extends FormRequest
     public function rules()
     {
         return [
-            'cost' => 'required|numeric',
+            'cost' => 'required|numeric|min:0|max:9999999',
             'service_name' => 'required',
             'valid_until' => 'required|date|after:now',
         ];

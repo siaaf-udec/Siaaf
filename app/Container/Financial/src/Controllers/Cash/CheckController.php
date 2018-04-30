@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Cash;
 
 use App\Container\Financial\src\Repository\CheckRepository;
 use App\Container\Financial\src\Requests\Check\CheckRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class CheckController extends Controller
@@ -30,7 +31,10 @@ class CheckController extends Controller
      */
     public function index()
     {
-        return view('financial.check.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.check.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -41,9 +45,12 @@ class CheckController extends Controller
      */
     public function store(CheckRequest $request)
     {
-        return ( $this->checkRepository->store( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->checkRepository->store( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -55,9 +62,12 @@ class CheckController extends Controller
      */
     public function update(CheckRequest $request, $id)
     {
-        return ( $this->checkRepository->update($request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->checkRepository->update($request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -68,11 +78,15 @@ class CheckController extends Controller
      */
     public function destroy($id)
     {
-        if ( $this->checkRepository->checkStatus( $id ) ) {
-            return jsonResponse('error', 'deleted_fail_status', 422);
+        if ( request()->isMethod('DELETE') ) {
+            if ($this->checkRepository->checkStatus($id)) {
+                return jsonResponse('error', 'deleted_fail_status', 422);
+            }
+            return ($this->checkRepository->destroy($id)) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
         }
-        return ( $this->checkRepository->destroy( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

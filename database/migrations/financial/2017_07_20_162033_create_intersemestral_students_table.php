@@ -24,8 +24,6 @@ class CreateIntersemestralStudentsTable extends Migration
                     ->comment('Campo que identifica al estudiantes inscrito en el intersemestral');
             $table->boolean( SchemaConstant::PAID )
                     ->comment('Campo que identifica si el estudiante pagó el intersemestral.');
-            $table->unsignedInteger(SchemaConstant::STATUS_FOREIGN_KEY)
-                    ->comment('Campo que contiene el identificador del estado de la solicitud');
             $table->timestamps();
             $table->softDeletes();
         });

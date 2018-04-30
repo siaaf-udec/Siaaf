@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 use App\Container\Financial\src\Repository\AddSubRepository;
 use App\Container\Financial\src\Requests\Requests\Student\AddSubStudentRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class AddSubRequestController extends Controller
@@ -32,7 +33,10 @@ class AddSubRequestController extends Controller
      */
     public function index()
     {
-        return view('financial.requests.student.addsub.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.addsub.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,7 +46,10 @@ class AddSubRequestController extends Controller
      */
     public function create()
     {
-        return view('financial.requests.student.addsub.create');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.addsub.create');
+
+        return abort( 405 );
     }
 
     /**
@@ -53,9 +60,12 @@ class AddSubRequestController extends Controller
      */
     public function store(AddSubStudentRequest $request)
     {
-        return ( $this->addSubRepository->storeStudentAddSub( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->addSubRepository->storeStudentAddSub( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -66,7 +76,10 @@ class AddSubRequestController extends Controller
      */
     public function show($id)
     {
-        return view('financial.requests.student.addsub.show', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.addsub.show', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -77,7 +90,10 @@ class AddSubRequestController extends Controller
      */
     public function edit( $id )
     {
-        return view('financial.requests.student.addsub.edit', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.addsub.edit', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -89,9 +105,12 @@ class AddSubRequestController extends Controller
      */
     public function update(AddSubStudentRequest $request, $id )
     {
-        return ( $this->addSubRepository->updateStudentAddSub( $request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->addSubRepository->updateStudentAddSub( $request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -102,9 +121,12 @@ class AddSubRequestController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->addSubRepository->deleteStudentAddSub( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->addSubRepository->deleteStudentAddSub( $id ) ) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
 
     }
 }

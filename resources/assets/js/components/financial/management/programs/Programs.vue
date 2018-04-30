@@ -73,15 +73,15 @@
                             inputAttributes: {
                                 autocompete: 'off',
                                 minlength: 2,
-                                maxlength: 191,
+                                maxlength: 60,
                                 required: 'required',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
-                                    } else if ( value.length < 3 || value.length > 191 ) {
-                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 191, attribute: Lang.get('validation.attributes.program') } ) )
+                                    } else if ( value.length < 3 || value.length > 60 ) {
+                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.program') } ) )
                                     } else {
                                         resolve()
                                     }
@@ -145,15 +145,15 @@
                             inputAttributes: {
                                 autocompete: 'off',
                                 minlength: 2,
-                                maxlength: 191,
+                                maxlength: 60,
                                 required: 'required',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
-                                    } else if ( value.length < 3 || value.length > 191 ) {
-                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 191, attribute: Lang.get('validation.attributes.program') } ) )
+                                    } else if ( value.length < 3 || value.length > 60 ) {
+                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.program') } ) )
                                     } else {
                                         resolve()
                                     }

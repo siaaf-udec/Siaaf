@@ -43,12 +43,17 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     {
         $status = $this->statusRequestRepository->getId( status_type_addition_subtraction(), sent_status() );
         $cost_service = $this->costServiceRepository->getId( status_type_addition_subtraction() );
-        $model->{ action_subject() }    =   $request->action;
-        $model->{ subject_fk() }        =   $request->subject_matter;
-        $model->{ student_fk() }        =   auth()->user()->id;
-        $model->{ status_fk() }         =   $status->{ primaryKey() };
-        $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
-        return $model->save();
+
+        if ( isset( $status->{ primaryKey() } ) && isset( $cost_service->{ primaryKey() } ) ) {
+            $model->{ action_subject() }    =   $request->action;
+            $model->{ subject_fk() }        =   $request->subject_matter;
+            $model->{ student_fk() }        =   auth()->user()->id;
+            $model->{ status_fk() }         =   $status->{ primaryKey() };
+            $model->{ cost_service_fk() }   =   $cost_service->{ primaryKey() };
+            return $model->save();
+        }
+
+        return false;
     }
 
     /**
@@ -62,14 +67,18 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     {
         $approved = $this->statusRequestRepository->getId( status_type_addition_subtraction(), approved_status() );
         $model = $this->getModel()->find( $id );
-        if ( $request->status == $approved->{ primaryKey() } ) {
-            if ( !isset( $model->{ approval_date() } ) ) {
-                $model->{ approval_date() } = now();
-                $model->{ approved_by() }   = auth()->user()->id;
+        if ( isset( $approved->{ primaryKey() }, $model ) ) {
+            if ($request->status == $approved->{primaryKey()}) {
+                if (!isset($model->{approval_date()})) {
+                    $model->{approval_date()} = now();
+                    $model->{approved_by()} = auth()->user()->id;
+                }
             }
+            $model->{status_fk()} = $request->status;
+            return $model->save();
         }
-        $model->{ status_fk() }         =   $request->status;
-        return $model->save();
+
+        return false;
     }
 
     /**
@@ -105,13 +114,17 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     {
         $status = $this->statusRequestRepository->getId( status_type_addition_subtraction(), sent_status() );
         $cost_service = $this->costServiceRepository->getId( status_type_addition_subtraction() );
-        $model = $this->getModel();
-        $model->{ action_subject() }        =  $request->action;
-        $model->{ subject_fk() }            =  $request->subject_matter;
-        $model->{ student_fk() }            =  auth()->user()->id;
-        $model->{ cost_service_fk() }       =  $cost_service->{ primaryKey() };
-        $model->{ status_fk() }             =  $status->{ primaryKey() };
-        return $model->save();
+        if ( isset( $status->{ primaryKey() } ) && isset( $cost_service->{ primaryKey() } ) ) {
+            $model = $this->getModel();
+            $model->{action_subject()} = $request->action;
+            $model->{subject_fk()} = $request->subject_matter;
+            $model->{student_fk()} = auth()->user()->id;
+            $model->{cost_service_fk()} = $cost_service->{primaryKey()};
+            $model->{status_fk()} = $status->{primaryKey()};
+            return $model->save();
+        }
+
+        return false;
     }
 
     /**
@@ -151,7 +164,7 @@ class AddSubRepository extends Methods implements FinancialAddSubInterface
     public function subjectRelation($id, $whitRelations = false )
     {
         $model = $this->getAuth( [], $id );
-        $model = SubjectProgram::where( subject_fk() , $model->{ subject_fk() } );
+        $model = SubjectProgram::where( subject_fk() , isset( $model->{ subject_fk() } ) ? $model->{ subject_fk() } : 0 );
         $model = $whitRelations ? $model->with(['programs', 'subjects', 'teachers:id,name,lastname,phone,email']) : $model;
         return $model->first();
     }

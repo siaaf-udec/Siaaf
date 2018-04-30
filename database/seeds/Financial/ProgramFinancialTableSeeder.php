@@ -1,8 +1,5 @@
 <?php
 
-namespace database\seeds\Financial;
-
-
 use App\Container\Financial\src\Constants\SchemaConstant;
 use App\Container\Financial\src\Program;
 use Illuminate\Database\Seeder;

@@ -224,7 +224,7 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 191,
+                            maxlength: 20,
                             minlength: 2,
                         }
                     },
@@ -237,7 +237,7 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 191,
+                            maxlength: 60,
                             minlength: 2,
                         }
                     },
@@ -264,6 +264,8 @@
                             autocomplete: 'off',
                             class: 'date date-picker',
                             readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
                         }
                     }
                 },

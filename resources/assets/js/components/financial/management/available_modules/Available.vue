@@ -139,6 +139,8 @@
                             autocomplete: 'off',
                             class: 'date date-picker',
                             readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
                         }
                     },
                     available_until: {
@@ -152,6 +154,8 @@
                             autocomplete: 'off',
                             class: 'date date-picker',
                             readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
                         }
                     },
                 },

@@ -148,6 +148,7 @@
                     text: Lang.get('financial.buttons.delete')
                 },
                 comment: 0,
+                status: null,
             }
         },
         mounted: function () {
@@ -170,6 +171,9 @@
                             self.triggerSwal(data);
                         },
                     },
+                    createdRow: function (  nRow, aData, iDataIndex ) {
+                        self.status = aData.status_name;
+                    }
                 });
                 $('.date-picker').datepicker({
                     rtl: App.isRTL(),

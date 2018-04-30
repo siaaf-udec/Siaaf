@@ -20,7 +20,7 @@
         <h3 class="sbold blog-comments-title" v-text="leave_a_comment"></h3>
         <form action="" method="POST" id="blog-comments-form">
             <div class="form-group">
-                <textarea rows="2" maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" class="form-control c-square"></textarea>
+                <input type="text" rows="2" maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" class="form-control c-square" />
             </div>
             <div class="form-group" v-if="errors">
                 <hr>
@@ -129,7 +129,7 @@
                         comment: (comment.comment) ? comment.comment.replace(/(<([^>]+)>)/ig,"") : '',
                         name:  (comment.user) ? comment.user.full_name : Lang.get('financial.generic.empty'),
                         picture: (comment.user) ? ( comment.user.profile_picture.length === 16 ) ? `data:image/png;base64,${new Identicon( comment.user.profile_picture , 420).toString()}` : comment.user.profile_picture : `data:image/png;base64,${new Identicon( 'c157a79031e1c40f85931829bc5fc552' , 420).toString()}`,
-                        date: moment( comment.created_at ).fromNow(),
+                        date: ( comment.created_at  ) ? moment( comment.created_at ).fromNow() : null,
                         chat: comment.comment_class
                     }
                 })

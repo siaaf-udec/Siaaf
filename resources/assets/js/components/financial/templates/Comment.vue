@@ -124,10 +124,10 @@
             formatComment: function () {
                 return this.comments.map( (comment) => {
                     return {
-                        comment: comment.comment,
+                        comment: (comment.comment) ? comment.comment.replace(/(<([^>]+)>)/ig,"") : null,
                         name:  (comment.user) ? comment.user.full_name : Lang.get('financial.generic.empty'),
                         picture: (comment.user) ? ( comment.user.profile_picture.length === 16 ) ? `data:image/png;base64,${new Identicon( comment.user.profile_picture , 420).toString()}` : comment.user.profile_picture : `data:image/png;base64,${new Identicon( 'c157a79031e1c40f85931829bc5fc552' , 420).toString()}`,
-                        date: moment( comment.created_at ).fromNow(),
+                        date: ( comment.created_at  ) ? moment( comment.created_at ).fromNow() : null,
                         chat: comment.comment_class
                     }
                 })

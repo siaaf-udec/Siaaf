@@ -21,7 +21,6 @@ class UserTransformer extends TransformerAbstract
             'is_icon'          =>      isset( $user->profile_picture ) ? isIdentIcon( $user->profile_picture ) : null,
             'email'            =>      isset( $user->email ) ? $user->email : __('financial.generic.empty'),
             'phone'            =>      isset( $user->phone ) ? $user->phone : __('financial.generic.empty'),
-
         ];
     }
 }
