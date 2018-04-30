@@ -72,7 +72,7 @@
                                             <div class="col-md-4 col-md-offset-1">
                                                 {!! Field::text(
                                                         'name_create',
-                                                        ['label' => 'Nombre', 'auto' => 'off'],
+                                                        ['label' => 'Nombre', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                         ['help' => 'Digite su Nombre']) !!}
                                                 {!! Field::date(
                                                         'date_birthday',
@@ -88,7 +88,7 @@
                                                         ['help' => 'Digite su fecha de expedición', 'icon' => 'fa fa-calendar']) !!}
                                                 {!! Field::text(
                                                         'phone_create',
-                                                        ['label' => 'Numero Telefonico', 'auto' => 'off'],
+                                                        ['label' => 'Numero Telefonico', 'auto' => 'off', 'max' => '30 ', 'min' => '4'],
                                                         ['help' => 'Digite su numero telefonico']) !!}
                                                 {!! Field::email(
                                                         'email_create',
@@ -98,7 +98,7 @@
                                             <div class="col-md-4 col-md-offset-1">
                                                 {!! Field::text(
                                                     'lastname_create',
-                                                    ['label' => 'Apellido', 'auto' => 'off'],
+                                                    ['label' => 'Apellido', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                     ['help' => 'Digite su Apellido']) !!}
                                                 {!! Field::select(
                                                     'sexo_create',
@@ -106,11 +106,11 @@
                                                     [ 'label' => 'Sexo']) !!}
                                                 {!! Field::text(
                                                         'identity_no_create',
-                                                        ['label' => 'Numero de Identificación', 'auto' => 'off'],
+                                                        ['label' => 'Numero de Identificación', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                         ['help' => 'Numero de Identificación']) !!}
                                                 {!! Field::text(
                                                         'identity_expe_place_create',
-                                                        ['label' => 'Lugar de expedición', 'auto' => 'off'],
+                                                        ['label' => 'Lugar de expedición', 'auto' => 'off', 'max' => '30 ', 'min' => '4'],
                                                         ['help' => 'Lugar de expedición']) !!}
                                                 {!! Field::select(
                                                         'state_create',
@@ -118,7 +118,7 @@
                                                         [ 'label' => 'Estado']) !!}
                                                 {!! Field::password(
                                                         'password_create',
-                                                        ['label' => 'Contraseña'],
+                                                        ['label' => 'Contraseña', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                         ['help' => 'Digite su contreaseña.']) !!}
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@
                                             <div class="col-md-4 col-md-offset-1">
                                                 {!! Field::text(
                                                         'address_create',
-                                                        ['label' => 'Dirección Procedencia', 'auto' => 'off'],
+                                                        ['label' => 'Dirección Procedencia', 'auto' => 'off', 'max' => '30', 'min' => '4', 'required'],
                                                         ['help' => 'Digite su dirección de procedencia']) !!}
                                                 {!! Field::select(
                                                         'Departamento', null,

@@ -116,13 +116,13 @@
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name"> {{ $user->name }} </div>
-                                <div class="profile-usertitle-job"> Developer</div>
+                                <div class="profile-usertitle-job"> {{ $user->role}}</div>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
                             <!-- SIDEBAR BUTTONS -->
                             <div class="profile-userbuttons">
-                                <button type="button" class="btn btn-circle green btn-sm">Follow</button>
-                                <button type="button" class="btn btn-circle red btn-sm">Message</button>
+                               <!-- <button type="button" class="btn btn-circle green btn-sm">Follow</button>
+                                <button type="button" class="btn btn-circle red btn-sm">Message</button> -->
                             </div>
                             <!-- END SIDEBAR BUTTONS -->
                             <!-- SIDEBAR MENU -->
@@ -130,15 +130,15 @@
                                 <ul class="nav">
                                     <li>
                                         <a href="page_user_profile_1.html">
-                                            <i class="icon-home"></i> Overview </a>
+                                            <i class="icon-home" disabled></i> Inicio </a>
                                     </li>
                                     <li class="active">
                                         <a href="page_user_profile_1_account.html">
-                                            <i class="icon-settings"></i> Account Settings </a>
+                                            <i class="icon-settings" ></i> Configuración </a>
                                     </li>
                                     <li>
                                         <a href="page_user_profile_1_help.html">
-                                            <i class="icon-info"></i> Help </a>
+                                            <i class="icon-info" disabled></i> Ayuda </a>
                                     </li>
                                 </ul>
                             </div>
@@ -170,9 +170,11 @@
                                             <li>
                                                 <a href="#tab_1_3" data-toggle="tab">Cambio de Contraseña</a>
                                             </li>
+                                            <!--
                                             <li>
                                                 <a href="#tab_1_4" data-toggle="tab">Privacy Settings</a>
                                             </li>
+                                            -->
                                         </ul>
                                     </div>
                                     <div class="portlet-body">
@@ -184,7 +186,7 @@
                                                     <div class="col-md-6">
                                                         {!! Field::text(
                                                                 'name', $user->name,
-                                                                ['label' => 'Nombre', 'auto' => 'off'],
+                                                                ['label' => 'Nombre', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                                 ['help' => 'Digite su Nombre']) !!}
                                                         {!! Field::date(
                                                                 'date_birthday', $user->date_birthday,
@@ -192,7 +194,7 @@
                                                                 ['help' => 'Digite su fecha de nacimiento', 'icon' => 'fa fa-calendar']) !!}
                                                         {!! Field::select(
                                                                 'identity_type',
-                                                                ['T.I' => 'T.I', 'C.C' => 'C.C'],null,
+                                                                ['T.I' => 'T.I', 'C.C' => 'C.C'],$user->identity_type,
                                                                 [ 'label' => 'Tipo de identificación']) !!}
                                                         {!! Field::date(
                                                                 'identity_expe', $user->identity_expe,
@@ -206,24 +208,44 @@
                                                     <div class="col-md-6">
                                                         {!! Field::text(
                                                                  'lastname', $user->lastname,
-                                                                ['label' => 'Apellido', 'auto' => 'off'],
+                                                                ['label' => 'Apellido', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                                 ['help' => 'Digite su Apellido']) !!}
                                                         {!! Field::select(
                                                                 'sexo',
-                                                                ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'],null,
+                                                                ['Masculino' => 'Masculino', 'Femenino' => 'Femenino'], $user->sexo,
                                                                 [ 'label' => 'Sexo']) !!}
                                                         {!! Field::text(
                                                                 'identity_no', $user->identity_no,
-                                                                ['label' => 'Numero de Identificación', 'auto' => 'off'],
+                                                                ['label' => 'Numero de Identificación', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                                 ['help' => 'Numero de Identificación']) !!}
                                                         {!! Field::text(
                                                                 'identity_expe_place', $user->identity_expe_place,
-                                                                ['label' => 'Lugar de expedición', 'auto' => 'off'],
+                                                                ['label' => 'Lugar de expedición', 'auto' => 'off', 'max' => '30 ', 'min' => '4'],
                                                                 ['help' => 'Lugar de expedición']) !!}
                                                         {!! Field::text(
                                                                 'phone', $user->phone,
-                                                                ['label' => 'Numero Telefonico', 'auto' => 'off'],
+                                                                ['label' => 'Numero Telefonico', 'auto' => 'off', 'max' => '30 ', 'min' => '4'],
                                                                 ['help' => 'Digite su numero telefonico']) !!}
+                                                    </div>
+                                                </div>
+                                                <h3 class="block">Datos de Ubicación</h3>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {!! Field::text(
+                                                                'address', $user->address,
+                                                                ['label' => 'Dirección Procedencia', 'auto' => 'off', 'max' => '30 ', 'min' => '4'],
+                                                                ['help' => 'Digite su dirección de procedencia']) !!}
+                                                        {!! Field::select(
+                                                                'Departamento', null,
+                                                                ['name' => 'regions']) !!}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {!! Field::select(
+                                                                'Pais', null,
+                                                                ['name' => 'countries']) !!}
+                                                        {!! Field::select(
+                                                                'Ciudad', null,
+                                                                ['name' => 'cities']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="margiv-top-10">
@@ -235,10 +257,7 @@
                                             <!-- END PERSONAL INFO TAB -->
                                             <!-- CHANGE AVATAR TAB -->
                                             <div class="tab-pane" id="tab_1_2">
-                                                <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                                    terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                                    skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                    eiusmod. </p>
+                                                <p>  </p>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         {!!  Field::file('image_profile') !!}
@@ -253,17 +272,20 @@
                                                     <div class="col-md-6">
                                                         {!! Field::password(
                                                                 'password_update',
-                                                                ['label' => 'Contraseña'],
+                                                                ['label' => 'Contraseña', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                                 ['help' => 'Digite su contreaseña.']) !!}
                                                         {!! Field::password(
                                                                 'password_update_new',
-                                                                ['label' => 'Nueva Contraseña', 'disabled'],
+                                                                ['label' => 'Nueva Contraseña', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required', 'disabled'],
                                                                 ['help' => 'Digite su nueva contreaseña.']) !!}
                                                         {!! Field::password(
                                                                 'password_update_verify',
-                                                                ['label' => 'Nueva Contraseña' , 'disabled'],
+                                                                ['label' => 'Nueva Contraseña', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required', 'disabled' ],
                                                                 ['help' => 'Digite su nueva contreaseña.']) !!}
-                                                        {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!}
+                                                    </div>
+                                                    <div class="margiv-top-10">
+                                                        {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                                        {!! Form::button('Cancelar', ['class' => 'btn red']) !!}
                                                     </div>
                                                     {!! Form::close() !!}
                                                 </div>
@@ -439,6 +461,69 @@
             });*/
             let $userId = "{{Auth::id()}}";
 
+            var $widget_select_countries_create = $('select[name="countries"]'),
+                $widget_select_regions_create = $('select[name="regions"]'),
+                $widget_select_cities_create = $('select[name="cities"]');
+
+            /*Carga todos los paises*/
+            var route_country = '{{ route('location.countries') }}';
+            $.get(route_country, function (response, status) {
+                $(response.data).each(function (key, value) {
+                    $widget_select_countries_create.append(new Option(value.name, value.id));
+                });
+            });
+
+            /*Carga todos los Departamentos*/
+            var region_id;
+            $widget_select_countries_create.on('change', function () {
+                region_id = $(this).val();
+                var route_region = '{{ route('location.regions.find') }}' + '/' + region_id;
+                $widget_select_regions_create.empty().append('whatever');
+                $widget_select_cities_create.empty().append('whatever');
+                $.ajax({
+                    url: route_region,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+                            $(response.data).each(function (key, value) {
+                                $widget_select_regions_create.append(new Option(value.name, value.id));
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            /*Carga todas las Ciudades*/
+            $widget_select_regions_create.on('change', function () {
+                var route_city = '{{ route('location.cities.find') }}' + '/' + region_id + '/' + $(this).val();
+                $widget_select_cities_create.empty().append('whatever');
+                $.ajax({
+                    url: route_city,
+                    type: 'GET',
+                    beforeSend: function () {
+                        App.blockUI({target: '.portlet-form', animate: true});
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            App.unblockUI('.portlet-form');
+                            $(response.data).each(function (key, value) {
+                                $widget_select_cities_create.append(new Option(value.name, value.id));
+                            });
+                        }
+                    }
+                });
+            });
+
+            //Función nueva JqueryValidator
+            jQuery.validator.addMethod("notEqual", function (value, element, param) {
+                return this.optional(element) || value != $(param).val();
+            }, "Por favor, especifique un valor diferente.");
+
             let updateProfile = function () {
                     return {
                         init: function () {
@@ -448,6 +533,19 @@
                             var formData = new FormData();
                             formData.append('id', '{{$user->id}}');
                             formData.append('name', $('input:text[name="name"]').val());
+                            formData.append('lastname', $('input:text[name="lastname"]').val());
+                            formData.append('birthday', $('#date_birthday').val());
+                            formData.append('sexo', $('select[name="sexo"]').val());
+                            formData.append('identity_type', $('select[name="identity_type"]').val());
+                            formData.append('identity_no', $('input:text[name="identity_no"]').val());
+                            formData.append('identity_expe_date', $('#identity_expe').val());
+                            formData.append('identity_expe_place', $('input:text[name="identity_expe_place"]').val());
+                            formData.append('phone', $('input:text[name="phone"]').val());
+                            formData.append('email', $('input[name="email"]').val());
+                            formData.append('address_create', $('input:text[name="address"]').val());
+                            formData.append('countries_id', $('select[name="countries"]').val());
+                            formData.append('regions_id', $('select[name="regions"]').val());
+                            formData.append('cities_id', $('select[name="cities"]').val());
                             $.ajax({
                                 url: route,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -516,15 +614,16 @@
                 from_password = $('#from_password'),
                 rules_password = {
                     password_update: {
-                        minlength: 4, remote: {
+                        minlength: 4,
+                        remote: {
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             url: '{{ route('users.check.password') }}',
                             type: 'POST',
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
+                            complete: function (response, xhr, request) {
+                                if (response.status === 200 && xhr === 'success') {
                                     let password_new = $('input[name="password_update_new"]'),
                                         password_new_verify = $('input[name="password_update_verify"]');
-                                    if (response === true) {
+                                    if (response.responseJSON === true) {
                                         password_new.prop("disabled", false);
                                         password_new_verify.prop("disabled", false);
                                     } else {
@@ -535,6 +634,16 @@
                             },
                         }
                     },
+                    password_update_new: {
+                        required: true,
+                        notEqual: "#password_update"
+                    },
+                    password_update_verify: {
+                        equalTo: "#password_update_new",
+                        notEqual: "#password_update",
+                        required: true
+                    }
+
                 };
             FormValidationMd.init(from_password, rules_password, false, updatePassword());
 

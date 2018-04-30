@@ -90,6 +90,21 @@ class User extends Authenticatable implements AuditableContract
      */
     protected $appends = ['full_name', 'profile_picture'];
 
+    public function getImageAttribute()
+    {
+        $img = $this->images[0]->url;
+        if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
+            $img = Storage::disk('developer')->url($img);
+        }
+        return $img;
+    }
+
+    public function getRoleAttribute()
+    {
+        $role_id = $this->roles()->first()->pivot->role_id;
+        return Role::find($role_id)->display_name;
+    }
+
     /**
      * The channels the user receives notification broadcasts on.
      *
@@ -97,12 +112,12 @@ class User extends Authenticatable implements AuditableContract
      */
     public function receivesBroadcastNotificationsOn()
     {
-        return 'users-notification.'.$this->id;
+        return 'users-notification.' . $this->id;
     }
 
     public function getNumStatusReadNotificationsAttribute()
     {
-        return count($this->unreadNotifications );
+        return count($this->unreadNotifications);
     }
 
     /**
@@ -158,16 +173,16 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the UsuarioEspaciosAcademicos record associated with the user.
      *
-    public function acadspace()
-    {
-        return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
-    }
-
-    public function formatosAcadspace()
-    {
-        return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');
-    }
-    */
+     * public function acadspace()
+     * {
+     * return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
+     * }
+     *
+     * public function formatosAcadspace()
+     * {
+     * return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');
+     * }
+     */
 
     /**
      * Get the UsuarioGesap record associated with the user.
@@ -193,22 +208,22 @@ class User extends Authenticatable implements AuditableContract
 
     public function getProfilePictureAttribute()
     {
-        if ( isset( $this->images[0]->url ) ) {
-            if ( filter_var($this->images[0]->url, FILTER_VALIDATE_URL) && file_exists( $this->images[0]->url ) ) {
+        if (isset($this->images[0]->url)) {
+            if (filter_var($this->images[0]->url, FILTER_VALIDATE_URL) && file_exists($this->images[0]->url)) {
                 return $this->images[0]->url;
             }
 
-            if ( Storage::disk('developer')->exists( $this->images[0]->url ) ) {
+            if (Storage::disk('developer')->exists($this->images[0]->url)) {
                 return Storage::disk('developer')->url($this->images[0]->url);
             }
         }
 
-        return substr( md5($this->full_name), 16 );
+        return substr(md5($this->full_name), 16);
     }
 
     public function subjects()
     {
-        $table = SchemaConstant::getRelationNameTable( SchemaConstant::SUBJECT_PROGRAM );
+        $table = SchemaConstant::getRelationNameTable(SchemaConstant::SUBJECT_PROGRAM);
 
         return $this->belongsToMany(Subject::class, $table, program_fk(), subject_fk())
             ->withPivot(program_fk(), teacher_fk());
@@ -216,7 +231,7 @@ class User extends Authenticatable implements AuditableContract
 
     public function programs()
     {
-        $table = SchemaConstant::getRelationNameTable( SchemaConstant::SUBJECT_PROGRAM );
+        $table = SchemaConstant::getRelationNameTable(SchemaConstant::SUBJECT_PROGRAM);
 
         return $this->belongsToMany(Program::class, $table, subject_fk(), program_fk())
             ->withPivot(subject_fk(), teacher_fk());
@@ -239,7 +254,7 @@ class User extends Authenticatable implements AuditableContract
 
     public function additionSubtraction()
     {
-        return $this->hasMany( AdditionSubtraction::class, student_fk(), 'id' );
+        return $this->hasMany(AdditionSubtraction::class, student_fk(), 'id');
     }
 
     public function filesUploaded()
