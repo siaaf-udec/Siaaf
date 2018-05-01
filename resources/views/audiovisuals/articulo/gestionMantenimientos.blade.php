@@ -1,5 +1,4 @@
 @extends('material.layouts.dashboard')
-
 @push('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- STYLES MODAL -->
@@ -38,80 +37,68 @@
 @section('page-title', 'Mantenimiento Artículo')
 
 @section('content')
-    <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Historial Artículos'])
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="modal fade" data-width="760" id="modal-mantenimiento-art" tabindex="-1">
-                        <div class="modal-header modal-header-success">
-                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
-                            </button>
-                            <h2 class="modal-title">
-                                <i class="glyphicon glyphicon-cog">
-                                </i>
-                                Registrar Observacion Solicitud Mantenimiento
-                            </h2>
-                        </div>
-                        <div class="modal-body">
-                            {!! Form::open(['id' => 'from_mantenimiento_create', 'class' => '', 'url' => '/forms']) !!}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>
-                                        {!! Field::text('TMT_Observacion_Realiza',
-                                        ['label' => 'Observacion mantenimiento:', 'required','max' => '255'],
-                                        ['help' => 'Ingrese una Observacion para el mantenimiento', 'icon' => 'fa fa-heartbeat'])
-                                        !!}
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="col-md-12" align="center">
-                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
-                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                                </div>
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="clearfix"></div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="actions">
-                        @permission("AUDI_REQUEST_MAINTENANCE_VIEW")
-                        <a class="btn btn-outline dark requestMaintenance" data-toggle="modal">
-                            <i class="fa fa-wrench">
+<div class="col-md-12">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Mantenimiento Artículos'])
+        @slot('actions', [
+          'link_cancel' => [
+          'link' => '',
+          'icon' => 'fa fa-arrow-left',
+         ],
+        ])
+        <div class="row">
+            <div class="col-md-12">
+                <div class="modal fade" data-width="760" id="modal-mantenimiento-art" tabindex="-1">
+                    <div class="modal-header modal-header-success">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                        </button>
+                        <h2 class="modal-title">
+                            <i class="glyphicon glyphicon-cog">
                             </i>
-                            Artículos en Mantenimiento
-                        </a>
-                        @endpermission
+                            Registrar Observacion Finalización Mantenimiento
+                        </h2>
+                    </div>
+                    <div class="modal-body">
+                        {!! Form::open(['id' => 'from_mantenimiento_create', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    {!! Field::text('TMT_Observacion_Finaliza',
+                                    ['label' => 'Observación Finalización mantenimiento:', 'required','max' => '255'],
+                                    ['help' => 'Ingrese una Observación para Finalizar el mantenimiento', 'icon' => 'fa fa-heartbeat'])
+                                    !!}
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12" align="center">
+                                {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <div class="clearfix"></div>
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'mtn-table-ajax'])
-                        @slot('columns', [
-                            '#' => ['style' => 'width:20px;'],
-                            'Nombre',
-                            'Codigo',
-                            'Horas Mantenimiento Preventivo',
-                            'Mantenimientos Realizados',
-                            'Horas Total Uso',
-                            'Acciones' => ['style' => 'width:100px;']
-                        ])
-                    @endcomponent
-                </div>
-            </div>
-        @endcomponent
-    </div>
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <br>
+        <br>
+        <div class="col-md-12">
+            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
+                @slot('columns', [
+                    'Tipo Articulo',
+                    'Codigo',
+                    'Observacion Mantenimiento',
+                    'Observacion Finalización ',
+                    'Acciones' => ['style' => 'width:100px;']
+                ])
+            @endcomponent
+        </div>
+        <div class="clearfix"></div>
+    @endcomponent
+</div>
 @endsection
 @push('plugins')
     <script src="{{-- {{ asset('ruta/del/archivo/js') }} --}}" type="text/javascript"></script>
@@ -183,22 +170,7 @@
     </script>
     <script>
         var table, url, columns;
-        var idArticulo,tipoArticuloNombre;
-        var ComponentsSelect2 = function () {
-            return {
-                init: function () {
-                    $.fn.select2.defaults.set("theme", "bootstrap");
-                    $(".pmd-select2").select2({
-                        placeholder: "Selecccionar",
-                        allowClear: true,
-                        width: 'auto',
-                        escapeMarkup: function (m) {
-                            return m;
-                        }
-                    });
-                }
-            }
-        }();
+        var idMantenimiento;
         var ComponentsBootstrapMaxlength = function () {
             var handleBootstrapMaxlength = function () {
                 $("input[maxlength], textarea[maxlength]").maxlength({
@@ -207,6 +179,7 @@
                 });
             }
             return {
+                //main function to initiate the module
                 init: function () {
                     handleBootstrapMaxlength();
                 }
@@ -214,31 +187,16 @@
         }();
         $(document).ready(function () {
             App.unblockUI('.portlet-form');
+            var idTipoArticulo;
             ComponentsBootstrapMaxlength.init();
-            ComponentsSelect2.init();
-            table = $('#mtn-table-ajax');
-            url = "{{ route('listarMantenimientos.data') }}";
+            table = $('#tipoArt-table-ajax');
+            url ="{{ route('listar.Mantenimientos.Solicitados.admin.data') }}";
             columns = [
-                {data: 'DT_Row_Index'},
-                {data: 'consulta_articulos.consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
-                {data: 'consulta_articulos.ART_Codigo', name: 'Codigo'},
-                {data: 'consulta_articulos.consulta_tipo_articulo.TPART_HorasMantenimiento', name: 'HorasMantenimiento'},
-                {data: 'consulta_articulos.ART_Cantidad_Mantenimiento', name: 'consulta_articulos.ART_Cantidad_Mantenimiento'},
-                {data: 'horasUso', name: 'Kit'},
-                {
-                    defaultContent: '@permission("AUDI_MAINTENANCE_CREATE")<a title="Solicitar Mantenimiento" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-send"></i></a>@endpermission' ,
-
-                    data: 'action',
-                    name: 'action',
-                    title: 'Acciones',
-                    orderable: false,
-                    searchable: false,
-                    exportable: false,
-                    printable: false,
-                    className: 'text-right',
-                    render: null,
-                    responsivePriority: 2
-                }
+                {data: 'TMT_Tipo_Articulo' , name: 'TMT_Tipo_Articulo'},
+                {data: 'consultar_articulo.ART_Codigo' , name: 'consultar_articulo.ART_Codigo'},
+                {data: 'TMT_Observacion_Realiza' , name: 'TMT_Observacion_Realiza'},
+                {data: 'TMT_Observacion_FinalizaO' , name: 'TMT_Observacion_FinalizaO'},
+                {data: 'Acciones',name: 'Acciones'}
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
@@ -247,22 +205,20 @@
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
                 console.log(dataTable);
-                idArticulo = dataTable.consulta_articulos.id;
-                tipoArticuloNombre = dataTable.consulta_articulos.consulta_tipo_articulo.TPART_Nombre;
-                //console.log('nombre-'+tipoArticuloNombre );
+                idMantenimiento = dataTable.TMT_Id;
+                idArticulo = dataTable.TMT_FK_Id_Articulo;
                 $('#modal-mantenimiento-art').modal('toggle');
             });
             var createMantenimiento = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('registrar.mantenimiento') }}';
+                        var route = '{{ route('finalizar.mantenimiento') }}';
                         var type = 'POST';
                         var async = async || false;
                         var formData = new FormData();
-                        //console.log('envio nombre'+tipoArticuloNombre);
-                        formData.append('TMT_Tipo_Articulo',tipoArticuloNombre);
+                        formData.append('TMT_Id', idMantenimiento);
                         formData.append('TMT_FK_Id_Articulo',idArticulo);
-                        formData.append('TMT_Observacion_Realiza', $('#TMT_Observacion_Realiza').val());
+                        formData.append('TMT_Observacion_Finaliza', $('#TMT_Observacion_Finaliza').val());
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -299,11 +255,12 @@
                 TMT_Observacion_Realiza :{ required: true},
             };
             FormValidationMd.init(from_mantenimiento_create, rules_mantenimiento_create, false, createMantenimiento());
-            $('.requestMaintenance').on('click',function(e){
+            $('#link_cancel').on('click', function (e) {
                 e.preventDefault();
-                var route = '{{ route('audiovisuales.gestionMantenimientoAjax') }}';
+                var route = '{{ route('audiovisuales.gestionArticulos.indexAjax') }}';
                 $(".content-ajax").load(route);
-            })
+            });
+
         });
     </script>
 @endpush

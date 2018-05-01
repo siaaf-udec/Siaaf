@@ -701,4 +701,6 @@ class ArticuloController extends Controller
                 'No se pudo completar tu solicitud.'
             );
         }
+
+
 }

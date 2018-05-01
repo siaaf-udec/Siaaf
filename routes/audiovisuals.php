@@ -154,6 +154,31 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => $controller . 'MantenimientoController@dataTableMantenimientos',
                 'as' => 'listarMantenimientos.data',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
             ]);
+            Route::post('registrarMantenimientoR', ['middleware' => ['permission:AUDI_MODULE'],
+                'uses' => $controller . 'MantenimientoController@registrarMantenimiento',
+                'as' => 'registrar.mantenimiento',                                    //ruta que conduce al controlador donde modifica el kit
+            ]);
+            Route::get('listarMantenimientosSolicitadosdataR', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@dataTableMantenimientosSolicitados',
+                'as' => 'listar.Mantenimientos.Solicitados.data',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
+            Route::post('finalizarMantenimientoR', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@finalizarMantenimiento',
+                'as' => 'finalizar.mantenimiento',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
+            Route::get('mantenimientoArticulosAjaxR', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@mantenimientoArticulosAjax',
+                'as' => 'mantenimiento.Articulos.Ajax',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
+            Route::get('mantenimientosSolicitadosindexR', ['middleware' => ['permission:AUDI_MAINTENANCE_SOLICI'],
+                'uses' => $controller . 'MantenimientoController@mantenimientosSolicitadosindex',
+                'as' => 'audiovisuales.mantenimientos.solicitados.index',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
+            Route::get('listarMantenimientosSolicitadosdataAdminR', ['middleware' => ['permission:AUDI_MAINTENANCE_ART'],
+                'uses' => $controller . 'MantenimientoController@dataTableMantenimientosSolicitadosAdmin',
+                'as' => 'listar.Mantenimientos.Solicitados.admin.data',                              //ruta que que conduce al controlador donde realiza la consulta de los articulos registrados
+            ]);
+
 
     });
     //RUTAS GESTION ADMINISTRADOR(crear, modificar , consultar solicitudes de prestamos o reservas)

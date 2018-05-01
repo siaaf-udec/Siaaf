@@ -109,14 +109,34 @@
             </li>
             @endpermission
             @permission('AUDI_MAINTENANCE_ART')
-            <li class="nav-item {{ active(['audiovisuales.mantenimientos.index'], 'start active open') }}">
-                <a class="nav-link" href="{{ route('audiovisuales.mantenimientos.index') }}">
+            <li class="nav-item {{ active(['audiovisuales.mantenimientos.*'], 'start active open') }}">
+                <a class="nav-link nav-toggle" href="javascript:;">
                     <i class="icon-check">
                     </i>
                     <span class="title">
-                            Mantenimiento Artículos
+                            Mantenimiento
                     </span>
+                    <span class="arrow {{ active(['audiovisuales.mantenimientos.*'], 'open') }}"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ active(['audiovisuales.mantenimientos.index'], 'start active open') }}">
+                        <a href="{{ route('audiovisuales.mantenimientos.index') }}" class="nav-link nav-toggle">
+                            <i class="icon-grid"></i>
+                            <span class="title">Consultar Articulos Para Mantenimiento</span>
+                        </a>
+                    </li>
+                    @permission('AUDI_MAINTENANCE_SOLICI')
+                    <li class="nav-item {{ active(['audiovisuales.mantenimientos.solicitados.index'], 'start active open') }}">
+                        <a class="nav-link" href="{{ route('audiovisuales.mantenimientos.solicitados.index') }}">
+                            <i class="icon-bar-chart">
+                            </i>
+                            <span class="title">
+                                Gestion Articulos en Mantenimiento
+                            </span>
+                        </a>
+                    </li>
+                    @endpermission
+                </ul>
             </li>
             @endpermission
         @endpermission
