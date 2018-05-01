@@ -92,7 +92,7 @@ class User extends Authenticatable implements AuditableContract
 
     public function getImageAttribute()
     {
-        $img = $this->images[0]->url;
+        $img = isset( $this->images[0]->url ) ? $this->images[0]->url : '';
         if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
             $img = Storage::disk('developer')->url($img);
         }
