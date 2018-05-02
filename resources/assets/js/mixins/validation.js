@@ -44,6 +44,16 @@ export const mixinValidator = {
     methods: {
         handleDefaultValidationForm: function () {
             let self = this;
+
+            jQuery.validator.addMethod(
+                "regex",
+                function(value, element, regexp) {
+                    var re = new RegExp(regexp);
+                    return this.optional(element) || re.test(value);
+                },
+                "Haz coincidir el formato solicitado."
+            );
+
             jQuery.validator.setDefaults( self.settings );
         },
         handleBootstrapMaxlength: function () {

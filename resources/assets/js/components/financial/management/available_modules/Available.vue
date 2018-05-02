@@ -141,6 +141,7 @@
                             readonly: true,
                             maxlength: 10,
                             minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
                         }
                     },
                     available_until: {
@@ -156,6 +157,7 @@
                             readonly: true,
                             maxlength: 10,
                             minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
                         }
                     },
                 },

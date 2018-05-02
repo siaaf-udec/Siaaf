@@ -22,6 +22,7 @@
                                                        :placeholder="formCost.cost.label"
                                                        min="0"
                                                        max="9999999"
+                                                       pattern=\\d{1,7}"
                                                        @input="checkLength( $event.target.value )"
                                                        class="form-control"
                                                        id="cost"
@@ -184,10 +185,9 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 7,
-                            minlength: 1,
                             min: 0,
                             max: 9999999,
+                            pattern: '\\d{1,7}',
                         }
                     },
                     serviceName: {
@@ -217,6 +217,7 @@
                             readonly: true,
                             maxlength: 10,
                             minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
                         }
                     }
                 },

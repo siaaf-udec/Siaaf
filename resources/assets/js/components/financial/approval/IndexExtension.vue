@@ -184,6 +184,7 @@
                                                                    minlength="10"
                                                                    maxlength="10"
                                                                    name="date"
+                                                                   pattern="\\d{4}-\\d{2}-\\d{2}"
                                                                    id="date"
                                                                    autocomplete="off"
                                                                    class="form-control datepicker date date-picker todo-taskbody-due"

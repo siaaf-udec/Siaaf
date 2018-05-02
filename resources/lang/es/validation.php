@@ -189,6 +189,7 @@ return [
         'support'               => 'soporte',
         'check'                 => 'cheque',
         'pay_to'                => 'pagar a',
+        'now'                   => 'hoy',
         'created_at'            => 'creado',
         'updated_at'            => 'actualizado',
         'deleted_at'            => 'eliminado',

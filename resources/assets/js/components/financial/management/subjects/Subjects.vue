@@ -36,16 +36,26 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <vue-input name="credits"
-                                                   v-model.number.trim="formCreate.credits.value"
-                                                   :value="formCreate.credits.value"
-                                                   :attributes="formCreate.credits.attributes"
-                                                   :help="formCreate.credits.help"
-                                                   :hasError="formCreate.credits.hasError"
-                                                   :errors="formCreate.credits.errors"
-                                                   type="number"
-                                                   :label="formCreate.credits.label">
-                                        </vue-input>
+                                        <vue-input-empty icon="fa fa-keyboard-o"
+                                                         :label="formCreate.credits.label"
+                                                         :help="formCreate.credits.help"
+                                                         :hasError="formCreate.credits.hasError"
+                                                         :errors="formCreate.credits.errors"
+                                                         name="credits">
+                                            <input type="number"
+                                                   name="credits"
+                                                   required="required"
+                                                   ref="credits"
+                                                   pattern="[1-5]{1}"
+                                                   :placeholder="formCreate.credits.label"
+                                                   min="1"
+                                                   max="5"
+                                                   @input="checkLength( $event.target.value )"
+                                                   class="form-control"
+                                                   id="credits"
+                                                   v-model.number.trim="formCreate.credits.value" />
+                                        </vue-input-empty>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -66,7 +76,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <input class="btn green" type="submit" :value="buttons.send">
-                                        <button class="btn red" type="reset" v-text="buttons.cancel"></button>
+                                        <button class="btn red" @click="changeTitle" type="reset" v-text="buttons.cancel"></button>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +136,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <input class="btn green" type="submit" :value="buttons.send">
-                                        <button class="btn red" type="reset" v-text="buttons.cancel"></button>
+                                        <button class="btn red" @click="changeTitle" type="reset" v-text="buttons.cancel"></button>
                                     </div>
                                 </div>
                             </div>
@@ -195,6 +205,7 @@
                             class: null,
                             min: null,
                             max: null,
+                            pattern: '[0-9a-zA-Z]{3,20}',
                         },
                         hasError: null,
                         errors: []
@@ -211,6 +222,7 @@
                             class: null,
                             min: 1,
                             max: 5,
+                            pattern: '[1-5]{1}',
                         },
                         hasError: null,
                         errors: []
@@ -221,10 +233,11 @@
                             required: true,
                             autocomplete: 'off',
                             maxlength: 50,
-                            minlength: 1,
+                            minlength: 2,
                             class: null,
                             min: null,
                             max: null,
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,50}',
                         },
                         hasError: null,
                         errors: []
@@ -251,9 +264,9 @@
                     columns: [
                         {name: Lang.get('financial.management.subjects.table_assigned.subject_code'), class: ''},
                         {name: Lang.get('financial.management.subjects.table_assigned.subject_name'), class: ''},
-                        {name: Lang.get('financial.management.subjects.table_assigned.subject_credits'), class: ''},
-                        {name: Lang.get('financial.management.subjects.table_assigned.program_name'), class: ''},
-                        {name: Lang.get('financial.management.subjects.table_assigned.teacher'), class: ''},
+                        {name: Lang.get('financial.management.subjects.table_assigned.subject_credits'), class: 'none'},
+                        {name: Lang.get('financial.management.subjects.table_assigned.program_name'), class: 'none'},
+                        {name: Lang.get('financial.management.subjects.table_assigned.teacher'), class: 'none'},
                         {name: Lang.get('financial.management.subjects.table_assigned.actions'), class: ''},
                     ],
                     url: route('financial.management.subjects.programs.teachers.index', {}, false),
@@ -298,6 +311,10 @@
                 $('#form-subject').validate();
                 $('#form-assign-subject').validate();
             },
+            checkLength: function( value ) {
+                this.formCreate.credits.value = value = value.slice(0, 1);
+                this.$emit('input', value);
+            },
             initTableSubjects: function() {
                 let self = this;
                 let table = $( '#datatable-subjects' ).DataTable({
@@ -314,6 +331,7 @@
                 });
                 $(document).on('click', '#tab-table-subject', function () {
                     table.ajax.reload(self.handleTooltips(), false);
+                    self.changeTitle()
                 });
                 this.updateTableSubjects( table );
                 this.deleteTableSubjects( table );
@@ -326,6 +344,10 @@
                     });
                     $( that.$refs.li_tab_1 ).addClass('active');
                     $( that.$refs.li_tab_2 ).removeClass('active');
+
+                    that.sections[0].title = Lang.get('financial.management.subjects.edit.title');
+                    that.sections[0].description = Lang.get('financial.management.subjects.edit.description').capitalize();
+
                     let row = $(this).parents('tr');
                     if ( row.hasClass('child') ) {
                         row = row.prev();
@@ -412,8 +434,11 @@
                     })
                         .then( (response) =>  {
                             swal.close();
+                            this.getSubjects();
                             this.setFormCreateNulls();
                             this.triggerSwal( response );
+                            this.sections[0].title = Lang.get('financial.management.subjects.create.title');
+                            this.sections[0].description = Lang.get('financial.management.subjects.create.description').capitalize();
                         })
                         .catch( (error) => {
                             swal.close();
@@ -448,7 +473,7 @@
                 });
                 $(document).on('click', '#tab-table-subject-program-teacher', function () {
                     table.ajax.reload(self.handleTooltips(), false);
-                    self.setFormAssignNulls();
+                    self.changeTitle()
                 });
                 this.updateTableAssigned( table );
                 this.deleteTableAssigned( table );
@@ -459,7 +484,8 @@
                     that.method = 'PUT';
                     that.url = route('financial.management.subjects.programs.teachers.update');
                     that.vueLoading();
-
+                    that.sections[2].title = Lang.get('financial.management.subjects.edit_assign.title');
+                    that.sections[2].description = Lang.get('financial.management.subjects.edit_assign.description').capitalize();
                     let row = $(this).parents('tr');
                     if ( row.hasClass('child') ) {
                         row = row.prev();
@@ -574,6 +600,8 @@
                        swal.close();
                        this.setFormAssignNulls();
                        this.triggerSwal( response );
+                       this.sections[2].title = Lang.get('financial.management.subjects.assign.title');
+                       this.sections[2].description = Lang.get('financial.management.subjects.assign.description').capitalize();
                    })
                    .catch( (error) => {
                        swal.close();
@@ -593,6 +621,15 @@
                 this.formAssign.program.value  =  null;
                 this.formAssign.teacher.value  =  null;
                 this.formAssign.subject.value  =  null;
+            },
+
+            changeTitle: function(){
+                this.setFormAssignNulls();
+                this.setFormCreateNulls();
+                this.sections[0].title = Lang.get('financial.management.subjects.create.title');
+                this.sections[0].description = Lang.get('financial.management.subjects.create.description').capitalize();
+                this.sections[2].title = Lang.get('financial.management.subjects.assign.title');
+                this.sections[2].description = Lang.get('financial.management.subjects.assign.description').capitalize();
             },
 
             getPrograms: function () {

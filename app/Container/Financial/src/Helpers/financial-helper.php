@@ -587,6 +587,19 @@ function student_permissions () {
 
 /*
 |--------------------------------------------------------------------------
+| File Types
+|--------------------------------------------------------------------------
+|
+| This functions return the status name of the requests
+*/
+
+function icetex_string() { return 'ICETEX'; }
+function fraction_string() { return 'FRACCIONAMIENTO DE MATRÍCULA'; }
+function invoice_string() { return 'FACTURA'; }
+function check_string() { return 'CHEQUE'; }
+
+/*
+|--------------------------------------------------------------------------
 | Status Helper
 |--------------------------------------------------------------------------
 |

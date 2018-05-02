@@ -36,6 +36,6 @@ class CreateFileTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_types');
+        Schema::dropIfExists(SchemaConstant::FILE_TYPE );
     }
 }

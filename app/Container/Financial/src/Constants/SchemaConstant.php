@@ -37,6 +37,26 @@ class SchemaConstant
     const COMMENTS                  = 'comments';
 
     /*
+     * Table Prefix
+     */
+    const PETTY_CASH_PREFIX                = 'PCS_';
+    const CHECKS_PREFIX                    = 'CHK_';
+    const AVAILABLE_MODULES_PREFIX         = 'AMD_';
+    const INTERSEMESTRAL_STUDENT_PREFIX    = 'ISS_';
+    const INTERSEMESTRAL_PREFIX            = 'IST_';
+    const EXTENSION_PREFIX                 = 'EXT_';
+    const ADD_SUB_SUBJECTS_PREFIX          = 'ASS_';
+    const VALIDATION_PREFIX                = 'VLT_';
+    const REQUEST_STATUS_PREFIX            = 'RST_';
+    const COST_SERVICES_PREFIX             = 'CSV_';
+    const PROGRAM_PREFIX                   = 'PGM_';
+    const SUBJECTS_PREFIX                  = 'SUB_';
+    const FILES_PREFIX                     = 'FIL_';
+    const FILE_TYPE_PREFIX                 = 'FTP_';
+    const SUBJECT_PROGRAM_PREFIX           = 'SPG_';
+    const COMMENTS_PREFIX                  = 'CMN_';
+
+    /*
      * Common Foreign Keys
      */
     const STUDENT_FOREIGN_KEY               = 'student'         .self::FOREIGN_KEY;

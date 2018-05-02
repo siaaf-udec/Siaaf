@@ -29,7 +29,7 @@
                                 <a class="pull-left" href="javascript:;">
                                     <img class="todo-userpic auth-user-profile-pic" src="" width="27px" height="27px"> </a>
                                 <div class="media-body">
-                                    <input type="text" class="form-control todo-taskbody-taskdesc" rows="2" minlength="2" maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" />
+                                    <input pattern='[a-záéíóúüA-ZÁÉÍÓÚÜ0-9.,\/#!$%\^&\*;:{}=\-_`~()""…]{2,2500}' type="text" class="form-control todo-taskbody-taskdesc" rows="2" minlength="2" maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" />
                                 </div>
                             </li>
                         </ul>

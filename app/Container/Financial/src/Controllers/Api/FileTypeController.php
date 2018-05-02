@@ -29,6 +29,7 @@ class FileTypeController extends Controller
      * Get file type in datatable format
      *
      * @return mixed
+     * @throws \Exception
      */
     public function datatable()
     {

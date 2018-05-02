@@ -22,7 +22,12 @@ class CostServiceRepository extends Methods implements FinancialCostServiceInter
         parent::__construct(CostService::class);
     }
 
-    public function patch( Request $request, $id )
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function patch(Request $request, $id )
     {
         $cost = $this->getModel()->find( $id );
         $name = $request->get('name');
@@ -31,7 +36,11 @@ class CostServiceRepository extends Methods implements FinancialCostServiceInter
         return $cost->save();
     }
 
-    public function checkAndSave( $request )
+    /**
+     * @param $request
+     * @return bool|mixed
+     */
+    public function checkAndSave($request )
     {
         $cost = $this->getModel()->currentCost()
                      ->where( cost_service_name(), $request->service_name )
@@ -57,9 +66,13 @@ class CostServiceRepository extends Methods implements FinancialCostServiceInter
         return $manager->createData( $costs )->toArray();
     }
 
-    public function getId( $service )
+    /**
+     * @param $service
+     * @return mixed
+     */
+    public function getId($service )
     {
-        return $this->getModel()->currentCost()->where( cost_service_name(), $service )->select( primaryKey() )->first();
+        return $this->getModel()->currentCost()->where( cost_service_name(), $service )->latest( cost_valid_until() )->select( primaryKey() )->first();
     }
 
     /**

@@ -16,7 +16,7 @@
         </div>
         <div class="chat-form">
             <div class="input-cont">
-                <input class="form-control" v-model.trim="comment" minlength="1" maxlength="2500" type="text" :placeholder="placeholder" />
+                <input class="form-control" pattern='[a-záéíóúüA-ZÁÉÍÓÚÜ0-9.,\/#!$%\^&\*;:{}=\-_`~()""…]{2,2500}' v-model.trim="comment" minlength="1" maxlength="2500" type="text" :placeholder="placeholder" />
             </div>
             <div class="btn-cont">
                 <span class="arrow"> </span>

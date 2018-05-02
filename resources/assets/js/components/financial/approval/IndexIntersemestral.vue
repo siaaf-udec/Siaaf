@@ -254,6 +254,7 @@
                                                                maxlength="10"
                                                                name="date"
                                                                id="date"
+                                                               pattern="\\d{4}-\\d{2}-\\d{2}"
                                                                autocomplete="off"
                                                                class="form-control datepicker date date-picker todo-taskbody-due"
                                                                :placeholder="table.realization_date"

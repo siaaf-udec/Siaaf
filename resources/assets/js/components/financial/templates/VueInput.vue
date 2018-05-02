@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        name: "vue-input",
+        name: "vue-input-empty",
         props: {
             showLabel: {
                 type: Boolean,

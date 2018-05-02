@@ -36,7 +36,7 @@ class ExtensionController extends Controller
         return auth()->user()->extensions()
             ->with([
                 'subject' => function ($query) {
-                    return $query->with('teachers:id,name,lastname');
+                    return $query->with('teachers:id,name,lastname,phone,email');
                 },
                 'status',
                 'cost'

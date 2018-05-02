@@ -14,10 +14,10 @@ class FileTypeFinancialTableSeeder extends Seeder
     {
 
         $files = [
-            [ file_types() => 'ICETEX' ],
-            [ file_types() => 'FRACCIONAMIENTO DE MATRÍCULA' ],
-            [ file_types() => 'FACTURA' ],
-            [ file_types() => 'CHEQUE' ],
+            [ file_types() => icetex_string() ],
+            [ file_types() => fraction_string() ],
+            [ file_types() => invoice_string() ],
+            [ file_types() => check_string() ],
         ];
 
         foreach ($files as $file) {

@@ -400,7 +400,6 @@
                     that.form.status.value = data.status;
                 });
             },
-
             edit: function () {
 
             },
@@ -438,8 +437,7 @@
                         },
                     }).then( (result) => {
                         if ( result.value ) {
-                            $tr.remove();
-                            self.handleTooltips();
+                            table.ajax.reload( self.handleTooltips(), false );
                             swal(Lang.get('javascript.success'), Lang.get('javascript.deleted_done'), "success");
                         }
                     }).catch(swal.noop);

@@ -58,9 +58,17 @@ return [
                 'title'         => 'Crear Materia',
                 'description'   => 'añadir nueva materia a la universidad.',
             ],
+            'edit'=> [
+                'title'         => 'Editar Materia',
+                'description'   => 'modificar valores de la respectiva materia seleccionada.',
+            ],
             'assign'=> [
                 'title'         => 'Asignar Materia',
                 'description'   => 'asignar materia a un prorama y docente de la universidad.',
+            ],
+            'edit_assign'=> [
+                'title'         => 'Modificar Asignación',
+                'description'   => 'modificar materia de prorama o docente de la universidad.',
             ],
             'assigned'=> [
                 'title'         => 'Materias Asignadas',

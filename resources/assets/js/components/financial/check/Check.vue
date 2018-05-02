@@ -226,6 +226,7 @@
                             autocomplete: 'off',
                             maxlength: 20,
                             minlength: 2,
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,20}',
                         }
                     },
                     pay_to: {
@@ -239,6 +240,7 @@
                             autocomplete: 'off',
                             maxlength: 60,
                             minlength: 2,
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
                         }
                     },
                     status: {
@@ -266,6 +268,7 @@
                             readonly: true,
                             maxlength: 10,
                             minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
                         }
                     }
                 },
@@ -444,8 +447,7 @@
                         },
                     }).then( (result) => {
                         if ( result.value ) {
-                            $tr.remove();
-                            self.handleTooltips();
+                            table.ajax.reload(self.handleTooltips(), false);
                             swal(Lang.get('javascript.success'), Lang.get('javascript.deleted_done'), "success");
                         }
                     }).catch(swal.noop);

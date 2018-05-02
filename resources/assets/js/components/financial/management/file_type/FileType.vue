@@ -87,13 +87,19 @@
                                 minlength: 2,
                                 maxlength: 60,
                                 required: 'required',
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.file_type') } ) )
-                                    } else if ( value.length < 3 || value.length > 60 ) {
+                                    }
+                                    if ( value.length < 3 || value.length > 60 ) {
                                         resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.file_type') } ) )
+                                    }
+                                    if (!re.test( value )) {
+                                        resolve( Lang.get('validation.alpha', { attribute: Lang.get('validation.attributes.file_type') } ) )
                                     } else {
                                         resolve()
                                     }
@@ -155,13 +161,19 @@
                                 minlength: 2,
                                 maxlength: 60,
                                 required: 'required',
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.file_type') } ) )
-                                    } else if ( value.length < 3 || value.length > 60 ) {
+                                    }
+                                    if ( value.length < 3 || value.length > 60 ) {
                                         resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.file_type') } ) )
+                                    }
+                                    if (!re.test( value )) {
+                                        resolve( Lang.get('validation.alpha', { attribute: Lang.get('validation.attributes.file_type') } ) )
                                     } else {
                                         resolve()
                                     }
@@ -244,8 +256,7 @@
                         },
                     }).then( (result) => {
                         if ( result.value ) {
-                            $tr.remove();
-                            self.handleTooltips();
+                            table.ajax.reload(self.handleTooltips(), false);
                             swal(Lang.get('javascript.success'), Lang.get('javascript.deleted_done'), "success");
                         }
                     }).catch(swal.noop);

@@ -58,6 +58,12 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
      */
     public function updateSubjectProgramTeacher(Request $request)
     {
+        if ( $request->old_subject ===  $request->subject &&
+             $request->old_teacher ===  $request->teacher &&
+             $request->old_program ===  $request->program) {
+            return true;
+        }
+
         return $this->getModel()->where([
                     [ subject_fk(), $request->old_subject ],
                     [ teacher_fk(), $request->old_teacher ],
