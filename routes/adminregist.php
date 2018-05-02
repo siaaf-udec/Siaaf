@@ -279,6 +279,12 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.sugerencia.index',
         ]);
 
+        Route::get('index/ajax', [
+            'middleware' => ['permission:ADMINREGIST_ADSU'],
+            'uses' => $controller . 'SugerenciaController@indexAjax',
+            'as' => 'adminRegist.sugerencia.index.ajax',
+        ]);
+
         Route::get('data', [
             'middleware' => ['permission:ADMINREGIST_ADSU'],
             'uses' => $controller . 'SugerenciaController@data',
@@ -297,5 +303,16 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'adminRegist.sugerencia.destroy'
         ]);
 
+        Route::get('index/correo/{id?}', [
+            'middleware' => ['permission:ADMINREGIST_ADSU'],
+            'uses' => $controller . 'CorreosController@index',
+            'as' => 'adminRegist.sugerencia.index.correo',
+        ]);
+
+        Route::post('enviar/email',[
+            'middleware' => ['permission:ADMINREGIST_SU_CREATE'],
+            'uses' => $controller . 'CorreosController@enviarMail',
+            'as' => 'adminRegist.sugerencia.enviar.email'
+        ]);
     });
 });

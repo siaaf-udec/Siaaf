@@ -29,6 +29,24 @@ class SugerenciaController extends Controller
     }
 
     /**
+     *Función que muestra las preguntas sugeridas registradas por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function indexAjax(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('adminregist.sugerencias.ajaxTablaSugerencia');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
      * Función que consulta las sugerencias de las preguntas registradas y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
@@ -40,6 +58,14 @@ class SugerenciaController extends Controller
             $sugerencia = Sugerencias::query();
 
             return DataTables::of($sugerencia)
+                ->addColumn('SU_Estado', function ($sugerencia) {
+                    if (!strcmp($sugerencia->SU_Estado, 'Resuelta')) {
+                        return "<span class='label label-sm label-success'>" . $sugerencia->SU_Estado . "</span>";
+                    } elseif (!strcmp($sugerencia->SU_Estado, 'Sin Resolver')) {
+                        return "<span class='label label-sm label-warning'>" . $sugerencia->SU_Estado . "</span>";
+                    }
+                })
+                ->rawColumns(['SU_Estado'])
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->make(true);

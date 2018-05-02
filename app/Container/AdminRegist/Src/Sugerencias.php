@@ -16,7 +16,7 @@ class Sugerencias extends Model
      * @var array
      */
     protected $fillable = [
-        'SU_Pregunta','SU_Email','SU_Username'
+        'SU_Pregunta','SU_Email','SU_Username','SU_Respuesta','SU_Estado'
     ];
 
     use Notifiable;
