@@ -20,7 +20,7 @@
         <h3 class="sbold blog-comments-title" v-text="leave_a_comment"></h3>
         <form action="" method="POST" id="blog-comments-form">
             <div class="form-group">
-                <input type="text" rows="2" pattern='[a-záéíóúüA-ZÁÉÍÓÚÜ0-9.,\/#!$%\^&\*;:{}=\-_`~()""…]{2,2500}' maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" class="form-control c-square" />
+                <input type="text" rows="2" pattern='[a-záéíóúüA-ZÁÉÍÓÚÜ0-9.,\/#!$%\^&\*;:{}=\-_`~()""… ]{2,2500}' maxlength="2500" v-model.trim="comment" required="required" name="comment" id="comment" :placeholder="placeholder" class="form-control c-square" />
             </div>
             <div class="form-group" v-if="errors">
                 <hr>

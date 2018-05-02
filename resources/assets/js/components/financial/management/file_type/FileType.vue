@@ -87,11 +87,11 @@
                                 minlength: 2,
                                 maxlength: 60,
                                 required: 'required',
-                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
-                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miy );
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.file_type') } ) )
                                     }
@@ -161,11 +161,11 @@
                                 minlength: 2,
                                 maxlength: 60,
                                 required: 'required',
-                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
-                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miy );
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.file_type') } ) )
                                     }

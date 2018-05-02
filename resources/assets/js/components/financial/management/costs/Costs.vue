@@ -22,7 +22,7 @@
                                                        :placeholder="formCost.cost.label"
                                                        min="0"
                                                        max="9999999"
-                                                       pattern=\\d{1,7}"
+                                                       pattern="\\d{1,7}"
                                                        @input="checkLength( $event.target.value )"
                                                        class="form-control"
                                                        id="cost"

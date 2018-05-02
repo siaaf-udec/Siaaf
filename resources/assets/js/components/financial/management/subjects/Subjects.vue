@@ -205,7 +205,7 @@
                             class: null,
                             min: null,
                             max: null,
-                            pattern: '[0-9a-zA-Z]{3,20}',
+                            pattern: '[0-9a-zA-Z ]{3,20}',
                         },
                         hasError: null,
                         errors: []
@@ -237,7 +237,7 @@
                             class: null,
                             min: null,
                             max: null,
-                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,50}',
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,50}',
                         },
                         hasError: null,
                         errors: []

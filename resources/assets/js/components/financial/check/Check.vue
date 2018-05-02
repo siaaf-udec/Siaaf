@@ -226,7 +226,7 @@
                             autocomplete: 'off',
                             maxlength: 20,
                             minlength: 2,
-                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,20}',
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,20}',
                         }
                     },
                     pay_to: {
@@ -240,7 +240,7 @@
                             autocomplete: 'off',
                             maxlength: 60,
                             minlength: 2,
-                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
+                            pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                         }
                     },
                     status: {

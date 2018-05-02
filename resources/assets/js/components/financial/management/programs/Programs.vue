@@ -37,7 +37,7 @@
                 btnText: Lang.get('financial.buttons.add'),
                 name: Lang.get('validation.attributes.program'),
                 patterns: {
-                    alpha_num: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]',
+                    alpha_num: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]',
                 }
             }
         },
@@ -82,7 +82,7 @@
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
-                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miyu );
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miyu );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
                                     }
@@ -155,12 +155,12 @@
                                 autocompete: 'off',
                                 minlength: 2,
                                 maxlength: 60,
-                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,60}',
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                                 required: 'required',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
-                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9]{2,60}/miy );
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
                                     }
