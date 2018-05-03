@@ -1,6 +1,6 @@
 <?php
 
-use App\Container\Users\Src\User;
+use App\Container\Users\src\User;
 use Illuminate\Database\Seeder;
 
 

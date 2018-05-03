@@ -1,7 +1,8 @@
 <?php
 
-use App\Container\Permissions\Src\Permission;
+use App\Container\Permissions\src\Permission;
 use Illuminate\Database\Seeder;
+use app\Container\Permissions\src\Role;
 
 class PermisosInteraccionSeeder extends Seeder
 {
@@ -124,150 +125,151 @@ class PermisosInteraccionSeeder extends Seeder
              'module_id'=>'5']
         ]);
         
-        $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Admin_uni')->sync(2);
-        $permission->roles('Coordinador_uni')->sync(3);
-        $permission->roles('Funcionario_uni')->sync(4);
-        $permission->roles('Pasante_uni')->sync(5);
-        $permission->roles('Empresario_uni')->sync(6);
+        $role1 = Role::where('name' , 'Admin_uni')->get(['id'])->first();
+        $role2 = Role::where('name' , 'Coordinador_uni')->get(['id'])->first();
+        $role3 = Role::where('name' , 'Funcionario_uni')->get(['id'])->first();
+        $role4 = Role::where('name' , 'Pasante_uni')->get(['id'])->first();
+        $role5 = Role::where('name' , 'Empresario_uni')->get(['id'])->first();
+        
+        
         
         
         //permisos para el pasante 
         $permission = Permission::where('name', '=', 'INTE_EVA_PASANTE')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_VER_NOTI')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_CON')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_DOC')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_VER_DATO_CON')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_EVA_PRE4')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_USU')->first();
-        $permission->roles('Pasante_uni')->sync(5);
+        $permission->roles()->attach($role4);
         
         
         //permisos para las empresas
         $permission = Permission::where('name', '=', 'INTE_EVA_EMPRESA')->first();
-        $permission->roles('Empresario_uni')->sync(6);
+         $permission->roles()->attach($role5);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
-        $permission->roles('Empresario_uni')->sync(6);   
+         $permission->roles()->attach($role5);   
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Empresario_uni')->sync(6);
+         $permission->roles()->attach($role5);
         $permission = Permission::where('name', '=', 'INTE_VER_NOTI')->first();
-        $permission->roles('Empresario_uni')->sync(6); 
+         $permission->roles()->attach($role5); 
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_CON')->first();
-        $permission->roles('Empresario_uni')->sync(6);
+         $permission->roles()->attach($role5);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_DOC')->first();
-        $permission->roles('Empresario_uni')->sync(6); 
+         $permission->roles()->attach($role5); 
         $permission = Permission::where('name', '=', 'INTE_VER_DATO_CON')->first();
-        $permission->roles('Empresario_uni')->sync(6);
+         $permission->roles()->attach($role5);
         $permission = Permission::where('name', '=', 'INTE_ADD_DOC_CON')->first();
-        $permission->roles('Empresario_uni')->sync(6); 
+         $permission->roles()->attach($role5); 
         $permission = Permission::where('name', '=', 'INTE_EVA_PRE2')->first();
-        $permission->roles('Empresario_uni')->sync(6);
+         $permission->roles()->attach($role5);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_USU')->first();
-        $permission->roles('Empresario_uni')->sync(6); 
+         $permission->roles()->attach($role5); 
         
         //premisos para los coordinadores de programa
         $permission = Permission::where('name', '=', 'INTE_EVA_EMPRESA')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_VER_NOTI')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_CON')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_DOC')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_VER_DATO_CON')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_ADD_DOC_CON')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_EVA_PRE2')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_USU')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_EVA_PASANTE')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         $permission = Permission::where('name', '=', 'INTE_EVA_PRE4')->first();
-        $permission->roles('Coordinador_uni')->sync(3);
+        $permission->roles()->attach($role2);
         
         //premisos para el funcionario 
         $permission = Permission::where('name', '=', 'INTE_ADD_CONVENIO')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_EVA')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_NOTI')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_CONVENIO')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_EVA_PRIN')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_EDIT_CONVENIO')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_DATO_CON')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_ADD_DOC_CON')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_ADD_PARTI')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_ADD_EMP_PARTY')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_DELET_PART')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_USU')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_EMPRESAS')->first();
-        $permission->roles('Funcionario_uni')->sync(4);
+        $permission->roles()->attach($role3);
         
         //permisos para el administrador de interccion universitaria
         $permission = Permission::where('name', '=', 'INTE_ADD_CONVENIO')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_CON')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_MODULE')->first();
-        $permission->roles('Admin_uni')->sync(2);
-        $permission = Permission::where('name', '=', 'INTE_VER_NOTI')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'INTE_VER_NOTI_ADMIN')->first();
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_CONVENIO')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_EDIT_CONVENIO')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_DATO_CON')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_ADD_DOC_CON')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_ADD_PARTI')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_ADD_EMP_PARTY')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_DELET_PART')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_DES_DOC_USU')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_EMPRESAS')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_SEDES')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_ESTADOS')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_MIS_DOC')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_TIPO_PREG')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_PREG')->first();
-        $permission->roles('Admin_uni')->sync(2);
+        $permission->roles()->attach($role1);
         
     }
 }

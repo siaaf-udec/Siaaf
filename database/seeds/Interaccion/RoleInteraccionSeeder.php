@@ -1,6 +1,6 @@
 <?php
 
-use App\Container\Permissions\Src\Role;
+use App\Container\Permissions\src\Role;
 use Illuminate\Database\Seeder;
 
 class RoleInteraccionSeeder extends Seeder

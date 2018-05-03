@@ -28,6 +28,7 @@
                     'ID',
                     'Titulo',
                     'Visto',
+                    'fecha de creacion',
                     'fecha de visualizacion',
                     'Usuario', 
                     'Apellido', 
@@ -47,11 +48,11 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+
 @endpush
 
 @push('functions')
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
@@ -63,6 +64,7 @@ jQuery(document).ready(function () {
                {data: 'PK_NTFC_Notificacion', className:'none',"visible": true, name:"PK_NTFC_Notificacion" },
                {data: 'NTFC_Titulo', searchable: true,name:"NTFC_Titulo" },
                {data: 'NTFC_Bandera', searchable: true,name:"NTFC_Bandera" },
+               {data: 'created_at', searchable: true,name:"created_at" },
                {data: 'NTFC_Fecha_Vista', searchable: true,name:"NTFC_Fecha_Vista" },
                {data: 'usuario.dato_usuario.name', searchable: true,name:"usuario.dato_usuario.name"},
                 {data: 'usuario.dato_usuario.lastname', searchable: true,name:"usuario.dato_usuario.lastname",className:'none'},
