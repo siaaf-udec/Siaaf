@@ -37,4 +37,6 @@ Administrativo
 $ php artisan db:seed --class=DatabaseAdminisSeeder
 Admisiones y registro
 $ php artisan db:seed --class=DatabaseAdminRegistSeeder
+Auto Evaluación
+$ php artisan db:seed --class=DatabaseAutoevaluationSeeder
 ```

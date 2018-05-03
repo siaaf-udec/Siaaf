@@ -98,6 +98,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'autoevaluation' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/autoevaluation'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
     ],
 
 ];

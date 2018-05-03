@@ -63,6 +63,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAdminRegistRoutes();
 
         $this->mapCrmUdecRoutes();
+
+        $this->mapAutoevaluationRoutes();
     }
 
     /**
@@ -75,8 +77,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -89,15 +91,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 
     protected function mapAcadSpaceRoutes()
     {
         Route::prefix('espacios-academicos')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/acadspace.php'));
     }
@@ -105,7 +107,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAudioVisualsRoutes()
     {
         Route::prefix('audiovisuales')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/audiovisuals.php'));
     }
@@ -121,7 +123,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapFinancialRoutes()
     {
         Route::prefix('financiero')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->financialNamespace)
             ->group(base_path('routes/financial.php'));
     }
@@ -129,7 +131,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapUnvInteractionRoutes()
     {
         Route::prefix('interaccion-universitaria')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/unvinteraction.php'));
     }
@@ -137,7 +139,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapGesapRoutes()
     {
         Route::prefix('gesap')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/gesap.php'));
     }
@@ -145,7 +147,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapCalisoftRoutes()
     {
         Route::prefix('calisoft')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/calisoft.php'));
     }
@@ -153,7 +155,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapHumtalentRoutes()
     {
         Route::prefix('talento-humano')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/humtalent.php'));
     }
@@ -161,7 +163,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapSportcitRoutes()
     {
         Route::prefix('sportcit')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/sportcit.php'));
     }
@@ -169,7 +171,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdministrative()
     {
         Route::prefix('administrative')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/administrative.php'));
     }
@@ -177,7 +179,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRegistRoutes()
     {
         Route::prefix('adminregist')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/adminregist.php'));
     }
@@ -185,8 +187,16 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapCrmUdecRoutes()
     {
         Route::prefix('crmudec')
-            ->middleware(['web','auth'])
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/crmudec.php'));
+    }
+
+    protected function mapAutoevaluationRoutes()
+    {
+        Route::prefix('autoevaluation')
+            ->middleware(['web', 'auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/autoevaluation.php'));
     }
 }
