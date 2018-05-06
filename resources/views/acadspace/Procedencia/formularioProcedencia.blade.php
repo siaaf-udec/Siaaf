@@ -165,9 +165,9 @@
             table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.procedencia.data') }}"; //url para cargar datos
             columns = [
-                {data: 'pk_id_procedencia', name: 'id_procedencia', "visible": false},
+                {data: 'PK_PRO_Id_Procedencia', name: 'id_procedencia', "visible": false},
                 {data: 'DT_Row_Index'},
-                {data: 'tipo_procedencia', name: 'Nombre procedencia'},
+                {data: 'PRO_Nombre', name: 'Nombre procedencia'},
                 {
                     defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
@@ -189,7 +189,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('espacios.academicos.procedencia.destroy') }}' + '/' + dataTable.pk_id_procedencia;
+                var route = '{{ route('espacios.academicos.procedencia.destroy') }}' + '/' + dataTable.PK_PRO_Id_Procedencia;
                 var type = 'DELETE';
                 var async = async || false;
 
@@ -202,7 +202,6 @@
                     processData: false,
                     async: async,
                     beforeSend: function () {
-
                     },
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
@@ -234,7 +233,7 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('tipo_procedencia', $('input:text[name="tipo_procedencia"]').val());
+                        formData.append('PRO_Nombre', $('input:text[name="tipo_procedencia"]').val());
 
                         $.ajax({
                             url: route,

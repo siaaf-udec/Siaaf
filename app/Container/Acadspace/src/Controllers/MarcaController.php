@@ -17,7 +17,7 @@ class MarcaController extends Controller
 
         if ($request->isMethod('GET')) {
             $marca = new marca();
-            $marcas = $marca->pluck('tipo_marca', 'pk_id_marca_equipo');
+            $marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
             return view('acadspace.Marca.formularioMarca',
                 [
                     'marcas' => $marcas->toArray()
@@ -39,7 +39,7 @@ class MarcaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             Marca::create([
-                'tipo_marca' => $request['tipo_marca']
+                'MAR_Nombre' => $request['MAR_Nombre']
             ]);
 
             return AjaxResponse::success(
@@ -84,10 +84,8 @@ class MarcaController extends Controller
      */
     public function destroy(Request $request, $id){
         if ($request->ajax() && $request->isMethod('DELETE')) {
-
                 $marca = Marca::find($id);
                 $marca->delete();
-
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Marca eliminada correctamente.'

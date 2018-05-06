@@ -17,7 +17,7 @@ class ProcedenciaController extends Controller
 
         if ($request->isMethod('GET')) {
             $proce = new procedencia();
-            $procedencias = $proce->pluck('tipo_procedencia', 'pk_id_procedencia');
+            $procedencias = $proce->pluck('PRO_Nombre', 'PK_PRO_Id_Procedencia');
             return view('acadspace.Procedencia.formularioProcedencia',
                 [
                     'procedencias' => $procedencias->toArray()
@@ -39,7 +39,7 @@ class ProcedenciaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             Procedencia::create([
-                'tipo_procedencia' => $request['tipo_procedencia']
+                'PRO_Nombre' => $request['PRO_Nombre']
             ]);
 
             return AjaxResponse::success(
@@ -64,6 +64,7 @@ class ProcedenciaController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $procedencias = Procedencia::select();
             return Datatables::of($procedencias)
+                ->removeColumn('create_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
                 ->make(true);
@@ -84,7 +85,7 @@ class ProcedenciaController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-            $validator=Articulo::where('fk_id_procedencia', $id)
+            $validator=Articulo::where('FK_ART_Id_Procedencia', $id)
                 ->count();
             if ($validator == 0) {
                 $procedencia = Procedencia::find($id);

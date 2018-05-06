@@ -17,7 +17,7 @@ class CategoriaController extends Controller
 
         if ($request->isMethod('GET')) {
             $cate = new categoria();
-            $categorias = $cate->pluck('nombre_categoria', 'pk_id_categoria');
+            $categorias = $cate->pluck('CAT_Nombre', 'PK_CAT_Id_Categoria');
             return view('acadspace.Categoria.formularioCategoria',
                 [
                     'categoria' => $categorias->toArray()
@@ -39,7 +39,7 @@ class CategoriaController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             Categoria::create([
-                'nombre_categoria' => $request['nombre_categoria']
+                'CAT_Nombre' => $request['CAT_Nombre']
             ]);
 
             return AjaxResponse::success(
@@ -84,7 +84,7 @@ class CategoriaController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-            $validator=Articulo::where('fk_id_categoria', $id)
+            $validator=Articulo::where('FK_ART_Id_Categoria', $id)
                 ->count();
             if ($validator == 0) {
                 $categoria = Categoria::find($id);

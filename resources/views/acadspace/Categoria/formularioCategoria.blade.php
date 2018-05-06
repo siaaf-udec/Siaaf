@@ -164,9 +164,9 @@
             table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.categoria.data') }}"; //url para cargar datos
             columns = [
-                {data: 'pk_id_categoria', name: 'id_categoria', "visible": false},
+                {data: 'PK_CAT_Id_Categoria', name: 'id_categoria', "visible": false},
                 {data: 'DT_Row_Index'},
-                {data: 'nombre_categoria', name: 'Nombre categoria'},
+                {data: 'CAT_Nombre', name: 'Nombre categoria'},
                 {
                     defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
@@ -188,7 +188,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('espacios.academicos.categoria.destroy') }}' + '/' + dataTable.pk_id_categoria;
+                var route = '{{ route('espacios.academicos.categoria.destroy') }}' + '/' + dataTable.PK_CAT_Id_Categoria;
                 var type = 'DELETE';
                 var async = async || false;
 
@@ -233,7 +233,7 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('nombre_categoria', $('input:text[name="nombre_categoria"]').val());
+                        formData.append('CAT_Nombre', $('input:text[name="nombre_categoria"]').val());
 
                         $.ajax({
                             url: route,
