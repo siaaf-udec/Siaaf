@@ -13,14 +13,33 @@
 {{--toast--}}
 <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 <style type="text/css">
-    #canvas {
+    #main {
+        margin: 15px auto;
+        background: white;
+        overflow: auto;
+        width: 100%;
+    }
+
+    #header {
+        background: white;
+        margin-bottom: 15px;
+    }
+
+    #mainbody {
+        background: white;
+        width: 100%;
         display: none;
+    }
+
+    #footer {
+        background: white;
     }
 
     #v,
     #barcodecanvas,
     #barcodecanvasg {
-        width: 30%;
+        width: 320px;
+        height: 240px;
     }
 
     #barcodecanvasg {
@@ -29,21 +48,30 @@
         left: 0%;
     }
 
-    #outdiv {
-        position: relative;
-        
-
-    }
-
+    #qr-canvas,
     #barcodecanvas {
         display: none;
     }
 
+    #mp1 {
+        text-align: center;
+        font-size: 35px;
+    }
+
     #outdiv {
         position: relative;
     }
 
+    #result {
+        border: solid;
+        border-width: 1px 1px 1px 1px;
+        padding: 20px;
+        width: 70%;
+    }
 
+    #footer a {
+        color: black;
+    }
 </style>
 <script type="text/javascript" charset="utf-8" src="{{asset('assets/main/acadspace/js/qr/lib/llqrcode.js')}}"></script>
 <!-- <script type="text/javascript">load();</script> -->
@@ -65,22 +93,20 @@
                 <i class="icon-social-dribbble font-green"></i>
                 <span class="caption-subject font-green bold uppercase">Lector QR</span>
             </div>
-
         </div>
         <div class="portlet-body">
             <div id="mainbody" style="display: inline;">
-                <td>
-                    <img class="selector" id="webcamimg" onclick="setwebcam()" align="left" style="opacity: 1;">
-                </td>
-                <td>
-                    <img class="selector" id="qrimg" onclick="setimg()" align="right" style="opacity: 0.2;">
-                </td>
                 <tr>
-                    <td colspan="2" align="center">
-                        <div id="outdiv">
-
-                        </div>
-                        <canvas id="barcodecanvas"></canvas>
+                    <td valign="top" align="center" width="50%">
+                        <table class="tsel" border="0">
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <div id="outdiv">
+                                    </div>
+                                    <canvas id="barcodecanvas"></canvas>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -101,36 +127,30 @@
                         <div id="soluong" style="padding-bottom: 10px;">&nbsp;</div>
 
                     </div>
-                    <canvas id="canvas"></canvas>
+                    
                 </td>
             </div>
-
-
-
-
-
-
+            <canvas id="qr-canvas" width="800" height="600"></canvas>
         </div>
         <!-- END SAMPLE TABLE PORTLET-->
     </div>
-    <div class="col-md-6">
-        {{-- END HTML SAMPLE --}} @endsection @push('plugins')
-        <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+</div>
+{{-- END HTML SAMPLE --}} @endsection @push('plugins')
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
 
-        <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-        {{--Selects--}}
-        <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-        <!-- SCRIPT MODAL -->
-        <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+{{--Selects--}}
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<!-- SCRIPT MODAL -->
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById('leer').click();
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                document.getElementById('leer').click();
+    });
+</script>
 
-            });
-        </script>
-
-        @endpush @endpermission
+@endpush @endpermission
