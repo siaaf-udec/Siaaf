@@ -1,3 +1,6 @@
+// QRCODE reader Copyright 2011 Lazar Laszlo
+// http://www.webqr.com
+
 var gCtx = null;
 var gCanvas = null;
 var c = 0;
@@ -85,7 +88,6 @@ function handleFiles(f) {
     }
 }
 
-
 function initCanvas(w, h) {
     gCanvas = document.getElementById("qr-canvas");
     gCanvas.style.width = w + "px";
@@ -95,6 +97,7 @@ function initCanvas(w, h) {
     gCtx = gCanvas.getContext("2d");
     gCtx.clearRect(0, 0, w, h);
 }
+
 
 function captureToCanvas() {
     if (stype != 1)
@@ -120,34 +123,38 @@ function htmlEntities(str) {
 }
 
 function read(a) {
-    // var html="<br>";
-    // // if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
-    // //     html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
-    // html+="<b>"+htmlEntities(a)+"</b><br><br>";
     var string = a,
         arr = string.split('|'),
         i;
 
     for (i in arr) {
-
-        document.getElementById("mapo").innerHTML = "<b><u>Titulo:</u> " + arr[0] + "</b>";
-        document.getElementById("mact").innerHTML = "<b><u>Contenido:</u> " + arr[1] + "</b>";
-        document.getElementById("soluong").innerHTML = "<b><u>Pie:</u> " + arr[2] + "</b>";
-        load();
-        document.getElementById("mapo").innerHTML = "<b><u>Titulo:</u> " + arr[0] + "</b>";
-        document.getElementById("mact").innerHTML = "<b><u>Contenido:</u> " + arr[1] + "</b>";
-        document.getElementById("soluong").innerHTML = "<b><u>Pie:</u> " + arr[2] + "</b>";
+        document.getElementById("codigo").value=arr[i];
+        document.getElementById("SOL_carrera").selectedIndex = arr[1];
+        document.getElementById("Espacio").selectedIndex = arr[1];
+        document.getElementById("Sala").selectedIndex = arr[i];
+      //  $('select[name="SOL_carrera"]').selectedIndex = "2";
+        console.log(arr[i]);
+       // document.getElementById("codigo_articulo").value=arr[1];
+       // document.getElementById("descripcion").value=arr[2];
+        
     }
-    var audio = new Audio('lib/beep.ogg');
-    audio.play();
-
-
+    document.getElementById("codigo").readOnly = true;
+    document.getElementById("SOL_carrera").disabled = true;
+    document.getElementById("Espacio").disabled = true;
+    document.getElementById("Sala").disabled = true;
+    console.log("LOS VALORES SON _______________________________");
+    console.log($('select[name="SOL_carrera"]').val());
+    console.log($('select[name="Espacio"]').val());
+    console.log($('select[name="Sala"]').val());
+    console.log("LOS VALORES SON _______________________________");
+    load();
 }
 
 function isCanvasSupported() {
     var elem = document.createElement('canvas');
     return !!(elem.getContext && elem.getContext('2d'));
 }
+
 function success(stream) {
 
     v.srcObject = stream;
@@ -278,6 +285,22 @@ function setwebcam2(options) {
 
     stype = 1;
     setTimeout(captureToCanvas, 20);
+}
+
+function setimg() {
+    document.getElementById("result").innerHTML = "";
+    if (stype == 2)
+        return;
+    document.getElementById("outdiv").innerHTML = imghtml;
+    //document.getElementById("qrimg").src="qrimg.png";
+    //document.getElementById("webcamimg").src="webcam2.png";
+    document.getElementById("qrimg").style.opacity = 1.0;
+    document.getElementById("webcamimg").style.opacity = 0.2;
+    var qrfile = document.getElementById("qrfile");
+    qrfile.addEventListener("dragenter", dragenter, false);
+    qrfile.addEventListener("dragover", dragover, false);
+    qrfile.addEventListener("drop", drop, false);
+    stype = 2;
 }
 
 function drawGraphics() {
