@@ -12,6 +12,7 @@ var v = null;
 var canvasblade = '';
 var videoblade = '';
 var canvasgblade = '';
+var cadenaControl = '';
 
 var dimensions = {
     height: 0,
@@ -32,7 +33,7 @@ var config = {
     strokeColor: '#0cf404',
     start: 0.1,
     end: 0.9,
-    
+
     threshold: 160,
     quality: 0.45,
     delay: 100
@@ -46,7 +47,7 @@ var imghtml = '<div id="qrfile"><canvas id="out-canvas" width="320" height="240"
     '</div>' +
     '</div>';
 
-var vidhtml =  '<video id="v" autoplay></video><canvas id="barcodecanvasg"></canvas>';
+var vidhtml = '<video id="v" autoplay></video><canvas id="barcodecanvasg"></canvas>';
 
 function dragenter(e) {
     e.stopPropagation();
@@ -125,29 +126,66 @@ function htmlEntities(str) {
 function read(a) {
     var string = a,
         arr = string.split('|'),
-        i;
+        k;
+    var bandera = [];
+    var mySelect1 = document.getElementById("SOL_carrera");
+    var mySelect2 = document.getElementById("Espacio");
+    var mySelect3 = document.getElementById("Sala");
+    console.log(cadenaControl + "===" + arr);
+    
+    if (cadenaControl.toString() === arr.toString()) {
+        UIToastr.init('warning', 'Retirar QR', '¡Se acaba de proporcionar el QR!');
+        setTimeout(captureToCanvas, 1000);
+    } else {
+        for (k in arr) {
+            document.getElementById("codigo").value = arr[0];
+            for (var i, j = 0; i = mySelect1.options[j]; j++) {
+                if (i.value == arr[1]) {
+                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[1]);
+                    mySelect1.selectedIndex = j;
+                    bandera[0] = true;
+                    break;
+                }
+            }
+            for (var i, j = 0; i = mySelect2.options[j]; j++) {
+                if (i.value == arr[2]) {
+                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[2]);
+                    mySelect2.selectedIndex = j;
+                    bandera[1] = true;
+                    break;
+                }
+            }
+            for (var i, j = 0; i = mySelect3.options[j]; j++) {
+                if (i.value == arr[3]) {
+                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[3]);
+                    mySelect3.selectedIndex = j;
+                    bandera[2] = true;
+                    break;
+                }
+            }
 
-    for (i in arr) {
-        document.getElementById("codigo").value=arr[i];
-        document.getElementById("SOL_carrera").selectedIndex = arr[1];
-        document.getElementById("Espacio").selectedIndex = arr[1];
-        document.getElementById("Sala").selectedIndex = arr[i];
-      //  $('select[name="SOL_carrera"]').selectedIndex = "2";
-        console.log(arr[i]);
-       // document.getElementById("codigo_articulo").value=arr[1];
-       // document.getElementById("descripcion").value=arr[2];
-        
+        }
+        if (bandera[0] && bandera[1] && bandera[2]) {
+            document.getElementById("codigo").readOnly = true;
+            document.getElementById("SOL_carrera").disabled = true;
+            document.getElementById("Espacio").disabled = true;
+            document.getElementById("Sala").disabled = true;
+            console.log("LOS VALORES SON _______________________________");
+            //console.log(document.getElementById("Sala").options[1]);
+            console.log($('select[name="SOL_carrera"]').val());
+            console.log($('select[name="Espacio"]').val());
+            console.log($('select[name="Sala"]').val());
+            console.log("LOS VALORES SON _______________________________");
+            UIToastr.init('success', 'BIENVENIDO', 'Registro satisfactorio.');
+            cadenaControl=arr;
+            setTimeout(captureToCanvas, 1000);
+            //load();
+        } else {
+            UIToastr.init('error', 'ERROR QR', '¡QR Corrupto!');
+            setTimeout(captureToCanvas, 1000);
+        }
     }
-    document.getElementById("codigo").readOnly = true;
-    document.getElementById("SOL_carrera").disabled = true;
-    document.getElementById("Espacio").disabled = true;
-    document.getElementById("Sala").disabled = true;
-    console.log("LOS VALORES SON _______________________________");
-    console.log($('select[name="SOL_carrera"]').val());
-    console.log($('select[name="Espacio"]').val());
-    console.log($('select[name="Sala"]').val());
-    console.log("LOS VALORES SON _______________________________");
-    load();
+    
 }
 
 function isCanvasSupported() {
@@ -170,6 +208,7 @@ function error(error) {
 }
 
 function load() {
+    console.log("COMO LOCO PERRO");
     if (isCanvasSupported() && window.File && window.FileReader) {
         initCanvas(800, 600);
         qrcode.callback = read;
@@ -256,16 +295,16 @@ function setwebcam2(options) {
     elements.video = document.querySelector(videoblade);
     elements.canvas = document.querySelector(canvasblade);
     elements.ctx = elements.canvas.getContext('2d');
-    elements.canvasg =  document.querySelector(canvasgblade);
+    elements.canvasg = document.querySelector(canvasgblade);
     elements.ctxg = elements.canvasg.getContext('2d');
     elements.video.addEventListener('canplay', function (e) {
 
         console.log("ENTROOO AL PINTAR");
 
         dimensions.height = elements.video.videoHeight;
-        console.log("HEIGHT : "+dimensions.height);
+        console.log("HEIGHT : " + dimensions.height);
         dimensions.width = elements.video.videoWidth;
-        console.log("WIDTH : "+dimensions.width);
+        console.log("WIDTH : " + dimensions.width);
 
         dimensions.start = dimensions.width * config.start;
         dimensions.end = dimensions.width * config.end;
@@ -307,35 +346,38 @@ function drawGraphics() {
     elements.ctxg.strokeStyle = config.strokeColor;
     elements.ctxg.lineWidth = 6;
     elements.ctxg.beginPath();
-    elements.ctxg.moveTo(dimensions.start+34, 60);
-    elements.ctxg.lineTo(dimensions.end-28, 60);
+    elements.ctxg.moveTo(dimensions.start + 34, 60);
+    elements.ctxg.lineTo(dimensions.end - 28, 60);
     elements.ctxg.stroke();
-    
+
 }
+
 function drawGraphics2() {
     elements.ctxg.strokeStyle = config.strokeColor;
     elements.ctxg.lineWidth = 6;
     elements.ctxg.beginPath();
-    elements.ctxg.moveTo(dimensions.start+34, 420);
+    elements.ctxg.moveTo(dimensions.start + 34, 420);
     elements.ctxg.lineTo(100, 60);
     elements.ctxg.stroke();
 
 }
+
 function drawGraphics3() {
     elements.ctxg.strokeStyle = config.strokeColor;
     elements.ctxg.lineWidth = 6;
     elements.ctxg.beginPath();
-    elements.ctxg.moveTo(dimensions.end-30, 420);
-    elements.ctxg.lineTo(dimensions.end-30, 60);
+    elements.ctxg.moveTo(dimensions.end - 30, 420);
+    elements.ctxg.lineTo(dimensions.end - 30, 60);
     elements.ctxg.stroke();
 
 }
+
 function drawGraphics4() {
     elements.ctxg.strokeStyle = config.strokeColor;
     elements.ctxg.lineWidth = 6;
     elements.ctxg.beginPath();
-    elements.ctxg.moveTo(dimensions.end-30, 420);
-    elements.ctxg.lineTo(dimensions.start+34, 420);
+    elements.ctxg.moveTo(dimensions.end - 30, 420);
+    elements.ctxg.lineTo(dimensions.start + 34, 420);
     elements.ctxg.stroke();
 
 }

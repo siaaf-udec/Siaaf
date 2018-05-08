@@ -1,4 +1,5 @@
-@permission('ACAD_INCIDENTES') @extends('material.layouts.dashboard') @push('styles') {{--Select2--}}
+@permission('ACAD_INCIDENTES') @extends('material.layouts.dashboard')
+@push('styles') {{--Select2--}}
 <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css"
 />
@@ -106,8 +107,9 @@
         canvasblade = '#barcodecanvas';
     });
 </script>
-@endpush @section('content') {{-- BEGIN HTML SAMPLE --}}
-<div class="col-md-12">
+@endpush 
+@section('content') 
+ <div class="col-md-12">
     <!-- BEGIN SAMPLE TABLE PORTLET-->
     <div class="portlet light ">
         <div class="portlet-title">
@@ -168,7 +170,7 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-12 col-md-offset-0">
-                                        @permission('ACAD_REGISTRAR_ASISTENCIA') {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} @endpermission
+                                        @permission('ACAD_REGISTRAR_ASISTENCIA') {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!} @endpermission
                                     </div>
                                 </div>
                             </div>
@@ -181,18 +183,22 @@
         </div>
         <!-- END SAMPLE TABLE PORTLET-->
     </div>
-</div>
-{{-- END HTML SAMPLE --}} @endsection @push('plugins') 
+ </div>
+@endsection
+@push('plugins')
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
-
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
-{{--Selects--}}
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<!-- SCRIPT MODAL -->
-<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}"type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"type="text/javascript"></script>
+@endpush 
+@push('functions') 
+<script src="{{ asset('assets/main/acadspace/js/form-wizard.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/acadspace/js/qr/AcadspaceControlQr.js') }}"type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         //document.getElementById('leer').click();
@@ -206,18 +212,20 @@
                 return m;
             }
         });
-    //    var temp = '1';
-    //    var mySelect = document.getElementById('SOL_carrera');
-       // console.log(mySelect.options[1]);
-      /*  for(var i, j = 0; i = mySelect.options[j]; j++) {
-           if(i.value == temp) {
-              mySelect.selectedIndex = j;
-              break;
-            }
-        }*/
-        //document.getElementById("SOL_carrera").selectedIndex = "2";
-        //console.log($('select[name="Espacio"]').val());
+        var valores = {
+                        'documento': $('input[name="codigo"]').val(),
+                        'carrera': $('select[name="SOL_carrera"]').val(),
+                        'espacio': $('select[name="Espacio"]').val(),
+                        'sala': $('select[name="Sala"]').val()
+        }
+              
+        var type_crud = 'CREATE',
+            route_store = route('espacios.academicos.formacad.store');
+            
+        QRcontrol.init(route_store,valores, type_crud);
 
+    
     });
 </script>
-@endpush @endpermission
+@endpush 
+@endpermission
