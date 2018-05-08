@@ -21,6 +21,7 @@
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
+     App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Pasante');
         url = "{{ route('listarPreguntaIndividual.listarPreguntaIndividual',[$id]) }}";

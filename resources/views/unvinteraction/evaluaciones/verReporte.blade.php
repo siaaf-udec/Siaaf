@@ -27,7 +27,7 @@
 
 <script >
 jQuery(document).ready(function () {
-    
+     App.unblockUI('.portlet-form');
     $('.atras').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('alertaAjax.alertaAjax') }}';

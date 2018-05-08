@@ -290,6 +290,9 @@ jQuery(document).ready(function () {
                     contentType: false,
                     processData: false,
                     async: async,
+                    beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             table.ajax.reload();

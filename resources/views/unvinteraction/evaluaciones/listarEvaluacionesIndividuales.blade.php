@@ -61,6 +61,9 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                        beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         var route = '{{route('reporte.reporte')}}/@php echo $id; @endphp/'+$('#Fecha_Inicio').val()+'/'+$('#Fecha_Fin').val();
