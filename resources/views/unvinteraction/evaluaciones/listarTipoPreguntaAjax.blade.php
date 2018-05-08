@@ -188,7 +188,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun tipo de pregunta", "error");
+                        swal("Cancelado", "No se eliminó ningún tipo de pregunta", "error");
                     }
                 });
             });

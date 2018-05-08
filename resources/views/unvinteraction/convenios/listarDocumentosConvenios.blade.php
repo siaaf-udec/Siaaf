@@ -361,7 +361,7 @@
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ningún participangte", "error");
                     }
                 });
             });
@@ -522,7 +522,7 @@
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ningún participante", "error");
                     }
                 });
             });

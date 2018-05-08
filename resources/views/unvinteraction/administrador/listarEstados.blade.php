@@ -272,7 +272,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun estado", "error");
+                        swal("Cancelado", "No se eliminó ningún estado", "error");
                     }
                 });
             });
