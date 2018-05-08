@@ -37,9 +37,10 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     ComponentsDateTimePickers.init();
     ComponentsSelect2.init();
-    App.unblockUI('.portlet-form');
+    
     $('.portlet-form').attr("id","form_wizard_1");
      var rules = {
             CVNO_Nombre: {required: true},

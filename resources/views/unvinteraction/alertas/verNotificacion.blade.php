@@ -25,7 +25,8 @@
 </div>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
-jQuery(document).ready(function () {    
+jQuery(document).ready(function () {  
+    App.unblockUI('.portlet-form');
     $('.atras').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('alertaAjax.alertaAjax') }}';

@@ -111,7 +111,7 @@
 <script>
 jQuery(document).ready(function () {
     Dropzone.autoDiscover = false;
-     App.unblockUI('.portlet-form');
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Documentos');
         url = "{{ route('listarMisDocumentos.listarMisDocumentos') }}";
