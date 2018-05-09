@@ -1,6 +1,6 @@
 <?php
 
-use app\Container\Gesap\src\Actividad;
+use App\Container\Gesap\src\Actividad;
 use \Illuminate\Database\Seeder;
 
 class ActividadesGesapSeeder extends Seeder
