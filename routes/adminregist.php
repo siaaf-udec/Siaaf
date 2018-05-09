@@ -22,13 +22,13 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('check/document', [
-            'middleware' => ['permission:ADMINREGIST_USER'],
+            'middleware' => ['permission:ADMINREGIST_MODULE'],
             'uses' => $controller . 'UsuariosController@checkDocument',
             'as' => 'adminRegist.users.check.document'
         ]);
 
         Route::post('check/code', [
-            'middleware' => ['permission:ADMINREGIST_USER'],
+            'middleware' => ['permission:ADMINREGIST_MODULE'],
             'uses' => $controller . 'UsuariosController@checkCode',
             'as' => 'adminRegist.users.check.code'
         ]);

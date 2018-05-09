@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Permissions\src\Role;
+use App\Notifications\HeaderSiaaf;
 
 class SugerenciaController extends Controller
 {
@@ -92,18 +94,22 @@ class SugerenciaController extends Controller
                 'SU_Email' => $request['SU_Email'],
                 'SU_Pregunta' => $request['SU_Pregunta'],
             ]);
+           $role = Role::where('name', '=', 'Adminis_AdminRegist')->first();
+            $user = $role->users()->get();
+            foreach ($user as $dato) {
+                /*Crea Notificacion*/
+                $data = [
+                    'url' => '/adminregist/sugerencia/index',
+                    'description' => '¡Tienes una Sugerencia!',
+                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                ];
+                $dato->notify(new HeaderSiaaf($data));
+            }
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Pregunta Agregada correctamente.'
             );
-
-            /*Crea Notificacion*/
-            $data = [
-                'url' => 'https://www.google.com.co/',
-                'description' => '¡Tienes una Sugerencia!',
-                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-            ];
-            $sugerencia->notify(new HeaderSiaaf($data));
         }
 
         return AjaxResponse::fail(

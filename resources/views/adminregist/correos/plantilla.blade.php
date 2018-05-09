@@ -21,7 +21,7 @@
                     <td height="20"></td>
                 </tr>
                 <!-- content -->
-                <tr>
+        <tr>
                     <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:11px; color:#FFFFFF;text-transform:uppercase; letter-spacing:4px;">{{ env('APP_NAME') }}</td>
                 </tr>
                 <!-- end content -->

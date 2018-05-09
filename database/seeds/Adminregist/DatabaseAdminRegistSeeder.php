@@ -13,6 +13,7 @@ class DatabaseAdminRegistSeeder extends Seeder
     public function run()
     {
         $this->call(NovedadesSeeder::class);
+        $this->call(RoleAdminRegistSeeder::class);
         $this->call(PermissionsAdminRegist::class);
     }
 }
