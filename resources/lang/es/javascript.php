@@ -97,7 +97,7 @@ return [
         'processing'                => 'Procesando Archivo.',
         'remove'                    => 'Quitar Archivo.',
         'server_error'              => 'Ha ocurrido un error e el servidor.',
-        'one_file'                  => 'Debes cargar al menos un archivo.',
+        'one_file'                  => 'Debes cargar al menos un archivo y completar los campos requeridos.',
         'stored'                    => 'Almacenado',
         'stored_and_processing'     => 'El archivo se ha cargado satisfactoriamente. Un momento mientras se procesa.',
         'failed'                    => 'El archivo no se pudo procesar, intenta nuevamente.',

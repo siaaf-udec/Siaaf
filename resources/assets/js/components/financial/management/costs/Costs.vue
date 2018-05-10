@@ -22,7 +22,7 @@
                                                        :placeholder="formCost.cost.label"
                                                        min="0"
                                                        max="9999999"
-                                                       pattern="\\d{1,7}"
+                                                       pattern="\d{1,7}"
                                                        @input="checkLength( $event.target.value )"
                                                        class="form-control"
                                                        id="cost"
@@ -344,6 +344,8 @@
                 if (jQuery().datepicker) {
                     $('.date-picker').datepicker({
                         format: 'yyyy-mm-dd',
+                        startDate: '+1d',
+                        todayBtn: false,
                     }).on('changeDate', function () {
                         that.formCost.validUntil.value = this.value;
                     });

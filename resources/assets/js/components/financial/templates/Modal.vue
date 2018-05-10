@@ -1,7 +1,7 @@
 <template>
     <div :id="id" class="modal fade" :class="modalClass" tabindex="-1" data-backdrop="static" data-keyboard="false" data-focus-on="input:first">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <button type="button" v-show="showDismiss" class="close" data-dismiss="modal" aria-hidden="true"></button>
             <h4 class="modal-title" v-text="title"></h4>
         </div>
         <div class="modal-body">
@@ -28,6 +28,10 @@
             modalClass: {
                 type: String,
                 default: null,
+            },
+            showDismiss: {
+                type: Boolean,
+                default: true,
             }
         },
     }
