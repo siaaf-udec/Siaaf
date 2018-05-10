@@ -19,28 +19,28 @@ class Marca extends Model
      * Tabla utilizada por el modelo.
      * @var string
      */
-    protected $table = 'tbl_marca_equipos';
+    protected $table = 'TBL_Marca';
 
     /**
      * Llave primaria usada por el modelo
      */
-    protected $primaryKey = 'pk_id_marca_equipo';
+    protected $primaryKey = 'PK_MAR_Id_Marca';
 
     /**
      * Atributos que son asignables.
      * @var array
      */
     protected $fillable = [
-        'tipo_marca'         
+        'MAR_Nombre'         
     ];
     /**
-     *  Función que retorna la relación entre la tabla 'tbl_marca_equipos' y la tabla
-     * 'tb_hojavida' a través de la llave foránea 'fk_id_marca_equipo'
-     *  y la llave 'pk_id_marca_equipo'
+     *  Función que retorna la relación entre la tabla 'TBL_Marca' y la tabla
+     * 'TBL_Hojavida' a través de la llave foránea 'FK_HOJ_Id_Marca'
+     *  y la llave 'PK_MAR_Id_Marca'
      */
-    public function articulo()
+    public function hojavida()
     {
-        return $this->hasMany(Articulo::class, 'fk_id_marca_equipo', 'pk_id_marca_equipos');
+        return $this->hasMany(Hojavida::class, 'FK_HOJ_Id_Marca', 'PK_MAR_Id_Marca');
     }
    
    

@@ -24,7 +24,7 @@ class IntersemestralTransformer extends TransformerAbstract
                 'student_phone'     =>  isset( $subscribed->student->phone ) ? $subscribed->student->phone : __('financial.generic.empty'),
                 'student_email'     =>  isset( $subscribed->student->email ) ? $subscribed->student->email : __('financial.generic.empty'),
                 'paid'              =>  $subscribed->{ paid() },
-                'paid_label'        =>  $subscribed->{ paid() } ? labelHtml( 'success', 'PAGADO' ) : labelHtml( 'info', 'EN ESPERA DE PAGO' ),
+                'paid_label'        =>  $subscribed->{ paid() } ? labelHtml( 'success', paid_status() ) : labelHtml( 'info', waiting_pay_status() ),
             ];
         }
 

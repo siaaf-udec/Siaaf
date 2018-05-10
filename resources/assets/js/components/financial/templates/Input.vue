@@ -15,6 +15,7 @@
                    :value="value"
                    :name="name"
                    :id="name"
+                   :pattern="attributes.pattern"
                    :type="type" @input="handleValue( $event.target.value )">
             <label v-show="showLabel" :for="name" class="control-label" v-text="label"></label>
             <span class="help-block" v-text="help"></span>
@@ -50,13 +51,14 @@
                     return {
                         required: true,
                         autocomplete: 'off',
-                        maxlength: 191,
+                        maxlength: 60,
                         minlength: 2,
                         disabled: false,
                         readonly: false,
                         class: null,
                         min: 1,
                         max: 99,
+                        pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                     }
                 }
             },

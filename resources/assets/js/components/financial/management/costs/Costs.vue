@@ -9,23 +9,31 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <vue-input name="cost"
-                                                       type="number"
-                                                       icon="fa fa-money"
-                                                       v-model.number.trim="formCost.cost.value"
-                                                       :value="formCost.cost.value"
-                                                       :help="formCost.cost.help"
-                                                       :hasError="formCost.cost.hasError"
-                                                       :errors="formCost.cost.errors"
-                                                       :attributes="formCost.cost.attributes"
-                                                       :label="formCost.cost.label">
-                                            </vue-input>
+                                            <vue-input-empty icon="fa fa-money"
+                                                             :label="formCost.cost.label"
+                                                             :help="formCost.cost.help"
+                                                             :hasError="formCost.validUntil.hasError"
+                                                             :errors="formCost.cost.errors"
+                                                             name="cost">
+                                                <input type="number"
+                                                       name="cost"
+                                                       required="required"
+                                                       ref="cost"
+                                                       :placeholder="formCost.cost.label"
+                                                       min="0"
+                                                       max="9999999"
+                                                       pattern="\\d{1,7}"
+                                                       @input="checkLength( $event.target.value )"
+                                                       class="form-control"
+                                                       id="cost"
+                                                       v-model.number.trim="formCost.cost.value" />
+                                            </vue-input-empty>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <vue-select2 :label="formCost.serviceName.label"
-                                                         v-model="formCost.serviceName.value"
+                                                         v-model.trim="formCost.serviceName.value"
                                                          :value="formCost.serviceName.value"
                                                          :attributes="formCost.serviceName.attributes"
                                                          :options="formCost.serviceName.options"
@@ -136,6 +144,7 @@
     import {mixinFormatter} from "../../../../mixins";
     import {mixinDataTable} from "../../../../mixins/datatable";
     import {mixinTootilps} from "../../../../mixins/tooltip";
+
     export default {
         name: "management-costs",
         mixins: [mixinTootilps, mixinValidator, mixinSelect2, mixinLoading, mixinDate, mixinHttpStatus, mixinEditable, mixinFormatter, mixinDataTable, mixinMomentLocale],
@@ -176,10 +185,9 @@
                         attributes: {
                             required: true,
                             autocomplete: 'off',
-                            maxlength: 22,
-                            minlength: 2,
-                            min: 1000,
-                            max: 999999999,
+                            min: 0,
+                            max: 9999999,
+                            pattern: '\\d{1,7}',
                         }
                     },
                     serviceName: {
@@ -207,6 +215,9 @@
                             autocomplete: 'off',
                             class: 'date date-picker',
                             readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
                         }
                     }
                 },
@@ -231,7 +242,7 @@
                             data: 'cost_valid_until',
                             name: 'cost_valid_until',
                             render: function (data, type, row) {
-                                return moment( data ).format('ll');
+                                return (data) ? moment( data ).format('ll') : null;
                             }
                         },
                     ],
@@ -245,6 +256,10 @@
             this.initTable();
         },
         methods: {
+            checkLength: function( value ) {
+                this.formCost.cost.value = value = value.slice(0, 7);
+                this.$emit('input', value);
+            },
             initTable: function() {
                 let self = this;
                 $( `#${self.history.id}` ).DataTable({
@@ -273,7 +288,13 @@
                         if($.trim(value) === '') {
                             return Lang.get('validation.required', {attribute: Lang.get('validation.attributes.cost')});
                         }
+                        if ( value.length > 7 ) {
+                            return Lang.get('validation.digits_between', {attribute: Lang.get('validation.attributes.cost'), min: 0, max: 9999999});
+                        }
                     },
+                    error: function(errors) {
+                        return errors.responseJSON.errors.value[0];
+                    }
                 });
                 $until.editable({
                     success: function () {
@@ -281,15 +302,20 @@
                         that.setMomentLocale();
                     },
                     display: function (value) {
+                        that.setMomentLocale();
                         $(this).text( moment( value ).format('ll') );
                     },
                     validate: function(value) {
+                        that.setMomentLocale();
                         if($.trim(value) === '') {
                             return Lang.get('validation.required', {attribute: Lang.get('validation.attributes.valid_until')});
                         }
                         if ( moment(value) <= moment() ) {
                             return Lang.get('validation.after_or_equal', { attribute: Lang.get('validation.attributes.valid_until'), date: moment().format('ll') });
                         }
+                    },
+                    error: function(errors) {
+                        return errors.responseJSON.errors.value[0];
                     },
                     combodate: that.table.editableAttr
                 });
@@ -299,11 +325,13 @@
                     rules: {
                         cost: {
                             required: true,
-                            number: true
+                            number: true,
+                            min: 0,
                         },
                         valid_until: {
                             required: true,
-                            date: true
+                            date: true,
+                            maxlength: 10,
                         },
                         service_name: {
                             required: true,
@@ -365,6 +393,23 @@
                         this.triggerSwal( response );
                     })
                     .catch( ( error ) => {
+                        console.log( error.response.data );
+                        
+                        if ( error.response.data.hasOwnProperty('errors') ) {
+                            if (error.response.data.errors.hasOwnProperty('cost')) {
+                                this.formCost.cost.hasError = 'has-error';
+                                this.formCost.cost.errors = error.response.data.errors.cost;
+                            }
+                            if (error.response.data.errors.hasOwnProperty('service_name')) {
+                                this.formCost.serviceName.hasError = 'has-error';
+                                this.formCost.serviceName.errors = error.response.data.errors.service_name;
+                            }
+                            if (error.response.data.errors.hasOwnProperty('valid_until')) {
+                                this.formCost.validUntil.hasError = 'has-error';
+                                this.formCost.validUntil.errors = error.response.data.errors.valid_until;
+                            }
+                        } 
+                        
                         swal.close();
                         this.setNullValues();
                         this.getData();
@@ -379,7 +424,7 @@
                 this.params.service_name = null;
                 this.params.valid_until = null;
             }
-        }
+        },
     }
 </script>
 

@@ -180,8 +180,12 @@
                                                     <div class="col-md-12">
                                                         <div class="input-icon">
                                                             <i class="fa fa-calendar"></i>
-                                                            <input type="text" required="required" readonly="readonly"
+                                                            <input type="text" :required="required" readonly="readonly"
+                                                                   minlength="10"
+                                                                   maxlength="10"
                                                                    name="date"
+                                                                   id="date"
+                                                                   pattern="\\d{4}-\\d{2}-\\d{2}"
                                                                    autocomplete="off"
                                                                    class="form-control datepicker date date-picker todo-taskbody-due"
                                                                    :placeholder="table.realization_date"
@@ -313,6 +317,7 @@
                 },
                 filter_query: null,
                 patch: '',
+                required: false,
             }
         },
         mounted: function () {
@@ -326,7 +331,6 @@
                 $('#approval-form').validate({
                     rules: {
                         date: {
-                            required: true,
                             date: true
                         },
                         status: {
@@ -428,6 +432,10 @@
             },
             sendStatus: function () {
                 let that = this;
+                if ( !that.required )  {
+                    that.realization_date = moment().format('YYYY-MM-DD');
+                }
+
                 if ( $('#approval-form').valid() ) {
                     swal({
                         title: Lang.get('javascript.warning'),
@@ -475,8 +483,10 @@
                 this.setActive( status );
             },
             status: function ( status ) {
-                console.log(status);
-                $('.todo-taskbody-tags').select2().val(status.value).trigger('change')
+                let data = $('#status').select2('data');
+                data = ( data ) ? data[0].text : null;
+                this.required = ( data === 'APROBADO' );
+                $('.todo-taskbody-tags').select2().val(status).trigger('change')
             }
         },
         computed: {

@@ -1,9 +1,6 @@
 <?php
 
-use App\Container\Users\Src\User;
-use App\Container\Unvinteraction\src\TipoPregunta;
-use App\Container\Unvinteraction\src\Sede;
-use App\Container\Unvinteraction\src\Estado;
+use App\Container\Users\src\User;
 use Illuminate\Database\Seeder;
 
 

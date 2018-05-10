@@ -1,12 +1,6 @@
 @extends('material.layouts.dashboard')
 @push('styles')
-    <!-- STYLES SELECT -->
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2.min.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/select2-bootstrap.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet"
-          type="text/css"/>
+
     <!-- STYLES MODAL -->
     <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet"
           type="text/css"/>
@@ -21,12 +15,12 @@
     <link href="{{asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
-@section('title', '| Gestion Kit')
-@section('page-title', 'Gestion kits')
+@section('title', '| Gestión Kit')
+@section('page-title', 'Gestión kits')
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="modal fade" data-width="760" id="modal-info-kit" tabindex="-1">
+            <div class="modal fade" data-width="380" id="modal-info-kit" tabindex="-1">
                 <div class="modal-header modal-header-success">
                     <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                     </button>
@@ -39,7 +33,7 @@
                 <div class="modal-body">
                     {!! Form::open(['id' => 'from_info_kit', 'class' => '', 'url' => '/forms']) !!}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::text('KIT_Nombre',
                                ['label' => 'Nombre Kit', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
                                ['help' => 'Nombre del Kit', 'icon' => 'fa fa-pencil'])
@@ -52,7 +46,7 @@
                                 ['label' => 'Tipo Tiempo','required'])
                             !!}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             {!! Field::text('KIT_Codigo',
                                 ['label' => 'Codigo', 'max' => '40', 'min' => '2', 'required', 'auto' => 'off'],
                                 ['help' => 'Codigo Del Kit', 'icon' => 'fa fa-key'])
@@ -61,15 +55,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
-                    {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                    <div class="col-md-12" align="center">
+                        {!! Form::submit('MODIFICAR', ['class' => 'btn blue']) !!}
+                        {!! Form::button('CANCELAR', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+
+                    </div>
                 </div>
                 {!! Form::close() !!}
             </div>
         </div>
     </div>
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestion Kits'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Gestión Kits'])
             <br>
             <div class="clearfix"></div>
             <div class="row">
@@ -90,7 +87,6 @@
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'kit-table-ajax'])
                     @slot('columns', [
-                        '#' => ['style' => 'width:20px;'],
                         'Nombre',
                         'Codigo',
                         'Acciones' => ['style' => 'width:160px;']
@@ -102,9 +98,7 @@
     </div>
 @endsection
 @push('plugins')
-    <!-- SCRIPT SELECT -->
-    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript">
-    </script>
+
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript">
     </script>
@@ -157,22 +151,7 @@
     <script>
         var table, url, columns;
         var idEditarKit;
-        var ComponentsSelect2 = function () {
-            return {
-                init: function () {
-                    /*Configuracion de Select*/
-                    $.fn.select2.defaults.set("theme", "bootstrap");
-                    $(".pmd-select2").select2({
-                        placeholder: "Selecccionar",
-                        allowClear: true,
-                        width: 'auto',
-                        escapeMarkup: function (m) {
-                            return m;
-                        }
-                    });
-                }
-            }
-        }();
+
         var ComponentsBootstrapMaxlength = function () {
             var handleBootstrapMaxlength = function () {
                 $("input[maxlength], textarea[maxlength]").maxlength({
@@ -190,11 +169,10 @@
         $(document).ready(function () {
             App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
-            ComponentsSelect2.init();
+
             table = $('#kit-table-ajax');
             url ="{{ route('listarKit.data') }}";
             columns = [
-                {data: 'DT_Row_Index'},
                 {data: 'KIT_Nombre' , name: 'KIT_Nombre'},
                 {data: 'KIT_Codigo' , name: 'KIT_Codigo'},
                 {
@@ -231,9 +209,9 @@
                 }else{
                     $('#KIT_Codigo').removeAttr('disabled');
                 }
-                //$('#KIT_FK_TiempoN').value(3);
                 $('#KIT_Nombre').val(dataTable.KIT_Nombre);
                 $('#KIT_Codigo').val(dataTable.KIT_Codigo);
+                $('select[name="KIT_FK_Tiempo"]').val(dataTable.KIT_FK_Tiempo);
 
                 idEditarKit=dataTable.id;
                 $('#modal-info-kit').modal('toggle');
@@ -380,17 +358,11 @@
                 KIT_Nombre: {
                     minlength: 3,
                     required: true,
-                    remote: {
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: "{{ route('kit.validar') }}",
-                        type: "post"
-                    }
+
                 }
             };
             var messagesKit = {
-                KIT_Nombre: {
-                    remote: 'El Kit ya Existe.'
-                }
+
             };
             FormValidationMd.init(form_create,rules_kit_modificar,messagesKit,modificarKit());
         })

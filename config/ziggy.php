@@ -88,7 +88,16 @@ return [
         //Approve Intersemestral
         'financial.admin.approval.intersemestral.store',
         'financial.admin.approval.intersemestral.update',
-
+        //Checks
+        'financial.money.checks.index',
+        'financial.money.checks.store',
+        'financial.money.checks.update',
+        'financial.money.checks.destroy',
+        //Petty Cash
+        'financial.money.cash.index',
+        'financial.money.cash.store',
+        'financial.money.cash.update',
+        'financial.money.cash.destroy',
         //Api
         'financial.api.*',
     ],

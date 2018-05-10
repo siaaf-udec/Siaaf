@@ -125,7 +125,12 @@ abstract class Methods implements MethodsInterface
         return $this->model;
     }
 
-    public function dataTables( $relations = [] )
+    /**
+     * @param array $relations
+     * @return mixed
+     * @throws \Exception
+     */
+    public function dataTables($relations = [] )
     {
         return DataTables::of( $this->model->with( $relations ) );
     }

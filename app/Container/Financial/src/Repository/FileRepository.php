@@ -90,13 +90,17 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     public function studentUpload( $request )
     {
         $status = $this->statusRequestRepository->getId( status_type_file(), sent_status() );
-        $model = $this->getModel();
-        $model->{ file_name() }     = $request->file('file')->getClientOriginalName();
-        $model->{ file_route() }    = $request->file('file')->store('', 'financial');
-        $model->{ user_fk() }       = auth()->user()->id;
-        $model->{ file_type_fk() }  = $request->file_type;
-        $model->{ status_fk() }     = $status->{ primaryKey() };
-        return $model->save();
+
+        if ( isset( $status->{ primaryKey() } ) ) {
+            $model = $this->getModel();
+            $model->{file_name()} = $request->file('file')->getClientOriginalName();
+            $model->{file_route()} = $request->file('file')->store('', 'financial');
+            $model->{user_fk()} = auth()->user()->id;
+            $model->{file_type_fk()} = $request->file_type;
+            $model->{status_fk()} = $status->{primaryKey()};
+            return $model->save();
+        }
+        return false;
     }
 
     /**

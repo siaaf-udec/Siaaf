@@ -19,6 +19,8 @@ class SchemaConstant
     /*
      * Index table name
      */
+    const PETTY_CASH                = 'petty_cash';
+    const CHECKS                    = 'checks';
     const AVAILABLE_MODULES         = 'available_modules';
     const INTERSEMESTRAL_STUDENT    = 'intersemestral_students';
     const INTERSEMESTRAL            = 'intersemestrals';
@@ -33,6 +35,26 @@ class SchemaConstant
     const FILE_TYPE                 = 'file_types';
     const SUBJECT_PROGRAM           = 'subjects_programs';
     const COMMENTS                  = 'comments';
+
+    /*
+     * Table Prefix
+     */
+    const PETTY_CASH_PREFIX                = 'PCS_';
+    const CHECKS_PREFIX                    = 'CHK_';
+    const AVAILABLE_MODULES_PREFIX         = 'AMD_';
+    const INTERSEMESTRAL_STUDENT_PREFIX    = 'ISS_';
+    const INTERSEMESTRAL_PREFIX            = 'IST_';
+    const EXTENSION_PREFIX                 = 'EXT_';
+    const ADD_SUB_SUBJECTS_PREFIX          = 'ASS_';
+    const VALIDATION_PREFIX                = 'VLT_';
+    const REQUEST_STATUS_PREFIX            = 'RST_';
+    const COST_SERVICES_PREFIX             = 'CSV_';
+    const PROGRAM_PREFIX                   = 'PGM_';
+    const SUBJECTS_PREFIX                  = 'SUB_';
+    const FILES_PREFIX                     = 'FIL_';
+    const FILE_TYPE_PREFIX                 = 'FTP_';
+    const SUBJECT_PROGRAM_PREFIX           = 'SPG_';
+    const COMMENTS_PREFIX                  = 'CMN_';
 
     /*
      * Common Foreign Keys
@@ -51,12 +73,14 @@ class SchemaConstant
     /*
      * Table Fields
      */
+    const CONCEPT           = 'concept';
+    const SUPPORT           = 'support';
     const STATUS            = 'status';
-
     const MODULE_NAME       = 'module_name';
     const AVAILABLE_FROM    = 'available_from';
     const AVAILABLE_UNTIL   = 'available_until';
-
+    const CHECK             = 'check';
+    const PAY_TO            = 'pay_to';
     const COST              = 'cost';
     const PAID              = 'paid';
     const COST_SERVICE_NAME = 'cost_service_name';
@@ -79,6 +103,7 @@ class SchemaConstant
     const CREATED_AT        = 'created_at';
     const UPDATED_AT        = 'updated_at';
     const DELETED_AT        = 'deleted_at';
+    const DELIVERED_AT      = 'delivered_at';
 
     /**
      * Retrieve full table name with connection name,

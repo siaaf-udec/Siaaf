@@ -3,7 +3,6 @@
 namespace App\Container\AdminRegist\Src;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
 class Sugerencias extends Model
 {
@@ -16,23 +15,6 @@ class Sugerencias extends Model
      * @var array
      */
     protected $fillable = [
-        'SU_Pregunta','SU_Email','SU_Username'
+        'SU_Pregunta','SU_Email','SU_Username','SU_Respuesta','SU_Estado'
     ];
-
-    use Notifiable;
-
-    /**
-     * The channels the user receives notification broadcasts on.
-     *
-     * @return string
-     */
-    public function receivesBroadcastNotificationsOn()
-    {
-        return 'sugerencia-notification.'.'sugerencia';
-    }
-
-    public function getNumStatusReadNotificationsAttribute()
-    {
-        return count($this->unreadNotifications );
-    }
 }

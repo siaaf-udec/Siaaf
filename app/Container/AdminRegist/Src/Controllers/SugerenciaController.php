@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Permissions\src\Role;
+use App\Notifications\HeaderSiaaf;
 
 class SugerenciaController extends Controller
 {
@@ -29,6 +31,24 @@ class SugerenciaController extends Controller
     }
 
     /**
+     *Función que muestra las preguntas sugeridas registradas por medio de una petición ajax.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function indexAjax(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('adminregist.sugerencias.ajaxTablaSugerencia');
+        } else {
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
      * Función que consulta las sugerencias de las preguntas registradas y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
@@ -40,6 +60,14 @@ class SugerenciaController extends Controller
             $sugerencia = Sugerencias::query();
 
             return DataTables::of($sugerencia)
+                ->addColumn('SU_Estado', function ($sugerencia) {
+                    if (!strcmp($sugerencia->SU_Estado, 'Resuelta')) {
+                        return "<span class='label label-sm label-success'>" . $sugerencia->SU_Estado . "</span>";
+                    } elseif (!strcmp($sugerencia->SU_Estado, 'Sin Resolver')) {
+                        return "<span class='label label-sm label-warning'>" . $sugerencia->SU_Estado . "</span>";
+                    }
+                })
+                ->rawColumns(['SU_Estado'])
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->make(true);
@@ -66,18 +94,22 @@ class SugerenciaController extends Controller
                 'SU_Email' => $request['SU_Email'],
                 'SU_Pregunta' => $request['SU_Pregunta'],
             ]);
+           $role = Role::where('name', '=', 'Adminis_AdminRegist')->first();
+            $user = $role->users()->get();
+            foreach ($user as $dato) {
+                /*Crea Notificacion*/
+                $data = [
+                    'url' => '/adminregist/sugerencia/index',
+                    'description' => '¡Tienes una Sugerencia!',
+                    'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                ];
+                $dato->notify(new HeaderSiaaf($data));
+            }
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Pregunta Agregada correctamente.'
             );
-
-            /*Crea Notificacion*/
-            $data = [
-                'url' => 'https://www.google.com.co/',
-                'description' => '¡Tienes una Sugerencia!',
-                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
-            ];
-            $sugerencia->notify(new HeaderSiaaf($data));
         }
 
         return AjaxResponse::fail(

@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use Dotenv\Exception\ValidationException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 
 class Handler extends ExceptionHandler
 {
@@ -61,5 +64,21 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest(route('login'));
+    }
+
+    /**
+     * @param \Illuminate\Validation\ValidationException $e
+     * @param \Illuminate\Http\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertValidationExceptionToResponse(\Illuminate\Validation\ValidationException $e, $request)
+    {
+        $response = parent::convertValidationExceptionToResponse($e, $request);
+        if ($response instanceof JsonResponse) {
+            $original = $response->getOriginalContent();
+            $original['message'] = 'Los datos enviados son incorrectos.';
+            $response->setContent(json_encode($original));
+        }
+        return $response;
     }
 }

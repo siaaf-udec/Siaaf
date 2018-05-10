@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'request.status'  =>  \App\Container\Financial\src\Middleware\CheckStatus::class,
         'api.ajax'  =>  \App\Container\Financial\src\Middleware\ApiRequestStatus::class,
         'check.available'  =>  \App\Container\Financial\src\Middleware\CheckIfAvailable::class,
+        'check.cost'  =>  \App\Container\Financial\src\Middleware\CheckCosts::class,
+        'sanitization'  =>  \App\Container\Financial\src\Middleware\RequestSanitization::class,
     ];
 }

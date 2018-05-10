@@ -82,7 +82,7 @@
                             <h3 class="block">Tiempos del Proyecto</h3>
                             <div class="row">
                                 <div class="col-xs-12 col-md-4 col-lg-4">
-                                    {!! Field::text('duracion',
+                                    {!! Field::tel('duracion',
                                     ['label' => 'Duracion del Proyecto', 'max' => '2', 'min' => '1', 'required', 'auto' => 'off'],['help' => 'Duracion del Proyecto', 'icon' => 'fa fa-clock-o']) !!}
                                 </div>
                                 <div class="col-xs-12 col-md-4 col-lg-4">
@@ -117,7 +117,7 @@
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
 												<input type="file" name="Min" class="other-file" required
-                                                       id="Min"> </span>
+                                                       id="Min"  accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"> </span>
                                                 <a href="javascript:;"
                                                    class="input-group-addon btn red fileinput-exists"
                                                    data-dismiss="fileinput"> Quitar </a>
@@ -140,7 +140,7 @@
 												<span class="fileinput-new"> Seleccionar Documento </span>
 												<span class="fileinput-exists"> Cambiar </span>
 												<input type="file" name="Requerimientos" class="other-file"
-                                                       id="Requerimientos">
+                                                       id="Requerimientos" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf">
 											</span>
                                                 <a href="javascript:;"
                                                    class="input-group-addon btn red fileinput-exists"
@@ -274,8 +274,8 @@
                 duracion: {required: true, minlength: 1, maxlength: 2, number: true},
                 FechaR: {required: true},
                 FechaL: {required: true},
-                Min: {required: true, extension: "txt|pdf|doc|docx"},
-                Requerimientos: {extension: "txt|pdf|doc|docx"}
+                Min: {required: true, extension: "pdf|doc|docx"},
+                Requerimientos: {extension: "pdf|doc|docx"}
             };
 
             var wizard = $('#form_wizard_1');
@@ -292,7 +292,7 @@
                         formData.append('estudiante1', $('select[name="estudiante1"]').val());
                         formData.append('estudiante2', $('select[name="estudiante2"]').val());
                         formData.append('Keywords', $('#Keywords').val());
-                        formData.append('duracion', $('input:text[name="duracion"]').val());
+                        formData.append('duracion', $('#duracion').val());
                         formData.append('FechaR', $('#FechaR').val());
                         formData.append('FechaL', $('#FechaL').val());
 

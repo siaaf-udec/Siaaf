@@ -165,7 +165,7 @@ class AdministradorController extends Controller
              $sede->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'Sede eliminada correctamente.'
              );
          }
          return AjaxResponse::fail(
@@ -420,7 +420,7 @@ class AdministradorController extends Controller
              $estado->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'Estado eliminado correctamente.'
              );
          }
          return AjaxResponse::fail(
@@ -459,7 +459,7 @@ class AdministradorController extends Controller
             $estado->restore();
             return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede editada correctamente.'
+                 'Estado restaurado correctamente.'
              );
         }
         return AjaxResponse::fail('¡Lo sentimos!','No se pudo completar tu solicitud.');

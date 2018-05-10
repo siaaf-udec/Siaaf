@@ -165,9 +165,9 @@
             table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.marca.data') }}"; //url para cargar datos
             columns = [
-                {data: 'pk_id_marca_equipo', name: 'id_marca', "visible": false},
+                {data: 'PK_MAR_Id_Marca', name: 'id_marca', "visible": false},
                 {data: 'DT_Row_Index'},
-                {data: 'tipo_marca', name: 'Nombre marca'},
+                {data: 'MAR_Nombre', name: 'Nombre marca'},
                 {
                     defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
@@ -189,7 +189,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('espacios.academicos.marca.destroy') }}' + '/' + dataTable.pk_id_marca_equipo;
+                var route = '{{ route('espacios.academicos.marca.destroy') }}' + '/' + dataTable.PK_MAR_Id_Marca;
                 var type = 'DELETE';
                 var async = async || false;
 
@@ -234,7 +234,7 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('tipo_marca', $('input:text[name="tipo_marca"]').val());
+                        formData.append('MAR_Nombre', $('input:text[name="tipo_marca"]').val());
 
                         $.ajax({
                             url: route,

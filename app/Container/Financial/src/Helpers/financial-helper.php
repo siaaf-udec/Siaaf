@@ -7,6 +7,7 @@ use App\Container\Financial\src\Constants\ConstantStatus;
 use App\Container\Financial\src\Helpers\StringFormatter;
 use App\Container\Financial\src\Constants\ConstantLabelClasses;
 use App\Container\Financial\src\Constants\SchemaConstant;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -88,11 +89,26 @@ function actionLink( $route, $class = '', $icon = 'fa fa-square', $attributes = 
                 'link'       => $route,
                 'class'      => $class,
                 'icon'       => $icon,
-                'text'       => $text,
+                'text'       => strip_tags($text),
                 'attributes' => htmlAttributes($attributes),
             ]
         )->render();
     }catch (Exception $e) {
+        report($e);
+        return false;
+    }
+}
+
+/**
+ * @param array $actions
+ * @return bool|string
+ * @throws Throwable
+ */
+function createDropdown( $actions = [] )
+{
+    try {
+        return view('financial.templates.actions.dropdown', ['actions' => $actions])->render();
+    } catch (Exception $e) {
         report($e);
         return false;
     }
@@ -159,14 +175,10 @@ function progressBar( $max, $now ) {
  * @param string $title
  * @param string $message
  * @param int $status
- * @return \Illuminate\Http\JsonResponse
+ * @return \Illuminate\Http\Response
  */
 function jsonResponse($title = 'success', $message = 'processed', $status = 200 ) {
-    $message = [
-        'title'     =>  trans("javascript.$title"),
-        'message'   =>  trans("javascript.$message")
-    ];
-    return response()->json($message, $status);
+    return AjaxResponse::make( trans("javascript.$title"), trans("javascript.$message"), '', $status);
 }
 
 /**
@@ -425,6 +437,16 @@ function permission_add_sub_approval () { return ConstantPermissions::ADD_SUB_SU
 function permission_intersemestral_approval () { return ConstantPermissions::INTERSEMESTRAL_APPROVAL; }
 
 /**
+ * @return string
+ */
+function permission_petty_cash () { return ConstantPermissions::PETTY_CASH; }
+
+/**
+ * @return string
+ */
+function permission_checks () { return ConstantPermissions::CHECKS; }
+
+/**
  * @return array
  */
 function module_approval_permissions() {
@@ -500,6 +522,8 @@ function root_permissions () {
         permission_validation_approval(),
         permission_add_sub_approval(),
         permission_intersemestral_approval(),
+        permission_petty_cash(),
+        permission_checks()
     ];
 }
 
@@ -522,6 +546,8 @@ function admin_permissions () {
         permission_validation_approval(),
         permission_add_sub_approval(),
         permission_intersemestral_approval(),
+        permission_petty_cash(),
+        permission_checks()
     ];
 }
 
@@ -558,6 +584,19 @@ function student_permissions () {
     ];
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| File Types
+|--------------------------------------------------------------------------
+|
+| This functions return the status name of the requests
+*/
+
+function icetex_string() { return 'ICETEX'; }
+function fraction_string() { return 'FRACCIONAMIENTO DE MATRÍCULA'; }
+function invoice_string() { return 'FACTURA'; }
+function check_string() { return 'CHEQUE'; }
 
 /*
 |--------------------------------------------------------------------------
@@ -659,6 +698,27 @@ function isEditable ($status ) {
     }
     return true;
 }
+/**
+ * Check if status is valid
+ *
+ * @param $status
+ * @return bool
+ */
+function isEditableStatus ($status ) {
+    if ( $status ==  approved_status()        ||
+         $status ==  sent_status()            ||
+         $status ==  pending_status()         ||
+         $status ==  rejected_status()        ||
+         $status ==  waiting_pay_status()     ||
+         $status ==  paid_status()            ||
+         $status ==  waiting_quota_status()   ||
+         $status ==  checking_status()        ||
+         $status ==  waiting_min_pay_status() ||
+         $status ==  canceled() ) {
+        return false;
+    }
+    return true;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -747,6 +807,35 @@ function file_type_fk(){ return SchemaConstant::FILE_TYPE_FOREIGN_KEY; }
  * @return string
  */
 function extension_fk(){ return SchemaConstant::EXTENSION_FOREIGN_KEY; }
+
+/**
+ * Return Check Text
+ *
+ * @return string
+ */
+function check(){ return SchemaConstant::CHECK; }
+
+/**
+ * Return Pay To Text
+ *
+ * @return string
+ */
+function pay_to(){ return SchemaConstant::PAY_TO; }
+
+/**
+ * Return Concept Text
+ *
+ * @return string
+ */
+function concept(){ return SchemaConstant::CONCEPT; }
+
+/**
+ * Return Support Text
+ *
+ * @return string
+ */
+function support(){ return SchemaConstant::SUPPORT; }
+
 
 /**
  * Return Module Name Text
@@ -922,3 +1011,10 @@ function updated_at(){ return SchemaConstant::UPDATED_AT; }
  * @return string
  */
 function deleted_at(){ return SchemaConstant::DELETED_AT; }
+
+/**
+ * Return Delivered At Field Text
+ *
+ * @return string
+ */
+function delivered_at(){ return SchemaConstant::DELIVERED_AT; }

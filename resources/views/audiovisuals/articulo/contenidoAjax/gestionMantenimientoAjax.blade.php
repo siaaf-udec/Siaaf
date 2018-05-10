@@ -6,7 +6,42 @@
       'icon' => 'fa fa-arrow-left',
      ],
     ])
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal fade" data-width="760" id="modal-mantenimiento-art" tabindex="-1">
+                <div class="modal-header modal-header-success">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                    </button>
+                    <h2 class="modal-title">
+                        <i class="glyphicon glyphicon-cog">
+                        </i>
+                        Registrar Observacion Finalización Mantenimiento
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id' => 'from_mantenimiento_create', 'class' => '', 'url' => '/forms']) !!}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>
+                                {!! Field::text('TMT_Observacion_Finaliza',
+                                ['label' => 'Observación Finalización mantenimiento:', 'required','max' => '255'],
+                                ['help' => 'Ingrese una Observación para Finalizar el mantenimiento', 'icon' => 'fa fa-heartbeat'])
+                                !!}
+                            </p>
 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12" align="center">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="clearfix"></div>
     <br>
     <br>
@@ -14,12 +49,10 @@
     <div class="col-md-12">
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tipoArt-table-ajax'])
             @slot('columns', [
-                '#' => ['style' => 'width:20px;'],
-                'Nombre',
+                'Tipo Articulo',
                 'Codigo',
-                'Hora Ultimo Mantenimiento',
-                'Horas Total Uso',
-                'Cantidad Mantenimientos',
+                'Observacion Mantenimiento',
+                'Observacion Finalización ',
                 'Acciones' => ['style' => 'width:100px;']
             ])
         @endcomponent
@@ -28,7 +61,7 @@
 @endcomponent
 <script>
     var table, url, columns;
-
+    var idMantenimiento;
     var ComponentsBootstrapMaxlength = function () {
         var handleBootstrapMaxlength = function () {
             $("input[maxlength], textarea[maxlength]").maxlength({
@@ -44,134 +77,80 @@
         };
     }();
     $(document).ready(function () {
-
+        App.unblockUI('.portlet-form');
         var idTipoArticulo;
         ComponentsBootstrapMaxlength.init();
-
         table = $('#tipoArt-table-ajax');
-        url ="{{ route('listarTipoArticulos.data') }}";
+        url ="{{ route('listar.Mantenimientos.Solicitados.data') }}";
         columns = [
-            {data: 'DT_Row_Index'},
-            {data: 'TPART_Nombre' , name: 'TPART_Nombre'},
-            {data: 'consultar_articulos_count' , name: 'consultar_articulos_count'},
-            {data: 'Tiempo' , name: 'Tiempo'},
-            {data: 'TPART_HorasMantenimiento' , name: 'TPART_HorasMantenimiento'},
-            {data: 'TPART_HorasMantenimiento' , name: 'TPART_HorasMantenimiento'},
-            {
-                defaultContent: '@permission("AUDI_END_MAINTENANCE")<a title="Finalizar Mantenimiento" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission',
-
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-right',
-                render: null,
-                responsivePriority: 2
-            }
+            {data: 'TMT_Tipo_Articulo' , name: 'TMT_Tipo_Articulo'},
+            {data: 'consultar_articulo.ART_Codigo' , name: 'consultar_articulo.ART_Codigo'},
+            {data: 'TMT_Observacion_Realiza' , name: 'TMT_Observacion_Realiza'},
+            {data: 'TMT_Observacion_FinalizaO' , name: 'TMT_Observacion_FinalizaO'},
+            {data: 'Acciones',name: 'Acciones'}
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
-        $('.createTipoArticulo').on('click',function(e){
-            e.preventDefault();
-            swal({
-                    title :"INFORMACION",
-                    text: "Al crear un nuevo tipo de artículo , tiene la" +
-                    " opción de seleccionar un tiempo(item )",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Continuar",
-                    cancelButtonText: "Consultar",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $('#modal-create-tipo').modal('toggle');
-
-                    } else {
-                        var route = '{{ route('audiovisuales.gestionArticulos.ValidacionesAjax') }}';
-                        $(".content-ajax").load(route);
-                    }
-                });
-
-        });
-        table.on('click', '.edit', function (e) {
+        table.on('click', '.create', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             console.log(dataTable);
-            $('#TPART_Nombre_Edit').val(dataTable.TPART_Nombre);
-            $('select[name="TPART_Tiempo_Edit"]').val(dataTable.TPART_Tiempo);
-            $('#TPART_HorasMantenimiento_Edit').val(dataTable.TPART_HorasMantenimiento);
-            if(dataTable.consultar_articulos_count!=0){
-                $("#TPART_Nombre_Edit").prop("disabled", true);
-            }else{
-                $("#TPART_Nombre_Edit").removeAttr('disabled');
-            }
-            idTipoArticulo = parseInt(dataTable.id);
-            $('#modal-edit-tipo').modal('toggle');
+            idMantenimiento = dataTable.TMT_Id;
+            idArticulo = dataTable.TMT_FK_Id_Articulo;
+            $('#modal-mantenimiento-art').modal('toggle');
         });
-        table.on('click', '.remove', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            if(parseInt((dataTable.consultar_articulos_count))==0){
-                swal({
-                        title: "Esta Seguro De eliminar?",
-                        text: "Este Tipo De Artículo será eliminado!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "si",
-                        cancelButtonText: "No",
-                        closeOnConfirm: true
-                    },
-                    function(isConfirm){
-                        if(isConfirm){
-                            var route = '{{ route('tipoArticuloEliminarA') }}'+'/'+dataTable.id;
-                            var type = 'POST';
-                            var async = async || false;
-                            $.ajax({
-                                url: route,
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                                cache: false,
-                                type: type,
-                                contentType: false,
-                                processData: false,
-                                async: async,
-                                beforeSend: function () {
-                                    App.blockUI({target: '.portlet-form', animate: true});
-                                },
-                                success: function (response, xhr, request) {
-                                    if (request.status === 200 && xhr === 'success') {
-                                        table.ajax.reload();
-                                        UIToastr.init(xhr , response.title , response.message  );
-                                        App.unblockUI('.portlet-form');
-                                    }
-                                },
-                                error: function (response, xhr, request) {
-                                    if (request.status === 422 &&  xhr === 'success') {
-                                        UIToastr.init(xhr, response.title, response.message);
-                                        App.unblockUI('.portlet-form');
-                                    }
-                                }
-                            });
+        var createMantenimiento = function () {
+            return {
+                init: function () {
+                    var route = '{{ route('finalizar.mantenimiento') }}';
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                    formData.append('TMT_Id', idMantenimiento);
+                    formData.append('TMT_FK_Id_Articulo',idArticulo);
+                    formData.append('TMT_Observacion_Finaliza', $('#TMT_Observacion_Finaliza').val());
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                $('#modal-mantenimiento-art').modal('hide');
+                                $('#from_mantenimiento_create')[0].reset();
+                                table.ajax.reload();
+                                UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                                App.unblockUI('.portlet-form');
+                            }
                         }
                     });
-
-            }else{
-                swal(
-                    'Oops...',
-                    'Lo sentimos este tipo de articulo tiene relacion con una cierta cantidad de articulos crados!',
-                    'error'
-                )
+                }
             }
+        };
+        var from_mantenimiento_create = $('#from_mantenimiento_create');
+        var rules_mantenimiento_create = {
+            TMT_Observacion_Realiza :{ required: true},
+        };
+        FormValidationMd.init(from_mantenimiento_create, rules_mantenimiento_create, false, createMantenimiento());
+        $('#link_cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('mantenimiento.Articulos.Ajax') }}';
+            $(".content-ajax").load(route);
         });
 
     });
-
 </script>

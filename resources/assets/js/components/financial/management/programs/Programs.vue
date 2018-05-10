@@ -36,6 +36,9 @@
                 ],
                 btnText: Lang.get('financial.buttons.add'),
                 name: Lang.get('validation.attributes.program'),
+                patterns: {
+                    alpha_num: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]',
+                }
             }
         },
         mounted: function () {
@@ -73,15 +76,21 @@
                             inputAttributes: {
                                 autocompete: 'off',
                                 minlength: 2,
-                                maxlength: 191,
+                                pattern: that.patterns.alpha_num + '{2,60}',
+                                maxlength: 60,
                                 required: 'required',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miyu );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
-                                    } else if ( value.length < 3 || value.length > 191 ) {
-                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 191, attribute: Lang.get('validation.attributes.program') } ) )
+                                    }
+                                    if ( value.length < 3 || value.length > 60 ) {
+                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.program') } ) )
+                                    }
+                                    if (!re.test( value )) {
+                                        resolve( Lang.get('validation.alpha', { attribute: Lang.get('validation.attributes.program') } ) )
                                     } else {
                                         resolve()
                                     }
@@ -145,15 +154,21 @@
                             inputAttributes: {
                                 autocompete: 'off',
                                 minlength: 2,
-                                maxlength: 191,
+                                maxlength: 60,
+                                pattern: '[0-9a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,60}',
                                 required: 'required',
                             },
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
+                                    let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ0-9 ]{2,60}/miy );
                                     if (!value) {
                                         resolve( Lang.get('validation.filled', { attribute: Lang.get('validation.attributes.program') } ) )
-                                    } else if ( value.length < 3 || value.length > 191 ) {
-                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 191, attribute: Lang.get('validation.attributes.program') } ) )
+                                    }
+                                    if ( value.length < 3 || value.length > 60 ) {
+                                        resolve( Lang.get('validation.between.numeric', {min: 2, max: 60, attribute: Lang.get('validation.attributes.program') } ) )
+                                    }
+                                    if (!re.test( value )) {
+                                        resolve( Lang.get('validation.alpha', { attribute: Lang.get('validation.attributes.program') } ) )
                                     } else {
                                         resolve()
                                     }
@@ -202,7 +217,11 @@
                     e.preventDefault();
                     let $tr = $(this).closest('tr');
                     let $url = route( 'financial.management.programs.destroy' , { id: $(this).data('id') } );
-                    let data = table.row( $(this).parents('tr') ).data();
+                    let row = $(this).parents('tr');
+                    if ( row.hasClass('child') ) {
+                        row = row.prev();
+                    }
+                    let data = table.row( row ).data();
                     let text = '';
 
                     if (data.hasOwnProperty('program_name')) {

@@ -37,9 +37,9 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Pregunta']) !!}
                     <div class="form-wizard">
-                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                        {!! Field:: textarea('PRGT_Enunciado',['label'=>'Enunciado de la pregunta','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'120', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el enunciado de la pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
                         
-                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta'])!!}
+                        {!! Field::select('FK_TBL_Tipo_Pregunta_Id',$pregunta,[ 'label' => 'Selecciona un tipo de pregunta','required'])!!}
                         
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!}
                         
@@ -51,8 +51,10 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
-
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');
     ComponentsSelect2.init();
@@ -64,12 +66,17 @@ jQuery(document).ready(function () {
            {data: 'PK_PRGT_Pregunta', "visible": true,name:"PK_PRGT_Pregunta" },
            {data: 'PRGT_Enunciado', searchable: true,name:"PRGT_Enunciado"},
            {data: 'pregunta_tipos_pregunta.TPPG_Tipo', searchable: true,name:"pregunta_tipos_pregunta.TPPG_Tipo"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" title="Editar Convenio" class="btn btn-simple btn-warning btn-icon editar"><i class="icon-pencil"></i></a></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
 
             
@@ -155,7 +162,7 @@ jQuery(document).ready(function () {
 				var async = async || false;
 				swal({
 					title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    text: "¿Esta seguro de eliminar la pregunta seleccionada?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -188,7 +195,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ninguna pregunta", "error");
                     }
                 });
             });

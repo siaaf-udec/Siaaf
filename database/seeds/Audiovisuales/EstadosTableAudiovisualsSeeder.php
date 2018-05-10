@@ -21,6 +21,11 @@ class EstadosTableAudiovisualsSeeder extends Seeder
             [ 'EST_Descripcion' => 'Prestado' ],
             [ 'EST_Descripcion' => 'Reservado' ],
             [ 'EST_Descripcion' => 'Disponible' ],
+
+            [ 'EST_Descripcion' => 'Sancion' ],
+            [ 'EST_Descripcion' => 'mantenimiento' ],
+            [ 'EST_Descripcion' => 'Finalizado' ],
+            [ 'EST_Descripcion' => 'Anulado' ],
         ];
 
         foreach ($estados as $estado ) {

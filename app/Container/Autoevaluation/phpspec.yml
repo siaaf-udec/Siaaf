@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: App\Container\User
+        psr4_prefix: App\Container\User
+        src_path: src

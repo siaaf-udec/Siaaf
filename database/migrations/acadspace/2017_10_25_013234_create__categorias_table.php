@@ -13,9 +13,9 @@ class CreateCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_categorias', function (Blueprint $table) {
-            $table->increments('pk_id_categoria')->unsigned()->unique();
-            $table->string('nombre_categoria',150);
+        Schema::connection('acadspace')->create('TBL_Categorias', function (Blueprint $table) {
+            $table->increments('PK_CAT_Id_Categoria')->unsigned()->unique();
+            $table->string('CAT_Nombre',150);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_categorias');
+        Schema::dropIfExists('TBL_Categorias');
     }
 }

@@ -25,22 +25,6 @@ class UsersFinancialTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ConstantRoles::getRoleNames();
-
-        /*
-         * Teacher Role
-         */
-        factory(User::class)->create([
-            'email' => 'teacher@app.com'
-        ])->each( function (User $user) {
-            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_TEACHER_ROLE)->first();
-            DB::connection('developer')
-                ->table('role_user')
-                ->insert([
-                    'user_id' => $user->id,
-                    'role_id' => $role->id,
-                ]);
-        });
 
         /*
          * Student Role
@@ -79,32 +63,6 @@ class UsersFinancialTableSeeder extends Seeder
             'email' => 'admin@app.com'
         ])->each( function (User $user) {
             $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_ADMIN_ROLE)->first();
-            DB::connection('developer')
-                ->table('role_user')
-                ->insert([
-                    'user_id' => $user->id,
-                    'role_id' => $role->id,
-                ]);
-        });
-
-        /*
-         * Random User Roles
-         */
-        factory( User::class, 20 )->create()->each( function (User $user) use ( $roles ) {
-                $role = Role::select('id')->where('name', $roles[ rand(1, 4) ])->first();
-                DB::connection('developer')
-                    ->table('role_user')
-                    ->insert([
-                        'user_id' => $user->id,
-                        'role_id' => $role->id,
-                    ]);
-            });
-
-        /*
-         * Random Teachers
-         */
-        factory(User::class, 20)->create()->each( function (User $user) {
-            $role = Role::select('id')->where('name', ConstantRoles::FINANCIAL_TEACHER_ROLE)->first();
             DB::connection('developer')
                 ->table('role_user')
                 ->insert([

@@ -28,22 +28,25 @@ class ApprovalAdditionSubtractionController extends Controller
      */
     public function sidebar()
     {
-        $status = $this->addSubRepository->availableStatus();
-        $sidebar[] = [
-            'id'    =>  null,
-            'count' =>  $this->addSubRepository->getModel()->count(),
-            'text'  =>  toUpper( __( 'validation.attributes.all' ) ),
-            'class' =>  randomClassesBadge()
-        ];
-        foreach ( $status as $status ) {
+        if ( request()->isMethod('GET') ) {
+            $status = $this->addSubRepository->availableStatus();
             $sidebar[] = [
-                'id'    =>  $status->{primaryKey()},
-                'count' =>  $this->addSubRepository->count( [ $status->{ primaryKey() } ] ),
-                'text'  =>  $status->{ status_name() },
-                'class' =>  randomClassesBadge()
+                'id' => null,
+                'count' => $this->addSubRepository->getModel()->count(),
+                'text' => toUpper(__('validation.attributes.all')),
+                'class' => randomClassesBadge()
             ];
+            foreach ($status as $status) {
+                $sidebar[] = [
+                    'id' => $status->{primaryKey()},
+                    'count' => $this->addSubRepository->count([$status->{primaryKey()}]),
+                    'text' => $status->{status_name()},
+                    'class' => randomClassesBadge()
+                ];
+            }
+            return response()->json(isset($sidebar) ? $sidebar : [], 200);
         }
-        return response()->json( isset($sidebar) ? $sidebar : [], 200 );
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
@@ -54,8 +57,11 @@ class ApprovalAdditionSubtractionController extends Controller
      */
     public function additionsSubtractions($status = null )
     {
-        return response()->json(
-            $this->addSubRepository->getAllPaginate( 10, $status ),
-            200 );
+        if ( request()->isMethod('GET') ) {
+            return response()->json(
+                $this->addSubRepository->getAllPaginate(10, $status),
+                200);
+        }
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

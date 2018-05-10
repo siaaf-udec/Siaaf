@@ -130,19 +130,19 @@ class ConstantStatus
         return [
             [
                 status_name()   =>  self::APPROVED,
-                status_type()   =>  self::FILE
+                status_type()   =>  self::INTERSEMESTER
             ],
             [
                 status_name()   =>  self::CANCELED,
-                status_type()   =>  self::FILE
+                status_type()   =>  self::INTERSEMESTER
             ],
             [
                 status_name()   =>  self::WAITING_QUOTA,
-                status_type()   =>  self::FILE
+                status_type()   =>  self::INTERSEMESTER
             ],
             [
                 status_name()   =>  self::WAITING_MIN_PAY,
-                status_type()   =>  self::FILE
+                status_type()   =>  self::INTERSEMESTER
             ],
         ];
     }

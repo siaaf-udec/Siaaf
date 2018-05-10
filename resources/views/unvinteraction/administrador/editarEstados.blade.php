@@ -5,7 +5,7 @@
                     <div class="form-body">
                             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Estado']) !!}
                             <div class="form-wizard">
-                                {!! Field:: text('ETAD_Estado',$estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
+                                {!! Field:: text('ETAD_Estado',$estado->ETAD_Estado,['label'=>'Estado', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de la sede','icon'=>'fa fa-line-chart'] ) !!}
                         
                                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
@@ -17,7 +17,8 @@
     </div>
     @endcomponent
 </div>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');
@@ -47,6 +48,9 @@ jQuery(document).ready(function () {
                         data: formData,
                         processData: false,
                         async: async,
+                        beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+				        },
                         success: function (response, xhr, request) {
                     if (request.status === 200 && xhr === 'success') {
                         UIToastr.init(xhr , response.title , response.message  );

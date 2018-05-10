@@ -118,20 +118,22 @@
                     })
             },
             createRequest: function () {
-                this.vueLoading();
-                axios.post( this.portlet.route, qs.stringify( {
-                    subject_matter: this.subject,
-                    program: this.program,
-                    teacher: this.teacher,
-                    action:  this.action,
-                } ) )
-                    .then( (response) => {
-                        this.setNull();
-                        this.triggerSwal( response );
-                    })
-                    .catch( (error) => {
-                        this.triggerSwal( error );
-                    })
+                if ($('#financial-form-request').valid()) {
+                    this.vueLoading();
+                    axios.post( this.portlet.route, qs.stringify( {
+                        subject_matter: this.subject,
+                        program: this.program,
+                        teacher: this.teacher,
+                        action:  this.action,
+                    } ) )
+                        .then( (response) => {
+                            this.setNull();
+                            this.triggerSwal( response );
+                        })
+                        .catch( (error) => {
+                            this.triggerSwal( error );
+                        })
+                }
             },
             setNull: function () {
                 this.subject = null;

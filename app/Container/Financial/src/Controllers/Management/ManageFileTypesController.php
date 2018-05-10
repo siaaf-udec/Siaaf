@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Management;
 
 use App\Container\Financial\src\Repository\FileTypeRepository;
 use App\Container\Financial\src\Requests\FileType\StoreFileTypeRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ManageFileTypesController extends Controller
@@ -30,7 +31,10 @@ class ManageFileTypesController extends Controller
      */
     public function index()
     {
-        return view('financial.management.file-type.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.management.file-type.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -41,9 +45,12 @@ class ManageFileTypesController extends Controller
      */
     public function store(StoreFileTypeRequest $request)
     {
-        return ( $this->fileTypeRepository->store( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->fileTypeRepository->store( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -55,10 +62,12 @@ class ManageFileTypesController extends Controller
      */
     public function update(StoreFileTypeRequest $request, $id)
     {
-        return ( $this->fileTypeRepository->update($request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->fileTypeRepository->update($request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
 
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -69,8 +78,11 @@ class ManageFileTypesController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->fileTypeRepository->destroy( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->fileTypeRepository->destroy( $id ) ) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

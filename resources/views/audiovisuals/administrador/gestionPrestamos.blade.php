@@ -28,11 +28,9 @@
 @section('content')
     <div class="clearfix"></div>
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizadas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Solicitudes prestamos realizados'])
             <div class="clearfix">
             </div>
-            <br>
-            <br>
             <br>
             <div class="row">
 
@@ -165,6 +163,7 @@
                 {data: 'consulta_usuario_audiovisuales.user.identity_type', name: 'consulta_usuario_audiovisuales.user.identity_type'},
                 {data: 'consulta_usuario_audiovisuales.user.identity_no', name: 'consulta_usuario_audiovisuales.user.identity_no'},
                 {
+
                     defaultContent: '@permission("AUDI_REQUESTS_VIEW_LENDING")<a href="javascript:;" class="btn btn-simple btn-warning btn-icon edit">Finalizar Prestamo</i></a>@endpermission',
                     data:'action',
                     name:'action',

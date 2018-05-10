@@ -13,14 +13,14 @@ class CreateArticulosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_articulos', function (Blueprint $table) {
-            $table->increments('pk_id_articulo')->unsigned()->unique();
-            $table->string('codigo_articulo',50);
-            $table->string('descripcion_articulo',450)->nullable();
-            $table->datetime('fecha_registro')->useCurrent();
-            $table->integer('fk_id_categoria')->unsigned();
-            $table->integer('fk_id_hojavida')->nullable()->unsigned();
-            $table->integer('fk_id_procedencia')->unsigned();
+        Schema::connection('acadspace')->create('TBL_Articulos', function (Blueprint $table) {
+            $table->increments('PK_ART_Id_Articulo')->unsigned()->unique();
+            $table->string('ART_Codigo',50);
+            $table->string('ART_Descripcion',450)->nullable();
+            $table->datetime('ART_Fecha_Registro')->useCurrent();
+            $table->integer('FK_ART_Id_Categoria')->unsigned();
+            $table->integer('FK_ART_Id_Hojavida')->nullable()->unsigned();
+            $table->integer('FK_ART_Id_Procedencia')->unsigned();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateArticulosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_articulos');
+        Schema::dropIfExists('TBL_Articulos');
     }
 }

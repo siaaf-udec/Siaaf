@@ -62,7 +62,7 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Estado']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('ETAD_Estado',null,['label'=>'Estado','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el estado.','icon'=>'fa fa-cog']) !!}
+                        {!! Field:: text('ETAD_Estado',null,['label'=>'Estado','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el estado.','icon'=>'fa fa-cog']) !!}
                         
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} 
                         {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -76,6 +76,9 @@
 </div>
 <!-- FIN MODALS -->
 @endcomponent
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');
@@ -86,12 +89,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_ETAD_Estado', "visible": true, name:"PK_ETAD_Estado" },
            {data: 'ETAD_Estado', searchable: true,name:"ETAD_Estado" },
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon editar" title="Editar Empresa"><i class="icon-pencil"></i></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
            }
         ];
@@ -174,7 +182,7 @@ jQuery(document).ready(function () {
 				var async = async || false;
 				swal({
 					title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    text: "¿Esta seguro de eliminar el estado seleccionado?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -196,6 +204,8 @@ jQuery(document).ready(function () {
                             success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									table.ajax.reload();
+                                    table1 = $('#Listar_Convenios2').DataTable();
+                                    table1.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);                                    
                                 }
                             },
@@ -207,7 +217,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ningún estado", "error");
                     }
                 });
             });
@@ -218,12 +228,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
             {data: 'PK_ETAD_Estado', "visible": true, name:"PK_ETAD_Estado" },
             {data: 'ETAD_Estado', searchable: true,name:"ETAD_Estado" },
-            {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+            {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon reset" title="resetear"><i class="icon-plus"></i></a>'
            }
         ];
@@ -248,6 +263,8 @@ jQuery(document).ready(function () {
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             table.ajax.reload();
+                            table1 = $('#Listar_Convenios').DataTable();
+                            table1.ajax.reload();
                             UIToastr.init(xhr, response.title, response.message);           
                         }
                     },

@@ -16,7 +16,9 @@ class CreateSugerenciasTable extends Migration
         Schema::create('TBL_Sugerencias', function (Blueprint $table) {
             $table->increments('PK_SU_IdSugerencia');
             $table->text('SU_Pregunta');
+            $table->text('SU_Respuesta');
             $table->text('SU_Username');
+            $table->enum('SU_Estado', ['Resuelta', 'Sin Resolver'])->default('Sin Resolver');
             $table->text('SU_Email');
             $table->timestamps();
         });

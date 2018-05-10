@@ -19,7 +19,10 @@ class UsersAudiovisualsTableSeeder extends Seeder
         $usuarios = [
             ['name'=>'Administrador','lastname'=>'Audiovisuales','birthday'=>'2017-08-20','identity_type'=>'C.C','identity_no'=>'1070977299','identity_expe_place'=>'Facatativa','identity_expe_date'=>'2017-08-23','address'=>'Calle 14 con Avenida 15','sexo'=>'Masculino','phone'=>'892 0707','email'=>'administrador@app.com','password' => bcrypt('administrador'),'state'=>'Aprobado','cities_id'=>'1','countries_id'=>'1','regions_id'=>'1'],
             ['name'=>'Funcionario','lastname'=>'Audiovisuales','birthday'=>'2017-08-20','identity_type'=>'C.C','identity_no'=>'1070975726','identity_expe_place'=>'Facatativa','identity_expe_date'=>'2017-08-23','address'=>'Calle 14 con Avenida 15','sexo'=>'Masculino','phone'=>'892 0707','email'=>'funcionario@app.com','password' => bcrypt('funcionario'),'state'=>'Aprobado','cities_id'=>'1','countries_id'=>'1','regions_id'=>'1'],
-        ];
+            ['name'=>'Cristian','lastname'=>'Audiovisuales','birthday'=>'2017-08-20','identity_type'=>'C.C','identity_no'=>'1070977299','identity_expe_place'=>'Facatativa','identity_expe_date'=>'2017-08-23','address'=>'Calle 14 con Avenida 15','sexo'=>'Masculino','phone'=>'892 0707','email'=>'funcionario2@app.com','password' => bcrypt('administrador'),'state'=>'Aprobado','cities_id'=>'1','countries_id'=>'1','regions_id'=>'1'],
+            ['name'=>'Jerson','lastname'=>'Audiovisuales','birthday'=>'2017-08-20','identity_type'=>'C.C','identity_no'=>'1070977299','identity_expe_place'=>'Facatativa','identity_expe_date'=>'2017-08-23','address'=>'Calle 14 con Avenida 15','sexo'=>'Masculino','phone'=>'892 0707','email'=>'funcionario3@app.com','password' => bcrypt('administrador'),'state'=>'Aprobado','cities_id'=>'1','countries_id'=>'1','regions_id'=>'1'],
+
+            ];
 
         foreach ($usuarios as $usuario ) {
             $aux = new User;

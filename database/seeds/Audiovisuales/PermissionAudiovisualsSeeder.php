@@ -56,6 +56,9 @@ class PermissionAudiovisualsSeeder extends Seeder
             ['name'=>'AUDI_REQUEST_MAINTENANCE_VIEW','display_name'=>'Visualiza Mantenimientos ','description'=>'Acceso de creacion solicitud mantenimiento a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_RECORD_MAINTENANCE_VIEW','display_name'=>'Gestion Mantenimientos ','description'=>'Acceso a la vista de solicitudes de mantenimientos a el modulo de audiovisuales.','module_id'=>'2'],
             ['name'=>'AUDI_END_MAINTENANCE','display_name'=>'Finalizar Mantenimiento ','description'=>'Acceso de finalizacion de mantenimiento a un articulo a el modulo de audiovisuales.','module_id'=>'2'],
+            ['name'=>'AUDI_REQUESTS_VIEW_CANCELED_SANCTION','display_name'=>'Vista sanciones Canceladas ','description'=>'Acceso de registro sanciones finalizadas a el modulo de audiovisuales.','module_id'=>'2'],
+
+            ['name'=>'AUDI_MAINTENANCE_SOLICI','display_name'=>'Vista Mantenimientos Registrados ','description'=>'Acceso de Gestion de mantenimientos Solicitados a el modulo de audiovisuales.','module_id'=>'2'],
 
 
         ];

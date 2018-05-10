@@ -31,6 +31,9 @@ class ProfileController extends Controller
         if ($request->isMethod('GET')) {
             $user = $this->userRepository->show(Auth::id(), []);
             $img = $user->images[0]->url;
+            if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
+                $img = Storage::disk('developer')->url($img);
+            }
             return view('users.profile', [
                 'user' => $user,
                 'img' => $img
@@ -78,11 +81,9 @@ class ProfileController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            $password = [
-                'id' => $id,
-                'password' => $request->get('password'),
-            ];
-            $this->userRepository->update($password);
+            $user = $this->userRepository->getModel()->find($id);
+            $user->password = bcrypt($request->get('password'));
+            $user->save();
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

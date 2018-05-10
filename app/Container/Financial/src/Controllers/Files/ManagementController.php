@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Files;
 
 use App\Container\Financial\src\Repository\FileRepository;
 use App\Container\Financial\src\Requests\File\UpdateFileStatusRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ManagementController extends Controller
@@ -30,7 +31,10 @@ class ManagementController extends Controller
      */
     public function index()
     {
-        return view('financial.files.request.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.files.request.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,8 +46,11 @@ class ManagementController extends Controller
      */
     public function update(UpdateFileStatusRequest $request, $id)
     {
-        return $this->fileRepository->managementUpdate( $request, $id ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return $this->fileRepository->managementUpdate( $request, $id ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 }

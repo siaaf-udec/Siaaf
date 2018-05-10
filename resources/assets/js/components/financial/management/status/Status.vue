@@ -180,8 +180,9 @@
                 attributes: {
                     required: true,
                     autocomplete: 'off',
-                    maxlength: 191,
+                    maxlength: 40,
                     minlength: 2,
+                    pattern: '[a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,40}',
                 },
                 types: {
                     extension: 'extension',

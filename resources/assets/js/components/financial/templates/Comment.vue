@@ -16,7 +16,7 @@
         </div>
         <div class="chat-form">
             <div class="input-cont">
-                <input class="form-control" v-model.trim="comment" minlength="1" maxlength="2500" type="text" :placeholder="placeholder" />
+                <input class="form-control" pattern='[a-záéíóúüA-ZÁÉÍÓÚÜ0-9.,\/#!$%\^&\*;:{}=\-_`~()""… ]{2,2500}' v-model.trim="comment" minlength="1" maxlength="2500" type="text" :placeholder="placeholder" />
             </div>
             <div class="btn-cont">
                 <span class="arrow"> </span>
@@ -24,6 +24,18 @@
                     <i class="fa fa-check icon-white"></i>
                 </a>
             </div>
+        </div>
+        <hr>
+        <div class="form-group" v-if="errors">
+            <hr>
+            <vue-alert :type="errors.alertClass"
+                       :dismiss="false"
+                       :heading="errors.title"
+                       :icon="errors.icon"
+                       :text="errors.text"
+                       :status="errors.status"
+                       :errors="errors.errors">
+            </vue-alert>
         </div>
     </div>
 </template>
@@ -33,9 +45,11 @@
     import PNGlib from 'identicon.js/pnglib';
     import Identicon from 'identicon.js/identicon';
     import {mixinLoading} from "../../../mixins/loadingswal";
+    import {mixinHttpStatus} from "../../../mixins";
+
     export default {
         name: "vue-comments",
-        mixins: [mixinLoading],
+        mixins: [mixinLoading, mixinHttpStatus],
         props: {
             styleObject: {
                 type: [Array, Object],
@@ -62,6 +76,7 @@
                 comment: null,
                 placeholder: Lang.get('financial.placeholder.comment'),
                 leave_a_comment: Lang.get('financial.generic.leave_a_comment'),
+                errors: null
             }
         },
         methods: {
@@ -75,6 +90,8 @@
                             this.getComments();
                         })
                         .catch( (error) => {
+                            this.comment = null;
+                            this.errors = this.httpStatus( error );
                             this.setLoading();
                         })
                 }
@@ -88,6 +105,7 @@
                         this.comments = response.data;
                     })
                     .catch( (error) => {
+                        this.errors = this.httpStatus( error );
                         this.setLoading();
                     })
             },
@@ -106,10 +124,10 @@
             formatComment: function () {
                 return this.comments.map( (comment) => {
                     return {
-                        comment: comment.comment,
+                        comment: (comment.comment) ? comment.comment.replace(/(<([^>]+)>)/ig,"") : null,
                         name:  (comment.user) ? comment.user.full_name : Lang.get('financial.generic.empty'),
                         picture: (comment.user) ? ( comment.user.profile_picture.length === 16 ) ? `data:image/png;base64,${new Identicon( comment.user.profile_picture , 420).toString()}` : comment.user.profile_picture : `data:image/png;base64,${new Identicon( 'c157a79031e1c40f85931829bc5fc552' , 420).toString()}`,
-                        date: moment( comment.created_at ).fromNow(),
+                        date: ( comment.created_at  ) ? moment( comment.created_at ).fromNow() : null,
                         chat: comment.comment_class
                     }
                 })

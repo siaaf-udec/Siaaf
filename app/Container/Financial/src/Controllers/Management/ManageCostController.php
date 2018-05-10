@@ -6,6 +6,7 @@ namespace App\Container\Financial\src\Controllers\Management;
 use App\Container\Financial\src\Repository\CostServiceRepository;
 use App\Container\Financial\src\Requests\CostsServices\StoreCostsServicesRequest;
 use App\Container\Financial\src\Requests\CostsServices\UpdateCostsServicesRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class ManageCostController extends Controller
@@ -31,7 +32,10 @@ class ManageCostController extends Controller
      */
     public function index()
     {
-        return view('financial.management.costs.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.management.costs.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,9 +46,12 @@ class ManageCostController extends Controller
      */
     public function store(StoreCostsServicesRequest $request)
     {
-        return ( $this->costServiceRepository->store( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->costServiceRepository->checkAndSave( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'processed_fail_cost', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -56,10 +63,12 @@ class ManageCostController extends Controller
      */
     public function update(UpdateCostsServicesRequest $request, $id)
     {
-        return ( $this->costServiceRepository->patch($request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->costServiceRepository->patch($request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
 
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -70,8 +79,11 @@ class ManageCostController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->costServiceRepository->destroy( $id ) ) ?
-            jsonResponse('success', 'deleted_done', 200) :
-            jsonResponse('error', 'deleted_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->costServiceRepository->destroy( $id ) ) ?
+                jsonResponse('success', 'deleted_done', 200) :
+                jsonResponse('error', 'deleted_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

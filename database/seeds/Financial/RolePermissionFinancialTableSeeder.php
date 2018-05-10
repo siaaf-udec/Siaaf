@@ -5,6 +5,7 @@ use App\Container\Financial\src\Constants\ConstantRoles;
 use App\Container\Permissions\Src\Module;
 use App\Container\Permissions\Src\Permission;
 use App\Container\Permissions\Src\Role;
+use App\Container\Users\Src\User;
 use Illuminate\Database\Seeder;
 
 class RolePermissionFinancialTableSeeder extends Seeder
@@ -225,6 +226,22 @@ class RolePermissionFinancialTableSeeder extends Seeder
         $intersemestral_approval->module_id    =  $module->id;
         $intersemestral_approval->save();
 
+        $permission = ConstantPermissions::getModulePermission( 'petty_cash' );
+        $petty_cash = new Permission;
+        $petty_cash->name         = $permission['name'];
+        $petty_cash->display_name = $permission['display_name'];
+        $petty_cash->description  = $permission['description'];
+        $petty_cash->module_id    =  $module->id;
+        $petty_cash->save();
+
+        $permission = ConstantPermissions::getModulePermission( 'checks' );
+        $checks = new Permission;
+        $checks->name         = $permission['name'];
+        $checks->display_name = $permission['display_name'];
+        $checks->description  = $permission['description'];
+        $checks->module_id    =  $module->id;
+        $checks->save();
+
         /*
          * Root permissions
          */
@@ -254,6 +271,9 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $validation_approval,
             $add_sub_approval,
             $intersemestral_approval,
+            //
+            $petty_cash,
+            $checks
         ];
 
         /*
@@ -278,6 +298,9 @@ class RolePermissionFinancialTableSeeder extends Seeder
             $validation_approval,
             $add_sub_approval,
             $intersemestral_approval,
+            //
+            $petty_cash,
+            $checks
         ];
 
         /*
@@ -317,5 +340,26 @@ class RolePermissionFinancialTableSeeder extends Seeder
         $teacher->attachPermission( $financial );
         $student->attachPermission( $student_permissions );
         $secretary->attachPermission( $secretary_permissions );
+
+        factory(User::class)->create([
+            'email' => 'student@app.com'
+        ])->attachRole($student);
+
+        factory(User::class)->create([
+            'email' => 'secretary@app.com'
+        ])->attachRole($secretary);
+
+        factory(User::class)->create([
+            'email' => 'admin@app.com'
+        ])->attachRole($admin);
+
+        factory(User::class)->create([
+            'email' => 'teacher@app.com'
+        ])->attachRole($teacher);
+
+        $userRoot = User::where('email', 'root@app.com')->first();
+        if ( isset( $root->id ) ) {
+            $userRoot->attachRole($root);
+        }
     }
 }

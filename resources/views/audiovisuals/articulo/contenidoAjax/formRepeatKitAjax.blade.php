@@ -101,7 +101,7 @@
         var valueTipoArticulo ,valueCodigoArticulo ,valueCaracteristicaArticulo;
         var idKitCreado;
         ComponentsBootstrapMaxlength.init();
-        ComponentsSelect2.init();
+
         function encontrarIdArticulo(array, llave, valor) {
             for (var i = 0; i < array.length; i++) {
                 if (array[i][llave] == valor) {
@@ -403,8 +403,8 @@
             if(objectForm.length == 0){
                 swal(
                     {
-                        title: "No ha ingrasados articulos al kit.",
-                        text: "¿ Desea salir sin ingresar ningun articulo ?",
+                        title: "No ha ingresado artículos al kit.",
+                        text: "¿ Desea salir sin ingresar ningun artículo ?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",

@@ -6,7 +6,7 @@
                            
                         {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Convenio']) !!}
                         <div class="form-wizard">
-                            {!! Field:: text('CVNO_Nombre',$convenio->CVNO_Nombre,['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
+                            {!! Field:: text('CVNO_Nombre',$convenio->CVNO_Nombre,['label'=>'nombre del convenio', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required'],['help' => 'Nombre de convenio','icon'=>'fa fa-line-chart'] ) !!}
                         
                             {!! Field::date('CVNO_Fecha_Inicio',$convenio->CVNO_Fecha_Inicio,['label'=>'Fecha Inicio','required', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date'=> "+0d"],['help' => 'seleciona una fecha', 'icon' => 'fa fa-calendar']) !!}
                         
@@ -14,7 +14,7 @@
                             
                             {!! Field::select('FK_TBL_Estado_Id',$estado,$convenio->FK_TBL_Estado_Id,[ 'label' => 'Selecciona un estado'])!!}
                         
-                            {!! Field::select('FK_TBL_Sede_Id',$sede,$convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede'])!!}
+                            {!! Field::select('FK_TBL_Sede_Id',$sede,$convenio->FK_TBL_Sede_Id,[ 'label' => 'Selecciona una   sede','required'])!!}
                         <div class="form-actions">
                               <div class="row">
                                 <div class="col-md-12 col-md-offset-0">
@@ -33,12 +33,14 @@
 
         @endcomponent
     </div>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     ComponentsDateTimePickers.init();
     ComponentsSelect2.init();
-    App.unblockUI('.portlet-form');
+    
     $('.portlet-form').attr("id","form_wizard_1");
      var rules = {
             CVNO_Nombre: {required: true},

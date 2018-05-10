@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Middleware;
 
 
 use App\Container\Financial\src\AvailableModules;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use Closure;
 
 class CheckIfAvailable
@@ -26,6 +27,7 @@ class CheckIfAvailable
             }
         }
 
-        return abort(403);
+        return AjaxResponse::make(  'Solicitud no disponible',
+                                'Este módulo no se encuentra disponible, es probable que la fecha permitida para realizar esta solicitud se haya vencido o no está configurada y no es posible realizar la acción requerida.', '', 403);
     }
 }

@@ -13,18 +13,18 @@ class CreateHojaVidaTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_hojavida', function (Blueprint $table) {
-            $table->increments('pk_id_hojavida')->unsigned()->unique();
-            $table->string('modelo_equipo',150)->nullable();
-            $table->string('procesador',80)->nullable();
-            $table->string('memoria_ram',15)->nullable();
-            $table->string('disco_duro',15)->nullable();
-            $table->string('mouse',25)->nullable();
-            $table->string('teclado',25)->nullable();
-            $table->string('sistema_operativo',50)->nullable();
-            $table->string('antivirus',50)->nullable();
-            $table->boolean('garantia')->nullable();
-            $table->integer('fk_id_marca_equipo')->unsigned();
+        Schema::connection('acadspace')->create('TBL_Hojavida', function (Blueprint $table) {
+            $table->increments('PK_HOJ_Id_Hojavida')->unsigned()->unique();
+            $table->string('HOJ_Modelo_Equipo',150)->nullable();
+            $table->string('HOJ_Procesador',80)->nullable();
+            $table->string('HOJ_Memoria_Ram',15)->nullable();
+            $table->string('HOJ_Disco_Duro',15)->nullable();
+            $table->string('HOJ_Mouse',25)->nullable();
+            $table->string('HOJ_Teclado',25)->nullable();
+            $table->string('HOJ_Sistema_Operativo',50)->nullable();
+            $table->string('HOJ_Antivirus',50)->nullable();
+            $table->boolean('HOJ_Garantia')->nullable();
+            $table->integer('FK_HOJ_Id_Marca')->unsigned();
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateHojaVidaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_hojavida');
+        Schema::dropIfExists('TBL_Hojavida');
     }
 }

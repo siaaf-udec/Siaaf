@@ -1,6 +1,6 @@
 <?php
 
-use app\Container\Permissions\src\Role;
+use App\Container\Permissions\src\Role;
 use \Illuminate\Database\Seeder;
 
 class RoleGesapSeeder extends Seeder

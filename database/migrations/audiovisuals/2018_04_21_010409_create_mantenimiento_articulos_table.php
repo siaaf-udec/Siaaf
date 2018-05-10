@@ -15,9 +15,12 @@ class CreateMantenimientoArticulosTable extends Migration
     {
         Schema::connection('audiovisuals')->create('TBL_Mantenimiento_Articulos', function (Blueprint $table) {
             $table->increments('TMT_Id');
-            $table->integer('TMT_FK_Id_Articulo');
-            $table->integer('TMT_Cantidad_Mantenimiento');
-            $table->String('TMT_Observacion');
+            $table->String('TMT_Tipo_Articulo')->nullable();
+            $table->integer('TMT_FK_Id_Articulo')->unsigned()->nullable();
+            $table->String('TMT_Observacion_Realiza')->nullable();
+            $table->String('TMT_Observacion_Finaliza')->nullable();
+            $table->integer('FK_TMT_Estado_id')->unsigned()->nullable();
+            $table->integer('FK_TMT_Tipo_Solicitud')->unsigned()->nullable();
 
             $table->timestamps();
         });

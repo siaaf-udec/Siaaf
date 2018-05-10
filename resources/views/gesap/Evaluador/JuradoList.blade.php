@@ -146,7 +146,7 @@
                                                 <span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Select file </span>    
 												<span class="fileinput-exists"> Change </span>
-												<input type="file" name="Min" class="" id="Min"> </span>
+												<input type="file" name="Min" class="" id="Min" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"> </span>
                                                 <a href="javascript:;"
                                                    class="input-group-addon btn red fileinput-exists"
                                                    data-dismiss="fileinput"> Remove </a>
@@ -169,7 +169,7 @@
                                                 <span class="input-group-addon btn default btn-file">
 												<span class="fileinput-new"> Select file </span>
 												<span class="fileinput-exists"> Change </span>
-												<input type="file" name="requerimientos" class="" id="Requerimientos"> </span>
+												<input type="file" name="requerimientos" class="" id="Requerimientos" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"> </span>
                                                 <a href="javascript:;"
                                                    class="input-group-addon btn red fileinput-exists"
                                                    data-dismiss="fileinput"> Remove </a>

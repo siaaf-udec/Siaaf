@@ -13,11 +13,11 @@ class CreateImagenesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('acadspace')->create('tbl_imagenes', function (Blueprint $table) {
-            $table->increments('pk_id_imagen')->unsigned()->unique();
-            $table->string('ruta_imagen',250);
-            $table->string('nombre_imagen',250);
-            $table->integer('fk_id_articulo')->unsigned();
+        Schema::connection('acadspace')->create('TBL_Imagenes', function (Blueprint $table) {
+            $table->increments('PK_IMA_Id_Imagen')->unsigned()->unique();
+            $table->string('IMA_Ruta',250);
+            $table->string('IMA_Nombre',250);
+            $table->integer('FK_IMA_Id_Articulo')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateImagenesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_imagenes');
+        Schema::dropIfExists('TBL_Imagenes');
     }
 }

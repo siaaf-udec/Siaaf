@@ -55,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
         View::share( 'permission_validation_approval', permission_validation_approval() );
         View::share( 'permission_add_sub_approval', permission_add_sub_approval() );
         View::share( 'permission_intersemestral_approval', permission_intersemestral_approval() );
+        View::share( 'permission_petty_cash', permission_petty_cash() );
+        View::share( 'permission_checks', permission_checks() );
 
         //Custom Financial Polymorphic Types
         Relation::morphMap([

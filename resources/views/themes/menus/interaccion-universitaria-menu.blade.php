@@ -19,7 +19,7 @@
             <li class="nav-item {{ active(['convenios.convenios'], 'start active open') }}">
                 <a href="{{ route('convenios.convenios') }}" class="nav-link nav-toggle">
                         <i class="fa fa-calendar-plus-o"></i>
-                        <span class="title">CONVENI0S</span>
+                        <span class="title">CONVENIOS</span>
                     </a>
                 </li>
 @endpermission

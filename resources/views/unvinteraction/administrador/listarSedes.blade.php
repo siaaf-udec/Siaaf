@@ -75,7 +75,7 @@
                 <div class="modal-body">
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Agregar-Sede']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
+                        {!! Field:: text('SEDE_Sede',null,['label'=>'Nombre','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digita el nombre de la sede.','icon'=>'fa fa-industry']) !!}
                     </div>
                     <div class="modal-footer">
                         {!! Form::submit('Agregar', ['class' => 'btn blue']) !!} {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -97,7 +97,7 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+
 <!-- Validation Plugins -->
 <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -110,11 +110,10 @@
 <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+@endpush
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-@endpush
-
 @push('functions')
 <script>
 jQuery(document).ready(function () {
@@ -126,12 +125,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_SEDE_Sede', "visible": true, name:"PK_SEDE_Sede" },
            {data: 'SEDE_Sede', searchable: true, name:"SEDE_Sede"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" class="btn btn-simple btn-warning btn-icon editar" title="Editar Empresa"><i class="icon-pencil"></i></a><a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon delete" title="eliminar"><i class="icon-close"></i></a>'
            }
         ];
@@ -146,7 +150,7 @@ jQuery(document).ready(function () {
 				var async = async || false;
 				swal({
 					title: "¿Esta seguro?",
-                    text: "¿Esta seguro de eliminar el participante seleccionado?",
+                    text: "¿Esta seguro de eliminar la sede seleccionada?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -168,6 +172,8 @@ jQuery(document).ready(function () {
                             success: function (response, xhr, request) {
 								if (request.status === 200 && xhr === 'success') {
 									table.ajax.reload();
+                                    table1 = $('#Listar_Convenios2').DataTable();
+                                    table1.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);                                    
                                 }
                             },
@@ -179,7 +185,7 @@ jQuery(document).ready(function () {
 						});
 						swal.close();
 					} else {
-                        swal("Cancelado", "No se eliminó ningun proyecto", "error");
+                        swal("Cancelado", "No se eliminó ninguna sede", "error");
                     }
                 });
             });
@@ -252,12 +258,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
            {data: 'PK_SEDE_Sede', "visible": true, name:"PK_SEDE_Sede" },
            {data: 'SEDE_Sede', searchable: true, name:"SEDE_Sede"},
-           {data:'action',searchable: false,
-            name:'action',
-            title:'Acciones',
+           {data: 'action',
+            name: 'action',
+            title: 'Acciones',
             orderable: false,
+            searchable: false,
             exportable: false,
             printable: false,
+            className: 'text-center',
+            render: null,
+            serverSide: false,
+            responsivePriority: 2,
             defaultContent: '<a href="#" target="_blank" class="btn btn-simple btn-danger btn-icon reset" title="resetear"><i class="icon-plus"></i></a>'
            }
         ];
@@ -279,9 +290,14 @@ jQuery(document).ready(function () {
                     contentType: false,
                     processData: false,
                     async: async,
+                    beforeSend: function () {
+								App.blockUI({target: '.portlet-form', animate: true});
+							},
                     success: function (response, xhr, request) {
                         if (request.status === 200 && xhr === 'success') {
                             table.ajax.reload();
+                            table1 = $('#Listar_Convenios').DataTable();
+                            table1.ajax.reload();
                             UIToastr.init(xhr, response.title, response.message);           
                         }
                     },

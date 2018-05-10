@@ -37,13 +37,20 @@ return [
     'processed'     => 'Datos procesados satisfactoriamente.',
     'processed_fail'=> 'No se han podido procesar los datos, intenta nuevamente.',
 
+    'processed_fail_cost'=> 'No se han podido procesar los datos, es probable que aún esté en vigencia el costo de este servicio, si no es así, intenta nuevamente.',
+
     'ask_if_update' => '¿Desea actualizar los datos seleccionados?',
     'updated_done'  => 'Se ha actualizado satisfactoriamente.',
     'updated_fail'  => 'No se pudo actualizar, intenta de nuevo.',
 
+    'updated_fail_status'  => 'No se puede modificar un estado por defecto de la plataforma.',
+
     'ask_if_delete' => '¿Desea eliminar los datos seleccionados?',
     'deleted_done'  => 'Se ha eliminado satisfactoriamente.',
     'deleted_fail'  => 'No se pudo eliminar, intenta de nuevo.',
+
+    'deleted_fail_status'  => 'No se puede eliminar el registro por que el cheque ha sido entregado.',
+    'destroy_fail_status'  => 'No se puede eliminar un estado por defecto de la plataforma.',
 
     'ask_if_unsubscribe'=> '¿Desea desinscribirse de esta solicitud?',
     'unsubscribe_done'  => 'Se ha desinscrito satisfactoriamente.',
@@ -102,6 +109,7 @@ return [
 
     'http_status'   =>  [
         'error'         =>  'Error :status',
+        'method'        =>  'Método esperado :method',
         'disconnected'  =>  'Comprueba tu conexión a internet y vuelve a intentarlo.',
         'unexpected'    =>  'Ocurrió un error inesperado. Intenta de nuevo más tarde.',
         '200'           =>  'Ok.',

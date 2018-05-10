@@ -90,7 +90,7 @@ var FormDropzone = function () {
                 complete: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', 'Carga Satisfactoria',
-                            'El archivo se ha procesado satisfactoriamente.'+file.status
+                            'El archivo se ha procesado satisfactoriamente.'
                         );
                          $("#Listar_Documentos").DataTable().ajax.reload();
                          
@@ -99,7 +99,7 @@ var FormDropzone = function () {
                 error: function(file, xhr, formData) {
                     if (file.status == 'success') {
                         UIToastr.init('success', '¡Ocurrió un Error!',
-                            'El archivo se ha procesado satisfactoriamente.'+file.status
+                            'El archivo se ha procesado satisfactoriamente.'
                         );
                     }
                 }

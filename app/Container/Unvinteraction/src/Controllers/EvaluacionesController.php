@@ -131,7 +131,7 @@ class EvaluacionesController extends Controller
              $pregunta->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'tipo de pregunta eliminado correctamente.'
              );
          }
          return AjaxResponse::fail(
@@ -266,7 +266,7 @@ class EvaluacionesController extends Controller
              $pregunta->delete();
              return AjaxResponse::success(
                  '¡Bien hecho!',
-                 'Sede eeliminada correctamente.'
+                 'Pregunta eliminada correctamente.'
              );
          }
          return AjaxResponse::fail(
@@ -426,7 +426,7 @@ class EvaluacionesController extends Controller
             $evaluacion->VLCN_Nota_Final =$Nota_Final;
             $evaluacion->save();
             
-            return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
+            return AjaxResponse::success('¡Bien hecho!', 'Evaluacion Registrada correctamente.');
         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }
@@ -487,7 +487,7 @@ class EvaluacionesController extends Controller
             $evaluacion->VLCN_Nota_Final =$Nota_Final;
             $evaluacion->save();
             
-            return AjaxResponse::success('¡Bien hecho!', 'Convenio Registrado correctamente.');
+            return AjaxResponse::success('¡Bien hecho!', 'Evaluacion Registrada correctamente.');
         } else {
             return AjaxResponse::fail('¡Lo sentimos!', 'No se pudo completar tu solicitud.');
         }

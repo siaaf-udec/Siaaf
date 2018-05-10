@@ -5,7 +5,7 @@
                     <div class="form-body">
                             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Pregunta']) !!}
                             <div class="form-wizard">
-                            {!! Field:: text('TPPG_Tipo',$pregunta->TPPG_Tipo,['label'=>'Tipo de pregunta','class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'20', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el tipo de pregunta','icon'=>'fa fa-graduation-cap'] ) !!}
+                            {!! Field:: text('TPPG_Tipo',$pregunta->TPPG_Tipo,['label'=>'Tipo de pregunta','class'=> 'form-control', 'autofocus','required', 'maxlength'=>'20', 'size'=>'100px','autocomplete'=>'off'],['help' => 'Agregar el tipo de pregunta','icon'=>'fa fa-graduation-cap','required'] ) !!}
                             
                             <div class="form-actions">
                               <div class="row">
@@ -22,7 +22,8 @@
             </div>
     @endcomponent
 </div>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
      App.unblockUI('.portlet-form');

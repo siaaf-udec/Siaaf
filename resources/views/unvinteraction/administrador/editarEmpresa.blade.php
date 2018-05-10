@@ -1,17 +1,17 @@
 <div class="col-md-12">
- @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de empresas'])
+ @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de edicion de empresas'])
 <div class="row">
     <div class="col-md-7 col-md-offset-2">
         <div class="form-body">
             {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-Modificar-Empresa']) !!}
             <div class="form-wizard">
-                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Nombre_Empresa',$empresa->EMPS_Nombre_Empresa,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el nombre de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Razon_Social',$empresa->EMPS_Razon_Social,['label'=>'Razon saocial', 'class'=> 'form-control', 'autofocus','required' , 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Telefono',$empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Telefono',$empresa->EMPS_Telefono,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-user'] ) !!}
                 
-                {!! Field:: text('EMPS_Direccion',$empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
+                {!! Field:: text('EMPS_Direccion',$empresa->EMPS_Direccion,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'],['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-user'] ) !!}
                 
                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
@@ -24,6 +24,9 @@
     </div>
     @endcomponent
 </div>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function () {
     App.unblockUI('.portlet-form');

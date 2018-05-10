@@ -122,6 +122,7 @@
                             'Pregunta',
                             'Usuario',
                             'Correo',
+                            'Estado',
                             'Acciones'
                         ])
                     @endcomponent
@@ -223,8 +224,9 @@
                 {data: 'SU_Pregunta', name: 'SU_Pregunta'},
                 {data: 'SU_Username', name: 'SU_Username'},
                 {data: 'SU_Email', name: 'SU_Email'},
+                {data: 'SU_Estado', name: 'SU_Estado'},
                 {
-                    defaultContent: '@permission('ADMINREGIST_SU_DELETE')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>@endpermission',
+                    defaultContent: '@permission('ADMINREGIST_SU_DELETE')<a href="javascript:;" class="btn btn-simple btn-danger btn-icon mt-sweetalert remove"><i class="icon-trash"></i></a>@endpermission @permission('ADMINREGIST_ADSU')<a href="javascript:;" class="btn btn-primary answer"><i class="icon-envelope-letter"></i></a>@endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -288,7 +290,13 @@
 
             });
 
-
+            table.on('click', '.answer', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                    route_edit = '{{ route('adminRegist.sugerencia.index.correo') }}' + '/' + dataTable.PK_SU_IdSugerencia;
+                $(".content-ajax").load(route_edit);
+            });
         });
     </script>
 @endpush

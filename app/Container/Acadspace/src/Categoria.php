@@ -19,29 +19,29 @@ class Categoria extends Model
      * Tabla utilizada por el modelo.
      * @var string
      */
-    protected $table = 'tbl_categorias';
+    protected $table = 'TBL_Categorias';
 
     /**
      * Llave primaria usada por el modelo
      */
-    protected $primaryKey = 'pk_id_categoria';
+    protected $primaryKey = 'PK_CAT_Id_Categoria';
 
     /**
      * Atributos que son asignables.
      * @var array
      */
     protected $fillable = [
-        'nombre_categoria'
+        'CAT_Nombre'
             
     ];   
     /**
-     *  Función que retorna la relación entre la tabla 'tbl_categorias' y la tabla
-     * 'tb_articulos' a través de la llave foránea 'fk_id_categoria'
-     *  y la llave 'pk_id_categoria'
+     *  Función que retorna la relación entre la tabla 'TBL_Categoria' y la tabla
+     * 'TBL_Articulos' a través de la llave foránea 'FK_ART_Id_Categoria'
+     *  y la llave 'PK_CAT_Id_Categoria'
      */
     public function articulo()
     {
-        return $this->hasMany(Articulo::class, 'fk_id_categoria', 'pk_id_categoria');
+        return $this->hasMany(Articulo::class, 'FK_ART_Id_Categoria', 'PK_CAT_Id_Categoria');
     }
         
 }

@@ -186,6 +186,20 @@ export const mixinHttpStatus = {
             title = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('title') ) ? objStr.title : Lang.get('javascript.http_status.unexpected');
             status = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('status') ) ? objStr.status : Lang.get('javascript.http_status.disconnected');
             text = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('text') ) ? objStr.text : '';
+
+            if ( type === 'undefined' ) {
+                type = 'warning';
+            }
+            if ( title === 'undefined' ) {
+                title = Lang.get('javascript.warning');
+            }
+            if ( status === 'undefined' ) {
+                status = Lang.get('javascript.unexpected');
+            }
+            if ( text === 'undefined' ) {
+                text = '';
+            }
+
             swal({
                 title: Lang.get('javascript.' + type),
                 type: type,

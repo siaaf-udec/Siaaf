@@ -26,7 +26,7 @@ class UpdateCostsServicesRequest extends FormRequest
     {
         if ( $this->request->has('name') && $this->request->get('name') == 'cost' ) {
             return [
-                'value' => 'required|numeric',
+                'value' => 'required|numeric|min:0|max:9999999',
             ];
         }
         if ( $this->request->has('name') && $this->request->get('name') == 'cost_valid_until' ) {

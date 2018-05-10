@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 
 
 use App\Container\Financial\src\Repository\UserRepository;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 
 class TeacherController
 {
@@ -28,6 +29,9 @@ class TeacherController
      */
     public function index()
     {
-        return response()->json( $this->userRepository->teachersAsOptions() , 200 );
+        if ( request()->isMethod( 'GET') )
+            return response()->json( $this->userRepository->teachersAsOptions() , 200 );
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

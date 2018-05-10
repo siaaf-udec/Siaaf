@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 
 use App\Container\Financial\src\Repository\ExtensionRepository;
 use App\Container\Financial\src\Repository\ValidationRepository;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use App\Transformers\Financial\SubjectProgramTransformer;
 use App\Transformers\Financial\ValidationTransformer;
@@ -55,9 +56,12 @@ class ValidationController extends Controller
      */
     public function datatable()
     {
-        return DataTables::of( $this->query() )
-                        ->setTransformer( new ValidationTransformer )
-                        ->toJson();
+        if ( request()->isMethod('GET') )
+            return DataTables::of( $this->query() )
+                            ->setTransformer( new ValidationTransformer )
+                            ->toJson();
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 
     /**
@@ -70,38 +74,46 @@ class ValidationController extends Controller
 
     public function show( $id )
     {
-        $relation = [
-            'subject' => function ($q) {
-                return $q->with([
-                    'programs',
-                    'teachers:id,name,lastname,phone,email'
-                ]);
-            },
-            'status',
-            'secretary:id,name,lastname',
-            'student:id,name,lastname,phone,email',
-        ];
-        if ( auth()->user()->hasRole( student_role() ) ) {
-            $model = $this->validationRepository->getAuth( $relation, $id );
-        } else if ( auth()->user()->hasRole( access_roles() ) ) {
-            $model = $this->validationRepository->get( $relation, $id );
+        if ( request()->isMethod('GET') ) {
+            $relation = [
+                'subject' => function ($q) {
+                    return $q->with([
+                        'programs',
+                        'teachers:id,name,lastname,phone,email'
+                    ]);
+                },
+                'status',
+                'secretary:id,name,lastname',
+                'student:id,name,lastname,phone,email',
+            ];
+            if (auth()->user()->hasRole(student_role()) || auth()->user()->can(permission_validation())) {
+                $model = $this->validationRepository->getAuth($relation, $id);
+            } else if (auth()->user()->hasRole(access_roles()) || auth()->user()->can(permission_validation_approval())) {
+                $model = $this->validationRepository->get($relation, $id);
+            }
+
+            $array[] = isset($model) ? $model : [];
+
+            return DataTables::of($array)
+                ->setTransformer(new ValidationTransformer)
+                ->toJson();
         }
 
-        $array[] = $model;
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
 
-        return DataTables::of( $array )
-                        ->setTransformer( new ValidationTransformer )
-                        ->toJson();
     }
 
     /**
      * Return the subject primary keys relation to edit the source
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function edit( $id )
     {
-        return response()->json( ( new SubjectProgramTransformer )->transform( $this->validationRepository->subjectRelation( $id ) ) , 200 );
+        if ( request()->isMethod('GET') )
+            return response()->json( ( new SubjectProgramTransformer )->transform( $this->validationRepository->subjectRelation( $id ) ) , 200 );
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

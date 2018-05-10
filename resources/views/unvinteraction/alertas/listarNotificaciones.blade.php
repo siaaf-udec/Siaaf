@@ -45,14 +45,13 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
 jQuery(document).ready(function () {
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Notificaciones');
         url = "{{ route('listarAlerta.listarAlerta') }}";

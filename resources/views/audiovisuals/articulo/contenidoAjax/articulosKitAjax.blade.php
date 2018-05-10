@@ -95,7 +95,7 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-        swal("Remover Articulos!", "los articulos removidos podrán ser asignados a este kit u otro kit que este creado previamente");
+        swal("Remover Artículos!", "los artículos removidos podrán ser asignados a este kit u otro kit que este creado previamente");
         var objectForm=[];
         var identificador = 0;
         var textTipoArticulo , textCodigoArticulo ,textCaracteristica,boton_quitar;
@@ -103,7 +103,7 @@
         var fila_completa;
         var valueTipoArticulo ,valueCodigoArticulo ,valueCaracteristicaArticulo;
         ComponentsBootstrapMaxlength.init();
-        ComponentsSelect2.init();
+
         function cargarSelect(){
             App.unblockUI('.portlet-form');
             var rutaCaragarTipoArticulo = '{{ route('cargar.tipoArticulos.selectKit') }}';

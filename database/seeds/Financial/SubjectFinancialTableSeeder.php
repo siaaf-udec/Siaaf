@@ -16,6 +16,6 @@ class SubjectFinancialTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Subject::class, 100)->create();
+        factory( Subject::class, 20 )->create();
     }
 }

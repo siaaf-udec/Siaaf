@@ -19,6 +19,8 @@ const eventBus = new Vue();
 
 let financial = {
     templates: "./components/financial/templates/",
+    check: "./components/financial/check/",
+    cash: "./components/financial/cash/",
     studentExtension: "./components/financial/requests/student/extension/",
     studentAddSub: "./components/financial/requests/student/addsub/",
     studentValidation: "./components/financial/requests/student/validation/",
@@ -42,6 +44,7 @@ Vue.component("vue-modal", require( financial.templates + "Modal.vue"));
 Vue.component("vue-alert", require( financial.templates + "Alert.vue"));
 Vue.component("vue-select2", require( financial.templates + "Select2.vue"));
 Vue.component("vue-input", require( financial.templates + "Input.vue"));
+Vue.component("vue-input-empty", require( financial.templates + "VueInput.vue"));
 Vue.component("vue-ribbon", require( financial.templates + "Ribbon.vue"));
 Vue.component("portlet-actions", require( financial.templates + "PortletActions.vue"));
 Vue.component("empty-sortable-portlet", require( financial.templates + "EmptySortablePortlet.vue"));
@@ -98,11 +101,25 @@ Vue.component("approval-index-validation", require( financial.approval + "IndexV
 Vue.component("approval-index-add-sub", require( financial.approval + "IndexAddSub.vue" ) );
 Vue.component("approval-index-intersemestral", require( financial.approval + "IndexIntersemestral.vue" ) );
 
+/**
+ * Checks and Petty Cash Management
+ */
+Vue.component("check", require( financial.check + "Check.vue" ) );
+Vue.component("cash", require( financial.cash + "Cash.vue" ) );
+
+
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
 import {mixinAuthUser} from "./mixins";
+import {Ziggy} from "./ziggy";
+
+Vue.mixin({
+    methods: {
+        route: route
+    }
+});
 
 const app = new Vue({
     el: "#app",

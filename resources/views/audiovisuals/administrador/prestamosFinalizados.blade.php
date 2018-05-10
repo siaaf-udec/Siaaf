@@ -101,12 +101,12 @@
                         +data.consulta_usuario_audiovisuales.user.lastname;
                 },name:'Funcionario'},
                 {data: function(data){
-                    return data.conultar_administrador_entrega.name +" "
-                        +data.conultar_administrador_entrega.lastname;
+                    return data.consultar_administrador_entrega.user.name +" "
+                        +data.consultar_administrador_entrega.user.lastname;
                 },name:'Administrador Entrega'},
                 {data: function(data){
-                    return data.conultar_administrador_recibe.name +" "
-                        +data.conultar_administrador_recibe.lastname;
+                    return data.consultar_administrador_recibe.user.name +" "
+                        +data.consultar_administrador_recibe.user.lastname;
                 },name:'Administrador Recibe'},
                 {data: 'PRT_Observacion_Entrega', name: 'PRT_Observacion_Entrega'},
                 {data: 'PRT_Observacion_Recibe', name: 'PRT_Observacion_Recibe'},

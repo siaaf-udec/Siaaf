@@ -49,42 +49,42 @@ class CreateForeignsSolicitudTable extends Migration
         
         /** NUEVAS RELACIONES VERSION 2.0 */
 
-        Schema::connection('acadspace')->table('tbl_incidentes', function (Blueprint $table) {
-            $table->foreign('fk_id_articulo')->references('pk_id_articulo')->on('tbl_articulos')
+        Schema::connection('acadspace')->table('TBL_Incidentes', function (Blueprint $table) {
+            $table->foreign('FK_INC_Id_Articulo')->references('PK_ART_Id_Articulo')->on('TBL_Articulos')
                 ->onDelete('cascade');
         });
        
-        Schema::connection('acadspace')->table('tbl_imagenes', function (Blueprint $table) {
-            $table->foreign('fk_id_articulo')->references('pk_id_articulo')->on('tbl_articulos')
+        Schema::connection('acadspace')->table('TBL_Imagenes', function (Blueprint $table) {
+            $table->foreign('FK_IMA_Id_Articulo')->references('PK_ART_Id_Articulo')->on('TBL_Articulos')
                 ->onDelete('cascade');
         });
 
-        Schema::connection('acadspace')->table('tbl_articulos', function (Blueprint $table) {
-            $table->foreign('fk_id_categoria')->references('pk_id_categoria')->on('tbl_categorias')
+        Schema::connection('acadspace')->table('TBL_Articulos', function (Blueprint $table) {
+            $table->foreign('FK_ART_Id_Categoria')->references('PK_CAT_Id_Categoria')->on('TBL_Categorias')
                 ->onDelete('cascade');
         });
 
-        Schema::connection('acadspace')->table('tbl_articulos', function (Blueprint $table) {
-            $table->foreign('fk_id_hojavida')->references('pk_id_hojavida')->on('tbl_hojavida')
+        Schema::connection('acadspace')->table('TBL_Articulos', function (Blueprint $table) {
+            $table->foreign('FK_ART_Id_Hojavida')->references('PK_HOJ_Id_Hojavida')->on('TBL_Hojavida')
                 ->onDelete('cascade');
         });
 
-        Schema::connection('acadspace')->table('tbl_articulos', function (Blueprint $table) {
-            $table->foreign('fk_id_procedencia')->references('pk_id_procedencia')->on('tbl_procedencias');
+        Schema::connection('acadspace')->table('TBL_Articulos', function (Blueprint $table) {
+            $table->foreign('FK_ART_Id_Procedencia')->references('PK_PRO_Id_Procedencia')->on('TBL_Procedencias');
         });
 
-        Schema::connection('acadspace')->table('tbl_hojavida', function (Blueprint $table) {
-            $table->foreign('fk_id_marca_equipo')->references('pk_id_marca_equipo')->on('tbl_marca_equipos')
+        Schema::connection('acadspace')->table('TBL_Hojavida', function (Blueprint $table) {
+            $table->foreign('FK_HOJ_Id_Marca')->references('PK_MAR_Id_Marca')->on('TBL_Marca')
                 ->onDelete('cascade');
         });
 
-        Schema::connection('acadspace')->table('tbl_registro_mantenimientos', function (Blueprint $table) {
-            $table->foreign('fk_id_hojavida')->references('pk_id_hojavida')->on('tbl_hojavida')
+        Schema::connection('acadspace')->table('TBL_Registro_Mantenimientos', function (Blueprint $table) {
+            $table->foreign('FK_MANT_Id_Hojavida')->references('PK_HOJ_Id_Hojavida')->on('TBL_Hojavida')
                 ->onDelete('cascade');
         });
 
-        Schema::connection('acadspace')->table('tbl_registro_mantenimientos', function (Blueprint $table) {
-            $table->foreign('fk_id_tipo_mantenimiento')->references('pk_id_tipo_mantenimiento')->on('tbl_tipo_mantenimientos')
+        Schema::connection('acadspace')->table('TBL_Registro_Mantenimientos', function (Blueprint $table) {
+            $table->foreign('FK_MANT_Id_Tipo')->references('PK_MAN_Id_Tipo')->on('TBL_Tipo_Mantenimientos')
                 ->onDelete('cascade');
         });
 

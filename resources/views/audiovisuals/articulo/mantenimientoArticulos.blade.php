@@ -40,6 +40,42 @@
 @section('content')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Historial Artículos'])
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="modal fade" data-width="760" id="modal-mantenimiento-art" tabindex="-1">
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                            </button>
+                            <h2 class="modal-title">
+                                <i class="glyphicon glyphicon-cog">
+                                </i>
+                                Registrar Observacion Solicitud Mantenimiento
+                            </h2>
+                        </div>
+                        <div class="modal-body">
+                            {!! Form::open(['id' => 'from_mantenimiento_create', 'class' => '', 'url' => '/forms']) !!}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        {!! Field::text('TMT_Observacion_Realiza',
+                                        ['label' => 'Observacion mantenimiento:', 'required','max' => '255'],
+                                        ['help' => 'Ingrese una Observacion para el mantenimiento', 'icon' => 'fa fa-heartbeat'])
+                                        !!}
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-md-12" align="center">
+                                    {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                                    {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <br>
             <div class="clearfix"></div>
             <div class="row">
@@ -49,7 +85,7 @@
                         <a class="btn btn-outline dark requestMaintenance" data-toggle="modal">
                             <i class="fa fa-wrench">
                             </i>
-                            Mantenimiento Artículos
+                            Artículos en Mantenimiento
                         </a>
                         @endpermission
                     </div>
@@ -67,6 +103,7 @@
                             'Nombre',
                             'Codigo',
                             'Horas Mantenimiento Preventivo',
+                            'Mantenimientos Realizados',
                             'Horas Total Uso',
                             'Acciones' => ['style' => 'width:100px;']
                         ])
@@ -146,7 +183,7 @@
     </script>
     <script>
         var table, url, columns;
-
+        var idArticulo,tipoArticuloNombre;
         var ComponentsSelect2 = function () {
             return {
                 init: function () {
@@ -176,6 +213,7 @@
             };
         }();
         $(document).ready(function () {
+            App.unblockUI('.portlet-form');
             ComponentsBootstrapMaxlength.init();
             ComponentsSelect2.init();
             table = $('#mtn-table-ajax');
@@ -185,9 +223,10 @@
                 {data: 'consulta_articulos.consulta_tipo_articulo.TPART_Nombre', name: 'Tipo'},
                 {data: 'consulta_articulos.ART_Codigo', name: 'Codigo'},
                 {data: 'consulta_articulos.consulta_tipo_articulo.TPART_HorasMantenimiento', name: 'HorasMantenimiento'},
+                {data: 'consulta_articulos.ART_Cantidad_Mantenimiento', name: 'consulta_articulos.ART_Cantidad_Mantenimiento'},
                 {data: 'horasUso', name: 'Kit'},
                 {
-                    defaultContent: '@permission("AUDI_MAINTENANCE_CREATE")<a title="Solicitar Mantenimiento" href="javascript:;" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission' ,
+                    defaultContent: '@permission("AUDI_MAINTENANCE_CREATE")<a title="Solicitar Mantenimiento" href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-send"></i></a>@endpermission' ,
 
                     data: 'action',
                     name: 'action',
@@ -203,141 +242,68 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
-            table.on('click', '.remove', function (e) {
+            table.on('click', '.create', function (e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var formData = new FormData();
-                var mensaje ;
-                var tipo;
-                formData.append('id', dataTable.id);
-                if(dataTable.FK_ART_Estado_id == 1){
-                    mensaje = 'Este artículo no ha realizado ninguna solicitud,'+
-                        ' ¿Desea elminar este artículo?';
-                    tipo = 'warning';
-                    formData.append('softdelete', false);
-                }else{
-                    mensaje = 'Este artículo sera eliminado y el codigo podrá ser '+
-                        'reutlizado.';
-                    tipo = 'info';
-                    formData.append('softdelete', true);
-                }
-                swal({
-                        title: "Esta seguro?",
-                        text: mensaje,
-                        type: tipo,
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Continuar",
-                        cancelButtonText: "Cancelar",
-                        closeOnConfirm: true,
-                        closeOnCancel: true
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            var route_elimarArticulo = '{{route('elimarArticulo') }}';
-                            var async = async || false;
-                            $.ajax({
-                                url: route_elimarArticulo,
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                                cache: false,
-                                processData: false,
-                                async: async,
-                                type: 'POST',
-                                contentType: false,
-                                data: formData,
-                                beforeSend: function () {
-                                    App.blockUI({target: '.portlet-form', animate: true});
-                                },
-                                success: function (response, xhr, request) {
-                                    if (request.status === 200 && xhr === 'success') {
-                                        UIToastr.init(xhr, response.title, response.message);
-                                        table.ajax.reload();
-                                        App.unblockUI('.portlet-form');
-                                    }
-                                },
-                                error: function (response, xhr, request) {
-                                    if (request.status === 422 && xhr === 'error') {
-                                        UIToastr.init(xhr, response.title, response.message);
-                                        App.unblockUI('.portlet-form');
-                                    }
+                console.log(dataTable);
+                idArticulo = dataTable.consulta_articulos.id;
+                tipoArticuloNombre = dataTable.consulta_articulos.consulta_tipo_articulo.TPART_Nombre;
+                //console.log('nombre-'+tipoArticuloNombre );
+                $('#modal-mantenimiento-art').modal('toggle');
+            });
+            var createMantenimiento = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('registrar.mantenimiento') }}';
+                        var type = 'POST';
+                        var async = async || false;
+                        var formData = new FormData();
+                        //console.log('envio nombre'+tipoArticuloNombre);
+                        formData.append('TMT_Tipo_Articulo',tipoArticuloNombre);
+                        formData.append('TMT_FK_Id_Articulo',idArticulo);
+                        formData.append('TMT_Observacion_Realiza', $('#TMT_Observacion_Realiza').val());
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    $('#modal-mantenimiento-art').modal('hide');
+                                    $('#from_mantenimiento_create')[0].reset();
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
-                            });
-                        }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                }
+                            }
+                        });
                     }
-                );
-            });
-            table.on('click', '.edit', function (e) {
-                e.preventDefault();
-                $tr = $(this).closest('tr');
-                var dataTable = table.row($tr).data();
-                idEditarArticulo = parseInt(dataTable.id);
-                if(dataTable.consulta_estado_articulo.EST_Descripcion != 'Creado'){
-                    $('select[name="ART_Tipo_edit"]').prop('disabled', 'disabled');
-                }else{
-                    $('select[name="ART_Tipo_edit"]').removeAttr("disabled");
                 }
-                $('select[name="FK_ART_Kit_id_edit"]').empty();
-                $('select[name="ART_Tipo_edit"]').empty();
-                $('#ART_Descripcion_edit').val(dataTable.ART_Descripcion);
-                $('#FK_ART_Estado_id_edit').val(dataTable.consulta_estado_articulo.EST_Descripcion);
-                $('#ART_Codigo_edit').val(dataTable.ART_Codigo);
-                $('#modal-edit-art').modal('toggle');
-                var route_cargar_kits = '{{route('cargar.kits.select') }}';
-                $.ajax({
-                    url: route_cargar_kits,
-                    type: 'GET',
-                    beforeSend: function () {
-                        App.blockUI({target: '.portlet-form', animate: true});
-                    },
-                    success: function (response, xhr, request) {
-                        if (request.status === 200 && xhr === 'success') {
-                            $(response.data).each(function (key, value) {
-                                $('select[name="FK_ART_Kit_id_edit"]').append(new Option(value.KIT_Nombre, value.id));
-                            });
-                            $('select[name="FK_ART_Kit_id_edit"]').val(parseInt(dataTable.FK_ART_Kit_id));
-                            App.unblockUI('.portlet-form');
-                        }
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 && xhr === 'error') {
-                            UIToastr.init(xhr, response.title, response.message);
-                            App.unblockUI('.portlet-form');
-                        }
-                    }
-                });
-                var route_cargar_tipo = '{{route('cargar.tipoArticulos.selectArtciulo') }}';
-                $.ajax({
-                    url: route_cargar_tipo,
-                    type: 'GET',
-                    beforeSend: function () {
-                        App.blockUI({target: '.portlet-form', animate: true});
-                    },
-                    success: function (response, xhr, request) {
-                        if (request.status === 200 && xhr === 'success') {
-
-                            $(response.data).each(function (key, value) {
-                                $('select[name="ART_Tipo_edit"]').append(new Option(value.TPART_Nombre, value.id));
-                            });
-                            $('select[name="ART_Tipo_edit"]').val(parseInt(dataTable.FK_ART_Tipo_id));
-                            App.unblockUI('.portlet-form');
-                        }
-                    },
-                    error: function (response, xhr, request) {
-                        if (request.status === 422 && xhr === 'error') {
-                            UIToastr.init(xhr, response.title, response.message);
-                            App.unblockUI('.portlet-form');
-                        }
-                    }
-                });
-            });
-
+            };
+            var from_mantenimiento_create = $('#from_mantenimiento_create');
+            var rules_mantenimiento_create = {
+                TMT_Observacion_Realiza :{ required: true},
+            };
+            FormValidationMd.init(from_mantenimiento_create, rules_mantenimiento_create, false, createMantenimiento());
             $('.requestMaintenance').on('click',function(e){
                 e.preventDefault();
                 var route = '{{ route('audiovisuales.gestionMantenimientoAjax') }}';
                 $(".content-ajax").load(route);
             })
-
         });
     </script>
 @endpush

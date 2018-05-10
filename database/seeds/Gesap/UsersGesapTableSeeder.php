@@ -1,8 +1,8 @@
 <?php
 
-use app\Container\Users\src\User;
+use App\Container\Users\src\User;
 use \Illuminate\Database\Seeder;
-use app\Container\Permissions\src\Role;
+use App\Container\Permissions\src\Role;
 
 class UsersGesapTableSeeder extends Seeder
 {
@@ -14,13 +14,13 @@ class UsersGesapTableSeeder extends Seeder
             ['name'=> 'Administrador',
              'lastname' => 'Admin',
              'state' => 'aprobado',
-             'email' => 'administrador@app.com',
+             'email' => 'administrador@App.com',
              'password' => bcrypt('123456')],
             //Coordinadores
             ['name'=> 'Coordinador',
              'lastname' => 'Coordinador',
              'state' => 'aprobado',
-             'email' => 'Coordinador@app.com',
+             'email' => 'Coordinador@App.com',
              'password' => bcrypt('123456')],
             ['name'=> 'Gina',
              'lastname' => 'Valenzuela',
@@ -36,7 +36,7 @@ class UsersGesapTableSeeder extends Seeder
             ['name'=> 'Evaluador',
              'lastname' => 'evaluador',
              'state' => 'aprobado',
-             'email' => 'evaluador@app.com',
+             'email' => 'evaluador@App.com',
              'password' => bcrypt('123456')],
             ['name'=> 'Cesar Yesid',
              'lastname' => 'Barahona Rodriguez',

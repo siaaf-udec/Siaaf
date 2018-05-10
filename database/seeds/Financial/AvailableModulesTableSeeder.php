@@ -16,27 +16,27 @@ class AvailableModulesTableSeeder extends Seeder
             [
                 module_name()       =>  status_type_file(),
                 available_from()    =>  today(),
-                available_until()   =>  today()->addDay(),
+                available_until()   =>  today()->addDays( 3 ),
             ],
             [
                 module_name()       =>  status_type_extension(),
                 available_from()    =>  today(),
-                available_until()   =>  today()->addDay(),
+                available_until()   =>  today()->addDays( 3 ),
             ],
             [
                 module_name()       =>  status_type_validation(),
                 available_from()    =>  today(),
-                available_until()   =>  today()->addDay(),
+                available_until()   =>  today()->addDays( 3 ),
             ],
             [
                 module_name()       =>  status_type_intersemestral(),
                 available_from()    =>  today(),
-                available_until()   =>  today()->addDay(),
+                available_until()   =>  today()->addDays( 3 ),
             ],
             [
                 module_name()       =>  status_type_addition_subtraction(),
                 available_from()    =>  today(),
-                available_until()   =>  today()->addDay(),
+                available_until()   =>  today()->addDays( 3 ),
             ],
         ];
         foreach ( $modules as $module ) {

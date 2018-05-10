@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Requests\Student;
 
 use App\Container\Financial\src\Repository\IntersemestralRepository;
 use App\Container\Financial\src\Requests\Requests\Student\IntersemestralStudentRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;;
 
 class IntersemestralRequestController extends Controller
@@ -20,8 +21,9 @@ class IntersemestralRequestController extends Controller
      */
     public function __construct(IntersemestralRepository $intersemestralRepository)
     {
-        $this->middleware( 'request.status:'.status_type_intersemestral(), ['only' => ['edit'] ] );
-        $this->middleware( 'check.available:'.status_type_intersemestral(), ['only' => ['create', 'store', 'edit', 'update', 'destroy'] ] );
+        //$this->middleware( 'request.status:'.status_type_intersemestral(), ['only' => ['edit'] ] );
+        $this->middleware( 'check.available:'.status_type_intersemestral(), ['only' => ['store', 'update', 'destroy'] ] );
+        $this->middleware( 'check.cost:'.status_type_intersemestral(), ['only' => ['store'] ] );
         $this->intersemestralRepository = $intersemestralRepository;
     }
 
@@ -32,7 +34,10 @@ class IntersemestralRequestController extends Controller
      */
     public function index()
     {
-        return view('financial.requests.student.intersemestral.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.intersemestral.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,7 +47,10 @@ class IntersemestralRequestController extends Controller
      */
     public function create()
     {
-        return view('financial.requests.student.intersemestral.create');
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.intersemestral.create');
+
+        return abort( 405 );
     }
 
     /**
@@ -53,9 +61,12 @@ class IntersemestralRequestController extends Controller
      */
     public function store(IntersemestralStudentRequest $request)
     {
-        return ( $this->intersemestralRepository->storeStudentIntersemestral( $request ) ) ?
-            jsonResponse() :
-            jsonResponse('error', 'messages.inter_processed_fail', 422);
+        if ( request()->isMethod('POST') )
+            return ( $this->intersemestralRepository->storeStudentIntersemestral( $request ) ) ?
+                jsonResponse() :
+                jsonResponse('error', 'messages.inter_processed_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -66,7 +77,10 @@ class IntersemestralRequestController extends Controller
      */
     public function show($id)
     {
-        return view('financial.requests.student.intersemestral.show', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.intersemestral.show', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -77,7 +91,10 @@ class IntersemestralRequestController extends Controller
      */
     public function edit( $id )
     {
-        return view('financial.requests.student.intersemestral.edit', compact('id'));
+        if ( request()->isMethod('GET') )
+            return view('financial.requests.student.intersemestral.edit', compact('id'));
+
+        return abort( 405 );
     }
 
     /**
@@ -88,9 +105,12 @@ class IntersemestralRequestController extends Controller
      */
     public function update( $id )
     {
-        return ( $this->intersemestralRepository->subscribeStudent( $id ) ) ?
-            jsonResponse('success', 'subscribe_done', 200) :
-            jsonResponse('error', 'subscribe_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->intersemestralRepository->subscribeStudent( $id ) ) ?
+                jsonResponse('success', 'subscribe_done', 200) :
+                jsonResponse('error', 'subscribe_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -101,8 +121,11 @@ class IntersemestralRequestController extends Controller
      */
     public function destroy($id)
     {
-        return ( $this->intersemestralRepository->deleteStudentIntersemestral( $id ) ) ?
-            jsonResponse('success', 'unsubscribe_done', 200) :
-            jsonResponse('error', 'unsubscribe_fail', 422);
+        if ( request()->isMethod('DELETE') )
+            return ( $this->intersemestralRepository->deleteStudentIntersemestral( $id ) ) ?
+                jsonResponse('success', 'unsubscribe_done', 200) :
+                jsonResponse('error', 'unsubscribe_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'DELETE']), '', 405);
     }
 }

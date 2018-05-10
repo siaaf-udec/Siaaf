@@ -19,7 +19,7 @@ class IntersemestralStudentTransformer extends TransformerAbstract
             'id'                =>  isset( $intersemestral->{ primaryKey() } ) ? $intersemestral->{ primaryKey() } : 0,
             'intersemestral_id' =>  isset( $intersemestral->{ intersemestral_fk() } ) ? $intersemestral->{ intersemestral_fk() } : 0,
             'paid'              =>  $intersemestral->{ paid() },
-            'paid_label'        =>  $intersemestral->{ paid() } ? labelHtml( 'success', 'PAGADO' ) : labelHtml( 'info', 'EN ESPERA DE PAGO' ),
+            'paid_label'        =>  $intersemestral->{ paid() } ? labelHtml( 'success', paid_status() ) : labelHtml( 'info', waiting_pay_status() ),
             'student_name'      =>  isset( $intersemestral->student->full_name ) ? $intersemestral->student->full_name : __('financial.generic.empty'),
             'student_picture'   =>  isset( $intersemestral->student->profile_picture ) ? $intersemestral->student->profile_picture : iconHash(),
             'student_phone'     =>  isset( $intersemestral->student->phone ) ? $intersemestral->student->phone : __('financial.generic.empty'),

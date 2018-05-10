@@ -4,6 +4,7 @@ namespace App\Container\Financial\src\Controllers\Api;
 
 
 use App\Container\Financial\src\Repository\AvailableModulesRepository;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class AvailableModuleController extends Controller
@@ -25,10 +26,13 @@ class AvailableModuleController extends Controller
     /**
      * Return a list of option for select modules
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function modules()
     {
-        return response()->json( $this->availableModulesRepository->getAll(), 200 );
+        if ( request()->isMethod('GET') )
+            return response()->json( $this->availableModulesRepository->getAll(), 200 );
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'GET']), '', 405);
     }
 }

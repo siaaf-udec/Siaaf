@@ -26,11 +26,6 @@ class CreateForeignTable extends Migration
                 ->on(SchemaConstant::INTERSEMESTRAL)
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign(SchemaConstant::STATUS_FOREIGN_KEY)
-                ->references(SchemaConstant::PRIMARY_KEY)
-                ->on(SchemaConstant::REQUEST_STATUS)
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
         });
 
         $schema->table(SchemaConstant::INTERSEMESTRAL, function (Blueprint $table) {

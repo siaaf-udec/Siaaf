@@ -51,15 +51,15 @@
                         <h1><i class="glyphicon glyphicon-thumbs-up"></i> AGREGAR EMPRESA</h1>
                     </div>
                     <div class="modal-body">
-                        {!! Field:: text('PK_EMPS_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required' => 'required','maxlength'=>'10','autocomplete'=>'off'], ['help' => 'Digitar el nunemero de indentificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
+                        {!! Field:: tel('PK_EMPS_Empresa',null,['label'=>'Identificacion de la empresa','class'=> 'form-control', 'autofocus','required','maxlength'=>'10','autocomplete'=>'off'], ['help' => 'Digitar el nunemero de indentificacion de la empresa.','icon'=>'fa fa-credit-card']) !!}
                         
-                        {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el ombre de la empresa','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('EMPS_Nombre_Empresa',null,['label'=>'Nombre de la empresa', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el nombre de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Tipo de empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
+                        {!! Field:: text('EMPS_Razon_Social',null,['label'=>'Tipo de empresa', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la razon social de la empresa','icon'=>'fa fa-user'] ) !!}
                         
-                        {!! Field:: tel('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
+                        {!! Field:: text('EMPS_Telefono',null,['label'=>'Telefono', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'Digitar el numero de telefono de la empresa','icon'=>'fa fa-phone'] ) !!}
                         
-                        {!! Field:: text('EMPS_Direccion',null,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required' => 'required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-tree'] ) !!}
+                        {!! Field:: text('EMPS_Direccion',null,['label'=>'Direccion de la empresa', 'class'=> 'form-control', 'autofocus','required', 'maxlength'=>'40','autocomplete'=>'off'], ['help' => 'digitar la direcion de la empresa','icon'=>'fa fa-tree'] ) !!}
 
                     </div>
 
@@ -82,7 +82,6 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
 <!-- Validation Plugins -->
 <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -93,12 +92,13 @@
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 @endpush
 
 @push('functions')
+
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script>
     jQuery(document).ready(function() {
         App.unblockUI('.portlet-form');
@@ -117,13 +117,16 @@
                 {data: 'EMPS_Telefono',searchable: true,name: "EMPS_Telefono"},
                 {data: 'EMPS_Direccion',searchable: true,name: "EMPS_Direccion"},
                 {data: 'action',
-                    className: '',
-                    searchable: false,
-                    name: 'action',
-                    title: 'Acciones',
-                    orderable: false,
-                    exportable: false,
-                    printable: false,
+                 name: 'action',
+                 title: 'Acciones',
+                 orderable: false,
+                 searchable: false,
+                 exportable: false,
+                 printable: false,
+                 className: 'text-center',
+                 render: null,
+                 serverSide: false,
+                 responsivePriority: 2,
                     defaultContent: '<a href="#" id="editar" class="btn btn-simple btn-warning btn-icon editar" title="Editar Empresa"><i class="icon-pencil"></i></a>'
                 }
         ];

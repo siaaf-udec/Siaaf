@@ -144,11 +144,11 @@
                                             {!! Field::hidden('id_edit') !!}
                                             {!! Field::text(
                                                 'name_edit',
-                                                ['label' => 'Nombre', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Nombre', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                 ['help' => 'Ingrese el Nombre', 'icon' => 'fa fa-user']) !!}
                                             {!! Field::text(
                                                 'display_name_edit',
-                                                ['label' => 'Nombre para Mostrar', 'max' => '15', 'min' => '2', 'required', 'auto' => 'off'],
+                                                ['label' => 'Nombre para Mostrar', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required'],
                                                 ['help' => 'Ingrese el Nombre para Mostrar', 'icon' => 'fa fa-user']) !!}
                                             {!! Field::textarea(
                                                 'description_edit',

@@ -85,7 +85,7 @@
 <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ asset('https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+
 <!-- Validation Plugins -->
 <script src="{{asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -99,16 +99,19 @@
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
+
+
 @endpush
 @push('functions')
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/interaccion/js/Dropzone.js') }}" type="text/javascript"></script> 
 <script>
 jQuery(document).ready(function () {
     Dropzone.autoDiscover = false;
-     App.unblockUI('.portlet-form');
+    App.unblockUI('.portlet-form');
     var table, url, columns;
         table = $('#Listar_Documentos');
         url = "{{ route('listarMisDocumentos.listarMisDocumentos') }}";
@@ -116,14 +119,17 @@ jQuery(document).ready(function () {
             {data: 'DT_Row_Index'},
             {data: 'PK_DCET_Documentacion_Extra', "visible": true, name:"PK_DCET_Documentacion_Extra",className:'none' },
             {data: 'DCET_Nombre',searchable: true,name:"DCET_Nombre"},
-            {data:'action',
-             
-             searchable: false,
-             name:'action',
-             title:'Acciones',
+            {data: 'action',
+             name: 'action',
+             title: 'Acciones',
              orderable: false,
+             searchable: false,
              exportable: false,
              printable: false,
+             className: 'text-center',
+             render: null,
+             serverSide: false,
+             responsivePriority: 2,
              defaultContent: '@permission(['INTE_DES_DOC_USU'])<a href="#" target="_blank" class="btn btn-simple btn-whrite btn-icon descargar" title="Descargar Documento"><i class="fa fa-cloud-download"> DESCARGAR</i></a>@endpermission'
             }
         ];

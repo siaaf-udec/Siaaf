@@ -61,15 +61,20 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     {
         $approved = $this->statusRequestRepository->getId( status_type_extension(), approved_status() );
         $model = $this->getModel()->find( $id );
-        if ( $request->status == $approved->{ primaryKey() } ) {
-            if ( !isset( $model->{ approval_date() } ) ) {
-                $model->{ approval_date() } = now();
-                $model->{ approved_by() }   = auth()->user()->id;
+
+        if ( isset( $approved->{ primaryKey() }, $model ) ) {
+            if ($request->status == $approved->{primaryKey()}) {
+                if (!isset($model->{approval_date()})) {
+                    $model->{approval_date()} = now();
+                    $model->{approved_by()} = auth()->user()->id;
+                }
+                $model->{realization_date()} = $request->date;
             }
-            $model->{ realization_date() }  =   $request->date;
+            $model->{status_fk()} = $request->status;
+            return $model->save();
         }
-        $model->{ status_fk() }         =   $request->status;
-        return $model->save();
+
+        return false;
     }
 
     /**
@@ -103,12 +108,16 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     {
         $status = $this->statusRequestRepository->getId( status_type_extension(), sent_status() );
         $cost_service = $this->costServiceRepository->getId( status_type_extension() );
-        $model = $this->getModel();
-        $model->{ subject_fk() }    =  $request->subject_matter;
-        $model->{ student_fk() }    =  auth()->user()->id;
-        $model->{ cost_service_fk() }  =  $cost_service->{ primaryKey() };
-        $model->{ status_fk() }     =  $status->{ primaryKey() };
-        return $model->save();
+        if ( isset( $status->{ primaryKey() } ) && isset( $cost_service->{ primaryKey() } ) ) {
+            $model = $this->getModel();
+            $model->{subject_fk()} = $request->subject_matter;
+            $model->{student_fk()} = auth()->user()->id;
+            $model->{cost_service_fk()} = $cost_service->{primaryKey()};
+            $model->{status_fk()} = $status->{primaryKey()};
+            return $model->save();
+        }
+
+        return false;
     }
 
     /**
@@ -134,7 +143,7 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     public function deleteStudentExtension( $id )
     {
         $extension = $this->getAuth(['status'], $id);
-        return ( $extension && $extension->status->{ status_name() } == 'PENDIENTE' || $extension->status->{ status_name() } == 'ENVIADO' ) ? $extension->forceDelete() : false;
+        return ( $extension && $extension->status->{ status_name() } == pending_status() || $extension->status->{ status_name() } == sent_status() ) ? $extension->forceDelete() : false;
     }
 
     /**
@@ -147,7 +156,7 @@ class ExtensionRepository extends Methods implements FinancialExtensionInterface
     public function subjectRelation($id, $whitRelations = false )
     {
         $extension = $this->getAuth( [], $id );
-        $extension = SubjectProgram::where( subject_fk() , $extension->{ subject_fk() } );
+        $extension = SubjectProgram::where( subject_fk() , isset($extension->{ subject_fk() }) ? $extension->{ subject_fk() } : 0 );
         $extension = $whitRelations ? $extension->with(['programs', 'subjects', 'teachers:id,name,lastname,phone,email']) : $extension;
         return $extension->first();
     }

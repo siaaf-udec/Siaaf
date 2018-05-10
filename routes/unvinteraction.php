@@ -11,7 +11,7 @@ Route::get('/', [
         return view('unvinteraction.Panel_Principal');
     }
 ]);
-$controller = "\\App\\Container\\Unvinteraction\\Src\\Controllers\\";
+$controller = "\\App\\Container\\Unvinteraction\\src\\Controllers\\";
 
 Route::get('convenios',['middleware' => ['permission:INTE_VER_CONVENIO'],
     'as' => 'convenios.convenios',

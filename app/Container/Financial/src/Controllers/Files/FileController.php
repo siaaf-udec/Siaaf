@@ -5,6 +5,7 @@ namespace App\Container\Financial\src\Controllers\Files;
 
 use App\Container\Financial\src\Repository\FileRepository;
 use App\Container\Financial\src\Requests\File\StoreFileRequest;
+use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 
 class FileController extends Controller
@@ -31,7 +32,10 @@ class FileController extends Controller
      */
     public function index()
     {
-        return view('financial.files.upload.index');
+        if ( request()->isMethod('GET') )
+            return view('financial.files.upload.index');
+
+        return abort( 405 );
     }
 
     /**
@@ -42,12 +46,16 @@ class FileController extends Controller
      */
     public function store(StoreFileRequest $request)
     {
-        if ( !$this->fileRepository->checkLatestRequest() ) {
-            return $this->fileRepository->studentUpload( $request ) ?
-                jsonResponse() :
-                jsonResponse('error', 'processed_fail', 422);
+        if ( request()->isMethod('POST') ) {
+            if (!$this->fileRepository->checkLatestRequest()) {
+                return $this->fileRepository->studentUpload($request) ?
+                    jsonResponse() :
+                    jsonResponse('error', 'processed_fail', 422);
+            }
+            return jsonResponse('warning', 'messages.request_in_process', 422);
         }
-        return jsonResponse('warning', 'messages.request_in_process', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'POST']), '', 405);
     }
 
     /**
@@ -58,7 +66,10 @@ class FileController extends Controller
      */
     public function show( $id )
     {
-        return view('financial.files.upload.show', compact('id') );
+        if ( request()->isMethod('GET') )
+            return view('financial.files.upload.show', compact('id') );
+
+        return abort( 405 );
     }
 
     /**
@@ -70,8 +81,11 @@ class FileController extends Controller
      */
     public function update(StoreFileRequest $request, $id)
     {
-        return $this->fileRepository->studentUpdate( $request, $id ) ?
-                jsonResponse('success', 'updated_done', 200) :
-                jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return $this->fileRepository->studentUpdate( $request, $id ) ?
+                    jsonResponse('success', 'updated_done', 200) :
+                    jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 }
