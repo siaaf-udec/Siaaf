@@ -31,7 +31,11 @@
                 url: route('financial.api.datatables.programs', {}, false),
                 source: [
                     { data: 'id',           name: 'id' },
-                    { data: 'program_name', name: 'program_name' },
+                    { data: 'program_name', name: 'program_name',
+                        render: function ( data, type, row ) {
+                            return data ? data.wordWrap(60,  "<br/>", true) : null;
+                        }
+                    },
                     { data: 'actions',      name: 'actions', searchable: false, orderable: false },
                 ],
                 btnText: Lang.get('financial.buttons.add'),

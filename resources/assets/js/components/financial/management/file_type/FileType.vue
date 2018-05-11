@@ -43,7 +43,11 @@
                 url: route('financial.api.datatables.file-type', {}, false),
                 source: [
                     { data: 'id',           name: 'id' },
-                    { data: 'file_types',   name: 'file_types' },
+                    { data: 'file_types',   name: 'file_types',
+                        render: function ( data, type, row ) {
+                            return data ? data.wordWrap(60,  "<br/>", true) : null;
+                        }
+                    },
                     { data: 'actions',      name: 'actions', searchable: false, orderable: false },
                 ],
                 btnText: Lang.get('financial.buttons.add'),

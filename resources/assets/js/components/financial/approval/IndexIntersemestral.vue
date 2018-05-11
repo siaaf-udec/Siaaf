@@ -16,7 +16,7 @@
                                     <li v-for="badge in badges" :id="badge.id" class="badge-sidebar" @click="setActive( badge.id )">
                                         <a href="javascript:">
                                             <span class="badge" :class="badge.class" v-text="badge.count"></span>
-                                            {{ badge.text }}
+                                            {{ badge.text.wordWrap(18, '\n', true) }}
                                         </a>
                                     </li>
                                 </ul>
@@ -43,9 +43,9 @@
                                         <div class="todo-tasklist-item todo-tasklist-item-border-green" data-target="#modal-detail" data-toggle="modal" v-for="task in taskList" :id="task.id" @click="viewData( task )">
                                             <img class="todo-userpic pull-left hash-avatar"  :src="setIcon( task.teacher_picture )" width="27px" height="27px">
                                             <div class="todo-tasklist-item-title" v-text="task.subject_name"></div>
-                                            <div class="todo-tasklist-item-text"> <small v-text="task.subject_code"></small> </div>
+                                            <div class="todo-tasklist-item-text"> <small v-text="task.subject_code.wordWrap(40, '\n', true)"></small> </div>
                                             <div class="todo-tasklist-item-text"> <small v-text="task.teacher_name"></small> </div>
-                                            <div class="todo-tasklist-item-text"> <small v-text="task.program_name"></small> </div>
+                                            <div class="todo-tasklist-item-text"> <small v-text="task.program_name.wordWrap(40, '\n', true)"></small> </div>
                                             <div class="todo-tasklist-controls pull-left">
                                                 <span class="todo-tasklist-date">
                                                     <small> <i class="fa fa-calendar"></i> {{ task.created_at }} </small>
@@ -59,7 +59,7 @@
                                                 <span class="todo-tasklist-date">
                                                     <small> <i class="fa fa-money"></i> {{ task.subscribed_paid_count }} </small>
                                                 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless" v-text="task.status_name"></span>
+                                                <span class="todo-tasklist-badge badge badge-roundless" v-text="task.status_name.wordWrap(40, '\n', true)"></span>
                                             </div>
                                         </div>
 
@@ -91,7 +91,7 @@
                                 <div class="col-lg-8">
                                     <div class="blog-single-content bordered blog-container">
                                         <div class="blog-single-head">
-                                            <h1 class="blog-single-head-title" v-text="modal.source.subject_name"></h1>
+                                            <h1 class="blog-single-head-title" v-if="modal.source.subject_name" v-text="modal.source.subject_name.wordWrap(20, '\n', true)"></h1>
                                             <div class="blog-single-head-date">
                                                 <i class="fa fa-cog font-blue"></i>
                                                 <a href="javascript:" v-text="modal.source.status_name"></a>
@@ -128,13 +128,13 @@
                                                         <th  v-for="column in modal.table.columns" :class="column.class" v-text="column.name"></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody v-if="modal.source.id">
                                                     <tr>
                                                         <td v-text="modal.source.id"></td>
                                                         <td v-text="modal.source.subject_code"></td>
-                                                        <td v-text="modal.source.subject_name"></td>
+                                                        <td v-text="modal.source.subject_name.wordWrap(25, '\n', true)"></td>
                                                         <td v-text="modal.source.subject_credits"></td>
-                                                        <td v-text="modal.source.program_name"></td>
+                                                        <td v-text="modal.source.program_name.wordWrap(25, '\n', true)"></td>
                                                         <td v-text="modal.source.total_cost"></td>
                                                         <td v-html="modal.source.status_label"></td>
                                                         <td v-text="modal.source.cost"></td>

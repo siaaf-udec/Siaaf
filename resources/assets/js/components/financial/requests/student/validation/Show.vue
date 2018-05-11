@@ -111,7 +111,11 @@
                             }
                         },
                         { data: 'subject_code',     name: 'subject_code' },
-                        { data: 'subject_name',     name: 'subject_name' },
+                        { data: 'subject_name',     name: 'subject_name',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(20,  "<br/>", true) : null;
+                            }
+                        },
                         { data: 'subject_credits',  name: 'subject_credits' },
                         { data: 'program_name',     name: 'program_name' },
                         { data: 'status_label',     name: 'status_label' },

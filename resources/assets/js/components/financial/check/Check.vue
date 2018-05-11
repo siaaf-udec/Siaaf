@@ -192,14 +192,22 @@
                         {name: Lang.get('financial.generic.table.pay_to'), class: ''},
                         {name: Lang.get('financial.generic.table.status_name'), class: ''},
                         {name: Lang.get('financial.generic.table.delivered_at'), class: ''},
-                        {name: Lang.get('financial.generic.table.created_at'), class: ''},
+                        {name: Lang.get('financial.generic.table.created_at'), class: 'none'},
                         {name: Lang.get('financial.generic.table.actions'), class: ''},
                     ],
                     url: route('financial.api.datatables.checks', {}, false),
                     source: [
                         { data: 'id',           name: 'id' },
-                        { data: 'check',        name: 'check' },
-                        { data: 'pay_to',       name: 'pay_to' },
+                        { data: 'check',        name: 'check',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(40,  "<br/>", true) : null;
+                            }
+                        },
+                        { data: 'pay_to',       name: 'pay_to',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(40,  "<br/>", true) : null;
+                            }
+                        },
                         { data: 'status_label', name: 'status_label' },
                         { data: 'delivered_at',   name: 'delivered_at',
                             render: function ( data, type, row ) {
@@ -415,7 +423,11 @@
                     e.preventDefault();
                     let $tr = $(this).closest('tr');
                     let $url = route( 'financial.money.checks.destroy' , { id: $(this).data('id') } );
-                    let data = table.row( $(this).parents('tr') ).data();
+                    let row = $(this).parents('tr');
+                    if ( row.hasClass('child') ) {
+                        row = row.prev();
+                    }
+                    let data = table.row( row ).data();
                     let text = '';
                     let to = '';
 

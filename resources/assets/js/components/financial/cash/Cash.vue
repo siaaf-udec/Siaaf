@@ -385,7 +385,11 @@
                     url: route('financial.api.datatables.cash', {}, false),
                     source: [
                         { data: 'id',           name: 'id' },
-                        { data: 'concept',        name: 'concept' },
+                        { data: 'concept',        name: 'concept',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(40,  "<br/>", true) : null;
+                            }
+                        },
                         { data: 'cost_to_money',       name: 'cost_to_money' },
                         { data: 'pdf_url',       name: 'pdf_url',
                             render: function ( data, type, row ) {

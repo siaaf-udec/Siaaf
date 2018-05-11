@@ -13,7 +13,7 @@
                         <a href="javascript:;" v-text="text.name"></a>
                         <span class="c-date" v-text="text.date"></span>
                     </h4>
-                    {{ text.comment }}
+                    {{ text.comment.wordWrap(40, '\n', true) }}
                 </div>
             </div>
         </div>
