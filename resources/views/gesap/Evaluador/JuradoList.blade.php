@@ -180,7 +180,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {{ Form::reset('Reset', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
+                            {{ Form::reset('Limpiar', ['class' => 'btn yellow-gold','style'=>'float:right;margin-left:1rem']) }}
                             {{ Form::submit('Guardar', ['class' => 'btn green','style'=>'float:right']) }}
                         </div>
                         {!! Form::close() !!}
