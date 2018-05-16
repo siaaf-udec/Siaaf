@@ -459,6 +459,35 @@ Route::group(['middleware' => ['auth']], function () {
         
     /*FIN FUNCIONALIDAD MARCA*/
 
+
+    /*RUTAS FUNCIONALIDAD TIPOS DE MANTENIMIENTOS*/
+    
+    Route::group(['prefix' => 'tiposmant', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+    
+        Route::get('index', [
+            'uses' => $controller . 'TiposMantController@index',
+            'as' => 'espacios.academicos.tiposmant.index'
+        ]);
+    
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'TiposMantController@data',
+            'as' => 'espacios.academicos.tiposmant.data'
+        ]);
+    
+        Route::post('regisTipo', [ //Registrar Tipo
+            'uses' => $controller . 'TiposMantController@regisTipo',
+            'as' => 'espacios.academicos.tiposmant.regisTipo',
+        ]);
+    
+        Route::delete('delete/{id?}', [ //Eliminar Tipo
+            'uses' => $controller . 'TiposMantController@destroy',
+            'as' => 'espacios.academicos.tiposmant.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
+        
+    /*FIN FUNCIONALIDAD TIPOS DE MANTENIMIENTOS*/
+
 });
 
 

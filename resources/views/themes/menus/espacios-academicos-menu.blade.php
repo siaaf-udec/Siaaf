@@ -197,6 +197,12 @@
                             <span class="title">Marcas</span>
                         </a>
                     </li>
+                    <li class="nav-item {{ active(['espacios.academicos.tiposmant.index'], 'start active open') }}">
+                            <a href="{{ route('espacios.academicos.tiposmant.index') }}" class="nav-link nav-toggle">
+                                <i class="fa fa-wrench"></i>
+                                <span class="title">Tipos Mantenimiento</span>
+                            </a>
+                        </li>
                 </ul>
             </li>
         </li>
