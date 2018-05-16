@@ -5,16 +5,17 @@ namespace App\Container\Acadspace\src\Controllers;
 use App\Container\Acadspace\src\Articulo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Acadspace\src\Marca;
+use App\Container\Acadspace\src\Mantenimiento;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 
-class MarcaController extends Controller
+class MantenimientoController extends Controller
 {
     public function index(Request $request)
     {
-        return view('acadspace.Marca.formularioMarca');
+        return view('acadspace.Mantenimiento.formularioMantenimiento');
+
     }
 
     /**

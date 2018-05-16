@@ -488,6 +488,34 @@ Route::group(['middleware' => ['auth']], function () {
         
     /*FIN FUNCIONALIDAD TIPOS DE MANTENIMIENTOS*/
 
+    /*RUTAS FUNCIONALIDAD MANTENIMIENTOS*/
+    
+    Route::group(['prefix' => 'mantenimiento', 'middleware' => ['permission:FUNC_ESPA']], function () {
+        $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+    
+        Route::get('index', [
+            'uses' => $controller . 'MantenimientoController@index',
+            'as' => 'espacios.academicos.mantenimiento.index'
+        ]);
+    
+        Route::get('data', [ //Cargar datatable
+            'uses' => $controller . 'MantenimientoController@data',
+            'as' => 'espacios.academicos.mantenimiento.data'
+        ]);
+    
+        Route::post('regisTipo', [ //Registrar Tipo
+            'uses' => $controller . 'MantenimientoController@regisTipo',
+            'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
+        ]);
+    
+        Route::delete('delete/{id?}', [ //Eliminar Tipo
+            'uses' => $controller . 'MantenimientoController@destroy',
+            'as' => 'espacios.academicos.mantenimiento.destroy'
+        ])->where(['id' => '[0-9]+']);
+    });
+        
+    /*FIN FUNCIONALIDAD MANTENIMIENTOS*/
+
 });
 
 
