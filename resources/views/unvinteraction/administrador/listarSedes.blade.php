@@ -298,12 +298,14 @@ jQuery(document).ready(function () {
                             table.ajax.reload();
                             table1 = $('#Listar_Convenios').DataTable();
                             table1.ajax.reload();
-                            UIToastr.init(xhr, response.title, response.message);           
+                            UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     },
                     error: function (response, xhr, request) {
                         if (request.status === 422 &&  xhr === 'error') {
                             UIToastr.init(xhr, response.title, response.message);
+                            App.unblockUI('.portlet-form');
                         }
                     }
                 });
