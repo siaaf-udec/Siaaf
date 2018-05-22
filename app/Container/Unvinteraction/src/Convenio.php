@@ -37,7 +37,7 @@ class Convenio extends Model
     *por los campo de FK_TBL_Sede y PK_Sede 
     *para realizar las busquedas complementarias
     */
-    public function convenioSede()
+    public function convenioSedes()
     {
         return $this->belongsto(Sede::class, 'FK_TBL_Sede_Id', 'PK_SEDE_Sede')->withTrashed();
     }
@@ -47,7 +47,7 @@ class Convenio extends Model
     *por los campo de FK_TBL_Estado y PK_Estado 
     *para realizar las busquedas complementarias
     */
-    public function convenioEstado()
+    public function convenioEstados()
     {
         return $this->belongsto(Estado::class, 'FK_TBL_Estado_Id', 'PK_ETAD_Estado')->withTrashed();
     }
