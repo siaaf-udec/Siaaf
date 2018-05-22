@@ -20,9 +20,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+
+
+use App\Notifications\ResetPassword;
 
 class User extends Authenticatable implements AuditableContract
 {
@@ -127,6 +129,11 @@ class User extends Authenticatable implements AuditableContract
             $img = Storage::disk('developer')->url($img);
         }
         return $img;
+    }
+
+    function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 
     function getRoleAttribute()
