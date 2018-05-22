@@ -288,6 +288,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UserController@data',
             'as' => 'users.data'
         ]);
+        Route::get('role/assign/{id?}', [
+            'uses' => $controller . 'UserController@role_assign',
+            'as'   => 'users.role.assign',
+        ]);
         Route::post('store', [
             'uses' => $controller . 'UserController@store',
             'as' => 'users.store'
