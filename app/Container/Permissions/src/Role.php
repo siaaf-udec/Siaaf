@@ -3,9 +3,12 @@
 namespace App\Container\Permissions\Src;
 
 use Zizaco\Entrust\EntrustRole;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Role extends EntrustRole
+class Role extends EntrustRole implements AuditableContract
 {
+    use \OwenIt\Auditing\Auditable;
+
     /*
      * The database connection used by the model.
      *
@@ -14,7 +17,24 @@ class Role extends EntrustRole
      */
     protected $connection = 'developer';
 
-    public function getNumPermsAttribute(){
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'name', 'dysplay_name', 'description',
+    ];
+
+    public function getNumPermsAttribute()
+    {
         return count($this->perms);
     }
 }

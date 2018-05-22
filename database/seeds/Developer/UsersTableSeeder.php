@@ -26,5 +26,8 @@ class UsersTableSeeder extends Seeder
 
         $user = User::find(1);
         $user->roles()->sync(1);
+        $user->images()->create([
+            'url' => ''
+        ]);
     }
 }

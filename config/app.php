@@ -206,6 +206,7 @@ return [
         App\Container\Permissions\src\Providers\PermissionServiceProvider::class,
         App\Container\Permissions\src\Providers\RoleServiceProvider::class,
         App\Container\Permissions\src\Providers\ModuleServiceProvider::class,
+        App\Container\Permissions\src\Providers\AuditServiceProvider::class,
         App\Container\Users\src\Providers\UserServiceProvider::class,
         App\Container\Audiovisuals\src\Providers\AdminServiceProvider::class, //Audiovisuales
         App\Container\Audiovisuals\src\Providers\FuncionarioServiceProvider::class, //Audiovisuales

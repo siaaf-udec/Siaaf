@@ -3,11 +3,21 @@
 namespace App\Container\Users\Src;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class City extends Model
+class City extends Model implements AuditableContract
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $connection = 'developer';
-    protected $table = 'cities';
+    protected $table      = 'cities';
+
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +25,7 @@ class City extends Model
      * @var array
      */
     protected $fillable = [
-        'region_id', 'country_id', 'latitude', 'longitude', 'name'
+        'region_id', 'country_id', 'latitude', 'longitude', 'name',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -23,6 +33,15 @@ class City extends Model
      * @var array
      */
     protected $hidden = [
+    ];
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'region_id', 'country_id', 'latitude', 'longitude', 'name',
     ];
 
     /**

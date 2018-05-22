@@ -2,28 +2,27 @@
 
 namespace App\Container\Users\Src;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use App\Container\Financial\src\AdditionSubtraction;
+use App\Container\Financial\src\Constants\SchemaConstant;
+use App\Container\Financial\src\Extension;
+use App\Container\Financial\src\File;
+use App\Container\Financial\src\IntersemestralStudents;
 
 /**
  * Financial Uses
  */
 
-use App\Container\Financial\src\Constants\SchemaConstant;
-use App\Container\Financial\src\Extension;
 use App\Container\Financial\src\Program;
 use App\Container\Financial\src\Subject;
-use App\Container\Permissions\Src\Role;
-use App\Container\Financial\src\AdditionSubtraction;
-use App\Container\Financial\src\File;
-use App\Container\Financial\src\IntersemestralStudents;
 use App\Container\Financial\src\Validation;
+use App\Container\Permissions\Src\Role;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable implements AuditableContract
 {
@@ -41,7 +40,7 @@ class User extends Authenticatable implements AuditableContract
      */
     protected $table = 'users';
 
-    use Notifiable, SoftDeletes, Auditable;
+    use Notifiable, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     /**
      * Informamos a la clase EntrustUserTrait que usara restore
@@ -49,6 +48,13 @@ class User extends Authenticatable implements AuditableContract
     use EntrustUserTrait {
         EntrustUserTrait::restore insteadof SoftDeletes;
     }
+
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -84,22 +90,46 @@ class User extends Authenticatable implements AuditableContract
     ];
 
     /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'name',
+        'lastname',
+        'birthday',
+        'identity_type',
+        'identity_no',
+        'identity_expe_place',
+        'identity_expe_date',
+        'address',
+        'sexo',
+        'phone',
+        'email',
+        'state',
+        'password',
+        'cities_id',
+        'countries_id',
+        'regions_id',
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
     protected $appends = ['full_name', 'profile_picture'];
 
-    public function getImageAttribute()
+    function getImageAttribute()
     {
-        $img = isset( $this->images[0]->url ) ? $this->images[0]->url : '';
+        $img = isset($this->images[0]->url) ? $this->images[0]->url : '';
         if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
             $img = Storage::disk('developer')->url($img);
         }
         return $img;
     }
 
-    public function getRoleAttribute()
+    function getRoleAttribute()
     {
         $role_id = $this->roles()->first()->pivot->role_id;
         return Role::find($role_id)->display_name;
@@ -110,12 +140,12 @@ class User extends Authenticatable implements AuditableContract
      *
      * @return string
      */
-    public function receivesBroadcastNotificationsOn()
+    function receivesBroadcastNotificationsOn()
     {
         return 'users-notification.' . $this->id;
     }
 
-    public function getNumStatusReadNotificationsAttribute()
+    function getNumStatusReadNotificationsAttribute()
     {
         return count($this->unreadNotifications);
     }
@@ -123,7 +153,7 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the user that owns the city.
      */
-    public function city()
+    function city()
     {
         return $this->belongsTo(City::class, 'cities_id');
     }
@@ -131,7 +161,7 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the user that owns the country.
      */
-    public function country()
+    function country()
     {
         return $this->belongsTo(Country::class, 'countries_id');
     }
@@ -139,7 +169,7 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the user that owns the region.
      */
-    public function region()
+    function region()
     {
         return $this->belongsTo(Region::class, 'regions_id');
     }
@@ -148,7 +178,7 @@ class User extends Authenticatable implements AuditableContract
      * morphMany() Identifica que existe relacion polimorfica
      * Parametros(Entidad de comentarios, Metodo en la entidad de comentario)
      * */
-    public function images()
+    function images()
     {
         //seoble, likeable, votable....
         return $this->morphMany(Image::class, 'imageble');
@@ -157,7 +187,7 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the UsuarioAudiovisuales record associated with the user.
      */
-    public function audiovisual()
+    function audiovisual()
     {
         return $this->hasOne('App\Container\Audiovisuals\Src\UsuarioAudiovisuales', 'USER_FK_User');
     }
@@ -165,7 +195,7 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the UsuarioInteraction  record associated with the user.
      */
-    public function unvInteraction()
+    function unvInteraction()
     {
         return $this->hasOne('App\Container\Unvinteraction\Src\UsuarioInteraction', 'USER_FK_User');
     }
@@ -187,12 +217,12 @@ class User extends Authenticatable implements AuditableContract
     /**
      * Get the UsuarioGesap record associated with the user.
      */
-    public function gesap()
+    function gesap()
     {
         return $this->hasOne('App\Container\Gesap\Src\Encargados', 'FK_developer_user_id');
     }
 
-    public function getFullNameAttribute()
+    function getFullNameAttribute()
     {
         return $this->name . ' ' . $this->lastname;
     }
@@ -201,12 +231,12 @@ class User extends Authenticatable implements AuditableContract
      * Start Financial Relations
      */
 
-    public function roles()
+    function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
-    public function getProfilePictureAttribute()
+    function getProfilePictureAttribute()
     {
         if (isset($this->images[0]->url)) {
             if (filter_var($this->images[0]->url, FILTER_VALIDATE_URL) && file_exists($this->images[0]->url)) {
@@ -221,7 +251,7 @@ class User extends Authenticatable implements AuditableContract
         return substr(md5($this->full_name), 16);
     }
 
-    public function subjects()
+    function subjects()
     {
         $table = SchemaConstant::getRelationNameTable(SchemaConstant::SUBJECT_PROGRAM);
 
@@ -229,7 +259,7 @@ class User extends Authenticatable implements AuditableContract
             ->withPivot(program_fk(), teacher_fk());
     }
 
-    public function programs()
+    function programs()
     {
         $table = SchemaConstant::getRelationNameTable(SchemaConstant::SUBJECT_PROGRAM);
 
@@ -237,27 +267,27 @@ class User extends Authenticatable implements AuditableContract
             ->withPivot(subject_fk(), teacher_fk());
     }
 
-    public function extensions()
+    function extensions()
     {
         return $this->hasMany(Extension::class, student_fk(), 'id');
     }
 
-    public function validations()
+    function validations()
     {
         return $this->hasMany(Validation::class, student_fk(), 'id');
     }
 
-    public function intersemestrals()
+    function intersemestrals()
     {
         return $this->hasMany(IntersemestralStudents::class, student_fk(), 'id');
     }
 
-    public function additionSubtraction()
+    function additionSubtraction()
     {
         return $this->hasMany(AdditionSubtraction::class, student_fk(), 'id');
     }
 
-    public function filesUploaded()
+    function filesUploaded()
     {
         return $this->hasMany(File::class, user_fk(), 'id');
     }

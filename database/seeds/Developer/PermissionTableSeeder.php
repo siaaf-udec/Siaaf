@@ -35,6 +35,20 @@ class PermissionTableSeeder extends Seeder
         $permission ->save();
 
         $permission= new Permission;
+        $permission->name = 'AUD_MODULE';
+        $permission->display_name = 'Auditoria';
+        $permission->description = 'Modulo general de auditoria.';
+        $permission->module_id = 8;
+        $permission ->save();
+
+        $permission= new Permission;
+        $permission->name = 'AUD_GENERAL';
+        $permission->display_name = 'Auditoria General';
+        $permission->description = 'Visualiza la auditoria general de los diferentes modulos.';
+        $permission->module_id = 8;
+        $permission ->save();
+
+        $permission= new Permission;
         $permission->name = 'MASTER_USER_UDEC';
         $permission->display_name = 'Usuario Udec';
         $permission->description = 'Acceso completo al modulo de administración de usuarios udec.';
@@ -56,6 +70,6 @@ class PermissionTableSeeder extends Seeder
         $permission ->save();
 
         $role = Role::findOrFail(1);
-        $role->perms()->sync([1, 2, 3]);
+        $role->perms()->sync([1, 2, 3, 4, 5]);
     }
 }

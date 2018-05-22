@@ -18,7 +18,7 @@
         "league/fractal": "^0.17.0",
         "maatwebsite/excel": "~2.1.0",
         "mariuzzo/laravel-js-localization": "^1.4",
-        "owen-it/laravel-auditing": "^4.1",
+        "owen-it/laravel-auditing": "^7.0",
         "predis/predis": "^1.1",
         "styde/html": "~1.4",
         "tightenco/ziggy": "^0.6.0",
