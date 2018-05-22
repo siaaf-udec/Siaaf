@@ -303,9 +303,6 @@
                         <ul class="dropdown-menu dropdown-menu-default">
                             @env('local')
                             <li>
-                                <a href="{{ route('users.profile') }}"><i class="icon-user"></i> My Profile </a>
-                            </li>
-                            <li>
                                 <a href="javascript:;"><i class="icon-calendar"></i> My Calendar </a>
                             </li>
                             <li>
@@ -325,6 +322,9 @@
                                 <a href="javascript:;"><i class="icon-lock"></i> Lock Screen </a>
                             </li>
                             @endenv
+                            <li>
+                                <a href="{{ route('users.profile') }}"><i class="icon-user"></i> Mi Perfil </a>
+                            </li>
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="icon-key"></i> Salir </a>

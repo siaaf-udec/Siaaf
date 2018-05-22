@@ -14,3 +14,7 @@ npm-debug.log
 package-lock.json
 
 
+
+resources/views/\.DS_Store
+
+\.DS_Store

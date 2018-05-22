@@ -182,7 +182,6 @@
                 </ul>
             </li>
         @endpermission
-        {{--
         @permission( $permission_petty_cash )
             <li class="nav-item {{ active(['financial.money.cash.*'], 'start active open') }}">
                 <a href="{{ route('financial.money.cash.index') }}" class="nav-link nav-toggle">
@@ -191,7 +190,6 @@
                 </a>
             </li>
         @endpermission
-        --}}
         @permission( $permission_checks )
             <li class="nav-item {{ active(['financial.money.checks.*'], 'start active open') }}">
                 <a href="{{ route('financial.money.checks.index') }}" class="nav-link nav-toggle">

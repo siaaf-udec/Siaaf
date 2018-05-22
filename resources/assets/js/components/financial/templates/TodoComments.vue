@@ -13,7 +13,7 @@
                                     <span class="todo-comment-username" v-text="text.name"></span> &nbsp;
                                     <span class="todo-comment-date" v-text="text.date"></span>
                                 </p>
-                                <p class="todo-text-color" v-text="text.comment"></p>
+                                <p class="todo-text-color" v-text="text.comment.wordWrap(40, '\n', true)"></p>
                             </div>
                         </li>
                     </ul>

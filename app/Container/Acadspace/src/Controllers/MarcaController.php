@@ -14,19 +14,7 @@ class MarcaController extends Controller
 {
     public function index(Request $request)
     {
-
-        if ($request->isMethod('GET')) {
-            $marca = new marca();
-            $marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
-            return view('acadspace.Marca.formularioMarca',
-                [
-                    'marcas' => $marcas->toArray()
-                ]);
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+        return view('acadspace.Marca.formularioMarca');
     }
 
     /**

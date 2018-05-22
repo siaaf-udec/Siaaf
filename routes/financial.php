@@ -378,6 +378,8 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
         Route::prefix('stats')->group( function () {
             Route::get('financial-supply', 'FileTypeController@stats')
                 ->name('financial.api.stats.financial.supply');
+            Route::middleware('permission:'.permission_petty_cash())->get('petty-cash', 'PettyCashController@counter')
+                ->name('financial.api.stats.financial.petty.cash');
         });
 
         Route::prefix('extension')->group( function () {

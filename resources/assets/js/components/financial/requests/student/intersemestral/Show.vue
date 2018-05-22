@@ -46,9 +46,9 @@
                                             <tr>
                                                 <td v-text="source.intersemestral_id"></td>
                                                 <td v-text="source.subject_code"></td>
-                                                <td v-text="source.subject_name"></td>
+                                                <td v-text="source.subject_name.wordWrap(20, '\n', true)"></td>
                                                 <td v-text="source.subject_credits"></td>
-                                                <td v-text="source.program_name"></td>
+                                                <td v-text="source.program_name.wordWrap(20, '\n', true)"></td>
                                                 <td v-text="source.total_cost"></td>
                                                 <td v-html="source.status_label"></td>
                                                 <td v-html="source.paid_label"></td>

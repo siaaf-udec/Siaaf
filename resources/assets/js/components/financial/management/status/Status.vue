@@ -371,19 +371,25 @@
                         inputAttributes: {
                             autocompete: 'off',
                             minlength: 2,
-                            maxlength: 191,
+                            maxlength: 40,
                             required: 'required',
+                            pattern: '[a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,40}',
                         },
                         inputValidator: (value) => {
                             return new Promise((resolve) => {
+                                let re = new RegExp( /[a-záéíóúüñA-ZÁÉÍÓÚÜÑ ]{2,40}/miyu );
                                 if (!value) {
                                     resolve(Lang.get('validation.filled', {attribute: Lang.get('validation.attributes.status_name')}))
-                                } else if (value.length < 3 || value.length > 191) {
+                                }
+                                if (value.length < 3 || value.length > 40) {
                                     resolve(Lang.get('validation.between.numeric', {
                                         min: 2,
-                                        max: 191,
+                                        max: 40,    
                                         attribute: Lang.get('validation.attributes.status_name')
                                     }))
+                                }
+                                if (!re.test( value )) {
+                                    resolve( Lang.get('validation.alpha', { attribute: Lang.get('validation.attributes.status_name') } ) )
                                 } else {
                                     resolve()
                                 }

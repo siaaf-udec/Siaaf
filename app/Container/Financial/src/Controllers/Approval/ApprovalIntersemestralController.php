@@ -59,7 +59,7 @@ class ApprovalIntersemestralController extends Controller
      */
     public function store(PaidIntersemestralStatusRequest $request)
     {
-        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            if ( request()->isMethod('PUT') || request()->isMethod('PATCH') || request()->isMethod('POST') )
             return ( $this->intersemestralRepository->paid( $request ) ) ?
                 jsonResponse('success', 'updated_done', 200) :
                 jsonResponse('error', 'updated_fail', 422);

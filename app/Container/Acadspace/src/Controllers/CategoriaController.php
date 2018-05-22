@@ -14,19 +14,7 @@ class CategoriaController extends Controller
 {
     public function index(Request $request)
     {
-
-        if ($request->isMethod('GET')) {
-            $cate = new categoria();
-            $categorias = $cate->pluck('CAT_Nombre', 'PK_CAT_Id_Categoria');
-            return view('acadspace.Categoria.formularioCategoria',
-                [
-                    'categoria' => $categorias->toArray()
-                ]);
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+        return view('acadspace.Categoria.formularioCategoria');
     }
 
     /**

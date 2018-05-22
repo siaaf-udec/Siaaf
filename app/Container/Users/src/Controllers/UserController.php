@@ -2,23 +2,17 @@
 
 namespace App\Container\Users\Src\Controllers;
 
+use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Permissions\Src\Interfaces\RoleInterface;
+use App\Container\Users\Src\Interfaces\UserInterface;
+use App\Http\Controllers\Controller;
 use App\Notifications\HeaderSiaaf;
-
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Yajra\DataTables\DataTables;
-
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-use App\Container\Users\Src\Interfaces\UserInterface;
-use App\Container\Permissions\Src\Interfaces\RoleInterface;
-
-use App\Container\Overall\Src\Facades\AjaxResponse;
-
 
 class UserController extends Controller
 {
@@ -31,7 +25,7 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
-        $this->user = Auth::user();
+        $this->user           = Auth::user();
     }
 
     /**
@@ -71,7 +65,7 @@ class UserController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $roles = $this->roleRepository->index([]);
             return view('users.content-ajax.ajax-create-user', [
-                'roles' => $roles
+                'roles' => $roles,
             ]);
         }
 
@@ -146,6 +140,28 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function role_assign(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $user_roles = $this->userRepository->show($id, []);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos cargados correctamente.',
+                $user_roles->roles
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -163,11 +179,11 @@ class UserController extends Controller
             if ($img !== null) {
                 $url = Storage::disk('developer')->putFile('avatars', $img);
                 $user->images()->create([
-                    'url' => $url
+                    'url' => $url,
                 ]);
             } else {
                 $user->images()->create([
-                    'url' => $request->get('identicon')
+                    'url' => $request->get('identicon'),
                 ]);
             }
 
@@ -179,9 +195,9 @@ class UserController extends Controller
 
             /*Crea Notificacion*/
             $data = [
-                'url' => 'https://www.google.com.co/',
+                'url'         => 'https://www.google.com.co/',
                 'description' => '¡Bienvenidos a Siaaf!',
-                'image' => 'assets/layouts/layout2/img/avatar3.jpg'
+                'image'       => 'assets/layouts/layout2/img/avatar3.jpg',
             ];
             $user->notify(new HeaderSiaaf($data));
 
@@ -207,7 +223,7 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_create' => 'unique:users,email' . Auth::id()
+                'email_create' => 'unique:users,email' . Auth::id(),
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -231,7 +247,7 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_forget' => 'exists:users,email'
+                'email_forget' => 'exists:users,email',
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -255,7 +271,7 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'password_update' => 'current_password'
+                'password_update' => 'current_password',
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');
@@ -280,13 +296,14 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = $this->userRepository->show($id, []);
-            $img = $user->images[0]->url;
+            $img  = $user->images[0]->url;
             if (strcmp(substr($img, 0, 4), 'data') !== 0 && Storage::disk('developer')->has('avatars', $img)) {
                 $img = Storage::disk('developer')->url($img);
             }
+
             return view('users.content-ajax.ajax-update-user', [
-                'user' => $user,
-                'img' => $img,
+                'user'  => $user,
+                'img'   => $img,
                 'roles' => $this->roleRepository->index([])
             ]);
         }
@@ -322,11 +339,11 @@ class UserController extends Controller
                 }
                 $url = Storage::disk('developer')->putFile('avatars', $img);
                 $user->images()->update([
-                    'url' => $url
+                    'url' => $url,
                 ]);
             } else {
                 $user->images()->update([
-                    'url' => $request->get('identicon')
+                    'url' => $request->get('identicon'),
                 ]);
             }
 

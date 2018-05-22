@@ -442,7 +442,14 @@ class EvaluatorController extends Controller
     {
         if ($request->isMethod('GET')) {
             $observaciones = Observaciones::
-            with(['encargado' => function ($encargados) use ($id) {
+            whereHas('encargado',function ($encargados) use ($id) {
+                $encargados->where('FK_TBL_Anteproyecto_Id', '=', $id);
+                $encargados->where(function ($query) {
+                    $query->where('NCRD_Cargo', '=', 'Jurado 1');
+                    $query->orwhere('NCRD_Cargo', '=', 'Jurado 2');
+                });
+            })
+            ->with(['encargado' => function ($encargados) use ($id) {
                 $encargados->where('FK_TBL_Anteproyecto_Id', '=', $id);
                 $encargados->where(function ($query) {
                     $query->where('NCRD_Cargo', '=', 'Jurado 1');

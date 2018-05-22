@@ -14,19 +14,7 @@ class ProcedenciaController extends Controller
 {
     public function index(Request $request)
     {
-
-        if ($request->isMethod('GET')) {
-            $proce = new procedencia();
-            $procedencias = $proce->pluck('PRO_Nombre', 'PK_PRO_Id_Procedencia');
-            return view('acadspace.Procedencia.formularioProcedencia',
-                [
-                    'procedencias' => $procedencias->toArray()
-                ]);
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+        return view('acadspace.Procedencia.formularioProcedencia');
     }
 
     /**

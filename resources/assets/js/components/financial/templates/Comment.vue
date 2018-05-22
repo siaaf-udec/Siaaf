@@ -9,7 +9,7 @@
                         <span class="arrow"> </span>
                         <a href="javascript:;" class="name" v-text="item.name"></a>
                         <span class="datetime" v-text="item.date"></span>
-                        <span class="body" v-text="item.comment"></span>
+                        <span class="body" v-text="item.comment.wordWrap(40, '\n', true)"></span>
                     </div>
                 </li>
             </ul>

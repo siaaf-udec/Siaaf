@@ -58,7 +58,7 @@
     <div class="user-login-5">
         <div class="row bs-reset">
             <div class="col-md-6 bs-reset mt-login-5-bsfix">
-                <div class="login-bg" style="background-image:url({{ asset('assets/pages/img/login/N1.jpeg') }})">
+                <div class="login-bg" style="background-image:url(https://i.imgur.com/VvKhtgt.jpg)">
                     <img class="login-logo" src="{{ asset('assets/pages/img/login/siaaf.png') }}"/></div>
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
@@ -97,17 +97,20 @@
                     {!! Form::close() !!}
                 <!-- END : LOGIN PAGE 5-1 -->
 
-                    <!-- BEGIN FORGOT PASSWORD FORM -->
-                    {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('password.email')]) !!}
-                    <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
-                    <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
-                    {!! Field::email('email_forget', old('email_forget'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
-                    <div class="form-actions">
-                        {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
-                        {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}
+                    <div class="row-forget">
+                        <!-- BEGIN FORGOT PASSWORD FORM -->
+                        {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('password.email')]) !!}
+                            <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
+                            <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
+                            {!! Field::email('email_forget', old('email_forget'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
+                            <div class="form-actions">
+                                {{ Form::button('Cancelar', ['id' => 'back-btn', 'class' => 'btn green btn-outline']) }}
+                                {{ Form::submit('Enviar', ['class' => 'btn btn-success uppercase pull-right']) }}
+                            </div>
+                        {!! Form::close() !!}
+                        <!-- END FORGOT PASSWORD FORM -->
+
                     </div>
-                {!! Form::close() !!}
-                <!-- END FORGOT PASSWORD FORM -->
                 </div>
                 <div class="login-footer">
                     <div class="row bs-reset">
@@ -227,11 +230,12 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-                            //App.blockUI({target: '.portlet-form', animate: true});
+                            App.blockUI({target: '.row-forget', animate: true});
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                UIToastr.init(xhr, response.title, response.message);
+                                UIToastr.init(xhr, 'Cambio de Contraseña', 'Solicitud enviada correctamente');
+                                App.unblockUI('.row-forget');
                             }
                         },
                         error: function (response, xhr, request) {

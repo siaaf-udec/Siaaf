@@ -16,7 +16,7 @@
                                     <li v-for="badge in badges" :id="badge.id" class="badge-sidebar" @click="setActive( badge.id )">
                                         <a href="javascript:;">
                                             <span class="badge" :class="badge.class" v-text="badge.count"></span>
-                                            {{ badge.text }}
+                                            {{ badge.text.wordWrap(18, '\n', true) }}
                                         </a>
                                     </li>
                                 </ul>
@@ -43,8 +43,8 @@
                                         <div class="todo-tasklist-item todo-tasklist-item-border-green" v-for="task in taskList" :id="task.id" @click="viewData( task )">
                                             <img class="todo-userpic pull-left hash-avatar"  :src="setIcon( task.student_picture )" width="27px" height="27px">
                                             <div class="todo-tasklist-item-title" v-text="task.student_name"></div>
-                                            <div class="todo-tasklist-item-text"> <small v-text="task.subject_name"></small> </div>
-                                            <div class="todo-tasklist-item-text"> <small v-text="task.program_name"></small> </div>
+                                            <div class="todo-tasklist-item-text"> <small v-text="task.subject_name.wordWrap(40, '\n', true)"></small> </div>
+                                            <div class="todo-tasklist-item-text"> <small v-text="task.program_name.wordWrap(40, '\n', true)"></small> </div>
                                             <div class="todo-tasklist-controls pull-left">
                                                 <span class="todo-tasklist-date">
                                                     <small> <i class="fa fa-calendar"></i> {{ task.created_at }} </small>
@@ -52,7 +52,7 @@
                                                 <span class="todo-tasklist-date">
                                                     <small> <i class="fa fa-comments"></i> {{ task.comments_count }} </small>
                                                 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless" v-text="task.status_name"></span>
+                                                <span class="todo-tasklist-badge badge badge-roundless" v-text="task.status_name.wordWrap(40, '\n', true)"></span>
                                             </div>
                                         </div>
 
@@ -109,7 +109,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <th v-text="table.subject_name"></th>
-                                                                <td v-text="view.subject_name"></td>
+                                                                <td v-text="view.subject_name.wordWrap(25, '\n', true)"></td>
                                                             </tr>
                                                             <tr>
                                                                 <th v-text="table.subject_credits"></th>
@@ -117,7 +117,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <th v-text="table.program_name"></th>
-                                                                <td v-text="view.program_name"></td>
+                                                                <td v-text="view.program_name.wordWrap(25, '\n', true)"></td>
                                                             </tr>
                                                             <tr>
                                                                 <th v-text="table.realization_date"></th>
@@ -125,7 +125,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <th v-text="table.status"></th>
-                                                                <td v-text="view.status_name"></td>
+                                                                <td v-text="view.status_name.wordWrap(25, '\n', true)"></td>
                                                             </tr>
                                                             <tr>
                                                                 <th colspan="2" class="text-center uppercase" v-text="divider.teacher"></th>
@@ -185,7 +185,7 @@
                                                                    maxlength="10"
                                                                    name="date"
                                                                    id="date"
-                                                                   pattern="\\d{4}-\\d{2}-\\d{2}"
+                                                                   pattern="\d{4}-\d{2}-\d{2}"
                                                                    autocomplete="off"
                                                                    class="form-control datepicker date date-picker todo-taskbody-due"
                                                                    :placeholder="table.realization_date"

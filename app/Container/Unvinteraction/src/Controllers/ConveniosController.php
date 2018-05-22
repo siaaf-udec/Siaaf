@@ -114,10 +114,14 @@ class ConveniosController extends Controller
 
                         }
                 ])->get();
-            return Datatables::of($convenio)->addIndexColumn()->make(true);
+            return Datatables::of($convenio)->addIndexColumn()
+                ->removeColumn('FK_TBL_Estado_Id')
+                      ->removeColumn('PK_SEDE_Sede')
+                      ->removeColumn('PK_ETAD_Estado')
+                      ->removeColumn('FK_TBL_Sede_Id')->make(true);
         }
         return AjaxResponse::fail(
-            '¡Lo sentimos!',
+            '   ¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }

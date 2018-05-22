@@ -34,18 +34,18 @@
 
                         <a href="{{ route('report.all.project') }}" target=”_blank” class="icon-btn"
                            data-toggle="tooltip" data-placement="bottom"
-                           title="Reporte con todos los proyectos registrados.">
+                           title="Reporte con todos los proyectos registrados." style="width:130px">
                             <i class="fa fa-group"></i>
                             <div> Todos los proyectos</div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a href="#" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom"
-                           title="Reporte de proyectos por jurado." id="Jurado">
+                           title="Reporte de proyectos por jurado." id="Jurado" style="width:130px">
                             <i class="fa fa-map-marker"></i>
                             <div> Por Jurado:</div>
                         </a>&nbsp;&nbsp;
                         <a href="#" target=”_blank” class="icon-btn" data-toggle="tooltip" data-placement="bottom"
-                           title="Reporte de proyectos por director." id="Director">
+                           title="Reporte de proyectos por director." id="Director" style="width:130px">
                             <i class="fa fa-dollar"></i>
                             <div> Por Director</div>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;

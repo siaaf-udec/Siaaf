@@ -410,6 +410,34 @@
         /*Carga la foto*/
         $('#file_image').attr("src", "{{$img}}");
 
+        /*Carga Roles*/
+         (function () {
+            var $id_edit = $('input[name="id_edit"]').val();
+
+            var route = '{{ route('users.role.assign') }}'+'/'+  $id_edit;
+            var type = 'GET';
+            var async = false;
+            var element = [];
+           
+            $.ajax({
+                url: route,
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                cache: false,
+                type: type,
+                contentType: false,
+                processData: false,
+                async: async,
+                success: function (response, xhr, request) {
+                    $( response.data ).each(function( key,value ) {
+                        element.push(value.id);
+                          $widget_select.val(element);
+                          $widget_select.multiSelect("refresh");
+                    });
+                }
+            });
+        }());
+
+
         /*Configuracion de input tipo fecha*/
         $('.date-picker').datepicker({
             rtl: App.isRTL(),

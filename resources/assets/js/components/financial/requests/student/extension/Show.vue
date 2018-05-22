@@ -102,9 +102,17 @@
                     sources: [
                         { data: 'id',        name: 'id' },
                         { data: 'subject_code', name: 'subject_code' },
-                        { data: 'subject_name', name: 'subject_name' },
+                        { data: 'subject_name', name: 'subject_name',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(20,  "<br/>", true) : null;
+                            }
+                        },
                         { data: 'subject_credits', name: 'subject_credits' },
-                        { data: 'subject_program', name: 'subject_program' },
+                        { data: 'subject_program', name: 'subject_program',
+                            render: function ( data, type, row ) {
+                                return data ? data.wordWrap(20,  "<br/>", true) : null;
+                            }
+                        },
                         { data: 'total_cost', name: 'total_cost' },
                         { data: 'status', name: 'status' },
                         { data: 'unit_cost', name: 'unit_cost' },

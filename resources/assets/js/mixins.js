@@ -138,7 +138,7 @@ export const mixinHttpStatus = {
             return (typeof error.message !== 'undefined');
         },
         getResponseStatus: function ( response ) {
-            return ( typeof response.status !== 'undefined') ? response.status : 0;
+            return ( typeof response.status !== 'undefined') ? response.status : ( typeof response.statusCode !== 'undefined') ? response.statusCode : 0;
         },
         getErrorStatus: function ( error ) {
             if ( error.hasOwnProperty('response') ) {
@@ -181,11 +181,12 @@ export const mixinHttpStatus = {
         },
         triggerSwal: function ( data ) {
             let objStr = this.httpStatus( data );
-            let type, status, title, text;
+            let type, status, title, text, code;
             type = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('swalClass') ) ? objStr.swalClass : 'warning';
             title = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('title') ) ? objStr.title : Lang.get('javascript.http_status.unexpected');
             status = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('status') ) ? objStr.status : Lang.get('javascript.http_status.disconnected');
             text = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('text') ) ? objStr.text : '';
+            code = ( typeof objStr !== 'undefined' && objStr.hasOwnProperty('code') ) ? objStr.code : 500;
 
             if ( type === 'undefined' ) {
                 type = 'warning';
@@ -199,6 +200,9 @@ export const mixinHttpStatus = {
             if ( text === 'undefined' ) {
                 text = '';
             }
+            if ( code === 'undefined' ) {
+                code = 500;
+            }
 
             swal({
                 title: Lang.get('javascript.' + type),
@@ -208,11 +212,11 @@ export const mixinHttpStatus = {
                 focusConfirm: false,
             }).then((result) => {
                 if (result.value) {
-                    if ( objStr.code === 404 ) {
+                    if ( code === 404 ) {
                         window.location.href = route('home');
                     }
                 } else if (result.dismiss) {
-                    if ( objStr.code === 404 ) {
+                    if ( code === 404 ) {
                         window.location.href = route('home');
                     }
                 }

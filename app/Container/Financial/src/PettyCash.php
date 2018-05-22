@@ -125,4 +125,22 @@ class PettyCash extends Model
         $type = ( isset( $this->class_name ) ) ? $this->class_name : 'default';
         return labelHtml( $type, $text );
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeSumIn($query)
+    {
+        return $query->where( status(), PettyCash::IN )->sum( cost() );
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeSumOut($query)
+    {
+        return $query->where( status(), PettyCash::OUT )->sum( cost() );
+    }
 }

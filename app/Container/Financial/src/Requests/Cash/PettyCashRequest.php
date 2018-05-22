@@ -27,7 +27,7 @@ class PettyCashRequest extends FormRequest
         return [
             'concept'     => 'required|max:2500',
             'cost'        => 'required|numeric',
-            'status'      => 'required|numeric',
+            'status'      => 'required|numeric|min:3|max:4',
             'need_file'   => 'required|boolean',
             'file'        => 'file|mimes:pdf|required_if:need_file,1',
         ];

@@ -232,6 +232,8 @@ class PermisosInteraccionSeeder extends Seeder
         $permission->roles()->attach($role3);
         $permission = Permission::where('name', '=', 'INTE_VER_EMPRESAS')->first();
         $permission->roles()->attach($role3);
+        $permission = Permission::where('name', '=', 'MASTER_USERS')->first();
+        $permission->roles()->attach($role3);
         
         //permisos para el administrador de interccion universitaria
         $permission = Permission::where('name', '=', 'INTE_ADD_CONVENIO')->first();
@@ -269,6 +271,8 @@ class PermisosInteraccionSeeder extends Seeder
         $permission = Permission::where('name', '=', 'INTE_VER_TIPO_PREG')->first();
         $permission->roles()->attach($role1);
         $permission = Permission::where('name', '=', 'INTE_VER_PREG')->first();
+        $permission->roles()->attach($role1);
+        $permission = Permission::where('name', '=', 'MASTER_USERS')->first();
         $permission->roles()->attach($role1);
         
     }

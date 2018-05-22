@@ -288,6 +288,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UserController@data',
             'as' => 'users.data'
         ]);
+        Route::get('role/assign/{id?}', [
+            'uses' => $controller . 'UserController@role_assign',
+            'as'   => 'users.role.assign',
+        ]);
         Route::post('store', [
             'uses' => $controller . 'UserController@store',
             'as' => 'users.store'
@@ -360,6 +364,26 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UsersUdecController@register',
             'as' => 'usersUdec.register'
         ]);
+    });
+
+    Route::group(['prefix' => 'audits'], function () {
+        $controller = "\\App\\Container\\Permissions\\src\\Controllers\\";
+        Route::get('index', [
+            'uses' => $controller . 'AuditsController@index',
+            'as' => 'audits.index'
+        ]);
+        Route::get('index/ajax', [
+            'uses' => $controller . 'AuditsController@index_ajax',
+            'as' => 'audits.index.ajax'
+        ]);
+        Route::get('data', [
+            'uses' => $controller . 'AuditsController@data',
+            'as' => 'audits.data'
+        ]);
+         Route::get('show/{id?}', [
+            'uses' => $controller . 'AuditsController@show',
+            'as' => 'audits.show'
+        ])->where(['id' => '[0-9]+']);
     });
 });
 
