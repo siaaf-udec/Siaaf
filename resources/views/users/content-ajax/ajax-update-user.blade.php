@@ -608,7 +608,7 @@
         FormWizard.init(wizard, form, rules, messages, createUsers());
 
         let loadData = function () {
-            $('select[name="countries_create"]').val('{{ $user->country->id }}');
+            $('select[name="countries_create"]').val('{{ $user->countries_id }}');
         }();
 
         $('.button-cancel').on('click', function (e) {
