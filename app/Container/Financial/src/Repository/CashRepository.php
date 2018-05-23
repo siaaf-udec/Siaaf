@@ -27,7 +27,7 @@ class CashRepository extends Methods implements FinancialCashInterface
      */
     public function datatable()
     {
-        return DataTables::of( $this->getModel()->latest() )
+        return DataTables::of( $this->getModel()->withTrashed()->latest() )
                             ->setTransformer( new CashTransformer() )
                             ->toJson();
     }
@@ -55,7 +55,7 @@ class CashRepository extends Methods implements FinancialCashInterface
     {
         if ( $request->has('delete_file') && (int) $request->delete_file === 1 ) {
             if ( isset( $model->{ support() } ) && Storage::disk('financial')->exists( $model->{ support() } ) ) {
-                Storage::disk('financial')->delete( $model->{ support() } );
+                // Storage::disk('financial')->delete( $model->{ support() } );
             }
             $model->{ support() } = null;
         }
@@ -63,7 +63,7 @@ class CashRepository extends Methods implements FinancialCashInterface
         if ( $request->method('PUT') && $request->need_file === '1' ) {
             if ( $request->has('file') ) {
                 if ( isset( $model->{ support() } ) && Storage::disk('financial')->exists( $model->{ support() } ) ) {
-                    Storage::disk('financial')->delete( $model->{ support() } );
+                    // Storage::disk('financial')->delete( $model->{ support() } );
                 }
                 $model->{ support() } = $request->file('file')->store('', 'financial');
             }

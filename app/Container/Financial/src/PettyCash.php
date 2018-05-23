@@ -6,14 +6,17 @@ namespace App\Container\Financial\src;
 use App\Container\Financial\src\Constants\SchemaConstant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as Auditor;
 
-class PettyCash extends Model
+class PettyCash extends Model implements Auditable
 {
     const OUT   =   3;
     const IN    =   4;
 
-    use SoftDeletes;
+    use SoftDeletes, Auditor;
 
     /**
      * The connection name for the model.
@@ -49,6 +52,25 @@ class PettyCash extends Model
     ];
 
     /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        SchemaConstant::CONCEPT,
+        SchemaConstant::COST,
+        SchemaConstant::STATUS,
+        SchemaConstant::SUPPORT,
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [ SchemaConstant::DELETED_AT ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -60,6 +82,31 @@ class PettyCash extends Model
      * Accessors and Mutator Attributes
      * ---------------------------------------------------------
      */
+
+    /**
+     * Audit data can be transformed before being stored.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function transformAudit(array $data) : array
+    {
+        if (Arr::has($data, 'new_values.'.status())) {
+            $data['new_values'][ status() ] = ($data['new_values'][ status() ] == PettyCash::IN) ? toUpper( __('validation.attributes.in') ) : toUpper( __('validation.attributes.out') );
+        }
+        if (Arr::has($data, 'old_values.'.status())) {
+            $data['old_values'][ status() ] = ($data['old_values'][ status() ] == PettyCash::IN) ? toUpper( __('validation.attributes.in') ) : toUpper( __('validation.attributes.out') );
+        }
+        if (Arr::has($data, 'new_values'.support())) {
+            $data['new_values'][ support() ] = isset( $data['new_values'][ support() ] ) && Storage::disk('financial')->exists( $data['new_values'][ support() ] ) ?
+                Storage::disk('financial')->url( $data['new_values'][ support() ] ) : null;
+        }
+        if (Arr::has($data, 'old_values'.support())) {
+            $data['old_values'][ support() ] = isset( $data['old_values'][ support() ] ) && Storage::disk('financial')->exists( $data['old_values'][ support() ] ) ?
+                Storage::disk('financial')->url( $data['old_values'][ support() ] ) : null;
+        }
+        return $data;
+    }
 
     /**
      * The attribute to set number to format money
@@ -123,6 +170,8 @@ class PettyCash extends Model
     {
         $text = ( isset( $this->{ 'status_name' } ) ) ? $this->{ 'status_name' } : '';
         $type = ( isset( $this->class_name ) ) ? $this->class_name : 'default';
+        $text = ( isset($this->{ deleted_at() }) ) ? 'Eliminado' : $text;
+        $type = ( isset($this->{ deleted_at() }) ) ? 'default' : $type;
         return labelHtml( $type, $text );
     }
 

@@ -6,14 +6,17 @@ namespace App\Container\Financial\src;
 use App\Container\Financial\src\Constants\SchemaConstant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as Auditor;
 
-class Check extends Model
+class Check extends Model implements Auditable
 {
 
     const UNDELIVERED   =   1;
     const DELIVERED     =   2;
 
-    use SoftDeletes;
+    use SoftDeletes, Auditor;
 
     /**
      * The connection name for the model.
@@ -49,6 +52,18 @@ class Check extends Model
     ];
 
     /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        SchemaConstant::CHECK,
+        SchemaConstant::PAY_TO,
+        SchemaConstant::STATUS,
+        SchemaConstant::DELIVERED_AT,
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -68,6 +83,23 @@ class Check extends Model
      * Accessors and Mutator Attributes
      * ---------------------------------------------------------
      */
+
+    /**
+     * Audit data can be transformed before being stored.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function transformAudit(array $data) : array
+    {
+        if (Arr::has($data, 'new_values.'.status())) {
+            $data['new_values'][ status() ] = ($data['new_values'][ status() ] == Check::DELIVERED) ? toUpper( __('validation.attributes.delivered') ) : toUpper( __('validation.attributes.undelivered') );
+        }
+        if (Arr::has($data, 'old_values.'.status())) {
+            $data['old_values'][ status() ] = ($data['old_values'][ status() ] == Check::DELIVERED) ? toUpper( __('validation.attributes.delivered') ) : toUpper( __('validation.attributes.undelivered') );
+        }
+        return $data;
+    }
 
     /**
      * The attribute mutator to set string to upper
@@ -113,6 +145,8 @@ class Check extends Model
             $this->{ status_name() } : '';
         $type = ( isset( $this->class_name ) ) ?
             $this->class_name : 'default';
+        $text = ( isset($this->{ deleted_at() }) ) ? 'Eliminado' : $text;
+        $type = ( isset($this->{ deleted_at() }) ) ? 'default' : $type;
         return labelHtml( $type, $text );
     }
 }

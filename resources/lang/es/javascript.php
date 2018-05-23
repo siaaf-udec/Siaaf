@@ -28,6 +28,9 @@ return [
     'delete_some'   => 'Eliminar :attribute',
     'all'           => 'All',
     'comments'      => 'Tienes un comentario|Tienes :num comentarios',
+    'updated'       => 'actualización',
+    'deleted'       => 'eliminación',
+    'created'       => 'creación',
 
     'ask_if_approve'=> '¿Desea aprobar esta solictud?',
     'ask_if_reject' => '¿Desea rechazar esta solictud?',

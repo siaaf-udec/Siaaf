@@ -26,7 +26,7 @@ class CheckRepository extends Methods implements FinancialCheckInterface
      */
     public function datatable()
     {
-        return DataTables::of( $this->getModel()->latest() )
+        return DataTables::of( $this->getModel()->withTrashed()->latest() )
                             ->setTransformer( new CheckTransformer )
                             ->toJson();
     }

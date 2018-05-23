@@ -339,6 +339,7 @@
                 </form>
             </template>
         </vue-modal>
+        <laravel-audits :metadata="audits"></laravel-audits>
     </div>
 </template>
 
@@ -555,7 +556,8 @@
                         prefix: '',
                         suffix: ''
                     },
-                }
+                },
+                audits: []
             }
         },
         mounted: function() {
@@ -605,6 +607,7 @@
 
                 this.editCheck( table );
                 this.deleteCheck( table );
+                this.controlLog( table );
             },
             initFormValidation: function() {
                 $('#form-cash').validate();
@@ -627,6 +630,19 @@
                     that.checkbox2 = 0;
                     that.checkbox_update = 0;
                     $('#modal-update').modal('show');
+                });
+            },
+            controlLog: function ( table ) {
+                this.setFormNull();
+                let that = this;
+                table.on('click', '.log', function () {
+                    let row = $(this).parents('tr');
+                    if ( row.hasClass('child') ) {
+                        row = row.prev();
+                    }
+                    let data = table.row( row ).data();
+                    that.audits = data.is_dirty.data;
+                    $('#modal-log').modal('show');
                 });
             },
             setFormNull: function (file) {
