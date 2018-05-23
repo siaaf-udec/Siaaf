@@ -156,7 +156,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio+'/'+dataTable.convenios_participante.convenio_estado.PK_ETAD_Estado;
+                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio+'/'+dataTable.convenios_participante.convenio_estados.PK_ETAD_Estado;
             $(".content-ajax").load(route_edit);
         });
    
