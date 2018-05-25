@@ -71,6 +71,7 @@ Vue.component("management-available-modules", require( financial.managementAvail
 Vue.component("file-upload", require( financial.fileUpload + "Upload.vue" ) );
 Vue.component("file-upload-show", require( financial.fileUpload + "ShowFile.vue" ) );
 Vue.component("file-management", require( financial.fileManagement + "FileManagement.vue" ) );
+Vue.component("file-upload-show-admin", require( financial.fileManagement + "ShowFile.vue" ) );
 
 /**
  * Student Requests

@@ -6,6 +6,7 @@ namespace App\Container\Financial\src\Controllers\Files;
 use App\Container\Financial\src\Repository\FileRepository;
 use App\Container\Financial\src\Requests\File\StoreFileRequest;
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use App\Container\Users\Src\User;
 use App\Http\Controllers\Controller;
 
 class FileController extends Controller
@@ -22,6 +23,7 @@ class FileController extends Controller
     public function __construct(FileRepository $fileRepository)
     {
         $this->middleware( 'check.available:'.status_type_file(), ['only' => ['store', 'update'] ] );
+
         $this->fileRepository = $fileRepository;
     }
 

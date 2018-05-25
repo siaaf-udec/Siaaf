@@ -25,6 +25,7 @@ class ExtensionRequestController extends Controller
         $this->middleware( 'request.status:'.status_type_extension(), ['only' => ['edit'] ] );
         $this->middleware( 'check.available:'.status_type_extension(), ['only' => ['store', 'update', 'destroy'] ] );
         $this->middleware( 'check.cost:'.status_type_extension(), ['only' => ['store'] ] );
+        $this->middleware( 'check.latest.request:'.status_type_extension(), ['only' => ['store'] ] );
         $this->extensionRepository = $extensionRepository;
     }
 

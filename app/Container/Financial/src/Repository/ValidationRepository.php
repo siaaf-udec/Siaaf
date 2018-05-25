@@ -76,6 +76,41 @@ class ValidationRepository extends Methods implements FinancialValidationInterfa
     }
 
     /**
+     * @param $request
+     * @param $id
+     * @return bool
+     */
+    public function canUpdateStatus($request, $id)
+    {
+        $approved = $this->statusRequestRepository->getId( status_type_validation(), approved_status() );
+        $paid = $this->statusRequestRepository->getId( status_type_validation(), paid_status() );
+        $waiting_pay = $this->statusRequestRepository->getId( status_type_validation(), waiting_pay_status() );
+        $canceled = $this->statusRequestRepository->getId( status_type_validation(), canceled() );
+        $model = $this->getModel()->find( $id );
+
+        if ( isset( $model->{ status_fk() }, $approved->{ primaryKey() }, $paid->{ primaryKey() }, $waiting_pay->{ primaryKey() }, $canceled->{ primaryKey() } ) ) {
+            $status = $this->statusRequestRepository->getModel()->select(status_name())->find($request->status);
+            if ( $model->{ status_fk() } == $approved->{ primaryKey() } ) {
+                if (isset($status->{status_name()}) && !approvedStatusIsEditable($status->{status_name()})) {
+                    return false;
+                }
+            }
+            if ( $model->{ status_fk() } == $paid->{ primaryKey() }) {
+                return false;
+            }
+            if ( $model->{ status_fk() } == $canceled->{ primaryKey() }) {
+                return false;
+            }
+            if ( $model->{ status_fk() } == $waiting_pay->{ primaryKey() } ) {
+                if (isset($status->{status_name()}) && !waitingPaidStatusIsEditable($status->{status_name()})) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Get count data
      *
      * @param array $status

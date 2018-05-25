@@ -79,7 +79,7 @@ class PettyCash extends Model implements Auditable
 
     /*
      * ---------------------------------------------------------
-     * Accessors and Mutator Attributes
+     * Audit functions
      * ---------------------------------------------------------
      */
 
@@ -107,6 +107,22 @@ class PettyCash extends Model implements Auditable
         }
         return $data;
     }
+
+    /**
+     * Generating tags for each model.
+     *
+     * @return array
+     */
+    public function generateTags() : array
+    {
+        return ['financial_petty_cash'];
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * Accessors and Mutator Attributes
+     * ---------------------------------------------------------
+     */
 
     /**
      * The attribute to set number to format money

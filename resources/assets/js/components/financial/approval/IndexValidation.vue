@@ -287,7 +287,7 @@
                 view: null,
                 table: {
                     approval_date: Lang.get('financial.extension.table.approval_date'),
-                    realization_date: Lang.get('financial.extension.table.realization_date'),
+                    realization_date: Lang.get('financial.generic.table.realization_date'),
                     created_at: Lang.get('financial.extension.table.created_at'),
                     subject_code: Lang.get('financial.extension.table.subject_code'),
                     subject_name: Lang.get('financial.extension.table.subject_name'),

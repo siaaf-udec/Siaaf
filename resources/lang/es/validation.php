@@ -181,6 +181,8 @@ return [
         'module_name'           => 'nombre del módulo',
         'available_from'        => 'disponible desde',
         'available_until'       => 'disponible hasta',
+        'start_date'            => 'fecha inicial',
+        'end_date'              => 'fecha final',
         'delivered'             => 'entregado',
         'undelivered'           => 'sin entregar',
         'in'                    => 'entrada',

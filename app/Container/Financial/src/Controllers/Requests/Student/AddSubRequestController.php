@@ -24,6 +24,7 @@ class AddSubRequestController extends Controller
         $this->middleware( 'request.status:'.status_type_addition_subtraction(), ['only' => ['edit'] ] );
         $this->middleware( 'check.available:'.status_type_addition_subtraction(), ['only' => ['store', 'update', 'destroy'] ] );
         $this->middleware( 'check.cost:'.status_type_addition_subtraction(), ['only' => ['store'] ] );
+        $this->middleware( 'check.latest.request:'.status_type_addition_subtraction(), ['only' => ['store'] ] );
         $this->addSubRepository = $addSubRepository;
     }
 

@@ -45,10 +45,15 @@ class ApprovalAdditionSubtractionController extends Controller
      */
     public function update(ApprovalAdditionSubtractionRequest $request, $id)
     {
-        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
-            return ( $this->addSubRepository->updateAdminAddSub($request, $id ) ) ?
-                jsonResponse('success', 'updated_done', 200) :
-                jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') ) {
+            if ( $this->addSubRepository->canUpdateStatus($request, $id) ) {
+                return ($this->addSubRepository->updateAdminAddSub($request, $id)) ?
+                    jsonResponse('success', 'updated_done', 200) :
+                    jsonResponse('error', 'updated_fail', 422);
+            }
+            return AjaxResponse::make(  'Advertencia',
+                "No se puede cambiar el estado de ".approved_status().", ".canceled()." o ".paid_status()." a estados anteriores.", '', 422);
+        }
 
         return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }

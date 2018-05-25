@@ -227,7 +227,7 @@
                     ]
                 },
                 fileCount: 0,
-                uploadedFiles: [],
+                uploadedFiles: { data: [] },
                 id: null,
                 src: '',
                 portlet: {
@@ -457,7 +457,7 @@
         },
         computed: {
             formatData: function () {
-                return this.uploadedFiles.map( ( file ) => {
+                return this.uploadedFiles.data.map( ( file ) => {
                     return {
                         id: file.pk_id || 0,
                         name: file.file_name || Lang.get('financial.generic.empty'),

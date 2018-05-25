@@ -80,7 +80,7 @@ class Check extends Model implements Auditable
 
     /*
      * ---------------------------------------------------------
-     * Accessors and Mutator Attributes
+     * Audit functions
      * ---------------------------------------------------------
      */
 
@@ -101,6 +101,22 @@ class Check extends Model implements Auditable
         return $data;
     }
 
+    /**
+     * Generating tags for each model.
+     *
+     * @return array
+     */
+    public function generateTags() : array
+    {
+        return ['financial_checks'];
+    }
+    
+    /*
+     * ---------------------------------------------------------
+     * Accessors and Mutator Attributes
+     * ---------------------------------------------------------
+     */
+    
     /**
      * The attribute mutator to set string to upper
      *
