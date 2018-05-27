@@ -276,6 +276,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'UserController@checkEmail',
             'as' => 'users.check.email'
         ]);
+        Route::post('check/email/update/{id?}', [
+            'uses' => $controller . 'UserController@checkEmailAuth',
+            'as' => 'users.check.email.update'
+        ]);
         Route::post('check/password', [
             'uses' => $controller . 'UserController@checkPassword',
             'as' => 'users.check.password'
