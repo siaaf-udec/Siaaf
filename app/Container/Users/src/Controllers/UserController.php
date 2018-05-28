@@ -363,12 +363,8 @@ class UserController extends Controller
                 $user->images()->update([
                     'url' => $url,
                 ]);
-            } else {
-                $user->images()->update([
-                    'url' => $request->get('identicon'),
-                ]);
-            }
-
+            } 
+            
             /*Guarda los Roles*/
             $roles = $request->get('multi_select_roles_create');
             $user->roles()->sync(
