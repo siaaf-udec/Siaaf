@@ -4,6 +4,9 @@ namespace App\Transformers\Financial;
 
 
 use App\Container\Financial\src\PettyCash;
+use Carbon\Carbon;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 
 class CashTransformer extends TransformerAbstract
@@ -22,7 +25,8 @@ class CashTransformer extends TransformerAbstract
             'pdf_url'       =>  isset( $pettyCash->pdf_url ) ? $pettyCash->pdf_url : null,
             'created_at'    =>  isset( $pettyCash->{ created_at() } ) ? $pettyCash->{ created_at() }->format('Y-m-d H:i:s') : null,
             'updated_at'    =>  isset( $pettyCash->{ updated_at() } ) ? $pettyCash->{ updated_at() }->format('Y-m-d H:i:s') : null,
-            'deleted_at'    =>  isset( $pettyCash->{ deleted_at() } ) ? $pettyCash->{ deleted_at() }->format('Y-m-d H:i:s') : null,
+            'deleted_at'    =>  isset( $pettyCash->{ deleted_at() } ) ? Carbon::parse( $pettyCash->{ deleted_at() } )->format('Y-m-d H:i:s') : null,
+            'is_dirty'      =>  $this->addChanges( $pettyCash ),
             'actions'       =>  $this->getActions( $pettyCash )
         ];
     }
@@ -34,27 +38,45 @@ class CashTransformer extends TransformerAbstract
     public function getActions( PettyCash $pettyCash )
     {
         try {
-
-            $edit  = actionLink(
+            $log = actionLink(
                 'javascript:;',
-                'edit',
-                'fa fa-pencil',
-                ['data-id' => $pettyCash->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ],
-                __('financial.buttons.edit')
+                'log',
+                'fa fa-eye',
+                ['data-id' => $pettyCash->{ primaryKey() } ],
+                'Ver Log'
             );
+            if (isset($pettyCash->{ deleted_at() })) {
+                return $log;
+            } else {
+                $edit  = actionLink(
+                    'javascript:;',
+                    'edit',
+                    'fa fa-pencil',
+                    ['data-id' => $pettyCash->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.edit') ],
+                    __('financial.buttons.edit')
+                );
 
-            $trash = actionLink(
-                'javascript:;',
-                'trash',
-                'fa fa-trash',
-                ['data-id' => $pettyCash->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ],
-                __('financial.buttons.delete')
-            );
-            return createDropdown( [$edit, $trash] );
+                $trash = actionLink(
+                    'javascript:;',
+                    'trash',
+                    'fa fa-trash',
+                    ['data-id' => $pettyCash->{ primaryKey() }, 'data-original-title' => trans('javascript.tooltip.delete') ],
+                    __('financial.buttons.delete')
+                );
+                return createDropdown( [$edit, $trash, $log] );
+            }
 
         } catch ( \Throwable $e ) {
             report( $e );
             return false;
         }
+    }
+
+    public function addChanges( PettyCash $pettyCash )
+    {
+        $audits = $pettyCash->audits()->with('user:id,name,lastname,phone,email')->latest()->get();
+        $manager = new Manager;
+        $audits = new Collection( $audits, new AuditsTransform );
+        return $manager->createData( $audits )->toArray();
     }
 }

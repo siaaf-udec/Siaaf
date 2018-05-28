@@ -28,6 +28,9 @@ return [
     'delete_some'   => 'Eliminar :attribute',
     'all'           => 'All',
     'comments'      => 'Tienes un comentario|Tienes :num comentarios',
+    'updated'       => 'actualización',
+    'deleted'       => 'eliminación',
+    'created'       => 'creación',
 
     'ask_if_approve'=> '¿Desea aprobar esta solictud?',
     'ask_if_reject' => '¿Desea rechazar esta solictud?',
@@ -126,7 +129,7 @@ return [
         '410'           =>  'El recurso solicitado ya no está disponible y no lo estará de nuevo.',
         '413'           =>  'Archivo demasiado grande para cargar.',
         '419'           =>  'Tiempo de espera de autenticación agotado.',
-        '422'           =>  'La solicitud está bien formada pero no fue imposible seguirla debido a errores semánticos.',
+        '422'           =>  '', // 'La solicitud está bien formada pero no fue imposible seguirla debido a errores semánticos.',
         '500'           =>  'Error Interno del Servidor.',
         '503'           =>  'El servidor no puede responder a la petición del navegador porque está congestionado o está realizando tareas de mantenimiento.',
     ],

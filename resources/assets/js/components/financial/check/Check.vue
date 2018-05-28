@@ -160,6 +160,7 @@
                 </form>
             </template>
         </vue-modal>
+        <laravel-audits :metadata="audits"></laravel-audits>
     </div>
 </template>
 
@@ -284,7 +285,8 @@
                     send: Lang.get('financial.buttons.send'),
                     cancel: Lang.get('financial.buttons.cancel'),
                 },
-                id: 0
+                id: 0,
+                audits: []
             }
         },
         mounted: function() {
@@ -310,6 +312,7 @@
 
                 this.editCheck( table );
                 this.deleteCheck( table );
+                this.controlLog( table );
             },
             initFormValidation: function() {
                 let that = this;
@@ -382,6 +385,19 @@
                     that.formCheck.status.value = data.status;
                     that.formCheck.delivered_at.value = data.delivered_at;
                     $modal.modal('show');
+                });
+            },
+            controlLog: function ( table ) {
+                this.setFormNull();
+                let that = this;
+                table.on('click', '.log', function () {
+                    let row = $(this).parents('tr');
+                    if ( row.hasClass('child') ) {
+                        row = row.prev();
+                    }
+                    let data = table.row( row ).data();
+                    that.audits = data.is_dirty.data;
+                    $('#modal-log').modal('show');
                 });
             },
             edit: function () {

@@ -304,7 +304,7 @@ return [
             'total_cost'        =>  'Costo Total',
             'approval_date'     =>  'Fecha de Aprobación',
             'realization_date'  =>  'Fecha de Realización',
-            'created_at'        =>  'Fecha de Solicitud',
+            'created_at'        =>  'Fecha de Solicitud/Creación',
             'updated_at'        =>  'Fecha de Actualización',
             'deleted_at'        =>  'Fecha de Eliminación',
             'delivered_at'      =>  'Fecha de Entrega',

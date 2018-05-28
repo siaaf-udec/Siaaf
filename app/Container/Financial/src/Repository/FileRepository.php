@@ -6,9 +6,17 @@ namespace App\Container\Financial\src\Repository;
 use App\Container\Financial\src\Comment;
 use App\Container\Financial\src\Constants\ConstantRoles;
 use App\Container\Financial\src\File;
+use App\Container\Financial\src\FileType;
 use App\Container\Financial\src\Interfaces\FinancialFileTypeInterface;
 use App\Container\Financial\src\Interfaces\Methods;
+use App\Container\Financial\src\StatusRequest;
+use App\Container\Users\Src\User;
+use App\Notifications\FinancialFileNotification;
+use App\Transformers\Financial\FileTransformer;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 
 class FileRepository extends Methods implements FinancialFileTypeInterface
 {
@@ -36,10 +44,10 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     {
         $columnsFileType = primaryKey().','.file_types();
         $columnsStatus = primaryKey().','.status_name();
-        return auth()->user()->filesUploaded()
-                    ->with(["status:$columnsStatus", "file_type:$columnsFileType"])
-                    ->withCount( 'comments' )
-                    ->latest()->get();
+        return $this->manager( auth()->user()->filesUploaded()
+            ->with(["status:$columnsStatus", "file_type:$columnsFileType"])
+            ->withCount( 'comments' )
+            ->latest()->get() );
     }
 
     /**
@@ -52,13 +60,13 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
         $columnsFileType = primaryKey().','.file_types();
         $columnsStatus = primaryKey().','.status_name();
         return $this->getModel()
-                    ->with([
-                        "status:$columnsStatus",
-                        "file_type:$columnsFileType",
-                        "user:id,name,lastname"
-                    ])
-                    ->withCount( 'comments' )
-                    ->latest();
+            ->with([
+                "status:$columnsStatus",
+                "file_type:$columnsFileType",
+                "user:id,name,lastname",
+            ])
+            ->withCount( 'comments' )
+            ->latest();
     }
 
     /**
@@ -98,7 +106,13 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
             $model->{user_fk()} = auth()->user()->id;
             $model->{file_type_fk()} = $request->file_type;
             $model->{status_fk()} = $status->{primaryKey()};
-            return $model->save();
+            $model->save();
+            $file_type = FileType::find( $request->file_type );
+            if ( $file_type ) {
+                $message = auth()->user()->name." ha creado una nueva solicitud de {$file_type->{ file_types() }}";
+                $this->notification( $model, $message );
+            }
+            return $model;
         }
         return false;
     }
@@ -156,7 +170,13 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
         $model->{ file_name() }     = $request->file('file')->getClientOriginalName();
         $model->{ file_route() }    = $request->file('file')->store('', 'financial');
         $model->{ file_type_fk() }  = $request->file_type;
-        return $model->save();
+        $model->save();
+        $file_type = FileType::find( $request->file_type );
+        if ( $file_type ) {
+            $message = auth()->user()->name." ha modificado una nueva solicitud de {$file_type->{ file_types() }}";
+            $this->notification( $model, $message );
+        }
+        return $model;
     }
 
     /**
@@ -170,6 +190,12 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     {
         $model = $this->getModel()->findOrFail( $id );
         $model->{ status_fk() } = $request->status;
+        $status = StatusRequest::find( $request->status );
+        $file_type = FileType::find( $model->{ file_type_fk() } );
+        if ( $status && $file_type ) {
+            $message = auth()->user()->name." ha cambiado el estado de la solicitud de {$file_type->{ file_types() }} a {$status->{ status_name() }}";
+            $this->notification( $model, $message );
+        }
         return $model->save();
     }
 
@@ -212,5 +238,27 @@ class FileRepository extends Methods implements FinancialFileTypeInterface
     public function process($model, $request)
     {
         return $model->save();
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    public function manager($data )
+    {
+        $manager = new Manager;
+        $data = new Collection( $data, new FileTransformer() );
+        return $manager->createData( $data )->toArray();
+    }
+
+    public function notification( $file, $message )
+    {
+        $users = User::whereHas('roles', function ($q) {
+            return $q->where('name', admin_role());
+        })->get();
+        $user  = User::find( $file->{ user_fk() } );
+        $data = new FinancialFileNotification( $file, $message);
+        Notification::send( $users, $data );
+        $user->notify( $data );
     }
 }

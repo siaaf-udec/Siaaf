@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'check.available'  =>  \App\Container\Financial\src\Middleware\CheckIfAvailable::class,
         'check.cost'  =>  \App\Container\Financial\src\Middleware\CheckCosts::class,
         'sanitization'  =>  \App\Container\Financial\src\Middleware\RequestSanitization::class,
+        'check.latest.request'  =>  \App\Container\Financial\src\Middleware\CheckLatestRequest::class,
     ];
 }

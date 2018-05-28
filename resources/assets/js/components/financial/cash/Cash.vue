@@ -88,6 +88,11 @@
         <div class="clearfix"></div>
         <div class="col-md-12">
             <portlet icon="fa fa-money" :title="portlet.title">
+                <template slot="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="Generar Reportes" data-toggle="modal" href="#modal-report">
+                        <i class="fa fa-file-pdf-o"></i>
+                    </a>
+                </template>
                 <template slot="body">
                     <div class="row">
                         <div class="col-md-12 margin-bottom-40">
@@ -339,6 +344,78 @@
                 </form>
             </template>
         </vue-modal>
+        <vue-modal id="modal-report" title="Reporte">
+            <template slot="body">
+                <form @submit.prevent="generateReport" method="post" :action="route('financial.money.cash.report')" class="" id="form-report" accept-charset="UTF-8">
+                    <div class="form-body">
+                        <input type="hidden" name="_token" :value="token.content">
+                        <div class="row" v-if="errors2">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <hr>
+                                    <vue-alert :type="errors3.alertClass"
+                                               :dismiss="false"
+                                               :heading="errors3.title"
+                                               :icon="errors3.icon"
+                                               :text="errors3.text"
+                                               :status="errors3.status"
+                                               :errors="errors3.errors">
+                                    </vue-alert>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-select2 :label="report.status.label"
+                                             v-model="report.status.value"
+                                             :value="report.status.value"
+                                             :attributes="report.status.attributes"
+                                             :options="report.status.options"
+                                             name="status">
+                                </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="start_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_from.value"
+                                           :value="report.available_from.value"
+                                           :help="report.available_from.help"
+                                           :hasError="report.available_from.hasError"
+                                           :errors="report.available_from.errors"
+                                           :attributes="report.available_from.attributes"
+                                           :label="report.available_from.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="end_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_until.value"
+                                           :value="report.available_until.value"
+                                           :help="report.available_until.help"
+                                           :hasError="report.available_until.hasError"
+                                           :errors="report.available_until.errors"
+                                           :attributes="report.available_until.attributes"
+                                           :label="report.available_until.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions  margin-top-30">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="btn green" type="submit" :value="buttons.send">
+                                <button class="btn red" data-dismiss="modal" type="reset" @click.prevent="setFormNull" v-text="buttons.cancel"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </template>
+        </vue-modal>
+        <laravel-audits :metadata="audits"></laravel-audits>
     </div>
 </template>
 
@@ -367,6 +444,7 @@
         },
         data: () => {
             return {
+                token: document.head.querySelector('meta[name="csrf-token"]'),
                 portlet: {
                     title: Lang.get('financial.cash.index.title'),
                     btnText: Lang.get('financial.buttons.add'),
@@ -485,6 +563,52 @@
                         }
                     },
                 },
+                report: {
+                    status: {
+                        value: null,
+                        label: Lang.get('validation.attributes.status').capitalize(),
+                        options: [
+                            { id: 4, text: Lang.get('validation.attributes.in').capitalize() },
+                            { id: 3, text: Lang.get('validation.attributes.out').capitalize() },
+                        ],
+                        attributes: {
+                            required: false,
+                            disabled: false,
+                        }
+                    },
+                    available_from: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_until'),
+                        label: Lang.get('validation.attributes.start_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            class: 'date date-picker',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                    available_until: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_from'),
+                        label: Lang.get('validation.attributes.end_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            class: 'date date-picker',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                },
                 checkbox: 1,
                 checkbox2: 0,
                 checkbox_update: 0,
@@ -529,6 +653,7 @@
                 who: 0,
                 errors: null,
                 errors2: null,
+                errors3: null,
                 stats: {
                     cash: 0,
                     in: 0,
@@ -555,15 +680,49 @@
                         prefix: '',
                         suffix: ''
                     },
-                }
+                },
+                audits: []
             }
         },
         mounted: function() {
             this.getStats();
             this.initDatatable();
             this.initFormValidation();
+            this.handleDatePicker();
         },
         methods: {
+            handleDatePicker: function() {
+                let that = this;
+                if (jQuery().datepicker) {
+
+                    $.extend($.fn.datepicker.defaults, {
+                        rtl: App.isRTL(),
+                        language: Lang.get('javascript.locale'),
+                        orientation: "left",
+                        autoclose: true,
+                        firstDay: 1,
+                        showMonthAfterYear: false,
+                        todayBtn: true,
+                        todayHighlight: true,
+                        calendarWeeks: true,
+                        daysOfWeekDisabled: [0],
+                        clearBtn: true,
+                    });
+
+                    $('#start_date').datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        $("#end_date").datepicker("setStartDate", moment( this.value ).add( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_from.value = this.value;
+                    });
+                    $('#end_date').datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        $("#start_date").datepicker("setEndDate", moment( this.value ).subtract( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_until.value = this.value;
+                    });
+                }
+            },
             onReady: function (instance, CountUp) {
                 const that = this;
                 instance.update(that.stats.cash);
@@ -605,10 +764,12 @@
 
                 this.editCheck( table );
                 this.deleteCheck( table );
+                this.controlLog( table );
             },
             initFormValidation: function() {
                 $('#form-cash').validate();
                 $('#form-cash-update').validate();
+                $('#form-report').validate();
             },
             editCheck: function ( table ) {
                 this.setFormNull();
@@ -627,6 +788,19 @@
                     that.checkbox2 = 0;
                     that.checkbox_update = 0;
                     $('#modal-update').modal('show');
+                });
+            },
+            controlLog: function ( table ) {
+                this.setFormNull();
+                let that = this;
+                table.on('click', '.log', function () {
+                    let row = $(this).parents('tr');
+                    if ( row.hasClass('child') ) {
+                        row = row.prev();
+                    }
+                    let data = table.row( row ).data();
+                    that.audits = data.is_dirty.data;
+                    $('#modal-log').modal('show');
                 });
             },
             setFormNull: function (file) {
@@ -655,6 +829,7 @@
                 this.checkbox_update = 0;
                 this.errors = null;
                 this.errors2 = null;
+                this.errors3 = null;
             },
             deleteCheck: function ( table ) {
                 let self = this;
@@ -877,6 +1052,42 @@
                     .catch((error) => {
                         this.triggerSwal(error);
                     })
+            },
+            generateReport: function () {
+                let that = this;
+                if ( $('#form-report').valid() ) {
+                    $('#form-report').submit();
+                    let data = {
+                        status: that.report.status.value || null,
+                        start_date: that.report.available_from.value,
+                        end_date: that.report.available_until.value
+                    };
+                    /*
+                    axios.post( route('financial.money.cash.report'), qs.stringify( data ) )
+                        .then((response) => {
+                            console.log(response);
+                            this.setFormNull();
+                        })
+                        .catch((error) => {
+                            this.errors3 = error.response.data;
+                            console.log(error)
+                        })
+                     */
+                    /*
+                    axios({
+                        url: route('financial.money.cash.report'),
+                        method: 'GET',
+                        responseType: 'blob', // important
+                    }).then((response) => {
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', 'file.pdf');
+                        document.body.appendChild(link);
+                        link.click();
+                    });
+                    */
+                }
             }
         }
     }

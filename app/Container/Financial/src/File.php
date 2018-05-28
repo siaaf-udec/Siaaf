@@ -5,13 +5,20 @@ namespace App\Container\Financial\src;
 
 use App\Container\Financial\src\Constants\SchemaConstant;
 use App\Container\Users\Src\User;
+use App\Transformers\Financial\AuditsTransform;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as Auditor;
 
-class File extends Model
+class File extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, Auditor;
 
     /**
      * The connection name for the model.
@@ -48,6 +55,19 @@ class File extends Model
     ];
 
     /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        SchemaConstant::FILE_NAME,
+        SchemaConstant::FILE_ROUTE,
+        SchemaConstant::STATUS_FOREIGN_KEY,
+        SchemaConstant::USER_FOREIGN_KEY,
+        SchemaConstant::FILE_TYPE_FOREIGN_KEY,
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -66,7 +86,61 @@ class File extends Model
      *
      * @var array
      */
-    protected $appends = ['pdf_url', 'semester', 'dropzone_status'];
+    protected $appends = ['pdf_url', 'semester', 'dropzone_status', 'is_dirty'];
+
+
+    /*
+     * ---------------------------------------------------------
+     * Audit functions
+     * ---------------------------------------------------------
+     */
+
+    /**
+     * Audit data can be transformed before being stored.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function transformAudit(array $data) : array
+    {
+        if (Arr::has($data, 'new_values.'.status_fk())) {
+            $data['new_values'][ status_fk() ] = StatusRequest::find( $data['new_values'][ status_fk() ] )->{ status_name() };
+        }
+        if (Arr::has($data, 'old_values.'.status_fk())) {
+            $data['old_values'][ status_fk() ] = StatusRequest::find( $data['old_values'][ status_fk() ] )->{ status_name() };
+        }
+        if (Arr::has($data, 'new_values.'.user_fk())) {
+            $data['new_values'][ user_fk() ] = User::find( $data['new_values'][ user_fk() ] )->full_name;
+        }
+        if (Arr::has($data, 'old_values.'.user_fk())) {
+            $data['old_values'][ user_fk() ] = User::find( $data['old_values'][ user_fk() ] )->full_name;
+        }
+        if (Arr::has($data, 'new_values.'.file_type_fk())) {
+            $data['new_values'][ file_type_fk() ] = FileType::find( $data['new_values'][ file_type_fk() ] )->{ file_types() };
+        }
+        if (Arr::has($data, 'old_values.'.file_type_fk())) {
+            $data['old_values'][ file_type_fk() ] = FileType::find( $data['old_values'][ file_type_fk() ] )->{ file_types() };
+        }
+        return $data;
+    }
+
+    /**
+     * Generating tags for each model.
+     *
+     * @return array
+     */
+    public function generateTags() : array
+    {
+        return ['financial_files'];
+    }
+
+    public function getIsDirtyAttribute()
+    {
+        $audits = $this->audits()->latest()->get();
+        $manager = new Manager;
+        $resource = new Collection( $audits, new AuditsTransform() );
+        return $manager->createData( $resource )->toArray();
+    }
 
     /*
      * ---------------------------------------------------------
@@ -101,17 +175,16 @@ class File extends Model
      */
     public function getDropzoneStatusAttribute()
     {
-        $available = AvailableModules::ofType( status_type_file() )->first();
+        $available = AvailableModules::ofType( status_type_file() )->latest()->first();
 
         if ( isset( $available->{ available_from() } ) &&
              isset( $available->{ available_until() } ) &&
              isset( $this->{created_at()} ) ) {
-            if ( $this->{created_at()}->format("Y-m-d H:i:s") < $available->{ available_from() }->format("Y-m-d H:i:s") ) {
+            if ( $this->{ created_at() }->lessThan( $available->{ available_from() } ) ) {
                 return false;
-            } elseif ( $this->{created_at()}->format("Y-m-d H:i:s") >  $available->{ available_until() }->format("Y-m-d H:i:s") ) {
+            } elseif ( $this->{created_at()}->greaterThan( $available->{ available_until() } ) ) {
                 return true;
-            } elseif ( $this->{created_at()}->format("Y-m-d H:i:s") >= $available->{ available_from() }->format("Y-m-d H:i:s") &&
-                       $this->{created_at()}->format("Y-m-d H:i:s") <=  $available->{ available_until() }->format("Y-m-d H:i:s")) {
+            } elseif ( $this->{ created_at() }->between( $available->{ available_from() }, $available->{ available_until() } ) ) {
                 return true;
             } else {
                 return false;

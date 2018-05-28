@@ -223,7 +223,31 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $validator = Validator::make($request->all(), [
-                'email_create' => 'unique:users,email' . Auth::id(),
+                'email_create' => 'unique:users,email',
+            ]);
+            if (empty($validator->errors()->all())) {
+                return response('true');
+            }
+            return response('false');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkEmailAuth(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $validator = Validator::make($request->all(), [
+                'email_create' => 'unique:users,email,'. $id,
             ]);
             if (empty($validator->errors()->all())) {
                 return response('true');

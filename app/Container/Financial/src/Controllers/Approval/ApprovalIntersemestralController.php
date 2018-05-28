@@ -46,9 +46,12 @@ class ApprovalIntersemestralController extends Controller
      */
     public function update(ApprovalIntersemestralRequest $request, $id)
     {
-        return ( $this->intersemestralRepository->updateAdminIntersemestral($request, $id ) ) ?
-            jsonResponse('success', 'updated_done', 200) :
-            jsonResponse('error', 'updated_fail', 422);
+        if ( request()->isMethod('PUT') || request()->isMethod('PATCH') )
+            return ( $this->intersemestralRepository->updateAdminIntersemestral($request, $id ) ) ?
+                jsonResponse('success', 'updated_done', 200) :
+                jsonResponse('error', 'updated_fail', 422);
+
+        return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }
 
     /**
@@ -59,10 +62,10 @@ class ApprovalIntersemestralController extends Controller
      */
     public function store(PaidIntersemestralStatusRequest $request)
     {
-            if ( request()->isMethod('PUT') || request()->isMethod('PATCH') || request()->isMethod('POST') )
-            return ( $this->intersemestralRepository->paid( $request ) ) ?
-                jsonResponse('success', 'updated_done', 200) :
-                jsonResponse('error', 'updated_fail', 422);
+            if ( request()->isMethod('POST') )
+                return ( $this->intersemestralRepository->paid( $request ) ) ?
+                    jsonResponse('success', 'updated_done', 200) :
+                    jsonResponse('error', 'updated_fail', 422);
 
         return AjaxResponse::make(__('javascript.http_status.error', ['status' => 405]), __('javascript.http_status.method', ['method' => 'PUT / PATCH']), '', 405);
     }

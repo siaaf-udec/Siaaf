@@ -63,6 +63,15 @@ class ConstantLabelClasses
             case PettyCash::IN :
                 return self::SUCCESS_CLASS;
                 break;
+            case 'created' :
+                return 'blue';
+                break;
+            case 'updated' :
+                return 'yellow';
+                break;
+            case 'deleted' :
+                return 'red';
+                break;
             default:
                 return self::DEFAULT_CLASS;
                 break;

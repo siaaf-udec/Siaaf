@@ -19,6 +19,7 @@ const eventBus = new Vue();
 
 let financial = {
     templates: "./components/financial/templates/",
+    audits: "./components/financial/audits/",
     check: "./components/financial/check/",
     cash: "./components/financial/cash/",
     studentExtension: "./components/financial/requests/student/extension/",
@@ -53,6 +54,7 @@ Vue.component("vue-comments", require( financial.templates + "Comment.vue"));
 Vue.component("vue-blog-comments", require( financial.templates + "BlogComments.vue"));
 Vue.component("vue-todo-comments", require( financial.templates + "TodoComments.vue"));
 Vue.component("vue-feeds", require( financial.templates + "Feeds.vue"));
+Vue.component("laravel-audits", require( financial.audits + "Audits.vue"));
 /**
  * Management Sources
  */
@@ -69,6 +71,7 @@ Vue.component("management-available-modules", require( financial.managementAvail
 Vue.component("file-upload", require( financial.fileUpload + "Upload.vue" ) );
 Vue.component("file-upload-show", require( financial.fileUpload + "ShowFile.vue" ) );
 Vue.component("file-management", require( financial.fileManagement + "FileManagement.vue" ) );
+Vue.component("file-upload-show-admin", require( financial.fileManagement + "ShowFile.vue" ) );
 
 /**
  * Student Requests

@@ -8,14 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sede extends Model
 {
      use SoftDeletes;
-   
-     
     /**
      * Conexión de la base de datos usada por el modelo
      *
      * @var string
      */
-    
     protected $connection ='unvinteraction';
     
     /**

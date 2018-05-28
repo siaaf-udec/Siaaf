@@ -98,6 +98,7 @@ return [
         'financial.money.cash.store',
         'financial.money.cash.update',
         'financial.money.cash.destroy',
+        'financial.money.cash.report',
         //Api
         'financial.api.*',
     ],

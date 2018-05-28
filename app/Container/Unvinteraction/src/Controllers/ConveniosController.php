@@ -29,7 +29,6 @@ class ConveniosController extends Controller
     public function convenios(Request $request)
     {
         if ( $request->isMethod('GET')) {
-            
             $sede = Sede::select('PK_SEDE_Sede', 'SEDE_Sede')->pluck('SEDE_Sede', 'PK_SEDE_Sede')->toArray();
             return view($this->path.'.listarConvenios', compact('sede'));
         }
@@ -79,10 +78,10 @@ class ConveniosController extends Controller
                         'conveniosParticipante'=>function ($query) {
                         $query->select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio','CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id');
                         $query->with([
-                            'convenioEstado'=>function ($query) {
+                            'convenioEstados'=>function ($query) {
                                 $query->select('PK_ETAD_Estado','ETAD_Estado');
                             },
-                            'convenioSede'=>function ($query) {
+                            'convenioSedes'=>function ($query) {
                                 $query->select('PK_SEDE_Sede','SEDE_Sede');
                             }    
                         ]);
@@ -105,20 +104,16 @@ class ConveniosController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $convenio= Convenio::select('PK_CVNO_Convenio','CVNO_Nombre','CVNO_Fecha_Inicio', 'CVNO_Fecha_Fin','FK_TBL_Estado_Id','FK_TBL_Sede_Id')
                 ->with([
-                        'convenioSede'=>function ($query) {
+                        'convenioSedes'=>function ($query) {
                         $query->select('PK_SEDE_Sede','SEDE_Sede');
 
                         },
-                        'convenioEstado'=>function ($query) {
+                        'convenioEstados'=>function ($query) {
                         $query->select('PK_ETAD_Estado','ETAD_Estado');
 
                         }
                 ])->get();
-            return Datatables::of($convenio)->addIndexColumn()
-                ->removeColumn('FK_TBL_Estado_Id')
-                      ->removeColumn('PK_SEDE_Sede')
-                      ->removeColumn('PK_ETAD_Estado')
-                      ->removeColumn('FK_TBL_Sede_Id')->make(true);
+            return Datatables::of($convenio)->addIndexColumn()->make(true);
         }
         return AjaxResponse::fail(
             '   ¡Lo sentimos!',

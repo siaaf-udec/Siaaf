@@ -483,7 +483,7 @@
             email_create: {
                 required: true, email: true, remote: {
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route('users.check.email') }}',
+                    url: '{{ route('users.check.email.update') }}' + '/' + $('input[name="id_edit"]').val(),
                     type: 'POST'
                 }
             },
@@ -518,7 +518,11 @@
             image_profile_create: {extension: "jpg|png"},
             'multi_select_roles_create[]': {minlength: 1}
         };
-        var messages = {};
+        var messages = { 
+            email_create: {
+                remote: "El correo electronico ya ha sido registrado." 
+            }
+        };
         var wizard = $('#form_wizard_1');
 
         /*Crear Usuarios*/

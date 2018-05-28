@@ -141,6 +141,9 @@
                                 </li>
                             </ul>
                         </div>
+                        <a class="btn blue btn-outline btn-circle btn-sm" href="#modal-log" data-toggle="modal">
+                            Log de Cambios
+                        </a>
                     </div>
                 </div>
                 <div class="portlet-body" style="display: block;">
@@ -157,7 +160,7 @@
                             </vue-comments>
                         </div>
                         <div class="col-md-12">
-
+                            <laravel-audits :metadata="audits"></laravel-audits>
                         </div>
                     </div>
                 </div>
@@ -175,7 +178,6 @@
     import PNGlib from 'identicon.js/pnglib';
     import Identicon from 'identicon.js/identicon';
     import {mixinLoading} from "../../../../mixins/loadingswal";
-
     export default {
         name: "file-management",
         mixins: [mixinHttpStatus, mixinLoading],
@@ -229,6 +231,7 @@
                     close: Lang.get('financial.buttons.close'),
                 },
                 status: [],
+                audits: []
             }
         },
         mounted: function () {
@@ -367,11 +370,13 @@
             viewFile: function ( file ) {
                 this.id = file.id;
                 this.src = file.file_route;
+                this.audits = file.audits;
                 this.fileViewer = true;
             },
             closeView: function () {
                 this.id = null;
                 this.src = '';
+                this.audits = [];
                 this.fileViewer = false;
             },
             getStatus: function () {
@@ -441,6 +446,7 @@
                         file_type: ( file.file_type ) ? file.file_type.file_types : Lang.get('financial.generic.empty'),
                         user: ( file.user ) ? file.user.full_name : Lang.get('financial.generic.empty'),
                         profile_picture: ( file.user ) ? ( file.user.profile_picture.length === 16 ) ? `data:image/png;base64,${new Identicon( file.user.profile_picture , 45).toString()}` : file.user.profile_picture : `data:image/png;base64,${new Identicon( 'c157a79031e1c40f85931829bc5fc552' , 45).toString()}`,
+                        audits: file.is_dirty.data || []
                     }
                 });
             },
@@ -458,6 +464,7 @@
                         file_type: ( file.file_type ) ? file.file_type.file_types : Lang.get('financial.generic.empty'),
                         user: ( file.user ) ? file.user.full_name : Lang.get('financial.generic.empty'),
                         profile_picture: ( file.user ) ? ( file.user.profile_picture.length === 16 ) ? `data:image/png;base64,${new Identicon( file.user.profile_picture , 45).toString()}` : file.user.profile_picture : `data:image/png;base64,${new Identicon( 'c157a79031e1c40f85931829bc5fc552' , 45).toString()}`,
+                        audits: file.is_dirty.data || []
                     }
                 });
             },

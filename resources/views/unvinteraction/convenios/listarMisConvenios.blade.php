@@ -133,8 +133,8 @@ jQuery(document).ready(function () {
                 {data: 'convenios_participante.CVNO_Nombre', searchable: true, name:"convenios_participante.CVNO_Nombre"},
                 {data: 'convenios_participante.CVNO_Fecha_Inicio', searchable: true, name:"convenios_participante.CVNO_Fecha_Inicio"},
                 {data: 'convenios_participante.CVNO_Fecha_Fin',searchable: true, name:"convenios_participante.CVNO_Fecha_Fin"},
-                {data: 'convenios_participante.convenio_estado.ETAD_Estado', searchable: true, name:"convenios_participante.convenio_estado.ETAD_Estado"},
-                {data: 'convenios_participante.convenio_sede.SEDE_Sede',searchable: true, name:"convenios_participante.convenio_sede.SEDE_Sede"},
+                {data: 'convenios_participante.convenio_estados.ETAD_Estado', searchable: true, name:"convenios_participante.convenio_estados.ETAD_Estado"},
+                {data: 'convenios_participante.convenio_sedes.SEDE_Sede',searchable: true, name:"convenios_participante.convenio_sedes.SEDE_Sede"},
                 {data: 'action',
                  name: 'action',
                 title: 'Acciones',
@@ -156,7 +156,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio+'/'+dataTable.convenios_participante.convenio_estado.PK_ETAD_Estado;
+                route_edit = '{{ route('documentosConvenios.documentosConvenios') }}'+'/'+dataTable.convenios_participante.PK_CVNO_Convenio+'/'+dataTable.convenios_participante.convenio_estados.PK_ETAD_Estado;
             $(".content-ajax").load(route_edit);
         });
    

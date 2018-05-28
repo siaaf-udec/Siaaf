@@ -201,7 +201,7 @@
                                                                 ['label' => 'Fecha de Expedición', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],
                                                                 ['help' => 'Digite su fecha de expedición', 'icon' => 'fa fa-calendar']) !!}
                                                         {!! Field::email(
-                                                                'email', $user->email,
+                                                                'email_create', $user->email,
                                                                 ['label' => 'Correo Electronico', 'auto' => 'off'],
                                                                 ['help' => 'Digite su correo electronico']) !!}
                                                     </div>
@@ -541,7 +541,7 @@
                             formData.append('identity_expe_date', $('#identity_expe').val());
                             formData.append('identity_expe_place', $('input:text[name="identity_expe_place"]').val());
                             formData.append('phone', $('input:text[name="phone"]').val());
-                            formData.append('email', $('input[name="email"]').val());
+                            formData.append('email', $('input[name="email_create"]').val());
                             formData.append('address_create', $('input:text[name="address"]').val());
                             formData.append('countries_id', $('select[name="countries"]').val());
                             formData.append('regions_id', $('select[name="regions"]').val());
@@ -574,8 +574,26 @@
                 form = $('#from_personal_info'),
                 rules = {
                     name: {minlength: 5, required: true},
+                    lastname: {minlength: 5, required: true},
+                    phone: {minlength: 5},
+                    sexo: {required: true},
+                    identity_expe_place: {minlength: 5},
+                    identity_no: {minlength: 5, number: true},
+                    address: {minlength: 5},
+                    email_create: {
+                        required: true, email: true, remote: {
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            url: '{{ route('users.check.email.update') }}'  + '/' + {{ Auth::id() }},
+                            type: 'POST'
+                        }
+                    }
+                },
+                messages = {
+                    email_create: {
+                        remote: "El correo electronico ya ha sido registrado." 
+                    }
                 };
-            FormValidationMd.init(form, rules, false, updateProfile());
+            FormValidationMd.init(form, rules, messages, updateProfile());
 
             let updatePassword = function () {
                     return {

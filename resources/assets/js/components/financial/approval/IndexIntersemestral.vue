@@ -414,7 +414,7 @@
                 },
                 badges: [],
                 table: {
-                    realization_date: Lang.get('financial.extension.table.realization_date'),
+                    realization_date: Lang.get('financial.generic.table.realization_date'),
                 },
                 sources: {
                     current_page: 0,

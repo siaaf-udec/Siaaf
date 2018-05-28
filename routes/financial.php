@@ -10,7 +10,7 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
             /**
              * File Upload by students
              */
-            Route::middleware([ 'permission:'.permission_upload_files() ])->resource('estudiantes', 'FileController', [
+            Route::middleware([ 'permission:'.permission_upload_files().'|'.permission_approve_files() ])->resource('estudiantes', 'FileController', [
                 'only'  =>  ['index', 'store', 'update', 'show'],
                 'names' => [
                     'index'     =>  'financial.files.index',
@@ -104,6 +104,10 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
         ],
             'parameters' => ['caja-menor' => 'id']
         ]);
+
+        Route::middleware([ 'permission:'.permission_petty_cash() ])
+                ->post('reporte-caja-menor', 'PettyCashReportController@report')
+                ->name('financial.money.cash.report');
 
         Route::middleware([ 'permission:'.permission_checks() ])->resource('cheques', 'CheckController', [
             'except'    =>  ['create', 'edit', 'show'],
