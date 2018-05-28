@@ -90,9 +90,7 @@ class UserController extends Controller
              * $users = $this->userRepository->index([]);
              * $users = $this->userRepository->getModel()::with('roles')->get();
              * */
-            $users = Cache::remember('roles', 1, function () {
-                return $this->userRepository->index(['roles']);
-            });
+            $users = $this->userRepository->index(['roles']);
             return DataTables::of($users)
                 ->addColumn('roles', function ($users) {
                     if (!empty($users->roles)) {
