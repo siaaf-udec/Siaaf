@@ -3,33 +3,33 @@
 namespace App\Container\Financial\src\Controllers\Cash;
 
 
-use App\Container\Financial\src\Repository\CashRepository;
+use App\Container\Financial\src\Repository\CheckRepository;
 use App\Http\Controllers\Controller;
-use App\Transformers\Financial\CashTransformer;
+use App\Transformers\Financial\CheckTransformer;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 
-class PettyCashReportController extends Controller
+class CheckReportController extends Controller
 {
     /**
-     * @var CashRepository
+     * @var CheckRepository
      */
-    private $cashRepository;
+    private $checkRepository;
 
     /**
      * PettyCashReportController constructor.
-     * @param CashRepository $cashRepository
+     * @param CheckRepository $checkRepository
      */
-    public function __construct(CashRepository $cashRepository)
+    public function __construct(CheckRepository $checkRepository)
     {
-        $this->cashRepository = $cashRepository;
+        $this->checkRepository = $checkRepository;
     }
 
     public function report(Request $request)
     {
-        $report = $this->cashRepository->getModel();
+        $report = $this->checkRepository->getModel();
         if ( $request->has('status') && $request->status ) {
             $report = $report->where( status(), $request->status );
         }
@@ -41,9 +41,9 @@ class PettyCashReportController extends Controller
         $end    = $request->has('end_date')   ? $request->end_date : now()->toDayDateTimeString();
         $report = $report->get();
         $manager = new Manager;
-        $resource = new Collection( $report, new CashTransformer );
+        $resource = new Collection( $report, new CheckTransformer );
         $data = $manager->createData( $resource )->toArray();
-        return SnappyPdf::loadView('financial.reports.cash', compact('data', 'start', 'end'))
+        return SnappyPdf::loadView('financial.reports.check', compact('data', 'start', 'end'))
                           ->download( 'Report-'.now()->toDateTimeString().'.pdf' );
     }
 }

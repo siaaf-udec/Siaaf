@@ -8,6 +8,8 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+import VueYoutube from 'vue-youtube';
+Vue.use(VueYoutube);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -128,7 +130,6 @@ String.prototype.wordWrap = function(m, b, c){
 
 import {mixinAuthUser} from "./mixins";
 import {Ziggy} from "./ziggy";
-
 Vue.mixin({
     methods: {
         route: route

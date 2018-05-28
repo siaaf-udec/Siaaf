@@ -33,6 +33,11 @@
                                 <span class="caption-helper" v-text="captions.helper"></span> &nbsp;
                                 <span class="caption-subject font-green-sharp bold uppercase" v-text="captions.subject"></span>
                             </div>
+                            <div class="actions">
+                                <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="Generar Reportes" data-toggle="modal" href="#modal-report">
+                                    <i class="fa fa-file-pdf-o"></i>
+                                </a>
+                            </div>
                         </div>
                         <!-- end PROJECT HEAD -->
                         <div class="portlet-body">
@@ -225,6 +230,84 @@
                 <!-- END TODO CONTENT -->
             </div>
         </div>
+        <vue-modal id="modal-report" title="Reporte">
+            <template slot="body">
+                <form @submit.prevent="generateReport" method="post" :action="route('financial.admin.approval.addition.subtraction.report')" class="" id="form-report" accept-charset="UTF-8">
+                    <div class="form-body">
+                        <input type="hidden" name="_token" :value="token.content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-select2 :label="report.select.program.label"
+                                             v-model.number="program"
+                                             :value="program"
+                                             :options="programs"
+                                             :attributes="report.select.program.attributes"
+                                             name="program">
+                                </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-select2 :label="report.select.subject.label"
+                                             v-model.number="subject"
+                                             :value="subject"
+                                             :options="subjects"
+                                             :attributes="report.select.subject.attributes"
+                                             name="subject">
+                                </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-select2 :label="report.status.label"
+                                             v-model="report.status.value"
+                                             :value="report.status.value"
+                                             :attributes="report.status.attributes"
+                                             :options="report.status.options"
+                                             name="status">
+                                </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="start_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_from.value"
+                                           :value="report.available_from.value"
+                                           :help="report.available_from.help"
+                                           :hasError="report.available_from.hasError"
+                                           :errors="report.available_from.errors"
+                                           :attributes="report.available_from.attributes"
+                                           :label="report.available_from.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="end_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_until.value"
+                                           :value="report.available_until.value"
+                                           :help="report.available_until.help"
+                                           :hasError="report.available_until.hasError"
+                                           :errors="report.available_until.errors"
+                                           :attributes="report.available_until.attributes"
+                                           :label="report.available_until.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions  margin-top-30">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="btn green" type="submit" :value="buttons.send">
+                                <button class="btn red" data-dismiss="modal" type="reset" v-text="buttons.cancel"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </template>
+        </vue-modal>
     </div>
 </template>
 
@@ -299,15 +382,97 @@
                 },
                 filter_query: null,
                 patch: '',
+                token: document.head.querySelector('meta[name="csrf-token"]'),
+                report: {
+                    status: {
+                        value: null,
+                        option: Lang.get('javascript.select'),
+                        label: Lang.get('validation.attributes.status').capitalize(),
+                        options: [],
+                        attributes: {
+                            required: false,
+                            disabled: false,
+                        }
+                    },
+                    select: {
+                        program: {
+                            label: Lang.get('validation.attributes.program').capitalize(),
+                            attributes: {
+                                disabled: false,
+                                required: false,
+                                class: null,
+                            }
+                        },
+                        subject: {
+                            label: Lang.get('validation.attributes.subject_matter').capitalize(),
+                            attributes: {
+                                disabled: true,
+                                required: false,
+                                class: null,
+                            }
+                        }
+                    },
+                    available_from: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_until'),
+                        label: Lang.get('validation.attributes.start_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            class: '',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                    available_until: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_from'),
+                        label: Lang.get('validation.attributes.end_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            class: '',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                },
+                buttons: {
+                    send: Lang.get('financial.buttons.send'),
+                    cancel: Lang.get('financial.buttons.cancel'),
+                },
+                programs: [],
+                subjects: [],
+                program: null,
+                subject: null,
             }
         },
         mounted: function () {
             this.getBadges();
+            this.getPrograms();
             this.getSource();
             this.getOptions();
             this.handleProjectListMenu();
+            this.handleDatePicker();
         },
         methods: {
+            getPrograms: function () {
+                axios.get( route('financial.api.options.programs') )
+                    .then( (response) => {
+                        this.programs = response.data;
+                    })
+                    .catch( (error) => {
+                        this.triggerSwal(error);
+                    })
+            },
             initFormValidation: function() {
                 $('#approval-form').validate({
                     rules: {
@@ -316,6 +481,7 @@
                         }
                     }
                 });
+                $('#form-report').validate();
             },
             initDatePickerAndSelect2: function () {
                 let that = this;
@@ -383,6 +549,7 @@
                 axios.get( route('financial.api.tree.status-request', {type: 'add_remove_subjects'}) )
                     .then( (response) => {
                         this.status.options = response.data.children;
+                        this.report.status.options = response.data.children;
                     })
                     .catch( (error) => {
                         this.triggerSwal(error);
@@ -437,6 +604,50 @@
                     });
                 }
             },
+            handleDatePicker: function() {
+                let that = this;
+                if (jQuery().datepicker) {
+
+                    let start = $('#start_date');
+                    let end = $('#end_date');
+                    $.extend($.fn.datepicker.defaults, {
+                        rtl: App.isRTL(),
+                        language: Lang.get('javascript.locale'),
+                        orientation: "left",
+                        autoclose: true,
+                        firstDay: 1,
+                        showMonthAfterYear: false,
+                        todayBtn: true,
+                        todayHighlight: true,
+                        calendarWeeks: true,
+                        daysOfWeekDisabled: [0],
+                        clearBtn: true,
+                        startDate: null,
+                    });
+                    start.datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        end.datepicker("setStartDate", moment( this.value ).add( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_from.value = this.value;
+                    });
+                    end.datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        start.datepicker("setEndDate", moment( this.value ).subtract( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_until.value = this.value;
+                    });
+                    $('#status')
+                        .select2({placeholder: that.report.status.option})
+                        .on('change', function () {
+                            that.report.status.value = this.value;
+                        });
+                }
+            },
+            generateReport: function () {
+                if ( $('#form-report').valid() ) {
+                    $('#form-report').submit();
+                }
+            }
         },
         updated: function () {
             this.$nextTick(function () {
@@ -451,7 +662,31 @@
             },
             status: function ( status ) {
                 $('.todo-taskbody-tags').select2().val(status.value).trigger('change')
-            }
+            },
+            program: function (program) {
+                if (program) {
+                    axios.get( route( 'financial.api.options.programs.subjects', { id: program } ) )
+                        .then( (response) => {
+                            this.report.select.subject.attributes = {
+                                disabled: false,
+                                required: false,
+                                class: null,
+                            };
+                            this.subjects = response.data;
+                        })
+                        .catch( (error) => {
+                            this.triggerSwal(error);
+                        });
+                } else {
+                    this.report.select.subject.attributes = {
+                        disabled: true,
+                        required: false,
+                        class: null,
+                    };
+                    this.subjects = [];
+                    this.subject = null;
+                }
+            },
         },
         computed: {
             taskList: function() {

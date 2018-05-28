@@ -120,6 +120,9 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
             'parameters' => ['cheques' => 'id']
         ]);
 
+        Route::middleware([ 'permission:'.permission_checks() ])
+            ->post('reporte-cheques', 'CheckReportController@report')
+            ->name('financial.money.checks.report');
     });
 
     Route::namespace('Approval')->prefix('administrativo')->group( function () {
@@ -134,6 +137,11 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
                 ],
                 'parameters' => ['supletorios' => 'id']
             ]);
+
+            Route::middleware([ 'permission:'.permission_extension_approval() ])
+                ->post('reporte-supletorios', 'ApprovalExtensionController@report')
+                ->name('financial.admin.approval.extension.report');
+
             Route::middleware([ 'permission:'.permission_validation_approval() ])->resource('validaciones', 'ApprovalValidationController', [
                 'only'  => ['index', 'update'],
                 'names' => [
@@ -142,6 +150,11 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
                 ],
                 'parameters' => ['validaciones' => 'id']
             ]);
+
+            Route::middleware([ 'permission:'.permission_validation_approval() ])
+                ->post('reporte-validaciones', 'ApprovalValidationController@report')
+                ->name('financial.admin.approval.validation.report');
+
             Route::middleware([ 'permission:'.permission_add_sub_approval() ])->resource('adicion-cancelacion', 'ApprovalAdditionSubtractionController', [
                 'only'  => ['index', 'update'],
                 'names' => [
@@ -150,6 +163,11 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
                 ],
                 'parameters' => ['adicion-cancelacion' => 'id']
             ]);
+
+            Route::middleware([ 'permission:'.permission_add_sub_approval() ])
+                ->post('reporte-adicion-cancelacion-materias', 'ApprovalAdditionSubtractionController@report')
+                ->name('financial.admin.approval.addition.subtraction.report');
+
             Route::middleware([ 'permission:'.permission_intersemestral_approval() ])->resource('intersemestral', 'ApprovalIntersemestralController', [
                 'only'  => ['index', 'update', 'store'],
                 'names' => [
@@ -159,6 +177,10 @@ Route::middleware( [ 'permission:'.permission_financial(), 'sanitization' ] )->g
                 ],
                 'parameters' => ['intersemestral' => 'id']
             ]);
+
+            Route::middleware([ 'permission:'.permission_intersemestral_approval() ])
+                ->post('reporte-intersemestrales', 'ApprovalIntersemestralController@report')
+                ->name('financial.admin.approval.intersemestral.report');
         });
     });
 

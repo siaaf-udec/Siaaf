@@ -19,9 +19,12 @@ class ValidationTransformer extends TransformerAbstract
             'approval_date'     =>  isset( $validation->{ approval_date() } ) ? $validation->{ approval_date() }->format('Y-m-d H:i:s ') : null,
             'realization_date'  =>  isset( $validation->{ realization_date() } ) ? $validation->{ realization_date() }->format('Y-m-d H:i:s ') : null,
             'created_at'        =>  isset( $validation->{ created_at() } ) ? $validation->{ created_at() }->format('Y-m-d H:i:s ') : null,
+            'subject_id'        =>  isset( $validation->subject->{ primaryKey() } ) ? $validation->subject->{ primaryKey() } : 0,
             'subject_code'      =>  isset( $validation->subject->{ subject_code() } ) ? $validation->subject->{ subject_code() } : 0,
             'subject_name'      =>  isset( $validation->subject->{ subject_name() } ) ? $validation->subject->{ subject_name() } : __('financial.generic.empty'),
             'subject_credits'   =>  isset( $validation->subject->{ subject_credits() } ) ? $validation->subject->{ subject_credits() } : 0,
+
+            'program_id'        =>  isset( $validation->subject->programs[0]->{ primaryKey() } ) ? $validation->subject->programs[0]->{ primaryKey() } : 0,
             'program_name'      =>  isset( $validation->subject->programs[0]->{ program_name() } ) ? $validation->subject->programs[0]->{ program_name() } : __('financial.generic.empty'),
 
             'status_name'       =>  isset( $validation->status->{ status_name() } ) ? $validation->status->{ status_name() } : __('financial.generic.empty'),
@@ -40,6 +43,7 @@ class ValidationTransformer extends TransformerAbstract
             'student_picture'   =>  isset( $validation->student->profile_picture ) ? $validation->student->profile_picture : iconHash(),
             'student_phone'     =>  isset( $validation->student->phone ) ? $validation->student->phone : __('financial.generic.empty'),
             'student_email'     =>  isset( $validation->student->email ) ? $validation->student->email : __('financial.generic.empty'),
+            'cost_float'        =>  isset( $validation->cost->cost ) ? $validation->cost->cost : 0,
             'cost'              =>  isset( $validation->cost->cost_to_money ) ? $validation->cost->cost_to_money : toMoney( 0 ),
             'total_cost'        =>  isset( $validation->total_cost ) ? toMoney( $validation->total_cost ) : toMoney( 0 ),
             'comments_count'    =>  isset( $validation->comments_count ) ? $validation->comments_count : 0,
