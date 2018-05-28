@@ -356,10 +356,11 @@ class RolePermissionFinancialTableSeeder extends Seeder
         factory(User::class)->create([
             'email' => 'teacher@app.com'
         ])->attachRole($teacher);
-
+        /*
         $userRoot = User::where('email', 'root@app.com')->first();
         if ( isset( $root->id ) ) {
             $userRoot->attachRole($root);
         }
+        */
     }
 }

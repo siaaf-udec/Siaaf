@@ -30,8 +30,10 @@
         <empty-sortable-portlet></empty-sortable-portlet>
         <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
             <template slot="body">
-                <p class="text-center">Video de Ayuda</p>
-                {{-- <youtube video-id="BBJa32lCaaY" ></youtube> --}}
+                <div class="col-md-12 text-center">
+                    <youtube video-id="Tu_aku3tNCw" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
             </template>
         </vue-modal>
     </div>
