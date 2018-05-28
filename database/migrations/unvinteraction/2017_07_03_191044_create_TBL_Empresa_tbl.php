@@ -20,6 +20,7 @@ class CreateTBLEmpresaTbl extends Migration
             $table->text('EMPS_Telefono');
             $table->text('EMPS_Direccion');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     /**

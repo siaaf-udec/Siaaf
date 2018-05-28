@@ -1054,39 +1054,8 @@
                     })
             },
             generateReport: function () {
-                let that = this;
                 if ( $('#form-report').valid() ) {
                     $('#form-report').submit();
-                    let data = {
-                        status: that.report.status.value || null,
-                        start_date: that.report.available_from.value,
-                        end_date: that.report.available_until.value
-                    };
-                    /*
-                    axios.post( route('financial.money.cash.report'), qs.stringify( data ) )
-                        .then((response) => {
-                            console.log(response);
-                            this.setFormNull();
-                        })
-                        .catch((error) => {
-                            this.errors3 = error.response.data;
-                            console.log(error)
-                        })
-                     */
-                    /*
-                    axios({
-                        url: route('financial.money.cash.report'),
-                        method: 'GET',
-                        responseType: 'blob', // important
-                    }).then((response) => {
-                        const url = window.URL.createObjectURL(new Blob([response.data]));
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download', 'file.pdf');
-                        document.body.appendChild(link);
-                        link.click();
-                    });
-                    */
                 }
             }
         }

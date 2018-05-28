@@ -60,6 +60,7 @@ return [
         'financial.requests.student.extension.edit',
         //Approve Extension
         'financial.admin.approval.extension.update',
+        'financial.admin.approval.extension.report',
         // Addition Subtraction
         'financial.requests.student.add-sub.index',
         'financial.requests.student.add-sub.create',
@@ -69,6 +70,7 @@ return [
         'financial.requests.student.add-sub.edit',
         //Approve Addition Subtraction
         'financial.admin.approval.addition.subtraction.update',
+        'financial.admin.approval.addition.subtraction.report',
         // Validation
         'financial.requests.student.validation.index',
         'financial.requests.student.validation.create',
@@ -78,6 +80,7 @@ return [
         'financial.requests.student.validation.edit',
         //Approve Validation
         'financial.admin.approval.validation.update',
+        'financial.admin.approval.validation.report',
         // Intersemestral
         'financial.requests.student.intersemestral.index',
         'financial.requests.student.intersemestral.create',
@@ -88,11 +91,13 @@ return [
         //Approve Intersemestral
         'financial.admin.approval.intersemestral.store',
         'financial.admin.approval.intersemestral.update',
+        'financial.admin.approval.intersemestral.report',
         //Checks
         'financial.money.checks.index',
         'financial.money.checks.store',
         'financial.money.checks.update',
         'financial.money.checks.destroy',
+        'financial.money.checks.report',
         //Petty Cash
         'financial.money.cash.index',
         'financial.money.cash.store',

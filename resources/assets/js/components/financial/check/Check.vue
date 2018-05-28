@@ -2,6 +2,11 @@
     <div class="row">
         <div class="col-md-12">
             <portlet icon="fa fa-money" :title="portlet.title">
+                <template slot="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="Generar Reportes" data-toggle="modal" href="#modal-report">
+                        <i class="fa fa-file-pdf-o"></i>
+                    </a>
+                </template>
                 <template slot="body">
                     <div class="row">
                         <div class="col-md-12 margin-bottom-40">
@@ -160,6 +165,62 @@
                 </form>
             </template>
         </vue-modal>
+        <vue-modal id="modal-report" title="Reporte">
+            <template slot="body">
+                <form @submit.prevent="generateReport" method="post" :action="route('financial.money.checks.report')" class="" id="form-report" accept-charset="UTF-8">
+                    <div class="form-body">
+                        <input type="hidden" name="_token" :value="token.content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-select2 :label="report.status.label"
+                                             v-model="report.status.value"
+                                             :value="report.status.value"
+                                             :attributes="report.status.attributes"
+                                             :options="report.status.options"
+                                             name="status">
+                                </vue-select2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="start_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_from.value"
+                                           :value="report.available_from.value"
+                                           :help="report.available_from.help"
+                                           :hasError="report.available_from.hasError"
+                                           :errors="report.available_from.errors"
+                                           :attributes="report.available_from.attributes"
+                                           :label="report.available_from.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <vue-input name="end_date"
+                                           icon="fa fa-calendar"
+                                           v-model.trim="report.available_until.value"
+                                           :value="report.available_until.value"
+                                           :help="report.available_until.help"
+                                           :hasError="report.available_until.hasError"
+                                           :errors="report.available_until.errors"
+                                           :attributes="report.available_until.attributes"
+                                           :label="report.available_until.label">
+                                </vue-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions  margin-top-30">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="btn green" type="submit" :value="buttons.send">
+                                <button class="btn red" data-dismiss="modal" type="reset" @click.prevent="setFormNull" v-text="buttons.cancel"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </template>
+        </vue-modal>
         <laravel-audits :metadata="audits"></laravel-audits>
     </div>
 </template>
@@ -286,6 +347,53 @@
                     cancel: Lang.get('financial.buttons.cancel'),
                 },
                 id: 0,
+                report: {
+                    status: {
+                        value: null,
+                        label: Lang.get('validation.attributes.status').capitalize(),
+                        options: [
+                            { id: 1, text: Lang.get('validation.attributes.undelivered').capitalize() },
+                            { id: 2, text: Lang.get('validation.attributes.delivered').capitalize() },
+                        ],
+                        attributes: {
+                            required: false,
+                            disabled: false,
+                        }
+                    },
+                    available_from: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_until'),
+                        label: Lang.get('validation.attributes.start_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            // class: 'date date-picker',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                    available_until: {
+                        value: null,
+                        help: Lang.get('financial.help-text.valid_from'),
+                        label: Lang.get('validation.attributes.end_date').capitalize(),
+                        hasError: null,
+                        errors: [],
+                        attributes: {
+                            required: true,
+                            autocomplete: 'off',
+                            // class: 'date date-picker',
+                            readonly: true,
+                            maxlength: 10,
+                            minlength: 10,
+                            pattern: '\\d{4}-\\d{2}-\\d{2}',
+                        }
+                    },
+                },
+                token: document.head.querySelector('meta[name="csrf-token"]'),
                 audits: []
             }
         },
@@ -332,6 +440,7 @@
                         }
                     }
                 });
+                $('#form-report').validate();
             },
             handleDatePicker: function() {
                 let that = this;
@@ -340,6 +449,34 @@
                         format: 'yyyy-mm-dd',
                     }).on('changeDate', function () {
                         that.formCheck.delivered_at.value = this.value;
+                    });
+                    let start = $('#start_date');
+                    let end = $('#end_date');
+                    $.extend($.fn.datepicker.defaults, {
+                        rtl: App.isRTL(),
+                        language: Lang.get('javascript.locale'),
+                        orientation: "left",
+                        autoclose: true,
+                        firstDay: 1,
+                        showMonthAfterYear: false,
+                        todayBtn: true,
+                        todayHighlight: true,
+                        calendarWeeks: true,
+                        daysOfWeekDisabled: [0],
+                        clearBtn: true,
+                        startDate: null,
+                    });
+                    start.datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        end.datepicker("setStartDate", moment( this.value ).add( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_from.value = this.value;
+                    });
+                    end.datepicker({
+                        format: 'yyyy-mm-dd',
+                    }).on('changeDate', function () {
+                        start.datepicker("setEndDate", moment( this.value ).subtract( 1, 'days').format('YYYY-MM-DD') );
+                        that.report.available_until.value = this.value;
                     });
                 }
             },
@@ -481,6 +618,17 @@
                     }).catch(swal.noop);
                 });
             },
+            generateReport: function () {
+                let that = this;
+                if ( $('#form-report').valid() ) {
+                    $('#form-report').submit();
+                    let data = {
+                        status: that.report.status.value || null,
+                        start_date: that.report.available_from.value,
+                        end_date: that.report.available_until.value
+                    };
+                }
+            }
         }
     }
 </script>

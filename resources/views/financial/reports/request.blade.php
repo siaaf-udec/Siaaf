@@ -48,9 +48,9 @@
             <div class="email">E-mail: <a href="mailto:{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}">{{ (isset( auth()->user()->email )) ? auth()->user()->email : 'unicundi@ucundinamarca.edu.co' }}</a></div>
         </div>
         <div id="invoice">
-            <h1>REPORTE DE CAJA MENOR</h1>
-            <div class="date">Fecha Inicial: {{ $start }}</div>
-            <div class="date">Fecha Final: {{ $end }}</div>
+            <h1>REPORTE DE {{ toUpper( isset( $title ) ? $title : 'Solicitudes' ) }}</h1>
+            <div class="date">Fecha Inicial: {{ isset( $start ) ? $start : now()->toDayDateTimeString() }}</div>
+            <div class="date">Fecha Final: {{ isset( $end ) ? $end : now()->toDayDateTimeString() }}</div>
         </div>
     </div>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -58,31 +58,29 @@
         <tr>
             <th class="no">#</th>
             <th class="desc">DESCRIPCIÓN</th>
-            <th class="unit">TIPO</th>
-            <th class="qty">FECHA</th>
+            <th class="unit">ESTADO</th>
+            <th class="qty">COSTO UNITARIO</th>
             <th class="total">TOTAL</th>
         </tr>
         </thead>
         <tbody>
-            @php  $in = 0; @endphp
-            @php  $out = 0; @endphp
-            @forelse($data['data'] as $key => $datum)
+            @php  $cost = 0; @endphp
+            @php  $total = 0; @endphp
+            @forelse($data as $key => $datum)
                 @php
-                    if ( $datum['status'] == \App\Container\Financial\src\PettyCash::IN ) {
-                        $in += $datum['cost'];
-                    } else {
-                        $out += $datum['cost'];
-                    }
+                    $subtotal = (float) $datum['subject_credits'] * (float) $datum['cost_float'];
+                    $total += $subtotal;
                 @endphp
                 <tr>
                     <td class="no">{{ $key + 1 }}</td>
                     <td class="desc">
-                        <h3>Identificador {{ $datum['id'] }}</h3>
-                        {{ $datum['concept'] }}
+                        <h3>Materia {{ "{$datum['subject_code']} {$datum['subject_name']}" }}</h3>
+                        <h3>Créditos {{ $datum['subject_credits'] }}</h3>
+                        {{ $datum['program_name'] }}
                     </td>
                     <td class="unit">{{ $datum['status_name'] }}</td>
-                    <td class="qty">{{ $datum['created_at'] }}</td>
-                    <td class="total">{{ $datum['cost_to_money'] }}</td>
+                    <td class="qty">{{ $datum['cost'] }}</td>
+                    <td class="total">{{ $datum['total_cost'] }}</td>
                 </tr>
                 @empty
                 <tr>
@@ -92,37 +90,27 @@
                         {{ __('financial.generic.empty')  }}
                     </td>
                     <td class="unit">{{ __('financial.generic.empty')  }}</td>
-                    <td class="qty">{{ now()->toDayDateTimeString() }}</td>
-                    <td class="total">$ 0</td>
+                    <td class="qty">{{  __('financial.generic.empty') }}</td>
+                    <td class="total">0</td>
                 </tr>
             @endforelse
         </tbody>
         <tfoot>
         <tr>
             <td colspan="2"></td>
-            <td colspan="2">Entradas</td>
-            <td>{{ isset( $in ) ? toMoney( $in ) : toMoney(0) }}</td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td colspan="2">Salidas</td>
-            <td>{{ isset( $out ) ? toMoney( $out ) : toMoney(0) }}</td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td colspan="2">En Caja</td>
-            <td>{{ isset( $in, $out ) ? toMoney( ($in - $out) ) : toMoney(0) }}</td>
+            <td colspan="2">Total</td>
+            <td>{{ isset( $total ) ? toMoney($total) : toMoney(0) }}</td>
         </tr>
         </tfoot>
     </table>
     <div id="thanks">{{ env('APP_NAME') }} - {{ config('app.description') }}</div>
     <div id="notices">
         <div>Información:</div>
-        <div class="notice">El reporte de caja menor puede ser comparado en la plataforma.</div>
+        <div class="notice">El reporte puede ser comparado en la plataforma.</div>
     </div>
 </main>
 <footer>
-    Esta reporte fue creada desde un computador y no es válida sin una firma y sello.
+    Esta reporte fue creado desde un computador y no es válida sin una firma y sello.
 </footer>
 </body>
 </html>

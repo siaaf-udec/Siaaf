@@ -3,10 +3,10 @@
 namespace App\container\Unvinteraction\src;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Convenio extends Model
 {
-   
+   use SoftDeletes;
     /**
      * Conexión de la base de datos usada por el modelo
      *

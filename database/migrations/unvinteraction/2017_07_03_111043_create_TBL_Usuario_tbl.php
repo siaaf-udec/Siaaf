@@ -17,6 +17,7 @@ class CreateTBLUsuarioTbl extends Migration
             $table->increments('PK_USER_Usuario');
             $table->bigInteger('USER_FK_Users')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
    
