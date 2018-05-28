@@ -23,6 +23,7 @@ class CreateTBLEvaluacionTbl extends Migration
             $table->float('VLCN_Nota_Final');
             $table->integer('VLCN_Tipo_Evaluacion')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
 
         }); 
     }

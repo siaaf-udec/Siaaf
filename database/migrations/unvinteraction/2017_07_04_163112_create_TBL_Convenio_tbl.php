@@ -23,6 +23,7 @@ class CreateTBLConvenioTbl extends Migration
             $table->integer('FK_TBL_Sede_Id')->unsigned();
             $table->foreign('FK_TBL_Sede_Id')->references('PK_SEDE_Sede')->on('TBL_Sede');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

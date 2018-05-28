@@ -20,6 +20,7 @@ class CreateTBLDocumentacionExtraTbl extends Migration
             $table->integer('FK_TBL_Usuarios_Id')->unsigned();
             $table->foreign('FK_TBL_Usuarios_Id')->references('PK_USER_Usuario')->on('TBL_Usuario');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
