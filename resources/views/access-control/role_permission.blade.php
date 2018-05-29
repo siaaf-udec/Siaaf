@@ -74,7 +74,7 @@
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Sistema de Información para el Apoyo Administrativo UdeC Facatativá.')
 
 {{--
 |--------------------------------------------------------------------------
