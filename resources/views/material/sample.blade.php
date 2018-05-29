@@ -67,7 +67,7 @@
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Sistema de Información para el Apoyo Administrativo UdeC Facatativá.')
 
 {{--
 |--------------------------------------------------------------------------
@@ -85,8 +85,7 @@
     <div class="col-md-12">
         <div class="note note-info">
             <p>
-                Página en blanco con dependencias de "assets" para usar como base en
-                cualquier nueva página personalizada que se cree.
+                Bienvenido a la plataforma Siaaf.
             </p>
         </div>
     </div>
