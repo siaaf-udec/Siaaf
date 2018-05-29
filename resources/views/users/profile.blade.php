@@ -282,13 +282,13 @@
                                                                 'password_update_verify',
                                                                 ['label' => 'Nueva Contraseña', 'auto' => 'off', 'max' => '30 ', 'min' => '4', 'required', 'disabled' ],
                                                                 ['help' => 'Digite su nueva contreaseña.']) !!}
-                                                    </div>
-                                                    <div class="margiv-top-10">
+                                                    </div>       
+                                                </div>
+                                                <div class="margiv-top-10">
                                                         {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                                                         {!! Form::button('Cancelar', ['class' => 'btn red']) !!}
-                                                    </div>
-                                                    {!! Form::close() !!}
                                                 </div>
+                                                    {!! Form::close() !!}
                                             </div>
                                             <!-- END CHANGE PASSWORD TAB -->
                                             <!-- PRIVACY SETTINGS TAB -->

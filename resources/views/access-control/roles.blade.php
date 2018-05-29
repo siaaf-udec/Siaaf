@@ -71,7 +71,7 @@
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Sistema de Información para el Apoyo Administrativo UdeC Facatativá.')
 
 {{--
 |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@
 --}}
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Datatable Ajax'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Roles'])
 
             @slot('actions', [
 

@@ -73,7 +73,7 @@
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Breve descripción de la página')
+@section('page-description', 'Sistema de Información para el Apoyo Administrativo UdeC Facatativá.')
 
 {{--
 |--------------------------------------------------------------------------
@@ -88,7 +88,7 @@
 --}}
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Datatable Ajax'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-frame', 'title' => 'Auditoria General'])
 
             @slot('actions', [
 
@@ -108,11 +108,6 @@
             ])
             <div class="clearfix"> </div><br><br><br>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="actions">
-                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="fa fa-plus"></i></a></div>
-                </div>
-                <div class="clearfix"> </div><br>
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'example-table-ajax'])
                         @slot('columns', [
@@ -204,7 +199,7 @@
             {data: 'event', name: 'event'},
             {data: 'auditable_type', name: 'auditable_type'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-info btn-icon visualize"><i class="icon-eye-open"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-simple btn-info btn-icon visualize"><i class="fa fa-eye"></i></a>',
                 data:'action',
                 name:'action',
                 title:'Acciones',
