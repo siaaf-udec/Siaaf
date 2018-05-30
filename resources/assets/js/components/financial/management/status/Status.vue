@@ -4,6 +4,11 @@
             <div class="m-heading-1 border-green m-bordered">
                 <h3 v-text="headingCard.title"></h3>
                 <p v-text="headingCard.text"></p>
+                <p>
+                    <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="¿Qué puedo hacer?" data-toggle="modal" href="#modal-faq">
+                        <i class="fa fa-question"></i>
+                    </a>
+                </p>
             </div>
         </div>
         <div class="col-md-6">
@@ -124,6 +129,14 @@
         <div class="col-md-6">
             <empty-sortable-portlet></empty-sortable-portlet>
         </div>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="dJChss9WAcs" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
+            </template>
+        </vue-modal>
     </div>
 </template>
 

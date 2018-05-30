@@ -36,6 +36,9 @@
                         <li>
                             <a href="#portlet_comments_2" @click="getApprovedFiles" data-toggle="tab" v-text="comments.approved"></a>
                         </li>
+                        <li>
+                            <a href="#modal-faq" data-toggle="modal">Ayuda</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="portlet-body">
@@ -166,6 +169,14 @@
                 </div>
             </div>
         </div>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="-LlPe4PFqJM" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
+            </template>
+        </vue-modal>
     </div>
 </template>
 

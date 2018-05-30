@@ -62,7 +62,7 @@ class SubjectController extends Controller
     public function datatable()
     {
         if (request()->isMethod('GET'))
-            return $this->subjectRepository->dataTables()
+            return DataTables::of( $this->subjectRepository->getModel()->whereIsCurrent() )
                         ->setTransformer( new SubjectTransformer )
                         ->toJson();
 
