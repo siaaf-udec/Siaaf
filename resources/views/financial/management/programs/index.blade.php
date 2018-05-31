@@ -31,7 +31,7 @@
         <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
             <template slot="body">
                 <div class="col-md-12 text-center">
-                    <youtube video-id="Tu_aku3tNCw" ></youtube>
+                    <youtube video-id="s0PWjasmYz8" ></youtube>
                     <p class="text-center">Video de Ayuda</p>
                 </div>
             </template>

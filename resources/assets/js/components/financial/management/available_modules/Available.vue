@@ -64,6 +64,11 @@
             </div>
             <div class="col-md-8">
                 <portlet icon="fa fa-money" :title="portlet.title">
+                    <template slot="actions">
+                        <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="¿Qué puedo hacer?" data-toggle="modal" href="#modal-faq">
+                            <i class="fa fa-question"></i>
+                        </a>
+                    </template>
                     <template slot="body">
                         <div class="row">
                             <div class="col-md-12">
@@ -88,6 +93,14 @@
                 </portlet>
             </div>
         </div>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="PkGn87goHDo" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
+            </template>
+        </vue-modal>
     </div>
 </template>
 

@@ -3,6 +3,9 @@
         <div class="col-md-12">
             <portlet icon="fa fa-money" :title="portlet.title">
                 <template slot="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="¿Qué puedo hacer?" data-toggle="modal" href="#modal-faq">
+                        <i class="fa fa-question"></i>
+                    </a>
                     <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="Generar Reportes" data-toggle="modal" href="#modal-report">
                         <i class="fa fa-file-pdf-o"></i>
                     </a>
@@ -25,6 +28,15 @@
         <div class="col-md-12">
             <empty-sortable-portlet></empty-sortable-portlet>
         </div>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="LmEZ0CFjfFk" ></youtube>
+                    <youtube video-id="Zpsw1Gbow80" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
+            </template>
+        </vue-modal>
         <vue-modal id="modal-check" :title="portlet.title">
             <template slot="body">
                 <form @submit.prevent="createCheck" class="" id="form-check" accept-charset="UTF-8">

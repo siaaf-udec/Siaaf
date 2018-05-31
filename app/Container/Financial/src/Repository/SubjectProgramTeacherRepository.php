@@ -47,7 +47,10 @@ class SubjectProgramTeacherRepository extends Methods implements FinancialSubjec
      */
     public function assigned()
     {
-        return $this->getModel()->with('teachers:id,name,lastname', 'programs', 'subjects');
+        return $this->getModel()->whereHas('subjects', function ($query) {
+                        return $query->whereIsCurrent();
+                    })
+                    ->with('teachers:id,name,lastname', 'programs', 'subjects');
     }
 
     /**

@@ -1,6 +1,9 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+    <!-- Bootstrap Modal Extended Style -->
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
     <!-- Date Picker Style -->
     <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Form Editable Style -->
@@ -27,6 +30,9 @@
 @endsection
 
 @push('plugins')
+    <!-- Bootstrap Modal Extended Scripts  -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript"></script>
     <!-- Date Picker Scripts -->
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>

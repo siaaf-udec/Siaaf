@@ -119,4 +119,27 @@ class Subject extends Model
                                 SchemaConstant::SUBJECT_FOREIGN_KEY,
                                 SchemaConstant::PRIMARY_KEY);
     }
+    
+    /*
+     * ---------------------------------------------------------------------------------------
+     * Query Scopes
+     * ---------------------------------------------------------------------------------------
+     */
+
+    /**
+     * Return Subjects available in current semester
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeWhereIsCurrent($query)
+    {
+        $query = $query->whereYear( created_at(), today()->year );
+        if ( isFirstSemester( today()->month ) ) {
+            $query = $query->whereMonth( created_at(), '<', '7' );
+        } else {
+            $query = $query->whereMonth( created_at(), '>', '6' );
+        }
+        return $query;
+    }
 }

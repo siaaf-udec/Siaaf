@@ -43,6 +43,7 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
     public function subjectsAsOptionsUnassigned()
     {
         $subjects = $this->optionsQuery()
+                    ->whereIsCurrent()
                     ->whereNotIn( primaryKey(), $this->subjectProgramTeacherRepository->assignedSubjectsIds() );
 
         return $this->subjectOptionsFormatted( $subjects );
@@ -56,7 +57,7 @@ class SubjectRepository extends Methods implements FinancialSubjectInterface
      */
     public function subjectsInProgramAsOptions($programId )
     {
-        $subjects = $this->optionsQuery()->whereHas('programs', function ($query) use ($programId) {
+        $subjects = $this->optionsQuery()->whereIsCurrent()->whereHas('programs', function ($query) use ($programId) {
             $query->where( program_fk(), $programId);
         });
 

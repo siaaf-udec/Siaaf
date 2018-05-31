@@ -3,6 +3,9 @@
         <div class="col-md-12">
             <portlet icon="icon-layers" :title="portlet.title">
                 <template slot="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default tooltips" data-placement="top" data-original-title="¿Qué puedo hacer?" data-toggle="modal" href="#modal-faq">
+                        <i class="fa fa-question"></i>
+                    </a>
                     <portlet-actions
                             :link="portlet.action.link"
                             icon="fa fa-plus"
@@ -34,6 +37,14 @@
             </portlet>
         </div>
         <empty-sortable-portlet/>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="ZZG3rWp3cR8" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
+                </div>
+            </template>
+        </vue-modal>
     </div>
 </template>
 
