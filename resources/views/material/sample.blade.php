@@ -37,7 +37,7 @@
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
-@section('title', '| Prueba')
+@section('title', '| Principal')
 
 {{--
 |--------------------------------------------------------------------------
