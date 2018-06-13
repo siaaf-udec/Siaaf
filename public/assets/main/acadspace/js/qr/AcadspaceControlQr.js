@@ -5,10 +5,10 @@ var QRcontrol = function () {
             var myQR = this,
                 btnsubmit = $('.button-submit');
             btnsubmit.on('click', function (e) {
-                e.preventDefault();
+                //e.preventDefault();
                 e.stopPropagation();
                 if (type_crud == 'CREATE') {
-                    if (valores.documento === null || valores.espacio === null || valoes.espacio === null) {
+                    if (valores.documento === null || valores.espacio === null || valores.espacio === null) {
                         UIToastr.init('error', 'ERROR QR', '¡QR Corrupto!');
                     } else {
                         UIToastr.init('success', 'BIENVENIDO', 'Registro satisfactorio.');
