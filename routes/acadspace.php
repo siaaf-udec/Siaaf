@@ -369,6 +369,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'LectorqrController@index',
             'as' => 'espacios.academicos.lectorqr.index'
         ]);
+        Route::get('cargarSalas/{espacio?}', [
+            'uses' => $controller . 'LectorqrController@cargarSalas',
+            'as' => 'espacios.academicos.lectorqr.cargarSalas'
+        ]);
         
     });
 

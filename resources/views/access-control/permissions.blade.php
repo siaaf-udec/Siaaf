@@ -43,7 +43,7 @@ de la plantilla
 | @section('title', $miVariable)
 | @section('title', 'Título')
 --}}
-@section('title', '| Dashboard')
+@section('title', '| Permisos')
 
 {{--
 |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ de la plantilla
 |
 |
 --}}
-@section('page-title', 'Dashboard')
+@section('page-title', 'SIAAF')
 {{--
 |--------------------------------------------------------------------------
 | Page Description
@@ -73,7 +73,7 @@ de la plantilla
 | @section('page-description', 'Título')
 --}}
 
-@section('page-description', 'Sistema de Información para el Apoyo Administrativo UdeC Facatativá.')
+@section('page-description', '(Sistema de Información para el Apoyo Administrativo UdeC Facatativá.)')
 
 {{--
 |--------------------------------------------------------------------------

@@ -14,6 +14,9 @@
                         <li>
                             <a href="#portlet_tab2" ref="li_tab_2" data-toggle="tab" v-text="modal.title"></a>
                         </li>
+                        <li>
+                            <a href="#modal-faq" data-toggle="modal">Ayuda</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="portlet-body flip-scroll">
@@ -187,6 +190,14 @@
                                       get="financial.api.file.comment.index">
                         </vue-comments>
                     </div>
+                </div>
+            </template>
+        </vue-modal>
+        <vue-modal id="modal-faq" modal-class="container" title="¿Qué puedo hacer?">
+            <template slot="body">
+                <div class="col-md-12 text-center">
+                    <youtube video-id="yR7WboSV6L0" ></youtube>
+                    <p class="text-center">Video de Ayuda</p>
                 </div>
             </template>
         </vue-modal>
