@@ -1,59 +1,45 @@
-<<<<<<< Updated upstream
-<li class="nav-item {{ active(['components.*', 'forms.*'], 'start active open') }}">
+<li class="nav-item {{ active(['access-control.*','roles.permissions.index'], 'start active open') }}">
     <a href="javascript:;" class="nav-link nav-toggle">
-        <i class="fa fa-building-o"></i>
+        <i class="fa fa-pencil-square-o"></i>
         <span class="title">Autoevaluacion</span>
-        <span class="arrow {{ active(['components.*'], 'open') }}"></span>
+        <span class="arrow {{ active(['autoevaluation.*'], 'open') }}"></span>
     </a>
     <ul class="sub-menu">
+        @permission('SUPERADMIN_MODULE')
         <li class="nav-item {{ active(['components.buttons', 'components.icons'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-diamond"></i>
-                <span class="title">Administrador</span>
+                <i class="icon-screen-desktop "></i>
+                <span class="title">Superadmin</span>
                 <span class="arrow {{ active(['components.buttons', 'components.icons'], 'open') }}"></span>
             </a>
-            <ul class="sub-menu">
-                <li class="nav-item {{ active(['components.buttons'], 'start active open') }}">
-                    <a href="{{ route('components.buttons') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-braille"></i>
-                        <span class="title">Botones</span>
-                    </a>
-                </li>
-            </ul>
         </li>
+        @endpermission
+        @permission(['PRIMARY_SOURCE_MODULE', 'SUPERADMIN_MODULE'])
         <li class="nav-item {{ active(['components.buttons', 'components.icons'], 'start active open') }}">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-diamond"></i>
+                <i class=" icon-notebook "></i>
                 <span class="title">Fuentes Primarias</span>
                 <span class="arrow {{ active(['components.buttons', 'components.icons'], 'open') }}"></span>
             </a>
+        </li>
+        @endpermission
+        @permission(['SECONDARY_SOURCES_MODULE' , 'SUPERADMIN_MODULE'])
+        <li class="nav-item {{ active(['components.buttons', 'components.icons'], 'start active open') }}">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-paper-clip "></i>
+                <span class="title">Secundarias</span>
+                <span class="arrow {{ active(['components.buttons', 'components.icons'], 'open') }}"></span>
+            </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ active(['components.buttons'], 'start active open') }}">
-                    <a href="{{ route('components.buttons') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-braille"></i>
-                        <span class="title">Gestionar Encuestas</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ active(['components.buttons'], 'start active open') }}">
-                    <a href="{{ route('components.buttons') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-braille"></i>
-                        <span class="title">Gestionar Preguntas</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ active(['components.buttons'], 'start active open') }}">
-                    <a href="{{ route('components.buttons') }}" class="nav-link nav-toggle">
-                        <i class="fa fa-braille"></i>
-                        <span class="title">Gestionar Tipo de Respuestas</span>
+                    <a href="{{ route("autoevaluation.documental.dependencia.index") }}"  class="nav-link nav-toggle">
+
+                        <span class="title">Dependencias</span>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="nav-item {{ active(['components.portlet'], 'start active open') }}">
-            <a href="{{ route('components.portlet') }}" class="nav-link">
-                <i class="icon-frame"></i>
-                <span class="title">Fuentes Secundarias</span>
-            </a>
-        </li>
+        @endpermission
     </ul>
 </li>
 =======
