@@ -87,7 +87,6 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     jQuery(document).ready(function () {
-
         /*Configuracion de input tipo fecha*/
         $('.date-picker').datepicker({
             rtl: App.isRTL(),
@@ -110,40 +109,31 @@
             yearSuffix: ''
         });
         /*FIN Configuracion de input tipo fecha*/
-
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
             return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
         });
-
         var createMoto = function () {
             return {
                 init: function () {
                     var route = '{{ route('parqueadero.motosCarpark.store') }}';
                     var type = 'POST';
                     var async = async || false;
-
                     var formData = new FormData();
                     var FileMoto = document.getElementById("CM_UrlFoto");
                     var FileProp = document.getElementById("CM_UrlPropiedad");
                     var FileSOAT = document.getElementById("CM_UrlSoat");
-
-
                     formData.append('CM_Placa', $('input:text[name="CM_Placa"]').val());
                     formData.append('CM_Marca', $('input:text[name="CM_Marca"]').val());
                     formData.append('CM_NuPropiedad', $('input:text[name="CM_NuPropiedad"]').val());
                     formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
                     formData.append('CM_FechaSoat', $('#CM_FechaSoat').val());
-
                     formData.append('CM_UrlFoto', FileMoto.files[0]);
                     formData.append('CM_UrlPropiedad', FileProp.files[0]);
                     formData.append('CM_UrlSoat', FileSOAT.files[0]);
-
                     formData.append('FK_CM_CodigoUser', $('input:text[name="FK_CM_CodigoUser"]').val());
-
-
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -192,20 +182,15 @@
             CM_NuPropiedad: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CM_NuSoat: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
-
         FormValidationMd.init(form, formRules, formMessage, createMoto());
-
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
-
         $("#link_cancel").on('click', function (e) {
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             $(".content-ajax").load(route);
         });
-
     });
-
 </script>
