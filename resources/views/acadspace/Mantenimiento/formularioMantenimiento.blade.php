@@ -28,7 +28,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestión Marcas'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestión Mantenimiento'])
             <div class="clearfix">
             </div>
             <br>
@@ -52,9 +52,9 @@
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
                 table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
-                    'id_marca',
+                    'id_mantenimiento',
                     '#',
-                    'Nombre marca',
+                    'Nombre tecnico',
                     'Acciones' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
@@ -72,17 +72,20 @@
                             <h2 class="modal-title">
                                 <i class="glyphicon glyphicon-tv">
                                 </i>
-                                Registrar Marca
+                                Registrar Mantenimiento
                             </h2>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(['id' => 'form_marc', 'class' => '', 'url'=>'/forms']) !!}
+                            {!! Form::open(['id' => 'form_mant', 'class' => '', 'url'=>'/forms']) !!}
                             <div class="row">
                                 <div class="col-md-12">
 
-                                    {!! Field:: text('tipo_marca',null,
-                                    ['label'=>'Nombre marca:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre de la marca perteneciente a una hoja de vida','icon'=>'fa fa-user'] ) !!}
+                                    {!! Field:: text('nom_tecnico',null,
+                                    ['label'=>'Nombre tecnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del tecnico','icon'=>'fa fa-user'] ) !!}
+                                    
+                                    {!! Field::select('Tipo de mantenimiento:',$tipos, ['id' => 'mantenimiento',
+                                    'name' => 'mantenimiento']) !!}
 
                                 </div>
 
@@ -163,11 +166,11 @@
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
-            url = "{{ route('espacios.academicos.marca.data') }}"; //url para cargar datos
+            url = "{{ route('espacios.academicos.mantenimiento.data') }}"; //url para cargar datos
             columns = [
-                {data: 'PK_MAR_Id_Marca', name: 'id_marca', "visible": false},
-                {data: 'DT_Row_Index'},
-                {data: 'MAR_Nombre', name: 'Nombre marca'},
+                {data: 'PK_MANT_Id_Registro', name: 'id_mantenimiento', "visible": false},
+                {data: 'DT_Rowtipos_Index'},
+                {data: 'MANT_Nombre_Tecnico', name: 'Nombre Tecnico'},
                 {
                     defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
@@ -189,7 +192,7 @@
                 e.preventDefault();
                 $tr = $(this).closest('tr');
                 var dataTable = table.row($tr).data();
-                var route = '{{ route('espacios.academicos.marca.destroy') }}' + '/' + dataTable.PK_MAR_Id_Marca;
+                var route = '{{ route('espacios.academicos.mantenimiento.destroy') }}' + '/' + dataTable.PK_MANT_Id_Registro;
                 var type = 'DELETE';
                 var async = async || false;
 
@@ -229,7 +232,7 @@
             var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.marca.regisMarca') }}';
+                        var route = '{{ route('espacios.academicos.mantenimiento.regisMantenimiento') }}';
                         var type = 'POST';
                         var async = async || false;
 
@@ -252,7 +255,7 @@
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
                                     $('#modal-create-marc').modal('hide');//Esconder el formulario
-                                    $('#form_marc')[0].reset(); //Limpia formulario
+                                    $('#form_mant')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -266,11 +269,8 @@
                 }
             };
 
-            var form_edit = $('#form_marc');
+            var form_edit = $('#form_mant');
             /*CONCATENAR EL CAMPO Y LAS OPCIONES DE VALIDACIÓN*/
-            var rules_edit = {
-                tipo_marca: {required: true, minlength:1, maxlength: 20}
-            };
             /*ENVIAR A FORMULARIO JS PARA VALIDAR*/
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
         });

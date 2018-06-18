@@ -6,6 +6,7 @@ use App\Container\Acadspace\src\Articulo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Mantenimiento;
+use App\Container\Acadspace\src\TiposMant;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
@@ -14,7 +15,19 @@ class MantenimientoController extends Controller
 {
     public function index(Request $request)
     {
-        return view('acadspace.Mantenimiento.formularioMantenimiento');
+        if ($request->isMethod('GET')) {
+            $tipos=new TiposMant();
+            $tiposmante=$tipos->pluck('MAN_Nombre','PK_MAN_Id_Tipo');
+            //Muestra vista elementos
+            return view('acadspace.Mantenimiento.formularioMantenimiento',
+            [
+               'tipos'=>$tiposmante->toArray()
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
     }
 
@@ -23,17 +36,18 @@ class MantenimientoController extends Controller
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function regisMarca(Request $request)
+    public function regisMantenimiento(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            Marca::create([
-                'MAR_Nombre' => $request['MAR_Nombre']
+            Mantenimiento::create([
+                'MANT_Nombre_Tecnico' => $request['MAR_Nombre'],
+                'FK_MANT_Id_Tipo' => $request['MAR_Nombre']
             ]);
 
             return AjaxResponse::success(
                 '¡Registro exitoso!',
-                'Marca registrada correctamente.'
+                'Mantenimiento registrado correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -51,8 +65,13 @@ class MantenimientoController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $marcas = Marca::select();
-            return Datatables::of($marcas)
+            $tipos = Mantenimiento::select();
+            return Datatables::of($tipos)
+                ->removeColumn('MANT_Fecha_Inicio')
+                ->removeColumn('MANT_Fecha_Fin')    
+                ->removeColumn('MANT_Descripcion_Errores')
+                ->removeColumn('FK_MANT_Id_Hojavida')
+                ->removeColumn('FK_MANT_Id_Tipo')
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()

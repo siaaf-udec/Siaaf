@@ -507,8 +507,8 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.mantenimiento.data'
         ]);
     
-        Route::post('regisTipo', [ //Registrar Tipo
-            'uses' => $controller . 'MantenimientoController@regisTipo',
+        Route::post('regisMantenimiento', [ //Registrar Tipo
+            'uses' => $controller . 'MantenimientoController@regisMantenimiento',
             'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
         ]);
     

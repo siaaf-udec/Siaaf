@@ -74,8 +74,12 @@
                             <div class="col-md-12">
                                 {!! Field:: text('codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
                                 ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
-                                fa-barcode'] ) !!} {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
-                                'name' => 'categoria']) !!} {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
+                                fa-barcode'] ) !!} 
+                                
+                                {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
+                                'name' => 'categoria']) !!} 
+                                
+                                {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
