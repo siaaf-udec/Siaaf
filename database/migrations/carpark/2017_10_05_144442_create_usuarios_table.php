@@ -15,7 +15,7 @@ class CreateUsuariosTable extends Migration
     {
         Schema::connection('carpark')->create('TBL_Carpark_Usuarios', function (Blueprint $table) {
             $table->integer('PK_CU_Codigo')->unsigned()->unique()->primary();
-            $table->integer('CU_Cedula');
+            $table->bigInteger('CU_Cedula');
             $table->String('CU_Nombre1', 50);
             $table->String('CU_Nombre2', 50)->nullable();
             $table->String('CU_Apellido1', 50);
