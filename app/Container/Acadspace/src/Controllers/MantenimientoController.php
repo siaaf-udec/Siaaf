@@ -9,7 +9,7 @@ use App\Container\Acadspace\src\Mantenimiento;
 use App\Container\Acadspace\src\TiposMant;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
-
+use Carbon\Carbon;
 
 class MantenimientoController extends Controller
 {
@@ -41,8 +41,11 @@ class MantenimientoController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             Mantenimiento::create([
-                'MANT_Nombre_Tecnico' => $request['MAR_Nombre'],
-                'FK_MANT_Id_Tipo' => $request['MAR_Nombre']
+                'MANT_Nombre_Tecnico' => $request['MANT_Nombre_Tecnico'],
+                'FK_MANT_Id_Tipo' => $request['FK_MANT_Id_Tipo'],
+                'MANT_Descripcion' => $request['MANT_Descripcion'],
+                'FK_MANT_Id_Hojavida' => '1',
+                'MANT_Fecha_Inicio' => Carbon::now()
             ]);
 
             return AjaxResponse::success(
@@ -67,7 +70,6 @@ class MantenimientoController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $tipos = Mantenimiento::select();
             return Datatables::of($tipos)
-                ->removeColumn('MANT_Fecha_Inicio')
                 ->removeColumn('MANT_Fecha_Fin')    
                 ->removeColumn('MANT_Descripcion_Errores')
                 ->removeColumn('FK_MANT_Id_Hojavida')
@@ -92,8 +94,8 @@ class MantenimientoController extends Controller
      */
     public function destroy(Request $request, $id){
         if ($request->ajax() && $request->isMethod('DELETE')) {
-                $marca = Marca::find($id);
-                $marca->delete();
+                $mantenimiento = Mantenimiento::find($id);
+                $mantenimiento->delete();
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Marca eliminada correctamente.'

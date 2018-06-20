@@ -294,7 +294,7 @@
 
                         var formData = new FormData();
                         formData.append('FK_INC_Id_User', $('input:text[name="id_persona"]').val());
-                        formData.append('FK_INC_Id_Articulo', $('select[id="articulos"]').val());
+                        formData.append('FK_INC_Id_Articulo', $('select[name="articulos"]').val());
                         formData.append('INC_Nombre_Espacio', $('select[name="espacios"]').val());
                         formData.append('INC_Descripcion', $('textarea[name="descripcion"]').val());
 
