@@ -30,6 +30,7 @@ class Incidentes extends Model
     protected $fillable = [
         'FK_INC_Id_User',
         'FK_INC_Id_Espacio',
+        'FK_INC_Id_Articulo',
         'INC_Descripcion'
     ];
 
@@ -42,5 +43,10 @@ class Incidentes extends Model
     {
         return $this->hasOne(Espacios::class, 'PK_ESP_Id_Espacio', 'FK_INC_Id_Espacio');
     }
+    public function articulo()
+    {
+        return $this->hasOne(Articulo::class, 'PK_ART_Id_Articulo', 'FK_INC_Id_Articulo');
+    }
+
 
 }
