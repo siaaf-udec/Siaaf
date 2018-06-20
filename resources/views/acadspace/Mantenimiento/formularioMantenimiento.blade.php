@@ -67,7 +67,7 @@
                 <div class="col-md-12">
                 {{-- BEGIN HTML MODAL CREATE --}}
                 <!-- responsive -->
-                    <div class="modal fade" data-width="760" id="modal-create-marc" tabindex="-1">
+                    <div class="modal fade" data-width="760" id="modal-create-mant" tabindex="-1">
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                             </button>
@@ -262,7 +262,7 @@
             /*ABRIR MODAL*/
             $(".create").on('click', function (e) {
                 e.preventDefault();
-                $('#modal-create-marc').modal('toggle');
+                $('#modal-create-mant').modal('toggle');
             });
             /*CREAR MARCA CON VALIDACIONES*/
             var createPermissions = function () {
@@ -292,8 +292,8 @@
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
-                                    $('#modal-create-cate').modal('hide');
-                                    $('#form_cate')[0].reset(); //Limpia formulario
+                                    $('#modal-create-mant').modal('hide');
+                                    $('#form_mant')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
