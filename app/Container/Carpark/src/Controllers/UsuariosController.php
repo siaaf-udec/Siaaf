@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Container\Carpark\src\Dependencias;
 use App\Container\Carpark\src\Estados;
 use App\Container\Carpark\src\Usuarios;
+use App\Container\Users\src\UsersUdec;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Motos;
 use Illuminate\Support\Facades\Storage;
@@ -125,7 +126,30 @@ class UsuariosController extends UsersUdecController
     public function store(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+            $documento=(string)$request['CU_Cedula'];
+
             $verificiaruser = Usuarios::find($request['PK_CU_Codigo']);
+            $verificarUserUdec= UsersUdec::find($documento);
+           // $verificarused=UsersUdec::where('number_document',$documento)->get();
+
+
+            if (!$verificarUserUdec->count() ) {
+                
+               
+                UsersUdec::create([
+                    'number_document' => $documento,
+                    'code' => $request['PK_CU_Codigo'],
+                    'username' => $request['CU_Nombre1'],                    
+                    'lastname' => $request['CU_Apellido1'],
+                    'number_phone' => $request['CU_Telefono'],
+                    'email' => $request['CU_Correo'],
+                    
+                ]);
+
+
+            }
+
+
             if (empty($verificiaruser)) {
 
                 $img = $request->file('CU_UrlFoto');
@@ -137,9 +161,7 @@ class UsuariosController extends UsersUdecController
                     'PK_CU_Codigo' => $request['PK_CU_Codigo'],
                     'CU_Cedula' => $request['CU_Cedula'],
                     'CU_Nombre1' => $request['CU_Nombre1'],
-                    'CU_Nombre2' => $request['CU_Nombre2'],
                     'CU_Apellido1' => $request['CU_Apellido1'],
-                    'CU_Apellido2' => $request['CU_Apellido2'],
                     'CU_Telefono' => $request['CU_Telefono'],
                     'CU_Correo' => $request['CU_Correo'],
                     'CU_Direccion' => $request['CU_Direccion'],
@@ -147,11 +169,16 @@ class UsuariosController extends UsersUdecController
                     'FK_CU_IdDependencia' => $request['FK_CU_IdDependencia'],
                     'FK_CU_IdEstado' => $request['FK_CU_IdEstado'],
                 ]);
+
+
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Datos almacenados correctamente.'
+                    'Datos creados en usuariosCarpark'
                 );
             }
+
+
+
 
             return AjaxResponse::success(
                 '¡Lo sentimos!',
@@ -169,7 +196,7 @@ class UsuariosController extends UsersUdecController
 
     /**
      * Presenta el formulario con los datos para editar el regitro de un usuario deseado.
-     *
+     *0
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
@@ -177,7 +204,9 @@ class UsuariosController extends UsersUdecController
     public function edit(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $infoUsuario = Usuarios::find($id);
+            $documento=(integer)$id;
+            $infoUsuario = Usuarios::find($documento);
+           // $infoUsuario=Usuarios::where('PK_CU_Codigo',$documento)->get();
             return view('carpark.usuarios.editarUsuario',
                 [
                     'infoUsuario' => $infoUsuario,
