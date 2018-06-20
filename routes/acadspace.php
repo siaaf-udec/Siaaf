@@ -507,18 +507,37 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.mantenimiento.data'
         ]);
     
-        Route::post('regisMantenimiento', [ //Registrar Tipo
+        Route::post('regisMantenimiento', [ //Registrar
             'uses' => $controller . 'MantenimientoController@regisMantenimiento',
             'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
         ]);
     
-        Route::delete('delete/{id?}', [ //Eliminar Tipo
+        Route::delete('delete/{id?}', [ //Eliminar
             'uses' => $controller . 'MantenimientoController@destroy',
             'as' => 'espacios.academicos.mantenimiento.destroy'
         ])->where(['id' => '[0-9]+']);
     });
         
     /*FIN FUNCIONALIDAD MANTENIMIENTOS*/
+
+        /*RUTAS FUNCIONALIDAD HOJA DE VIDA*/
+    
+        Route::group(['prefix' => 'hojavida', 'middleware' => ['permission:FUNC_ESPA']], function () {
+            $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
+        
+            Route::get('index', [
+                'uses' => $controller . 'HojavidaController@index',
+                'as' => 'espacios.academicos.hojavida.index'
+            ]);
+        
+            Route::post('regisHojavida', [ //Registrar
+                'uses' => $controller . 'HojavidaController@regisHojavida',
+                'as' => 'espacios.academicos.hojavida.regisHojavida',
+            ]);
+        
+        });
+            
+        /*FIN FUNCIONALIDAD HOJA DE VIDA*/
 
 });
 

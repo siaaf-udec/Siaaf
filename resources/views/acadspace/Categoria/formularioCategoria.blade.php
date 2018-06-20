@@ -216,8 +216,6 @@
                     }
                 });
 
-
-
             });
             /*ABRIR MODAL*/
             $(".create").on('click', function (e) {

@@ -90,9 +90,9 @@
                                     ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                     ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
                                     
-                                    {!! Field:: text('codigo_articulo',null,
-                                    ['label'=>'Codigo Articulo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                    ['help' => 'Digite el código del articulo','icon'=>'fa fa-laptop'] ) !!}
+                                    {!! Field:: select('Codigo articulo:',$articulos,
+                                    ['id' => 'articulos', 'name' => 'articulos'])
+                                    !!}
 
                                     {!! Field::select('Espacio académico:',$espacios,
                                         ['id' => 'espacios', 'name' => 'espacios'])
@@ -169,11 +169,15 @@
         <table class="table">
             <tr>
                 <td>Descripcion:</td>
-                <td>@{{INC_Descripcion}}</td>
+                <td>@{{ INC_Descripcion }}</td>
+            </tr>
+            <tr>
+                <td>Codigo del articulo:</td>
+                <td>@{{ articulo.ART_Codigo }}</td>
             </tr>
             <tr>
                 <td>Fecha:</td>
-                <td>@{{created_at}}</td>
+                <td>@{{ created_at }}</td>
             </tr>
         </table>
     </script>
@@ -290,6 +294,7 @@
 
                         var formData = new FormData();
                         formData.append('FK_INC_Id_User', $('input:text[name="id_persona"]').val());
+                        formData.append('FK_INC_Id_Articulo', $('select[name="articulos"]').val());
                         formData.append('INC_Nombre_Espacio', $('select[name="espacios"]').val());
                         formData.append('INC_Descripcion', $('textarea[name="descripcion"]').val());
 
