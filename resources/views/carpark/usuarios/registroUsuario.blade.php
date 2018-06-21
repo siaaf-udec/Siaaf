@@ -25,7 +25,7 @@
                             {!! Field:: text('CU_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Nombre1',null,['label'=>'Nombres','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
+                            {!! Field:: text('CU_Nombre1',null,['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
                                                              ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user']) !!}
 
                            {{--  {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
