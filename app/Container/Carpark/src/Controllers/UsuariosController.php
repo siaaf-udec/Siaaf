@@ -205,10 +205,13 @@ class UsuariosController extends UsersUdecController
     public function edit(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $documento=(integer)$id;
-            $infoUsuario = Usuarios::find($documento);
-            //$infoUsuario['id']=$id;
-           //$infoUsuario=::where()->get();
+           
+            $infoUsuario = Usuarios::find($id);
+           // $infoUsuario=Usuarios::all()->first();
+            //$infoUsuario=Usuarios::all()->first();
+           //$infoUsuario=Usuarios::all()->where('CU_Cedula',$id)->get();
+
+           
             return view('carpark.usuarios.editarUsuario',
                 [
                     'infoUsuario' => $infoUsuario,

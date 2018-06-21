@@ -58,6 +58,7 @@
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                         @slot('columns', [
                             'Documento',
+                            'Codigo',
                             'Nombre',
                             'Apellido',
                        //    {{--  'Perfil', --}}
@@ -110,6 +111,7 @@
         url = "{{ route('parqueadero.usuariosCarpark.tablaUsuarios')}}";
         columns = [
             {data: 'CU_Cedula', name: 'CU_Cedula'},
+            {data: 'PK_CU_Codigo', name: 'PK_CU_Codigo'},
             {data: 'CU_Nombre1', name: 'CU_Nombre1'},
             {data: 'CU_Apellido1', name: 'CU_Apellido1'},
             //{data: 'type_user', name: 'type_user'},
@@ -150,7 +152,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.number_document;
+            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.PK_CU_Codigo;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -205,7 +207,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.CU_Cedula;
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.PK_CU_Codigo;
             $(".content-ajax").load(route_edit);
         });
 
@@ -213,7 +215,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.CU_Cedula;
+                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.PK_CU_Codigo;
             $(".content-ajax").load(route_edit);
         });
 
