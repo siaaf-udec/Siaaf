@@ -174,7 +174,7 @@ class UsuariosController extends UsersUdecController
 
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Datos creados en usuariosCarpark'
+                    'Datos creados en Usuarios'
                 );
             }
 
@@ -207,8 +207,8 @@ class UsuariosController extends UsersUdecController
         if ($request->ajax() && $request->isMethod('GET')) {
             $documento=(integer)$id;
             $infoUsuario = Usuarios::find($documento);
-            $infoUsuario['id']=$id;
-           // $infoUsuario=Usuarios::where('PK_CU_Codigo',$documento)->get();
+            //$infoUsuario['id']=$id;
+           //$infoUsuario=::where()->get();
             return view('carpark.usuarios.editarUsuario',
                 [
                     'infoUsuario' => $infoUsuario,
