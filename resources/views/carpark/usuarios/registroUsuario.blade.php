@@ -26,7 +26,7 @@
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
                             {!! Field:: text('CU_Nombre1',null,['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el primer nombre del usuario.','icon'=>'fa fa-user']) !!}
+                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user']) !!}
 
                            {{--  {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!} --}}
@@ -36,7 +36,7 @@
                         <div class="col-md-6">
 
                             {!! Field:: text('CU_Apellido1',null,['label'=>'Primer Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
+                                                             ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
 
                             {{-- {!! Field:: text('CU_Apellido2',null,['label'=>'Segundo Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!} --}}
