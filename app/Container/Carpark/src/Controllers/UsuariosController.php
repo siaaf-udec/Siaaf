@@ -131,9 +131,9 @@ class UsuariosController extends UsersUdecController
             $verificiaruser = Usuarios::find($request['PK_CU_Codigo']);
             $verificarUserUdec= UsersUdec::find($documento);
            // $verificarused=UsersUdec::where('number_document',$documento)->get();
+            
 
-
-            if (!$verificarUserUdec->count() ) {
+            if (is_null($verificarUserUdec) ) {
                 
                
                 UsersUdec::create([
@@ -148,6 +148,7 @@ class UsuariosController extends UsersUdecController
 
 
             }
+        
 
 
             if (empty($verificiaruser)) {
@@ -206,6 +207,7 @@ class UsuariosController extends UsersUdecController
         if ($request->ajax() && $request->isMethod('GET')) {
             $documento=(integer)$id;
             $infoUsuario = Usuarios::find($documento);
+            $infoUsuario['id']=$id;
            // $infoUsuario=Usuarios::where('PK_CU_Codigo',$documento)->get();
             return view('carpark.usuarios.editarUsuario',
                 [
