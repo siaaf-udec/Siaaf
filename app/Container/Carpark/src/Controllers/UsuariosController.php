@@ -340,4 +340,28 @@ class UsuariosController extends UsersUdecController
         );
     }
 
+      public function data2(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            //$user = UsersUdec::query();
+            $user2=Usuarios::query();
+            //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
+          
+            return DataTables::of($user2)
+                ->removeColumn('company')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->removeColumn('deleted_at')
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
 }
