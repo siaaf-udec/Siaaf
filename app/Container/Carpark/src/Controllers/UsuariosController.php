@@ -208,7 +208,7 @@ class UsuariosController extends UsersUdecController
            
             $infoUsuario = Usuarios::find($id);
            // $infoUsuario=Usuarios::all()->first();
-            //$infoUsuario=Usuarios::all()->first();
+            
            //$infoUsuario=Usuarios::all()->where('CU_Cedula',$id)->get();
 
            
@@ -237,6 +237,21 @@ class UsuariosController extends UsersUdecController
             $usuario = Usuarios::find($request['PK_CU_Codigo']);
             $usuario->fill($request->all());
             $usuario->save();
+
+            
+            $documento=(string)$request['CU_Cedula'];
+            $userudec=UsersUdec::find($documento);
+            $userudec->fill([
+
+            'number_document' => $documento,
+            'code' => $request['PK_CU_Codigo'],
+            'username' => $request['CU_Nombre1'],                    
+            'lastname' => $request['CU_Apellido1'],
+            'number_phone' => $request['CU_Telefono'],
+            'email' => $request['CU_Correo'],
+
+            ]);
+            $userudec->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -342,6 +357,8 @@ class UsuariosController extends UsersUdecController
             'No se pudo completar tu solicitud.'
         );
     }
+
+
 
       public function data2(Request $request)
     {
