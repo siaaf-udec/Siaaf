@@ -24,7 +24,7 @@ class CreateMotosTable extends Migration
             $table->String('CM_UrlPropiedad', 100)->nullable();
             $table->String('CM_UrlSoat', 100)->nullable();
             $table->String('FK_CM_CodigoUser');
-            $table->foreign('FK_CM_CodigoUser')->references('number_document')->on('developer.users_udec');
+            $table->foreign('FK_CM_CodigoUser')->references('PK_CU_Codigo')->on('TBL_Carpark_Usuarios');
 
             $table->timestamps();
         });
