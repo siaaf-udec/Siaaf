@@ -4,6 +4,7 @@ namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Users\src\UsersUdec;
+use App\Container\Carpark\src\Usuarios;
 
 class Motos extends Model
 {
@@ -30,8 +31,9 @@ class Motos extends Model
     public function relacionMotosUsuarios()
     {
         //return $this->belongsTo(UsersUdec::class, 'FK_CM_CodigoUser');
-        return $this->hasMany(UsersUdec::class, 'number_document', 'FK_CM_CodigoUser');
+        return $this->hasMany(Usuarios::class, 'PK_CU_Codigo', 'FK_CM_CodigoUser');
     }
+
 
      
 }
