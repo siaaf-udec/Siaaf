@@ -104,51 +104,63 @@ class MotosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if(!empty($request->file('CM_UrlFoto')))
-            {
-                $imgMoto = $request->file('CM_UrlFoto');
-                $urlMoto = Storage::disk('developer')->putFile('carpark/motos', $imgMoto);
-                $urlMoto = "developer/" . $urlMoto;
+            $verificarplaca=Motos::where('CM_Placa',strtoupper($request['CM_Placa'])); //VALIDAR QUE LA PLACA NO EXISTA
 
-            }else
-            {
-                $urlMoto = null;
-            }
-            // if(!empty($request->file('CM_UrlPropiedad')))
-            // {
-            //     $imgProp = $request->file('CM_UrlPropiedad');
-            //     $urlProp = Storage::disk('developer')->putFile('carpark/motos', $imgProp);
-            //     $urlProp = "developer/" . $urlProp;
-            // }else
-            // {
-            //     $urlProp = null;
-            // }
-            // if(!empty($request->file('CM_UrlSoat')))
-            // {
-            //     $imgSOAT = $request->file('CM_UrlSoat');
-            //     $urlSOAT = Storage::disk('developer')->putFile('carpark/motos', $imgSOAT);
-            //     $urlSOAT = "developer/" . $urlSOAT;
-            // }else
-            // {
-            //     $urlSOAT = null;
-           // }
-            $generadorID = date_create();
-            Motos::create([
-                'PK_CM_IdMoto' => date_timestamp_get($generadorID),
-                'CM_Placa' => strtoupper($request['CM_Placa']),
-                'CM_Marca' => $request['CM_Marca'],
-                'CM_NuPropiedad' => $request['CM_NuPropiedad'],
-                // 'CM_NuSoat' => $request['CM_NuSoat'],
-                // 'CM_FechaSoat' => $request['CM_FechaSoat'],
-                'CM_UrlFoto' => $urlMoto,
-                // 'CM_UrlPropiedad' => $urlProp,
-                // 'CM_UrlSoat' => $urlSOAT,
-                'FK_CM_CodigoUser' => $request['FK_CM_CodigoUser'],
-            ]);
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos almacenados correctamente.'
+
+        if (empty($verificarplaca)) {
+
+                if(!empty($request->file('CM_UrlFoto')))
+                {
+                    $imgMoto = $request->file('CM_UrlFoto');
+                    $urlMoto = Storage::disk('developer')->putFile('carpark/motos', $imgMoto);
+                    $urlMoto = "developer/" . $urlMoto;
+
+                }else
+                {
+                    $urlMoto = null;
+                }
+                // if(!empty($request->file('CM_UrlPropiedad')))
+                // {
+                //     $imgProp = $request->file('CM_UrlPropiedad');
+                //     $urlProp = Storage::disk('developer')->putFile('carpark/motos', $imgProp);
+                //     $urlProp = "developer/" . $urlProp;
+                // }else
+                // {
+                //     $urlProp = null;
+                // }
+                // if(!empty($request->file('CM_UrlSoat')))
+                // {
+                //     $imgSOAT = $request->file('CM_UrlSoat');
+                //     $urlSOAT = Storage::disk('developer')->putFile('carpark/motos', $imgSOAT);
+                //     $urlSOAT = "developer/" . $urlSOAT;
+                // }else
+                // {
+                //     $urlSOAT = null;
+               // }
+                $generadorID = date_create();
+                Motos::create([
+                    'PK_CM_IdMoto' => date_timestamp_get($generadorID),
+                    'CM_Placa' => strtoupper($request['CM_Placa']),
+                    'CM_Marca' => $request['CM_Marca'],
+                    'CM_NuPropiedad' => $request['CM_NuPropiedad'],
+                    // 'CM_NuSoat' => $request['CM_NuSoat'],
+                    // 'CM_FechaSoat' => $request['CM_FechaSoat'],
+                    'CM_UrlFoto' => $urlMoto,
+                    // 'CM_UrlPropiedad' => $urlProp,
+                    // 'CM_UrlSoat' => $urlSOAT,
+                    'FK_CM_CodigoUser' => $request['FK_CM_CodigoUser'],
+                ]);
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos almacenados correctamente.'
+                );
+        }
+        
+        return AjaxResponse::success(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud, la placa ya está registrada.'
             );
+
         }
 
         return AjaxResponse::fail(
