@@ -21,20 +21,21 @@
                             {!! Field:: text('CM_Placa',null,['label'=>'Placa del vehículo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite la placa del vehículo a registrar.','icon'=>'fa fa-motorcycle'] ) !!}
 
-                            {!! Field:: text('CM_Marca',null,['label'=>'Marca del vehículo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                         ['help' => 'Digite la marca del vehículo.','icon'=>'fa fa-credit-card'] ) !!}
 
 
                         </div>
                         <div class="col-md-6">
+                            
+                            {!! Field:: text('CM_Marca',null,['label'=>'Marca del vehículo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                         ['help' => 'Digite la marca del vehículo.','icon'=>'fa fa-credit-card'] ) !!}
 
                             {!! Field:: text('CM_NuPropiedad',null,['label'=>'Número de tarjeta de propiedad:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite el número de la tarjeta de propiedad del vehículo.','icon'=>'fa fa-id-card-o'] ) !!}
 
-                            {!! Field:: text('CM_NuSoat',null,['label'=>'Número del SOAT:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                          {{--   {!! Field:: text('CM_NuSoat',null,['label'=>'Número del SOAT:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite el número del SOAT vigente.','icon'=>'fa fa-id-card-o'] ) !!}
 
-                            {!! Field::date('CM_FechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!}
+                            {!! Field::date('CM_FechaSoat',['label' => 'Fecha de vencimiento del SOAT', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de vencimiento del SOAT', 'icon' => 'fa fa-calendar']) !!} --}}
 
                         </div>
                     </div>
@@ -44,14 +45,14 @@
                                 <span class="label label-primary">Seleccione la foto del vehículo</span>
                                 {!! Field::file('CM_UrlFoto') !!}
                             </div>
-                            <div class="col-md-4">
+                           {{--  <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
                                 {!! Field::file('CM_UrlPropiedad') !!}
                             </div>
                             <div class="col-md-4">
                                 <span class="label label-primary">SOAT del vehículo</span>
                                 {!! Field::file('CM_UrlSoat') !!}
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -123,16 +124,16 @@
                     var async = async || false;
                     var formData = new FormData();
                     var FileMoto = document.getElementById("CM_UrlFoto");
-                    var FileProp = document.getElementById("CM_UrlPropiedad");
-                    var FileSOAT = document.getElementById("CM_UrlSoat");
+                    // var FileProp = document.getElementById("CM_UrlPropiedad");
+                    // var FileSOAT = document.getElementById("CM_UrlSoat");
                     formData.append('CM_Placa', $('input:text[name="CM_Placa"]').val());
                     formData.append('CM_Marca', $('input:text[name="CM_Marca"]').val());
                     formData.append('CM_NuPropiedad', $('input:text[name="CM_NuPropiedad"]').val());
-                    formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
-                    formData.append('CM_FechaSoat', $('#CM_FechaSoat').val());
+                    // formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
+                    // formData.append('CM_FechaSoat', $('#CM_FechaSoat').val());
                     formData.append('CM_UrlFoto', FileMoto.files[0]);
-                    formData.append('CM_UrlPropiedad', FileProp.files[0]);
-                    formData.append('CM_UrlSoat', FileSOAT.files[0]);
+                    // formData.append('CM_UrlPropiedad', FileProp.files[0]);
+                    // formData.append('CM_UrlSoat', FileSOAT.files[0]);
                     formData.append('FK_CM_CodigoUser', $('input:text[name="FK_CM_CodigoUser"]').val());
                     $.ajax({
                         url: route,
@@ -171,16 +172,16 @@
             CM_Placa: {minlength: 5, maxlength: 6, required: true, noSpecialCharacters:true},
             CM_Marca: {required: true, minlength: 5, maxlength: 50, noSpecialCharacters:true},
             CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
-            CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
-            CM_FechaSoat: {required: true},
-            CM_UrlPropiedad: {required: false, extension: "jpg|png"},
-            CM_UrlSoat: {required: false, extension: "jpg|png"},
+            // CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
+            // CM_FechaSoat: {required: true},
+            // CM_UrlPropiedad: {required: false, extension: "jpg|png"},
+            // CM_UrlSoat: {required: false, extension: "jpg|png"},
         };
         var formMessage = {
             CM_Placa: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CM_Marca: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CM_NuPropiedad: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CM_NuSoat: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CM_NuSoat: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, createMoto());
         $('.button-cancel').on('click', function (e) {
