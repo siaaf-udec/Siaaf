@@ -213,7 +213,8 @@
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-                                $(".content-ajax").load(route);
+                                location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
@@ -293,7 +294,8 @@
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-                                $(".content-ajax").load(route);
+                                location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
@@ -318,7 +320,8 @@
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-            $(".content-ajax").load(route);
+            location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+            //$(".content-ajax").load(route);
         });
 
 
@@ -334,7 +337,8 @@
 
         $("#link_cancel").on('click', function (e) {
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-            $(".content-ajax").load(route);
+            location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+            //$(".content-ajax").load(route);
         });
 
 
