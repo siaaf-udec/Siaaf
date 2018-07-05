@@ -165,12 +165,21 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                $('#form_usuario_create')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr, response.title, response.message);
-                                App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-                                location.href="{{route('parqueadero.usuariosCarpark.index')}}";
-                                //$(".content-ajax").load(route);
+                                if (response.data == 422) {
+                                    xhr = "warning"
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+                                    location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                    //$(".content-ajax").load(route);;
+                                } else {
+                                    $('#form_usuario_create')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
+                                    location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                    //$(".content-ajax").load(route);
+                                    }
                             }
                         },
                         error: function (response, xhr, request) {

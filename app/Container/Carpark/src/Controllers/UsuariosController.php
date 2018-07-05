@@ -182,10 +182,11 @@ class UsuariosController extends UsersUdecController
 
 
 
-
+            $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, el código ya está registrado.'
+                'No se pudo completar tu solicitud, el código ya está registrado.',
+                $IdError
             );
 
         }
