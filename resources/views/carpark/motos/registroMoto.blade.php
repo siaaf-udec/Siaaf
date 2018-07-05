@@ -179,7 +179,7 @@
         var form = $('#form_moto_create');
         var formRules = {
             CM_UrlFoto: {required: false, extension: "jpg|png"},
-            CM_Placa: {minlength: 5, maxlength: 6, required: true, noSpecialCharacters:true},
+            CM_Placa: {minlength: 6, maxlength: 6, required: true, noSpecialCharacters:true},
             CM_Marca: {required: true, minlength: 5, maxlength: 50, noSpecialCharacters:true},
             CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
             // CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
