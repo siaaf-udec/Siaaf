@@ -104,10 +104,10 @@ class MotosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            $verificarplaca=Motos::where('CM_Placa',strtoupper($request['CM_Placa'])); //VALIDAR QUE LA PLACA NO EXISTA
+            $verificarplaca=Motos::where('CM_Placa','LIKE',strtoupper($request['CM_Placa']))->get(); //VALIDAR QUE LA PLACA NO EXISTA
 
 
-        if (empty($verificarplaca)) {
+        if ($verificarplaca == '[]') {
 
                 if(!empty($request->file('CM_UrlFoto')))
                 {
