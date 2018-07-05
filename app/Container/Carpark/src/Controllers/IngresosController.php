@@ -134,7 +134,8 @@ class IngresosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $infoMoto = Motos::find($id);
-            $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
+            $infoUser=Usuarios::where('PK_CU_Codigo',$infoMoto['FK_CM_CodigoUser'])->first();//usar llave foranea para buscar datos usuario
+            $infoUsuario = UsersUdec::find($infoUser['CU_Cedula']);
 
             return view('carpark.ingresos.confirmacion',
                 [

@@ -12,7 +12,7 @@
 
                 <div class="form-body">
 
-                    {!! Field:: text('CodigoUsuario',null,['label'=>'Documento del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite el documento del usuario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: text('CodigoUsuario',null,['label'=>'Codigo Universitario del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite el codigo universitario del usuario.','icon'=>'fa fa-user']) !!}
 
                     {!! Field:: text('PlacaMoto',null,['label'=>'Placa del vehículo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'6','autocomplete'=>'off'],['help' => 'Digite la placa del vehículo.','icon'=>'fa fa-user']) !!}
 
