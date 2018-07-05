@@ -135,14 +135,14 @@ class UsuariosController extends UsersUdecController
 
             if (is_null($verificarUserUdec) ) {
                 
-                $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->get();
+                // $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
                 UsersUdec::create([
 
                     'number_document' => $documento,
                     'code' => $request['PK_CU_Codigo'],
                     'username' => $request['CU_Nombre1'],               
                     'lastname' => $request['CU_Apellido1'],
-                    'type_user'=>$perfil['CD_Dependencia'],
+                    // 'type_user'=>$perfil['CD_Dependencia'],
                     'number_phone' => $request['CU_Telefono'],
                     'email' => $request['CU_Correo'],
                     
