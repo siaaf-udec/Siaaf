@@ -149,12 +149,22 @@
                         },
                         success: function (response, xhr, request) {
                             console.log(response);
-                            if (request.status === 200 && xhr === 'success') {
+                            
+                            if (response.data == 422) {
+                                    xhr = "warning"
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
+                                    $(".content-ajax").load(route);
+                            }
+                            else{
+                                if (request.status === 200 && xhr === 'success') {
                                 $('#form_moto_create')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('parqueadero.motosCarpark.index.ajax') }}';
                                 $(".content-ajax").load(route);
+                                }
                             }
                         },
                         error: function (response, xhr, request) {

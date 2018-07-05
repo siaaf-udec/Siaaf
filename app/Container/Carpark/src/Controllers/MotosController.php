@@ -155,10 +155,11 @@ class MotosController extends Controller
                     'Datos almacenados correctamente.'
                 );
         }
-        
+        $IdError = 422;
         return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, la placa ya está registrada.'
+                'No se pudo completar tu solicitud, la placa ya está registrada.',
+                $IdError
             );
 
         }
