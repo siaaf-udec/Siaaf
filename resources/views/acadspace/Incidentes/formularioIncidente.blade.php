@@ -39,7 +39,7 @@
                 <div class="col-md-12">
                     <div class="actions">
                         @permission('ACAD_REGISTRAR_INCIDENTE')
-                        <a class="btn btn-outline dark create" data-toggle="modal">
+                        <a class="btn btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar
@@ -89,7 +89,7 @@
                                     {!! Field:: text('id_persona',null,
                                     ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                     ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
-                                    
+
                                     {!! Field:: select('Codigo articulo:',$articulos,
                                     ['id' => 'articulos', 'name' => 'articulos'])
                                     !!}

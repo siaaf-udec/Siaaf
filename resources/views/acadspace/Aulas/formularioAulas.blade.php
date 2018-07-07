@@ -36,7 +36,7 @@
                 <div class="col-md-12">
                     <div class="actions">
                         @permission('ACAD_REGISTRAR_AULA')
-                        <a class="btn btn-outline dark create" data-toggle="modal">
+                        <a class="btn btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar

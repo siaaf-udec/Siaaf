@@ -74,11 +74,11 @@
                             <div class="col-md-12">
                                 {!! Field:: text('codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
                                 ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
-                                fa-barcode'] ) !!} 
-                                
+                                fa-barcode'] ) !!}
+
                                 {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
-                                'name' => 'categoria']) !!} 
-                                
+                                'name' => 'categoria']) !!}
+
                                 {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}
@@ -153,7 +153,7 @@
     {{--Dropzone--}}
     <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
-    
+
     <script>
         function format(d) {
             // `d` is the original data object for the row
@@ -222,7 +222,7 @@
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
-            url = "{{ route('espacios.academicos.elementos.data') }}"; //url para cargar datos
+            url = "{{ route('espacios.academicos.articulo.data') }}"; //url para cargar datos
             columns = [
                 //Carga los datos que ha traido el control
                 
@@ -285,7 +285,7 @@
                     // Open this row
                     row.child(format(row.data())).show();
                     tr.addClass('shown');
-                    
+
                 }
             });
 

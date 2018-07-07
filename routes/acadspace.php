@@ -332,35 +332,35 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*INICIO SEGUNDA FASE ESPACIOS ACADEMICOS*/
 
-    /*RUTAS PARA FUNCIONALIDAD ELEMENTOS*/
-    Route::group(['prefix' => 'elementos', 'middleware' => ['permission:FUNC_ESPA']], function () {
+    /*RUTAS PARA FUNCIONALIDAD Articulo*/
+    Route::group(['prefix' => 'articulo', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
         Route::get('index', [
-            'uses' => $controller . 'ElementosController@index',
-            'as' => 'espacios.academicos.elementos.index'
+            'uses' => $controller . 'ArticuloController@index',
+            'as' => 'espacios.academicos.articulo.index'
         ]);
         Route::get('data', [ //Cargar datatable
-            'uses' => $controller . 'ElementosController@data',
-            'as' => 'espacios.academicos.elementos.data'
+            'uses' => $controller . 'ArticuloController@data',
+            'as' => 'espacios.academicos.articulo.data'
         ]);
 
-        Route::post('regisElemento', [ //Registrar elemento
-            'uses' => $controller . 'ElementosController@regisIncidente',
-            'as' => 'espacios.academicos.elementos.regisElemento',
+        Route::post('regisArticulo', [ //Registrar Articulo
+            'uses' => $controller . 'ArticuloController@regisIncidente',
+            'as' => 'espacios.academicos.articulo.regisArticulo',
         ]);
 
         Route::get('edit/{id?}', [ //EDITAR
             'uses' => $controller . 'formatosController@edit',
-            'as' => 'espacios.academicos.elementos.edit'
+            'as' => 'espacios.academicos.articulo.edit'
         ])->where(['id' => '[0-9]+']);
 
         Route::delete('delete/{id?}', [ //ELIMINAR
-            'uses' => $controller . 'ElementosController@destroy',
-            'as' => 'espacios.academicos.elementos.destroy'
+            'uses' => $controller . 'ArticuloController@destroy',
+            'as' => 'espacios.academicos.articulo.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-    
-    /*FIN FUNCIONALIDAD ELEMENTOS*/
+
+    /*FIN FUNCIONALIDAD Articulo*/
 
     /*RUTAS PARA LECTOR QR*/
     Route::group(['prefix' => 'lectorqr', 'middleware' => ['permission:FUNC_ESPA']], function () {
@@ -373,7 +373,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'LectorqrController@cargarSalas',
             'as' => 'espacios.academicos.lectorqr.cargarSalas'
         ]);
-        
+
     });
 
     //FIN RUTAS LECTOR QR
@@ -382,168 +382,161 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'categoria', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-    
+
         Route::get('index', [
             'uses' => $controller . 'CategoriaController@index',
             'as' => 'espacios.academicos.categoria.index'
         ]);
-    
+
         Route::get('data', [ //Cargar datatable
             'uses' => $controller . 'CategoriaController@data',
             'as' => 'espacios.academicos.categoria.data'
         ]);
-    
+
         Route::post('regisCategoria', [ //Registrar Categoria
             'uses' => $controller . 'CategoriaController@regisCategoria',
             'as' => 'espacios.academicos.categoria.regisCategoria',
         ]);
-    
+
         Route::delete('delete/{id?}', [ //Eliminar Categoria
             'uses' => $controller . 'CategoriaController@destroy',
             'as' => 'espacios.academicos.categoria.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-        
-    
+
+
     /*FIN FUNCIONALIDAD CATEGORIA*/
-    
+
     /*RUTAS FUNCIONALIDAD PROCEDENCIA*/
-    
+
     Route::group(['prefix' => 'procedencia', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-    
+
         Route::get('index', [
             'uses' => $controller . 'ProcedenciaController@index',
             'as' => 'espacios.academicos.procedencia.index'
         ]);
-    
+
         Route::get('data', [ //Cargar datatable
             'uses' => $controller . 'ProcedenciaController@data',
             'as' => 'espacios.academicos.procedencia.data'
         ]);
-    
+
         Route::post('regisProcedencia', [ //Registrar Procedencia
             'uses' => $controller . 'ProcedenciaController@regisProcedencia',
             'as' => 'espacios.academicos.procedencia.regisProcedencia',
         ]);
-    
+
         Route::delete('delete/{id?}', [ //Eliminar Procedencia
             'uses' => $controller . 'ProcedenciaController@destroy',
             'as' => 'espacios.academicos.procedencia.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-        
+
     /*FIN FUNCIONALIDAD PROCEDENCIA*/
 
     /*RUTAS FUNCIONALIDAD MARCA*/
-    
+
     Route::group(['prefix' => 'marca', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-    
+
         Route::get('index', [
             'uses' => $controller . 'MarcaController@index',
             'as' => 'espacios.academicos.marca.index'
         ]);
-    
+
         Route::get('data', [ //Cargar datatable
             'uses' => $controller . 'MarcaController@data',
             'as' => 'espacios.academicos.marca.data'
         ]);
-    
+
         Route::post('regisMarca', [ //Registrar Marca
             'uses' => $controller . 'MarcaController@regisMarca',
             'as' => 'espacios.academicos.marca.regisMarca',
         ]);
-    
+
         Route::delete('delete/{id?}', [ //Eliminar Marca
             'uses' => $controller . 'MarcaController@destroy',
             'as' => 'espacios.academicos.marca.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-        
+
     /*FIN FUNCIONALIDAD MARCA*/
 
 
     /*RUTAS FUNCIONALIDAD TIPOS DE MANTENIMIENTOS*/
-    
+
     Route::group(['prefix' => 'tiposmant', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-    
+
         Route::get('index', [
             'uses' => $controller . 'TiposMantController@index',
             'as' => 'espacios.academicos.tiposmant.index'
         ]);
-    
+
         Route::get('data', [ //Cargar datatable
             'uses' => $controller . 'TiposMantController@data',
             'as' => 'espacios.academicos.tiposmant.data'
         ]);
-    
+
         Route::post('regisTipo', [ //Registrar Tipo
             'uses' => $controller . 'TiposMantController@regisTipo',
             'as' => 'espacios.academicos.tiposmant.regisTipo',
         ]);
-    
+
         Route::delete('delete/{id?}', [ //Eliminar Tipo
             'uses' => $controller . 'TiposMantController@destroy',
             'as' => 'espacios.academicos.tiposmant.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-        
+
     /*FIN FUNCIONALIDAD TIPOS DE MANTENIMIENTOS*/
 
     /*RUTAS FUNCIONALIDAD MANTENIMIENTOS*/
-    
+
     Route::group(['prefix' => 'mantenimiento', 'middleware' => ['permission:FUNC_ESPA']], function () {
         $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-    
+
         Route::get('index', [
             'uses' => $controller . 'MantenimientoController@index',
             'as' => 'espacios.academicos.mantenimiento.index'
         ]);
-    
+
         Route::get('data', [ //Cargar datatable
             'uses' => $controller . 'MantenimientoController@data',
             'as' => 'espacios.academicos.mantenimiento.data'
         ]);
-    
+
         Route::post('regisMantenimiento', [ //Registrar
             'uses' => $controller . 'MantenimientoController@regisMantenimiento',
             'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
         ]);
-    
+
         Route::delete('delete/{id?}', [ //Eliminar
             'uses' => $controller . 'MantenimientoController@destroy',
             'as' => 'espacios.academicos.mantenimiento.destroy'
         ])->where(['id' => '[0-9]+']);
     });
-        
+
     /*FIN FUNCIONALIDAD MANTENIMIENTOS*/
 
         /*RUTAS FUNCIONALIDAD HOJA DE VIDA*/
-    
+
         Route::group(['prefix' => 'hojavida', 'middleware' => ['permission:FUNC_ESPA']], function () {
             $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
-        
+
             Route::get('index', [
                 'uses' => $controller . 'HojavidaController@index',
                 'as' => 'espacios.academicos.hojavida.index'
             ]);
-        
+
             Route::post('regisHojavida', [ //Registrar
                 'uses' => $controller . 'HojavidaController@regisHojavida',
                 'as' => 'espacios.academicos.hojavida.regisHojavida',
             ]);
-        
+
         });
-            
+
         /*FIN FUNCIONALIDAD HOJA DE VIDA*/
 
 });
-
-
-
-
-
-
-
