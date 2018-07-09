@@ -18,7 +18,7 @@ class CreateUsersUdecTable extends Migration
             $table->string('code')->nullable();
             $table->string('username');
             $table->string('lastname');
-            $table->enum('type_user', ['Estudiante', 'Docente', 'Externo'])->nullable();
+            $table->enum('type_user', ['Estudiante', 'Docente', 'Externo','Admin'])->nullable();
             $table->string('company')->nullable();
             $table->enum('place', ['Fusagasugá', 'Girardot', 'Ubaté', 'Chia', 'Chocontá', 'Facatativá', 'Soacha', 'Zipaquirá','Ninguna'])->nullable();
             $table->string('number_phone');

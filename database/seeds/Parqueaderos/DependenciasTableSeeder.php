@@ -13,10 +13,10 @@ class DependenciasTableSeeder extends Seeder
     public function run()
     {
          $dependencias = [
-            [ 'PK_CD_IdDependencia' => '1','CD_Dependencia' => 'Administrativo' ],
-            [ 'PK_CD_IdDependencia' => '2','CD_Dependencia' => 'Profesor(a)' ],
-            [ 'PK_CD_IdDependencia' => '3','CD_Dependencia' => 'Estudiante' ],
-            //[ 'PK_CD_IdDependencia' => '4','CD_Dependencia' => 'Ingeniería Ambiental' ],
+            [ 'PK_CD_IdDependencia' => '1','CD_Dependencia' => 'Estudiante' ],
+            [ 'PK_CD_IdDependencia' => '2','CD_Dependencia' => 'Docente' ],
+            [ 'PK_CD_IdDependencia' => '3','CD_Dependencia' => 'Externo' ],
+            [ 'PK_CD_IdDependencia' => '4','CD_Dependencia' => 'Admin' ],
             //[ 'PK_CD_IdDependencia' => '5','CD_Dependencia' => 'Ingeniería Agronómica' ],
         ];
 
