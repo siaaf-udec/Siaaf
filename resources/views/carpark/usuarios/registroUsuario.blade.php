@@ -19,21 +19,39 @@
                                 <br><br>
                             </div>
 
-                            {!! Field:: text('PK_CU_Codigo',null,['label'=>'Código interno:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+
+                             {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
+
+
+                            
 
                             {!! Field:: text('CU_Cedula',null,['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Nombre1',null,['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
-                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user']) !!}
-
+                            
                            {{--  {!! Field:: text('CU_Nombre2',null,['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!} --}}
                             
-                            <a href="http://intranet.unicundi.edu.co/portal/index.php/resoluciones/774-resolucion-307-de-diciembre-4-de-2008" target="_blank">Ver la resolución número 307 de 2008</a>
+                            
+                            
+                             <div class="form-group divcode">
+                                
+
+                                {!! Field:: text('PK_CU_Codigo',null,['label'=>'Código interno:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                                     ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+                               
+                            </div>
+
+                        <a href="http://intranet.unicundi.edu.co/portal/index.php/resoluciones/774-resolucion-307-de-diciembre-4-de-2008" target="_blank">Ver la resolución número 307 de 2008</a>
+                        
                         </div>
+
+
                         <div class="col-md-6">
+
+                            {!! Field:: text('CU_Nombre1',null,['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user']) !!}
+
 
                             {!! Field:: text('CU_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
@@ -50,7 +68,7 @@
                             {!! Field:: text('CU_Direccion',null,['label'=>'Dirección:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'70','autocomplete'=>'off'],
                                                              ['help' => 'Digite la dirección del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                            {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
+                           
 
                             {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
 
@@ -91,6 +109,7 @@
 
         /* Configuración del Select cargado de la BD */
 
+
         var $widget_select_SelectDependencia = $('select[name="SelectDependencia"]');
 
         var route_Dependencia = '{{ route('parqueadero.usuariosCarpark.listDependencias') }}';
@@ -99,7 +118,7 @@
                 $widget_select_SelectDependencia.append(new Option(value.CD_Dependencia, value.PK_CD_IdDependencia));
             });
             $widget_select_SelectDependencia.val([]);
-            $('#FK_CU_IdDependencia').val(1);
+            $('#FK_CU_IdDependencia').val(2);
         });
 
 
@@ -117,6 +136,36 @@
         $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
+
+
+        //hola
+        $('.divcode').hide();
+        
+
+        $("#FK_CU_IdDependencia").on('change', function () {
+            var tipo = $('select[name="SelectDependencia"]').val();
+            if (tipo == 1) {
+                $('.divcode').show();
+                
+            }
+            if (tipo == 2) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 3) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 4) {
+                $('.divcode').hide();
+               
+            }
+        });
+
+
+
+
+
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
@@ -195,7 +244,7 @@
         var formRules = {
             CU_UrlFoto: {required: true, extension: "jpg|png"},
             CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
-            PK_CU_Codigo: {required: true, minlength: 9, maxlength: 9, number: true},
+            PK_CU_Codigo: {required:false, minlength: 9, maxlength: 9, number: true},
             CU_Nombre1: {required: true, letters: true},
             // CU_Nombre2: {letters: true},
             CU_Apellido1: {required: true, letters: true},

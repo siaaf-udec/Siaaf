@@ -23,7 +23,7 @@ class CreateMotosTable extends Migration
             $table->String('CM_UrlFoto', 100)->nullable();
             $table->String('CM_UrlPropiedad', 100)->nullable();
             $table->String('CM_UrlSoat', 100)->nullable();
-            $table->integer('FK_CM_CodigoUser')->unsigned();
+            $table->bigInteger('FK_CM_CodigoUser')->unsigned();
             $table->foreign('FK_CM_CodigoUser')->references('PK_CU_Codigo')->on('TBL_Carpark_Usuarios');
 
             $table->timestamps();

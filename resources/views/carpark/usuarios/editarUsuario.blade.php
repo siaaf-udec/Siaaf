@@ -231,7 +231,7 @@
         var formRules = {
             CU_UrlFoto: {required: true, extension: "jpg|png"},
             CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
-            PK_CU_Codigo: {required: true, minlength: 9, maxlength: 9, number: true},
+            PK_CU_Codigo: {required: true, minlength: 9, maxlength: 12, number: true},
             CU_Nombre1: {required: true, letters: true},
             // CU_Nombre2: {letters: true},
             CU_Apellido1: {required: true, letters: true},

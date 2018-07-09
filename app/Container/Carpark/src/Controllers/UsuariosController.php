@@ -128,65 +128,83 @@ class UsuariosController extends UsersUdecController
         if ($request->ajax() && $request->isMethod('POST')) {
             $documento=(string)$request['CU_Cedula'];
 
-            $verificiaruser = Usuarios::find($request['PK_CU_Codigo']);
-            $verificarUserUdec= UsersUdec::find($documento);
-           // $verificarused=UsersUdec::where('number_document',$documento)->get();
+            if($request['PK_CU_Codigo']==null){
+                $request['PK_CU_Codigo']=$request['CU_Cedula'];
+
+           }
+
+            $verificiaruser = Usuarios::find($request['PK_CU_Codigo']); //validar codigo repetido en usuarios carpark
+            $verificiarusercedula = Usuarios::where('CU_Cedula','=',$request['CU_Cedula'])->first();//validar cedula en usuarios carpark
+            $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
+          
             
+            if (is_null($verificiarusercedula) && empty($verificiaruser)){
 
-            if (is_null($verificarUserUdec) ) {
-                
-                $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
-                UsersUdec::create([
-
-                    'number_document' => $documento,
-                    'code' => $request['PK_CU_Codigo'],
-                    'username' => $request['CU_Nombre1'],               
-                    'lastname' => $request['CU_Apellido1'],
-                    'type_user'=>$perfil['CD_Dependencia'],
-                    'number_phone' => $request['CU_Telefono'],
-                    'place'=>"Facatativá",
-                    'email' => $request['CU_Correo'],
-                    
-                ]);
+                    if (is_null($verificarUserUdec) ) {
+                        
+                        $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
 
 
-            }
+                        UsersUdec::create([
+
+                            'number_document' => $documento,
+                            'code' => $request['PK_CU_Codigo'],
+                            'username' => $request['CU_Nombre1'],               
+                            'lastname' => $request['CU_Apellido1'],
+                            'type_user'=>$perfil['CD_Dependencia'],
+                            'number_phone' => $request['CU_Telefono'],
+                            'place'=>"Facatativá",
+                            'email' => $request['CU_Correo'],
+                            
+                        ]);
+
+
+                    }
         
 
+            
+                if (empty($verificiaruser)) {
 
-            if (empty($verificiaruser)) {
-
-                $img = $request->file('CU_UrlFoto');
-                $url = Storage::disk('developer')->putFile('carpark/usuarios', $img);
-                $url = "developer/" . $url;
-
-
-                Usuarios::create([
-                    'PK_CU_Codigo' => $request['PK_CU_Codigo'],
-                    'CU_Cedula' => $request['CU_Cedula'],
-                    'CU_Nombre1' => $request['CU_Nombre1'],
-                    'CU_Apellido1' => $request['CU_Apellido1'],
-                    'CU_Telefono' => $request['CU_Telefono'],
-                    'CU_Correo' => $request['CU_Correo'],
-                    'CU_Direccion' => $request['CU_Direccion'],
-                    'CU_UrlFoto' => $url,
-                    'FK_CU_IdDependencia' => $request['FK_CU_IdDependencia'],
-                    'FK_CU_IdEstado' => $request['FK_CU_IdEstado'],
-                ]);
+                    $img = $request->file('CU_UrlFoto');
+                    $url = Storage::disk('developer')->putFile('carpark/usuarios', $img);
+                    $url = "developer/" . $url;
 
 
-                return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'Datos creados en Usuarios'
-                );
-            }
+                    Usuarios::create([
+                        'PK_CU_Codigo' => $request['PK_CU_Codigo'],
+                        'CU_Cedula' => $request['CU_Cedula'],
+                        'CU_Nombre1' => $request['CU_Nombre1'],
+                        'CU_Apellido1' => $request['CU_Apellido1'],
+                        'CU_Telefono' => $request['CU_Telefono'],
+                        'CU_Correo' => $request['CU_Correo'],
+                        'CU_Direccion' => $request['CU_Direccion'],
+                        'CU_UrlFoto' => $url,
+                        'FK_CU_IdDependencia' => $request['FK_CU_IdDependencia'],
+                        'FK_CU_IdEstado' => $request['FK_CU_IdEstado'],
+                    ]);
+
+
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos creados en Usuarios'
+                    );
+                }
+                else{
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No se pudo completar tu solicitud, el código ya está registrado.',
+                        $IdError
+                    );
+                }
+        }
 
 
 
             $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, el código ya está registrado.',
+                'No se pudo completar tu solicitud, la cedula o el codigo ya está registrado.',
                 $IdError
             );
 
