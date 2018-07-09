@@ -149,7 +149,7 @@ class ReportesController extends Controller
             $time = date("h:i A");
             $infoMotos = Motos::all();
             foreach ($infoMotos as $infoMoto) {
-                $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
+                $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
 
                 $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
                 $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
@@ -181,7 +181,7 @@ class ReportesController extends Controller
                 $time = date("h:i A");
                 $infoMotos = Motos::all();
                 foreach ($infoMotos as $infoMoto) {
-                    $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
+                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
 
                     $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
                     $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
