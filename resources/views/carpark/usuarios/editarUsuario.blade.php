@@ -25,7 +25,7 @@
                             {!! Field:: text('PK_CU_Codigo',$infoUsuario['PK_CU_Codigo'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:','readonly', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
                             {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],

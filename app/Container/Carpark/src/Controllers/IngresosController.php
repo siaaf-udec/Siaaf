@@ -95,7 +95,9 @@ class IngresosController extends Controller
     public function verificar(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $infoMoto = Motos::where([['CM_Placa', '=', $request['PlacaMoto']], ['FK_CM_CodigoUser', '=', $request['CodigoUsuario']]])->get();
+
+            $infoUser=Usuarios::where('CU_Cedula','=', $request['CodigoUsuario'])->first();//obtener codigo a partir de la cedula
+            $infoMoto = Motos::where([['CM_Placa', '=', $request['PlacaMoto']], ['FK_CM_CodigoUser', '=', $infoUser['PK_CU_Codigo']]])->get();
 
             if ($infoMoto == '[]') {
                 $IdError = 422;

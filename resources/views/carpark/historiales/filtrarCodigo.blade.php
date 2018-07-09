@@ -13,7 +13,7 @@
 
                 <div class="form-body">
 
-                    {!! Field:: text('CodigoUsuario',null,['label'=>'Código del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite el código del usuario.','icon'=>'fa fa-user']) !!}
+                    {!! Field:: text('CodigoUsuario',null,['label'=>'Cedula del usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'12','autocomplete'=>'off'],['help' => 'Digite la cedula del usuario.','icon'=>'fa fa-user']) !!}
 
                     <div class="form-actions">
                         <div class="row">
@@ -66,7 +66,7 @@
                 messages:{
 
                     CodigoUsuario: {
-                        required: "Debe ingresar un número de código valido."
+                        required: "Debe ingresar un número de cedula valido."
                     }
 
 

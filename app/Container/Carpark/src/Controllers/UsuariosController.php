@@ -135,15 +135,16 @@ class UsuariosController extends UsersUdecController
 
             if (is_null($verificarUserUdec) ) {
                 
-                // $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
+                $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
                 UsersUdec::create([
 
                     'number_document' => $documento,
                     'code' => $request['PK_CU_Codigo'],
                     'username' => $request['CU_Nombre1'],               
                     'lastname' => $request['CU_Apellido1'],
-                    // 'type_user'=>$perfil['CD_Dependencia'],
+                    'type_user'=>$perfil['CD_Dependencia'],
                     'number_phone' => $request['CU_Telefono'],
+                    'place'=>"Facatativá",
                     'email' => $request['CU_Correo'],
                     
                 ]);
@@ -243,18 +244,25 @@ class UsuariosController extends UsersUdecController
 
             
             $documento=(string)$request['CU_Cedula'];
+             $perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
+
             $userudec=UsersUdec::find($documento);
             $userudec->fill([
 
-            'number_document' => $documento,
-            'code' => $request['PK_CU_Codigo'],
-            'username' => $request['CU_Nombre1'],                    
-            'lastname' => $request['CU_Apellido1'],
-            'number_phone' => $request['CU_Telefono'],
-            'email' => $request['CU_Correo'],
+                'number_document' => $documento,
+                'code' => $request['PK_CU_Codigo'],
+                'username' => $request['CU_Nombre1'],                    
+                'lastname' => $request['CU_Apellido1'],
+                'type_user'=>$perfil['CD_Dependencia'],
+                'number_phone' => $request['CU_Telefono'],
+                'email' => $request['CU_Correo'],
 
             ]);
+
             $userudec->save();
+
+
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
