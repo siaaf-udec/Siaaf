@@ -83,7 +83,8 @@
                             async: async,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-
+                                     UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
                                 }
                             },
                             error: function (response, xhr, request) {
