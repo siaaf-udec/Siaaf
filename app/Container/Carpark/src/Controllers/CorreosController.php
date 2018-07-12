@@ -39,6 +39,16 @@ class CorreosController extends Controller
                 Mail::to($infoCorreo['email'], 'P1')->send(new EmailCarpark($subject));
             }
 
+            if($infoEntradas == '[]'){
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No existen registros pendientes.',
+                        $IdError
+                    );
+
+            }
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Mensaje enviado correctamente.'

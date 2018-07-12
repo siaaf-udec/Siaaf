@@ -84,6 +84,19 @@
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
 
+<<<<<<< Updated upstream
+=======
+                                    if (response.data == 422) {
+                                        xhr = "warning"
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                       
+                                    } else{
+
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
+>>>>>>> Stashed changes
                                 }
                             },
                             error: function (response, xhr, request) {

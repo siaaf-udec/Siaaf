@@ -22,15 +22,15 @@ class Ingresos extends Model
         'CI_CodigoMoto'];
 
     //Función de conexión entre las tablas de Ingresos y Usuarios por el campo de CI_CodigoUser y PK_CU_Codigo para realizar las busquedas complementarias
-    // public function relacionIngresosUsuarios()
-    // {
-    //     return $this->belongsTo(UsersUdec::class, 'CI_CodigoUser');
-    // }
-
-
-     public function relacionIngresosUsuarios()
+    public function relacionIngresosUsuarios()
     {
-        //return $this->belongsTo(UsersUdec::class, 'FK_CM_CodigoUser');
-        return $this->belongsTo(Usuarios::class, 'CU_Cedula','CI_CodigoUser');
+        return $this->belongsTo(UsersUdec::class, 'CI_CodigoUser');
     }
+
+
+    //  public function relacionIngresosUsuarios()
+    // {
+    //     //return $this->belongsTo(UsersUdec::class, 'FK_CM_CodigoUser');
+    //     return $this->belongsTo(Usuarios::class, 'CU_Cedula','CI_CodigoUser');
+    // }
 }
