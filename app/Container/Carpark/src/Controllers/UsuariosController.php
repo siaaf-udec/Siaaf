@@ -396,12 +396,19 @@ class UsuariosController extends UsersUdecController
             //$user = UsersUdec::query();
             $user2=Usuarios::query();
             //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
-          
+           
+
             return DataTables::of($user2)
                 ->removeColumn('company')
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')
                 ->removeColumn('deleted_at')
+                
+                ->addColumn('CU_Perfil', function ($user2) {
+                    $perfil=Dependencias::where('PK_CD_IdDependencia', $user2->FK_CU_IdDependencia)->first();
+                    return $perfil['CD_Dependencia'];
+                     
+                })//agregar columna a datatable, agregar informacion a esa columna nueva
                 ->addIndexColumn()
                 ->make(true);
         }
