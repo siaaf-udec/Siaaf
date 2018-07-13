@@ -58,7 +58,7 @@
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                         @slot('columns', [
                             'Documento',
-                            'Codigo',
+                            'Perfil',
                             'Nombre',
                             'Apellido',
                        //    {{--  'Perfil', --}}
@@ -111,7 +111,7 @@
         url = "{{ route('parqueadero.usuariosCarpark.tablaUsuarios')}}";
         columns = [
             {data: 'CU_Cedula', name: 'CU_Cedula'},
-            {data: 'PK_CU_Codigo', name: 'PK_CU_Codigo'},
+            {data: 'CU_Perfil', name: 'CU_Perfil'},
             {data: 'CU_Nombre1', name: 'CU_Nombre1'},
             {data: 'CU_Apellido1', name: 'CU_Apellido1'},
             //{data: 'type_user', name: 'type_user'},
