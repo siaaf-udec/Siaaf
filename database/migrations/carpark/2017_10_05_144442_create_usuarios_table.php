@@ -22,7 +22,7 @@ class CreateUsuariosTable extends Migration
             $table->String('CU_Apellido2', 50)->nullable();
             $table->String('CU_Telefono', 45)->nullable();
             $table->String('CU_Correo', 90);
-            $table->String('CU_Direccion', 70);
+            $table->String('CU_Direccion', 70)->nullable();
             $table->String('CU_UrlFoto', 90);
             $table->integer('FK_CU_IdEstado')->unsigned();
             $table->foreign('FK_CU_IdEstado')->references('PK_CE_IdEstados')->on('TBL_Carpark_Estados');

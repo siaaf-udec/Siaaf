@@ -251,7 +251,7 @@
             // CU_Apellido2: {letters: true},
             CU_Telefono: {noSpecialCharacters:true},
             CU_Correo: {required: true, email: true},
-            CU_Direccion: {required: true, noSpecialCharacters:true},
+            CU_Direccion: { noSpecialCharacters:true},
             FK_CU_IdDependencia: {required: true},
             FK_CU_IdEstado: {required: true},
             acceptTeminos: {required: true},
