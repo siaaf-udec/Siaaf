@@ -194,39 +194,73 @@ class IngresosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             ////////////////Validación entrada o salida//////////////////
-            $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
-            if ($infoIngresos == '[]') {
-                $generadorID = date_create();
-                Ingresos::create([
-                    'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
-                    'CI_NombresUser' => $request['CI_NombresUser'],
-                    'CI_CodigoUser' => $request['CI_CodigoUser'],
-                    'CI_Placa' => $request['CI_Placa'],
-                    'CI_CodigoMoto' => $request['CI_CodigoMoto']
-                ]);
 
-                return AjaxResponse::success(
-                    '¡Bien hecho!',
-                    'Ingreso almacenados correctamente.'
-                );
+            $validarUsuario = Ingresos::where('CI_CodigoUser', '=', $request['CI_CodigoUser'])->get();
+
+            if ($validarUsuario == '[]') {//valida que el usuario ya tenga una moto ingresada
+                //si no hay ingresos , crea un ingreso nuevo
+
+       
+                $infoIngresos = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
+
+
+                if ($infoIngresos == '[]') {
+                    $generadorID = date_create();
+                    Ingresos::create([
+                        'PK_CI_IdIngreso' => date_timestamp_get($generadorID),
+                        'CI_NombresUser' => $request['CI_NombresUser'],
+                        'CI_CodigoUser' => $request['CI_CodigoUser'],
+                        'CI_Placa' => $request['CI_Placa'],
+                        'CI_CodigoMoto' => $request['CI_CodigoMoto']
+                    ]);
+
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Ingreso almacenados correctamente.'
+                    );
+                }
+
+                
             }
+            else{
+                //si hay ingresos 
 
-            $generadorID = date_create();
-            Historiales::create([
-                'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
-                'CH_NombresUser' => $request['CI_NombresUser'],
-                'CH_CodigoUser' => $request['CI_CodigoUser'],
-                'CH_Placa' => $request['CI_Placa'],
-                'CH_CodigoMoto' => $request['CI_CodigoMoto'],
-                'CH_FHentrada' => $infoIngresos[0]['created_at'],
-            ]);
+                $validarIngreso = Ingresos::where([['CI_CodigoUser', '=', $request['CI_CodigoUser']], ['CI_CodigoMoto', '=', $request['CI_CodigoMoto']]])->get();
+                //valida si es una salida del ingreso existente o un ingreso nuevo diferente
 
-            Ingresos::destroy($infoIngresos[0]['PK_CI_IdIngreso']); // limpia la entrada
+                if ($validarIngreso == '[]') {
+                    //su es un ingreso nuevo, pero ya tiene un ingreso existente, no puede tener dos ingresos al tiempo
 
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Salida almacenada correctamente.'
-            );
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'Solo puede tener un vehiculo ingresado.',
+                        $IdError
+                    );
+
+                }
+                else{
+                    //si es un ingreso existente crea la salida
+                    $generadorID = date_create();
+                    Historiales::create([
+                        'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
+                        'CH_NombresUser' => $request['CI_NombresUser'],
+                        'CH_CodigoUser' => $request['CI_CodigoUser'],
+                        'CH_Placa' => $request['CI_Placa'],
+                        'CH_CodigoMoto' => $request['CI_CodigoMoto'],
+                        'CH_FHentrada' => $validarIngreso[0]['created_at'],
+                    ]);
+
+                    Ingresos::destroy($validarIngreso[0]['PK_CI_IdIngreso']); // limpia la entrada
+
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Salida almacenada correctamente.'
+                    );
+
+                }
+
+            }
 
             //////////////// FIN Validación entrada o salida//////////////////
         }
