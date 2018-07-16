@@ -35,18 +35,8 @@ class CorreosController extends Controller
             $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
             for ($i = 0; $i < sizeof($infoEntradas); $i++) {
                 $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
-                $subject = $infoCorreo['username'] . ' ' . $infoCorreo['lastname'];
-                Mail::to($infoCorreo['email'], 'P1')->send(new EmailCarpark($subject));
-            }
-
-            if($infoEntradas == '[]'){
-                    $IdError = 422;
-                    return AjaxResponse::success(
-                        '¡Lo sentimos!',
-                        'No existen registros pendientes.',
-                        $IdError
-                    );
-
+                $subject = $infoCorreo['CU_Nombre1'] . ' ' . $infoCorreo['CU_Apellido1'];
+                Mail::to($infoCorreo['CU_Correo'], 'P1')->send(new EmailCarpark($subject));
             }
 
             return AjaxResponse::success(
