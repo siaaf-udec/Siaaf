@@ -49,6 +49,29 @@ class CorreosController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
+     }
+ 
+
+
+     public function desactivarUsers(Request $request)
+      {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Mensaje enviado correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
+
+
+
 
 }

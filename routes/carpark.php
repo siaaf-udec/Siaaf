@@ -483,7 +483,19 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.correosCarpark.enviarMail',
         ]);
 
+
+        //ruta para acceder al controlador que desactiva todos los usuarios
+
+        Route::post('desactivarUsers', [
+            'uses' => $controller . 'CorreosController@desactivarUsers',
+            'as' => 'parqueadero.correosCarpark.desactivarUsers',
+        ]);
+
+
     });
+
+
+
 ///////////////////////FIN Rutas Para Los Correos//////////////////////////////
 
 });

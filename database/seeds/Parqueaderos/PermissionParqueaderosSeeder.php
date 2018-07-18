@@ -199,5 +199,18 @@ class PermissionParqueaderosSeeder extends Seeder
 
         //Fin De Permisos Sobre Cerrar Parqueadero
 
+
+        //Inicio de permisos para desactivar y activar usuarios parqueadero
+
+        $permissionClosePark = new Permission;
+        $permissionClosePark->name = 'PARK_DEFUSE_CARPARK';
+        $permissionClosePark->display_name = 'Parqueaderos';
+        $permissionClosePark->description = 'Permiso para autorizar la desactivacion de todos los usuarios de parqueadero.';
+        $permissionClosePark->module_id = 3;
+        $permissionClosePark->save();
+
+        //Fin de permisos desactivar y activar usuarios parqueadero
+
+
     }
 }   
