@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
+use App\Container\Carpark\src\Usuarios;
 
 class CorreosController extends Controller
 {
@@ -33,10 +34,20 @@ class CorreosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             $infoEntradas = Ingresos::with('relacionIngresosUsuarios')->get();
+
+            if( $infoEntradas == '[]'){
+                $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No existen ingresos activos.',
+                        $IdError
+                );  
+            }
+
             for ($i = 0; $i < sizeof($infoEntradas); $i++) {
                 $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
-                $subject = $infoCorreo['CU_Nombre1'] . ' ' . $infoCorreo['CU_Apellido1'];
-                Mail::to($infoCorreo['CU_Correo'], 'P1')->send(new EmailCarpark($subject));
+                $subject = $infoCorreo['username'] . ' ' . $infoCorreo['lastname'];
+                Mail::to($infoCorreo['email'], 'P1')->send(new EmailCarpark($subject));
             }
 
             return AjaxResponse::success(
@@ -57,11 +68,27 @@ class CorreosController extends Controller
       {
         if ($request->ajax() && $request->isMethod('POST')) {
 
+            $infoUsuarios=Usuarios::all();
+
+            if( $infoUsuarios == '[]'){
+                $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No existen usuarios activos.',
+                        $IdError
+                );  
+            }
+            //inactivar todos los usuarios, estado 2
+            for ($i = 0; $i < sizeof($infoUsuarios); $i++) {
+                $infoUsuarios[$i]['FK_CU_IdEstado']=2;
+                $infoUsuarios[$i]->save();
+            }
+
             
 
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Mensaje enviado correctamente.'
+                'Usuarios desactivados correctamente.'
             );
         }
 

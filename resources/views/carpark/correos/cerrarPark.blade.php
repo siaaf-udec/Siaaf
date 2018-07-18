@@ -107,7 +107,16 @@
                             async: async,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
+                                    if (response.data == 422) {
+                                        xhr = "warning"
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                       
+                                    } else{
 
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
                                 }
                             },
                             error: function (response, xhr, request) {
@@ -125,7 +134,7 @@
        $(".desactivarUsuarios").on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            var route = '{{ route('parqueadero.correosCarpark.enviarMail') }}';
+            var route = '{{ route('parqueadero.correosCarpark.desactivarUsers') }}';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
