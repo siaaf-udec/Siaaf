@@ -42,8 +42,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="alert alert-success">
-                        <strong>¡Advertencia!</strong> Este espacio está dedicado al envio de correos informativos para los
-                        usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.
+                        <strong>¡Advertencia!</strong> Espacio dedicado al a la desactivacion de los usuarios que estan registrados en el parqueadero, durante el peridodo de vacaciones.
                     </div>
                 </div>
                 <div class="col-md-12 col-md-offset-5">
