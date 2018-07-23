@@ -18,6 +18,7 @@
                                 {!! Field::file('CU_UrlFoto') !!}
                                 <br><br>
                             </div>
+                            
 
 
                              {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
@@ -41,9 +42,10 @@
                                                                      ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
                                
                             </div>
-
-                        <a href="http://intranet.unicundi.edu.co/portal/index.php/resoluciones/774-resolucion-307-de-diciembre-4-de-2008" target="_blank">Ver la resolución número 307 de 2008</a>
-                        
+                        <br>
+                        <a href="http://intranet.unicundi.edu.co/portal/index.php/resoluciones/774-resolucion-307-de-diciembre-4-de-2008" target="_blank">- Ver la resolución número 307 de 2008 , uso de parqueaderos</a>
+                        <br><br>
+                        <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
                         </div>
 
 
@@ -73,6 +75,8 @@
                             {!! Field::select('FK_CU_IdEstado',['1'=>'Activo', '2'=>'Inactivo'],null,['label'=>'Estado del usuario: ']) !!}
 
                             {!! Field::checkbox('acceptTeminos', '1', ['label' => 'Acepta términos y condiciones de la resolución número 307 de 2008.','required']) !!}
+
+                            {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
                         </div>
                     </div>
@@ -255,6 +259,7 @@
             FK_CU_IdDependencia: {required: true},
             FK_CU_IdEstado: {required: true},
             acceptTeminos: {required: true},
+            acceptTeminos2: {required: true},
         };
 
         var formMessage = {
