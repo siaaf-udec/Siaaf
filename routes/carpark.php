@@ -42,11 +42,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.usuariosCarpark.listEstados'
         ]);
 
-        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
+        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario, subiendo la foto como archivo
         Route::get('create', [
             'uses' => $controller . 'UsuariosController@create',  
             'as' => 'parqueadero.usuariosCarpark.create'
         ]);
+        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario utilizando la camara para tomar fotos
+         Route::get('create2', [
+            'uses' => $controller . 'UsuariosController@create2',  
+            'as' => 'parqueadero.usuariosCarpark.create2'
+        ]);
+
 
         //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
         Route::post('store', [

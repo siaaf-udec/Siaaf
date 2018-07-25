@@ -221,7 +221,7 @@
 
         $(".create").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('parqueadero.usuariosCarpark.create') }}';
+            var route = '{{ route('parqueadero.usuariosCarpark.create2') }}';
             $(".content-ajax").load(route);
         });
         table.on('click', '.reporte', function (e) {

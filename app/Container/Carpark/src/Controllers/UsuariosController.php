@@ -71,6 +71,25 @@ class UsuariosController extends UsersUdecController
 
     }
 
+    //ruta para crear usuarios usando la camara
+
+    public function create2(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $listaDependencias = Dependencias::all();
+            return view('carpark.usuarios.registroUsuario2',
+                [
+                    'listaDependencias' => $listaDependencias,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+
     /**
      * Muestra la lista de dependencias registradas para el select del registro.
      *

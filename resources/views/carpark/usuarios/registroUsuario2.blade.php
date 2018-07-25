@@ -14,10 +14,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div>
-                                <span class="label label-primary">Seleccione la foto del usuario</span>
+                                {{-- <span class="label label-primary">Seleccione la foto del usuario</span>
                                 {!! Field::file('CU_UrlFoto') !!}
-                                <br><br>
-
+                                <br><br> --}}
 
                                 <video id="video" width="100%" height="100%" ></video>
                                 <br>
@@ -102,6 +101,19 @@
                             </div>
                         </div>
                     </div>
+                     <br>
+
+                    <div class="form-actions">
+                         <div align="center" >
+                            <span >Registro usuarios, sin utilizar camara</span>  
+                         </div>
+                        @permission('PARK_CREATE_USER')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon create"
+                                                       title="Registar nuevo usuario sin usar camara">
+                            <i class="fa fa-plus">
+                            </i>Registro sin camara
+                        </a>@endpermission
+                    </div>
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -117,7 +129,8 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
-//SCRIPT TOMAR FOTO
+
+    //SCRIPT TOMAR FOTO
 
            
             function tieneSoporteUserMedia() {
@@ -151,7 +164,7 @@
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
                     contexto.drawImage($video, 0, 0, $canvas.width, $canvas.height);
-                    var foto = $canvas.toDataURL(); //Esta es la foto, en base 64
+                    var foto = $canvas.toDataURL; //Esta es la foto, en base 64
                     $estado.innerHTML = "Enviando foto. Por favor, espera...";
 
                 });
@@ -196,7 +209,7 @@
                 for (var i = 0; i < byteString.length; i++) {
                     ia[i] = byteString.charCodeAt(i);
                 }
-                return new Blob([ia], {type:'image/jpg'});
+                return new Blob([ia],{type:'image/png'});
             }
 
 
@@ -291,10 +304,10 @@
                     formData.append('CU_Correo', $('input[name="CU_Correo"]').val());
                     formData.append('CU_Direccion', $('input:text[name="CU_Direccion"]').val());
 
-                    //formData.append('CU_UrlFoto', File.files[0]);
-                    var name='imagensiña.jpg';
+                    
                     var file=postCanvasToURL();
                     formData.append('CU_UrlFoto', file);
+                    
 
                     formData.append('FK_CU_IdEstado', $('select[name="FK_CU_IdEstado"]').val());
                     formData.append('FK_CU_IdDependencia', $('select[name="SelectDependencia"]').val());
@@ -342,7 +355,7 @@
         };
         var form = $('#form_usuario_create');
         var formRules = {
-            CU_UrlFoto: {required: true, extension: "jpg|png"},
+            //CU_UrlFoto: {required: true, extension: "jpg|png"},
             CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
             PK_CU_Codigo: {required:false, minlength: 9, maxlength: 9, number: true},
             CU_Nombre1: {required: true, letters: true},
@@ -380,6 +393,11 @@
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             location.href="{{route('parqueadero.usuariosCarpark.index')}}";
             //$(".content-ajax").load(route);
+        });
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('parqueadero.usuariosCarpark.create') }}';
+            $(".content-ajax").load(route);
         });
 
 

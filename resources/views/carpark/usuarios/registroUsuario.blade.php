@@ -95,6 +95,19 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+
+                    <div class="form-actions">
+                         <div align="center" >
+                            <span >Registro usuarios, usando camara web</span>  
+                         </div>
+                        @permission('PARK_CREATE_USER')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon create"
+                                                       title="Registar nuevo usuario usando camara">
+                            <i class="fa fa-plus">
+                            </i>Registro usando camara
+                        </a>@endpermission
+                    </div>
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -284,6 +297,11 @@
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
             location.href="{{route('parqueadero.usuariosCarpark.index')}}";
             //$(".content-ajax").load(route);
+        });
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('parqueadero.usuariosCarpark.create2') }}';
+            $(".content-ajax").load(route);
         });
 
 
