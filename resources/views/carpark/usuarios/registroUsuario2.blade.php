@@ -13,19 +13,23 @@
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div>
+                            <div class="text-center" >
                                 {{-- <span class="label label-primary">Seleccione la foto del usuario</span>
                                 {!! Field::file('CU_UrlFoto') !!}
                                 <br><br> --}}
 
                                 <video id="video" width="100%" height="100%" ></video>
                                 <br>
-                                <button id="boton" type="button">Tomar foto</button>
-                                <p id="estado"></p>
+                                <button id="boton" type="button" class="btn btn-info btn-responsive btninter centrado" >Tomar foto</button>
+                                <br>
+                                <div align="center">
+                                     <span class="label label-success" id="estado"></span>
+                                </div>
                                 <canvas id="canvas" style="display: none"></canvas>
                             </div>
                             
-
+                            <br>
+                            <br>
 
                              {!! Field::select('FK_CU_IdDependencia', null,['name' => 'SelectDependencia','label'=>'Dependencia: ']) !!}
 
@@ -102,18 +106,25 @@
                         </div>
                     </div>
                      <br>
-
-                    <div class="form-actions">
-                         <div align="center" >
-                            <span >Registro usuarios, sin utilizar camara</span>  
-                         </div>
-                        @permission('PARK_CREATE_USER')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar nuevo usuario sin usar camara">
-                            <i class="fa fa-plus">
-                            </i>Registro sin camara
-                        </a>@endpermission
+                <div class="form-actions">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="alert alert-success">
+                            <strong>¡OPCIONAL!</strong> Registro de usuarios sin utilizar camara web, solo cargando archivos del equipo.
+                        </div>
                     </div>
+                    <div class="col-md-12 col-md-offset-4">
+                        <div class="actions">
+                            @permission('PARK_CREATE_USER')<a href="javascript:;"
+                                                                   class="btn btn-simple btn-success btn-icon create"
+                                                                   title="Registar nuevo usuario sin usar camara">
+                                        <i class="fa fa-plus">
+                                        </i>Registro sin camara
+                                    </a>@endpermission
+                        </div>
+                    </div>
+                </div>
+
+
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -165,17 +176,17 @@
                     $canvas.height = $video.videoHeight;
                     contexto.drawImage($video, 0, 0, $canvas.width, $canvas.height);
                     var foto = $canvas.toDataURL; //Esta es la foto, en base 64
-                    $estado.innerHTML = "Enviando foto. Por favor, espera...";
+                    $estado.innerHTML = "FOTO TOMADA";
 
                 });
                 },
                 function(error) {
                     console.log("Permiso denegado o error: ", error);
-                    $estado.innerHTML = "No se puede acceder a la cámara, o no diste permiso.";
+                    $estado.innerHTML = "ACCESO DENEGADO A LA CAMARA";
                 });
             } else {
                 alert("Lo siento. Tu navegador no soporta esta característica");
-                $estado.innerHTML = "Parece que tu navegador no soporta esta característica. Intenta actualizarlo.";
+                $estado.innerHTML = "NAVEGADOR NO SOORTA CAMARA";
             }
 
 

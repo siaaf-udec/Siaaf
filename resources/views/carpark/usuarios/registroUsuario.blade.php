@@ -98,16 +98,23 @@
                     <br>
 
                     <div class="form-actions">
-                         <div align="center" >
-                            <span >Registro usuarios, usando camara web</span>  
-                         </div>
-                        @permission('PARK_CREATE_USER')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar nuevo usuario usando camara">
-                            <i class="fa fa-plus">
-                            </i>Registro usando camara
-                        </a>@endpermission
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="alert alert-success">
+                                <strong>¡OPCIONAL!</strong> Registro de usuarios utilizando camara web, sin cargar archivos del equipo.
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-md-offset-4">
+                            <div class="actions">
+                                @permission('PARK_CREATE_USER')<a href="javascript:;"
+                                                                   class="btn btn-simple btn-success btn-icon create"
+                                                                   title="Registar nuevo usuario usando camara">
+                                        <i class="fa fa-plus">
+                                        </i>Registro usando camara
+                                    </a>@endpermission
+                            </div>
+                        </div>
                     </div>
+
                     {!! Form::close() !!}
                 </div>
             </div>
