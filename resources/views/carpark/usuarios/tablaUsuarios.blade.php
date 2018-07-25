@@ -207,7 +207,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.PK_CU_Codigo;
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + dataTable.PK_CU_Codigo;
             $(".content-ajax").load(route_edit);
         });
 

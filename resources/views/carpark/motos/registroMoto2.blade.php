@@ -42,8 +42,22 @@
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0">
                             <div class="col-md-4">
-                                <span class="label label-primary">Seleccione la foto del vehículo</span>
-                                {!! Field::file('CM_UrlFoto') !!}
+                                {{-- <span class="label label-primary">Seleccione la foto del vehículo</span>
+                                {!! Field::file('CM_UrlFoto') !!} --}}
+                                <div class="text-center" >
+                                {{-- <span class="label label-primary">Seleccione la foto del usuario</span>
+                                {!! Field::file('CU_UrlFoto') !!}
+                                <br><br> --}}
+
+                                <video id="video" width="100%" height="100%" ></video>
+                                <br>
+                                <button id="boton" type="button" class="btn btn-info btn-responsive btninter centrado" >Tomar foto</button>
+                                <br>
+                                <div align="center">
+                                     <span class="label label-success" id="estado"></span>
+                                </div>
+                                <canvas id="canvas" style="display: none"></canvas>
+                            </div>
                             </div>
                            {{--  <div class="col-md-4">
                                 <span class="label label-primary">Tarjeta de propiedad del vehículo</span>
@@ -69,15 +83,16 @@
                             </a>@endpermission
 
                             @permission('PARK_CREATE_MOTO'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
-                          
+                            
                         </div>
                     </div>
                 </div>
                 <br>
+
                 <div class="form-actions">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="alert alert-success">
-                                <strong>¡OPCIONAL!</strong> Registro de usuarios utilizando camara web, sin cargar archivos del equipo.
+                                <strong>¡OPCIONAL!</strong> Registro de Motos utilizando camara web, sin cargar archivos del equipo.
                             </div>
                         </div>
                         <div class="col-md-12 col-md-offset-4">
@@ -93,7 +108,6 @@
                     </div>
 
                 {!! Form::close() !!}
-
             </div>
         </div>
 
@@ -108,6 +122,95 @@
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+
+
+//SCRIPT TOMAR FOTO
+
+           
+            function tieneSoporteUserMedia() {
+            return !!(navigator.getUserMedia || (navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia) || navigator.webkitGetUserMedia || navigator.msGetUserMedia)
+            }
+            function _getUserMedia() {
+            return (navigator.getUserMedia || (navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia) || navigator.webkitGetUserMedia || navigator.msGetUserMedia).apply(navigator, arguments);
+            }
+            // Declaramos elementos del DOM
+            var $video = document.getElementById("video"),
+            $canvas = document.getElementById("canvas"),
+            $boton = document.getElementById("boton"),
+            $estado = document.getElementById("estado");
+
+
+            if (tieneSoporteUserMedia()) {
+                _getUserMedia({
+                video: true
+                },
+                function(stream) {
+
+                    console.log("Permiso concedido");
+                    $video.srcObject = stream;
+                    $video.play();
+                    //Escuchar el click
+                    $boton.addEventListener("click", function() {
+                    //Pausar reproducción
+                    $video.pause();
+                    //Obtener contexto del canvas y dibujar sobre él
+                    var contexto = $canvas.getContext("2d");
+                    $canvas.width = $video.videoWidth;
+                    $canvas.height = $video.videoHeight;
+                    contexto.drawImage($video, 0, 0, $canvas.width, $canvas.height);
+                    var foto = $canvas.toDataURL; //Esta es la foto, en base 64
+                    $estado.innerHTML = "FOTO TOMADA";
+
+                });
+                },
+                function(error) {
+                    console.log("Permiso denegado o error: ", error);
+                    $estado.innerHTML = "ACCESO DENEGADO A LA CAMARA";
+                });
+            } else {
+                alert("Lo siento. Tu navegador no soporta esta característica");
+                $estado.innerHTML = "NAVEGADOR NO SOORTA CAMARA";
+            }
+
+
+//FIN SCRIPT
+
+//CONVERTIR FOTO EN ARCHIVO
+
+
+            function postCanvasToURL() {
+                  // Convert canvas image to Base64
+                  var img = $canvas.toDataURL();
+                  // Convert Base64 image to binary
+                  var file = dataURItoBlob(img);
+
+                  return file;
+            }
+
+            function dataURItoBlob(dataURI) {
+                // convert base64/URLEncoded data component to raw binary data held in a string
+                var byteString;
+                if (dataURI.split(',')[0].indexOf('base64') >= 0){
+                    byteString = atob(dataURI.split(',')[1]);
+                }
+                else{
+                    byteString = unescape(dataURI.split(',')[1]);
+                }
+                // separate out the mime component
+                var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                // write the bytes of the string to a typed array
+                var ia = new Uint8Array(byteString.length);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                return new Blob([ia],{type:'image/png'});
+            }
+
+
+//FIN SCRIPT
+
+
+
     jQuery(document).ready(function () {
         /*Configuracion de input tipo fecha*/
         $('.date-picker').datepicker({
@@ -152,7 +255,10 @@
                     formData.append('CM_NuPropiedad', $('input:text[name="CM_NuPropiedad"]').val());
                     // formData.append('CM_NuSoat', $('input:text[name="CM_NuSoat"]').val());
                     // formData.append('CM_FechaSoat', $('#CM_FechaSoat').val());
-                    formData.append('CM_UrlFoto', FileMoto.files[0]);
+
+                    var file=postCanvasToURL();
+                    formData.append('CM_UrlFoto', file);
+                    //formData.append('CM_UrlFoto', FileMoto.files[0]);
                     // formData.append('CM_UrlPropiedad', FileProp.files[0]);
                     // formData.append('CM_UrlSoat', FileSOAT.files[0]);
                     formData.append('FK_CM_CodigoUser', $('input:text[name="FK_CM_CodigoUser"]').val());
@@ -199,7 +305,7 @@
         };
         var form = $('#form_moto_create');
         var formRules = {
-            CM_UrlFoto: {required: false, extension: "jpg|png"},
+            //CM_UrlFoto: {required: false, extension: "jpg|png"},
             CM_Placa: {minlength: 6, maxlength: 6, required: true, noSpecialCharacters:true},
             CM_Marca: {required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true},
             CM_NuPropiedad: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
@@ -227,11 +333,10 @@
             //$(".content-ajax").load(route);
         });
 
-
          $(".create").on('click', function (e) {
             e.preventDefault();
             var codigo=  $('input:text[name="FK_CM_CodigoUser"]').val();
-            var route = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + codigo;
+            var route = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + codigo;
             $(".content-ajax").load(route);
         });
     });

@@ -93,6 +93,22 @@ class MotosController extends Controller
         );
 
     }
+    //ruta para crear motos usando la camara
+    public function create2(Request $request, $id)//
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('carpark.motos.registroMoto2',
+                [
+                    'codigoUsuario' => $id,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 
     /**
      * Función que almacena en la base de datos un nuevo vehículo.

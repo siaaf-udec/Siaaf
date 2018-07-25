@@ -123,6 +123,12 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.motosCarpark.RegistrarMoto'
         ]);
 
+         //ruta que conduce al controlador para mostrar el formulario para registrar una motociclet, con camara
+        Route::get('create2/{id?}', [
+            'uses' => $controller . 'MotosController@create2',  
+            'as' => 'parqueadero.motosCarpark.RegistrarMoto2'
+        ]);
+
         //ruta que conduce al controlador para alamacenar los datos de la motocicleta en la base de datos
         Route::post('store', [
             'uses' => $controller . 'MotosController@store',   
