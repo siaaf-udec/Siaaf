@@ -145,6 +145,7 @@
                     var async = async || false;
                     var formData = new FormData();
                     var FileMoto = document.getElementById("CM_UrlFoto");
+              
                     // var FileProp = document.getElementById("CM_UrlPropiedad");
                     // var FileSOAT = document.getElementById("CM_UrlSoat");
                     formData.append('CM_Placa', $('input:text[name="CM_Placa"]').val());
@@ -155,6 +156,7 @@
                     formData.append('CM_UrlFoto', FileMoto.files[0]);
                     // formData.append('CM_UrlPropiedad', FileProp.files[0]);
                     // formData.append('CM_UrlSoat', FileSOAT.files[0]);
+
                     formData.append('FK_CM_CodigoUser', $('input:text[name="FK_CM_CodigoUser"]').val());
                     $.ajax({
                         url: route,
@@ -227,12 +229,12 @@
             //$(".content-ajax").load(route);
         });
 
-
          $(".create").on('click', function (e) {
             e.preventDefault();
             var codigo=  $('input:text[name="FK_CM_CodigoUser"]').val();
             var route = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + codigo;
             $(".content-ajax").load(route);
         });
+
     });
 </script>

@@ -33,7 +33,5 @@ class Motos extends Model
        
         return $this->hasMany(Usuarios::class, 'PK_CU_Codigo', 'FK_CM_CodigoUser');
     }
-
-
      
 }
