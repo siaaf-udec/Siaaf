@@ -310,7 +310,7 @@
 
             var form_edit = $('#form_tipo');
             var rules_edit = {
-                nombre_tipo: {minlength: 15, required: true, number: true},
+                nombre_tipo: {minlength: 1, required: true},
                 descripcion_tipo: {required: true, minlength: 5, maxlength: 400},
             };
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());

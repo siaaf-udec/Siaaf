@@ -21,6 +21,8 @@ class DatabaseAutoevaluationSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(ModulesTableSeeder::class);
+        $this->call(RoleAutoevaluationSeeder::class);
+        $this->call(PermissionAutoevaluationSeeder::class);
+        $this->call(UsersAutoevaluationSeeder::class);
     }
 }

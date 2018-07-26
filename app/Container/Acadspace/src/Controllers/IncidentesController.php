@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Incidentes;
 use App\Container\Acadspace\src\Espacios;
+use App\Container\Acadspace\src\Articulo;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
@@ -28,10 +29,14 @@ class IncidentesController extends Controller
 
         if ($request->isMethod('GET')) {
             $espa = new espacios();
+            $articulo = new Articulo();
             $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo');
             return view('acadspace.Incidentes.formularioIncidente',
                 [
-                    'espacios' => $espacios->toArray()
+                    'espacios' => $espacios->toArray(),
+                    'articulos' => $articulos->toArray()
+
                 ]);
         }
         return AjaxResponse::fail(
@@ -52,6 +57,7 @@ class IncidentesController extends Controller
             Incidentes::create([
                 'FK_INC_Id_User' => $request['FK_INC_Id_User'],
                 'FK_INC_Id_Espacio' => $request['INC_Nombre_Espacio'],
+                'FK_INC_Id_Articulo' => $request['FK_INC_Id_Articulo'],
                 'INC_Descripcion' => $request['INC_Descripcion']
             ]);
 
@@ -79,6 +85,10 @@ class IncidentesController extends Controller
                 ->with(['espacio' => function ($query) {
                     return $query->select('PK_ESP_Id_Espacio',
                         'ESP_Nombre_Espacio');
+                }])
+                ->with(['articulo' => function ($query) {
+                    return $query->select('PK_ART_Id_Articulo',
+                        'ART_Codigo');
                 }])
                 ->get();
             return Datatables::of($incidentes)

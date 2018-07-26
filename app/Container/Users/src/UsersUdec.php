@@ -6,7 +6,7 @@ use App\Container\AdminRegist\Src\Registros;
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Administrative\Src\RegistroIngreso;
 use App\Container\Carpark\src\Motos;
-
+use App\Container\Carpark\src\Usuarios;
 
 class UsersUdec extends Model
 {
@@ -50,5 +50,14 @@ class UsersUdec extends Model
     {
         return $this->hasMany(Motos::class, 'FK_CM_CodigoUser');
     }
+
+
+    //Función de conexión entre las tablas de UsuariosUdec y Usuarios por el campo de PK_CU_Codigo y number_document para realizar las busquedas complementarias de datos de usuario
+    public function relacionUsersUdecUsuarios()
+    {
+        return $this->hasOne(Usuarios::class, 'CU_Cedula','number_document');
+    }
+
+
 
 }

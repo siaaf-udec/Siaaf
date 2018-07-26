@@ -34,7 +34,30 @@
             <br>
         @endcomponent
     </div>
+   
+    <div class="col-md-12">
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Desactivar todos los usuarios, en periodo de vacaciones:'])
+        
+            <br>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-success">
+                        <strong>¡Advertencia!</strong> Espacio dedicado al a la desactivacion de los usuarios que estan registrados en el parqueadero, durante el peridodo de vacaciones.
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-5">
+                    <div class="actions">
+                        @permission('PARK_DEFUSE_CARPARK')<a href="javascript:;" class="btn btn-primary btn-icon desactivarUsuarios"
+                                                        title="Desactivar Usuarios"><i
+                                    class="fa fa-paper-plane"></i>Desactivar Usuarios</a>@endpermission
+                    </div>
+                </div>
+            </div>
+            <br>
+        @endcomponent
+    </div>
     @endpermission
+
 @endsection
 
 @push('plugins')
@@ -83,6 +106,70 @@
                             async: async,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
+                                    if (response.data == 422) {
+                                        xhr = "warning"
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                       
+                                    } else{
+
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se enviaron las advertencias.", "error");
+                    }
+                });
+        });
+
+       $(".desactivarUsuarios").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var route = '{{ route('parqueadero.correosCarpark.desactivarUsers') }}';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro que desea enviar las advertencias?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+
+
+                                    if (response.data == 422) {
+                                        xhr = "warning"
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                       
+                                    } else{
+
+                                        UIToastr.init(xhr, response.title, response.message);
+                                        App.unblockUI('.portlet-form');
+                                    }
 
                                 }
                             },

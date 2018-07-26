@@ -74,8 +74,12 @@
                             <div class="col-md-12">
                                 {!! Field:: text('codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
                                 ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
-                                fa-barcode'] ) !!} {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
-                                'name' => 'categoria']) !!} {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
+                                fa-barcode'] ) !!}
+
+                                {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
+                                'name' => 'categoria']) !!}
+
+                                {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
@@ -149,7 +153,7 @@
     {{--Dropzone--}}
     <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
-    
+
     <script>
         function format(d) {
             // `d` is the original data object for the row
@@ -218,12 +222,12 @@
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
-            url = "{{ route('espacios.academicos.elementos.data') }}"; //url para cargar datos
+            url = "{{ route('espacios.academicos.articulo.data') }}"; //url para cargar datos
             columns = [
                 //Carga los datos que ha traido el control
                 
                 {
-                    data: 'pk_id_articulo',
+                    data: 'PK_ART_Id_Articulo',
                     name: 'id_articulo',
                     "visible": false
                 },
@@ -235,15 +239,15 @@
                     "defaultContent": ''
                 },
                 {
-                    data: 'codigo_articulo',
+                    data: 'ART_Codigo',
                     name: 'Codigo'
                 },
                 {
-                    data: 'procedencia.tipo_procedencia',
+                    data: 'procedencia.PRO_Nombre',
                     name: 'Procedencia'
                 },
                 {
-                    data: 'categoria.nombre_categoria',
+                    data: 'categoria.CAT_Nombre',
                     name: 'Categoria'
                 },
                 {
@@ -252,7 +256,7 @@
                 },
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;"><i class="fa fa-file-pdf-o"></i> Ver imagenes </a></li><li><a href="javascript:;"><i class="fa fa-file-excel-o"></i> Editar </a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;"><i class="fa fa-file-pdf-o"></i> Ver imagenes </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -281,7 +285,7 @@
                     // Open this row
                     row.child(format(row.data())).show();
                     tr.addClass('shown');
-                    
+
                 }
             });
 
@@ -289,6 +293,13 @@
             $(".create").on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-articulo').modal('toggle');
+            });
+
+            /*ABRIR FORMULARIO HOJA DE VIDA*/
+            table.on('click', '.hoja', function(e) {
+                e.preventDefault();
+                route1 = '{{ route('espacios.academicos.hojavida.index') }}';
+                $(".content-ajax").load(route1);
             });
 
 

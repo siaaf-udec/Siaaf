@@ -96,11 +96,19 @@
                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
-                                $('#form_confirm_ingreso')[0].reset(); //Limpia formulario
-                                UIToastr.init(xhr, response.title, response.message);
-                                App.unblockUI('.portlet-form');
-                                var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
-                                $(".content-ajax").load(route);
+                                if (response.data == 422) {
+                                    xhr = "warning"
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
+                                    $(".content-ajax").load(route);
+                                } else {
+                                    $('#form_confirm_ingreso')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('parqueadero.ingresosCarpark.index.ajax') }}';
+                                    $(".content-ajax").load(route);
+                                }
                             }
                         },
                         error: function (response, xhr, request) {

@@ -19,7 +19,7 @@
                                  height="250" width="250">
                         </div>
 
-                        <div class="col-md-4">
+                       {{--  <div class="col-md-4">
                             <img src="{{ asset(Storage::url($infoMoto[0]['CM_UrlPropiedad'])) }}" class="" height="250"
                                  width="250">
                         </div>
@@ -28,7 +28,7 @@
                             <img src="{{ asset(Storage::url($infoMoto[0]['CM_UrlSoat'])) }}" class="" height="250"
                                  width="250">
                         </div>
-
+ --}}
                     </div>
                     <br>
                     <div class="row">
@@ -40,14 +40,15 @@
                             {!! Field:: text('CM_NuPropiedad',$infoMoto[0]['CM_NuPropiedad'],['label'=>'Número de la tarjeta de propiedad:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CM_NuSoat',$infoMoto[0]['CM_NuSoat'],['label'=>'Número del SOAT del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {{-- {!! Field:: text('CM_NuSoat',$infoMoto[0]['CM_NuSoat'],['label'=>'Número del SOAT del vehículo:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                         ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!} --}}
+                             {!! Field:: text('FK_CM_CodigoUser',$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Nombre1'].' '.$infoMoto[0]['relacionMotosUsuarios'][0]['CU_Apellido1'],['label'=>'Nombre del Dueño:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
                         </div>
                         <div class="col-md-6">
 
-                            {!! Field:: text('FK_CM_CodigoUser',$infoMoto[0]['relacionMotosUsuarios'][0]['username'].' '.$infoMoto[0]['relacionMotosUsuarios'][0]['lastname'],['label'=>'Nombre del Dueño:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                         ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
+                            
 
                             {!! Field:: text('CM_CodigoMoto',$infoMoto[0]['PK_CM_IdMoto'],['label'=>'Código de la motocicleta:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                          ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}

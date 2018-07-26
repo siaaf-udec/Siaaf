@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bff90c8715714a5fe5e2a1001732b7ca",
+    "content-hash": "07f723180802ce9d1ce53320bc986032",
     "packages": [
         {
             "name": "barryvdh/laravel-snappy",
@@ -1849,6 +1849,7 @@
         },
         {
             "name": "nesbot/carbon",
+
             "version": "1.29.2",
             "source": {
                 "type": "git",
@@ -1859,6 +1860,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ed6aa898982f441ccc9b2acdec51490f2bc5d337",
                 "reference": "ed6aa898982f441ccc9b2acdec51490f2bc5d337",
+
                 "shasum": ""
             },
             "require": {
@@ -1893,7 +1895,9 @@
                 "datetime",
                 "time"
             ],
+
             "time": "2018-05-29T15:23:46+00:00"
+
         },
         {
             "name": "nikic/php-parser",

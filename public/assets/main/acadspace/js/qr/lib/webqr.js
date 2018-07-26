@@ -109,11 +109,11 @@ function captureToCanvas() {
             try {
                 qrcode.decode();
             } catch (e) {
-                console.log(e);
+                //console.log(e);
                 setTimeout(captureToCanvas, 20);
             };
         } catch (e) {
-            console.log(e);
+            //console.log(e);
             setTimeout(captureToCanvas, 20);
         };
     }
@@ -128,64 +128,108 @@ function read(a) {
         arr = string.split('|'),
         k;
     var bandera = [];
+    bandera[3] = true;
     var mySelect1 = document.getElementById("SOL_carrera");
-    var mySelect2 = document.getElementById("Espacio");
-    var mySelect3 = document.getElementById("Sala");
+    var mySelect2 = document.getElementById("SOL_laboratorios");
+    var mySelect3 = document.getElementById("aula");
     console.log(cadenaControl + "===" + arr);
-    
+
     if (cadenaControl.toString() === arr.toString()) {
         UIToastr.init('warning', 'Retirar QR', '¡Se acaba de proporcionar el QR!');
         setTimeout(captureToCanvas, 1000);
     } else {
-        for (k in arr) {
-            document.getElementById("codigo").value = arr[0];
-            for (var i, j = 0; i = mySelect1.options[j]; j++) {
-                if (i.value == arr[1]) {
-                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[1]);
-                    mySelect1.selectedIndex = j;
-                    bandera[0] = true;
-                    break;
-                }
+        UIToastr.init('info', 'Registrando...', 'Validando QR');
+        document.getElementById("codigo").value = arr[0];
+        for (var i, j = 0; i = mySelect1.options[j]; j++) {
+            if (i.value == arr[1]) {
+                console.log("Valor selector Carrera :" + i.value + " Valor del QR :" + arr[1]);
+                mySelect1.selectedIndex = j;
+                bandera[0] = true;
+                break;
             }
-            for (var i, j = 0; i = mySelect2.options[j]; j++) {
-                if (i.value == arr[2]) {
-                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[2]);
-                    mySelect2.selectedIndex = j;
-                    bandera[1] = true;
-                    break;
-                }
-            }
-            for (var i, j = 0; i = mySelect3.options[j]; j++) {
-                if (i.value == arr[3]) {
-                    console.log("Valor selector :" + i.value + " Valor del QR :" + arr[3]);
-                    mySelect3.selectedIndex = j;
-                    bandera[2] = true;
-                    break;
-                }
-            }
-
         }
-        if (bandera[0] && bandera[1] && bandera[2]) {
-            document.getElementById("codigo").readOnly = true;
-            document.getElementById("SOL_carrera").disabled = true;
-            document.getElementById("Espacio").disabled = true;
-            document.getElementById("Sala").disabled = true;
-            console.log("LOS VALORES SON _______________________________");
-            //console.log(document.getElementById("Sala").options[1]);
-            console.log($('select[name="SOL_carrera"]').val());
-            console.log($('select[name="Espacio"]').val());
-            console.log($('select[name="Sala"]').val());
-            console.log("LOS VALORES SON _______________________________");
-            UIToastr.init('success', 'BIENVENIDO', 'Registro satisfactorio.');
-            cadenaControl=arr;
-            setTimeout(captureToCanvas, 1000);
-            //load();
-        } else {
-            UIToastr.init('error', 'ERROR QR', '¡QR Corrupto!');
-            setTimeout(captureToCanvas, 1000);
+        for (var i, j = 0; i = mySelect2.options[j]; j++) {
+            if (i.value == arr[2]) {
+                console.log("Valor selector Espacio :" + i.value + " Valor del QR :" + arr[2]);
+                mySelect2.selectedIndex = j;
+                console.log(bandera[3])
+                if (bandera[3]) {
+                    console.log("If del ciclo de llenado")
+                    $('#aula').empty();
+                    $.get("cargarSalas/" + i.value + "", function (response) {
+                        $(response.data).each(function (key, value) {
+                            $("#aula").append(new Option(value.SAL_Nombre_Sala, value.PK_SAL_Id_Sala));
+                            console.log("If del ciclo interno")
+                            if (value.PK_SAL_Id_Sala == arr[3]) {
+                                bandera[2] = true;
+                            }
+                        });
+                        cadenaControl = arr;
+                        $("#aula").val([]);
+                        
+                        validate(bandera[0],bandera[1],bandera[2],mySelect3,arr[3]);
+                    });
+                }
+                bandera[3] = false;
+                bandera[1] = true;
+                break;
+            }
+        }
+        /*for (var i, j = 0; i = mySelect3.options[j]; j++) {
+            if (i.value == arr[3]) {
+                console.log("Valor selector Sala :" + i.value + " Valor del QR :" + arr[3]);
+                mySelect3.selectedIndex = j;
+                bandera[2] = true;
+                break;
+            }
+        }*/
+
+    }
+
+}
+
+function validate(i1, j2, k3, mySelect3,value) {
+    for (var i, j = 0; i = mySelect3.options[j]; j++) {
+        if (i.value == value) {
+            console.log("Valor selector Sala :" + i.value + " Valor del QR :" + value);
+            mySelect3.selectedIndex = j;
+            break;
         }
     }
-    
+    console.log(i1)
+    console.log(j2)
+    console.log(k3)
+
+    if (i1 && j2 && k3) {
+        //document.getElementById("codigo").readOnly = true;
+        /* document.getElementById("SOL_carrera").disabled = true;
+         document.getElementById("Espacio").disabled = true;
+         document.getElementById("Sala").disabled = true;*/
+        console.log("LOS VALORES SON _______________________________");
+        //console.log(document.getElementById("Sala").options[1]);
+        console.log($('select[name="SOL_carrera"]').val());
+        console.log($('select[name="SOL_laboratorios"]').val());
+        console.log($('select[name="aula"]').val());
+        console.log("LOS VALORES SON _______________________________");
+        
+        $(".create").click();
+        setTimeout(captureToCanvas, 1000);
+        
+
+        //load();
+    } else {
+        
+        UIToastr.init('error', 'ERROR QR', '¡QR Corrupto!');
+        /* $('#form_sol_create')[0].reset(); //Limpia formulario
+         $('#Espacio').val('').trigger('change');
+         $("#SOL_carrera").val('').trigger('change');
+         $("#Sala").val('').trigger('change');*/
+        //document.getElementById("codigo").readOnly = false;
+        document.getElementById("SOL_carrera").disabled = false;
+        document.getElementById("SOL_laboratorios").disabled = false;
+        document.getElementById("aula").disabled = false;
+        setTimeout(captureToCanvas, 1000);
+    }
 }
 
 function isCanvasSupported() {
