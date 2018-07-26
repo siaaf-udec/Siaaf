@@ -30,7 +30,7 @@ class Motos extends Model
     //Función de conexión entre las tablas de Motos y Usuarios por el campo de PK_CU_Codigo y FK_CM_CodigoUser para realizar las busquedas complementarias
     public function relacionMotosUsuarios()
     {
-        //return $this->belongsTo(UsersUdec::class, 'FK_CM_CodigoUser');
+       
         return $this->hasMany(Usuarios::class, 'PK_CU_Codigo', 'FK_CM_CodigoUser');
     }
 
