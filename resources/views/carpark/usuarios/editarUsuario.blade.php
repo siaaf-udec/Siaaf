@@ -16,7 +16,7 @@
                         <div class="col-md-6">
                             <div>
                                 @permission('PARK_UPDATE_USER')<a href="javascript:;"><img
-                                            src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto']),true) }}"
+                                            src="{{ asset(Storage::url($infoUsuario['CU_UrlFoto'])) }}"
                                             class="img-circle UpdateFotoPerfil" id="FotoPerfil" height="250" width="250"
                                             data-toggle="modal"></a> @endpermission
                                 <br>
