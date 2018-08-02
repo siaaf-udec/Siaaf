@@ -92,16 +92,16 @@
                 <div class="form-actions">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="alert alert-success">
-                                <strong>¡OPCIONAL!</strong> Registro de Motos utilizando camara web, sin cargar archivos del equipo.
+                                <strong>¡OPCIONAL!</strong> Registro de Motos sin utilizar camara web, cargando archivos del equipo.
                             </div>
                         </div>
                         <div class="col-md-12 col-md-offset-4">
                             <div class="actions">
                                 @permission('PARK_CREATE_MOTO')<a href="javascript:;"
                                                                    class="btn btn-simple btn-success btn-icon create"
-                                                                   title="Registar nueva Moto usando camara">
+                                                                   title="Registar nueva Moto sin usar camara">
                                         <i class="fa fa-plus">
-                                        </i>Registro usando camara
+                                        </i>Registro sin usar camara
                                     </a>@endpermission
                             </div>
                         </div>
