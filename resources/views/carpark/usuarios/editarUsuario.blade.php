@@ -25,7 +25,7 @@
                             {!! Field:: text('PK_CU_Codigo',$infoUsuario['PK_CU_Codigo'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:','readonly', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
                             {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
@@ -231,7 +231,7 @@
         var formRules = {
             CU_UrlFoto: {required: true, extension: "jpg|png"},
             CU_Cedula: {minlength: 8, maxlength: 10, required: false, number: true,},
-            PK_CU_Codigo: {required: false, minlength: 9, maxlength: 12, number: true},
+            PK_CU_Codigo: {required: false, minlength: 5, maxlength: 12, number: true},
             CU_Nombre1: {required: true, letters: true},
             // CU_Nombre2: {letters: true},
             CU_Apellido1: {required: true, letters: true},
