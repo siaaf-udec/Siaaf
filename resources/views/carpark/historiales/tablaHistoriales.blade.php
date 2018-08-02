@@ -105,7 +105,7 @@
             {data: 'CH_CodigoUser', name: 'CH_CodigoUser'},
             {data: 'CH_Placa', name: 'CH_Placa'},
             {data: 'CH_FHentrada', name: 'CH_FHentrada'},
-            {data: 'CH_FHsalida', name: 'CH_FHsalida'}
+            {data: 'created_at', name: 'created_at'}
         ];
         dataTableServer.init(table, url, columns);
 
