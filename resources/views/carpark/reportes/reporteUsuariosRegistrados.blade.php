@@ -30,7 +30,7 @@
 <body>
 <header class="clearfix">
     <div id="logo">
-        <img src="{{ asset('public/css/logoUDEC.png') }}">
+        <img src="{{ asset('css/LogoUDEC.png') }}">
     </div>
     <div id="company">
         <h2 class="name">{{ env('APP_NAME') }}</h2>
