@@ -242,6 +242,7 @@ class IngresosController extends Controller
                 else{
                     //si es un ingreso existente crea la salida
                     $generadorID = date_create();
+                    $ldate = date('Y-m-d H:i:s');
                     Historiales::create([
                         'PK_CH_IdHistorial' => date_timestamp_get($generadorID),
                         'CH_NombresUser' => $request['CI_NombresUser'],
@@ -249,6 +250,8 @@ class IngresosController extends Controller
                         'CH_Placa' => $request['CI_Placa'],
                         'CH_CodigoMoto' => $request['CI_CodigoMoto'],
                         'CH_FHentrada' => $validarIngreso[0]['created_at'],
+                        
+                        'CH_FHsalida'=>$ldate,
                     ]);
 
                     Ingresos::destroy($validarIngreso[0]['PK_CI_IdIngreso']); // limpia la entrada
