@@ -30,7 +30,7 @@
 <body>
 <header class="clearfix">
     <div id="logo">
-        <img src="{{ asset('css/logoUDEC.png') }}">
+        <img src="{{ asset('css/LogoUDEC.png') }}">
     </div>
     <div id="company">
         <h2 class="name">{{ env('APP_NAME') }}</h2>
@@ -78,10 +78,10 @@
             <tbody>
             <tr>
                 <td class="no">{{$cont++}}</td>
-                <td class="unit">{{$infoUsuario->number_document}}</td>
-                <td class="desc">{{$infoUsuario->username.' '.$infoUsuario->lastname}}</td>
-                <td class="unit">{{$infoUsuario->number_phone}}</td>
-                <td class="unit">{{$infoUsuario->email}}</td>
+                <td class="unit">{{$infoUsuario->PK_CU_Codigo}}</td>
+                <td class="desc">{{$infoUsuario->CU_Nombre1.' '.$infoUsuario->CU_Apellido1}}</td>
+                <td class="unit">{{$infoUsuario->CU_Telefono}}</td>
+                <td class="unit">{{$infoUsuario->CU_Correo}}</td>
 
 
             </tr>

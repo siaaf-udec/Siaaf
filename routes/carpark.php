@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que realiza la consulta de los usuarios registrados
         Route::get('tablaUsuarios', [   
-            'uses' => $controller . 'UsuariosController@data',
+            'uses' => $controller . 'UsuariosController@data2',
             'as' => 'parqueadero.usuariosCarpark.tablaUsuarios'            
         ]);
 
@@ -42,11 +42,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.usuariosCarpark.listEstados'
         ]);
 
-        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario
+        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario, subiendo la foto como archivo
         Route::get('create', [
             'uses' => $controller . 'UsuariosController@create',  
             'as' => 'parqueadero.usuariosCarpark.create'
         ]);
+        //ruta que conduce al controlador para mostrar el formulario para registrar un usuario utilizando la camara para tomar fotos
+         Route::get('create2', [
+            'uses' => $controller . 'UsuariosController@create2',  
+            'as' => 'parqueadero.usuariosCarpark.create2'
+        ]);
+
 
         //ruta que conduce al controlador para alamacenar los datos del usuario en la base de datos
         Route::post('store', [
@@ -115,6 +121,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create/{id?}', [
             'uses' => $controller . 'MotosController@create',  
             'as' => 'parqueadero.motosCarpark.RegistrarMoto'
+        ]);
+
+         //ruta que conduce al controlador para mostrar el formulario para registrar una motociclet, con camara
+        Route::get('create2/{id?}', [
+            'uses' => $controller . 'MotosController@create2',  
+            'as' => 'parqueadero.motosCarpark.RegistrarMoto2'
         ]);
 
         //ruta que conduce al controlador para alamacenar los datos de la motocicleta en la base de datos
@@ -483,7 +495,19 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'parqueadero.correosCarpark.enviarMail',
         ]);
 
+
+        //ruta para acceder al controlador que desactiva todos los usuarios
+
+        Route::post('desactivarUsers', [
+            'uses' => $controller . 'CorreosController@desactivarUsers',
+            'as' => 'parqueadero.correosCarpark.desactivarUsers',
+        ]);
+
+
     });
+
+
+
 ///////////////////////FIN Rutas Para Los Correos//////////////////////////////
 
 });

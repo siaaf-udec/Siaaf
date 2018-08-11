@@ -25,23 +25,23 @@
                             {!! Field:: text('PK_CU_Codigo',$infoUsuario['PK_CU_Codigo'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite interno de la universidad del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                            {!! Field:: text('CU_Cedula',$infoUsuario['CU_Cedula'],['label'=>'Cedula de ciudadanía:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número cedula del usuario.','icon'=>'fa fa-credit-card'] ) !!}
 
-                            {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Primer Nombre','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el primer nombre del usuario.','icon'=>'fa fa-user']) !!}
+                            {!! Field:: text('CU_Nombre1',$infoUsuario['CU_Nombre1'],['label'=>'Nombres:','class'=> 'form-control', 'autofocus', 'maxlength'=>'50','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user']) !!}
 
-                            {!! Field:: text('CU_Nombre2',$infoUsuario['CU_Nombre2'],['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {{-- {!! Field:: text('CU_Nombre2',$infoUsuario['CU_Nombre2'],['label'=>'Segundo Nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo nombre del usuario.','icon'=>'fa fa-user'] ) !!} --}}
 
                         </div>
                         <div class="col-md-6">
 
-                            {!! Field:: text('CU_Apellido1',$infoUsuario['CU_Apellido1'],['label'=>'Primer Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {!! Field:: text('CU_Apellido1',$infoUsuario['CU_Apellido1'],['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                            {!! Field:: text('CU_Apellido2',$infoUsuario['CU_Apellido2'],['label'=>'Segundo Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!}
+                          {{--   {!! Field:: text('CU_Apellido2',$infoUsuario['CU_Apellido2'],['label'=>'Segundo Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el primer apellido del usuario.','icon'=>'fa fa-user'] ) !!} --}}
 
                             {!! Field:: text('CU_Telefono',$infoUsuario['CU_Telefono'],['label'=>'Teléfono:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número de teléfono del usuario.','icon'=>'fa fa-phone'] ) !!}
@@ -185,9 +185,9 @@
                     formData.append('PK_CU_Codigo', $('input:text[name="PK_CU_Codigo"]').val());
                     formData.append('CU_Cedula', $('input:text[name="CU_Cedula"]').val());
                     formData.append('CU_Nombre1', $('input:text[name="CU_Nombre1"]').val());
-                    formData.append('CU_Nombre2', $('input:text[name="CU_Nombre2"]').val());
+                    // formData.append('CU_Nombre2', $('input:text[name="CU_Nombre2"]').val());
                     formData.append('CU_Apellido1', $('input:text[name="CU_Apellido1"]').val());
-                    formData.append('CU_Apellido2', $('input:text[name="CU_Apellido2"]').val());
+                    // formData.append('CU_Apellido2', $('input:text[name="CU_Apellido2"]').val());
                     formData.append('CU_Telefono', $('input:text[name="CU_Telefono"]').val());
                     formData.append('CU_Correo', $('input[name="CU_Correo"]').val());
                     formData.append('CU_Direccion', $('input:text[name="CU_Direccion"]').val());
@@ -213,7 +213,8 @@
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-                                $(".content-ajax").load(route);
+                                location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
@@ -229,24 +230,24 @@
         var form = $('#form_update_usuario');
         var formRules = {
             CU_UrlFoto: {required: true, extension: "jpg|png"},
-            CU_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
-            PK_CU_Codigo: {required: true, minlength: 9, maxlength: 9, number: true},
+            CU_Cedula: {minlength: 8, maxlength: 10, required: false, number: true,},
+            PK_CU_Codigo: {required: false, minlength: 5, maxlength: 12, number: true},
             CU_Nombre1: {required: true, letters: true},
-            CU_Nombre2: {letters: true},
+            // CU_Nombre2: {letters: true},
             CU_Apellido1: {required: true, letters: true},
-            CU_Apellido2: {letters: true},
-            CU_Telefono: {required: true, noSpecialCharacters:true},
+            // CU_Apellido2: {letters: true},
+            CU_Telefono: {required: false, noSpecialCharacters:true},
             CU_Correo: {required: true, email: true},
-            CU_Direccion: {required: true, noSpecialCharacters:true},
+            CU_Direccion: {required: false, noSpecialCharacters:true},
             FK_CU_IdDependencia: {required: true},
             FK_CU_IdEstado: {required: true},
             acceptTeminos: {required: true},
         };
         var formMessage = {
             CU_Nombre1: {letters: 'Solo se pueden ingresar letras'},
-            CU_Nombre2: {letters: 'Solo se pueden ingresar letras'},
+            // CU_Nombre2: {letters: 'Solo se pueden ingresar letras'},
             CU_Apellido1: {letters: 'Solo se pueden ingresar letras'},
-            CU_Apellido2: {letters: 'Solo se pueden ingresar letras'},
+            // CU_Apellido2: {letters: 'Solo se pueden ingresar letras'},
             CU_Telefono: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CU_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
@@ -293,7 +294,8 @@
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-                                $(".content-ajax").load(route);
+                                location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
@@ -318,7 +320,8 @@
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-            $(".content-ajax").load(route);
+            location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+            //$(".content-ajax").load(route);
         });
 
 
@@ -334,7 +337,8 @@
 
         $("#link_cancel").on('click', function (e) {
             var route = '{{ route('parqueadero.usuariosCarpark.index.ajax') }}';
-            $(".content-ajax").load(route);
+            location.href="{{route('parqueadero.usuariosCarpark.index')}}";
+            //$(".content-ajax").load(route);
         });
 
 

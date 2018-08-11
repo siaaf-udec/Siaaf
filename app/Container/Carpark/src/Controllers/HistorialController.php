@@ -49,7 +49,7 @@ class HistorialController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {            
             return Datatables::of(Historiales::all())
                     ->removeColumn('CH_CodigoMoto') 
-                    ->removeColumn('created_at')
+                    
                     ->removeColumn('updated_at')                   
                     ->addIndexColumn()
                     ->make(true);

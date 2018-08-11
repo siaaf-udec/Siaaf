@@ -1,4 +1,4 @@
-{{-- MENÚ DE EJEMPLO --}}
+articulo{{-- MENÚ DE EJEMPLO --}}
 
 
 <li class="nav-item {{ active(['espacios.academicos.*'], 'start active open') }}">
@@ -157,20 +157,20 @@
                 </li>
             </ul>
             @endpermission
-            
+
             {{-- INICIO SEGUNDA FASE ESPACIOS ACADEMICOS--}}
-            
-            <li class="nav-item {{ active(['espacios.academicos.elementos.index'], 'start active open') }}">
+
+            <li class="nav-item {{ active(['espacios.academicos.articulo.index'], 'start active open') }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-list-ol"></i>
                     <span class="title">Inventario</span>
                     <span class="arrow {{ active(['espacios.academicos.*'], 'open') }}"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item {{ active(['espacios.academicos.elementos.index'], 'start active open') }}">
-                        <a href="{{ route('espacios.academicos.elementos.index') }}" class="nav-link nav-toggle">
+                    <li class="nav-item {{ active(['espacios.academicos.articulo.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.articulo.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-archive"></i>
-                            <span class="title">Elementos</span>
+                            <span class="title">Articulo</span>
                         </a>
                     </li>
                     <li class="nav-item {{ active(['espacios.academicos..index'], 'start active open') }}">
@@ -198,11 +198,17 @@
                         </a>
                     </li>
                     <li class="nav-item {{ active(['espacios.academicos.tiposmant.index'], 'start active open') }}">
-                            <a href="{{ route('espacios.academicos.tiposmant.index') }}" class="nav-link nav-toggle">
-                                <i class="fa fa-wrench"></i>
-                                <span class="title">Tipos Mantenimiento</span>
-                            </a>
-                        </li>
+                        <a href="{{ route('espacios.academicos.tiposmant.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-wrench"></i>
+                            <span class="title">Tipos Mantenimiento</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ active(['espacios.academicos.mantenimiento.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.mantenimiento.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-wrench"></i>
+                            <span class="title">Mantenimiento</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </li>

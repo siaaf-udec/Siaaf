@@ -20,7 +20,7 @@ class CreateHistorialesTable extends Migration
             $table->String('CH_Placa', 6);
             $table->integer('CH_CodigoMoto')->unsigned();
             $table->datetime('CH_FHentrada');
-            $table->timestamp('CH_FHsalida')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('CH_FHsalida')->nullable();
 
             $table->timestamps();
         });

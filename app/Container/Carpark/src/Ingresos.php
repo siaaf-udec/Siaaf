@@ -4,6 +4,7 @@ namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Container\Users\src\UsersUdec;
+use App\Container\Carpark\src\Usuarios;
 
 class Ingresos extends Model
 {
@@ -25,4 +26,11 @@ class Ingresos extends Model
     {
         return $this->belongsTo(UsersUdec::class, 'CI_CodigoUser');
     }
+
+
+    //  public function relacionIngresosUsuarios()
+    // {
+    //     //return $this->belongsTo(UsersUdec::class, 'FK_CM_CodigoUser');
+    //     return $this->belongsTo(Usuarios::class, 'CU_Cedula','CI_CodigoUser');
+    // }
 }

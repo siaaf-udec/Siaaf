@@ -58,9 +58,10 @@
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                         @slot('columns', [
                             'Documento',
+                            'Perfil',
                             'Nombre',
                             'Apellido',
-                            'Perfil',
+                       //    {{--  'Perfil', --}}
                             'Correo',
                             'Vehículo',
                             'Acciones'
@@ -109,11 +110,12 @@
         table = $('#listaUsuarios');
         url = "{{ route('parqueadero.usuariosCarpark.tablaUsuarios')}}";
         columns = [
-            {data: 'number_document', name: 'number_document'},
-            {data: 'username', name: 'username'},
-            {data: 'lastname', name: 'lastname'},
-            {data: 'type_user', name: 'type_user'},
-            {data: 'email', name: 'email'},
+            {data: 'CU_Cedula', name: 'CU_Cedula'},
+            {data: 'CU_Perfil', name: 'CU_Perfil'},
+            {data: 'CU_Nombre1', name: 'CU_Nombre1'},
+            {data: 'CU_Apellido1', name: 'CU_Apellido1'},
+            //{data: 'type_user', name: 'type_user'},
+            {data: 'CU_Correo', name: 'CU_Correo'},
             {
                 defaultContent: '@permission('PARK_CREATE_MOTO')<a href="javascript:;" class="btn btn-success RegistrarMoto"  title="Vehículo" ><i class="fa fa-motorcycle"></i></a>@endpermission',
                 data: 'action',
@@ -150,7 +152,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.number_document;
+            var route = '{{ route('parqueadero.usuariosCarpark.destroy') }}' + '/' + dataTable.PK_CU_Codigo;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -197,7 +199,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.usuariosCarpark.verPerfil') }}' + '/' + dataTable.number_document;
+                route_edit = '{{ route('parqueadero.usuariosCarpark.verPerfil') }}' + '/' + dataTable.CU_Cedula;
             $(".content-ajax").load(route_edit);
         });
 
@@ -205,7 +207,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.number_document;
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + dataTable.PK_CU_Codigo;
             $(".content-ajax").load(route_edit);
         });
 
@@ -213,13 +215,13 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.number_document;
+                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.PK_CU_Codigo;
             $(".content-ajax").load(route_edit);
         });
 
         $(".create").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('parqueadero.usuariosCarpark.create') }}';
+            var route = '{{ route('parqueadero.usuariosCarpark.create2') }}';
             $(".content-ajax").load(route);
         });
         table.on('click', '.reporte', function (e) {
@@ -227,7 +229,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuario') }}' + '/' + dataTable.number_document, '_blank');
+                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuario') }}' + '/' + dataTable.CU_Cedula, '_blank');
             });
         });
 

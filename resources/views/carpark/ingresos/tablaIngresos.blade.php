@@ -41,7 +41,7 @@
                         @slot('columns', [
                             '#',
                             'Nombre Usuario',
-                            'Código Usuario',
+                            'Documento Usuario',
                             'Placa',                            
                             'Código Motocicleta'
                         ])

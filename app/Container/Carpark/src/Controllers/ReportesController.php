@@ -90,7 +90,7 @@ class ReportesController extends Controller
             $cont = 1;
             $date = date("d/m/Y");
             $time = date("h:i A");
-            $infoUsuarios = UsersUdec::all();
+            $infoUsuarios = Usuarios::all();
             return view('carpark.reportes.reporteUsuariosRegistrados',
                 compact('infoUsuarios', 'date', 'time', 'cont'));
         }
@@ -116,7 +116,7 @@ class ReportesController extends Controller
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
-                $infoUsuarios = UsersUdec::all();
+                $infoUsuarios = Usuarios::all();
                 return SnappyPdf::loadView('carpark.reportes.reporteUsuariosRegistrados',
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf');
 
@@ -149,7 +149,7 @@ class ReportesController extends Controller
             $time = date("h:i A");
             $infoMotos = Motos::all();
             foreach ($infoMotos as $infoMoto) {
-                $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
+                $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
 
                 $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
                 $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
@@ -181,7 +181,7 @@ class ReportesController extends Controller
                 $time = date("h:i A");
                 $infoMotos = Motos::all();
                 foreach ($infoMotos as $infoMoto) {
-                    $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->get();
+                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
 
                     $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
                     $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);

@@ -18,13 +18,13 @@ class CreateMotosTable extends Migration
             $table->String('CM_Placa', 6);
             $table->String('CM_Marca', 50);
             $table->String('CM_NuPropiedad', 20);
-            $table->String('CM_NuSoat', 20);
-            $table->date('CM_FechaSoat');
+            $table->String('CM_NuSoat', 20)->nullable();
+            $table->date('CM_FechaSoat')->nullable();
             $table->String('CM_UrlFoto', 100)->nullable();
             $table->String('CM_UrlPropiedad', 100)->nullable();
             $table->String('CM_UrlSoat', 100)->nullable();
-            $table->String('FK_CM_CodigoUser');
-            $table->foreign('FK_CM_CodigoUser')->references('number_document')->on('developer.users_udec');
+            $table->bigInteger('FK_CM_CodigoUser')->unsigned();
+            $table->foreign('FK_CM_CodigoUser')->references('PK_CU_Codigo')->on('TBL_Carpark_Usuarios');
 
             $table->timestamps();
         });

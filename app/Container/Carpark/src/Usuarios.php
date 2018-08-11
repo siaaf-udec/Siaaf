@@ -3,6 +3,7 @@
 namespace App\Container\Carpark\src;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Container\Users\src\UsersUdec;
 
 class Usuarios extends Model
 {
@@ -40,10 +41,17 @@ class Usuarios extends Model
     }
 
     //Función de conexión entre las tablas de Usuarios y Motos por el campo de FK_CM_CodigoUser y PK_CU_Codigo para realizar las busquedas complementarias
+    
     public function relacionUsuariosMotos()
     {
         return $this->hasMany(Motos::class, 'FK_CM_CodigoUser', 'PK_CU_Codigo');
     }
 
+
+     //Función de conexión entre las tablas de UsuariosUdec y Usuarios por el campo de PK_CU_Codigo y number_document para realizar las busquedas complementarias de datos de usuario
+    public function relacionUsersUdecUsuarios()
+    {
+        return $this->hasOne(UsersUdec::class, 'number_document','CU_Cedula');
+    }      
 
 }

@@ -10,9 +10,8 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
 
-class ElementosController extends Controller
+class ArticuloController extends Controller
 {
-
     /**
      * Funcion para mostrar la vista elementos o articulos
      * @param Request $request
@@ -26,7 +25,7 @@ class ElementosController extends Controller
                 $cate=new categoria();
                 $categoria=$cate->pluck('CAT_Nombre','PK_CAT_Id_Categoria');
                 //Muestra vista elementos
-                return view('acadspace.Inventario.formularioinventario',
+                return view('acadspace.Articulo.formularioArticulo',
                 [
                    'categoria'=>$categoria->toArray()
                 ]);
@@ -36,7 +35,28 @@ class ElementosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
+    
+    /**
+      * Funcion registrar articulo retorna un mensaje Ajax
+      * @param Request $request
+      * @return \App\Container\Overall\Src\Facades\AjaxResponse
+    */
+    public function regisArticulo(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+          Categoria::create([
+              'CAT_Nombre' => $request['CAT_Nombre']
+          ]);
+          return AjaxResponse::success(
+              '¡Registro exitoso!',
+              'Articulo agregada correctamente.'
+          );
+          }
+      return AjaxResponse::fail(
+          '¡Lo sentimos!',
+          'No se pudo completar tu solicitud.'
+      );
+    }
     /**
      * funcion para cargar articulos ya registrados
      * @param Request $request
@@ -103,7 +123,7 @@ class ElementosController extends Controller
                 ->removeColumn('fk_id_procedencia')
                 ->addIndexColumn()
                 ->make(true);*/
-            
+
         }
         //Envia notificacion de no recibir peticion ajax
         return AjaxResponse::fail(
@@ -131,5 +151,5 @@ class ElementosController extends Controller
         );
 
     }
-    
+
 }

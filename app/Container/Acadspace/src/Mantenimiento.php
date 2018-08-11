@@ -24,17 +24,18 @@ class Mantenimiento extends Model
     /**
      * Llave primaria usada por el modelo
      */
-    protected $primaryKey = 'PK_MAN_Id_Registro';
+    protected $primaryKey = 'PK_MANT_Id_Registro';
 
     /**
      * Atributos que son asignables.
      * @var array
      */
     protected $fillable = [
-        'MAN_Fecha_Inicio',
-        'MAN_Fecha_Fin',
-        'MAN_Descripcion',
-        'MAN_Descripcion_Errores',
+        'MANT_Fecha_Inicio',
+        'MANT_Fecha_Fin',
+        'MANT_Descripcion',
+        'MANT_Nombre_Tecnico',
+        'MANT_Descripcion_Errores',
         'FK_MANT_Id_Hojavida',
         'FK_MANT_Id_Tipo'
             
