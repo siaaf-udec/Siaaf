@@ -196,6 +196,7 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Custom Service Providers...
@@ -303,6 +304,7 @@ return [
         'Entrust'      => Zizaco\Entrust\EntrustFacade::class,
         'Active'       => Watson\Active\Facades\Active::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF'          => Barryvdh\DomPDF\Facade::class,
 
         /*
          * Custom Aliases...
