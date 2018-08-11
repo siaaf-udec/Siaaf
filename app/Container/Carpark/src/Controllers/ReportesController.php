@@ -112,7 +112,7 @@ class ReportesController extends Controller
     public function descargarreporteUsuariosRegistrados(Request $request)
     {
         if ($request->isMethod('GET')) {
-           try{
+        
 
                 $cont = 1;
                 $date = date("d/m/Y");
@@ -120,14 +120,6 @@ class ReportesController extends Controller
                 $infoUsuarios = Usuarios::all();
                 return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados',
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf');
-
-            
-        } catch (Exception $e) {
-
-                return view('carpark.reportes.ReporteUsuariosRegistrados',
-                    compact('infoUsuarios', 'date', 'time', 'cont'));
-
-            }
 
         return AjaxResponse::fail(
             '¡Lo sentimos!',
