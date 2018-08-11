@@ -118,8 +118,9 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-                return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados',
-                    compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf');
+                $PDF= PDF::loadView('carpark.reportes.reporteUsuariosRegistrados',
+                    compact('infoUsuarios', 'date', 'time', 'cont'));
+                return $PDF->stream();
 
         return AjaxResponse::fail(
             '¡Lo sentimos!',
