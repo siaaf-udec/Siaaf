@@ -66,9 +66,9 @@
         @endpermission
         @env('local')
         {{-- CRM UDEC --}}
-        @include('themes.menus.crmudec-menu')
+        {{-- @include('themes.menus.crmudec-menu') --}}
         {{-- SELF EVALUATIÓN --}}
-        @include('themes.menus.auto-evaluation-menu')
+        {{-- @include('themes.menus.auto-evaluation-menu') --}}
         @endenv
     </ul>
     {{-- BEGIN SIDEBAR MENU --}}
