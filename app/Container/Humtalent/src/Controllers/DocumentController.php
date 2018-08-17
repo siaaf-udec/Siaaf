@@ -692,11 +692,15 @@ class DocumentController extends Controller
                             "Documentación completa Caja de compensación",
                             "Afiliado Caja de compensación"
                         ])->get(['EDCMT_Proceso_Documentacion'])->first();
-                if (count($estadoCaja) > 0) {
-                    $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
-                } else {
-                    $empleado->offsetSet('estadoCaja', "Sin documentación");
-                }
+                if(!$estadoCaja==null){
+
+                
+                    if (count($estadoCaja) > 0  ) {
+                        $empleado->offsetSet('estadoCaja', $estadoCaja['EDCMT_Proceso_Documentacion']);
+                    } else {
+                        $empleado->offsetSet('estadoCaja', "Sin documentación");
+                    }
+                 }
 
                 $estadoEPS = StatusOfDocument::where('FK_TBL_Persona_Cedula', $empleado->PK_PRSN_Cedula)
                     ->whereIn('EDCMT_Proceso_Documentacion',
@@ -705,10 +709,13 @@ class DocumentController extends Controller
                             "Documentación completa EPS",
                             "Afiliado EPS"
                         ])->get(['EDCMT_Proceso_Documentacion'])->first();
-                if (count($estadoEPS) > 0) {
-                    $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
-                } else {
-                    $empleado->offsetSet('estadoEPS', "Sin documentación");
+                if(!$estadoCaja==null){
+
+                    if (count($estadoEPS) > 0) {
+                        $empleado->offsetSet('estadoEPS', $estadoEPS['EDCMT_Proceso_Documentacion']);
+                    } else {
+                        $empleado->offsetSet('estadoEPS', "Sin documentación");
+                    }
                 }
             }
             return view('humtalent.reportes.ReporteConsolidadoEmpleados',
