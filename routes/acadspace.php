@@ -397,6 +397,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CategoriaController@regisCategoria',
             'as' => 'espacios.academicos.categoria.regisCategoria',
         ]);
+        
+        Route::get('editarCategoria/{id?}',[   
+            'as' => 'espacios.academicos.categoria.editarCategoria', 
+            'uses' => $controller.'CategoriaController@editarCategoria'
+        ]);
 
         Route::delete('delete/{id?}', [ //Eliminar Categoria
             'uses' => $controller . 'CategoriaController@destroy',

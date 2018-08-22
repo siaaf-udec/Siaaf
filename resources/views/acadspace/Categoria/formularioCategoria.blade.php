@@ -168,7 +168,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'CAT_Nombre', name: 'Nombre categoria'},
                 {
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -182,6 +182,15 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
+            /*EDITAR LA CATEGORIA*/
+            table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.categoria.editarCategoria') }}'+'/'+dataTable.PK_CAT_Id_Categoria;
+                $(".content-ajax").load(route_edit);
+             });
 
             /*ELIMINAR REGISTROS*/
             table.on('click', '.remove', function (e) {
@@ -262,6 +271,8 @@
                     }
                 }
             };
+
+
 
             var form_edit = $('#form_cate');
 
