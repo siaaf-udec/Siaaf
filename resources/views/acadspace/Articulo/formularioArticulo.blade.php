@@ -79,6 +79,9 @@
                                 {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
                                 'name' => 'categoria']) !!}
 
+                                {!! Field::select('Procedencia del articulo:',$procedencia, ['id' => 'procedencia',
+                                'name' => 'procedencia']) !!}
+
                                 {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}

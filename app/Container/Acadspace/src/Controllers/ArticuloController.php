@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
 use App\Container\Acadspace\src\Categoria;
+use App\Container\Acadspace\src\Procedencia;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 
@@ -24,10 +25,13 @@ class ArticuloController extends Controller
         if ($request->isMethod('GET')) {
                 $cate=new categoria();
                 $categoria=$cate->pluck('CAT_Nombre','PK_CAT_Id_Categoria');
+                $pro= new Procedencia();
+                $procedencia= $pro->pluck('PRO_Nombre','PK_PRO_Id_Procedencia');
                 //Muestra vista elementos
                 return view('acadspace.Articulo.formularioArticulo',
                 [
-                   'categoria'=>$categoria->toArray()
+                   'categoria'=>$categoria->toArray(),
+                   'procedencia'=>$procedencia->toArray()
                 ]);
             }
         return AjaxResponse::fail(
@@ -44,18 +48,17 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-          Categoria::create([
-              'CAT_Nombre' => $request['CAT_Nombre']
-          ]);
-          return AjaxResponse::success(
+            
+
+
+            return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
-          );
-          }
-      return AjaxResponse::fail(
-          '¡Lo sentimos!',
-          'No se pudo completar tu solicitud.'
-      );
+            );
+        }return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /**
      * funcion para cargar articulos ya registrados
