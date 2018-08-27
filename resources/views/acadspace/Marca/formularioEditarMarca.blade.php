@@ -1,13 +1,13 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Procedencia'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Marca'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
                        
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-procedencia']) !!}
+                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-marca']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('PRO_Nombre',$procedencia->PRO_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la procedencia', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
+                        {!! Field:: text('MAR_Nombre',$marca->MAR_Nombre
+                        ,['label'=>'Digite el nuevo nombre de la marca', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
                         ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
 
                     <div class="form-actions">
@@ -32,12 +32,12 @@
         var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.procedencia.modificarProcedencia',[$procedencia->PK_PRO_Id_Procedencia]) }}';
+                        var route = '{{ route('espacios.academicos.marca.modificarMarca',[$marca->PK_MAR_Id_Marca]) }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('CAT_Nombre', $('input:text[name="PRO_Nombre"]').val());
+                        formData.append('CAT_Nombre', $('input:text[name="nombre_marca"]').val());
 
                         $.ajax({
                             url: route,
@@ -54,7 +54,7 @@
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
-                                    $('#form_procedencia')[0].reset(); //Limpia formulario
+                                    $('#form_marca')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -67,9 +67,9 @@
                     }
                 }
             };
-        var form_edit = $('#form_procedencia');
+        var form_edit = $('#form_marca');
         var rules_edit = {
-            PRO_Nombre: {required: true, minlength: 1, maxlength: 20}
+            MAR_Nombre: {required: true, minlength: 1, maxlength: 20}
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });

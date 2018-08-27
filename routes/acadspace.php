@@ -475,6 +475,16 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.marca.regisMarca',
         ]);
 
+        Route::get('editarMarca/{id?}',[   //Editar Marca
+            'as' => 'espacios.academicos.marca.editarMarca', 
+            'uses' => $controller.'MarcaController@editarMarca'
+        ]);
+
+        Route::post('modificarMarca/{id?}',[   //Modificar Marca
+            'uses' => $controller.'MarcaController@modificarMarca',
+            'as' => 'espacios.academicos.marca.modificarMarca'
+        ]);
+
         Route::delete('delete/{id?}', [ //Eliminar Marca
             'uses' => $controller . 'MarcaController@destroy',
             'as' => 'espacios.academicos.marca.destroy'

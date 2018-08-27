@@ -12,6 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class MarcaController extends Controller
 {
+    private $path='acadspace.Marca';
     public function index(Request $request)
     {
         return view('acadspace.Marca.formularioMarca');
@@ -62,6 +63,40 @@ class MarcaController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
+    }
+    /*funcion para buscar una Marca y pasarle la información
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function editarMarca(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $marca = Marca::findOrFail($id);
+            return view($this->path.'.formularioEditarMarca',compact('marca'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /*funcion para modificar una Marca
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarMarca(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $marca = Marca::findOrFail($id);
+            $marca->MAR_Nombre = $request->MAR_Nombre;
+            $marca->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
        /**
      * Funcion para eliminar marca entre los registrados

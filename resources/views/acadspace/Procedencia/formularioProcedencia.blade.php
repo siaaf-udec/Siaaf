@@ -184,7 +184,7 @@
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
 
-            /*EDITAR LA CATEGORIA*/
+            /*EDITAR LA PROCEDENCIA*/
                 table.on('click', '.edit', function(e) {
                 e.preventDefault();
                 $tr = $(this).closest('tr');
