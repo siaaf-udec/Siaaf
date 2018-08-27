@@ -398,9 +398,14 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.categoria.regisCategoria',
         ]);
         
-        Route::get('editarCategoria/{id?}',[   
+        Route::get('editarCategoria/{id?}',[   //Editar Categoria
             'as' => 'espacios.academicos.categoria.editarCategoria', 
             'uses' => $controller.'CategoriaController@editarCategoria'
+        ]);
+
+        Route::post('modificarCategoria/{id?}',[   //Modificar Categoria
+            'uses' => $controller.'CategoriaController@modificarCategoria',
+            'as' => 'espacios.academicos.categoria.modificarCategoria'
         ]);
 
         Route::delete('delete/{id?}', [ //Eliminar Categoria
@@ -430,6 +435,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('regisProcedencia', [ //Registrar Procedencia
             'uses' => $controller . 'ProcedenciaController@regisProcedencia',
             'as' => 'espacios.academicos.procedencia.regisProcedencia',
+        ]);
+
+        Route::get('editarProcedencia/{id?}',[   //Editar Procedencia
+            'as' => 'espacios.academicos.procedencia.editarProcedencia', 
+            'uses' => $controller.'ProcedenciaController@editarProcedencia'
+        ]);
+
+        Route::post('modificarProcedencia/{id?}',[   //Modificar Procedencia
+            'uses' => $controller.'ProcedenciaController@modificarProcedencia',
+            'as' => 'espacios.academicos.procedencia.modificarProcedencia'
         ]);
 
         Route::delete('delete/{id?}', [ //Eliminar Procedencia

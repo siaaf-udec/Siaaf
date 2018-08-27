@@ -1,13 +1,13 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Categoria'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Procedencia'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
                        
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-cate']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('CAT_Nombre',$categoria->CAT_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la categoria', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
+                        {!! Field:: text('PRO_Nombre',$procedencia->PRO_Nombre
+                        ,['label'=>'Digite el nuevo nombre de la procedencia', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
                         ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
 
                     <div class="form-actions">
@@ -32,12 +32,12 @@
         var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.categoria.modificarCategoria',[$categoria->PK_CAT_Id_Categoria]) }}';
+                        var route = '{{ route('espacios.academicos.procedencia.modificarProcedencia',[$procedencia->PK_PRO_Id_Procedencia]) }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('CAT_Nombre', $('input:text[name="nombre_categoria"]').val());
+                        formData.append('CAT_Nombre', $('input:text[name="PRO_Nombre"]').val());
 
                         $.ajax({
                             url: route,
@@ -69,7 +69,7 @@
             };
         var form_edit = $('#form_cate');
         var rules_edit = {
-            CAT_Nombre: {required: true, minlength: 1, maxlength: 20}
+            PRO_Nombre: {required: true, minlength: 1, maxlength: 20}
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });

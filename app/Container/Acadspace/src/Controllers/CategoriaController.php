@@ -79,6 +79,24 @@ class CategoriaController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    /*funcion para modificar una categoria 
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarCategoria(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $categoria = Categoria::findOrFail($id);
+            $categoria->CAT_Nombre = $request->CAT_Nombre;
+            $categoria->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
        /**
      * Funcion para eliminar categoria entre los registrados
      * retorna mensaje ajax
