@@ -397,6 +397,16 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CategoriaController@regisCategoria',
             'as' => 'espacios.academicos.categoria.regisCategoria',
         ]);
+        
+        Route::get('editarCategoria/{id?}',[   //Editar Categoria
+            'as' => 'espacios.academicos.categoria.editarCategoria', 
+            'uses' => $controller.'CategoriaController@editarCategoria'
+        ]);
+
+        Route::post('modificarCategoria/{id?}',[   //Modificar Categoria
+            'uses' => $controller.'CategoriaController@modificarCategoria',
+            'as' => 'espacios.academicos.categoria.modificarCategoria'
+        ]);
 
         Route::delete('delete/{id?}', [ //Eliminar Categoria
             'uses' => $controller . 'CategoriaController@destroy',
@@ -427,6 +437,16 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.procedencia.regisProcedencia',
         ]);
 
+        Route::get('editarProcedencia/{id?}',[   //Editar Procedencia
+            'as' => 'espacios.academicos.procedencia.editarProcedencia', 
+            'uses' => $controller.'ProcedenciaController@editarProcedencia'
+        ]);
+
+        Route::post('modificarProcedencia/{id?}',[   //Modificar Procedencia
+            'uses' => $controller.'ProcedenciaController@modificarProcedencia',
+            'as' => 'espacios.academicos.procedencia.modificarProcedencia'
+        ]);
+
         Route::delete('delete/{id?}', [ //Eliminar Procedencia
             'uses' => $controller . 'ProcedenciaController@destroy',
             'as' => 'espacios.academicos.procedencia.destroy'
@@ -453,6 +473,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('regisMarca', [ //Registrar Marca
             'uses' => $controller . 'MarcaController@regisMarca',
             'as' => 'espacios.academicos.marca.regisMarca',
+        ]);
+
+        Route::get('editarMarca/{id?}',[   //Editar Marca
+            'as' => 'espacios.academicos.marca.editarMarca', 
+            'uses' => $controller.'MarcaController@editarMarca'
+        ]);
+
+        Route::post('modificarMarca/{id?}',[   //Modificar Marca
+            'uses' => $controller.'MarcaController@modificarMarca',
+            'as' => 'espacios.academicos.marca.modificarMarca'
         ]);
 
         Route::delete('delete/{id?}', [ //Eliminar Marca

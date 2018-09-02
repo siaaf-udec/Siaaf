@@ -12,6 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class ProcedenciaController extends Controller
 {
+    private $path='acadspace.Procedencia';
     public function index(Request $request)
     {
         return view('acadspace.Procedencia.formularioProcedencia');
@@ -62,6 +63,40 @@ class ProcedenciaController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
+    }
+    /*funcion para buscar una procedencia y pasarle la información
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function editarProcedencia(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $procedencia = Procedencia::findOrFail($id);
+            return view($this->path.'.formularioEditarProcedencia',compact('procedencia'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /*funcion para modificar una procedencia 
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarProcedencia(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $procedencia = Procedencia::findOrFail($id);
+            $procedencia->PRO_Nombre = $request->PRO_Nombre;
+            $procedencia->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
        /**
      * Funcion para eliminar procedencia entre los registrados
