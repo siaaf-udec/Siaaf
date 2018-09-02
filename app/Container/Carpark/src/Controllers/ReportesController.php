@@ -118,7 +118,7 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-               return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados', 
+               return SnappyPdf::loadView('carpark.reportes.reporteUsuariosRegistrados', 
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf'); 
 
 }
@@ -181,7 +181,7 @@ class ReportesController extends Controller
                     $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
 
                 }
-                return PDF::loadView('carpark.reportes.reporteMotosRegistradas',
+                return SnappyPdf::loadView('carpark.reportes.reporteMotosRegistradas',
                     compact('infoMotos', 'date', 'time', 'cont'))->download('ReporteMotosRegistradas.pdf');
 
             } catch (Exception $e) {
