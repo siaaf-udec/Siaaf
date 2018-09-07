@@ -72,17 +72,17 @@
                         {!! Form::open(['id' => 'form_create_inventary', 'class' => '', 'url'=>'/forms']) !!}
                         <div class="form-wizard">
                             <div class="col-md-12">
-                                {!! Field:: text('codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
+                                {!! Field:: text('ART_Codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
                                 ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
                                 fa-barcode'] ) !!}
 
                                 {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
-                                'name' => 'categoria']) !!}
+                                'name' => 'FK_ART_Id_Categoria']) !!}
 
                                 {!! Field::select('Procedencia del articulo:',$procedencia, ['id' => 'procedencia',
-                                'name' => 'procedencia']) !!}
+                                'name' => 'FK_ART_Id_Procedencia']) !!}
 
-                                {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
+                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
@@ -190,7 +190,7 @@
             /*Validaciones*/
             var $form = $('#form_create_inventary'),
                 $wizard = $('#form_wizard_1');
-            var rules = {
+            var formRules = {
                 codigo: {
                     minlength: 3,
                     required: true
@@ -204,7 +204,7 @@
                     required: true
                 }
             };
-            var messages = {};
+            var formMessages = {};
             $wizard.bootstrapWizard(FormWizard.init($wizard, $form, rules, messages, false));
             var method = function () {
                 return {
@@ -305,7 +305,51 @@
                 $(".content-ajax").load(route1);
             });
 
+            /*AGREGAR UN NUEVO ARTICULO*/
+
+            var createArt = function () {
+            return {
+                init: function () {
+                    var route = '{{ route('espacios.academicos.articulo.regisArticulo') }}';
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                    var File = document.getElementById("my_dropzone");
+                    formData.append('ART_Codigo', $('input:text[name="ART_Codigo"]').val());
+                    formData.append('FK_ART_Id_Categoria', $('input:select[name="FK_ART_Id_Categoria"]').val());
+                    formData.append('FK_ART_Id_Procedencia', $('input:select[name="FK_ART_Id_Procedencia"]').val());
+                    formData.append('ART_Descripcion', $('input:text[name="ART_Descripcion"]').val());
+                    formData.append('my_dropzone', File.files[9]);
+
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+                            App.blockUI({target: '.portlet-form', animate: true});
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                            }
+                        });
+                    }
+                }
+        };
+        
+        FormValidationMd.init(form, formRules, formMessage, createArt());
 
         });
+        
     </script>
     @endpush @endpermission
