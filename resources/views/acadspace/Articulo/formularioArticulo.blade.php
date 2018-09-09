@@ -307,7 +307,9 @@
             /*ABRIR FORMULARIO HOJA DE VIDA*/
             table.on('click', '.hoja', function(e) {
                 e.preventDefault();
-                route1 = '{{ route('espacios.academicos.hojavida.index') }}';
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                route1 = '{{ route('espacios.academicos.hojavida.index') }}' + '/' + dataTable.PK_ART_Id_Articulo;
                 $(".content-ajax").load(route1);
             });
 

@@ -555,7 +555,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'hojavida', 'middleware' => ['permission:FUNC_ESPA']], function () {
             $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
-            Route::get('index', [
+            Route::get('index/{id?}', [
                 'uses' => $controller .'HojavidaController@index',
                 'as' => 'espacios.academicos.hojavida.index'
             ]);
