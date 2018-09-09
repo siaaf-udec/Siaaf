@@ -345,8 +345,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('regisArticulo', [ //Registrar Articulo
-            'uses' => $controller . 'ArticuloController@regisIncidente',
-            'as' => 'espacios.academicos.articulo.regisArticulo',
+            'uses' => $controller . 'ArticuloController@regisArticulo',
+            'as' => 'espacios.academicos.articulo.regisArticulo'
         ]);
 
         Route::get('edit/{id?}', [ //EDITAR
@@ -395,7 +395,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('regisCategoria', [ //Registrar Categoria
             'uses' => $controller . 'CategoriaController@regisCategoria',
-            'as' => 'espacios.academicos.categoria.regisCategoria',
+            'as' => 'espacios.academicos.categoria.regisCategoria'
         ]);
         
         Route::get('editarCategoria/{id?}',[   //Editar Categoria
@@ -556,7 +556,7 @@ Route::group(['middleware' => ['auth']], function () {
             $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
             Route::get('index', [
-                'uses' => $controller . 'HojavidaController@index',
+                'uses' => $controller .'HojavidaController@index',
                 'as' => 'espacios.academicos.hojavida.index'
             ]);
 

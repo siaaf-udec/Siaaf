@@ -2,6 +2,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
@@ -9,7 +10,6 @@ use App\Container\Acadspace\src\Categoria;
 use App\Container\Acadspace\src\Procedencia;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
-use Carbon\Carbon;
 
 
 class ArticuloController extends Controller
@@ -56,8 +56,6 @@ class ArticuloController extends Controller
                 'FK_ART_Id_Categoria' => $request['FK_ART_Id_Categoria'],
                 'FK_ART_Id_Procedencia' => $request['FK_ART_Id_Procedencia']
             ]);
-
-
             return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
@@ -147,7 +145,7 @@ class ArticuloController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
-            $aulas = Incidentes::find($id);
+            $aulas = Articulo::find($id);
             $aulas->delete();
 
             return AjaxResponse::success(
