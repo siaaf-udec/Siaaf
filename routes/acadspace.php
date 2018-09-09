@@ -514,6 +514,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.tiposmant.regisTipo',
         ]);
 
+        
+        Route::get('editarTipo/{id?}',[   //Editar Tipo
+            'as' => 'espacios.academicos.tiposmant.editarTipo', 
+            'uses' => $controller.'TiposMantController@editarTipo'
+        ]);
+
+        Route::post('modificarTipo/{id?}',[   //Modificar Tipo
+            'uses' => $controller.'TiposMantController@modificarTipo',
+            'as' => 'espacios.academicos.tiposmant.modificarTipo'
+        ]);
+
         Route::delete('delete/{id?}', [ //Eliminar Tipo
             'uses' => $controller . 'TiposMantController@destroy',
             'as' => 'espacios.academicos.tiposmant.destroy'

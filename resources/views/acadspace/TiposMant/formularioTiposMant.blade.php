@@ -53,13 +53,14 @@
             <br>
             <div class="col-md-12">
                 @permission('ACAD_CONSULTAR_INCIDENTE')
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped table-bordered table-hover dt-responsive'])
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
+                table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
-                    'id_tipo_mantenimiento',
+                    'id_tipo',
                     '  ',
                     '#',
                     'Nombre',
-                    'Acciones' => ['style' => 'width:45px;']
+                    ''=> ['style' => 'width:70px;']
                     ])
                 @endcomponent
                 @endpermission
@@ -161,6 +162,7 @@
             <tr>
                 <td>Descripcion:</td>
                 <td>@{{ MAN_Descripcion }}</td>
+                <td></td>
             </tr>
         </table>
     </script>
@@ -182,7 +184,7 @@
             table = $('#art-table-ajax');
             url = "{{ route('espacios.academicos.tiposmant.data') }}"; //url para cargar datos
             columns = [
-                {data: 'PK_MAN_Id_Tipo', name: 'id_tipo_mantenimiento', "visible": false},
+                {data: 'PK_MAN_Id_Tipo', name: 'id_tipo', "visible": false},
                 {
                     "className": 'details-control',
                     "orderable": false,
@@ -193,21 +195,28 @@
                 {data: 'DT_Row_Index'},
                 {data: 'MAN_Nombre', name: 'Nombre'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
-                    title: 'Acciones',
                     orderable: false,
                     searchable: false,
                     exportable: false,
                     printable: false,
-                    className: 'text-right',
                     render: null,
                     responsivePriority: 2
                 }
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
+            /*EDITAR TIPOS*/
+            table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.tiposmant.editarTipo') }}'+'/'+dataTable.PK_MAN_Id_Tipo;
+                $(".content-ajax").load(route_edit);
+             });
 
             /*ELIMINAR REGISTROS*/
             table.on('click', '.remove', function (e) {
