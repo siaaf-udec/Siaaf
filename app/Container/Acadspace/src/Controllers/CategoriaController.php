@@ -91,11 +91,12 @@ class CategoriaController extends Controller
             $categoria->CAT_Nombre = $request->CAT_Nombre;
             $categoria->save();
             return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
         }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
        /**
      * Funcion para eliminar categoria entre los registrados

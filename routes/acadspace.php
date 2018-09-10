@@ -345,8 +345,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::post('regisArticulo', [ //Registrar Articulo
-            'uses' => $controller . 'ArticuloController@regisIncidente',
-            'as' => 'espacios.academicos.articulo.regisArticulo',
+            'uses' => $controller . 'ArticuloController@regisArticulo',
+            'as' => 'espacios.academicos.articulo.regisArticulo'
         ]);
 
         Route::get('edit/{id?}', [ //EDITAR
@@ -395,7 +395,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('regisCategoria', [ //Registrar Categoria
             'uses' => $controller . 'CategoriaController@regisCategoria',
-            'as' => 'espacios.academicos.categoria.regisCategoria',
+            'as' => 'espacios.academicos.categoria.regisCategoria'
         ]);
         
         Route::get('editarCategoria/{id?}',[   //Editar Categoria
@@ -514,6 +514,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.tiposmant.regisTipo',
         ]);
 
+        
+        Route::get('editarTipo/{id?}',[   //Editar Tipo
+            'as' => 'espacios.academicos.tiposmant.editarTipo', 
+            'uses' => $controller.'TiposMantController@editarTipo'
+        ]);
+
+        Route::post('modificarTipo/{id?}',[   //Modificar Tipo
+            'uses' => $controller.'TiposMantController@modificarTipo',
+            'as' => 'espacios.academicos.tiposmant.modificarTipo'
+        ]);
+
         Route::delete('delete/{id?}', [ //Eliminar Tipo
             'uses' => $controller . 'TiposMantController@destroy',
             'as' => 'espacios.academicos.tiposmant.destroy'
@@ -555,8 +566,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'hojavida', 'middleware' => ['permission:FUNC_ESPA']], function () {
             $controller = "\\App\\Container\\Acadspace\\src\\Controllers\\";
 
-            Route::get('index', [
-                'uses' => $controller . 'HojavidaController@index',
+            Route::get('index/{id?}', [
+                'uses' => $controller .'HojavidaController@index',
                 'as' => 'espacios.academicos.hojavida.index'
             ]);
 

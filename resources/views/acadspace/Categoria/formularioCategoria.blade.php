@@ -78,13 +78,10 @@
                             {!! Form::open(['id' => 'form_cate', 'class' => '', 'url'=>'/forms']) !!}
                             <div class="row">
                                 <div class="col-md-12">
-
                                     {!! Field:: text('nombre_categoria',null,
                                     ['label'=>'Nombre categoria:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre de la categoria perteneciente a un elemento','icon'=>'fa fa-user'] ) !!}
-
                                 </div>
-
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -271,15 +268,15 @@
                     }
                 }
             };
-
-
-
             var form_edit = $('#form_cate');
-
             var rules_edit = {
-                nombre_categoria: {required: true, minlength: 1, maxlength: 20}
+                nombre_categoria: 
+                {
+                required: true, 
+                minlength: 1, 
+                maxlength: 20
+                }
             };
-
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
         });
 

@@ -3,22 +3,19 @@
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
-                       
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-cate']) !!}
+                    {!! Form::open(['id'=>'form-cate','url' => '/forms']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('CAT_Nombre',$categoria->CAT_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la categoria', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
+                        {!! Field:: text('CAT_Nombre',$categoria->CAT_Nombre,['label'=>'Digite el nuevo nombre de la categoria', 
+                        'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
                         ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
-
-                    <div class="form-actions">
-                          <div class="row">
-                            <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
-                              </div>
-                                {!! Form::close() !!}
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-0">
+                            {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                            {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                         </div>
+                    {!! Form::close() !!}
+                    </div>
+                        
                     </div>
                 </div>
             </div>
@@ -28,7 +25,11 @@
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
-    $(document).ready(function () {
+    jQuery(document).ready(function () {
+        $('.atras').on('click', function (e) {
+            e.preventDefault();
+            location.reload();
+        });
         var createPermissions = function () {
                 return {
                     init: function () {
@@ -37,7 +38,7 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('CAT_Nombre', $('input:text[name="nombre_categoria"]').val());
+                        formData.append('CAT_Nombre', $('input:text[name="CAT_Nombre"]').val());
 
                         $.ajax({
                             url: route,
@@ -49,13 +50,11 @@
                             processData: false,
                             async: async,
                             beforeSend: function () {
-
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    $('#form_cate')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
+                                    location.reload();
                                 }
                             },
                             error: function (response, xhr, request) {
@@ -67,11 +66,10 @@
                     }
                 }
             };
-        var form_edit = $('#form_cate');
+        var form_edit = $('#form-cate');
         var rules_edit = {
             CAT_Nombre: {required: true, minlength: 1, maxlength: 20}
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });
-
 </script>

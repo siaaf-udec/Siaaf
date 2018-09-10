@@ -2,6 +2,7 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
@@ -48,9 +49,13 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
-
-
+            Articulo::create([
+                'ART_Codigo' => $request['ART_Codigo'],
+                'ART_Descripcion' => $request['ART_Descripcion'],
+                'ART_Fecha_Registro' => Carbon::now(),
+                'FK_ART_Id_Categoria' => $request['FK_ART_Id_Categoria'],
+                'FK_ART_Id_Procedencia' => $request['FK_ART_Id_Procedencia']
+            ]);
             return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
@@ -140,7 +145,7 @@ class ArticuloController extends Controller
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
 
-            $aulas = Incidentes::find($id);
+            $aulas = Articulo::find($id);
             $aulas->delete();
 
             return AjaxResponse::success(

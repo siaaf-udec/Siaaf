@@ -1,24 +1,24 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Procedencia'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar el Tipo de Mantenimiento'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
-                       
-                    {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-procedencia']) !!}
+                    {!! Form::open(['id'=>'form-tipo','url' => '/forms']) !!}
                     <div class="form-wizard">
-                        {!! Field:: text('PRO_Nombre',$procedencia->PRO_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la procedencia', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
+                        {!! Field:: text('MAN_Nombre',$tiposMant->MAN_Nombre,['label'=>'Digite el nuevo nombre del tipo de mantenimiento', 
+                        'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
                         ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
-
-                    <div class="form-actions">
-                          <div class="row">
-                            <div class="col-md-12 col-md-offset-0">
-                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
-                              </div>
-                                {!! Form::close() !!}
-                            </div>
+                        {!! Field:: textarea('MAN_Descripcion',$tiposMant->MAN_Descripcion,
+                        ['label'=>'Digite la nueva descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
+                        ['help' => 'Modifique la descripción','icon'=>'fa fa-desktop'] ) !!}                        
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-0">
+                            {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                            {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                         </div>
+                    {!! Form::close() !!}
+                    </div>
+                        
                     </div>
                 </div>
             </div>
@@ -36,12 +36,13 @@
         var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.procedencia.modificarProcedencia',[$procedencia->PK_PRO_Id_Procedencia]) }}';
+                        var route = '{{ route('espacios.academicos.tiposmant.modificarTipo',[$tiposMant->PK_MAN_Id_Tipo]) }}';
                         var type = 'POST';
                         var async = async || false;
-                        var formData = new FormData();
-                        formData.append('PRO_Nombre', $('input:text[name="PRO_Nombre"]').val());
 
+                        var formData = new FormData();
+                        formData.append('MAN_Nombre', $('input:text[name="MAN_Nombre"]').val());
+                        formData.append('MAN_Descripcion', $('textarea[name="MAN_Descripcion"]').val());
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -68,9 +69,18 @@
                     }
                 }
             };
-        var form_edit = $('#form-procedencia');
+        var form_edit = $('#form-tipo');
         var rules_edit = {
-            PRO_Nombre: {required: true, minlength: 1, maxlength: 20}
+            MAN_Nombre: {
+                required: true, 
+                minlength: 1,
+                maxlength: 20
+            },
+            MAN_Descripcion: {
+                required: true, 
+                minlength: 20,
+                maxlength: 400
+            }
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });

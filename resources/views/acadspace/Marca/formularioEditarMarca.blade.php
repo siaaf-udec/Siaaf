@@ -28,16 +28,19 @@
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script>
-    $(document).ready(function () {
+    jQuery(document).ready(function () {
+        $('.atras').on('click', function (e) {
+            e.preventDefault();
+            location.reload();
+        });
         var createPermissions = function () {
                 return {
                     init: function () {
                         var route = '{{ route('espacios.academicos.marca.modificarMarca',[$marca->PK_MAR_Id_Marca]) }}';
                         var type = 'POST';
                         var async = async || false;
-
                         var formData = new FormData();
-                        formData.append('CAT_Nombre', $('input:text[name="nombre_marca"]').val());
+                        formData.append('MAR_Nombre', $('input:text[name="MAR_Nombre"]').val());
 
                         $.ajax({
                             url: route,
@@ -49,13 +52,11 @@
                             processData: false,
                             async: async,
                             beforeSend: function () {
-
                             },
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    $('#form_marca')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
+                                    location.reload();
                                 }
                             },
                             error: function (response, xhr, request) {
@@ -67,11 +68,10 @@
                     }
                 }
             };
-        var form_edit = $('#form_marca');
+        var form_edit = $('#form-marca');
         var rules_edit = {
             MAR_Nombre: {required: true, minlength: 1, maxlength: 20}
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });
-
 </script>

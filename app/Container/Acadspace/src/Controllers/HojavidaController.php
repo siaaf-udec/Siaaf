@@ -4,7 +4,7 @@ namespace App\Container\Acadspace\src\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Container\Acadspace\src\Incidentes;
+use App\Container\Acadspace\src\Hojavida;
 use App\Container\Acadspace\src\Marca;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
@@ -17,15 +17,17 @@ class HojavidaController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
 
         if ($request->isMethod('GET')) {
             $marca = new Marca();
-            $Marcas = $marca->pluck('PK_MAR_Id_Marca', 'MAR_Nombre');
+            $Marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
             return view('acadspace.Hojavida.formularioHojavida',
                 [
-                    'marcas' => $Marcas->toArray()
+                    'marcas' => $Marcas->toArray(),
+                    'id_articulo' => $id
+
                 ]);
         }
         return AjaxResponse::fail(
@@ -43,11 +45,17 @@ class HojavidaController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            Incidentes::create([
-                'FK_INC_Id_User' => $request['FK_INC_Id_User'],
-                'FK_INC_Id_Articulo' => $request['FK_INC_Id_Articulo'],
-                'FK_INC_Id_Espacio' => $request['INC_Nombre_Espacio'],
-                'INC_Descripcion' => $request['INC_Descripcion']
+            Hojavida::create([
+                'HOJ_Modelo_Equipo' => $request['HOJ_Modelo_Equipo'],
+                'HOJ_Procesador' => $request['HOJ_Procesador'],
+                'HOJ_Memoria_Ram' => $request['HOJ_Memoria_Ram'],
+                'HOJ_Disco_Duro' => $request['HOJ_Disco_Duro'],
+                'HOJ_Mouse' => $request['HOJ_Modelo_Equipo'],
+                'HOJ_Teclado' => $request['HOJ_Teclado'],
+                'HOJ_Sistema_Operativo' => $request['HOJ_Sistema_Operativo'],
+                'HOJ_Antivirus' => $request['HOJ_Antivirus'],
+                'HOJ_Garantia' => $request['HOJ_Garantia'],
+                'FK_HOJ_Id_Marca' => $request['MAR_Nombre']
             ]);
 
             return AjaxResponse::success(

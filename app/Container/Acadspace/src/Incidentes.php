@@ -35,7 +35,7 @@ class Incidentes extends Model
     ];
 
     /**
-     *  Función que retorna la relación entre la tabla 'tbl_incidentes' y la tabla
+     *  Función que retorna la relación entre la tabla 'TBL_Incidentes' y la tabla
      * 'TBL_Espacio' a través de la llave foránea 'FK_INC_Id_Espacio'
      *  y la llave 'PK_ESP_Id_Espacio'
      */
@@ -43,6 +43,13 @@ class Incidentes extends Model
     {
         return $this->hasOne(Espacios::class, 'PK_ESP_Id_Espacio', 'FK_INC_Id_Espacio');
     }
+
+    /**
+     *  Función que retorna la relación entre la tabla 'TBL_Incidentes' y la tabla
+     * 'TBL_Espacio' a través de la llave foránea 'FK_INC_Id_Articulo'
+     *  y la llave 'PK_ART_Id_Articulo'
+     */
+
     public function articulo()
     {
         return $this->hasOne(Articulo::class, 'PK_ART_Id_Articulo', 'FK_INC_Id_Articulo');
