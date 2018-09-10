@@ -85,6 +85,10 @@
                                     {!! Field:: text('nom_tecnico',null,
                                     ['label'=>'Nombre tecnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del tecnico','icon'=>'fa fa-user'] ) !!}
+
+                                    {!! Field:: select('Codigo articulo:',$articulos,
+                                    ['id' => 'articulos', 'name' => 'articulos'])
+                                    !!} 
                                     
                                     {!! Field::select('Tipo de mantenimiento:',$tipos, ['id' => 'mantenimiento',
                                     'name' => 'mantenimiento']) !!}
@@ -273,9 +277,11 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MANT_Nombre_Tecnico', $('input:text[name="nom_tecnico"]').val());
+                        formData.append('MANT_Nombre_Tecnico', $('input:text[name="nom_tecnico"]').val());                      
+                        formData.append('ART_Codigo', $('select[name="articulos"]').val());
                         formData.append('MANT_Descripcion', $('textarea[name="descripcion"]').val());
                         formData.append('FK_MANT_Id_Tipo', $('select[name="mantenimiento"]').val());
+
 
                         $.ajax({
                             url: route,
