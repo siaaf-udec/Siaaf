@@ -113,16 +113,23 @@ class ReportesController extends Controller
     {
         if ($request->isMethod('GET')) {
         
-
+        try {
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-               return SnappyPdf::loadView('carpark.reportes.reporteUsuariosRegistrados', 
+               return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados', 
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf'); 
 
-}
+
         
+         } catch (Exception $e) {
+
+                return view('carpark.reportes.reporteMotosRegistradas',
+                    compact('infoMotos', 'date', 'time', 'cont'));
+
+            }
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -181,7 +188,7 @@ class ReportesController extends Controller
                     $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
 
                 }
-                return SnappyPdf::loadView('carpark.reportes.reporteMotosRegistradas',
+                return PDF::loadView('carpark.reportes.reporteMotosRegistradas',
                     compact('infoMotos', 'date', 'time', 'cont'))->download('ReporteMotosRegistradas.pdf');
 
             } catch (Exception $e) {
