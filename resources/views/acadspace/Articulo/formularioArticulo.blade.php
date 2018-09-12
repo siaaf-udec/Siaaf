@@ -70,28 +70,29 @@
                 </h2>
             </div>
             <div class="modal-body">
-                    {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms']) !!}
+                    {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms', 'files'=>true]) !!}
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Field:: text('ART_Codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
                                 ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
                                 fa-barcode'] ) !!}
 
-                                {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'FK_ART_Id_Categoria',
-                                'name' => 'FK_ART_Id_Categoria'],['help' => 'Seleccione la categoria a la cual pertenece el objeto']) !!}
+                                {!! Field::select('Categoria del articulo:',$categoria, 
+                                ['id' => 'FK_ART_Id_Categoria',
+                                'name' => 'FK_ART_Id_Categoria']) !!}
 
-                                {!! Field::select('Procedencia del articulo:',$procedencia, ['id' => 'FK_ART_Id_Procedencia',
-                                'name' => 'FK_ART_Id_Procedencia'],['help' => 'Seleccione la procedencia de la categoria']) !!}
+                                {!! Field::select('Procedencia del articulo:',$procedencia, 
+                                ['id' => 'FK_ART_Id_Procedencia',
+                                'name' => 'FK_ART_Id_Procedencia']) !!}
 
                                 {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripcion',
                                 'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
                                 del articulo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
-                                    <h3 class="block">Subir imagenes del articulo</h3>
-                                    <h6>10 archivos maximos</h6>
+                                    <h3 class="block">Subir imagen del articulo</h3>
                                 </div>
                                 <div class="form-group">
-                                    <div class="dropzone dropzone-file-area data-dz-size" id="my_dropzone">
+                                    <div class="dropzone dropzone-file-area data-dz-size" id="myDropzone">
                                         <h3 class="sbold">Arrastra o da click aquí para cargar las imagenes</h3>
                                         <p> Solo se admiten formatos JPEG - JPG - PNG </p>
                                     </div>
@@ -152,7 +153,7 @@
     <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
 
-    <script>
+    <script type="text/javascript">
         function format(d) {
             // `d` is the original data object for the row
             return '<table class=table table-striped table-bordered table-hover dt-responsive dataTable no-footer collapsed">' +
@@ -161,6 +162,16 @@
                 '<td>'+d.ART_Descripcion + '</td>' +
                 '</tr>'
                 '</table>';
+        }
+        
+        Dropzone.options.myDropzone ={
+            url: 'espacios.academicos.articulo.regisArticulo',
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            maxFiles: 1,
+            maxFilesize: 4,
+            acceptedFiles: 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
+            addRemoveLinks: true,
         }
 
     jQuery(document).ready(function () {
@@ -174,25 +185,7 @@
                     return m;
                 }
             });
-           /* var method = function () {
-                return {
-                    init: function () {
-                        return valores = {
-                            'titulo': $('input[name="titulo"]').val(),
-                            'descripcion': $('textarea[name="descripcion"]').val(),
-                            'email': $('input[name="email"]').val()
-                        }
-                    }
-                };
-            };
 
-            //Iniciar variable para cargar las fotos
-            var type_crud = 'CREATE',
-                route_store = route('espacios.academicos.formacad.store'),
-                formatfile = 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
-                numfile = 10;
-            FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
-            */
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
@@ -317,20 +310,19 @@
             var createArt = function () {
                 return {
                     init: function () {
+                        console.log($('#myDropzone')[0].dropzone.getAcceptedFiles()[0]);
                         var route = '{{ route('espacios.academicos.articulo.regisArticulo') }}';
                         var type = 'POST';
                         var async = async || false;
-                        
                         var formData = new FormData();
                         formData.append('ART_Codigo', $('input:text[name="ART_Codigo"]').val());
-                        formData.append('FK_ART_Id_Categoria', $('input:select[name="FK_ART_Id_Categoria"]').val());
-                        formData.append('FK_ART_Id_Procedencia', $('input:select[name="FK_ART_Id_Procedencia"]').val());
-                        formData.append('ART_Descripcion', $('input:text[name="ART_Descripcion"]').val());
-                        
+                        formData.append('FK_ART_Id_Categoria', $('select[name="FK_ART_Id_Categoria"]').val());
+                        formData.append('FK_ART_Id_Procedencia', $('select[name="FK_ART_Id_Procedencia"]').val());
+                        formData.append('ART_Descripcion', $('textarea[name="ART_Descripcion"]').val());
+                        formData.append('Imagen', $('#myDropzone')[0].dropzone.getAcceptedFiles()[0]);
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            cache: false,
                             type: type,
                             contentType: false,
                             data: formData,
@@ -343,6 +335,7 @@
                                     table.ajax.reload();
                                     $('#modal-create-articulo').modal('hide');
                                     $('#form_articulo')[0].reset(); //Limpia formulario
+                                    $('#myDropzone')[0].dropzone.removeAllFiles();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -365,7 +358,14 @@
                 ART_Descripcion: {
                     required: true,
                     minlength: 15
+                },
+                FK_ART_Id_Categoria: {
+                    required: true
+                },
+                FK_ART_Id_Procedencia: {
+                    required: true
                 }
+
             };
 
         FormValidationMd.init(form, rules, false, createArt());

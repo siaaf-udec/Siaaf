@@ -8,6 +8,7 @@ use App\Container\Acadspace\src\Hojavida;
 use App\Container\Acadspace\src\Marca;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use App\Container\Acadspace\src\Articulo;
 
 
 class HojavidaController extends Controller
@@ -19,15 +20,13 @@ class HojavidaController extends Controller
      */
     public function index(Request $request, $id)
     {
-
         if ($request->isMethod('GET')) {
             $marca = new Marca();
             $Marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
             return view('acadspace.Hojavida.formularioHojavida',
                 [
-                    'marcas' => $Marcas->toArray(),
-                    'id_articulo' => $id
-
+                    'articulo' => $id,
+                    'marcas' => $Marcas->toArray()
                 ]);
         }
         return AjaxResponse::fail(
@@ -50,17 +49,19 @@ class HojavidaController extends Controller
                 'HOJ_Procesador' => $request['HOJ_Procesador'],
                 'HOJ_Memoria_Ram' => $request['HOJ_Memoria_Ram'],
                 'HOJ_Disco_Duro' => $request['HOJ_Disco_Duro'],
-                'HOJ_Mouse' => $request['HOJ_Modelo_Equipo'],
+                'HOJ_Mouse' => $request['HOJ_Mouse'],
                 'HOJ_Teclado' => $request['HOJ_Teclado'],
                 'HOJ_Sistema_Operativo' => $request['HOJ_Sistema_Operativo'],
                 'HOJ_Antivirus' => $request['HOJ_Antivirus'],
                 'HOJ_Garantia' => $request['HOJ_Garantia'],
-                'FK_HOJ_Id_Marca' => $request['MAR_Nombre']
+                'FK_HOJ_Id_Marca' => $request['FK_HOJ_Id_Marca']
             ]);
-
+            $idArt =Articulo::findOrFail($request['FK_ART_Id_Hojavida']);
+            $idArt->FK_ART_Id_Hojavida = $request['FK_ART_Id_Hojavida'];
+            $idArt->save();
             return AjaxResponse::success(
                 '¡Registro exitoso!',
-                'Incidente registrado correctamente.'
+                'Hoja de vida registrada correctamente.'
             );
         }
         return AjaxResponse::fail(

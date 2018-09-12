@@ -64,7 +64,7 @@ class TiposMantController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $tiposmant = TiposMant::select();
+            $tiposMant = TiposMant::select();
             return Datatables::of($tiposmant)
                 ->removeColumn('create_at')
                 ->removeColumn('updated_at')
@@ -124,8 +124,8 @@ class TiposMantController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-            $tipomant = TiposMant::find($id);
-            $tipomant->delete();
+            $tipoMant = TiposMant::find($id);
+            $tipoMant->delete();
             return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Tipo eliminado correctamente.'

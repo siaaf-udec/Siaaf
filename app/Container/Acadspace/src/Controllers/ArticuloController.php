@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
 use App\Container\Acadspace\src\Categoria;
 use App\Container\Acadspace\src\Procedencia;
+use App\Container\Acadspace\src\Imagen;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ArticuloController extends Controller
@@ -49,13 +52,22 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            Articulo::create([
-                'ART_Codigo' => $request['ART_Codigo'],
-                'ART_Descripcion' => $request['ART_Descripcion'],
-                'ART_Fecha_Registro' => Carbon::now(),
-                'FK_ART_Id_Categoria' => $request['FK_ART_Id_Categoria'],
-                'FK_ART_Id_Procedencia' => $request['FK_ART_Id_Procedencia']
-            ]);
+            $archivo = $request->file['Imagen'];
+            $obtArticulo = new Articulo();
+            $obtArticulo->ART_Codigo = $request['ART_Codigo'];
+            $obtArticulo->ART_Descripcion = $request['ART_Descripcion'];
+            $obtArticulo->ART_Fecha_Registro = Carbon::now();
+            $obtArticulo->FK_ART_Id_Categoria = $request['FK_ART_Id_Categoria'];
+            $obtArticulo->FK_ART_Id_Procedencia = $request['FK_ART_Id_Procedencia'];
+            $obtArticulo->save();
+            $nombre = $obtArticulo->ART_Codigo;
+            $url = Storage::disk('developer')->put($archivo);
+            $url = Storage::url('developer/' . $nombre);
+            $guardarImagen = new Imagen();
+            $guardarImagen->IMA_Ruta = $url;
+            $guardarImagen->IMA_Nombre = $nombre;
+            $guardarImagen->FK_IMA_Id_Articulo = $obtArticulo->PK_ART_Id_Articulo;
+            $guardarImagen->save();
             return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
@@ -90,10 +102,10 @@ class ArticuloController extends Controller
             ->get();//Trae todos los articulos
             return DataTables::of($articulos)
             ->addColumn('hojavida',function($articulos) {
-                if ($articulos->fk_id_hojavida==NULL) {
+                if ($articulos->FK_ART_Id_Hojavida==NULL) {
                     return "<span class='label label-sm label-warning'>" . 'No corresponde' . "</span>";
                 } else{
-                    return "<span class='label label-sm label-default'>" . $articulos->fk_id_hojavida . "</span>";
+                    return "<span class='label label-sm label-default'>" . $articulos->FK_ART_Id_Hojavida . "</span>";
                 }
             })
                 //Elimina columnas no necesarias
