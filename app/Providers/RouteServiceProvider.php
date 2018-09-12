@@ -67,6 +67,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAutoevaluationRoutes();
 
         $this->mapCalidadPcsRoutes();
+
+
     }
 
     /**
