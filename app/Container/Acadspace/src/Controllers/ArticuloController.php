@@ -52,7 +52,7 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            $archivo = $request->file['Imagen'];
+            $archivo = $request->file('Imagen');
             $obtArticulo = new Articulo();
             $obtArticulo->ART_Codigo = $request['ART_Codigo'];
             $obtArticulo->ART_Descripcion = $request['ART_Descripcion'];
@@ -60,14 +60,16 @@ class ArticuloController extends Controller
             $obtArticulo->FK_ART_Id_Categoria = $request['FK_ART_Id_Categoria'];
             $obtArticulo->FK_ART_Id_Procedencia = $request['FK_ART_Id_Procedencia'];
             $obtArticulo->save();
-            $nombre = $obtArticulo->ART_Codigo;
-            $url = Storage::disk('developer')->put($archivo);
-            $url = Storage::url('developer/' . $nombre);
-            $guardarImagen = new Imagen();
-            $guardarImagen->IMA_Ruta = $url;
-            $guardarImagen->IMA_Nombre = $nombre;
-            $guardarImagen->FK_IMA_Id_Articulo = $obtArticulo->PK_ART_Id_Articulo;
-            $guardarImagen->save();
+            if($archivo){
+                $nombre = 'Imagen del articulo con codigo ' . $obtArticulo->ART_Codigo;
+                $url = Storage::disk('developer')->putFile('acadspace/articulos',$archivo);
+                $urlNew = Storage::url('developer/'. $url);
+                $guardarImagen = new Imagen();
+                $guardarImagen->IMA_Ruta = $urlNew;
+                $guardarImagen->IMA_Nombre = $nombre;
+                $guardarImagen->FK_IMA_Id_Articulo = $obtArticulo->PK_ART_Id_Articulo;
+                $guardarImagen->save();
+            }
             return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
@@ -153,6 +155,26 @@ class ArticuloController extends Controller
 
 
     }
+        /**
+     * Muestra el perfil de un usuario especifico.
+     *
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verImagen(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo', $id)->get();
+            return $infoUsuario->IMA_Ruta;
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {

@@ -350,8 +350,13 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::get('edit/{id?}', [ //EDITAR
-            'uses' => $controller . 'formatosController@edit',
+            'uses' => $controller . 'ArticuloController@edit',
             'as' => 'espacios.academicos.articulo.edit'
+        ])->where(['id' => '[0-9]+']);
+
+        Route::get('verImagen/{id?}', [ //EDITAR
+            'uses' => $controller . 'ArticuloController@verImagen',
+            'as' => 'espacios.academicos.articulo.verImagen'
         ])->where(['id' => '[0-9]+']);
 
         Route::delete('delete/{id?}', [ //ELIMINAR
@@ -401,12 +406,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('editarCategoria/{id?}',[   //Editar Categoria
             'as' => 'espacios.academicos.categoria.editarCategoria', 
             'uses' => $controller.'CategoriaController@editarCategoria'
-        ]);
+        ])->where(['id' => '[0-9]+']);
 
         Route::post('modificarCategoria/{id?}',[   //Modificar Categoria
             'uses' => $controller.'CategoriaController@modificarCategoria',
             'as' => 'espacios.academicos.categoria.modificarCategoria'
-        ]);
+        ])->where(['id' => '[0-9]+']);
 
         Route::delete('delete/{id?}', [ //Eliminar Categoria
             'uses' => $controller . 'CategoriaController@destroy',
@@ -551,6 +556,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('regisMantenimiento', [ //Registrar
             'uses' => $controller . 'MantenimientoController@regisMantenimiento',
             'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
+        ]);
+
+        Route::get('editMantenimiento/{id?}', [ //Terminar mantenimiento
+            'uses' => $controller . 'MantenimientoController@editMantenimiento',
+            'as' => 'espacios.academicos.mantenimiento.editMantenimiento',
+        ]);
+
+        
+        Route::post('cerrarMantenimiento', [ //Terminar mantenimiento
+            'uses' => $controller . 'MantenimientoController@cerrarMantenimiento',
+            'as' => 'espacios.academicos.mantenimiento.cerrarMantenimiento',
         ]);
 
         Route::delete('delete/{id?}', [ //Eliminar

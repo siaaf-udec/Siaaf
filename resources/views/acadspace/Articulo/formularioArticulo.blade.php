@@ -106,6 +106,15 @@
                 </div>
             </div>
         </div>
+        <div id="mimodal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <span class="glyphicon glyphicon-ban-circle cerrar" data-dismiss="modal"></span>
+                    <img src="" class="modal-content recibir-imagen" width="100%" height="100%">
+                    <div class="modal-footer">
+                      <p><strong class="texto-imagen"></strong></p>
+                    </div>
+                </div>
+              </div>
         @endcomponent
     </div>
 @endsection 
@@ -223,7 +232,7 @@
                 },
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;"><i class="fa fa-file-pdf-o"></i> Ver imagenes </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="imagen"><i class="fa fa-file-pdf-o"></i> Ver imagen </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -304,6 +313,18 @@
                 var dataTable = table.row($tr).data();
                 route1 = '{{ route('espacios.academicos.hojavida.index') }}' + '/' + dataTable.PK_ART_Id_Articulo;
                 $(".content-ajax").load(route1);
+            });
+
+            /*VER IMAGEN*/
+            table.on('click', '.imagen', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                route1 = '{{ route('espacios.academicos.articulo.verImagen') }}' + '/' + dataTable.PK_ART_Id_Articulo;
+                var result = $(".content-ajax").load(route1);
+                var imagen1 = result;
+                $('.recibir-imagen').attr('src',imagen1);
+	            $('#mimodal').modal();
             });
 
             /*AGREGAR UN NUEVO ARTICULO*/

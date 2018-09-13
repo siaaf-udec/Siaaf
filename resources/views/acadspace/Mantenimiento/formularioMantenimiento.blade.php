@@ -199,7 +199,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'MANT_Nombre_Tecnico', name: 'Nombre Tecnico'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Cerrar mantenimiento </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -268,6 +268,16 @@
                 e.preventDefault();
                 $('#modal-create-mant').modal('toggle');
             });
+
+            /*EDITAR LA CATEGORIA*/
+            table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.mantenimiento.editMantenimiento') }}'+'/'+dataTable.PK_MANT_Id_Registro;
+                $(".content-ajax").load(route_edit);
+             });
+
             /*CREAR MARCA CON VALIDACIONES*/
             var createPermissions = function () {
                 return {

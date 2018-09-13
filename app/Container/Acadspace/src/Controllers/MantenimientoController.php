@@ -92,6 +92,46 @@ class MantenimientoController extends Controller
         );
 
     }
+               /**
+     * Funcion para eliminar marca entre los registrados
+     * retorna mensaje ajax
+     * @param $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function editMantenimiento(Request $request, $id){
+        if ($request->ajax() && $request->isMethod('GET')) {
+                return view('acadspace.Mantenimiento.formularioCerrarMantenimiento',compact('id'));
+            }
+            return AjaxResponse::fail(
+                '¡Error!',
+                'La peticion no pudo ser procesada.'
+            );
+        }
+
+           /**
+     * Funcion para eliminar marca entre los registrados
+     * retorna mensaje ajax
+     * @param Request $request
+     * @param $id
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function cerrarMantenimiento(Request $request){
+        if ($request->ajax() && $request->isMethod('POST')) {
+                $id = $request['MANT_Id'];
+                $mantenimiento = Mantenimiento::findOrFail($id);
+                $mantenimiento->MANT_Fecha_Fin = Carbon::now();
+                $mantenimiento->MANT_Descripcion_Errores = $request['MANT_Descripcion_Errores'];
+                $mantenimiento->save();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Mantenimiento eliminado correctamente.'
+                );
+            }
+            return AjaxResponse::fail(
+                '¡Error!',
+                'No se logro cerrar el Mantenimiento.'
+            );
+        }
        /**
      * Funcion para eliminar marca entre los registrados
      * retorna mensaje ajax
@@ -105,12 +145,12 @@ class MantenimientoController extends Controller
                 $mantenimiento->delete();
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Marca eliminada correctamente.'
+                    'Mantenimiento eliminado correctamente.'
                 );
             }
             return AjaxResponse::fail(
                 '¡Error!',
-                'Primero debe eliminar los elementos asociados a la marca.'
+                'No se pudo eliminar el mantenimiento.'
             );
         }
 }
