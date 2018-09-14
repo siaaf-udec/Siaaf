@@ -1,3 +1,4 @@
+@permission('ACAD_HOJAVIDA')
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Agregar Hoja de vida'])
         <div class="row">
@@ -29,7 +30,9 @@
                     <div class="form-actions">
                           <div class="row">
                             <div class="col-md-12 col-md-offset-0">
+                                @permission('ACAD_REGISTRAR_HOJAVIDA')
                                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                @endpermission
                                  {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                               </div>
                                 {!! Form::close() !!}
@@ -144,3 +147,4 @@
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
     });
 </script>
+@endpermission

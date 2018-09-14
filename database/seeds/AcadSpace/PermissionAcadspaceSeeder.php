@@ -406,5 +406,90 @@ class PermissionAcadspaceSeeder extends Seeder
         $permission2->module_id = 1;
         $permission2 ->save();
 
+        //PERMISOS DE HOJAVIDA
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_HOJAVIDA';
+        $permission2->display_name = 'Acesso al modulo hoja de vida';
+        $permission2->description = 'Acceso al modulo hoja de vida.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_HOJAVIDA';
+        $permission2->display_name = 'Registrar las hojas de vida';
+        $permission2->description = 'Acceso a registar las hojas de vida.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        
+        //PERMISOS MANTENIMIENTOS
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_MANT';
+        $permission2->display_name = 'Acesso al modulo tipo de mantenimiento';
+        $permission2->description = 'Acceso al modulo tipo de mantenimiento.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_MANT';
+        $permission2->display_name = 'Consultar los tipos de mantenimiento';
+        $permission2->description = 'Acceso a consultar los tipos de mantenimiento.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_MANT';
+        $permission2->display_name = 'Registrar tipos de mantenimientos';
+        $permission2->description = 'Acceso a registrar tipos de mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_MANT';
+        $permission2->display_name = 'Eliminar tipos de mantenimientos';
+        $permission2->description = 'Acceso a eliminar tipos de mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        //PERMISOS PROCEDENCIA
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_PROCE';
+        $permission2->display_name = 'Acesso al modulo procedencia';
+        $permission2->description = 'Acceso al modulo procedencia.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_PROCE';
+        $permission2->display_name = 'Consultar las procedencias';
+        $permission2->description = 'Acceso a consultar las procedencias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_PROCE';
+        $permission2->display_name = 'Registrar procedencias';
+        $permission2->description = 'Acceso a registrar procedencias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_PROCE';
+        $permission2->display_name = 'Eliminar procedencias';
+        $permission2->description = 'Acceso a eliminar procedencias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_EDITAR_PROCE';
+        $permission2->display_name = 'Editar procedencias';
+        $permission2->description = 'Acceso a editar procedencias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+
     }
 }
