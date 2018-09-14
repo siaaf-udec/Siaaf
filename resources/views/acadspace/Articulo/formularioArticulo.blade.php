@@ -233,7 +233,7 @@
                 },
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('ACAD_ELIMINAR_ARTICULO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_ARTICULO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i>Ver o Asignar Hoja de vida</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,

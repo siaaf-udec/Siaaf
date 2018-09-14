@@ -23,11 +23,20 @@ class HojavidaController extends Controller
         if ($request->isMethod('GET')) {
             $marca = new Marca();
             $Marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
-            return view('acadspace.Hojavida.formularioHojavida',
-                [
-                    'articulo' => $id,
-                    'marcas' => $Marcas->toArray()
-                ]);
+            $obtId = Articulo::select('FK_ART_Id_Hojavida')->where('PK_ART_Id_Articulo', $id)->get();
+            $finId = $obtId[0]->FK_ART_Id_Hojavida;
+            if($finId == NULL ){
+                return view('acadspace.Hojavida.formularioHojavida',
+                    [
+                        'articulo' => $id,
+                        'marcas' => $Marcas->toArray()
+                    ]);
+            }else{
+                $hojavida = Hojavida::select('*')
+                ->where('PK_HOJ_Id_Hojavida', $finId)
+                ->get();
+                return view('acadspace.Hojavida.formulariomostrarHojavida',compact('hojavida'));
+            }
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -72,7 +81,7 @@ class HojavidaController extends Controller
     }
 
     /**
-     * Funcion cargar datatable con incidentes registrados
+     * Funcion para mostrar una hoja de vida registrados
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Yajra\DataTables\
      */
@@ -80,15 +89,5 @@ class HojavidaController extends Controller
     {
     }
 
-    /**
-     * Funcion eliminar incidentes registrados
-     * @param Request $request
-     * @param $id
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function destroy(Request $request, $id)
-    {
-
-    }
 
 }
