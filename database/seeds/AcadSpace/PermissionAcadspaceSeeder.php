@@ -427,31 +427,39 @@ class PermissionAcadspaceSeeder extends Seeder
 
         $permission2= new Permission;
         $permission2->name = 'ACAD_MANT';
-        $permission2->display_name = 'Acesso al modulo tipo de mantenimiento';
-        $permission2->description = 'Acceso al modulo tipo de mantenimiento.';
+        $permission2->display_name = 'Acesso al modulo mantenimiento';
+        $permission2->description = 'Acceso al modulo mantenimiento.';
         $permission2->module_id = 1;
         $permission2 ->save();
 
         $permission2= new Permission;
         $permission2->name = 'ACAD_CONSULTAR_MANT';
-        $permission2->display_name = 'Consultar los tipos de mantenimiento';
-        $permission2->description = 'Acceso a consultar los tipos de mantenimiento.';
+        $permission2->display_name = 'Consultar los mantenimientos';
+        $permission2->description = 'Acceso a consultar los mantenimientos.';
         $permission2->module_id = 1;
         $permission2 ->save();
 
         $permission2= new Permission;
         $permission2->name = 'ACAD_REGISTRAR_MANT';
-        $permission2->display_name = 'Registrar tipos de mantenimientos';
-        $permission2->description = 'Acceso a registrar tipos de mantenimientos.';
+        $permission2->display_name = 'Registrar mantenimientos';
+        $permission2->description = 'Acceso a registrar mantenimientos.';
         $permission2->module_id = 1;
         $permission2 ->save();
 
         $permission2= new Permission;
         $permission2->name = 'ACAD_ELIMINAR_MANT';
-        $permission2->display_name = 'Eliminar tipos de mantenimientos';
-        $permission2->description = 'Acceso a eliminar tipos de mantenimientos.';
+        $permission2->display_name = 'Eliminar mantenimientos';
+        $permission2->description = 'Acceso a eliminar mantenimientos.';
         $permission2->module_id = 1;
         $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CERRAR_MANT';
+        $permission2->display_name = 'Eliminar mantenimientos';
+        $permission2->description = 'Acceso a eliminar mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
 
         //PERMISOS PROCEDENCIA
 
@@ -489,7 +497,6 @@ class PermissionAcadspaceSeeder extends Seeder
         $permission2->description = 'Acceso a editar procedencias.';
         $permission2->module_id = 1;
         $permission2 ->save();
-
 
     }
 }

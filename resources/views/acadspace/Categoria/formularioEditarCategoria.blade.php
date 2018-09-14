@@ -10,7 +10,9 @@
                         ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0">
+                            @permission('ACAD_EDITAR_CATEGORIA')
                             {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                            @endpermission
                             {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                         </div>
                     {!! Form::close() !!}

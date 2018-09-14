@@ -13,7 +13,9 @@
                         ['help' => 'Modifique la descripción','icon'=>'fa fa-desktop'] ) !!}                        
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0">
+                            @permission('ACAD_EDITAR_TIPMANT')
                             {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                            @endpermission
                             {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                         </div>
                     {!! Form::close() !!}

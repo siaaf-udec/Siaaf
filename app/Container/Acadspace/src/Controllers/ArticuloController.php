@@ -91,6 +91,7 @@ class ArticuloController extends Controller
 
         if ($request->ajax() && $request->isMethod('GET')) {
             //Relaciona la tabla articulos con, categorias y prodecencias
+            
             $articulos = Articulo::select('PK_ART_Id_Articulo', 'ART_Codigo',
                 'ART_Descripcion', 'FK_ART_Id_Categoria','FK_ART_Id_Procedencia','FK_ART_Id_Hojavida')
             ->with(['categoria' => function ($query) {
@@ -102,12 +103,23 @@ class ArticuloController extends Controller
                     'PRO_Nombre');
             }])
             ->get();//Trae todos los articulos
+
+
+
             return DataTables::of($articulos)
             ->addColumn('hojavida',function($articulos) {
                 if ($articulos->FK_ART_Id_Hojavida==NULL) {
                     return "<span class='label label-sm label-warning'>" . 'No corresponde' . "</span>";
                 } else{
                     return "<span class='label label-sm label-default'>" . $articulos->FK_ART_Id_Hojavida . "</span>";
+                }
+            })
+            ->addColumn('imagen',function($articulos){ 
+                $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo',$articulos->PK_ART_Id_Articulo )->get();
+                if($infoUsuario){
+                    return $infoUsuario[0]->IMA_Ruta;
+                }else{
+                    return '<span> LOSER </span>';
                 }
             })
                 //Elimina columnas no necesarias

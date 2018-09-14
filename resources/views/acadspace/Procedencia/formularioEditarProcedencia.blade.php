@@ -13,7 +13,9 @@
                     <div class="form-actions">
                           <div class="row">
                             <div class="col-md-12 col-md-offset-0">
+                                @permission('ACAD_EDITAR_PROCE')
                                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                @endpermission
                                  {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                               </div>
                                 {!! Form::close() !!}

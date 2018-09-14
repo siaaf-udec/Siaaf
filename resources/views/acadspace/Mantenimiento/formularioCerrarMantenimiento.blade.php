@@ -10,7 +10,9 @@
                             ,['help' => 'Una breve descripción de que se le hizo al equipo y los errores encontrados','icon'=>'fa fa-barcode'] ) !!}
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
+                                @permission('ACAD_CERRAR_MANT')
                                 {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                @endpermission
                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                             </div>
                         {!! Form::close() !!}

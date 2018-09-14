@@ -62,7 +62,7 @@
                     'Acciones' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
-                @permission
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -292,3 +292,4 @@
 
     </script>
 @endpush
+@endpermission
