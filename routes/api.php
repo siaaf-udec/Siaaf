@@ -16,6 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 
-Route::get('app/Container/Acadspace/src/Controllers/api-rest-app/listado.php); 
+Route::get('app/Container/Acadspace/src/Controllers/api-rest-app/listado.php'); 
 
 });
