@@ -378,6 +378,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'LectorqrController@cargarSalas',
             'as' => 'espacios.academicos.lectorqr.cargarSalas'
         ]);
+        Route::get('verificarHash/{id?}/{token?}/{fecha?}', [ //verificar si el hash es valido
+            'uses' => $controller . 'LectorqrController@verificarHash',
+            'as' => 'espacios.academicos.lectorqr.verificarHash'
+        ]);
 
     });
 
