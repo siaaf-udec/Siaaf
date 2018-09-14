@@ -1,3 +1,4 @@
+@permission('ACAD_ARTICULO')
 @extends('material.layouts.dashboard') 
 
 @push('styles') 
@@ -32,7 +33,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="actions">
-                @permission('ACAD_REGISTRAR_INCIDENTE')
+                @permission('ACAD_REGISTRAR_ARTICULO')
                 <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                     <i class="fa fa-plus">
                     </i>
@@ -48,7 +49,7 @@
     <div class="col-md-12">
         {{--DATATABLE--}}
         <div class="portlet-body">
-            @permission('ACAD_CONSULTAR_INCIDENTE') @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax',
+            @permission('ACAD_CONSULTAR_ARTICULO') @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax',
             'class' => 'table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-column collapsed']) @slot('columns', ['id_articulo',' ',
             'Codigo', 'Procedencia', 'Categoria', 'Hoja de vida', ' ' => ['style' => 'width:60px;'] ]) @endcomponent @endpermission
         </div>
@@ -99,7 +100,9 @@
                                 </div>
                         
                         <div class="modal-footer">
+                            @permission('ACAD_REGISTRAR_ARTICULO')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                     {!! Form::close() !!}
@@ -232,7 +235,7 @@
                 },
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="imagen"><i class="fa fa-file-pdf-o"></i> Ver imagen </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_ARTICULO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="imagen"><i class="fa fa-file-pdf-o"></i> Ver imagen </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -394,3 +397,4 @@
         
     </script>
     @endpush
+    @endpermission

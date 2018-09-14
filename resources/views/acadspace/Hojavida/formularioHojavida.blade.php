@@ -10,9 +10,9 @@
                     
                         {!! Field:: text('HOJ_Procesador',null,['label'=>'Procesador','required', 'auto' => 'off'],['help' => 'Ingrese el procesador del equipo', 'icon' => 'fa fa-microchip']) !!}
                     
-                        {!! Field:: number('HOJ_Memoria_Ram', null,['id'=>'HOJ_Memoria_Ram','label'=>'Memoria RAM','min' => '0','max' => '128','required', 'auto' => 'off'],['help' => 'Ingrese el numero en GBs de memoria RAM del equipo', 'icon' => 'fas fa-microchip']) !!}
+                        {!! Field:: number('HOJ_Memoria_Ram', null,['id'=>'HOJ_Memoria_Ram','label'=>'Memoria RAM','min' => '0','max' => '128','required', 'auto' => 'off'],['help' => 'Ingrese el numero en GBs de memoria RAM del equipo', 'icon' => 'fa fa-memory']) !!}
                         
-                        {!! Field:: number('HOJ_Disco_Duro',null,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','required', 'auto' => 'off'],['help' => 'Ingrese el numero en gigas del disco duro del equipo', 'icon' => 'fas fa-discord']) !!}
+                        {!! Field:: number('HOJ_Disco_Duro',null,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','required', 'auto' => 'off'],['help' => 'Ingrese el numero en gigas del disco duro del equipo', 'icon' => 'fas fa-compact-disc']) !!}
                     
                         {!! Field:: select('HOJ_Mouse',['1'=>'Si', '0'=>'No'],['name'=>'HOJ_Mouse','label'=>'Mouse','required'],['help'=>'Indique si el equipo tiene mouse', 'icon' => 'fa fa-mouse-pointer']) !!}
 
@@ -25,8 +25,6 @@
                         {!! Field:: number('HOJ_Garantia', null ,['id'=>'HOJ_Garantia','label'=>'Garantia','required','auto'=>'off'],['help'=>'Ingrese el numero de mese que tiene de garantia el equipo','icon'=>'fa fa-clock']) !!}
 
                         {!! Field:: select('Marca:',$marcas, ['id' => 'FK_HOJ_Id_Marca','name' => 'FK_HOJ_Id_Marca','value'=>'1']) !!}
-
-                        {!! Field:: text('id_articulo', $articulo,['class'=>'']) !!}
 
                     <div class="form-actions">
                           <div class="row">
@@ -72,7 +70,7 @@
                         var async = async || false;
                         var formData = new FormData();
 
-                        formData.append('FK_ART_Id_Hojavida', $('input:text[name="id_articulo"]').val());
+                        formData.append('FK_ART_Id_Hojavida',{{$articulo}});
                         formData.append('HOJ_Modelo_Equipo', $('input:text[name="HOJ_Modelo_Equipo"]').val());
                         formData.append('HOJ_Procesador', $('input:text[name="HOJ_Procesador"]').val());
                         formData.append('HOJ_Memoria_Ram', $('#HOJ_Memoria_Ram').val());

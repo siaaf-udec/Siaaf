@@ -264,7 +264,147 @@ class PermissionAcadspaceSeeder extends Seeder
         $permission2->module_id = 1;
         $permission2 ->save();
 
+        //PERMISOS CATEGORIA
 
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CATEGORIA';
+        $permission2->display_name = 'Acesso al modulo Categoria';
+        $permission2->description = 'Acceso al modulo categoria.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_CATEGORIA';
+        $permission2->display_name = 'Consultar las categorias';
+        $permission2->description = 'Acceso a consultar las categorias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_CATEGORIA';
+        $permission2->display_name = 'Registrar Categoria';
+        $permission2->description = 'Acceso a registrar categorias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_CATEGORIA';
+        $permission2->display_name = 'Eliminar Categoria';
+        $permission2->description = 'Acceso a eliminar categorias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_EDITAR_CATEGORIA';
+        $permission2->display_name = 'Editar Categoria';
+        $permission2->description = 'Acceso a editar categorias.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+
+        //PERMISOS MARCA
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_MARCA';
+        $permission2->display_name = 'Acesso al modulo marca';
+        $permission2->description = 'Acceso al modulo marca.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_MARCA';
+        $permission2->display_name = 'Consultar las marcas';
+        $permission2->description = 'Acceso a consultar las marcas.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_MARCA';
+        $permission2->display_name = 'Registrar marca';
+        $permission2->description = 'Acceso a registrar marca.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_MARCA';
+        $permission2->display_name = 'Eliminar marca';
+        $permission2->description = 'Acceso a eliminar marca.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_EDITAR_MARCA';
+        $permission2->display_name = 'Editar marca';
+        $permission2->description = 'Acceso a editar Marcas.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        //PERMISOS TIPOS MANTENIMIENTOS
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_TIPMANT';
+        $permission2->display_name = 'Acesso al modulo tipo de mantenimiento';
+        $permission2->description = 'Acceso al modulo tipo de mantenimiento.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_TIPMANT';
+        $permission2->display_name = 'Consultar los tipos de mantenimiento';
+        $permission2->description = 'Acceso a consultar los tipos de mantenimiento.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_TIPMANT';
+        $permission2->display_name = 'Registrar tipos de mantenimientos';
+        $permission2->description = 'Acceso a registrar tipos de mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_TIPMANT';
+        $permission2->display_name = 'Eliminar tipos de mantenimientos';
+        $permission2->description = 'Acceso a eliminar tipos de mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_EDITAR_TIPMANT';
+        $permission2->display_name = 'Editar tipos de mantenimientos';
+        $permission2->description = 'Acceso a editar tipos de mantenimientos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        //PERMISOS DE ARTICULOS
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ARTICULO';
+        $permission2->display_name = 'Acesso al modulo articulo';
+        $permission2->description = 'Acceso al modulo articulo.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_CONSULTAR_ARTICULO';
+        $permission2->display_name = 'Consultar los articulos';
+        $permission2->description = 'Acceso a consultar los articulos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_REGISTRAR_ARTICULO';
+        $permission2->display_name = 'Registrar articulos';
+        $permission2->description = 'Acceso a registrar articulos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
+
+        $permission2= new Permission;
+        $permission2->name = 'ACAD_ELIMINAR_ARTICULO';
+        $permission2->display_name = 'Eliminar articulos';
+        $permission2->description = 'Acceso a eliminar articulos.';
+        $permission2->module_id = 1;
+        $permission2 ->save();
 
     }
 }

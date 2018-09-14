@@ -1,3 +1,4 @@
+@permission('ACAD_CATEGORIA')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -36,11 +37,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('ACAD_REGISTRAR_CATEGORIA')
                         <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar Categoria
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -48,6 +51,7 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('ACAD_CONSULTAR_AULA')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
                 table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
@@ -57,6 +61,7 @@
                     '' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -85,7 +90,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('ACAD_REGISTRAR_CATEGORIA')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -165,7 +172,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'CAT_Nombre', name: 'Nombre categoria'},
                 {
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_CATEGORIA') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -282,3 +289,4 @@
 
     </script>
 @endpush
+@endpermission
