@@ -132,7 +132,6 @@ function read(a) {
     bandera[3] = true;
     bandera[4] = false;
     bandera[1] = true;
-    arr[4] = true;
     var mySelect1 = document.getElementById("SOL_carrera");
     var mySelect2 = document.getElementById("SOL_laboratorios");
     var mySelect3 = document.getElementById("aula");
@@ -145,7 +144,7 @@ function read(a) {
         UIToastr.init('info', 'Registrando...', 'Validando QR');
         document.getElementById("codigo").value = arr[0];
 
-        if (arr[4]) {
+        if (arr[4] == null) {
             bandera[4] = false;
         }else{
             hash = arr[4];
