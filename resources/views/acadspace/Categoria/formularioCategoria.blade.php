@@ -51,7 +51,7 @@
             </div>
             <br>
             <div class="col-md-12">
-                @permission('ACAD_CONSULTAR_AULA')
+                @permission('ACAD_CONSULTAR_CATEGORIA')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
                 table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [

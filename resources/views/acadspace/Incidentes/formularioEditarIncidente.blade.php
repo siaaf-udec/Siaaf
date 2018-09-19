@@ -11,17 +11,21 @@
                         ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
 
                         {!! Field:: select('Codigo articulo:',$articulos,
-                        ['id' => 'articulos', 'name' => 'articulos','value' => $obtIncidentes->FK_INC_Id_Articulo])
+                        ['id' => 'articulos', 'name' => 'articulos'])
                         !!}
 
                         {!! Field::select('Espacio académico:',$espacios,
-                            ['id' => 'espacios', 'name' => 'espacios', 'value' => $obtIncidentes->FK_INC_Id_Espacio])
+                            ['id' => 'espacios', 'name' => 'espacios'])
                             !!}
 
                         {!! Field:: textarea('descripcion',$obtIncidentes->INC_Descripcion,
                              ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
                              ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
                     </div>
+                        <div class="col-md-12 col-md-offset-0">
+                            {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                            {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
+                        </div>
                     {!! Form::close() !!}
                     </div>
                         
@@ -54,14 +58,14 @@
         var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.incidente.modificarIncidente','$obtIncidentes->PK_INC_Id_Incidente') }}';
+                        var route = '{{ route('espacios.academicos.incidente.modificarIncidente',$obtIncidentes->PK_INC_Id_Incidente) }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
                         formData.append('FK_INC_Id_User', $('input:text[name="id_persona"]').val());
                         formData.append('FK_INC_Id_Articulo', $('select[name="articulos"]').val());
-                        formData.append('INC_Nombre_Espacio', $('select[name="espacios"]').val());
+                        formData.append('FK_INC_Id_Espacio', $('select[name="espacios"]').val());
                         formData.append('INC_Descripcion', $('textarea[name="descripcion"]').val());
                         $.ajax({
                             url: route,
@@ -91,15 +95,21 @@
             };
         var form_edit = $('#form-tipo');
         var rules_edit = {
-            MAN_Nombre: {
+            id_persona: {
                 required: true, 
-                minlength: 8,
-                maxlength: 8
+                minlength: 6,
+                maxlength: 12
             },
-            MAN_Descripcion: {
+            articulos: {
+                required: true
+            },
+            espacios: {
+                required: true
+            },
+            descripcion: {
                 required: true, 
                 minlength: 20,
-                maxlength: 400
+                maxlength: 200
             }
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());

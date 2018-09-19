@@ -65,7 +65,7 @@ class TiposMantController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $tiposMant = TiposMant::select();
-            return Datatables::of($tiposmant)
+            return Datatables::of($tiposMant)
                 ->removeColumn('create_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
