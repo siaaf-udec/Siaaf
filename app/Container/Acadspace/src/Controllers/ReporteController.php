@@ -9,6 +9,7 @@
 namespace App\Container\Acadspace\src\Controllers;
 
 use App\Container\Acadspace\src\Asistencia;
+use App\Container\Acadspace\src\Articulo;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,8 @@ use App\Container\Acadspace\src\Aulas;
 use App\Container\Acadspace\src\Espacios;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use App\Container\Acadspace\src\Categoria;
+use App\Container\Acadspace\src\Procedencia;
 
 
 class ReporteController extends Controller
@@ -78,7 +81,21 @@ class ReporteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
+        /**
+     * Retorna la vista de reportes carrera
+     * @param Request $request
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporteIndexArt(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            return view('acadspace.Reportes.reportesIndexArt');
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 
     /**
      * Recibe el parametro espacio y retorna un json con las aulas
@@ -543,6 +560,34 @@ class ReporteController extends Controller
             }
         }
         return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar su solicitud.'
+        );
+    }
+        /**
+     * Recibe los campos de la vista ReportesIndexCarr y llama las funcion "changeform" para obtener
+     * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
+     * que han ingresado a todos los espacios academicos
+     * @param Request $request
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporArticulos(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $articulos = Articulo::select('PK_ART_Id_Articulo', 'ART_Codigo',
+                'ART_Descripcion', 'FK_ART_Id_Categoria','FK_ART_Id_Procedencia','FK_ART_Id_Hojavida')
+            ->with(['categoria' => function ($query) {
+                return $query->select('PK_CAT_Id_Categoria',
+                'CAT_Nombre');
+            }])
+            ->with(['procedencia' => function ($query) {
+                return $query->select('PK_PRO_Id_Procedencia',
+                'PRO_Nombre');
+            }])
+            ->get();//Trae todos los articulos
+        }
+        return AjaxResponse::fail(
+
             '¡Lo sentimos!',
             'No se pudo completar su solicitud.'
         );

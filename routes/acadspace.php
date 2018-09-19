@@ -194,6 +194,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.incidente.destroy'
         ])->where(['id' => '[0-9]+']);
 
+        
+        Route::get('editIncidente/{id?}', [ //Terminar mantenimiento
+            'uses' => $controller . 'IncidentesController@editIncidente',
+            'as' => 'espacios.academicos.incidente.editIncidente',
+        ]);
+
+        Route::post('modificarIncidente/{id?}',[   //Modificar Procedencia
+            'uses' => $controller.'IncidentesController@modificarIncidente',
+            'as' => 'espacios.academicos.incidente.modificarIncidente'
+        ]);
+
         Route::post('regisIncidente', [ //CREAR INCIDENTE
             'uses' => $controller . 'IncidentesController@regisIncidente',
             'as' => 'espacios.academicos.incidente.regisIncidente',
@@ -213,9 +224,14 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.report.indexEst'
         ]);
 
-        Route::get('indexCarr', [ //Pagina inicial y captura de rango de fechas rep carrera
+        Route::get('indexCarr', [ //Pagina inicial y captura de rango de fechas
             'uses' => $controller . 'ReporteController@reporteIndexCarr',
             'as' => 'espacios.academicos.report.indexCarr'
+        ]);
+
+        Route::get('indexArt', [ //Pagina inicial y captura de rango de fechas rep carrera
+            'uses' => $controller . 'ReporteController@reporteIndexArt',
+            'as' => 'espacios.academicos.report.indexArt'
         ]);
 
         Route::post('repDoc', [ //CREAR REPORTE DOCENTE
