@@ -103,6 +103,52 @@ class IncidentesController extends Controller
         );
 
     }
+    /*funcion para buscar un tipo y pasarle la información
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function editIncidente(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $espa = new espacios();
+            $articulo = new Articulo();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo');
+            $obtIncidentes = Incidentes::findOrFail($id);
+            return view('acadspace.Incidentes.formularioEditarIncidente',compact('obtIncidentes'),[
+                'espacios' => $espacios->toArray(),
+                'articulos' => $articulos->toArray()
+            ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /*funcion para modificar una categoria 
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarIncidente(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $Incidente = Incidentes::findOrFail($id);
+            $Incidente->FK_INC_Id_User = $request->FK_INC_Id_User;
+            $Incidente->FK_INC_Id_Espacio = $request->FK_INC_Id_Espacio;
+            $Incidente->FK_INC_Id_Articulo = $request->FK_INC_Id_Articulo;
+            $Incidente->INC_Descripcion = $request->INC_Descripcion;
+            $Incidente->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
 
     /**
      * Funcion eliminar incidentes registrados

@@ -194,6 +194,17 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.incidente.destroy'
         ])->where(['id' => '[0-9]+']);
 
+        
+        Route::get('editIncidente/{id?}', [ //Terminar mantenimiento
+            'uses' => $controller . 'IncidentesController@editIncidente',
+            'as' => 'espacios.academicos.incidente.editIncidente',
+        ]);
+
+        Route::post('modificarIncidente/{id?}',[   //Modificar Procedencia
+            'uses' => $controller.'IncidentesController@modificarIncidente',
+            'as' => 'espacios.academicos.incidente.modificarIncidente'
+        ]);
+
         Route::post('regisIncidente', [ //CREAR INCIDENTE
             'uses' => $controller . 'IncidentesController@regisIncidente',
             'as' => 'espacios.academicos.incidente.regisIncidente',
@@ -213,9 +224,19 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.report.indexEst'
         ]);
 
-        Route::get('indexCarr', [ //Pagina inicial y captura de rango de fechas rep carrera
+        Route::get('indexCarr', [ //Pagina inicial y captura de rango de fechas
             'uses' => $controller . 'ReporteController@reporteIndexCarr',
             'as' => 'espacios.academicos.report.indexCarr'
+        ]);
+
+        Route::get('indexArt', [ //Pagina inicial y captura de rango de fechas rep carrera
+            'uses' => $controller . 'ReporteController@reporteIndexArt',
+            'as' => 'espacios.academicos.report.indexArt'
+        ]);
+
+        Route::get('indexInc', [ //Pagina inicial y captura de rango de fechas rep carrera
+            'uses' => $controller . 'ReporteController@reporteIndexInc',
+            'as' => 'espacios.academicos.report.indexInc'
         ]);
 
         Route::post('repDoc', [ //CREAR REPORTE DOCENTE
@@ -227,13 +248,24 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ReporteController@cargarRepEst',
             'as' => 'espacios.academicos.report.repEst',
         ]);
+
         Route::post('repCarr', [ //CREAR REPORTE CARRERAS
             'uses' => $controller . 'ReporteController@reporCarrera',
             'as' => 'espacios.academicos.report.repCarr',
         ]);
+
+        Route::post('repInc', [ //CREAR REPORTE INCIDENTES
+            'uses' => $controller . 'ReporteController@reporIncidente',
+            'as' => 'espacios.academicos.report.repInc',
+        ]);
+
         Route::get('descargarRepEst/{fech1}/{fech2}/{labNum}', [
             'uses' => $controller.'ReporteController@descargarReporteEst',
             'as' => 'espacios.academicos.report.descargarRepEst'
+        ]);
+        Route::get('descargarRepInc/{fech1}/{fech2}/{labNum}', [
+            'uses' => $controller.'ReporteController@descargarReporteInc',
+            'as' => 'espacios.academicos.report.descargarRepInc'
         ]);
         Route::get('descargarRepDoc/{fech1}/{fech2}/{labNum}/{aula}', [
             'uses' => $controller.'ReporteController@descargarReporteDoc',
@@ -350,8 +382,13 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::get('edit/{id?}', [ //EDITAR
-            'uses' => $controller . 'formatosController@edit',
+            'uses' => $controller . 'ArticuloController@edit',
             'as' => 'espacios.academicos.articulo.edit'
+        ])->where(['id' => '[0-9]+']);
+
+        Route::get('verImagen/{id?}', [ //EDITAR
+            'uses' => $controller . 'ArticuloController@verImagen',
+            'as' => 'espacios.academicos.articulo.verImagen'
         ])->where(['id' => '[0-9]+']);
 
         Route::delete('delete/{id?}', [ //ELIMINAR
@@ -372,6 +409,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('cargarSalas/{espacio?}', [
             'uses' => $controller . 'LectorqrController@cargarSalas',
             'as' => 'espacios.academicos.lectorqr.cargarSalas'
+        ]);
+        Route::get('verificarHash/{id?}/{token?}/{fecha?}', [ //verificar si el hash es valido
+            'uses' => $controller . 'LectorqrController@verificarHash',
+            'as' => 'espacios.academicos.lectorqr.verificarHash'
         ]);
 
     });
@@ -401,12 +442,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('editarCategoria/{id?}',[   //Editar Categoria
             'as' => 'espacios.academicos.categoria.editarCategoria', 
             'uses' => $controller.'CategoriaController@editarCategoria'
-        ]);
+        ])->where(['id' => '[0-9]+']);
 
         Route::post('modificarCategoria/{id?}',[   //Modificar Categoria
             'uses' => $controller.'CategoriaController@modificarCategoria',
             'as' => 'espacios.academicos.categoria.modificarCategoria'
-        ]);
+        ])->where(['id' => '[0-9]+']);
 
         Route::delete('delete/{id?}', [ //Eliminar Categoria
             'uses' => $controller . 'CategoriaController@destroy',
@@ -551,6 +592,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('regisMantenimiento', [ //Registrar
             'uses' => $controller . 'MantenimientoController@regisMantenimiento',
             'as' => 'espacios.academicos.mantenimiento.regisMantenimiento',
+        ]);
+
+        Route::get('editMantenimiento/{id?}', [ //Terminar mantenimiento
+            'uses' => $controller . 'MantenimientoController@editMantenimiento',
+            'as' => 'espacios.academicos.mantenimiento.editMantenimiento',
+        ]);
+
+        
+        Route::post('cerrarMantenimiento', [ //Terminar mantenimiento
+            'uses' => $controller . 'MantenimientoController@cerrarMantenimiento',
+            'as' => 'espacios.academicos.mantenimiento.cerrarMantenimiento',
         ]);
 
         Route::delete('delete/{id?}', [ //Eliminar

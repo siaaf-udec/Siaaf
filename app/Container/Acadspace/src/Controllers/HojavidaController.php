@@ -8,6 +8,7 @@ use App\Container\Acadspace\src\Hojavida;
 use App\Container\Acadspace\src\Marca;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use App\Container\Acadspace\src\Articulo;
 
 
 class HojavidaController extends Controller
@@ -19,16 +20,23 @@ class HojavidaController extends Controller
      */
     public function index(Request $request, $id)
     {
-
         if ($request->isMethod('GET')) {
             $marca = new Marca();
             $Marcas = $marca->pluck('MAR_Nombre', 'PK_MAR_Id_Marca');
-            return view('acadspace.Hojavida.formularioHojavida',
-                [
-                    'marcas' => $Marcas->toArray(),
-                    'id_articulo' => $id
-
-                ]);
+            $obtId = Articulo::select('FK_ART_Id_Hojavida')->where('PK_ART_Id_Articulo', $id)->get();
+            $finId = $obtId[0]->FK_ART_Id_Hojavida;
+            if($finId == NULL ){
+                return view('acadspace.Hojavida.formularioHojavida',
+                    [
+                        'articulo' => $id,
+                        'marcas' => $Marcas->toArray()
+                    ]);
+            }else{
+                $hojavida = Hojavida::select('*')
+                ->where('PK_HOJ_Id_Hojavida', $finId)
+                ->get();
+                return view('acadspace.Hojavida.formulariomostrarHojavida',compact('hojavida'));
+            }
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -50,17 +58,19 @@ class HojavidaController extends Controller
                 'HOJ_Procesador' => $request['HOJ_Procesador'],
                 'HOJ_Memoria_Ram' => $request['HOJ_Memoria_Ram'],
                 'HOJ_Disco_Duro' => $request['HOJ_Disco_Duro'],
-                'HOJ_Mouse' => $request['HOJ_Modelo_Equipo'],
+                'HOJ_Mouse' => $request['HOJ_Mouse'],
                 'HOJ_Teclado' => $request['HOJ_Teclado'],
                 'HOJ_Sistema_Operativo' => $request['HOJ_Sistema_Operativo'],
                 'HOJ_Antivirus' => $request['HOJ_Antivirus'],
                 'HOJ_Garantia' => $request['HOJ_Garantia'],
-                'FK_HOJ_Id_Marca' => $request['MAR_Nombre']
+                'FK_HOJ_Id_Marca' => $request['FK_HOJ_Id_Marca']
             ]);
-
+            $idArt =Articulo::findOrFail($request['FK_ART_Id_Hojavida']);
+            $idArt->FK_ART_Id_Hojavida = $request['FK_ART_Id_Hojavida'];
+            $idArt->save();
             return AjaxResponse::success(
                 '¡Registro exitoso!',
-                'Incidente registrado correctamente.'
+                'Hoja de vida registrada correctamente.'
             );
         }
         return AjaxResponse::fail(
@@ -71,7 +81,7 @@ class HojavidaController extends Controller
     }
 
     /**
-     * Funcion cargar datatable con incidentes registrados
+     * Funcion para mostrar una hoja de vida registrados
      * @param Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse | \Yajra\DataTables\
      */
@@ -79,15 +89,5 @@ class HojavidaController extends Controller
     {
     }
 
-    /**
-     * Funcion eliminar incidentes registrados
-     * @param Request $request
-     * @param $id
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function destroy(Request $request, $id)
-    {
-
-    }
 
 }

@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
 use App\Container\Acadspace\src\Categoria;
 use App\Container\Acadspace\src\Procedencia;
+use App\Container\Acadspace\src\Imagen;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ArticuloController extends Controller
@@ -49,13 +52,24 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            Articulo::create([
-                'ART_Codigo' => $request['ART_Codigo'],
-                'ART_Descripcion' => $request['ART_Descripcion'],
-                'ART_Fecha_Registro' => Carbon::now(),
-                'FK_ART_Id_Categoria' => $request['FK_ART_Id_Categoria'],
-                'FK_ART_Id_Procedencia' => $request['FK_ART_Id_Procedencia']
-            ]);
+            $archivo = $request->file('Imagen');
+            $obtArticulo = new Articulo();
+            $obtArticulo->ART_Codigo = $request['ART_Codigo'];
+            $obtArticulo->ART_Descripcion = $request['ART_Descripcion'];
+            $obtArticulo->ART_Fecha_Registro = Carbon::now();
+            $obtArticulo->FK_ART_Id_Categoria = $request['FK_ART_Id_Categoria'];
+            $obtArticulo->FK_ART_Id_Procedencia = $request['FK_ART_Id_Procedencia'];
+            $obtArticulo->save();
+            if($archivo){
+                $nombre = 'Imagen del articulo con codigo ' . $obtArticulo->ART_Codigo;
+                $url = Storage::disk('developer')->putFile('acadspace/articulos',$archivo);
+                $urlNew = Storage::url('developer/'. $url);
+                $guardarImagen = new Imagen();
+                $guardarImagen->IMA_Ruta = $urlNew;
+                $guardarImagen->IMA_Nombre = $nombre;
+                $guardarImagen->FK_IMA_Id_Articulo = $obtArticulo->PK_ART_Id_Articulo;
+                $guardarImagen->save();
+            }
             return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
@@ -77,6 +91,7 @@ class ArticuloController extends Controller
 
         if ($request->ajax() && $request->isMethod('GET')) {
             //Relaciona la tabla articulos con, categorias y prodecencias
+            
             $articulos = Articulo::select('PK_ART_Id_Articulo', 'ART_Codigo',
                 'ART_Descripcion', 'FK_ART_Id_Categoria','FK_ART_Id_Procedencia','FK_ART_Id_Hojavida')
             ->with(['categoria' => function ($query) {
@@ -88,12 +103,23 @@ class ArticuloController extends Controller
                     'PRO_Nombre');
             }])
             ->get();//Trae todos los articulos
+
+
+
             return DataTables::of($articulos)
             ->addColumn('hojavida',function($articulos) {
-                if ($articulos->fk_id_hojavida==NULL) {
+                if ($articulos->FK_ART_Id_Hojavida==NULL) {
                     return "<span class='label label-sm label-warning'>" . 'No corresponde' . "</span>";
                 } else{
-                    return "<span class='label label-sm label-default'>" . $articulos->fk_id_hojavida . "</span>";
+                    return "<span class='label label-sm label-default'>" . $articulos->FK_ART_Id_Hojavida . "</span>";
+                }
+            })
+            ->addColumn('imagen',function($articulos){ 
+                $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo',$articulos->PK_ART_Id_Articulo )->get();
+                if($infoUsuario){
+                    return $infoUsuario[0]->IMA_Ruta;
+                }else{
+                    return '<span> LOSER </span>';
                 }
             })
                 //Elimina columnas no necesarias
@@ -141,6 +167,26 @@ class ArticuloController extends Controller
 
 
     }
+        /**
+     * Muestra el perfil de un usuario especifico.
+     *
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verImagen(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo', $id)->get();
+            return $infoUsuario->IMA_Ruta;
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {

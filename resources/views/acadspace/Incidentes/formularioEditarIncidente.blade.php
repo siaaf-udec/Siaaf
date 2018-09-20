@@ -4,18 +4,26 @@
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
                     {!! Form::open(['id'=>'form-tipo','url' => '/forms']) !!}
-                    <div class="form-wizard">
-                        {!! Field:: text('MAN_Nombre',$tiposMant->MAN_Nombre,['label'=>'Digite el nuevo nombre del tipo de mantenimiento', 
-                        'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
-                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
-                        {!! Field:: textarea('MAN_Descripcion',$tiposMant->MAN_Descripcion,
-                        ['label'=>'Digite la nueva descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Modifique la descripción','icon'=>'fa fa-desktop'] ) !!}                        
-                    <div class="row">
+                    <div class="col-md-12">
+
+                        {!! Field:: text('id_persona',$obtIncidentes->FK_INC_Id_User,
+                        ['label'=>'Identificacion:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                        ['help' => 'Digite el código o identificación de la persona implicada','icon'=>'fa fa-user'] ) !!}
+
+                        {!! Field:: select('Codigo articulo:',$articulos,
+                        ['id' => 'articulos', 'name' => 'articulos'])
+                        !!}
+
+                        {!! Field::select('Espacio académico:',$espacios,
+                            ['id' => 'espacios', 'name' => 'espacios'])
+                            !!}
+
+                        {!! Field:: textarea('descripcion',$obtIncidentes->INC_Descripcion,
+                             ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
+                             ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
+                    </div>
                         <div class="col-md-12 col-md-offset-0">
-                            @permission('ACAD_EDITAR_TIPMANT')
                             {{ Form::submit('Editar', ['class' => 'btn blue']) }}
-                            @endpermission
                             {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                         </div>
                     {!! Form::close() !!}
@@ -35,16 +43,30 @@
             e.preventDefault();
             location.reload();
         });
+        $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+         });
+        
+        $('#articulos').val({{$obtIncidentes->FK_INC_Id_Articulo}});
+        $('#espacios').val({{$obtIncidentes->FK_INC_Id_Espacio}});
         var createPermissions = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('espacios.academicos.tiposmant.modificarTipo',[$tiposMant->PK_MAN_Id_Tipo]) }}';
+                        var route = '{{ route('espacios.academicos.incidente.modificarIncidente',$obtIncidentes->PK_INC_Id_Incidente) }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MAN_Nombre', $('input:text[name="MAN_Nombre"]').val());
-                        formData.append('MAN_Descripcion', $('textarea[name="MAN_Descripcion"]').val());
+                        formData.append('FK_INC_Id_User', $('input:text[name="id_persona"]').val());
+                        formData.append('FK_INC_Id_Articulo', $('select[name="articulos"]').val());
+                        formData.append('FK_INC_Id_Espacio', $('select[name="espacios"]').val());
+                        formData.append('INC_Descripcion', $('textarea[name="descripcion"]').val());
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -73,15 +95,21 @@
             };
         var form_edit = $('#form-tipo');
         var rules_edit = {
-            MAN_Nombre: {
+            id_persona: {
                 required: true, 
-                minlength: 1,
-                maxlength: 20
+                minlength: 6,
+                maxlength: 12
             },
-            MAN_Descripcion: {
+            articulos: {
+                required: true
+            },
+            espacios: {
+                required: true
+            },
+            descripcion: {
                 required: true, 
                 minlength: 20,
-                maxlength: 400
+                maxlength: 200
             }
         };
         FormValidationMd.init(form_edit, rules_edit, false, createPermissions());

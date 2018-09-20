@@ -211,7 +211,7 @@
                 {data: 'FK_INC_Id_User', name: 'Identificación'},
                 {data: 'espacio.ESP_Nombre_Espacio', name: 'Nombre Espacio'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <a href="javascript:;" class="btn btn-simple btn-danger btn-icon remove" data-toggle="confirmation"><i class="icon-trash"></i></a> @endpermission',
+                    defaultContent:'@permission('ACAD_ELIMINAR_MANT') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -219,7 +219,6 @@
                     searchable: false,
                     exportable: false,
                     printable: false,
-                    className: 'text-right',
                     render: null,
                     responsivePriority: 2
                 }
@@ -262,6 +261,16 @@
 
 
             });
+            
+            /*EDITAR INCIDENTES*/
+                table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.incidente.editIncidente') }}'+'/'+dataTable.PK_INC_Id_Incidente;
+                $(".content-ajax").load(route_edit);
+             });
+
 
             /*Inicio detalles desplegables*/
             $('#art-table-ajax tbody').on('click', 'td.details-control', function () {

@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Articulo extends Model
+class Imagen extends Model
 {
     /**
      * Conexión de la base de datos usada por el modelo

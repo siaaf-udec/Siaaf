@@ -39,7 +39,8 @@ class Hojavida extends Model
         'HOJ_Teclado',
         'HOJ_Sistema_Operativo',
         'HOJ_Antivirus',
-        'HOJ_Garantia'
+        'HOJ_Garantia',
+        'FK_HOJ_Id_Marca'
     ];
     /**
      *  Función que retorna la relación entre la tabla 'TBL_Hojavida' y la tabla
@@ -48,6 +49,6 @@ class Hojavida extends Model
      */
     public function marca()
     {
-        return $this->hasMany(Marca::class, 'FK_HOJ_Id_Marca', 'PK_MAR_Id_Marca');
+        return $this->hasMany(Marca::class, 'PK_MAR_Id_Marca', 'FK_HOJ_Id_Marca');
     }
 }

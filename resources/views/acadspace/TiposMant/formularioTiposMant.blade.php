@@ -1,4 +1,4 @@
-@permission('ACAD_INCIDENTES')
+@permission('ACAD_TIPMANT')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('ACAD_REGISTRAR_INCIDENTE')
+                        @permission('ACAD_REGISTRAR_TIPMANT')
                         <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
@@ -52,7 +52,7 @@
             </div>
             <br>
             <div class="col-md-12">
-                @permission('ACAD_CONSULTAR_INCIDENTE')
+                @permission('ACAD_CONSULTAR_TIPMANT')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
                 table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
@@ -78,7 +78,7 @@
                             <h2 class="modal-title">
                                 <i class="glyphicon glyphicon-tv">
                                 </i>
-                                Registrar Tipo Manteniemiento
+                                Registrar Tipo Mantenimiento
                             </h2>
                         </div>
                         <div class="modal-body">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @permission('ACAD_REGISTRAR_INCIDENTE')
+                            @permission('ACAD_REGISTRAR_TIPMANT')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
@@ -195,7 +195,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'MAN_Nombre', name: 'Nombre'},
                 {
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_TIPMANT') <div class="btn-group"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
