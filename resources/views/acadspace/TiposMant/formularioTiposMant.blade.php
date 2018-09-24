@@ -78,7 +78,7 @@
                             <h2 class="modal-title">
                                 <i class="glyphicon glyphicon-tv">
                                 </i>
-                                Registrar Tipo Manteniemiento
+                                Registrar Tipo Mantenimiento
                             </h2>
                         </div>
                         <div class="modal-body">

@@ -124,6 +124,12 @@ articulo{{-- MENÚ DE EJEMPLO --}}
                         <span class="title">Carreras</span>
                     </a>
                 </li>
+                <li class="nav-item {{ active(['espacios.academicos.report.indexInc'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.report.indexInc') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-graduation-cap"></i>
+                        <span class="title">Incidentes</span>
+                    </a>
+                </li>
             </ul>
         </li>
         @endpermission
