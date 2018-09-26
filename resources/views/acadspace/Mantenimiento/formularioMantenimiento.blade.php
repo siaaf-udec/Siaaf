@@ -205,7 +205,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'MANT_Nombre_Tecnico', name: 'Nombre Tecnico'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_MANT') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Asignar Diagnostico </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_MANT') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Ver/Asignar Diagnostico </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -340,3 +340,4 @@
 
     </script>
 @endpush
+@endpermission

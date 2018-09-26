@@ -100,14 +100,18 @@ class MantenimientoController extends Controller
      */
     public function editMantenimiento(Request $request, $id){
         if ($request->ajax() && $request->isMethod('GET')) {
+            $findDescri = Mantenimiento::select('*')->where('PK_MANT_Id_Registro',$id)->get();
+            if($findDescri[0]->MANT_Descripcion_Errores ==  null && $findDescri[0]->MANT_Descripcion_Errores ==  ''){
                 return view('acadspace.Mantenimiento.formularioCerrarMantenimiento',compact('id'));
+            }else{
+                return view('acadspace.Mantenimiento.formularioVerDiagnostico',compact('findDescri'));
             }
             return AjaxResponse::fail(
                 '¡Error!',
                 'La peticion no pudo ser procesada.'
             );
         }
-
+    }
            /**
      * Funcion para eliminar marca entre los registrados
      * retorna mensaje ajax
@@ -117,15 +121,16 @@ class MantenimientoController extends Controller
      */
     public function cerrarMantenimiento(Request $request){
         if ($request->ajax() && $request->isMethod('POST')) {
-                $id = $request['MANT_Id'];
+            
                 $mantenimiento = Mantenimiento::findOrFail($id);
                 $mantenimiento->MANT_Fecha_Fin = Carbon::now();
                 $mantenimiento->MANT_Descripcion_Errores = $request['MANT_Descripcion_Errores'];
                 $mantenimiento->save();
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Mantenimiento eliminado correctamente.'
+                    'Diagnostico tecnico generado correctamente.'
                 );
+
             }
             return AjaxResponse::fail(
                 '¡Error!',

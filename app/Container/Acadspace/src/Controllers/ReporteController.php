@@ -19,6 +19,7 @@ use App\Container\Overall\Src\Facades\AjaxResponse;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Acadspace\src\Categoria;
 use App\Container\Acadspace\src\Procedencia;
+use App\Container\Acadspace\src\Incidentes;
 
 
 class ReporteController extends Controller
@@ -96,6 +97,28 @@ class ReporteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    /**
+     * Retorna la vista de reportes estudiantes
+     * @param Request $request
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporteIndexInc(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            $espa = new espacios();
+            $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
+            return view('acadspace.Reportes.reporteIndexInc',
+                [
+                    'espacios' => $espacios->toArray()
+                ]);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
 
     /**
      * Recibe el parametro espacio y retorna un json con las aulas
@@ -191,7 +214,6 @@ class ReporteController extends Controller
 
         return $total;
     }
-
     /**
      * Recibe los campos de la vista ReportesIndexEst y llama las funcion "changeform" para obtener
      * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
@@ -401,6 +423,53 @@ class ReporteController extends Controller
             'No se pudo completar su solicitud.'
         );
     }
+        /**
+     * Recibe los campos de la vista ReportesIndexCarr y llama las funcion "changeform" para obtener
+     * la fecha en el formato necesario. Obtiene la cantidad de estudiantes por carrera y tipo de practica
+     * que han ingresado a todos los espacios academicos
+     * @param Request $request
+     * @return \Illuminate\View\View | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function reporIncidente(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+//           try {
+                $data = $request->all();
+                $fecha = $data['date_range'];
+                $laboratorio = $data['SOL_laboratorios'];
+                $f2 = substr($fecha, -10);
+                $f1 = substr($fecha, -23, -13);
+
+                $fech1 = $this->changeForm($f1);//Cambia el formato de la fecha
+                $fech2 = $this->changeForm($f2);
+
+                $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+                $time = date("h:i A");
+
+                $obtIncidentes = Incidentes::whereBetween('created_at', [$fech1, $fech2])
+                ->where('FK_INC_Id_Espacio', '=', $laboratorio)
+                ->with(['articulo' => function ($query) {
+                    return $query->select('PK_ART_Id_Articulo',
+                        'ART_Codigo');
+                }])
+                ->get();
+                
+                $obtEspacio = Espacios::select('ESP_Nombre_Espacio')->where('PK_ESP_Id_Espacio',$laboratorio)->get();
+                $num = count($obtIncidentes);
+                $labNum =$laboratorio;
+                $cont = 1;
+                return view('acadspace.Reportes.reporteIncidente',compact('obtIncidentes','date','time','obtEspacio', 'fech1', 'fech2','labNum','cont','num'));
+/*            } catch (Exception $e) {
+                return view('acadspace.Reportes.reporteindexInc');
+
+            }*/
+        }
+        return AjaxResponse::fail(
+
+            '¡Lo sentimos!',
+            'No se pudo completar su solicitud.'
+        );
+    }
 
     /*
      * Descarga de reporte por carrera
@@ -558,6 +627,47 @@ class ReporteController extends Controller
                     compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
                 );
             }
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar su solicitud.'
+        );
+    }
+        /*
+     * Descarga de reporte de docentes
+     *
+   * @param  \Illuminate\Http\Request
+     * @param   date fech1
+     * @param   date fech2
+     * @param   int labNum
+     * @param   int aula
+     *
+     * @return Barryvdh\Snappy\Facades\SnappyPdf | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function descargarReporteInc(Request $request, $fech1, $fech2, $labNum)
+    {
+        if ($request->isMethod('GET')) {
+
+
+            $date = date("d/m/Y");//Fecha actual para adjuntar en el reporte
+            $time = date("h:i A");
+
+            $obtIncidentes = Incidentes::whereBetween('created_at', [$fech1, $fech2])
+            ->where('FK_INC_Id_Espacio', '=', $labNum)
+            ->with(['articulo' => function ($query) {
+                return $query->select('PK_ART_Id_Articulo',
+                    'ART_Codigo');
+            }])
+            ->get();
+            
+            $obtEspacio = Espacios::select('ESP_Nombre_Espacio')->where('PK_ESP_Id_Espacio',$labNum)->get();
+            $num = count($obtIncidentes);
+            $cont = 1;
+            return SnappyPdf::loadView('acadspace.Reportes.ReporteIncidente', [
+                'obtIncidentes'=>$obtIncidentes,'date'=>$date,'time'=>$time,
+                'obtEspacio'=>$obtEspacio, 'fech1'=>$fech1, 'fech2'=>$fech2,
+                'labNum'=>$labNum,'cont'=>$cont,'num'=>$num
+            ])->download('ReporteIncidente.pdf');
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

@@ -234,6 +234,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'espacios.academicos.report.indexArt'
         ]);
 
+        Route::get('indexInc', [ //Pagina inicial y captura de rango de fechas rep carrera
+            'uses' => $controller . 'ReporteController@reporteIndexInc',
+            'as' => 'espacios.academicos.report.indexInc'
+        ]);
+
         Route::post('repDoc', [ //CREAR REPORTE DOCENTE
             'uses' => $controller . 'ReporteController@reporDocente',
             'as' => 'espacios.academicos.report.repDoc',
@@ -243,13 +248,24 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ReporteController@cargarRepEst',
             'as' => 'espacios.academicos.report.repEst',
         ]);
+
         Route::post('repCarr', [ //CREAR REPORTE CARRERAS
             'uses' => $controller . 'ReporteController@reporCarrera',
             'as' => 'espacios.academicos.report.repCarr',
         ]);
+
+        Route::post('repInc', [ //CREAR REPORTE INCIDENTES
+            'uses' => $controller . 'ReporteController@reporIncidente',
+            'as' => 'espacios.academicos.report.repInc',
+        ]);
+
         Route::get('descargarRepEst/{fech1}/{fech2}/{labNum}', [
             'uses' => $controller.'ReporteController@descargarReporteEst',
             'as' => 'espacios.academicos.report.descargarRepEst'
+        ]);
+        Route::get('descargarRepInc/{fech1}/{fech2}/{labNum}', [
+            'uses' => $controller.'ReporteController@descargarReporteInc',
+            'as' => 'espacios.academicos.report.descargarRepInc'
         ]);
         Route::get('descargarRepDoc/{fech1}/{fech2}/{labNum}/{aula}', [
             'uses' => $controller.'ReporteController@descargarReporteDoc',
