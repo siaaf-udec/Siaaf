@@ -20,7 +20,7 @@ class MantenimientoController extends Controller
             $tipos=new TiposMant();
             $articulo=new Articulo();
             $tiposmante=$tipos->pluck('MAN_Nombre','PK_MAN_Id_Tipo');
-            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo');
+            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo')->sort();
             //Muestra vista elementos
             return view('acadspace.Mantenimiento.formularioMantenimiento',
             [
