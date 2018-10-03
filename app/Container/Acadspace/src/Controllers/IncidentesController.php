@@ -31,7 +31,7 @@ class IncidentesController extends Controller
             $espa = new espacios();
             $articulo = new Articulo();
             $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
-            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo');
+            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo')->sort();
             return view('acadspace.Incidentes.formularioIncidente',
                 [
                     'espacios' => $espacios->toArray(),
