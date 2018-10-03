@@ -65,10 +65,13 @@
                 <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                 </button>
                 <h2 class="modal-title">
-                    <i class="glyphicon glyphicon-tv">
-                    </i>
+                    <i class="glyphicon glyphicon-tv"></i>
                     Registrar articulo.
                 </h2>
+                <h5>
+                    <i class="fa fa-warning"></i>    
+                    Antes de intentar registrar un articulo agregue primero al menos una categoria y una procedencia
+                </h5>
             </div>
             <div class="modal-body">
                     {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms', 'files'=>true]) !!}

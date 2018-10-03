@@ -199,7 +199,7 @@
                 };
             };
             var type_crud = 'CREATE',
-                route_store = route('espacios.academicos.formacad.store'),
+                route_store = 'store',
                 formatfile = '.pdf',
                 numfile = 1;
             FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
