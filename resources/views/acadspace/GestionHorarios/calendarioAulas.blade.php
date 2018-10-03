@@ -670,6 +670,7 @@
                 });
 
                 /* AGREGANDO EVENTOS AL PANEL */
+                var exist = [];
                 var currColor = "#3c8dbc"; //Red by default
                 //Color chooser button
                 var colorChooser = $("#color-chooser-btn");
@@ -685,22 +686,34 @@
                     //Get value and make sure it is not null
                     var val = $("#new-event").val();
                     if (val.length == 0) {
+                        UIToastr.init('error', 'Escribir un nombre', 'por favor agregar escribir algo en el campo');
                         return;
                     }
-
+                    console.log(exist.length);
+                    exist.push(val.toLowerCase());
+                    console.log(exist);
                     //Create events
+                var flag = 0;
+                for (let i = 0; i < exist.length ; i++) {
+                    if(exist[i].localeCompare(val.toLowerCase()) == 0)
+                        flag += 1;
+                }
+                if(flag < 2 ){
                     var event = $("<div />");
-                    event.css({
+                        event.css({
                         "background-color": currColor,
                         "border-color": currColor,
                         "color": "#fff"
-                    }).addClass("external-event");
-                    event.html(val);
-                    $('#external-events').prepend(event);
-
-                    //Add draggable funtionality
-                    ini_events(event);
-
+                        }).addClass("external-event");
+                        event.html(val);
+                        $('#external-events').prepend(event);
+                        flag = 0;
+                        //Add draggable funtionality
+                        ini_events(event);
+                }else{
+                    UIToastr.init('error', 'No repetir los nombres de los eventos', 'por favor cambiar el nombre');
+                    return;
+                }
                     //Remove event from text input
                     $("#new-event").val("");
                 });
