@@ -80,10 +80,6 @@
                                 </i>
                                 Registrar Mantenimiento
                             </h2>
-                            <h5>
-                                <i class="fa fa-warning"></i>    
-                                Antes de intentar registrar un mantenimiento agregue por lo menos un articulo y un tipo de mantenimiento
-                            </h5>
                         </div>
                         <div class="modal-body">
                             {!! Form::open(['id' => 'form_mant', 'class' => '', 'url'=>'/forms']) !!}

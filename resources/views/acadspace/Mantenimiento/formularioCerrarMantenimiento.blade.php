@@ -72,7 +72,7 @@
                 };
             var form_edit = $('#form-cate');
             var rules_edit = {
-                MANT_Solucion: {required: true, minlength: 30, maxlength: 4000}
+                MANT_Solucion: {required: true, minlength: 30, maxlength: 200}
             };
             FormValidationMd.init(form_edit, rules_edit, false, createPermissions());
         });

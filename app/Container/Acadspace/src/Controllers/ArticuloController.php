@@ -111,7 +111,7 @@ class ArticuloController extends Controller
                 if ($articulos->FK_ART_Id_Hojavida==NULL) {
                     return "<span class='label label-sm label-warning'>" . 'No corresponde' . "</span>";
                 } else{
-                    return "<span class='label label-sm label-success'>" . 'Asignada' . "</span>";
+                    return "<span class='label label-sm label-default'>" . $articulos->FK_ART_Id_Hojavida . "</span>";
                 }
             })
             ->addColumn('imagen',function($articulos){ 

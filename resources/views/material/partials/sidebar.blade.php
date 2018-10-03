@@ -64,12 +64,6 @@
         @permission('AUD_MODULE')
         @include('themes.menus.auditing-menu')
         @endpermission
-
-        {{-- CALIDADPCS --}}
-        @permission('CALIDADPCS_MODULE')
-        @include('themes.menus.calidadpcs-menu')
-        @endpermission
-
         @env('local')
         {{-- CRM UDEC --}}
         {{-- @include('themes.menus.crmudec-menu') --}}

@@ -10,7 +10,6 @@ use App\Container\Acadspace\src\TiposMant;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
-use App\Services\PayUService\Exception;
 
 
 class MantenimientoController extends Controller
@@ -21,7 +20,7 @@ class MantenimientoController extends Controller
             $tipos=new TiposMant();
             $articulo=new Articulo();
             $tiposmante=$tipos->pluck('MAN_Nombre','PK_MAN_Id_Tipo');
-            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo')->sort();
+            $articulos = $articulo->pluck('ART_Codigo','PK_ART_Id_Articulo');
             //Muestra vista elementos
             return view('acadspace.Mantenimiento.formularioMantenimiento',
             [
@@ -46,32 +45,26 @@ class MantenimientoController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $art =new Articulo();
             $articulo = $art::select('FK_ART_Id_Hojavida')
-                ->where('PK_ART_Id_Articulo',$request['ART_Codigo'])
-                ->sum('FK_ART_Id_Hojavida');
-            if($articulo != 0){          
-                Mantenimiento::create([
+                        ->where('PK_ART_Id_Articulo',$request['ART_Codigo'])
+                        ->sum('FK_ART_Id_Hojavida');          
+            Mantenimiento::create([
                 'MANT_Nombre_Tecnico' => $request['MANT_Nombre_Tecnico'],
                 'FK_MANT_Id_Tipo' => $request['FK_MANT_Id_Tipo'],
                 'MANT_Descripcion' => $request['MANT_Descripcion'],
                 'FK_MANT_Id_Hojavida' => $articulo,
                 'MANT_Fecha_Inicio' => Carbon::now()
-                ]);
-                return AjaxResponse::success(
-                    '¡Registro exitoso!',
-                    'Mantenimiento registrado correctamente.'
-                );
+            ]);
 
-            }else{
-                return AjaxResponse::success(
-                    '¡Lo sentimos!',
-                    'Agregue primero la hoja de vida del articulo que desea registrar el mantenimiento.'
-                );  
-            }
+            return AjaxResponse::success(
+                '¡Registro exitoso!',
+                'Mantenimiento registrado correctamente.'
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
+
     }
      /**
      * Funcion cargar datatable con marcas registradas
@@ -128,7 +121,8 @@ class MantenimientoController extends Controller
      */
     public function cerrarMantenimiento(Request $request){
         if ($request->ajax() && $request->isMethod('POST')) {
-                $mantenimiento = Mantenimiento::findOrFail($request['MANT_Id']);
+            
+                $mantenimiento = Mantenimiento::findOrFail($id);
                 $mantenimiento->MANT_Fecha_Fin = Carbon::now();
                 $mantenimiento->MANT_Descripcion_Errores = $request['MANT_Descripcion_Errores'];
                 $mantenimiento->save();

@@ -42,6 +42,7 @@
                     'id_documento',
                     'Formato Académico ',
                     'Fecha',
+                    'Secretaria',
                     'Acciones' => ['style' => 'width:150px;']
                     ])
                 @endcomponent
@@ -58,7 +59,8 @@
     <!-- SCRIPT DATATABLE -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"
+            type="text/javascript"></script>
     <!-- SCRIPT MENSAJES TOAST-->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endpush
@@ -82,6 +84,11 @@
                 {data: 'PK_FAC_Id_Formato', name: 'id_documento', "visible": false},
                 {data: 'FAC_Titulo_Doc', name: 'Formato Académico'},
                 {data: 'created_at', name: 'Fecha'},
+                {
+                    data: function (data, type, dataToSet) {
+                        return data.user.name + " " + data.user.lastname;
+                    }, name: 'Secretaria'
+                },
                 {
                     //Botones de acciones(editar estado, descargar)
                     defaultContent: '@permission('ACAD_EDIT_ESTADO_FORMATO') <a href="javascript:;" class="btn btn blue btn-icon edit"><i class="glyphicon glyphicon-ok"></i></a> @endpermission ' +
