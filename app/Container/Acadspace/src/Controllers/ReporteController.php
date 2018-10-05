@@ -224,7 +224,7 @@ class ReporteController extends Controller
     public function cargarRepEst(Request $request)
     {
         if ($request->isMethod('POST')) {
-            try {
+       //     try {
                 $data = $request->all();
                 $code = $data['date_range'];
                 $lab = $request['SOL_laboratorios'];
@@ -268,14 +268,14 @@ class ReporteController extends Controller
                         'totPiscologiaLibre', 'totPiscologiaaGrup',
                         'totalTot', 'totExternos', 'cont', 'date', 'time', 'fech1', 'fech2', 'lab', 'code', 'labNum')
                 );
-            } catch (Exception $e) {
+      /*      } catch (Exception $e) {
                 $espa = new espacios();
                 $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
                 return view('acadspace.Reportes.reportesIndexEst',
                     [
                         'espacios' => $espacios->toArray()
                     ]);
-            }
+            }*/
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -529,7 +529,7 @@ class ReporteController extends Controller
     public function reporDocente(Request $request)
     {
         if ($request->isMethod('POST')) {
-            try {
+        //  try {
                 $data = $request->all();
 
                 $fecha = $request['date_range'];
@@ -567,14 +567,14 @@ class ReporteController extends Controller
                 return view('acadspace.Reportes.ReportesDocentes',
                     compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
                 );
-            } catch (Exception $e) {
+         /*   } catch (Exception $e) {
                 $espa = new espacios();
                 $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
                 return view('acadspace.Reportes.reportesIndex',
                     [
                         'espacios' => $espacios->toArray()
                     ]);
-            }
+            } */
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
