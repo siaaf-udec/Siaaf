@@ -125,69 +125,119 @@ function htmlEntities(str) {
 
 function read(a) {
     let hash;
-    var string = a,
-        arr = string.split('|'),
-        k;
+    var repeticion = 0;
+    var arr;
     var bandera = [];
     bandera[3] = true;
     bandera[4] = false;
     bandera[1] = true;
-    var mySelect1 = document.getElementById("SOL_carrera");
-    var mySelect2 = document.getElementById("SOL_laboratorios");
-    var mySelect3 = document.getElementById("aula");
-    console.log(cadenaControl + "===" + arr);
+    bandera[5] = false;
+    var valid = /^([0-9])*$/;
+    for (i = 0; i < a.length; i++) {
+        if (a.charAt(i) == '|') {
 
+            repeticion++;
+            console.log(repeticion + " " + a);
+
+        }
+    }
+    if (repeticion == 4) {
+        console.log("RETIRANDO | DE : " + a)
+        arr = a.split('|');
+        bandera[5] = true;
+        if (arr[1].length < 1 || arr[2].length < 1 || arr[3].length < 1) {
+            console.log("ARRAY  error : " + arr[0] + arr[1] + arr[2] + arr[3]);
+            arr[1] = '0';
+            arr[2] = '0';
+            arr[3] = '0';
+            bandera[5] = false;
+        }
+
+        if (valid.test(arr[0]) && valid.test(arr[1]) && valid.test(arr[2]) && valid.test(arr[3])) {
+            document.getElementById("codigo").value = arr[0];
+            
+            bandera[5] = true;
+        } else {
+            arr[0] = '0';
+            arr[1] = '0';
+            arr[2] = '0';
+            arr[3] = '0';
+            bandera[5] = false;
+        }
+
+        var mySelect1 = document.getElementById("SOL_carrera");
+        var mySelect2 = document.getElementById("SOL_laboratorios");
+        var mySelect3 = document.getElementById("aula");
+        console.log(cadenaControl + "===" + arr);
+    } else {
+        bandera[5] = false;
+    }
     if (cadenaControl.toString() === arr.toString()) {
+        document.getElementById("codigo").value = "";
         UIToastr.init('warning', 'Retirar QR', '¡Se acaba de proporcionar el QR!');
         setTimeout(captureToCanvas, 1000);
     } else {
+
         UIToastr.init('info', 'Registrando...', 'Validando QR');
-        document.getElementById("codigo").value = arr[0];
+        if (bandera[5]) {
 
-        if (arr[4] == null) {
-            bandera[4] = false;
-        }else{
-            hash = arr[4];
-        }
-        
-        console.log("HASH DE QR : " + hash)
-        var localISOTime = (new Date(Date.now())).toISOString().slice(0, -1);
-        localISOTime = localISOTime.replace('T', ' ');
-        $.get("verificarHash/" + arr[0] + '/' + hash + '/' + localISOTime, function (response) {
-            $(response.data).each(function (key, value) {
-                console.log("----------------------->" + value)
-                bandera[4] = value;
-                for (var i, j = 0; i = mySelect1.options[j]; j++) {
-                    if (i.value == arr[1]) {
-                        console.log("Valor selector Carrera :" + i.value + " Valor del QR :" + arr[1]);
-                        mySelect1.selectedIndex = j;
-                        bandera[0] = true;
-                        break;
-                    }
+            try {
+                if (arr[4] == null) {
+                    bandera[4] = false;
+                } else {
+                    hash = arr[4];
                 }
-                for (var i, j = 0; i = mySelect2.options[j]; j++) {
-                    if (i.value == arr[2]) {
-                        console.log("Valor selector Espacio :" + i.value + " Valor del QR :" + arr[2]);
-                        mySelect2.selectedIndex = j;
-                        console.log(bandera[3])
-                        if (bandera[3]) {
-                            console.log("If del ciclo de llenado")
-                            $('#aula').empty();
-                            $("#aula").append(new Option('Sala general', 2));
-                            bandera[2] = true;
-                            cadenaControl = arr;
-                            $("#aula").val([]);
-                            validate(bandera[0], bandera[1], bandera[2], bandera[4], mySelect3, arr[3]);
-
+                console.log("HASH DE QR : " + hash)
+                var localISOTime = (new Date(Date.now())).toISOString().slice(0, -1);
+                localISOTime = localISOTime.replace('T', ' ');
+                $.get("verificarHash/" + arr[0] + '/' + hash + '/' + localISOTime, function (response) {
+                    $(response.data).each(function (key, value) {
+                        console.log("----------------------->" + value)
+                        bandera[4] = value;
+                        for (var i, j = 0; i = mySelect1.options[j]; j++) {
+                            console.log("ENTRA A SELECTOR DE CARRERA " + i.value)
+                            if (i.value == arr[1]) {
+                                console.log("Valor selector Carrera :" + i.value + " Valor del QR :" + arr[1]);
+                                mySelect1.selectedIndex = j;
+                                bandera[0] = true;
+                                break;
+                            }
                         }
+                        for (var i, j = 0; i = mySelect2.options[j]; j++) {
+                            console.log("ENTRA A SELECTOR DE ESPACIO ")
+                            if (i.value == arr[2]) {
+                                console.log("Valor selector Espacio :" + i.value + " Valor del QR :" + arr[2]);
+                                mySelect2.selectedIndex = j;
+                                console.log(bandera[3])
+                                if (bandera[3]) {
+                                    console.log("If del ciclo de llenado")
+                                    $('#aula').empty();
+                                    $("#aula").append(new Option('Sala general', 2));
+                                    bandera[2] = true;
+                                    cadenaControl = arr;
+                                    $("#aula").val([]);
+                                    // validate(bandera[0], bandera[1], bandera[2], bandera[4], mySelect3, arr[3]);
+
+                                }
+
+                                break;
+                            }
+                        }
+                        validate(bandera[0], bandera[1], bandera[2], bandera[4], mySelect3, arr[3]);
                         bandera[3] = false;
                         bandera[1] = true;
-                        break;
-                    }
-                }
-            });
-        });
+                    });
+                });
 
+            } catch (e) {
+                console.log("ERROR : " + e)
+
+            }
+        } else {
+            validate(false, false, false, false, mySelect3, arr[3]);
+            bandera[3] = false;
+            bandera[1] = true;
+        }
 
     }
 
@@ -225,7 +275,7 @@ function validate(i1, j2, k3, z4, mySelect3, value) {
         //load();
     } else {
 
-        UIToastr.init('error', 'QR Obsoleto', '¡Por favor genere otro QR!');
+        UIToastr.init('error', 'QR Obsoleto o Corrupto', '¡Por favor genere otro QR!');
         /* $('#form_sol_create')[0].reset(); //Limpia formulario
          $('#Espacio').val('').trigger('change');
          $("#SOL_carrera").val('').trigger('change');
