@@ -259,7 +259,7 @@ class ReporteController extends Controller
                 }
 
                 $cont = 1;
-                return view('acadspace.Reportes.ReportesEstudiantes',
+                return view('acadspace.Reportes.reportesEstudiantes',
                     compact('totSistemasLibre', 'totSistemasGrup',
                         'totAmbientalLibre', 'totAmbientalGrup',
                         'totAgronomicaLibre', 'totAgronomicaGrup',
@@ -324,7 +324,7 @@ class ReporteController extends Controller
 
                 $cont = 1;
 
-                return SnappyPdf::loadView('acadspace.Reportes.ReportesEstudiantes', [
+                return SnappyPdf::loadView('acadspace.Reportes.reportesEstudiantes', [
                     'totSistemasLibre' => $totSistemasLibre, 'totSistemasGrup' => $totSistemasGrup,
                     'totAmbientalLibre' => $totAmbientalLibre, 'totAmbientalGrup' => $totAmbientalGrup,
                     'totAgronomicaLibre' => $totAgronomicaLibre, 'totAgronomicaGrup' => $totAgronomicaGrup,
@@ -335,7 +335,7 @@ class ReporteController extends Controller
                     'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'lab' => $lab, 'cont' => $cont, 'labNum' => $labNum
                 ])->download('ReporteEstudiantes.pdf');
             } catch (Exception $e) {
-                return view('acadspace.Reportes.ReportesEstudiantes',
+                return view('acadspace.Reportes.reportesEstudiantes',
                     compact('totSistemasLibre', 'totSistemasGrup',
                         'totAmbientalLibre', 'totAmbientalGrup',
                         'totAgronomicaLibre', 'totAgronomicaGrup',
@@ -529,7 +529,7 @@ class ReporteController extends Controller
     public function reporDocente(Request $request)
     {
         if ($request->isMethod('POST')) {
-        //  try {
+          try {
                 $data = $request->all();
 
                 $fecha = $request['date_range'];
@@ -564,17 +564,17 @@ class ReporteController extends Controller
                 $totalTot = count($docentes);
 
                 $cont = 1;
-                return view('acadspace.Reportes.ReportesDocentes',
+                return view('acadspace.Reportes.reportesDocentes',
                     compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
                 );
-         /*   } catch (Exception $e) {
+            } catch (Exception $e) {
                 $espa = new espacios();
                 $espacios = $espa->pluck('ESP_Nombre_Espacio', 'PK_ESP_Id_Espacio');
                 return view('acadspace.Reportes.reportesIndex',
                     [
                         'espacios' => $espacios->toArray()
                     ]);
-            } */
+            } 
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
@@ -617,13 +617,13 @@ class ReporteController extends Controller
                 $totalTot = count($docentes);
 
                 $cont = 1;
-                return SnappyPdf::loadView('acadspace.Reportes.ReportesDocentes', [
+                return SnappyPdf::loadView('acadspace.Reportes.reportesDocentes', [
                     'docentes' => $docentes, 'aula' => $aula,
                     'nomEspacio' => $nomEspacio, 'nombreAula' => $nombreAula, 'totalTot' => $totalTot,
                     'date' => $date, 'time' => $time, 'fech1' => $fech1, 'fech2' => $fech2, 'labNum' => $labNum, 'cont' => $cont
                 ])->download('ReporteDocentes.pdf');
             } catch (Exception $e) {
-                return view('acadspace.Reportes.ReportesDocentes',
+                return view('acadspace.Reportes.reportesDocentes',
                     compact('docentes', 'cont', 'nomEspacio', 'date', 'time', 'fech1', 'fech2', 'labNum', 'aula', 'totalTot', 'fecha', 'nombreAula')
                 );
             }
@@ -663,7 +663,7 @@ class ReporteController extends Controller
             $obtEspacio = Espacios::select('ESP_Nombre_Espacio')->where('PK_ESP_Id_Espacio',$labNum)->get();
             $num = count($obtIncidentes);
             $cont = 1;
-            return SnappyPdf::loadView('acadspace.Reportes.ReporteIncidente', [
+            return SnappyPdf::loadView('acadspace.Reportes.reporteIncidente', [
                 'obtIncidentes'=>$obtIncidentes,'date'=>$date,'time'=>$time,
                 'obtEspacio'=>$obtEspacio, 'fech1'=>$fech1, 'fech2'=>$fech2,
                 'labNum'=>$labNum,'cont'=>$cont,'num'=>$num
