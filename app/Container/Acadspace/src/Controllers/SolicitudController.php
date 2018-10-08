@@ -9,7 +9,7 @@
 namespace App\Container\Acadspace\src\Controllers;
 
 
-use App\Container\Users\src\UsersUdec;
+use App\Container\Users\src\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -327,7 +327,7 @@ class SolicitudController extends Controller
                 'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
                 'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Rango_Fechas')
                 ->with(['user' => function ($query) {
-                    return $query->select('number_document', 'username', 'lastname');
+                    return $query->select('name', 'lastname');
                 }])
                 ->with(['software' => function ($query) {
                     return $query->select('PK_SOF_Id',
@@ -375,7 +375,7 @@ class SolicitudController extends Controller
                 'created_at', 'SOL_Carrera', 'SOL_Dias', 'SOL_Hora_Inicio',
                 'SOL_Hora_Fin', 'SOL_Guia_Practica', 'FK_SOL_Id_Software', 'SOL_Fecha_Inicial')
                 ->with(['user' => function ($query) {
-                    return $query->select('number_document', 'username', 'lastname');
+                    return $query->select('name', 'lastname');
                 }])
                 ->with(['software' => function ($query) {
                     return $query->select('PK_SOF_Id',
@@ -427,7 +427,7 @@ class SolicitudController extends Controller
             $coment->save();
 
 
-            $user = UsersUdec::find($solicitud->FK_SOL_Id_Docente);
+            $user = User::find($solicitud->FK_SOL_Id_Docente);
             $data = [
                 'url' => url('espacios-academicos/solacad/indexDoc'),
                 'description' => '¡Tiene una solicitud aprobada!',
@@ -467,7 +467,7 @@ class SolicitudController extends Controller
             $coment->FK_COM_Id_Solicitud = $request['id_solicitud'];
             $coment->save();
 
-            $user = UsersUdec::find($solicitud->FK_SOL_Id_Docente);
+            $user = User::find($solicitud->FK_SOL_Id_Docente);
             $data = [
                 'url' => url('espacios-academicos/solacad/indexDoc'),
                 'description' => '¡Tiene una solicitud rechazada!',
@@ -536,7 +536,7 @@ class SolicitudController extends Controller
                 'SOL_Dias', 'SOL_Hora_Inicio', 'SOL_Hora_Fin',
                 'FK_SOL_Id_Software', 'FK_SOL_Id_Sala', 'SOL_fecha_inicial')
                 ->with(['user' => function ($query) {
-                    return $query->select('number_document', 'username', 'lastname');
+                    return $query->select('name', 'lastname');
                 }])
                 ->with(['aula' => function ($query) {
                     return $query->select('PK_SAL_Id_Sala',

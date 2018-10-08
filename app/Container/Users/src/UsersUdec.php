@@ -35,11 +35,11 @@ class UsersUdec extends Model
     /**
      * Get the UsuarioEspaciosAcademicos record associated with the user.
      */
-    public function acadspace()
+  /*  public function acadspace()
     {
         return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
     }
-
+    */
     public function formatosAcadspace()
     {
         return $this->hasMany('App\Container\Acadspace\Src\Formatos', 'FK_FAC_id_secretaria');

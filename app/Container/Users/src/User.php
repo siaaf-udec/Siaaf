@@ -7,6 +7,7 @@ use App\Container\Financial\src\Constants\SchemaConstant;
 use App\Container\Financial\src\Extension;
 use App\Container\Financial\src\File;
 use App\Container\Financial\src\IntersemestralStudents;
+use App\Container\Acadspace\src\Solicitud;
 
 /**
  * Financial Uses
@@ -207,13 +208,15 @@ class User extends Authenticatable implements AuditableContract
         return $this->hasOne('App\Container\Unvinteraction\Src\UsuarioInteraction', 'USER_FK_User');
     }
 
+    /*public function acadspace()
+    {
+        return $this->hasMany(Solicitud::class,user() ,'id');
+    }*/
+
     /**
      * Get the UsuarioEspaciosAcademicos record associated with the user.
      *
-     * public function acadspace()
-     * {
-     * return $this->hasMany('App\Container\Acadspace\Src\Solicitud', 'SOL_id_docente');
-     * }
+
      *
      * public function formatosAcadspace()
      * {
