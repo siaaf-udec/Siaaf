@@ -7,8 +7,8 @@
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-marca']) !!}
                     <div class="form-wizard">
                         {!! Field:: text('MAR_Nombre',$marca->MAR_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la marca', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
-                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
+                        ,['label'=>'Digite el nuevo nombre de la marca', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off','required','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios']
+                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-tasks'] ) !!}
 
                     <div class="form-actions">
                           <div class="row">

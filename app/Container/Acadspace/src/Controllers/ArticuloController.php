@@ -9,9 +9,12 @@ use App\Container\Acadspace\src\Articulo;
 use App\Container\Acadspace\src\Categoria;
 use App\Container\Acadspace\src\Procedencia;
 use App\Container\Acadspace\src\Imagen;
+use \App\Container\Acadspace\src\Hojavida;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+
+
 
 
 
@@ -190,13 +193,17 @@ class ArticuloController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-
-            $aulas = Articulo::find($id);
-            $aulas->delete();
-
+    
+            $obtArticulo = Articulo::find($id);
+            $idHoj = Articulo::select('FK_ART_Id_Hojavida')->where('PK_ART_Id_Articulo', '=', $id)->get();
+            $regiHoja = Hojavida::find($idHoj[0]->FK_ART_Id_Hojavida);
+            $obtArticulo->delete();
+            if($idHoj[0]->FK_ART_Id_Hojavida != NULL && $idHoj[0]->FK_ART_Id_Hojavida != ''){
+                $regiHoja->delete();
+            }
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Incidente eliminado correctamente.'
+                'Articulo eliminado correctamente.'
             );
         }
         return AjaxResponse::fail(

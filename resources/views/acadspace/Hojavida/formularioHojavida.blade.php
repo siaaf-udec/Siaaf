@@ -73,7 +73,7 @@
                         var async = async || false;
                         var formData = new FormData();
 
-                        formData.append('FK_ART_Id_Hojavida',{{$articulo}});
+                        formData.append('id',{{$articulo}});
                         formData.append('HOJ_Modelo_Equipo', $('input:text[name="HOJ_Modelo_Equipo"]').val());
                         formData.append('HOJ_Procesador', $('input:text[name="HOJ_Procesador"]').val());
                         formData.append('HOJ_Memoria_Ram', $('#HOJ_Memoria_Ram').val());
