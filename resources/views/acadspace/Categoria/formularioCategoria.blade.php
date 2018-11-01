@@ -84,8 +84,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     {!! Field:: text('nombre_categoria',null,
-                                    ['label'=>'Nombre categoria:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre de la categoria perteneciente a un elemento','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre categoria:','class'=> 'form-control', 'autofocus', 'maxlength'=>'35','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'],
+                                    ['help' => 'Digite el nombre de la categoria perteneciente a un elemento','icon'=>'fa fa-sitemap'] ) !!}
                                 </div>
                             </div>
                         </div>

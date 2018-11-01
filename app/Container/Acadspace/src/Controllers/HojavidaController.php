@@ -52,21 +52,23 @@ class HojavidaController extends Controller
     public function regisHojavida(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
-            Hojavida::create([
-                'HOJ_Modelo_Equipo' => $request['HOJ_Modelo_Equipo'],
-                'HOJ_Procesador' => $request['HOJ_Procesador'],
-                'HOJ_Memoria_Ram' => $request['HOJ_Memoria_Ram'],
-                'HOJ_Disco_Duro' => $request['HOJ_Disco_Duro'],
-                'HOJ_Mouse' => $request['HOJ_Mouse'],
-                'HOJ_Teclado' => $request['HOJ_Teclado'],
-                'HOJ_Sistema_Operativo' => $request['HOJ_Sistema_Operativo'],
-                'HOJ_Antivirus' => $request['HOJ_Antivirus'],
-                'HOJ_Garantia' => $request['HOJ_Garantia'],
-                'FK_HOJ_Id_Marca' => $request['FK_HOJ_Id_Marca']
-            ]);
-            $idArt =Articulo::findOrFail($request['FK_ART_Id_Hojavida']);
-            $idArt->FK_ART_Id_Hojavida = $request['FK_ART_Id_Hojavida'];
+            $nuevaHoja = new Hojavida();
+            $nuevaHoja->HOJ_Modelo_Equipo = $request['HOJ_Modelo_Equipo'];
+            $nuevaHoja->HOJ_Procesador = $request['HOJ_Procesador'];
+            $nuevaHoja->HOJ_Memoria_Ram = $request['HOJ_Memoria_Ram'];
+            $nuevaHoja->HOJ_Disco_Duro = $request['HOJ_Disco_Duro'];
+            $nuevaHoja->HOJ_Mouse = $request['HOJ_Mouse'];
+            $nuevaHoja->HOJ_Teclado = $request['HOJ_Teclado'];
+            $nuevaHoja->HOJ_Sistema_Operativo = $request['HOJ_Sistema_Operativo'];
+            $nuevaHoja->HOJ_Antivirus = $request['HOJ_Antivirus'];
+            $nuevaHoja->HOJ_Garantia = $request['HOJ_Garantia'];
+            $nuevaHoja->FK_HOJ_Id_Marca = $request['FK_HOJ_Id_Marca'];
+            $nuevaHoja->save();
+            $idArt =Articulo::findOrFail($request['id']);
+            $hojVida = Articulo::select('FK_ART_Id_Hojavida')
+                        ->where('PK_ART_Id_Articulo','=', $request['id'])
+                        ->get();
+            $idArt->FK_ART_Id_Hojavida = $nuevaHoja->PK_HOJ_Id_Hojavida;
             $idArt->save();
             return AjaxResponse::success(
                 '¡Registro exitoso!',

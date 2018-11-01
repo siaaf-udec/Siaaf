@@ -345,7 +345,7 @@
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
-                <td>Oscar Lobaton</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Fecha seleccionada:</td>
