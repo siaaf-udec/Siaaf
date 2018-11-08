@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
                                 @permission('ACAD_CERRAR_MANT')
-                                {{ Form::submit('Editar', ['class' => 'btn blue']) }}
+                                {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
                                 @endpermission
                                 {{ Form::reset('Atras', ['class' => 'btn btn-danger atras']) }}
                             </div>
