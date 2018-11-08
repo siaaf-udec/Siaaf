@@ -29,6 +29,11 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'glyphicon glyphicon-edit', 'title' => 'Gestión Solicitudes'])
         <div class="col-md-12">
             <div class="clearfix">
+                <h5>
+                    <i class="fa fa-warning"></i>    
+                     Antes de intentar crear una solicitud agregar al menos un espacio academico
+                </h5>
+                    
                 <br>
                 {!! Field::select('Espacio académico:',$espacios,
                                     ['id' => 'SOL_laboratorio', 'name' => 'SOL_laboratorio'])
@@ -340,7 +345,7 @@
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
-                <td>@{{user.name}} @{{user.lastname}}</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Fecha seleccionada:</td>

@@ -2,12 +2,20 @@
 
 namespace App\Container\Acadspace\src\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Articulo;
 use App\Container\Acadspace\src\Categoria;
+use App\Container\Acadspace\src\Procedencia;
+use App\Container\Acadspace\src\Imagen;
+use \App\Container\Acadspace\src\Hojavida;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
+
+
+
 
 
 class ArticuloController extends Controller
@@ -24,10 +32,13 @@ class ArticuloController extends Controller
         if ($request->isMethod('GET')) {
                 $cate=new categoria();
                 $categoria=$cate->pluck('CAT_Nombre','PK_CAT_Id_Categoria');
+                $pro= new Procedencia();
+                $procedencia= $pro->pluck('PRO_Nombre','PK_PRO_Id_Procedencia');
                 //Muestra vista elementos
                 return view('acadspace.Articulo.formularioArticulo',
                 [
-                   'categoria'=>$categoria->toArray()
+                   'categoria'=>$categoria->toArray(),
+                   'procedencia'=>$procedencia->toArray()
                 ]);
             }
         return AjaxResponse::fail(
@@ -44,18 +55,32 @@ class ArticuloController extends Controller
     public function regisArticulo(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-          Categoria::create([
-              'CAT_Nombre' => $request['CAT_Nombre']
-          ]);
-          return AjaxResponse::success(
+            $archivo = $request->file('Imagen');
+            $obtArticulo = new Articulo();
+            $obtArticulo->ART_Codigo = $request['ART_Codigo'];
+            $obtArticulo->ART_Descripcion = $request['ART_Descripcion'];
+            $obtArticulo->ART_Fecha_Registro = Carbon::now();
+            $obtArticulo->FK_ART_Id_Categoria = $request['FK_ART_Id_Categoria'];
+            $obtArticulo->FK_ART_Id_Procedencia = $request['FK_ART_Id_Procedencia'];
+            $obtArticulo->save();
+            if($archivo){
+                $nombre = 'Imagen del articulo con codigo ' . $obtArticulo->ART_Codigo;
+                $url = Storage::disk('developer')->putFile('acadspace/articulos',$archivo);
+                $urlNew = Storage::url('developer/'. $url);
+                $guardarImagen = new Imagen();
+                $guardarImagen->IMA_Ruta = $urlNew;
+                $guardarImagen->IMA_Nombre = $nombre;
+                $guardarImagen->FK_IMA_Id_Articulo = $obtArticulo->PK_ART_Id_Articulo;
+                $guardarImagen->save();
+            }
+            return AjaxResponse::success(
               '¡Registro exitoso!',
               'Articulo agregada correctamente.'
-          );
-          }
-      return AjaxResponse::fail(
-          '¡Lo sentimos!',
-          'No se pudo completar tu solicitud.'
-      );
+            );
+        }return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
     /**
      * funcion para cargar articulos ya registrados
@@ -69,6 +94,7 @@ class ArticuloController extends Controller
 
         if ($request->ajax() && $request->isMethod('GET')) {
             //Relaciona la tabla articulos con, categorias y prodecencias
+            
             $articulos = Articulo::select('PK_ART_Id_Articulo', 'ART_Codigo',
                 'ART_Descripcion', 'FK_ART_Id_Categoria','FK_ART_Id_Procedencia','FK_ART_Id_Hojavida')
             ->with(['categoria' => function ($query) {
@@ -80,12 +106,23 @@ class ArticuloController extends Controller
                     'PRO_Nombre');
             }])
             ->get();//Trae todos los articulos
+
+
+
             return DataTables::of($articulos)
             ->addColumn('hojavida',function($articulos) {
-                if ($articulos->fk_id_hojavida==NULL) {
+                if ($articulos->FK_ART_Id_Hojavida==NULL) {
                     return "<span class='label label-sm label-warning'>" . 'No corresponde' . "</span>";
                 } else{
-                    return "<span class='label label-sm label-default'>" . $articulos->fk_id_hojavida . "</span>";
+                    return "<span class='label label-sm label-success'>" . 'Asignada' . "</span>";
+                }
+            })
+            ->addColumn('imagen',function($articulos){ 
+                $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo',$articulos->PK_ART_Id_Articulo )->get();
+                if($infoUsuario){
+                    return $infoUsuario[0]->IMA_Ruta;
+                }else{
+                    return '<span> LOSER </span>';
                 }
             })
                 //Elimina columnas no necesarias
@@ -133,16 +170,40 @@ class ArticuloController extends Controller
 
 
     }
+        /**
+     * Muestra el perfil de un usuario especifico.
+     *
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function verImagen(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoUsuario = Imagen::select('IMA_Ruta')->where('FK_IMA_Id_Articulo', $id)->get();
+            return $infoUsuario->IMA_Ruta;
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-
-            $aulas = Incidentes::find($id);
-            $aulas->delete();
-
+    
+            $obtArticulo = Articulo::find($id);
+            $idHoj = Articulo::select('FK_ART_Id_Hojavida')->where('PK_ART_Id_Articulo', '=', $id)->get();
+            $regiHoja = Hojavida::find($idHoj[0]->FK_ART_Id_Hojavida);
+            $obtArticulo->delete();
+            if($idHoj[0]->FK_ART_Id_Hojavida != NULL && $idHoj[0]->FK_ART_Id_Hojavida != ''){
+                $regiHoja->delete();
+            }
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Incidente eliminado correctamente.'
+                'Articulo eliminado correctamente.'
             );
         }
         return AjaxResponse::fail(

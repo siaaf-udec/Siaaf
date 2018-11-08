@@ -103,7 +103,7 @@
             </tr>
             <tr>
                 <td>Docente solicitante:</td>
-                <td>@{{user.name}} @{{user.lastname}}</td>
+                <td>Oscar Lobaton</td>
             </tr>
             <tr>
                 <td>Solicito para:</td>

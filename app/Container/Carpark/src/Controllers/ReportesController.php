@@ -113,21 +113,28 @@ class ReportesController extends Controller
     {
         if ($request->isMethod('GET')) {
         
-
+        try {
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-                $PDF= PDF::loadView('carpark.reportes.reporteUsuariosRegistrados',
-                    compact('infoUsuarios', 'date', 'time', 'cont'));
-                return $PDF->stream();
+               return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados', 
+                    compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf'); 
 
+
+        
+         } catch (Exception $e) {
+
+                return view('carpark.reportes.reporteMotosRegistradas',
+                    compact('infoMotos', 'date', 'time', 'cont'));
+
+            }
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
 
-    }
 }
     /**
      * Permite generar el reporte correspondiente a los usuarios registrados.

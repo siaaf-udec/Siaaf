@@ -1,3 +1,4 @@
+@permission('ACAD_MARCA')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -37,11 +38,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('ACAD_REGISTRAR_MARCA')
                         <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar Marca
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -49,6 +52,7 @@
             </div>
             <br>
             <div class="col-md-12">
+                @permission('ACAD_CONSULTAR_MARCA')
                 @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
                 table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
                     @slot('columns', [
@@ -58,6 +62,7 @@
                     'Acciones' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -81,15 +86,17 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('tipo_marca',null,
-                                    ['label'=>'Nombre marca:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre de la marca perteneciente a una hoja de vida','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre marca:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'],
+                                    ['help' => 'Digite el nombre de la marca perteneciente a una hoja de vida','icon'=>'fa fa-tasks'] ) !!}
 
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('ACAD_REGISTRAR_MARCA')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -169,7 +176,7 @@
                 {data: 'DT_Row_Index'},
                 {data: 'MAR_Nombre', name: 'Nombre marca'},
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_MARCA') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -183,6 +190,15 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
+            /*EDITAR LA MARCA*/
+            table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.marca.editarMarca') }}'+'/'+dataTable.PK_MAR_Id_Marca;
+                $(".content-ajax").load(route_edit);
+             });
 
             /*ELIMINAR REGISTROS*/
             table.on('click', '.remove', function (e) {
@@ -277,3 +293,4 @@
 
     </script>
 @endpush
+@endpermission
