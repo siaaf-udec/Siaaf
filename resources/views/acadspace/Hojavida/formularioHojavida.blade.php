@@ -15,9 +15,9 @@
                         
                         {!! Field:: number('HOJ_Disco_Duro',null,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','required', 'auto' => 'off'],['help' => 'Ingrese la capacidad del disco duro en Gigabyte', 'icon' => 'fa fa-server']) !!}
                     
-                        {!! Field:: select('HOJ_Mouse',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Mouse','label'=>'Raton','required'],['help'=>'Indique si el equipo tiene ratón', 'icon' => 'fa fa-mouse-pointer']) !!}
+                        {!! Field:: select('¿El computador tiene ratón?',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Mouse','required','help'=>'Indique si el equipo tiene ratón', 'icon' => 'fa fa-mouse-pointer']) !!}
 
-                        {!! Field:: select('HOJ_Teclado',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Teclado','label'=>'Teclado','required'],['help'=>'Indique si el equipo tiene teclado', 'icon' => 'fa fa-keyboard-o']) !!}
+                        {!! Field:: select('¿El computador tiene teclado?',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Teclado','required','help'=>'Indique si el equipo tiene teclado', 'icon' => 'fa fa-keyboard-o']) !!}
 
                         {!! Field:: text('HOJ_Sistema_Operativo', null ,['label'=>'Sistema operativo','required','auto'=>'off'],['help'=>'Ingrese el sistema operativo del equipo','icon'=>'fa fa-laptop']) !!}
 

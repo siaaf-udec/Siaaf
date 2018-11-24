@@ -77,20 +77,20 @@
                     {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms', 'files'=>true]) !!}
                         <div class="row">
                             <div class="col-md-12">
-                                {!! Field:: text('ART_Codigo',['required', 'label' => 'Placa del Articulo', 'max' => '30', 'min' => '2', 'auto' => 'off', 'rows' => '1','pattern'=> '[A-Za-zñÑ -0-9]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
-                                ['help' => 'Escriba la placa asociada al articulo que va a registrar','icon'=>'fa
+                                {!! Field:: text('ART_Codigo',['required', 'label' => 'Placa del Articulo', 'max' => '30', 'min' => '2', 'auto' => 'off', 'rows' => '1','pattern'=> '[A-Za-zñÑ 0-9\-\/]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
+                                ['help' => 'Escriba la placa asociada al artículo que va a registrar','icon'=>'fa
                                 fa-barcode'] ) !!}
 
-                                {!! Field::select('Categoria del articulo:',$categoria, 
+                                {!! Field::select('Categoría del artículo:',$categoria, 
                                 ['id' => 'FK_ART_Id_Categoria',
                                 'name' => 'FK_ART_Id_Categoria']) !!}
 
-                                {!! Field::select('Procedencia del articulo:',$procedencia, 
+                                {!! Field::select('Procedencía del artículo:',$procedencia, 
                                 ['id' => 'FK_ART_Id_Procedencia',
                                 'name' => 'FK_ART_Id_Procedencia']) !!}
 
-                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripcion',
-                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '2','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y números, con espacios'], ['help' => 'Digite la descripción
+                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripción del artículo',
+                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '2','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ,.-/ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'], ['help' => 'Digite la descripción
                                 del artículo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
                                     <h3 class="block">Subir imagen del artículo</h3>
@@ -258,13 +258,14 @@
                 var row = table.row(tr);
                 if (row.child.isShown()) {
                     // This row is already open - close it
+                    tr.removeClass('details');
                     row.child.hide();
-                    tr.removeClass('shown');
 
                 } else {
                     // Open this row
+                    
+                    tr.addClass('details');
                     row.child(format(row.data())).show();
-                    tr.addClass('shown');
 
                 }
             });
@@ -370,7 +371,7 @@
                  },
                 ART_Descripcion: {
                     required: true,
-                    minlength: 15,
+                    minlength: 1,
                     maxlength: 300
                 },
                 FK_ART_Id_Categoria: {
