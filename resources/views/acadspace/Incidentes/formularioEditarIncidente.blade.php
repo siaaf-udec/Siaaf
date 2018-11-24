@@ -20,7 +20,7 @@
 
                         {!! Field:: textarea('descripcion',$obtIncidentes->INC_Descripcion,
                              ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                             ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
+                             ['help' => 'Digite la descripción del incidente','icon'=>'fa fa-desktop'] ) !!}
                     </div>
                         <div class="col-md-12 col-md-offset-0">
                             {{ Form::submit('Editar', ['class' => 'btn blue']) }}

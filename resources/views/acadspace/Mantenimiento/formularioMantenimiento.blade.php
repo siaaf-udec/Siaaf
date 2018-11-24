@@ -84,7 +84,7 @@
                             </h2>
                             <h5>
                                 <i class="fa fa-warning"></i>    
-                                Antes de intentar registrar un mantenimiento agregue por lo menos un articulo y un tipo de mantenimiento
+                                Antes de intentar registrar un mantenimiento agregue por lo menos un artículo y un tipo de mantenimiento.
                             </h5>
                         </div>
                         <div class="modal-body">
@@ -93,10 +93,10 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('nom_tecnico',null,
-                                    ['label'=>'Nombre tecnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del tecnico','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre técnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del técnico','icon'=>'fa fa-user'] ) !!}
 
-                                    {!! Field:: select('Placa del articulo:',$articulos,
+                                    {!! Field:: select('Placa del artículo:',$articulos,
                                     ['id' => 'articulos', 'name' => 'articulos'])
                                     !!} 
                                     
@@ -105,7 +105,7 @@
 
                                     {!! Field:: textarea('descripcion',null,
                                     ['label'=>'Descripción:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Descripción porque se realizara el mantenimiento','icon'=>'fa fa-user'] ) !!}
+                                    ['help' => 'Descripción del por qué se realizara el mantenimiento','icon'=>'fa fa-user'] ) !!}
 
                                 </div>
 

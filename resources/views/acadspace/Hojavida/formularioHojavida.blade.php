@@ -11,19 +11,19 @@
                     
                         {!! Field:: text('HOJ_Procesador',null,['label'=>'Procesador','required', 'auto' => 'off'],['help' => 'Ingrese el procesador del equipo', 'icon' => 'fa fa-microchip']) !!}
                     
-                        {!! Field:: number('HOJ_Memoria_Ram', null,['id'=>'HOJ_Memoria_Ram','label'=>'Memoria RAM','min' => '0','max' => '128','required', 'auto' => 'off'],['help' => 'Ingrese el numero en GBs de memoria RAM del equipo', 'icon' => 'fa fa-building ']) !!}
+                        {!! Field:: number('HOJ_Memoria_Ram', null,['id'=>'HOJ_Memoria_Ram','label'=>'Memoria RAM','min' => '0','max' => '128','required', 'auto' => 'off'],['help' => 'Ingrese la capacidad de la memoria RAM en Gigabyte', 'icon' => 'fa fa-building ']) !!}
                         
-                        {!! Field:: number('HOJ_Disco_Duro',null,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','required', 'auto' => 'off'],['help' => 'Ingrese el numero en gigas del disco duro del equipo', 'icon' => 'fa fa-server']) !!}
+                        {!! Field:: number('HOJ_Disco_Duro',null,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','required', 'auto' => 'off'],['help' => 'Ingrese la capacidad del disco duro en Gigabyte', 'icon' => 'fa fa-server']) !!}
                     
-                        {!! Field:: select('HOJ_Mouse',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Mouse','label'=>'Mouse','required'],['help'=>'Indique si el equipo tiene mouse', 'icon' => 'fa fa-mouse-pointer']) !!}
+                        {!! Field:: select('HOJ_Mouse',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Mouse','label'=>'Raton','required'],['help'=>'Indique si el equipo tiene ratón', 'icon' => 'fa fa-mouse-pointer']) !!}
 
                         {!! Field:: select('HOJ_Teclado',['Si'=>'Si', 'No'=>'No'],['name'=>'HOJ_Teclado','label'=>'Teclado','required'],['help'=>'Indique si el equipo tiene teclado', 'icon' => 'fa fa-keyboard-o']) !!}
 
-                        {!! Field:: text('HOJ_Sistema_Operativo', null ,['label'=>'Sistema operativo','required','auto'=>'off'],['help'=>'Ingrese sobre que sistema operativo trabaja el equipo','icon'=>'fa fa-laptop']) !!}
+                        {!! Field:: text('HOJ_Sistema_Operativo', null ,['label'=>'Sistema operativo','required','auto'=>'off'],['help'=>'Ingrese el sistema operativo del equipo','icon'=>'fa fa-laptop']) !!}
 
                         {!! Field:: text('HOJ_Antivirus', null ,['label'=>'Antivirus','required','auto'=>'off'],['help'=>'Ingrese el antivirus del equipo','icon'=>'fa fa-handshake-o']) !!}
 
-                        {!! Field:: number('HOJ_Garantia', null ,['id'=>'HOJ_Garantia','label'=>'Garantia','required','auto'=>'off'],['help'=>'Ingrese el numero de mese que tiene de garantia el equipo','icon'=>'fa fa-clock-o']) !!}
+                        {!! Field:: number('HOJ_Garantia', null ,['id'=>'HOJ_Garantia','label'=>'Garantia','required','auto'=>'off'],['help'=>'Ingrese los meses de garantia que tiene el equipo','icon'=>'fa fa-clock-o']) !!}
 
                         {!! Field:: select('Marca:',$marcas, ['id' => 'FK_HOJ_Id_Marca','name' => 'FK_HOJ_Id_Marca','value'=>'1','icon'=>'fa fa-list']) !!}
 
@@ -130,7 +130,7 @@
             HOJ_Garantia:{
                 required:true,
                 min:1,
-                max:10
+                max:62
             },
             HOJ_Disco_Duro:{
                 required:true,
