@@ -24,7 +24,7 @@
 @endpush 
 @section('content') {{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Registrar Articulo'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Registrar Artículo'])
     <div class="clearfix">
     </div>
     <br>
@@ -37,7 +37,7 @@
                 <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                     <i class="fa fa-plus">
                     </i>
-                    Registrar Articulo
+                    Registrar Artículo
                 </a>
                 @endpermission
             </div>
@@ -66,34 +66,34 @@
                 </button>
                 <h2 class="modal-title">
                     <i class="glyphicon glyphicon-tv"></i>
-                    Registrar articulo.
+                    Registrar artículo.
                 </h2>
                 <h5>
                     <i class="fa fa-warning"></i>    
-                    Antes de intentar registrar un articulo agregue primero al menos una categoria y una procedencia
+                    Antes de intentar registrar un articulo agregue primero al menos una categoría y una procedencía
                 </h5>
             </div>
             <div class="modal-body">
                     {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms', 'files'=>true]) !!}
                         <div class="row">
                             <div class="col-md-12">
-                                {!! Field:: text('ART_Codigo',['required', 'label' => 'Placa del Articulo', 'max' => '30', 'min' => '2', 'auto' => 'off', 'rows' => '1','pattern'=> '[A-Za-zñÑ0-9]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
-                                ['help' => 'Escriba la placa asociada al articulo que pretende registrar','icon'=>'fa
+                                {!! Field:: text('ART_Codigo',['required', 'label' => 'Placa del Articulo', 'max' => '30', 'min' => '2', 'auto' => 'off', 'rows' => '1','pattern'=> '[A-Za-zñÑ 0-9\-\/]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
+                                ['help' => 'Escriba la placa asociada al artículo que va a registrar','icon'=>'fa
                                 fa-barcode'] ) !!}
 
-                                {!! Field::select('Categoria del articulo:',$categoria, 
+                                {!! Field::select('Categoría del artículo:',$categoria, 
                                 ['id' => 'FK_ART_Id_Categoria',
                                 'name' => 'FK_ART_Id_Categoria']) !!}
 
-                                {!! Field::select('Procedencia del articulo:',$procedencia, 
+                                {!! Field::select('Procedencía del artículo:',$procedencia, 
                                 ['id' => 'FK_ART_Id_Procedencia',
                                 'name' => 'FK_ART_Id_Procedencia']) !!}
 
-                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripcion',
-                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '2','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'], ['help' => 'Digite la descripción
-                                del articulo','icon'=>'fa fa-desktop'] ) !!}
+                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripción del artículo',
+                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '2','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ,.-/ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'], ['help' => 'Digite la descripción
+                                del artículo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
-                                    <h3 class="block">Subir imagen del articulo</h3>
+                                    <h3 class="block">Subir imagen del artículo</h3>
                                 </div>
                                 <div class="form-group">
                                     <div class="dropzone dropzone-file-area data-dz-size" id="myDropzone">
@@ -258,13 +258,14 @@
                 var row = table.row(tr);
                 if (row.child.isShown()) {
                     // This row is already open - close it
+                    tr.removeClass('details');
                     row.child.hide();
-                    tr.removeClass('shown');
 
                 } else {
                     // Open this row
+                    
+                    tr.addClass('details');
                     row.child(format(row.data())).show();
-                    tr.addClass('shown');
 
                 }
             });
@@ -370,7 +371,7 @@
                  },
                 ART_Descripcion: {
                     required: true,
-                    minlength: 15,
+                    minlength: 1,
                     maxlength: 300
                 },
                 FK_ART_Id_Categoria: {

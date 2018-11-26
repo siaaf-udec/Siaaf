@@ -87,11 +87,11 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('nombre_tipo',null,
-                                        ['label'=>'Nombre del tipo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off', 'pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ0-9]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
+                                        ['label'=>'Nombre del tipo:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off', 'pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ0-9]+','title'=>'En este campo solo se admiten letras y números, sin espacios'],
                                         ['help' => 'Digite el nombre','icon'=>'fa fa-wrench'] ) !!}
 
                                     {!! Field:: textarea('descripcion_tipo',null,
-                                         ['label'=>'Descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'],
+                                         ['label'=>'Descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y números, con espacios'],
                                          ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
                                 </div>
 
