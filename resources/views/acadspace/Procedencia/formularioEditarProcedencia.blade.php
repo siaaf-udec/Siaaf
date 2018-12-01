@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Procedencia'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Modificar Procedencía'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">
@@ -7,8 +7,8 @@
                     {!! Form::open(['url' => '/forms','enctype'=>'multipart/form-data','id'=>'form-procedencia']) !!}
                     <div class="form-wizard">
                         {!! Field:: text('PRO_Nombre',$procedencia->PRO_Nombre
-                        ,['label'=>'Digite el nuevo nombre de la procedencia', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off','required','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios']
-                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-home'] ) !!}
+                        ,['label'=>'Digite el nuevo nombre de la procedencía', 'class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off','required','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y números, con espacios']
+                        ,['help' => 'Digite el nuevo nombre de la procedencía','icon'=>'fa fa-home'] ) !!}
 
                     <div class="form-actions">
                           <div class="row">

@@ -101,7 +101,7 @@
 
                                     {!! Field:: textarea('descripcion',null,
                                          ['label'=>'Descripción Incidente:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                                         ['help' => 'Digite la descripción','icon'=>'fa fa-desktop'] ) !!}
+                                         ['help' => 'Digite la descripción del incidente','icon'=>'fa fa-desktop'] ) !!}
                                 </div>
 
                             </div>

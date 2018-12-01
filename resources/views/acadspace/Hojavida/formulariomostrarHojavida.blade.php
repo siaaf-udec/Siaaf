@@ -1,5 +1,5 @@
 <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Agregar Hoja de vida'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Ver hoja de vida'])
             <div class="row">
                 <div class="col-md-7 col-md-offset-2">
                     <div class="form-body">
@@ -14,9 +14,9 @@
                             
                             {!! Field:: number('HOJ_Disco_Duro',$hojavida[0]->HOJ_Disco_Duro,['id'=>'HOJ_Disco_Duro','label'=>'Disco duro','disabled'],['icon' => 'fa fa-server']) !!}
                         
-                            {!! Field:: text('HOJ_Mouse',$hojavida[0]->HOJ_Mouse,['name'=>'HOJ_Mouse','label'=>'Mouse','disabled'],['icon' => 'fa fa-mouse-pointer']) !!}
+                            {!! Field:: text('HOJ_Mouse',$hojavida[0]->HOJ_Mouse,['name'=>'HOJ_Mouse','label'=>'¿El computador tiene ratón?','disabled'],['icon' => 'fa fa-mouse-pointer']) !!}
     
-                            {!! Field:: text('HOJ_Teclado',$hojavida[0]->HOJ_Teclado,['name'=>'HOJ_Teclado','label'=>'Teclado','disabled'],['icon' => 'fa fa-keyboard-o']) !!}
+                            {!! Field:: text('HOJ_Teclado',$hojavida[0]->HOJ_Teclado,['name'=>'HOJ_Teclado','label'=>'¿El computador tiene teclado?','disabled'],['icon' => 'fa fa-keyboard-o']) !!}
     
                             {!! Field:: text('HOJ_Sistema_Operativo', $hojavida[0]->HOJ_Sistema_Operativo ,['label'=>'Sistema operativo','disabled','auto'=>'off'],['icon'=>'fa fa-laptop']) !!}
     
