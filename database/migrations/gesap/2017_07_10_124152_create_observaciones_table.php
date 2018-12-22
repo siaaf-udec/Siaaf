@@ -18,9 +18,11 @@ class CreateObservacionesTable extends Migration
             $table->string('BVCS_Observacion', 600);
             $table->integer('FK_TBL_Encargado_Id')->unsigned();
             $table->foreign('FK_TBL_Encargado_Id')
-                ->references('PK_NCRD_IdCargo')
+                ->references('PK_IdCargo')
                 ->on('TBL_Encargados')
                 ->onDelete('cascade');
+            $table->date('Fecha_Observacion');
+            $table->date('Fecha_Lim_Correcion_Observacion');
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class CreateObservacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_observaciones');
+        Schema::dropIfExists('TBL_observaciones');
     }
 }

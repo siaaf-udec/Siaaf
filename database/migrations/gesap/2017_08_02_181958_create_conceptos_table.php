@@ -19,7 +19,7 @@ class CreateConceptosTable extends Migration
             $table->enum('CNPT_Tipo', ['Anteproyecto','Proyecto'])->default('Anteproyecto');
             $table->integer('FK_TBL_Encargado_Id')->unsigned();
             $table->foreign('FK_TBL_Encargado_Id')
-                ->references('PK_NCRD_IdCargo')
+                ->references('PK_IdCargo')
                 ->on('TBL_Encargados')
                 ->onDelete('cascade');
             $table->timestamps();
@@ -34,6 +34,6 @@ class CreateConceptosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_conceptos');
+        Schema::dropIfExists('TBL_conceptos');
     }
 }

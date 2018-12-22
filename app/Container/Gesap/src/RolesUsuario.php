@@ -4,22 +4,21 @@ namespace App\container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Actividad extends Model
+class RolesUsuario extends Model
 {
+    //la base
+   protected $connection = 'gesap';
 
-    protected $connection = 'gesap';
+   //la tabla
+    protected $table = 'TBL_Rol';
 
-    //la tabla
-     protected $table = 'TBL_Actividades';
- 
-     //la pk
-     protected $primaryKey = 'PK_CTVD_IdActividad';
-     
-     //las q se llenan
-     protected $fillable = ['CTVD_Nombre', 'CTVD_Descripcion','CTVD_Default'];
- 
-    protected $dates = ['deleted_at'];
+    //la pk
+    protected $primaryKey = 'PK_Id_Rol_Usuario';
+    
+    //las q se llenan
+    protected $fillable = ['Rol_Usuario', 'Rol_Descripcion'];
 
+    
     /*
 	*Función de relacion entre las tablas de Actividad y Documentos 
 	*por los campo de FK_TBL_Actividad_Id y PK_CTVD_IdActividad 
