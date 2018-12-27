@@ -40,7 +40,7 @@ class CoordinatorController extends Controller
 	public function index(Request $request)
 	{
 		if ($request->isMethod('GET')) {
-			return view($this->path . 'AnteproyectoList');
+			return view($this->path . 'Anteproyectos');
 		}
 		return AjaxResponse::fail(
 			'¡Lo sentimos!',
@@ -450,16 +450,16 @@ class CoordinatorController extends Controller
 
 
 	/*
-     * Listado de las actividades de proyectos por defecto
+     * Envia A la vista de Anteproyectos
      *
 	 * @param  \Illuminate\Http\Request
 	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-	public function activityDefault(Request $request)
+	public function mctAnteproyectos(Request $request)
 	{
 		if ($request->isMethod('GET')) {
-			return view($this->path . 'ActividadDefault');
+			return view($this->path . 'Anteproyectos');
 		}
 		return AjaxResponse::fail(
 			'¡Lo sentimos!',
@@ -707,17 +707,17 @@ class CoordinatorController extends Controller
 	}
 
 	/*
-    * Consulta de todos las actividades por defecto
+    * Consulta Todos Los Anteproyectos
     *
 	* @param  \Illuminate\Http\Request 
 	*
     * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-	public function activityDefaultList(Request $request)
+	public function AnteproyectosList(Request $request)
 	{
 		if ($request->isMethod('GET')) {
-			$actividades = Actividad::where('CTVD_Default', '=', 1)->get();
-			return Datatables::of($actividades)
+			$anteproyectos = Anteproyecto::where('PK_NPRY_IdMctr008', '=', 1)->get();
+			return Datatables::of($anteproyectos)
 				->removeColumn('created_at')
 				->removeColumn('updated_at')
 				->addIndexColumn()->make(true);

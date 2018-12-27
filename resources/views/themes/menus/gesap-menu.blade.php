@@ -1,50 +1,46 @@
 {{-- MENÚ DE EJEMPLO --}}
-<li class="nav-item {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'start active open') }}">
+<li class="nav-item {{ active(['gesap.*','mct.*','project.*','anteproyecto.*','report.*','graficos.*'], 'start active open') }}">
 	<a class="nav-link nav-toggle" href="javascript:;">
 		<i class="fa fa-cube">
 		</i>
 		<span class="title">
 			Gesap
 		</span>
-		<span class="arrow {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
+		<span class="arrow {{ active(['gesap.*','mct.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
 		</span>
 	</a>
 	<ul class="sub-menu">
-		@permission('CREATE_ACTIVITY_DEFAULT_GESAP')
-		<li class="nav-item {{ active(['activity.default'], 'start active open') }}">
-			<a href="{{ route('activity.default') }}" class="nav-link nav-toggle">
+	
+		@permission('LIST_ANTEPROYECTOS')
+		<li class="nav-item {{ active(['mct.anteproyectos'], 'start active open') }}">
+			<a href="{{ route('mct.anteproyectos') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
-				<span class="title">Entregables</span>
+				<span class="title">Lista De Anteproyectos</span>
 			</a>
 		</li>
 		@endpermission
-		@permission('SEE_ALL_PROJECT_GESAP')
-		<li class="nav-item {{ active(['min.index'], 'start active open') }}">
-			<a href="{{ route('min.index') }}" class="nav-link nav-toggle">
-				<i class="fa fa-list-alt"></i>
-				<span class="title">Listar Anteproyectos</span>
-			</a>
-		</li>
-		<li class="nav-item {{ active(['project.index'], 'start active open') }}">
-			<a href="{{ route('project.index') }}" class="nav-link nav-toggle">
+		@permission('LIST_PROYECTOS')
+		<li class="nav-item {{ active(['mct.anteproyectos'], 'start active open') }}">
+			<a href="{{ route('mct.anteproyectos') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
 				<span class="title">Listar Proyectos</span>
 			</a>
 		</li>
+		
 		@endpermission
-		@permission('DIRECTOR_LIST_GESAP')
+		@permission('ADD_USER_GESAP')
 		<li class="nav-item {{ active(['anteproyecto.index.directorList'], 'start active open') }}">
 			<a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
 				<i class="fa fa-user"></i>
-				<span class="title">Director de Proyecto</span>
+				<span class="title">Lista De Usuarios</span>
 			</a>
 		</li>
 		@endpermission
-		@permission('JURY_LIST_GESAP')
+		@permission('FIND_DB_GESAP')
 		<li class="nav-item {{ active(['anteproyecto.index.juryList'], 'start active open') }}">
 			<a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }} ">
-				<i class="fa fa-user"></i>
-				<span class="title">Jurado de Proyecto</span>
+				<i class="fa fa-search"></i>
+				<span class="title">Busquedas</span>
 			</a>
 		</li>
 		@endpermission
@@ -57,20 +53,15 @@
 				<span class="title">Reportes</span>
 			</a>
 		</li>
-		<li class="nav-item {{ active(['graficos.index'], 'start active open') }}">
-			<a class="nav-link " href="{{ route('graficos.index') }}">
-				<i class="fa fa-bar-chart"></i>
-				<span class="title">Graficos</span>
-			</a>
-		</li>
+		
 		@endpermission
-		@permission('STUDENT_LIST_GESAP')
+		@permission('GRAPHICS_GESAP')
 		<li class="nav-item {{ active(['anteproyecto.index.studentList'], 'start active open') }}">
 			<a class="nav-link " href="{{ route('anteproyecto.index.studentList') }}">
-				<i class="fa fa-list-alt">
+				<i class="fa fa-bar-chart">
 				</i>
 				<span class="title">
-					Proyectos
+					Graficos
 				</span>
 			</a>
 		</li>

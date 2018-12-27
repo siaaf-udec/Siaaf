@@ -14,40 +14,39 @@
           type="text/css"/>
     <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
-
 @section('title', '| Anteproyectos')
-
 @section('page-title', 'Anteproyectos')
-
 @section('content')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de perras'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-list', 'title' => 'Lista de Anteproyectos'])
             <div class="clearfix"></div><br><br><br>
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="actions">
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
-                                    class="fa fa-plus"></i></a></div>
+                         class="fa fa-plus"></i></a></div>
                 </div>
                 <div class="clearfix"></div>
                 <br>
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-actividad'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'lista-anteproyectos'])
                         @slot('columns', [
                         '#' => ['style' => 'width:20px;'],
-                        'id',
-                        'Nombre',
-                        'Descripcion',
-                        'Acciones'
+                        'Id',
+                        'Titulo',
+                        'Palabras Clave',
+                        'Duracion',
+                        'Fecha Inicio',
+                        'Fecha Fin',
+                        'Estado'
                         ])
                     @endcomponent
                 </div>
             </div>
         @endcomponent
-    </div>
-    <!--MODAL CREAR ACTIVIDAD-->
-    <div class="clearfix"></div>
+        </div>
+       <!--MODAL CREAR ANTEPROYECTO-->
+       <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
@@ -59,19 +58,39 @@
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad predeterminada</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Anteproyecto</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {!! Field::textarea('nombre', null,
-                                    ['label'=>'Nombre', 'required', 'auto' => 'off','rows' => '5','max' => '50', 'min' => '5','id'=>'nombre'],
-                                    [ 'help'=>'Nombre de actividad','icon' => 'fa fa-user']) !!}
+                                    {!! Field::textarea('titulo', null,
+                                    ['label'=>'Titulo', 'required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '5','id'=>'titulo'],
+                                    [ 'help'=>'Titulo Anteproyecto','icon' => 'fa fa-user']) !!}
                                 </div>
                                 <div class="col-md-12">
-                                    {!! Field::textarea('descripcion', null,
-                                    ['label'=>'Descripción','required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '1','id'=>'descripcion'],
-                                    [ 'help'=>'Descripcion','icon' => 'fa fa-book']) !!}
+                                    {!! Field::textarea('palabras_clave', null,
+                                    ['label'=>'Palabras Clave','required', 'auto' => 'off','rows' => '3','max' => '200', 'min' => '50','id'=>'p_clave'],
+                                    [ 'help'=>'Palabras Clave','icon' => 'fa fa-book']) !!}
+                                </div>
+                                <div class="col-md-12">
+                                    {!! Field::textarea('duracion', null,
+                                    ['label'=>'Duracion(Meses)', 'required', 'auto' => 'off','rows' => '1','max' => '50', 'min' => '5','id'=>'duracion'],
+                                    [ 'help'=>'Duracion Proyecto','icon' => 'fa fa-book']) !!}
+                                </div>
+                                <div class="col-md-12">
+                                    {!! Field::textarea('f_inicio', null,
+                                    ['label'=>'Fecha Inicio','required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '1','id'=>'f_inicio'],
+                                    [ 'help'=>'Fecha Inicio','icon' => 'fa fa-book']) !!}
+                                </div>
+                                 <div class="col-md-12">
+                                    {!! Field::textarea('f_fin', null,
+                                    ['label'=>'Fecha Fin','required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '1','id'=>'f_fin'],
+                                    [ 'help'=>'Fecha Fin','icon' => 'fa fa-book']) !!}
+                                </div>
+                                <div class="col-md-12">
+                                    {!! Field::textarea('estado', null,
+                                    ['label'=>'Estado','required', 'auto' => 'off','rows' => '1','max' => '100', 'min' => '1','id'=>'estado'],
+                                    [ 'help'=>'Estado','icon' => 'fa fa-book']) !!}
                                 </div>
                             </div>
                         </div>
@@ -86,7 +105,7 @@
         </div>
     </div>
 
-    <!--MODAL EDITAR ACTIVIDAD-->
+    <!--MODAL EDITAR ANTEPROYECTO-->
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12">
@@ -125,8 +144,9 @@
         </div>
     </div>
 
-@endsection
 
+
+@endsection
 @push('plugins')
     <!-- Datatables Scripts -->
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
@@ -162,14 +182,19 @@
     <script>
         jQuery(document).ready(function () {
             var table, url, columns;
-            table = $('#lista-actividad');
-            url = "{{ route('actividad.default.list') }}";
+            table = $('#lista-anteproyectos');
+            url = "{{ route('Anteproyectos.List') }}";
 
             columns = [
                 {data: 'DT_Row_Index', name: 'DT_Row_Index'},
-                {data: 'PK_CTVD_IdActividad', name: 'PK_CTVD_IdActividad', "visible": false},
-                {data: 'CTVD_Nombre', name: 'CTVD_Nombre', searchable: true},
-                {data: 'CTVD_Descripcion', name: 'CTVD_Descripcion', searchable: true},
+          
+                {data: 'PK_NPRY_IdMctr008', name: 'PK_NPRY_IdMctr008', "visible": false},
+                {data: 'NPRY_Titulo', name: 'NPRY_Titulo', searchable: true},
+                {data: 'NPRY_Keywords', name: 'NPRY_Keywords', searchable: true},
+                {data: 'NPRY_Duracion', name: 'NPRY_Duracion', searchable: true},
+                {data: 'NPRY_FechaR', name: 'NPRY_FechaR', searchable: true},
+                {data: 'NPRY_FechaL', name: 'NPRY_FechaL', searchable: true},
+                {data: 'NPRY_Estado', name: 'NPRY_Estado', searchable: true},
                 {
                     defaultContent: '@permission("EDIT_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" title="Editar actividad" class="btn btn-simple btn-warning btn-icon edit"><i class="icon-pencil"></i></a>@endpermission @permission("DELETE_ACTIVITY_DEFAULT_GESAP")<a href="javascript:;" title="Eliminar actividad" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                     data: 'action',
@@ -190,8 +215,7 @@
                 e.preventDefault();
                 $('#modal-create-activity').modal('toggle');
             });
-
-            var createActivity = function () {
+var createActivity = function () {
                 return {
                     init: function () {
                         var route = '{{ route('nueva.actividad') }}';
@@ -351,3 +375,4 @@
         });
     </script>
 @endpush
+   

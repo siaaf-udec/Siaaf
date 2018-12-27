@@ -1,23 +1,33 @@
 <?php
 
 $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
-
-	Route::get('min/', [
+	/*
+	Route::get('mct/', [
 		'uses' => $controller.'CoordinatorController@index',
-		'as' => 'min.index'
-	])->middleware('permission:SEE_ALL_PROJECT_GESAP');
-	Route::get('activity/', [
-		'uses' => $controller.'CoordinatorController@activityDefault',
-		'as' => 'activity.default'
-	])->middleware('permission:CREATE_ACTIVITY_DEFAULT_GESAP');
+		'as' => 'mct.index'
+	])->middleware('permission:LIST_ANTEPROYECTOS');
+	*/
+
+	Route::get('mct/', [
+		'uses' => $controller.'CoordinatorController@mctAnteproyectos',
+		'as' => 'mct.anteproyectos'
+	])->middleware('permission:LIST_ANTEPROYECTOS');
+	
+	Route::get('mct ', [
+		'uses' => $controller.'CoordinatorController@AnteproyectosList',
+		'as' => 'Anteproyectos.List'
+	])->middleware('permission:LIST_ANTEPROYECTOS');
+
 	Route::get('activities', [
 		'uses' => $controller.'CoordinatorController@activityDefaultList',
 		'as' => 'actividad.default.list'
 	])->middleware('permission:CREATE_ACTIVITY_DEFAULT_GESAP');
+
 	Route::post('activity/new', [
 		'uses' => $controller.'CoordinatorController@storeActividadDefault',
 		'as' => 'nueva.actividad'
 	])->middleware('permission:CREATE_ACTIVITY_DEFAULT_GESAP');
+
 	Route::post('activity/edit', [
 		'uses' => $controller.'CoordinatorController@updateActividadDefault',
 		'as' => 'editar.actividad'

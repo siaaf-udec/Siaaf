@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="btn-group">
-                        @permission('CREATE_PROJECT_GESAP')
+                        @permission('LIST_ANTEPROYECTOS')
                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i
                                     class="fa fa-plus"></i></a>
                         @endpermission

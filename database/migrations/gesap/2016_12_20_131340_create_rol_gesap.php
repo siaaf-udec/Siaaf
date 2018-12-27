@@ -14,8 +14,8 @@ class CreateRolGesap extends Migration
     public function up()
     {
         Schema::connection('gesap')->create('TBL_Rol', function (Blueprint $table) {
-            $table->increments('PK_Id_Rol_Usuario');
-            $table->String('Rol_Usuario', 150);
+            $table->increments('PK_Id_Rol_Usuario')->unique();
+            $table->String('Rol_Usuario', 150)->unique();
             $table->String('Rol_Descripcion', 150);
 
             $table->timestamps();
