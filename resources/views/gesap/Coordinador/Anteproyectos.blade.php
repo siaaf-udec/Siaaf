@@ -44,9 +44,9 @@
                 </div>
             </div>
         @endcomponent
-        </div>
-       <!--MODAL CREAR ANTEPROYECTO-->
-       <div class="clearfix"></div>
+    </div>
+    <!--MODAL CREAR ANTEPROYECTO-->
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
@@ -187,7 +187,6 @@
 
             columns = [
                 {data: 'DT_Row_Index', name: 'DT_Row_Index'},
-          
                 {data: 'PK_NPRY_IdMctr008', name: 'PK_NPRY_IdMctr008', "visible": false},
                 {data: 'NPRY_Titulo', name: 'NPRY_Titulo', searchable: true},
                 {data: 'NPRY_Keywords', name: 'NPRY_Keywords', searchable: true},
@@ -215,7 +214,7 @@
                 e.preventDefault();
                 $('#modal-create-activity').modal('toggle');
             });
-var createActivity = function () {
+            var createActivity = function () {
                 return {
                     init: function () {
                         var route = '{{ route('nueva.actividad') }}';

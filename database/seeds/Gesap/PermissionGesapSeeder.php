@@ -17,13 +17,13 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->save();
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'LIST_ANTEPROYECTOS';
-        $permissionFuncionario->display_name = 'Parqueaderos';
+        $permissionFuncionario->display_name = 'Lista de Anteproyectos';
         $permissionFuncionario->description = 'Acceso a los anteproyectos abiertos para su realizacion';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'LIST_PROYECTOS';
-        $permissionFuncionario->display_name = 'Parqueaderos';
+        $permissionFuncionario->display_name = 'Lista de Proyectos';
         $permissionFuncionario->description = 'Acceso a los Proyectos que ya fueron anteriormente aprovados';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
@@ -35,8 +35,8 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->save();
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'FIND_DB_GESAP';
-        $permissionFuncionario->display_name = 'Parqueaderos';
-        $permissionFuncionario->description = 'Acceso completo a la modulo de parqueaderos.';
+        $permissionFuncionario->display_name = 'Usuarios registrados';
+        $permissionFuncionario->description = 'Acceso a los usuarios que se han registrado.';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
         $permissionFuncionario = new Permission;
