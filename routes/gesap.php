@@ -15,8 +15,13 @@ $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 	
 	Route::get('mct ', [
 		'uses' => $controller.'CoordinatorController@AnteproyectosList',
-		'as' => 'Anteproyectos.List'
+		'as' => 'anteproyectos.List'
 	])->middleware('permission:LIST_ANTEPROYECTOS');
+
+	Route::post('anteproyecto/new', [
+		'uses' => $controller.'CoordinatorController@storeAnteproyectoDefault',
+		'as' => 'nuevo.anteproyecto'
+	])->middleware('permission:CREATE_ACTIVITY_DEFAULT_GESAP');
 
 	Route::get('activities', [
 		'uses' => $controller.'CoordinatorController@activityDefaultList',

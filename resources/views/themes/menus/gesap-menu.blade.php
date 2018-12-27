@@ -15,7 +15,7 @@
 		<li class="nav-item {{ active(['mct.anteproyectos'], 'start active open') }}">
 			<a href="{{ route('mct.anteproyectos') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
-				<span class="title">Lista De Anteproyectos</span>
+				<span class="title">Lista de Anteproyectos</span>
 			</a>
 		</li>
 		@endpermission

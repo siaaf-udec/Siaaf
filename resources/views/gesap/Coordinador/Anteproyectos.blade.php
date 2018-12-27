@@ -50,11 +50,11 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-activity" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-anteproyecto" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_create-activity', 'class' => '', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'from_create-anteproyecto', 'class' => '', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -110,7 +110,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div class="modal fade" id="modal-edit-activity" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-edit-anteproyecto" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -124,7 +124,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                 {!! Form::open(['id' => 'from_edit-activity', 'class' => '', 'url' => '/forms']) !!}
+                                 {!! Form::open(['id' => 'from_edit-anteproyecto', 'class' => '', 'url' => '/forms']) !!}
                         {!! Field::hidden('PK_CTVD_IdActividad') !!}
                                     {!! Field::textarea('nombre', null,
                                     ['label'=>'Nombre', 'required', 'auto' => 'off','rows' => '1','max' => '50', 'min' => '5','id'=>'nombreUpdate'],
@@ -183,7 +183,7 @@
         jQuery(document).ready(function () {
             var table, url, columns;
             table = $('#lista-anteproyectos');
-            url = "{{ route('Anteproyectos.List') }}";
+            url = "{{ route('anteproyectos.List') }}";
 
             columns = [
                 {data: 'DT_Row_Index', name: 'DT_Row_Index'},
@@ -212,18 +212,22 @@
             dataTableServer.init(table, url, columns);
             $('.create').on('click', function (e) {
                 e.preventDefault();
-                $('#modal-create-activity').modal('toggle');
+                $('#modal-create-anteproyecto').modal('toggle');
             });
-            var createActivity = function () {
+            var createAnteproyecto = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('nueva.actividad') }}';
+                        var route = '{{ route('nuevo.anteproyecto') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('nombre', $('#nombre').val());
-                        formData.append('descripcion', $('#descripcion').val());
+                        formData.append('titulo', $('#titulo').val());
+                        formData.append('keywords', $('#keywords').val());
+                        formData.append('duracion', $('#duracion').val());
+                        formData.append('fecha ini', $('#fecha ini').val());
+                        formData.append('fecha fin', $('#fecha fin').val());
+                        formData.append('estado', $('#estado').val());
 
                         $.ajax({
                             url: route,
@@ -262,7 +266,7 @@
                 nombre: {required: true, minlength: 5, maxlength: 50},
                 descripcion: {required: true, minlength: 1, maxlength: 100}
             };
-            FormValidationMd.init(form, rules, false, createActivity());
+            FormValidationMd.init(form, rules, false, createAnteproyecto());
             table = table.DataTable();
             table.on('click', '.edit', function (e) {
                 e.preventDefault();

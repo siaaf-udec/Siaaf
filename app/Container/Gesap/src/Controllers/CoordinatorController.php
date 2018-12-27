@@ -494,6 +494,34 @@ class CoordinatorController extends Controller
 		);
 	}
 
+	/*
+     * Función de almacenamiento en la base de datos de anteproyectos para nuevos proyectos
+     *
+     * @param  \Illuminate\Http\Request 
+     * 
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+	public function storeAnteproyectoDefault(Request $request)
+	{
+		if ($request->ajax() && $request->isMethod('POST')) {
+			$anteproyecto = new Anteproyecto();
+			$anteproyecto->NPRY_Titulo = $request->get('titulo');
+			$anteproyecto->NPRY_Keywords = $request->get('keywords');
+			$anteproyecto->NPRY_Duracion = $request->get('duracion');
+			$anteproyecto->NPRY_FechaR = $request->get('fecha ini');
+			$anteproyecto->NPRY_FechaL = $request->get('fecha fin');
+			$anteproyecto->NPRY_Estado = $request->get('estado');
+			$anteproyecto->save();
+			return AjaxResponse::success(
+				'¡Creacion Existosa!',
+				'Nueva actividad creada correctamente.'
+			);
+		}
+		return AjaxResponse::fail(
+			'¡Lo sentimos!',
+			'No se pudo completar tu solicitud.'
+		);
+	}
 
 	/*
      * Función de actualizacion en la base de datos de actividades predeterminadas
@@ -713,11 +741,11 @@ class CoordinatorController extends Controller
 	*
     * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
     */
-	public function AnteproyectosList(Request $request)
+	public function anteproyectosList(Request $request)
 	{
 		if ($request->isMethod('GET')) {
-			$anteproyectos = Anteproyecto::where('PK_NPRY_IdMctr008', '=', 1)->get();
-			return Datatables::of($anteproyectos)
+			$anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', '=', 1)->get();
+			return Datatables::of($anteproyecto)
 				->removeColumn('created_at')
 				->removeColumn('updated_at')
 				->addIndexColumn()->make(true);
