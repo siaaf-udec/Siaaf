@@ -1,22 +1,37 @@
 <?php
 
 $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
-	/*
-	Route::get('mct/', [
-		'uses' => $controller.'CoordinatorController@index',
-		'as' => 'mct.index'
-	])->middleware('permission:LIST_ANTEPROYECTOS');
-	*/
 
-	Route::get('mct/', [
-		'uses' => $controller.'CoordinatorController@mctAnteproyectos',
-		'as' => 'mct.anteproyectos'
-	])->middleware('permission:LIST_ANTEPROYECTOS');
-	
-	Route::get('mct ', [
-		'uses' => $controller.'CoordinatorController@AnteproyectosList',
-		'as' => 'anteproyectos.List'
-	])->middleware('permission:LIST_ANTEPROYECTOS');
+Route::group(['middleware' => ['auth']], function () {
+	Route::group(['prefix' => 'AnteproyectosGesap', 'middleware' => ['permission:LIST_ANTEPROYECTOS']], function () {
+		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('Mctr008/', [
+			'uses' => $controller.'CoordinatorController@index',
+			'as' => 'AnteproyectosGesap.index'
+		]);
+		
+		Route::delete('destroy/{id?}', [
+			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
+			'as' => 'Anteproyecto.destroy'
+		]);
+		Route::get('editar/{id?}', [
+			'uses' => $controller . 'CoordinatorController@editAnte',     
+			'as' => 'Anteproyecto.edit'
+		]);
+		Route::get('create', [
+			'uses' => $controller . 'CoordinatorController@createAnte',  
+			'as' => 'Anteproyecto.create'
+		]);
+		Route::get('tablaanteproyectos', [
+			'uses' => $controller.'CoordinatorController@anteproyectosList',
+			'as' => 'anteproyectos.List'
+		]);
+
+	});
+
+});	
+
 
 	Route::post('anteproyecto/new', [
 		'uses' => $controller.'CoordinatorController@storeAnteproyectoDefault',

@@ -19,14 +19,14 @@ class Anteproyecto extends Model
      *
      * @var string
      */
-    protected $table = 'TBL_Anteproyecto';
+    protected $table = 'tbl_anteproyecto';
 
     /**
      * Nombre de columna primary_key de tabla .
      *
      * @var string
      */
-    protected $primaryKey = 'PK_NPRY_IdMinr008';
+    protected $primaryKey = 'PK_NPRY_IdMctr008';
 
     /**
      * Atributos que son asignables.

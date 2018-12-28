@@ -4,7 +4,7 @@
 		<i class="fa fa-cube">
 		</i>
 		<span class="title">
-			Gesap
+		Gesap
 		</span>
 		<span class="arrow {{ active(['gesap.*','mct.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
 		</span>
@@ -12,16 +12,16 @@
 	<ul class="sub-menu">
 	
 		@permission('LIST_ANTEPROYECTOS')
-		<li class="nav-item {{ active(['mct.anteproyectos'], 'start active open') }}">
-			<a href="{{ route('mct.anteproyectos') }}" class="nav-link nav-toggle">
-				<i class="fa fa-list-alt"></i>
-				<span class="title">Lista de Anteproyectos</span>
-			</a>
-		</li>
+		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-user"></i>
+                <span class="title">Lista de Anteproyectos</span>
+            </a>    	    	
+    	</li>
 		@endpermission
 		@permission('LIST_PROYECTOS')
-		<li class="nav-item {{ active(['mct.anteproyectos'], 'start active open') }}">
-			<a href="{{ route('mct.anteproyectos') }}" class="nav-link nav-toggle">
+		<li class="nav-item {{ active(['AnteproyectosGesap*'], 'start active open') }}">
+			<a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
 				<span class="title">Listar Proyectos</span>
 			</a>

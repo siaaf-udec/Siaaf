@@ -39,13 +39,9 @@ class CoordinatorController extends Controller
      */
 	public function index(Request $request)
 	{
-		if ($request->isMethod('GET')) {
+		
 			return view($this->path . 'Anteproyectos');
-		}
-		return AjaxResponse::fail(
-			'¡Lo sentimos!',
-			'No se pudo completar tu solicitud.'
-		);
+		
 	}
 
 	/*
@@ -56,16 +52,17 @@ class CoordinatorController extends Controller
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
 	public function indexAjax(Request $request)
-	{
-		if ($request->ajax() && $request->isMethod('GET')) {
-			return view($this->path . 'AnteproyectoList-ajax');
-		}
-		return AjaxResponse::fail(
-			'¡Lo sentimos!',
-			'No se pudo completar tu solicitud.'
-		);
-	}
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('AnteproyectosAjax');
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
 	/*
      * Listado de todos los proyectos avalados
      *
@@ -187,42 +184,7 @@ class CoordinatorController extends Controller
      *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-	public function edit($id, Request $request)
-	{
-		if ($request->ajax() && $request->isMethod('GET')) {
-			$estudiantes = User::orderBy('name', 'asc')
-				->whereHas('roles', function ($e) {
-					$e->where('name', 'Student_Gesap');
-				})
-				->get(['name', 'lastname', 'id'])
-				->pluck('full_name', 'id')
-				->toArray();
 
-			$anteproyecto = Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
-				->with('radicacion')
-				->get();
-
-			$estudiante12 = Anteproyecto::where('PK_NPRY_IdMinr008', '=', $id)
-				->select('PK_NPRY_IdMinr008')
-				->with(['encargados' => function ($query) {
-					$query->select('PK_NCRD_IdCargo', 'FK_TBL_Anteproyecto_Id', 'FK_Developer_User_Id', 'NCRD_Cargo');
-					$query->where('NCRD_Cargo', 'ESTUDIANTE 1');
-					$query->orwhere('NCRD_Cargo', 'ESTUDIANTE 2');
-				}])
-				->get();
-
-
-			return view($this->path . 'ModificarMin', [
-				"anteproyecto" => $anteproyecto,
-				"estudiante12" => $estudiante12,
-				"estudiantes" => $estudiantes
-			]);
-		}
-		return AjaxResponse::fail(
-			'¡Lo sentimos!',
-			'No se pudo completar tu solicitud.'
-		);
-	}
 
 	/*
      * Función de actualizacion en la base de datos de anteproyectos
@@ -740,20 +702,102 @@ class CoordinatorController extends Controller
 	* @param  \Illuminate\Http\Request 
 	*
     * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
-    */
-	public function anteproyectosList(Request $request)
-	{
-		if ($request->isMethod('GET')) {
-			$anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', '=', 1)->get();
-			return Datatables::of($anteproyecto)
-				->removeColumn('created_at')
-				->removeColumn('updated_at')
-				->addIndexColumn()->make(true);
-		}
-		return AjaxResponse::fail(
-			'¡Lo sentimos!',
-			'No se pudo completar tu solicitud.'
-		);
-	}
+	*/
+	public function anteproyectoList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
 
+            //$user = UsersUdec::query();
+            $anteproyecto=Anteproyecto::query();
+            //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
+           
+
+            return DataTables::of($anteproyecto)
+                
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                
+                
+               
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+	
+	public function EliminarAnte(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Anteproyecto::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+	}
+	public function edit(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            $infoUsuario = Usuarios::find($id);
+           // $infoUsuario=Usuarios::all()->first();
+            
+           //$infoUsuario=Usuarios::all()->where('CU_Cedula',$id)->get();
+
+           
+            return view('carpark.usuarios.editarUsuario',
+                [
+                    'infoUsuario' => $infoUsuario,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+	}
+	public function createAnte(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('GET')) {
+
+            //$user = UsersUdec::query();
+            $anteproyectos=Anteproyectos::query();
+            //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
+           
+
+            return DataTables::of($anteproyectos)
+                ->removeColumn('company')
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->removeColumn('deleted_at')
+                
+                ->addColumn('CU_Perfil', function ($anteproyectos) {
+                    $perfil=Dependencias::where('PK_CD_IdDependencia', $anteproyectos->FK_CU_IdDependencia)->first();
+                    return $perfil['CD_Dependencia'];
+                     
+                })//agregar columna a datatable, agregar informacion a esa columna nueva
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
+    
 }
