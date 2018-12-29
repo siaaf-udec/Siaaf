@@ -1,15 +1,14 @@
+
 {{-- MENÚ DE EJEMPLO --}}
-<li class="nav-item {{ active(['gesap.*','mct.*','project.*','anteproyecto.*','report.*','graficos.*'], 'start active open') }}">
-	<a class="nav-link nav-toggle" href="javascript:;">
-		<i class="fa fa-cube">
-		</i>
-		<span class="title">
-		Gesap
-		</span>
-		<span class="arrow {{ active(['gesap.*','mct.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
-		</span>
-	</a>
-	<ul class="sub-menu">
+
+<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
+      <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+               <i class="fa fa-cube"></i>
+        <span class="title">Gesap</span>
+        <span class="arrow {{ active(['parqueadero.*'], 'open') }}"></span>
+    </a>
+
+    <ul class="sub-menu">
 	
 		@permission('LIST_ANTEPROYECTOS')
 		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">

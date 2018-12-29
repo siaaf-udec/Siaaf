@@ -11,6 +11,11 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'AnteproyectosGesap.index'
 		]);
 		
+		Route::get('Anteproyecto', [
+			'uses' => $controller.'CoordinatorController@anteproyectoList',
+			'as' => 'AnteproyectosGesap.List'
+		]);
+		
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
 			'as' => 'Anteproyecto.destroy'

@@ -707,20 +707,16 @@ class CoordinatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            //$user = UsersUdec::query();
-            $anteproyecto=Anteproyecto::query();
-            //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
-           
+		   
+		   $anteproyecto=Anteproyecto::query();
+		   
 
-            return DataTables::of($anteproyecto)
-                
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                
-                
-               
-                ->addIndexColumn()
-                ->make(true);
+		   return DataTables::of($anteproyecto)
+			   ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+			   ->make(true);
         }
 
         return AjaxResponse::fail(
@@ -746,7 +742,7 @@ class CoordinatorController extends Controller
         );
 
 	}
-	public function edit(Request $request, $id)
+	public function editAnte(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
            
@@ -772,24 +768,7 @@ class CoordinatorController extends Controller
     {
 		if ($request->ajax() && $request->isMethod('GET')) {
 
-            //$user = UsersUdec::query();
-            $anteproyectos=Anteproyectos::query();
-            //$user3=UsersUdec::has('relacionUsersUdecUsuarios')->get();
-           
-
-            return DataTables::of($anteproyectos)
-                ->removeColumn('company')
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->removeColumn('deleted_at')
-                
-                ->addColumn('CU_Perfil', function ($anteproyectos) {
-                    $perfil=Dependencias::where('PK_CD_IdDependencia', $anteproyectos->FK_CU_IdDependencia)->first();
-                    return $perfil['CD_Dependencia'];
-                     
-                })//agregar columna a datatable, agregar informacion a esa columna nueva
-                ->addIndexColumn()
-                ->make(true);
+			return view($this->path . 'Anteproyectos');
         }
 
         return AjaxResponse::fail(
