@@ -10,7 +10,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@index',
 			'as' => 'AnteproyectosGesap.index'
 		]);
-		
+		Route::get('Mctr008/Ajax', [
+			'uses' => $controller.'CoordinatorController@indexAjax',
+			'as' => 'AnteproyectosGesap.index.Ajax'
+		]);
 		Route::get('Anteproyecto', [
 			'uses' => $controller.'CoordinatorController@anteproyectoList',
 			'as' => 'AnteproyectosGesap.List'
@@ -26,12 +29,12 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 		Route::get('create', [
 			'uses' => $controller . 'CoordinatorController@createAnte',  
-			'as' => 'Anteproyecto.create'
+			'as' => 'AnteproyectosGesap.create'
 		]);
-		Route::get('tablaanteproyectos', [
-			'uses' => $controller.'CoordinatorController@anteproyectosList',
-			'as' => 'anteproyectos.List'
-		]);
+		Route::post('store', [
+            'uses' => $controller . 'CoordinatorController@CreateAnteproyecto',   
+            'as' => 'AnteproyectosGesap.createanteproyecto'
+        ]);
 
 	});
 

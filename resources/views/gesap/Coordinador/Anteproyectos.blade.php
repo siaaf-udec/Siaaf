@@ -25,21 +25,21 @@
 
 @endpush
 
-@section('title', '| Información de los usuarios')
+@section('title', '| Información de los Anteproyectos')
 
-@section('page-title', 'Parqueadero Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-    @permission('ADMIN_CARPARK')
+    @permission('ADMIN_GESAP')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Usuarios registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('PARK_CREATE_USER')<a href="javascript:;"
+                        @permission('ADD_ANTEPROYECTO')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar nuevo usuario">
+                                                       title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
                             </i>Nuevo
                         </a>@endpermission
@@ -55,7 +55,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
                             'Titulo',
                             
@@ -109,7 +109,7 @@
     jQuery(document).ready(function () {
 
         var table, url, columns;
-        table = $('#listaUsuarios');
+        table = $('#listaAnteproyecto');
         url = "{{ route('AnteproyectosGesap.List')}}";
         columns = [
             {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
@@ -146,7 +146,7 @@
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar el usuario seleccionado?",
+                    text: "¿Está seguro de eliminar este anteproyecto?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -178,12 +178,17 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun usuario", "error");
+                        swal("Cancelado", "No se eliminó ningun anteproyecto", "error");
                     }
                 });
 
         });
-
+        
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.create') }}';
+            $(".content-ajax").load(route);
+        });
     
 
     

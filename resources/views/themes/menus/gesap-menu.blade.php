@@ -5,7 +5,7 @@
       <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
                <i class="fa fa-cube"></i>
         <span class="title">Gesap</span>
-        <span class="arrow {{ active(['parqueadero.*'], 'open') }}"></span>
+        <span class="arrow {{ active(['AnteproyectosGesap.*'], 'open') }}"></span>
     </a>
 
     <ul class="sub-menu">

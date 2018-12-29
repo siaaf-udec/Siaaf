@@ -37,32 +37,9 @@ class CoordinatorController extends Controller
 	 *
      * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-	public function index(Request $request)
-	{
-		
-			return view($this->path . 'Anteproyectos');
-		
-	}
+	
 
-	/*
-     * Listado de todos los anteproyectos que se han registrado con vista AJAX
-     *
-     * @param  \Illuminate\Http\Request
-     *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-	public function indexAjax(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            return view('AnteproyectosAjax');
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
+    
 	/*
      * Listado de todos los proyectos avalados
      *
@@ -703,6 +680,27 @@ class CoordinatorController extends Controller
 	*
     * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
 	*/
+
+	// CONTROLLERS CREADOS PARA GESAP V2.0//
+
+	public function index(Request $request)
+	{
+		
+			return view($this->path . 'Anteproyectos');
+		
+	}
+
+	public function indexAjax(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view('AnteproyectosAjax');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+		);
+	}
 	public function anteproyectoList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -723,8 +721,41 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-    }
-	
+	}
+
+	public function CreateAnteproyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+		        
+
+                    Anteproyecto::create([
+                        'NPRY_Titulo' => $request['NPRY_Titulo'],
+                        'NPRY_Keywords' => $request['NPRY_Keywords'],
+                        'NPRY_Duracion' => $request['NPRY_Duracion'],
+                        'NPRY_FechaR' => $request['NPRY_FechaR'],
+                        'NPRY_FechaL' => $request['NPRY_FechaL'],
+                        'NPRY_Estado' => $request['NPRY_Estado'],
+                    ]);
+
+
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos creados en Usuarios'
+                    );
+                }
+                else{
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No se pudo completar tu solicitud, el código ya está registrado.',
+                        $IdError
+                    );
+                }
+        }
+
+
+
+          
 	public function EliminarAnte(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -768,7 +799,7 @@ class CoordinatorController extends Controller
     {
 		if ($request->ajax() && $request->isMethod('GET')) {
 
-			return view($this->path . 'Anteproyectos');
+			return view($this->path . 'CrearAnteproyecto');
         }
 
         return AjaxResponse::fail(
