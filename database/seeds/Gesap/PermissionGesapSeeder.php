@@ -14,7 +14,7 @@ class PermissionGesapSeeder extends Seeder
 
         $permissionAdmin = new Permission;
         $permissionAdmin->name = 'ADMIN_GESAP';
-        $permissionAdmin->display_name = 'Gesao';
+        $permissionAdmin->display_name = 'Gesap';
         $permissionAdmin->description = 'Acceso completo al modulo de gesap.';
         $permissionAdmin->module_id = 7;
         $permissionAdmin->save();

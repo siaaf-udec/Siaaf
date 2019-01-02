@@ -693,7 +693,7 @@ class CoordinatorController extends Controller
 	public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view('AnteproyectosAjax');
+            return view($this->path .'AnteproyectosAjax');
         }
 
         return AjaxResponse::fail(
@@ -725,32 +725,21 @@ class CoordinatorController extends Controller
 
 	public function CreateAnteproyecto(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {
-		        
-
-                    Anteproyecto::create([
-                        'NPRY_Titulo' => $request['NPRY_Titulo'],
-                        'NPRY_Keywords' => $request['NPRY_Keywords'],
-                        'NPRY_Duracion' => $request['NPRY_Duracion'],
-                        'NPRY_FechaR' => $request['NPRY_FechaR'],
-                        'NPRY_FechaL' => $request['NPRY_FechaL'],
-                        'NPRY_Estado' => $request['NPRY_Estado'],
-                    ]);
-
-
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos creados en Usuarios'
-                    );
-                }
-                else{
-                    $IdError = 422;
-                    return AjaxResponse::success(
-                        '¡Lo sentimos!',
-                        'No se pudo completar tu solicitud, el código ya está registrado.',
-                        $IdError
-                    );
-                }
+		if ($request->isMethod('POST')) {	
+        
+	
+			Anteproyecto::create([
+			 'NPRY_Titulo' => $request['NPRY_Titulo'],
+			 'NPRY_Keywords' => $request['NPRY_Keywords'],
+			 'NPRY_Duracion' => $request['NPRY_Duracion'],
+			 'NPRY_FechaR' => $request['NPRY_FechaR'],
+			 'NPRY_FechaL' => $request['NPRY_FechaL'],
+			 'NPRY_Estado' => $request['NPRY_Estado'],
+			]);
+		}
+	
+            return view($this->path .'Anteproyectos');
+        
         }
 
 
@@ -773,19 +762,31 @@ class CoordinatorController extends Controller
         );
 
 	}
-	public function editAnte(Request $request, $id)
+	
+	public function createAnte(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('GET')) {
+			$listaAnteproyectos = Anteproyecto::all();
+          
+				return view($this->path . 'CrearAnteproyecto',
+					['listaAnteproyectos' => $listaAnteproyectos,]
+				);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+	}
+	public function EditarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
            
-            $infoUsuario = Usuarios::find($id);
-           // $infoUsuario=Usuarios::all()->first();
-            
-           //$infoUsuario=Usuarios::all()->where('CU_Cedula',$id)->get();
-
-           
-            return view('carpark.usuarios.editarUsuario',
+            $infoAnte = Anteproyecto::find($id);
+                    
+            return view($this->path .'EditarAnyeproyecto',
                 [
-                    'infoUsuario' => $infoUsuario,
+                    'infoAnte' => $infoAnte,
                 ]);
         }
 
@@ -794,19 +795,8 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
-	}
-	public function createAnte(Request $request)
-    {
-		if ($request->ajax() && $request->isMethod('GET')) {
-
-			return view($this->path . 'CrearAnteproyecto');
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
+
 
 
     

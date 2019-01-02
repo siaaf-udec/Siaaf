@@ -8,20 +8,34 @@
          ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+                   {!! Form::open ([
+                   'route' => 'AnteproyectosGesap.createanteproyecto',
+                   'method' => 'POST',
+                   'id' => 'form_crear_anteproyecto']) !!}
+
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div>
-                                <span class="label label-primary">Ingrese Todos Los Datos</span>
+                                <span class="label label-primary">Ingrese  Los Datos</span>
                                  <br><br>
                             </div>
                             
-                            <span class="label label-primary">Información de priivacidad</span>
-              
+                          
                              <div class="form-group divcode">
                                 
                             </div>
                         <br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
                         <br><br>
                         <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
                         </div>
@@ -88,18 +102,6 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
-        var $widget_select_SelectDependencia = $('select[name="SelectDependencia"]');
-
-        var route_Dependencia = '{{ route('parqueadero.usuariosCarpark.listDependencias') }}';
-        $.get(route_Dependencia, function (response, status) {
-            $(response.data).each(function (key, value) {
-                $widget_select_SelectDependencia.append(new Option(value.CD_Dependencia, value.PK_CD_IdDependencia));
-            });
-            $widget_select_SelectDependencia.val([]);
-            $('#FK_CU_IdDependencia').val(2);
-        });
-
-
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
@@ -110,37 +112,6 @@
                 return m;
             }
         });
-
-        $('.pmd-select2', form).change(function () {
-            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-        });
-
-
-        //hola
-        $('.divcode').hide();
-        
-
-        $("#FK_CU_IdDependencia").on('change', function () {
-            var tipo = $('select[name="SelectDependencia"]').val();
-            if (tipo == 1) {
-                $('.divcode').show();
-                
-            }
-            if (tipo == 2) {
-                $('.divcode').hide();
-                
-            }
-            if (tipo == 3) {
-                $('.divcode').hide();
-                
-            }
-            if (tipo == 4) {
-                $('.divcode').hide();
-               
-            }
-        });
-
-
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
@@ -165,7 +136,7 @@
                     formData.append('NPRY_FechaR', $('input:text[name="NPRY_FechaR"]').val());
                     formData.append('NPRY_FechaL', $('input:text[name="NPRY_FechaL"]').val());
                     formData.append('NPRY_Estado', $('input[name="NPRY_Estado"]').val());
-                    
+                 
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -187,15 +158,13 @@
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
                                     location.href="{{route('AnteproyectosGesap.index')}}";
-                                    //$(".content-ajax").load(route);;
                                 } else {
                                     $('#form_anteproyecto_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
                                     location.href="{{route('AnteproyectosGesap.index')}}";
-                                    //$(".content-ajax").load(route);
-                                    }
+                                     }
                             }
                         },
                         error: function (response, xhr, request) {
@@ -233,11 +202,7 @@
             location.href="{{route('AnteproyectosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
-        $(".create").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.create') }}';
-            $(".content-ajax").load(route);
-        });
+     
       
 
     });

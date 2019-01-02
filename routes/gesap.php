@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'Anteproyecto.destroy'
 		]);
 		Route::get('editar/{id?}', [
-			'uses' => $controller . 'CoordinatorController@editAnte',     
+			'uses' => $controller . 'CoordinatorController@EditarAnteproyecto',     
 			'as' => 'Anteproyecto.edit'
 		]);
 		Route::get('create', [

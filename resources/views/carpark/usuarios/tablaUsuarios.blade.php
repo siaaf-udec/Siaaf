@@ -195,18 +195,52 @@
 
         });
 
-       
+        table.on('click', '.verPerfil', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('parqueadero.usuariosCarpark.verPerfil') }}' + '/' + dataTable.CU_Cedula;
+            $(".content-ajax").load(route_edit);
+        });
 
-       
+        table.on('click', '.RegistrarMoto', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + dataTable.PK_CU_Codigo;
+            $(".content-ajax").load(route_edit);
+        });
 
-       
+        table.on('click', '.edit', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('parqueadero.usuariosCarpark.edit') }}' + '/' + dataTable.PK_CU_Codigo;
+            $(".content-ajax").load(route_edit);
+        });
 
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('parqueadero.usuariosCarpark.create2') }}';
             $(".content-ajax").load(route);
         });
-       
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuario') }}' + '/' + dataTable.CU_Cedula, '_blank');
+            });
+        });
+
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('parqueadero.reportesCarpark.reporteUsuariosRegistrados') }}', '_blank');
+            });
+        });
 
     });
 </script>

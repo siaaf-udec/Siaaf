@@ -113,14 +113,14 @@
         url = "{{ route('AnteproyectosGesap.List')}}";
         columns = [
             {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-      {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-      {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-      {data: 'NPRY_FechaR', name: 'NPRY_FechaR'},
-      {data: 'NPRY_FechaL', name: 'NPRY_FechaL'},
-      {data: 'NPRY_Estado', name: 'NPRY_Estado'},
+            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
+            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
+            {data: 'NPRY_FechaR', name: 'NPRY_FechaR'},
+            {data: 'NPRY_FechaL', name: 'NPRY_FechaL'},
+            {data: 'NPRY_Estado', name: 'NPRY_Estado'},
            
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('PARK_UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission('PARK_DELETE_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -189,7 +189,14 @@
             var route = '{{ route('AnteproyectosGesap.create') }}';
             $(".content-ajax").load(route);
         });
-    
+
+        table.on('click', '.editar', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('Anteproyecto.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route_edit);
+        });
 
     
 
