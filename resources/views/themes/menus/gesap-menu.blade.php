@@ -1,11 +1,15 @@
 
 {{-- MENÚ DE EJEMPLO --}}
 
-<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
+<li class="nav-item {{ active(['AnteproyectosGesap.*','UsuariosGesap.*'], 'start active open') }}">
       <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
                <i class="fa fa-cube"></i>
         <span class="title">Gesap</span>
+<<<<<<< HEAD
         <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*'], 'open') }}"></span>
+=======
+        <span class="arrow {{ active(['AnteproyectosGesap.*','UsuariosGesap.*'], 'open') }}"></span>
+>>>>>>> develop
     </a>
 
     <ul class="sub-menu">
@@ -28,8 +32,18 @@
 		
 		@endpermission
 		@permission('ADD_USER_GESAP')
+<<<<<<< HEAD
 		<li class="nav-item {{ active(['UsuariosGesap.*'], 'start active open') }}">
 			<a href="{{ route('UsuariosGesap.index') }}" class="nav-link nav-toggle">
+=======
+<<<<<<< HEAD
+		<li class="nav-item {{ active(['UsuariosGesap.*'], 'start active open') }}">
+			<a href="{{ route('UsuariosGesap.index') }}" class="nav-link nav-toggle">
+=======
+		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
+			<a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+>>>>>>> develop
+>>>>>>> develop
 				<i class="fa fa-user"></i>
 				<span class="title">Lista De Usuarios</span>
 			</a>

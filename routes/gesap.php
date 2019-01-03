@@ -10,6 +10,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@index',
 			'as' => 'AnteproyectosGesap.index'
 		]);
+		Route::get('Usuarios/', [
+			'uses' => $controller.'CoordinatorController@index',
+			'as' => 'UsuariosGesap.index'
+		]);
 		Route::get('Mctr008/Ajax', [
 			'uses' => $controller.'CoordinatorController@indexAjax',
 			'as' => 'AnteproyectosGesap.index.Ajax'
@@ -28,13 +32,20 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'Anteproyecto.edit'
 		]);
 		Route::get('create', [
-			'uses' => $controller . 'CoordinatorController@createAnte',  
+			'uses' => $controller . 'CoordinatorController@CreateAnte',  
 			'as' => 'AnteproyectosGesap.create'
 		]);
+		
 		Route::post('store', [
             'uses' => $controller . 'CoordinatorController@CreateAnteproyecto',   
             'as' => 'AnteproyectosGesap.createanteproyecto'
 		]);
+<<<<<<< HEAD
+		Route::get('EstadoAnte', [
+            'uses' => $controller . 'UsuariosController@listarEstadosAnte',
+            'as' => 'AnteproyectoGesap.listEstado.Ante'
+        ]);
+=======
 	});
 		
 		// Rutas para la parte de Usuarios
@@ -51,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@usuariosList',
 			'as' => 'UsuariosGesap.List'
 		]);
+>>>>>>> develop
 
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 

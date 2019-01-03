@@ -1,6 +1,6 @@
 <?php
 
-namespace App\container\gesap\src;
+namespace App\Container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -20,11 +20,16 @@ class Anteproyecto extends Model
         ,'NPRY_Duracion'
         ,'NPRY_FechaR'
         ,'NPRY_FechaL'
-        ,'NPRY_Estado',
+        ,'FK_NPRY_Estado',
     ];
 
+<<<<<<< HEAD
+ 
+    public function relacionEstado()
+=======
     public function relacionUsuariosRadicacion()
+>>>>>>> develop
     {
-        return $this->hasOne(Radicacion::class, 'PK_NPRY_IdMctr008', 'FK_RDCN_idRadicaccion');
+        return $this->hasOne(EstadoAnteproyecto::class, 'PK_EST_id', 'FK_NPRY_Estado');
     }
 }

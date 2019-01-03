@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de usuarios'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de Anteproyectos'])
         @slot('actions', [
             'link_cancel' => [
                 'link' => '',
@@ -8,11 +8,12 @@
          ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                   {!! Form::open ([
+              
+                {!! Form::open ([
                    'route' => 'AnteproyectosGesap.createanteproyecto',
                    'method' => 'POST',
                    'id' => 'form_crear_anteproyecto']) !!}
-
+                
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -62,7 +63,7 @@
 
                            
 
-                            {!! Field::select('NPRY_Estado',['1'=>'EN ESPERA', '2'=>'EN REVISION', '3'=>'PENDIENTE', '4'=>'APROVADO', '5'=>'APLAZADO', '6'=>'RECHAZADO', '7'=>'COMPLETADO'],null,['label'=>'ESTADO: ']) !!}
+                            {!! Field::select('FK_NPRY_Estado',['1'=>'EN ESPERA', '2'=>'APROVADO', '3'=>'RECHAZADO', '4'=>'APLAZADO', '5'=>'ASIGNADO'],null,['label'=>'ESTADO: ']) !!}
 
                             
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
@@ -101,17 +102,55 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
+        var $widget_select_SelectEstado = $('select[name="SelectEstado"]');
 
-        /*Configuracion de Select*/
+        var route_Estado = '{{ route('AnteproyectoGesap.listEstado.Ante') }}';
+        $.get(route_Estado, function (response, status) {
+            $(response.data).each(function (key, value) {
+                $widget_select_SelectEstado.append(new Option(value.EST_estado, value.PK_EST_Id));
+            });
+            $widget_select_Selectestado.val([]);
+            $('#FK_NPRY_Estado').val(2);
+        });
+                /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
-            placeholder: "Selecccionar",
+            placeholder: "Seleccionar",
             allowClear: true,
             width: 'auto',
             escapeMarkup: function (m) {
                 return m;
             }
         });
+        $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
+
+
+        //hola
+        $('.divcode').hide();
+        
+
+        $("#FK_NPRY_Estado").on('change', function () {
+            var tipo = $('select[name="SelectEstado"]').val();
+            if (tipo == 1) {
+                $('.divcode').show();
+                
+            }
+            if (tipo == 2) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 3) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 4) {
+                $('.divcode').hide();
+               
+            }
+        });
+
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
@@ -135,7 +174,7 @@
                     formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
                     formData.append('NPRY_FechaR', $('input:text[name="NPRY_FechaR"]').val());
                     formData.append('NPRY_FechaL', $('input:text[name="NPRY_FechaL"]').val());
-                    formData.append('NPRY_Estado', $('input[name="NPRY_Estado"]').val());
+                    formData.append('FK_NPRY_Estado', $('input[name="FK_NPRY_Estado"]').val());
                  
                     $.ajax({
                         url: route,
