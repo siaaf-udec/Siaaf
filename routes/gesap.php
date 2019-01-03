@@ -40,12 +40,6 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@CreateAnteproyecto',   
             'as' => 'AnteproyectosGesap.createanteproyecto'
 		]);
-<<<<<<< HEAD
-		Route::get('EstadoAnte', [
-            'uses' => $controller . 'UsuariosController@listarEstadosAnte',
-            'as' => 'AnteproyectoGesap.listEstado.Ante'
-        ]);
-=======
 	});
 		
 		// Rutas para la parte de Usuarios
@@ -62,11 +56,15 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@usuariosList',
 			'as' => 'UsuariosGesap.List'
 		]);
->>>>>>> develop
 
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 
 			'as' => 'Usuarios.destroy'
+		]);
+
+		Route::get('editar/{id?}', [
+			'uses' => $controller . 'CoordinatorController@editUser',     
+			'as' => 'Usuarios.edit'
 		]);
 
 		Route::get('create', [

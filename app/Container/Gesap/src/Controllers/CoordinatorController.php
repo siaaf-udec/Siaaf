@@ -47,10 +47,6 @@ class CoordinatorController extends Controller
 			return view($this->path . 'Anteproyectos');
 		
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> develop
 	public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -157,13 +153,8 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-<<<<<<< HEAD
-	}
-
-=======
 
     }
->>>>>>> develop
 	public function EditarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
