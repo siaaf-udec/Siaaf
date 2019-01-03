@@ -55,17 +55,14 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                         @slot('columns', [
-                            'Titulo',
-                            
-                            'Palabras clave',
-                            'Duracion',
-                            'Fecha Inicio',
-                            'Fecha Fin',
-                    
+                            'Cedula',
+                            'Nombre',
+                            'Apellido',
+                            'Correo',
+                            'Rol',
                             'Estado',
-                         
                             'Acciones'
                         ])
                     @endcomponent
@@ -109,15 +106,15 @@
     jQuery(document).ready(function () {
 
         var table, url, columns;
-        table = $('#listaAnteproyecto');
-        url = "{{ route('AnteproyectosGesap.List')}}";
+        table = $('#listaUsuarios');
+        url = "{{ route('UsuariosGesap.List')}}";
         columns = [
-            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-            {data: 'NPRY_FechaR', name: 'NPRY_FechaR'},
-            {data: 'NPRY_FechaL', name: 'NPRY_FechaL'},
-            {data: 'NPRY_Estado', name: 'NPRY_Estado'},
+            {data: 'User_Cedula', name: 'User_Cedula'},
+            {data: 'User_Nombre1', name: 'User_Nombre1'},
+            {data: 'User_Apellido1', name: 'User_Apellido1'},
+            {data: 'User_Correo', name: 'User_Correo'},
+            {data: 'Fk_User_IdEstado', name: 'Fk_User_IdEstado'},
+            {data: 'FK_User_IdRol', name: 'FK_User_IdRol'},
            
             {
                 defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
@@ -141,12 +138,12 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('Anteproyecto.destroy') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('Anteproyecto.destroy') }}' + '/' + dataTable.PK_User_Codigo;
             var type = 'DELETE';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este anteproyecto?",
+                    text: "¿Está seguro de eliminar este usuario?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -178,7 +175,7 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun anteproyecto", "error");
+                        swal("Cancelado", "No se eliminó ningun usuario", "error");
                     }
                 });
 
@@ -186,7 +183,7 @@
         
         $(".create").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.create') }}';
+            var route = '{{ route('UsuariosGesap.create') }}';
             $(".content-ajax").load(route);
         });
 

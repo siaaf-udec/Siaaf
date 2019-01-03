@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
 			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 		Route::get('Users/', [
-            'uses' => $controller . 'CoordinatorController@index',   
+            'uses' => $controller . 'CoordinatorController@indexUsuarios',   
             'as' => 'UsuariosGesap.index'
 		]);
 		
@@ -52,6 +52,21 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'UsuariosGesap.List'
 		]);
 
+		Route::delete('destroy/{id?}', [
+			'uses' => $controller . 'CoordinatorController@eliminarUser', 
+			'as' => 'Usuarios.destroy'
+		]);
+
+		Route::get('create', [
+			'uses' => $controller . 'CoordinatorController@createUser',  
+			'as' => 'UsuariosGesap.create'
+		]);
+
+		Route::post('store', [
+            'uses' => $controller . 'CoordinatorController@createUsuario',   
+            'as' => 'UsuariosGesap.createUsuario'
+		]);
+		
 	});
 
 });	

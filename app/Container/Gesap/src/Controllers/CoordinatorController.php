@@ -690,7 +690,7 @@ class CoordinatorController extends Controller
 			return view($this->path . 'Anteproyectos');
 		
 	}
-
+	
 	public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -742,7 +742,7 @@ class CoordinatorController extends Controller
 	
             return view($this->path .'Anteproyectos');
         
-        }
+    }
 
 
 
@@ -780,6 +780,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 	}
+
 	public function EditarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -798,7 +799,15 @@ class CoordinatorController extends Controller
         );
 
 	}
-	
+
+	//Index para vista de Usuarios
+	public function indexUsuarios(Request $request)
+	{
+		
+			return view($this->path . 'Usuarios');
+		
+	}
+	//lista de usuarios
 	public function usuariosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -820,8 +829,62 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 	}
+	//Creacion de Usuario
+	public function createUser(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('GET')) {
+			$listaUsuarios = Usuarios::all();
+          
+				return view($this->path . 'CrearUsuario',
+					['listaUsuarios' => $listaUsuarios,]
+				);
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+	}
 
+	//Metodo de creacion de un usuario
+	public function createUsuario(Request $request)
+    {
+		if ($request->isMethod('POST')) {	
+        
+	
+			Usuarios::create([
+			 'User_Cedula' => $request['User_Cedula'],
+			 'User_Nombre1' => $request['User_Nombre1'],
+			 'User_Nombre2' => $request['User_Nombre2'],
+			 'User_Apellido1' => $request['User_Apellido1'],
+			 'User_Apellido2' => $request['User_Apellido2'],
+			 'User_Correo' => $request['User_Correo'],
+			 'User_Direccion' => $request['User_Direccion'],
+			 'Fk_User_IdEstado' => $request['Fk_User_IdEstado'],
+			 'FK_User_IdRol' => $request['FK_User_IdRol'],
+			]);
+		}
+	
+            return view($this->path .'Usuarios');
+        
+    }
+	//Eliminar un usuario
+	public function eliminarUser(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Usuarios::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+	}
     
 }
