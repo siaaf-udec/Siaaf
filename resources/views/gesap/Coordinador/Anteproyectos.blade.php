@@ -117,7 +117,7 @@
             {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
             {data: 'NPRY_FechaR', name: 'NPRY_FechaR'},
             {data: 'NPRY_FechaL', name: 'NPRY_FechaL'},
-            {data: 'NPRY_Estado', name: 'NPRY_Estado'},
+            {data: 'Estado', name: 'Estado'},
            
             {
                 defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
