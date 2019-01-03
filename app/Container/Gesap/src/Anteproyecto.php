@@ -23,8 +23,12 @@ class Anteproyecto extends Model
         ,'FK_NPRY_Estado',
     ];
 
+<<<<<<< HEAD
  
     public function relacionEstado()
+=======
+    public function relacionUsuariosRadicacion()
+>>>>>>> develop
     {
         return $this->hasOne(EstadoAnteproyecto::class, 'PK_EST_id', 'FK_NPRY_Estado');
     }

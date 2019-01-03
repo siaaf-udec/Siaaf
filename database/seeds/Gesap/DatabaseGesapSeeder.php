@@ -16,7 +16,12 @@ class DatabaseGesapSeeder extends Seeder
         //$this->call(UsersGesapTableSeeder::class);
         $this->call(PermissionGesapSeeder::class);
         //$this->call(ActividadesGesapSeeder::class);
+<<<<<<< HEAD
         $this->call(EstadoAnteproyectoGesapSeeder::class);
+=======
+        
+        $this->call(EstadosGesapSeeder::class);
+>>>>>>> develop
         $this->call(RolesUserGesapSeeder::class);
  
       

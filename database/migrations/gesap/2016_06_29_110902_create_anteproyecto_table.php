@@ -30,9 +30,6 @@ class CreateAnteproyectoTable extends Migration
         });
 
     }
-
-
-
     
     /**
      * Reverse the migrations.
