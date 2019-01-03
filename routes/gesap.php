@@ -32,9 +32,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'Anteproyecto.edit'
 		]);
 		Route::get('create', [
-			'uses' => $controller . 'CoordinatorController@createAnte',  
+			'uses' => $controller . 'CoordinatorController@CreateAnte',  
 			'as' => 'AnteproyectosGesap.create'
 		]);
+		
 		Route::post('store', [
             'uses' => $controller . 'CoordinatorController@CreateAnteproyecto',   
             'as' => 'AnteproyectosGesap.createanteproyecto'

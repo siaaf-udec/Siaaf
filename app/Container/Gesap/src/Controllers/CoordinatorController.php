@@ -29,6 +29,8 @@ use Carbon\Carbon;
 class CoordinatorController extends Controller
 {
 
+	private $path = 'gesap.Coordinador.';
+
 
 	// CONTROLLERS CREADOS PARA GESAP V2.0//
 
@@ -109,7 +111,10 @@ class CoordinatorController extends Controller
 			]);
 		}
 	
-            return view($this->path .'Anteproyectos');
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Datos Creados.'
+			);
         
         }
 
@@ -134,21 +139,20 @@ class CoordinatorController extends Controller
 
 	}
 	
-	public function createAnte(Request $request)
+	
+	public function CreateAnte(Request $request)
     {
-		if ($request->ajax() && $request->isMethod('GET')) {
-			$listaEstados = EstadoAnteproyecto::all();
-          
-				return view($this->path . 'CrearAnteproyecto',
-					['listaAnteproyectos' => $listaAnteproyectos,]
-				);
+        if ($request->ajax() && $request->isMethod('GET')) {
+			
+            return view($this->path . 'CrearAnteproyecto');
         }
 
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-	}
+
+    }
 	public function EditarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

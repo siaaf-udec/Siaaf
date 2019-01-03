@@ -8,8 +8,11 @@
          ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-            {!! Form::model ($listaEstados,['id'=>'form_estado_create', 'url' => '/forms']) !!}
-
+              
+                {!! Form::open ([
+                   'route' => 'AnteproyectosGesap.createanteproyecto',
+                   'method' => 'POST',
+                   'id' => 'form_crear_anteproyecto']) !!}
                 
                 <div class="form-body">
                     <div class="row">
