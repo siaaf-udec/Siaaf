@@ -23,7 +23,7 @@ class Anteproyecto extends Model
         ,'NPRY_Estado',
     ];
 
-    public function relacionUsuariosDependencia()
+    public function relacionUsuariosRadicacion()
     {
         return $this->hasOne(Radicacion::class, 'PK_NPRY_IdMctr008', 'FK_RDCN_idRadicaccion');
     }

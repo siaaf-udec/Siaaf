@@ -19,7 +19,7 @@
     	</li>
 		@endpermission
 		@permission('LIST_PROYECTOS')
-		<li class="nav-item {{ active(['AnteproyectosGesap*'], 'start active open') }}">
+		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
 			<a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
 				<span class="title">Listar Proyectos</span>
@@ -28,8 +28,8 @@
 		
 		@endpermission
 		@permission('ADD_USER_GESAP')
-		<li class="nav-item {{ active(['anteproyecto.index.directorList'], 'start active open') }}">
-			<a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
+		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
+			<a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-user"></i>
 				<span class="title">Lista De Usuarios</span>
 			</a>

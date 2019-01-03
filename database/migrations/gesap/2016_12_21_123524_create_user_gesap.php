@@ -23,7 +23,11 @@ class CreateUserGesap extends Migration
             $table->String('User_Apellido2', 50)->nullable();
             $table->String('User_Correo', 90);
             $table->String('User_Direccion', 70)->nullable();
-            $table->enum('User_IdEstado', ['APROBADO', 'RECHAZADO', 'EN ESPERA'])->default('EN ESPERA');
+            $table->integer('Fk_User_IdEstado')->unsigned();
+            $table->foreign('FK_User_IdEstado')
+                ->references('Pk_IdEstado')
+                ->on('TBL_Estados')
+                ->onDelete('cascade');
             $table->integer('FK_User_IdRol')->unsigned();
             $table->foreign('FK_User_IdRol')
                 ->references('PK_Id_Rol_Usuario')

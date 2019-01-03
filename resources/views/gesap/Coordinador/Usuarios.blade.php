@@ -25,14 +25,14 @@
 
 @endpush
 
-@section('title', '| Información de los Anteproyectos')
+@section('title', '| Información de los Usuarios')
 
-@section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', 'Usuarios del Modulo Gesap')
 
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Usuarios registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">

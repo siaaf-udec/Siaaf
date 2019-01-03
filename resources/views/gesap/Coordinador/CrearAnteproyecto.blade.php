@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div>
-                                <span class="label label-primary">Ingrese  Los Datos</span>
+                                <span class="label label-primary">Ingrese los Datos</span>
                                  <br><br>
                             </div>
                             

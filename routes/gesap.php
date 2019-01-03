@@ -34,7 +34,23 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('store', [
             'uses' => $controller . 'CoordinatorController@CreateAnteproyecto',   
             'as' => 'AnteproyectosGesap.createanteproyecto'
-        ]);
+		]);
+	});
+		
+		// Rutas para la parte de Usuarios
+
+	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADD_USER_GESAP']], function () {
+			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('Users/', [
+            'uses' => $controller . 'CoordinatorController@index',   
+            'as' => 'UsuariosGesap.index'
+		]);
+		
+		Route::get('Usuarios', [
+			'uses' => $controller.'CoordinatorController@usuariosList',
+			'as' => 'UsuariosGesap.List'
+		]);
 
 	});
 

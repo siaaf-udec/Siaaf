@@ -21,6 +21,7 @@ use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
+use App\Container\Gesap\src\Usuarios;
 use App\Container\Users\src\User;
 
 use Carbon\Carbon;
@@ -701,6 +702,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
 		);
 	}
+
 	public function anteproyectoList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -795,7 +797,29 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
-    }
+	}
+	
+	public function usuariosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+		   
+		   $usuarios=Usuarios::query();
+		   
+
+		   return DataTables::of($usuarios)
+			   ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+			   ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+	}
 
 
 
