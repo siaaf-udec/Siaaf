@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('ADD_ANTEPROYECTO')<a href="javascript:;"
+                        @permission('ADD_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar un nuevo usuario">
                             <i class="fa fa-plus">
@@ -117,7 +117,7 @@
             {data: 'FK_User_IdRol', name: 'FK_User_IdRol'},
            
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELETE_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -138,7 +138,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('Anteproyecto.destroy') }}' + '/' + dataTable.PK_User_Codigo;
+            var route = '{{ route('Usuarios.destroy') }}' + '/' + dataTable.PK_User_Codigo;
             var type = 'DELETE';
             var async = async || false;
             swal({
@@ -191,7 +191,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('Anteproyecto.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+                route_edit = '{{ route('Usuarios.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
             $(".content-ajax").load(route_edit);
         });
 
