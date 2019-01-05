@@ -79,9 +79,46 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Permiso para el admin de registrar un anteproyecto';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'UPDATE_ANTEPROYECTO';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de editar un anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DELETE_ANTEPROYECTO';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de eliminar un anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
             
         //Fin de permisos para el CRUD de Admin
         
+        //Inicio de los permisos para e crud de Usuarios con el rol Admin
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ADD_USER';
+        $permissionFuncionario->display_name = 'Usuarios Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de registrar un usuario';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'UPDATE_USER';
+        $permissionFuncionario->display_name = 'Usuarios Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de editar un usuario';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DELETE_USER';
+        $permissionFuncionario->display_name = 'Usuarios Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de eliminar un usuario';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
         
+
+        //Fin de los permisos para e crud de Usuarios con el rol Admin
     }
 }

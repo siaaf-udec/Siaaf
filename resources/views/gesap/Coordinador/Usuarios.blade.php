@@ -39,7 +39,7 @@
                     <div class="actions">
                         @permission('ADD_ANTEPROYECTO')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar un nuevo anteproyecto">
+                                                       title="Registar un nuevo usuario">
                             <i class="fa fa-plus">
                             </i>Nuevo
                         </a>@endpermission
