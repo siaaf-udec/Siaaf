@@ -10,10 +10,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@index',
 			'as' => 'AnteproyectosGesap.index'
 		]);
-		Route::get('Usuarios/', [
-			'uses' => $controller.'CoordinatorController@index',
-			'as' => 'UsuariosGesap.index'
-		]);
+
 		Route::get('Mctr008/Ajax', [
 			'uses' => $controller.'CoordinatorController@indexAjax',
 			'as' => 'AnteproyectosGesap.index.Ajax'
@@ -51,6 +48,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@indexUsuarios',   
             'as' => 'UsuariosGesap.index'
 		]);
+
+		Route::get('Users/Ajax', [
+			'uses' => $controller.'CoordinatorController@indexAjaxUsuarios',
+			'as' => 'UsuariosGesap.index.Ajax'
+		]);
 		
 		Route::get('Usuarios', [
 			'uses' => $controller.'CoordinatorController@usuariosList',
@@ -63,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 
 		Route::get('editar/{id?}', [
-			'uses' => $controller . 'CoordinatorController@editUser',     
+			'uses' => $controller . 'CoordinatorController@editarUser',     
 			'as' => 'Usuarios.edit'
 		]);
 

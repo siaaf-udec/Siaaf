@@ -25,7 +25,10 @@
                              <div class="form-group divcode">
                                 
                             </div>
-                        <br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        <br><br>
                         <br><br>
                         <br><br>
                         <br><br>
@@ -43,28 +46,31 @@
 
                         <div class="col-md-6">
 
-                            {!! Field:: text('NPRY_Titulo',null,['label'=>'TITULO:','class'=> 'form-control', 'autofocus', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+                            {!! Field:: text('User_Cedula',null,['label'=>'Cedula:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
 
+                            {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                            {!! Field:: text('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
-                                                             ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+                            {{--{!! Field:: text('User_Nombre2',null,['label'=>'Nombre 2:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo nombre.','icon'=>'fa fa-user'] ) !!} --}}
 
-                            {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {!! Field:: text('User_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                      
-                            {!! Field:: date('NPRY_FechaR',null,['label'=>'FECHA INICIO:','class'=> 'form-control','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la fecha de inicio del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {{--{!! Field:: text('User_Apellido2',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo apellido.','icon'=>'fa fa-user'] ) !!}--}}
 
-                            {!! Field:: date('NPRY_FechaL',null,['label'=>'FECHA FIN:', 'class'=> 'form-control', 'autocomplete'=>'off'],
-                                                             ['help' => 'Digite la fecha fin del anteproyecto.','icon'=>'fa fa-calendar '] ) !!}
+                            {!! Field:: text('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
 
-                           
+                            {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                            {!! Field::select('NPRY_Estado',['1'=>'EN ESPERA', '2'=>'EN REVISION', '3'=>'PENDIENTE', '4'=>'APROVADO', '5'=>'APLAZADO', '6'=>'RECHAZADO', '7'=>'COMPLETADO'],null,['label'=>'ESTADO: ']) !!}
+                            {!! Field::select('Fk_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
 
-                            
+                            {!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}
+
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
                         </div>
@@ -74,13 +80,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('ADD_ANTEPROYECTO')<a href="javascript:;"
+                                @permission('ADD_USER')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('ADD_ANTEPROYECTO'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('ADD_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -123,19 +129,22 @@
         var createAnte = function () {
             return {
                 init: function () {
-                    var route = '{{ route('AnteproyectosGesap.createanteproyecto') }}';
+                    var route = '{{ route('UsuariosGesap.createUsuario') }}';
                     var type = 'POST';
                     var async = async || false;
 
                     var formData = new FormData();
                   
 
-                    formData.append('NPRY_Titulo', $('input:text[name="NPRY_Titulo"]').val());
-                    formData.append('NPRY_Keywords', $('input:text[name="NPRY_Keywords"]').val());
-                    formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
-                    formData.append('NPRY_FechaR', $('input:text[name="NPRY_FechaR"]').val());
-                    formData.append('NPRY_FechaL', $('input:text[name="NPRY_FechaL"]').val());
-                    formData.append('NPRY_Estado', $('input[name="NPRY_Estado"]').val());
+                    formData.append('User_Cedula', $('input:text[name="User_Cedula"]').val());
+                    formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
+                    //formData.append('User_Nombre2', $('input:text[name="User_Nombre2"]').val());
+                    formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
+                    //formData.append('User_Apellido2', $('input:text[name="User_Apellido2"]').val());
+                    formData.append('User_Correo', $('input:text[name="User_Correo"]').val());
+                    formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
+                    formData.append('Fk_User_IdEstado', $('input:text[name="Fk_User_IdEstado"]').val());
+                    formData.append('FK_User_IdRol', $('input[name="FK_User_IdRol"]').val());
                  
                     $.ajax({
                         url: route,
@@ -156,14 +165,14 @@
                                     xhr = "warning"
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-                                    location.href="{{route('AnteproyectosGesap.index')}}";
+                                    var route = '{{ route('UsuariosGesap.index.Ajax') }}';
+                                    location.href="{{route('UsuariosGesap.index')}}";
                                 } else {
-                                    $('#form_anteproyecto_create')[0].reset(); //Limpia formulario
+                                    $('#form_usuarios_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-                                    location.href="{{route('AnteproyectosGesap.index')}}";
+                                    var route = '{{ route('UsuariosGesap.index.Ajax') }}';
+                                    location.href="{{route('UsuariosGesap.index')}}";
                                      }
                             }
                         },
@@ -176,15 +185,18 @@
                 }
             }
         };
-        var form = $('#form_anteproyecto_create');
+        var form = $('#form_usuarios_create');
         var formRules = {
          
-            NPRY_Titulo: {minlength: 25, maxlength: 100, required: true, number: true,},
-            NPRY_Keywords: {required:false, minlength: 50, maxlength: 200, number: true},
-            NPRY_Duracion: {required: true, letters: true,minlength: 50, maxlength: 200, number: true},
-            NPRY_FechaR: {required: true, letters: true},
-            NPRY_FechaR: {noSpecialCharacters:true},
-            NPRY_Estado: {required: true},
+            User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
+            User_Nombre1: {required: true, letters: true},
+            //User_Nombre2: {required: true, letters: true},
+            User_Apellido1: {required: true, letters: true},
+            //User_Apellido2: {required: true, letters: true},
+            User_Correo: {required: true, email: true},
+            User_Direccion: {noSpecialCharacters:true},
+            Fk_User_IdEstado: {required: true},
+            FK_User_IdRol: {required: true},
             acceptTeminos2: {required: true},
         };
 
@@ -193,13 +205,13 @@
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
+            location.href="{{route('UsuariosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
 
         $("#link_cancel").on('click', function (e) {
             var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
+            location.href="{{route('UsuariosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
      

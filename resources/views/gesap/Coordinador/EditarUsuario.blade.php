@@ -23,7 +23,7 @@
                              <div class="form-group divcode">
                                 
                             </div>
-                        <br>
+                        <br><br>
                         <br><br>
                         <br><br>
                         <br><br>
@@ -41,26 +41,32 @@
 
                         <div class="col-md-6">
 
-                            {!! Field:: text('NPRY_Titulo',$infoAnte['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+                            {!! Field:: text('User_Cedula',null,['label'=>'Cedula:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
 
-                           
-                            {!! Field:: text('NPRY_Keywords',$infoAnte['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+                            {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$infoAnte['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {{--{!! Field:: text('User_Nombre2',null,['label'=>'Nombre 2:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo nombre.','icon'=>'fa fa-user'] ) !!} --}}
 
-                      
-                            {!! Field:: date('NPRY_FechaR',$infoAnte['NPRY_FechaR'],['label'=>'FECHA INICIO:','class'=> 'form-control','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la fecha de inicio del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {!! Field:: text('User_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
 
-                            {!! Field:: date('NPRY_FechaL',$infoAnte['NPRY_FechaL'],['label'=>'FECHA FIN:', 'class'=> 'form-control', 'autocomplete'=>'off'],
-                                                             ['help' => 'Digite la fecha fin del anteproyecto.','icon'=>'fa fa-calendar '] ) !!}
+                            {{--{!! Field:: text('User_Apellido2',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el segundo apellido.','icon'=>'fa fa-user'] ) !!}--}}
 
-                           
+                            {!! Field:: text('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
 
-                            {!! Field::select('NPRY_Estado',['1'=>'EN ESPERA', '2'=>'EN REVISION', '3'=>'PENDIENTE', '4'=>'APROVADO', '5'=>'APLAZADO', '6'=>'RECHAZADO', '7'=>'COMPLETADO'],null,['label'=>'ESTADO: ']) !!}
+                            {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
+
+                            {!! Field::select('Fk_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
+
+                            {!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}
+
+                            {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
                             
                         

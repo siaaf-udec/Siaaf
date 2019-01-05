@@ -46,7 +46,8 @@ class CoordinatorController extends Controller
 		
 			return view($this->path . 'Anteproyectos');
 		
-	}
+    }
+    
 	public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -119,9 +120,6 @@ class CoordinatorController extends Controller
 			);
         
     }
-
-
-
           
 	public function EliminarAnte(Request $request, $id)
     {
@@ -139,8 +137,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
-	}
-	
+    }
 	
 	public function CreateAnte(Request $request)
     {
@@ -180,7 +177,21 @@ class CoordinatorController extends Controller
 		
 			return view($this->path . 'Usuarios');
 		
-	}
+    }
+
+    //Index con Ajax para usuarios
+    public function indexAjaxUsuarios(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path .'UsuariosAjax');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+		);
+    }
+
 	//lista de usuarios
 	public function usuariosList(Request $request)
     {
@@ -202,7 +213,8 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-	}
+    }
+        
 	//Creacion de Usuario
 	public function createUser(Request $request)
     {
@@ -229,9 +241,9 @@ class CoordinatorController extends Controller
 			Usuarios::create([
 			 'User_Cedula' => $request['User_Cedula'],
 			 'User_Nombre1' => $request['User_Nombre1'],
-			 'User_Nombre2' => $request['User_Nombre2'],
+			 //'User_Nombre2' => $request['User_Nombre2'],
 			 'User_Apellido1' => $request['User_Apellido1'],
-			 'User_Apellido2' => $request['User_Apellido2'],
+			 //'User_Apellido2' => $request['User_Apellido2'],
 			 'User_Correo' => $request['User_Correo'],
 			 'User_Direccion' => $request['User_Direccion'],
 			 'Fk_User_IdEstado' => $request['Fk_User_IdEstado'],
@@ -242,6 +254,26 @@ class CoordinatorController extends Controller
             return view($this->path .'Usuarios');
         
     }
+    //Editar un usuario
+    public function editarUser(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            $infoUser = Anteproyecto::find($id);
+                    
+            return view($this->path .'EditarUsuario',
+                [
+                    'infoUser' => $infoUser,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    
 	//Eliminar un usuario
 	public function eliminarUser(Request $request, $id)
     {
