@@ -17,13 +17,14 @@ class CreateUserGesap extends Migration
         Schema::connection('gesap')->create('TBL_Usuario', function (Blueprint $table) {
             $table->increments('PK_User_Codigo');
             $table->bigInteger('User_Cedula');
-            $table->String('User_Nombre1', 50);
-            $table->String('User_Nombre2', 50)->nullable();
-            $table->String('User_Apellido1', 50);
-            $table->String('User_Apellido2', 50)->nullable();
-            $table->String('User_Correo', 90);
+            $table->String('User_Nombre1', 100);
+            $table->String('User_Nombre2', 100)->nullable();
+            $table->String('User_Apellido1', 100);
+            $table->String('User_Apellido2', 100)->nullable();
+            $table->String('User_Correo', 100);
+            $table->String('User_Contra', 15);
             $table->String('User_Direccion', 70)->nullable();
-            $table->integer('Fk_User_IdEstado')->unsigned();
+            $table->integer('FK_User_IdEstado')->unsigned();
             $table->foreign('FK_User_IdEstado')
                 ->references('Pk_IdEstado')
                 ->on('TBL_Estados')

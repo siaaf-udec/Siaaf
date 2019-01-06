@@ -170,7 +170,7 @@ class CoordinatorController extends Controller
         );
 
 	}
-
+    //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
 	//Index para vista de Usuarios
 	public function indexUsuarios(Request $request)
 	{
@@ -235,7 +235,7 @@ class CoordinatorController extends Controller
 	//Metodo de creacion de un usuario
 	public function createUsuario(Request $request)
     {
-		if ($request->isMethod('POST')) {	
+		if ($request->ajax() && $request->isMethod('POST')) {	
         
 	
 			Usuarios::create([
@@ -244,9 +244,10 @@ class CoordinatorController extends Controller
 			 //'User_Nombre2' => $request['User_Nombre2'],
 			 'User_Apellido1' => $request['User_Apellido1'],
 			 //'User_Apellido2' => $request['User_Apellido2'],
-			 'User_Correo' => $request['User_Correo'],
+             'User_Correo' => $request['User_Correo'],
+             'User_Contra' => $request['User_Nombre1'],
 			 'User_Direccion' => $request['User_Direccion'],
-			 'Fk_User_IdEstado' => $request['Fk_User_IdEstado'],
+			 'FK_User_IdEstado' => $request['FK_User_IdEstado'],
 			 'FK_User_IdRol' => $request['FK_User_IdRol'],
 			]);
 		}
@@ -259,7 +260,7 @@ class CoordinatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
            
-            $infoUser = Anteproyecto::find($id);
+            $infoUser = Usuarios::find($id);
                     
             return view($this->path .'EditarUsuario',
                 [

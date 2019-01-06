@@ -21,6 +21,7 @@ class Usuarios extends Model
         , 'User_Apellido1'
         , 'User_Apellido2'
         , 'User_Correo'
+        , 'User_Contra'
         , 'User_Direccion'
         , 'FK_User_IdEstado'
         , 'FK_User_IdRol',

@@ -8,10 +8,8 @@
          ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                   {!! Form::open ([
-                   'route' => 'UsuariosGesap.createUsuario',
-                   'method' => 'POST',
-                   'id' => 'form_crear_usuario']) !!}
+                {!! Form::open (['id'=>'form_crear_usuario', 'url'=>'/forms']) !!}
+          
 
                 <div class="form-body">
                     <div class="row">
@@ -67,7 +65,7 @@
                             {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                              ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                            {!! Field::select('Fk_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
+                            {!! Field::select('FK_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
 
                             {!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}
 
@@ -106,7 +104,7 @@
 <script src = "{{ asset('assets/main/scripts/form-validation-md.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
+    $(document).ready(function () {
 
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -118,23 +116,24 @@
                 return m;
             }
         });
+        $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
 
-        jQuery.validator.addMethod("letters", function(value, element) {
+      /*   jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
             return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
-        });
+        }); */
 
-        var createAnte = function () {
+        var createUsers = function () {
             return {
                 init: function () {
                     var route = '{{ route('UsuariosGesap.createUsuario') }}';
-                    var type = 'POST';
+                    var formData = new FormData();
                     var async = async || false;
 
-                    var formData = new FormData();
-                  
 
                     formData.append('User_Cedula', $('input:text[name="User_Cedula"]').val());
                     formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
@@ -142,23 +141,21 @@
                     formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
                     //formData.append('User_Apellido2', $('input:text[name="User_Apellido2"]').val());
                     formData.append('User_Correo', $('input:text[name="User_Correo"]').val());
+                    formData.append('User_Contra', $('input:text[name="User_Nombre1"]').val());
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-                    formData.append('Fk_User_IdEstado', $('input:text[name="Fk_User_IdEstado"]').val());
-                    formData.append('FK_User_IdRol', $('input[name="FK_User_IdRol"]').val());
+                    formData.append('FK_User_IdEstado', $('select[name="FK_User_IdEstado"]').val());
+                    formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
                  
                     $.ajax({
                         url: route,
+                        type: 'POST',
+                        data: formData,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         cache: false,
-                        type: type,
                         contentType: false,
-                        data: formData,
                         processData: false,
-                        async: async,
-                        beforeSend: function () {
-                            App.blockUI({target: '.portlet-form', animate: true});
-                        },
-                        success: function (response, xhr, request) {
+                        async: async || false,
+                         success: function (response, xhr, request) {
                             console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 if (response.data == 422) {
@@ -168,7 +165,7 @@
                                     var route = '{{ route('UsuariosGesap.index.Ajax') }}';
                                     location.href="{{route('UsuariosGesap.index')}}";
                                 } else {
-                                    $('#form_usuarios_create')[0].reset(); //Limpia formulario
+                                    $('#form_crear_usuario')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('UsuariosGesap.index.Ajax') }}';
@@ -185,10 +182,10 @@
                 }
             }
         };
-        var form = $('#form_usuarios_create');
+        var form = $('#form_crear_usuario');
         var formRules = {
          
-            User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
+      /*       User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
             User_Nombre1: {required: true, letters: true},
             //User_Nombre2: {required: true, letters: true},
             User_Apellido1: {required: true, letters: true},
@@ -197,24 +194,27 @@
             User_Direccion: {noSpecialCharacters:true},
             Fk_User_IdEstado: {required: true},
             FK_User_IdRol: {required: true},
-            acceptTeminos2: {required: true},
+            acceptTeminos2: {required: true}, */
+        };
+        var formMessage = {
+          //  NPRY_Titulo: {letters: 'Solo se pueden letras'},//arreglar
         };
 
         FormValidationMd.init(form, formRules, formMessage, createUsers());
 
-        $('.button-cancel').on('click', function (e) {
+       /*  $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
+            var route = '{{ route('UsuariosGesap.index.Ajax') }}';
             location.href="{{route('UsuariosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
 
         $("#link_cancel").on('click', function (e) {
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
+            var route = '{{ route('UsuariosGesap.index.Ajax') }}';
             location.href="{{route('UsuariosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
-     
+      */
       
 
     });

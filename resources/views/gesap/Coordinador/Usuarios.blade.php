@@ -113,7 +113,7 @@
             {data: 'User_Nombre1', name: 'User_Nombre1'},
             {data: 'User_Apellido1', name: 'User_Apellido1'},
             {data: 'User_Correo', name: 'User_Correo'},
-            {data: 'Fk_User_IdEstado', name: 'Fk_User_IdEstado'},
+            {data: 'FK_User_IdEstado', name: 'FK_User_IdEstado'},
             {data: 'FK_User_IdRol', name: 'FK_User_IdRol'},
            
             {
