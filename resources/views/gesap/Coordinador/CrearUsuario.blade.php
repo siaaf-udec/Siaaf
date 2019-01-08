@@ -38,11 +38,15 @@
                         <br><br>
                         <br><br>
                         <br><br>
+                        <br><br>
                         <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
                         </div>
 
 
                         <div class="col-md-6">
+
+                             {!! Field:: text('PK_User_Codigo',null,['label'=>'Codigo Interno del Usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el codigo interno del usuario.','icon'=>'fa fa-credit-card']) !!}
 
                             {!! Field:: text('User_Cedula',null,['label'=>'Cedula:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                              ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
@@ -59,15 +63,17 @@
                             {{--{!! Field:: text('User_Apellido2',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                              ['help' => 'Digite el segundo apellido.','icon'=>'fa fa-user'] ) !!}--}}
 
-                            {!! Field:: text('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                            {!! Field:: email('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'150','autocomplete'=>'off'],
                                                              ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
 
                             {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                              ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                            {!! Field::select('FK_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
+                            {{--{!! Field::select('FK_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}--}}
 
-                            {!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}
+                            {{--{!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}--}}
+
+                            {!! Field::select('FK_User_IdRol', null,['name' => 'SelectRol','label'=>'ROL: ']) !!}
 
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
@@ -105,27 +111,66 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+    alert('diego')
+        /* Configuración del Select cargado de la BD */
+
+        var $widget_select_SelectRol = $('select[name="SelectRol"]');
+
+        var route_Rol = '{{ route('UsuariosGesap.listRoles') }}';
+        $.get(route_Rol, function (response, status) {
+            $(response.data).each(function (key, value) {
+                $widget_select_SelectRol.append(new Option(value.Rol_Usuario, value.PK_Id_Rol_Usuario));
+            });
+            $widget_select_SelectRol.val([]);
+            $('#FK_User_IdRol').val(2);
+        });
 
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
-            placeholder: "Selecccionar",
+            placeholder: "Seleccionar",
             allowClear: true,
             width: 'auto',
             escapeMarkup: function (m) {
                 return m;
             }
         });
+
         $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
+        /*
+         //hola
+         $('.divcode').hide();
+        
 
-      /*   jQuery.validator.addMethod("letters", function(value, element) {
+         $("#FK_User_IdRol").on('change', function () {
+            var tipo = $('select[name="SelectRol"]').val();
+            if (tipo == 1) {
+                $('.divcode').show();
+                
+            }
+            if (tipo == 2) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 3) {
+                $('.divcode').hide();
+                
+            }
+            if (tipo == 4) {
+                $('.divcode').hide();
+               
+            }
+        }); */
+
+
+        jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
             return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
-        }); */
+        });
 
         var createUsers = function () {
             return {
@@ -134,17 +179,18 @@
                     var formData = new FormData();
                     var async = async || false;
 
-
+                    formData.append('PK_User_Codigo', $('input:text[name="PK_User_Codigo"]').val());
                     formData.append('User_Cedula', $('input:text[name="User_Cedula"]').val());
                     formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
                     //formData.append('User_Nombre2', $('input:text[name="User_Nombre2"]').val());
                     formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
                     //formData.append('User_Apellido2', $('input:text[name="User_Apellido2"]').val());
-                    formData.append('User_Correo', $('input:text[name="User_Correo"]').val());
+                    formData.append('User_Correo', $('input[name="User_Correo"]').val());
                     formData.append('User_Contra', $('input:text[name="User_Nombre1"]').val());
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-                    formData.append('FK_User_IdEstado', $('select[name="FK_User_IdEstado"]').val());
-                    formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
+                    formData.append('FK_User_IdEstado', '2');
+                    //formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
+                    formData.append('FK_User_IdRol', $('select[name="SelectRol"]').val());
                  
                     $.ajax({
                         url: route,
@@ -184,25 +230,31 @@
         };
         var form = $('#form_crear_usuario');
         var formRules = {
-         
-      /*       User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
+            PK_User_Codigo: {minlength: 7, maxlength: 9, required: true, number: true,},
+            User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
             User_Nombre1: {required: true, letters: true},
             //User_Nombre2: {required: true, letters: true},
             User_Apellido1: {required: true, letters: true},
             //User_Apellido2: {required: true, letters: true},
             User_Correo: {required: true, email: true},
+            User_Contra: {required: true},
             User_Direccion: {noSpecialCharacters:true},
-            Fk_User_IdEstado: {required: true},
+            //Fk_User_IdEstado: {required: true},
             FK_User_IdRol: {required: true},
-            acceptTeminos2: {required: true}, */
+            acceptTeminos2: {required: true},
         };
         var formMessage = {
           //  NPRY_Titulo: {letters: 'Solo se pueden letras'},//arreglar
+            User_Nombre1: {letters: 'Solo se pueden ingresar letras'},
+            // CU_Nombre2: {letters: 'Solo se pueden ingresar letras'},
+            User_Apellido1: {letters: 'Solo se pueden ingresar letras'},
+            // CU_Apellido2: {letters: 'Solo se pueden ingresar letras'},
+            User_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
 
         FormValidationMd.init(form, formRules, formMessage, createUsers());
 
-       /*  $('.button-cancel').on('click', function (e) {
+        $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('UsuariosGesap.index.Ajax') }}';
             location.href="{{route('UsuariosGesap.index')}}";
@@ -214,8 +266,6 @@
             location.href="{{route('UsuariosGesap.index')}}";
             //$(".content-ajax").load(route);
         });
-      */
-      
 
     });
 

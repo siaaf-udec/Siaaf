@@ -15,6 +15,7 @@ use Yajra\DataTables\DataTables;
 
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
@@ -22,8 +23,12 @@ use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
+use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Users\src\User;
 use App\Container\Users\src\EstadoAnteproyecto;
+use App\Container\Users\src\UsersUdec;
+
+use App\Container\Users\src\Controllers\UsersUdecController;
 
 use Carbon\Carbon;
 
@@ -214,6 +219,44 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    
+    //Muestra la lista de roles registrados para el select del registro de usuario.
+    public function listarRoles(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $roles = RolesUsuario::where('PK_Id_Rol_Usuario','>','3')->get();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                $roles
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    
+    //Muestra la lista de estados registrados para el select del registro de usuario.
+    public function listarEstados(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $estados = Estados::all();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                $estados
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
         
 	//Creacion de Usuario
 	public function createUser(Request $request)
@@ -235,36 +278,111 @@ class CoordinatorController extends Controller
 	//Metodo de creacion de un usuario
 	public function createUsuario(Request $request)
     {
-		if ($request->ajax() && $request->isMethod('POST')) {	
+		if ($request->ajax() && $request->isMethod('POST')) {
+            $documento=(string)$request['User_Cedula'];
+
+            if($request['PK_User_Codigo']==null){
+                $request['PK_User_Codigo']=$request['User_Cedula'];
+
+           }
+
+            $verificiaruser = Usuarios::find($request['PK_User_Codigo']); //validar codigo repetido en usuarios gesap
+            $verificiarusercedula = Usuarios::where('User_Cedula','=',$request['User_Cedula'])->first();//validar cedula en usuarios gesap
+            $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
+          
+            if (is_null($verificiarusercedula) && empty($verificiaruser)){
+
+                if (is_null($verificarUserUdec) ) {
+
+                    $perfil=RolesUsuario::where('PK_Id_Rol_Usuario', $request['FK_User_IdRol'])->first();
+
+                        UsersUdec::create([
+
+                            'number_document' => $documento,
+                            'code' => $request['PK_User_Codigo'],
+                            'username' => $request['User_Nombre1'],               
+                            'lastname' => $request['User_Apellido1'],
+                            'type_user'=>$perfil['Rol_Usuario'],
+                            //'number_phone' => $request['CU_Telefono'],
+                            'place'=>"Facatativá",
+                            'email' => $request['User_Correo'],
+                            
+                        ]);
+
+                    }
+
+                    if(empty($verificiaruser)){
+
+                        Usuarios::create([
+                            'PK_User_Codigo' => $request['PK_User_Codigo'],
+                            'User_Cedula' => $request['User_Cedula'],
+                            'User_Nombre1' => $request['User_Nombre1'],
+                            //'User_Nombre2' => $request['User_Nombre2'],
+                            'User_Apellido1' => $request['User_Apellido1'],
+                            //'User_Apellido2' => $request['User_Apellido2'],
+                            'User_Correo' => $request['User_Correo'],
+                            'User_Contra' => Crypt::encrypt($request['User_Cedula']),
+                            'User_Direccion' => $request['User_Direccion'],
+                            'FK_User_IdEstado' => $request['FK_User_IdEstado'],
+                            'FK_User_IdRol' => $request['FK_User_IdRol'],
+                        ]);
+
+                    }
+                }
+            }
         
-	
-			Usuarios::create([
-			 'User_Cedula' => $request['User_Cedula'],
-			 'User_Nombre1' => $request['User_Nombre1'],
-			 //'User_Nombre2' => $request['User_Nombre2'],
-			 'User_Apellido1' => $request['User_Apellido1'],
-			 //'User_Apellido2' => $request['User_Apellido2'],
-             'User_Correo' => $request['User_Correo'],
-             'User_Contra' => $request['User_Nombre1'],
-			 'User_Direccion' => $request['User_Direccion'],
-			 'FK_User_IdEstado' => $request['FK_User_IdEstado'],
-			 'FK_User_IdRol' => $request['FK_User_IdRol'],
-			]);
-		}
-	
-            return view($this->path .'Usuarios');
-        
+            return view($this->path .'Usuarios'); 
     }
-    //Editar un usuario
+
+     //funcion para actualizar los datos del usuario
+     public function updateUsuario(Request $request)
+     {
+         if ($request->ajax() && $request->isMethod('POST')) {
+             $usuario = Usuarios::find($request['PK_User_Codigo']);
+             $usuario->fill($request->all());
+             $usuario->save();
+ 
+             
+             $documento=(string)$request['User_Cedula'];
+             //$perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
+ 
+             $usuariosGesap=Usuarios::find($documento);
+             $usuariosGesap->fill([
+ 
+                 'number_document' => $documento,
+                 'username' => $request['User_Nombre1'],                    
+                 'lastname' => $request['User_Apellido1'],
+                 'email' => $request['User_Correo'],
+                 'direccion' => $request['User_Direccion'],
+ 
+             ]);
+ 
+             $usuariosGesap->save();
+ 
+ 
+ 
+             return AjaxResponse::success(
+                 '¡Bien hecho!',
+                 'Datos modificados correctamente.'
+             );
+         }
+ 
+         return AjaxResponse::fail(
+             '¡Lo sentimos!',
+             'No se pudo completar tu solicitud.'
+         );
+     }
+
+    //Enviar a la vista de Editar un usuario
     public function editarUser(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
            
-            $infoUser = Usuarios::find($id);
+            $infoUsuario = Usuarios::find($id);
                     
-            return view($this->path .'EditarUsuario',
+            return view($this->path . 'EditarUsuario',
                 [
-                    'infoUser' => $infoUser,
+                    'infoUsuario' => $infoUsuario,
                 ]);
         }
 

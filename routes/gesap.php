@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 	});
 		
-		// Rutas para la parte de Usuarios
+	// Rutas para la parte de Usuarios
 
 	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADD_USER_GESAP']], function () {
 			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
@@ -59,6 +59,18 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'UsuariosGesap.List'
 		]);
 
+		//Ruta que carga la información de roles ancladas a los usuarios
+        Route::get('RolesUser', [
+            'uses' => $controller . 'CoordinatorController@listarRoles',
+            'as' => 'UsuariosGesap.listRoles'
+        ]);
+
+        //Ruta que carga la información de estados anclados a los usuarios
+        Route::get('EstadosUser', [
+            'uses' => $controller . 'CoordinatorController@listarEstados',
+            'as' => 'UsuariosGesap.listEstados'
+        ]);
+
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 
 			'as' => 'Usuarios.destroy'
@@ -68,6 +80,12 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@editarUser',     
 			'as' => 'Usuarios.edit'
 		]);
+
+		//ruta que conduce al controlador para actulizar datos del usuario
+        Route::post('update', [
+            'uses' => $controller . 'CoordinatorController@updateUsuario',      
+            'as' => 'UsuariosGesap.update'
+        ]);
 
 		Route::get('create', [
 			'uses' => $controller . 'CoordinatorController@createUser',  

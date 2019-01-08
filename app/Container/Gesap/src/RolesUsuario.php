@@ -29,4 +29,13 @@ class RolesUsuario extends Model
         return $this->hasMany(Documentos::class, 'FK_TBL_Actividad_Id', 'PK_CTVD_IdActividad');
     }
     */
+
+    //Relacion del Rol con el Usuario
+    public function relacionRolUsuario()
+    {
+        return $this->belongsTo(Usuarios::class,
+            'PK_Id_Rol_Usuario',
+            'FK_User_IdRol'
+        );
+    }
 }
