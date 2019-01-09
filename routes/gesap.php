@@ -50,8 +50,8 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Pre_Director', [
             'uses' => $controller . 'CoordinatorController@listarPreDirector',
             'as' => 'AnteproyectoGesap.listarpredirector'
+		]);
 	});
-		
 	// Rutas para la parte de Usuarios
 
 	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADD_USER_GESAP']], function () {
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Estado_Ante', [
             'uses' => $controller . 'CoordinatorController@listarEstado',
             'as' => 'AnteproyectoGesap.listarEstado'
-
+		]);	
 		Route::get('Users/Ajax', [
 			'uses' => $controller.'CoordinatorController@indexAjaxUsuarios',
 			'as' => 'UsuariosGesap.index.Ajax'

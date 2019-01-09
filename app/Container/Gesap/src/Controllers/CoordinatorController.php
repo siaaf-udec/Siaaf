@@ -269,19 +269,7 @@ class CoordinatorController extends Controller
 
     }
 	
-	public function CreateAnte(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-			
-            return view($this->path . 'CrearAnteproyecto');
-        }
 
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
 	public function EditarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
