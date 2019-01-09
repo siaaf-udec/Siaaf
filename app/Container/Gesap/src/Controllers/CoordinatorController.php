@@ -25,7 +25,7 @@ use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Users\src\User;
-use App\Container\Users\src\EstadoAnteproyecto;
+use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
 
 use App\Container\Users\src\Controllers\UsersUdecController;
