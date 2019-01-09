@@ -17,19 +17,19 @@ class Anteproyecto extends Model
     protected $fillable = [
         'NPRY_Titulo'
         ,'NPRY_Keywords'
+        ,'NPRY_Descripcion'
         ,'NPRY_Duracion'
-        ,'NPRY_FechaR'
-        ,'NPRY_FechaL'
+        ,'FK_NPRY_Pre_Director'
         ,'FK_NPRY_Estado',
     ];
 
-<<<<<<< HEAD
- 
-    public function relacionEstado()
-=======
-    public function relacionUsuariosRadicacion()
->>>>>>> develop
+    public function relacionPredirectores()
     {
+         return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_NPRY_Pre_Director');
+     }
+   public function relacionEstado()
+   {
         return $this->hasOne(EstadoAnteproyecto::class, 'PK_EST_id', 'FK_NPRY_Estado');
     }
+    
 }

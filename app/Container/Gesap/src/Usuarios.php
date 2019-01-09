@@ -38,4 +38,8 @@ class Usuarios extends Model
     {
         return $this->hasOne(Estados::class, 'PK_IdEstado', 'FK_User_IdEstado');
     }
+    public function relacionAnteproyectoUser()
+    {
+        return $this->hasMany(Anteproyecto::class, 'FK_NPRY_Pre_Director', 'PK_User_Codigo');
+    }
 }

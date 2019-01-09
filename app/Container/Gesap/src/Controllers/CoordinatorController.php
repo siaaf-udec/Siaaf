@@ -70,10 +70,43 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
 
 		   
-		   $anteproyecto=Anteproyecto::all();
-		   //$estado = EstadoAnteproyecto::find(2); 
-		   return DataTables::of($anteproyecto)
-			   ->addColumn('Estado','No sirve')
+           $anteproyecto=Anteproyecto::all();
+           
+           $i=0;
+           $i2=0;
+
+           foreach($anteproyecto as $ante){
+            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
+           
+               $i=$i+1;
+           }
+           $j=0;
+           foreach ($anteproyecto as $ante) {
+           
+            $ante->offsetSet('Estado', $s[$j]);
+            $j=$j+1;
+            }
+
+            foreach($anteproyecto as $antep){
+                $s2[$i2]=$anteproyecto[$i2]-> relacionPredirectores-> User_Nombre1;
+               
+                $i2=$i2+1;
+            }
+            $j2=0;
+           foreach ($anteproyecto as $antep) {
+           
+            $antep->offsetSet('Nombre', $s2[$j2]);
+            $j2=$j2+1;
+            }
+          
+            
+
+        /*    $nombre = $anteproyecto->get('FK_NPRY_Estado');
+           $estado = EstadoAnteproyecto::Find($nombre);
+           $estadoante = $estado->get('Est_estado');
+		 */   return DataTables::of($anteproyecto)
+                //->addColumn('Estado',implode(',', $s))
+               //->addColumn('Estado', $aux) 
 		  	   ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
 			    
@@ -85,12 +118,102 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-	}
-	public function listarEstadosAnte(Request $request)
+    }
+    public function CreateAnte(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-			$Estado = EstadoAnteproyecto::all();
-			
+            $Pre_directores = Usuarios::Where('FK_User_IdRol','5')->get();
+            return view($this->path .'CrearAnteproyecto',
+                [
+                    'Pre_directores' => $Pre_directores,
+                ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    public function listarPreDirector(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Pre_directores = Usuarios::Where('FK_User_IdRol','5')->get();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                $Pre_directores
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    public function updateAnte(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $anteproyecto = Anteproyecto::Where('PK_NPRY_IdMctr008', $request['PK_NPRY_IdMctr008'])->first();
+            
+            $anteproyecto -> NPRY_Titulo = $request['NPRY_Titulo']; 
+            $anteproyecto -> NPRY_Keywords = $request['NPRY_Keywords'];
+            $anteproyecto -> NPRY_Descripcion = $request['NPRY_Descripcion'];
+            $anteproyecto -> NPRY_Duracion = $request['NPRY_Duracion'];
+            $anteproyecto -> FK_NPRY_Pre_Director = $request['FK_NPRY_Pre_Director'];
+            $anteproyecto -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
+
+            $anteproyecto -> save();
+
+
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    public function AsignarAnteproyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoAnte = Anteproyecto::find($id);
+
+                      
+            return view($this->path .'AsignarAnteproyecto',
+                [
+                    'infoAnte' => $infoAnte,
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    public function VerAnteproyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            $infoAnte->put('Estado',$infoAnte -> relacionEstado -> EST_estado);
+           
+            return response()->json($infoAnte);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
+	
+	public function listarEstado(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Estado = EstadoAnteproyecto::where('PK_EST_Id','<',3)->get();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos consultados correctamente.',
@@ -102,19 +225,21 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-    }
 
-	public function CreateAnteproyecto(Request $request)
+    }
+	
+
+	public function store(Request $request)
     {
-		if ($request->isMethod('POST')) {	
+		if ($request->ajax() && $request->isMethod('POST')) {	
         
 	
 			Anteproyecto::create([
 			 'NPRY_Titulo' => $request['NPRY_Titulo'],
 			 'NPRY_Keywords' => $request['NPRY_Keywords'],
+			 'NPRY_Descripcion' => $request['NPRY_Descripcion'],
 			 'NPRY_Duracion' => $request['NPRY_Duracion'],
-			 'NPRY_FechaR' => $request['NPRY_FechaR'],
-			 'NPRY_FechaL' => $request['NPRY_FechaL'],
+			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
 			 'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
 			]);
 		}
@@ -162,6 +287,12 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
            
             $infoAnte = Anteproyecto::find($id);
+
+            //$Nombre = $infoAnte -> relacionEstado -> EST_estado;
+            //$Estado= $infoAnte -> relacionPredirectores-> User_Nombre1;
+              
+           // $x = compact('infoAnte', 'Nombre' , 'Estado');
+           $Estado = EstadoAnteproyecto::all();
                     
             return view($this->path .'EditarAnteproyecto',
                 [

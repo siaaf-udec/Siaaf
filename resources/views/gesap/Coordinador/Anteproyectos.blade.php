@@ -32,7 +32,7 @@
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Usuarios registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -58,14 +58,11 @@
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
                             'Titulo',
-                            
                             'Palabras clave',
+                            'Descripción',
                             'Duracion',
-                            'Fecha Inicio',
-                            'Fecha Fin',
-                    
+                            'Pre Director',
                             'Estado',
-                         
                             'Acciones'
                         ])
                     @endcomponent
@@ -114,13 +111,14 @@
         columns = [
             {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
             {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
+            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
             {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-            {data: 'NPRY_FechaR', name: 'NPRY_FechaR'},
-            {data: 'NPRY_FechaL', name: 'NPRY_FechaL'},
+            {data: 'Nombre', name: 'Nombre'},
             {data: 'Estado', name: 'Estado'},
-           
+            
+      
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-pencil"></i></a>@endpermission @permission('DELATE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -134,6 +132,7 @@
                 responsivePriority: 2
             }
         ];
+        
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
@@ -184,17 +183,26 @@
 
         });
         
+      
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('AnteproyectosGesap.create') }}';
             $(".content-ajax").load(route);
         });
 
+        table.on('click', '.Ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_ver = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route_ver);
+        });
+
         table.on('click', '.editar', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('Anteproyecto.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+                route_edit = '{{ route('AnteproyectoGesap.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
             $(".content-ajax").load(route_edit);
         });
 

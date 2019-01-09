@@ -12,7 +12,7 @@ class EstadoAnteproyecto extends Model
 
     protected $table = 'tbl_estado_anteproyecto';
 
-    protected $primaryKey = 'PK_EST_id';
+    protected $primaryKey = 'PK_EST_Id';
 
     protected $fillable = [
         'EST_Estado'
@@ -21,6 +21,6 @@ class EstadoAnteproyecto extends Model
 
     public function relacionAnteproyecto()
     {
-        return $this->belongsToMany(Anteproyecto::class, 'FK_NPRY_Estado', 'PK_EST_id');
+        return $this->hasMany(Anteproyecto::class, 'FK_NPRY_Estado', 'PK_EST_Id');
     }
 }
