@@ -338,27 +338,47 @@ class CoordinatorController extends Controller
      public function updateUsuario(Request $request)
      {
          if ($request->ajax() && $request->isMethod('POST')) {
-             $usuario = Usuarios::find($request['PK_User_Codigo']);
-             $usuario->fill($request->all());
-             $usuario->save();
+             $usuario = Usuarios::where('PK_User_Codigo', $request['PK_User_Codigo'])->first();
+            //  $usuario->fill([
+            //     //'PK_User_Codigo' => $request['PK_User_Codigo'],
+            //    // 'User_Cedula' => $request['User_Cedula'],
+            //     'User_Nombre1' => $request['User_Nombre1'],
+            //     //'User_Nombre2' => $request['User_Nombre2'],
+            //     'User_Apellido1' => $request['User_Apellido1'],
+            //     //'User_Apellido2' => $request['User_Apellido2'],
+            //     'User_Correo' => $request['User_Correo'],
+            //     //'User_Contra' => Crypt::encrypt($request['User_Cedula']),
+            //     'User_Direccion' => $request['User_Direccion'],
+            //     'FK_User_IdEstado' => $request['FK_User_IdEstado'],
+            //     'FK_User_IdRol' => $request['FK_User_IdRol'],
+            //  ]);
+            $usuario -> User_Nombre1 = $request['User_Nombre1'];
+            $usuario -> User_Apellido1 = $request['User_Apellido1'];
+            $usuario -> User_Correo = $request['User_Correo'];
+            $usuario -> User_Direccion = $request['User_Direccion'];
+            //$usuario -> FK_User_IdEstado = $request['FK_User_IdEstado'];
+            $usuario -> FK_User_IdRol = $request['FK_User_IdRol'];
+            $usuario->save();
  
              
              $documento=(string)$request['User_Cedula'];
-             //$perfil=Dependencias::where('PK_CD_IdDependencia', $request['FK_CU_IdDependencia'])->first();
+             $perfil=RolesUsuario::where('PK_Id_Rol_Usuario', $request['FK_User_IdRol'])->first();
  
-             $usuariosGesap=Usuarios::find($documento);
-             $usuariosGesap->fill([
+             $userudec=UsersUdec::find($documento)->first();
+             $userudec->fill([
  
-                 'number_document' => $documento,
-                 'username' => $request['User_Nombre1'],                    
-                 'lastname' => $request['User_Apellido1'],
-                 'email' => $request['User_Correo'],
-                 'direccion' => $request['User_Direccion'],
+                'number_document' => $documento,
+                'code' => $request['PK_User_Codigo'],
+                'username' => $request['User_Nombre1'],               
+                'lastname' => $request['User_Apellido1'],
+                'type_user'=>$perfil['Rol_Usuario'],
+                //'number_phone' => $request['CU_Telefono'],
+                //'place'=>"Facatativá",
+                'email' => $request['User_Correo'],
  
              ]);
  
-             $usuariosGesap->save();
- 
+             $userudec->save();
  
  
              return AjaxResponse::success(

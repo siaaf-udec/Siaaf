@@ -73,7 +73,7 @@
 
                             {{--{!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}--}}
 
-                            {!! Field::select('FK_User_IdRol', null,['name' => 'SelectRol','label'=>'Rol: ']) !!}
+                            {!! Field::select('FK_User_IdRol', null,['name' => 'SelectRol','label'=>'ROL: ']) !!}
 
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
                         
@@ -115,16 +115,17 @@
     jQuery(document).ready(function () {
         alert('diego')
         /* Configuración del Select cargado de la BD */
-
         var $widget_select_SelectRol = $('select[name="SelectRol"]');
 
-        var route_Rol = '{{ route('UsuariosGesap.listRoles') }}';
-        $.get(route_Rol, function (response, status) {
+        var valorSelected = <?php echo $infoUsuario['FK_User_IdRol']; ?>
+
+        var route_Estado = '{{ route('UsuariosGesap.listRoles') }}';
+        $.get(route_Estado, function (response, status) {
             $(response.data).each(function (key, value) {
                 $widget_select_SelectRol.append(new Option(value.Rol_Usuario, value.PK_Id_Rol_Usuario));
             });
-            $widget_select_SelectRol.val([]);
-            $('#FK_User_IdRol').val(1);
+            $widget_select_SelectRol.val();
+            $('#FK_User_IdRol').val(valorSelected);
         });
         
         /*Configuracion de Select*/
@@ -168,9 +169,9 @@
                     formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
                     //formData.append('User_Apellido2', $('input:text[name="User_Apellido2"]').val());
                     formData.append('User_Correo', $('input[name="User_Correo"]').val());
-                    formData.append('User_Contra', $('input:text[name="User_Nombre1"]').val());
+                    //formData.append('User_Contra', $('input:text[name="User_Nombre1"]').val());
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-                    formData.append('FK_User_IdEstado', $('select[name="FK_User_IdEstado"]').val());
+                    //formData.append('FK_User_IdEstado', $('select[name="FK_User_IdEstado"]').val());
                     //formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
                     formData.append('FK_User_IdRol', $('select[name="SelectRol"]').val());
 
@@ -229,6 +230,7 @@
             // CU_Apellido2: {letters: 'Solo se pueden ingresar letras'},
             User_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
+
         FormValidationMd.init(form, formRules, formMessage, editarUsers());
 
         $('.button-cancel').on('click', function (e) {
