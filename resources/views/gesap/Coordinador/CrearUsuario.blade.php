@@ -111,7 +111,7 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-    alert('diego')
+    
         /* Configuración del Select cargado de la BD */
 
         var $widget_select_SelectRol = $('select[name="SelectRol"]');

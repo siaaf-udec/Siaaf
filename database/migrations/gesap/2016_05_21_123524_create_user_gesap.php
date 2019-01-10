@@ -22,7 +22,7 @@ class CreateUserGesap extends Migration
             $table->String('User_Apellido1', 100);
             $table->String('User_Apellido2', 100)->nullable();
             $table->String('User_Correo', 100);
-            $table->String('User_Contra', 200);
+            $table->String('User_Contra', 600);
             $table->String('User_Direccion', 70)->nullable();
             $table->integer('FK_User_IdEstado')->unsigned();
             $table->foreign('FK_User_IdEstado')

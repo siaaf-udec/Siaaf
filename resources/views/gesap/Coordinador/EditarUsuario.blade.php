@@ -69,7 +69,9 @@
                             {!! Field:: text('User_Direccion',$infoUsuario['User_Direccion'],['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                              ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
 
-                            {!! Field::select('Fk_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}
+                            {{--{!! Field::select('FK_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}--}}
+
+                            {!! Field::select('FK_User_IdEstado', null,['name' => 'SelectEstado','label'=>'ESTADO: ']) !!}
 
                             {{--{!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}--}}
 
@@ -113,21 +115,35 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-        alert('diego')
-        /* Configuración del Select cargado de la BD */
+        
+        /* Configuración del Select roles cargado de la BD */
         var $widget_select_SelectRol = $('select[name="SelectRol"]');
 
-        var valorSelected = <?php echo $infoUsuario['FK_User_IdRol']; ?>
+        var valorSelectedRol = <?php echo $infoUsuario['FK_User_IdRol']; ?>
 
-        var route_Estado = '{{ route('UsuariosGesap.listRoles') }}';
-        $.get(route_Estado, function (response, status) {
+        var route_Rol = '{{ route('UsuariosGesap.listRoles') }}';
+        $.get(route_Rol, function (response, status) {
             $(response.data).each(function (key, value) {
                 $widget_select_SelectRol.append(new Option(value.Rol_Usuario, value.PK_Id_Rol_Usuario));
             });
             $widget_select_SelectRol.val();
-            $('#FK_User_IdRol').val(valorSelected);
+            $('#FK_User_IdRol').val(valorSelectedRol);
         });
-        
+
+        /* Configuración del Select estados cargado de la BD */
+        var $widget_select_SelectEstado = $('select[name="SelectEstado"]');
+
+        var valorSelectedEstado = <?php echo $infoUsuario['FK_User_IdEstado']; ?>
+
+        var route_Estado = '{{ route('UsuariosGesap.listEstados') }}';
+        $.get(route_Estado, function (response, status) {
+            $(response.data).each(function (key, value) {
+                $widget_select_SelectEstado.append(new Option(value.STD_Descripcion, value.PK_IdEstado));
+            });
+            $widget_select_SelectEstado.val();
+            $('#FK_User_IdEstado').val(valorSelectedEstado);
+        });     
+
         /*Configuracion de Select*/
 
         ///////////////////////
@@ -173,6 +189,7 @@
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
                     //formData.append('FK_User_IdEstado', $('select[name="FK_User_IdEstado"]').val());
                     //formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
+                    formData.append('FK_User_IdEstado', $('select[name="SelectEstado"]').val());
                     formData.append('FK_User_IdRol', $('select[name="SelectRol"]').val());
 
                     $.ajax({

@@ -94,16 +94,15 @@
 
     
         var $widget_select_Pre_Director = $('select[name="SelectPre_Director"]');
-        var valorSelectedPre =
-                <?php echo $infoAnte['FK_NPRY_Pre_Director']; ?>
+        var valorSelectedPre = <?php echo $infoAnte['FK_NPRY_Pre_Director']; ?>
 
         var route_Pre_Director = '{{ route('AnteproyectoGesap.listarpredirector') }}';
         $.get(route_Pre_Director, function (response, status) {
         $(response.data).each(function (key, value) {
             $widget_select_Pre_Director.append(new Option(value.User_Nombre1, value.PK_User_Codigo ));
         });
-        $widget_select_Pre_Director.val([]);
-        $('#FK_NPRY_Pre_Director').val(valorSelectedPre);
+            $widget_select_Pre_Director.val([]);
+            $('#FK_NPRY_Pre_Director').val(valorSelectedPre);
         });
 
         

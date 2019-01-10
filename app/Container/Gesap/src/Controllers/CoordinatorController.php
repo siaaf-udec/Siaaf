@@ -24,6 +24,7 @@ use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\RolesUsuario;
+use App\Container\Gesap\src\Estados;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
@@ -293,7 +294,8 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
-	}
+    }
+    
     //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
 	//Index para vista de Usuarios
 	public function indexUsuarios(Request $request)

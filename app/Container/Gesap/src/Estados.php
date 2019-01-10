@@ -16,4 +16,13 @@ class Estados extends Model
         'PK_IdEstado',
         'STD_Descripcion',
     ];
+
+    //Relacion del Estado con el Usuario
+    public function relacionEstadoUsuario()
+    {
+        return $this->belongsTo(Usuarios::class,
+            'PK_IdEstado',
+            'FK_User_IdEstado'
+        );
+    }
 }
