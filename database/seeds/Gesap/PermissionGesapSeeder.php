@@ -10,7 +10,7 @@ class PermissionGesapSeeder extends Seeder
     public function run()
     {
 
-        //Inicio para los permisos generales de los Roles
+        //Inicio para los permisos generales de administrador
 
         $permissionAdmin = new Permission;
         $permissionAdmin->name = 'ADMIN_GESAP';
@@ -43,7 +43,7 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ADD_USER_GESAP';
         $permissionFuncionario->display_name = 'Listar Usuarios Gesap';
-        $permissionFuncionario->description = 'Ver usuarios de Gesap';
+        $permissionFuncionario->description = 'Aministarcion de los usuarios de Gesap';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
 
@@ -72,6 +72,37 @@ class PermissionGesapSeeder extends Seeder
         //Fin de permisos generales para los roles
 
         //Inicio de permisos para el CRUD de Admin
+      
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'GESAP_REPORT_USER';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para hacer reportes de los usuarios en general';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+       
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DELATE_ANTE';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para eliminar anteproyectos';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'GESAP_CREATE_USER';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para crear nuevos anteproyectos';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'UPDATE_ANTE';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para editar anteproyectos';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
 
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ADD_ANTEPROYECTO';

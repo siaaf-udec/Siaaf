@@ -42,13 +42,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('PARK_CREATE_USER')<a href="javascript:;"
+                                @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('PARK_CREATE_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_CREATE_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

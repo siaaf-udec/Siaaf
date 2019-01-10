@@ -19,7 +19,7 @@ class CreateAnteproyectoTable extends Migration
             $table->String('NPRY_Keywords', 300);
             $table->String('NPRY_Descripcion', 500);
             $table->integer('NPRY_Duracion');
-            $table->integer('FK_NPRY_Pre_Director')->unsigned();
+            $table->bigInteger('FK_NPRY_Pre_Director')->unsigned();
             $table->foreign('FK_NPRY_Pre_Director')
                 ->references('PK_User_Codigo')
                 ->on('TBL_Usuario')

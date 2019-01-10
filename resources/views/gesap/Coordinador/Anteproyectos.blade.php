@@ -32,18 +32,18 @@
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Usuarios registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('ADD_ANTEPROYECTO')<a href="javascript:;"
+                        @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
                             </i>Nuevo
                         </a>@endpermission
-                        @permission('PARK_REPORT_USER')<a href="javascript:;"
+                        @permission('GESAP_REPORT_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Usuarios</a>@endpermission

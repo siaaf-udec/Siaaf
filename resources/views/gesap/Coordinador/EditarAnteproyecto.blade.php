@@ -39,12 +39,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('ADMIN_GESAP')<a href="javascript:;"
+                                @permission('UPDATE_ANTE')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('ADMIN_GESAP'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                                @permission('UPDATE_ANTE'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
