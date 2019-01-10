@@ -71,7 +71,7 @@ class PermissionGesapSeeder extends Seeder
         
         //Fin de permisos generales para los roles
 
-        //Inicio de permisos para el CRUD de Admin
+        //Inicio de permisos para el CRUD de anteproyectos con el rol Admin
       
         
         $permissionFuncionario = new Permission;
@@ -127,7 +127,7 @@ class PermissionGesapSeeder extends Seeder
             
         //Fin de permisos para el CRUD de Admin
         
-        //Inicio de los permisos para e crud de Usuarios con el rol Admin
+        //Inicio de los permisos para el crud de Usuarios con el rol Admin
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ADD_USER';
         $permissionFuncionario->display_name = 'Usuarios Gesap';

@@ -448,11 +448,35 @@ class CoordinatorController extends Controller
                             'FK_User_IdRol' => $request['FK_User_IdRol'],
                         ]);
 
+                        return AjaxResponse::success(
+                            '¡Bien hecho!',
+                            'Datos creados en Usuarios'
+                        );
+                    }
+                    else{
+                        $IdError = 422;
+                        return AjaxResponse::success(
+                            '¡Lo sentimos!',
+                            'No se pudo completar tu solicitud, el código ya está registrado.',
+                            $IdError
+                        );
                     }
                 }
-            }
-        
-            return view($this->path .'Usuarios'); 
+            
+
+            $IdError = 422;
+            return AjaxResponse::success(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud, la cedula o el codigo ya está registrado.',
+                $IdError
+            );
+        }
+            //return view($this->path .'Usuarios'); 
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+    
     }
 
      //funcion para actualizar los datos del usuario
