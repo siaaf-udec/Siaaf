@@ -319,7 +319,7 @@ class CoordinatorController extends Controller
     }
 
 	//lista de usuarios
-	public function usuariosList(Request $request)
+	/* public function usuariosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -339,6 +339,54 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
+    } */
+
+    //lista de usuarios con el metodo para traer los strings en vez de los id's de rol y estado
+    public function usuariosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+		   
+           $usuarios=Usuarios::all();
+           
+           $i=0;
+           $i2=0;
+
+           foreach($usuarios as $user){
+            $s[$i]=$usuarios[$i] -> relacionUsuariosEstado -> STD_Descripcion;
+           
+               $i=$i+1;
+           }
+           $j=0;
+           foreach ($usuarios as $user) {
+           
+            $user->offsetSet('Estado', $s[$j]);
+            $j=$j+1;
+            }
+
+            foreach($usuarios as $userRol){
+                $s2[$i2]=$usuarios[$i2]-> relacionUsuariosRol-> Rol_Usuario;
+               
+                $i2=$i2+1;
+            }
+            $j2=0;
+           foreach ($usuarios as $userRol) {
+           
+            $userRol->offsetSet('Rol', $s2[$j2]);
+            $j2=$j2+1;
+            }
+          
+            return DataTables::of($usuarios)
+		  	   ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			   ->addIndexColumn()
+			   ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     }
 
     
@@ -346,7 +394,7 @@ class CoordinatorController extends Controller
     public function listarRoles(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $roles = RolesUsuario::where('PK_Id_Rol_Usuario','>','3')->get();
+            $roles = RolesUsuario::all();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos consultados correctamente.',

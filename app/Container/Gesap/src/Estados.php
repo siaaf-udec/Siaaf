@@ -20,9 +20,6 @@ class Estados extends Model
     //Relacion del Estado con el Usuario
     public function relacionEstadoUsuario()
     {
-        return $this->belongsTo(Usuarios::class,
-            'PK_IdEstado',
-            'FK_User_IdEstado'
-        );
+        return $this->belongsTo(Usuarios::class,'PK_IdEstado','FK_User_IdEstado');
     }
 }

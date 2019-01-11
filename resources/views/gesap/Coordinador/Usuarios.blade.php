@@ -113,8 +113,8 @@
             {data: 'User_Nombre1', name: 'User_Nombre1'},
             {data: 'User_Apellido1', name: 'User_Apellido1'},
             {data: 'User_Correo', name: 'User_Correo'},
-            {data: 'FK_User_IdEstado', name: 'FK_User_IdEstado'},
-            {data: 'FK_User_IdRol', name: 'FK_User_IdRol'},
+            {data: 'Estado', name: 'Estado'},
+            {data: 'Rol', name: 'Rol'},
            
             {
                 defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('DELETE_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',

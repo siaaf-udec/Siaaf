@@ -33,9 +33,6 @@ class RolesUsuario extends Model
     //Relacion del Rol con el Usuario
     public function relacionRolUsuario()
     {
-        return $this->belongsTo(Usuarios::class,
-            'PK_Id_Rol_Usuario',
-            'FK_User_IdRol'
-        );
+        return $this->belongsTo(Usuarios::class,'PK_Id_Rol_Usuario','FK_User_IdRol');
     }
 }

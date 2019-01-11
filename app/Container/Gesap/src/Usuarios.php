@@ -30,7 +30,7 @@ class Usuarios extends Model
     //Relacion entre Usuarios y Rol
     public function relacionUsuariosRol()
     {
-        return $this->hasMany(RolesUsuario::class, 'PK_Id_Rol_Usuario','FK_User_IdRol');
+        return $this->hasOne(RolesUsuario::class, 'PK_Id_Rol_Usuario','FK_User_IdRol');
     }
 
     //Relacion entre Usuarios y Estado
@@ -38,6 +38,8 @@ class Usuarios extends Model
     {
         return $this->hasOne(Estados::class, 'PK_IdEstado', 'FK_User_IdEstado');
     }
+
+    //Relacion entre Usuarios y Anteproyecto
     public function relacionAnteproyectoUser()
     {
         return $this->hasMany(Anteproyecto::class, 'FK_NPRY_Pre_Director', 'PK_User_Codigo');

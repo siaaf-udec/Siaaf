@@ -122,7 +122,7 @@
                 $widget_select_SelectRol.append(new Option(value.Rol_Usuario, value.PK_Id_Rol_Usuario));
             });
             $widget_select_SelectRol.val([]);
-            $('#FK_User_IdRol').val(2);
+            $('#FK_User_IdRol').val(1);
         });
 
         /*Configuracion de Select*/
