@@ -29,6 +29,9 @@ use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
 
+use App\Container\Gesap\src\Mail\EmailGesap;
+use Illuminate\Support\Facades\Mail;
+
 use App\Container\Users\src\Controllers\UsersUdecController;
 
 use Carbon\Carbon;
@@ -457,9 +460,11 @@ class CoordinatorController extends Controller
 
             $verificiaruser = Usuarios::find($request['PK_User_Codigo']); //validar codigo repetido en usuarios gesap
             $verificiarusercedula = Usuarios::where('User_Cedula','=',$request['User_Cedula'])->first();//validar cedula en usuarios gesap
+            $verificarCorreo = Usuarios::where('User_Correo', '=', $request['User_Correo'])->first(); //Validar correo en usuarios gesap
             $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
+            
           
-            if (is_null($verificiarusercedula) && empty($verificiaruser)){
+            if (is_null($verificiarusercedula) && empty($verificiaruser) && empty($verificarCorreo)){
 
                 if (is_null($verificarUserUdec) ) {
 
@@ -496,10 +501,14 @@ class CoordinatorController extends Controller
                             'FK_User_IdRol' => $request['FK_User_IdRol'],
                         ]);
 
+                        Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
+
                         return AjaxResponse::success(
                             '¡Bien hecho!',
                             'Datos creados en Usuarios'
                         );
+                        
+
                     }
                     else{
                         $IdError = 422;
@@ -515,15 +524,15 @@ class CoordinatorController extends Controller
             $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, la cedula o el codigo ya está registrado.',
+                'No se pudo completar tu solicitud, la cedula, el codigo o el correo electronico ya está registrado.',
                 $IdError
             );
-        }
-            //return view($this->path .'Usuarios'); 
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
+            }
+        //return view($this->path .'Usuarios'); 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
     
     }
 

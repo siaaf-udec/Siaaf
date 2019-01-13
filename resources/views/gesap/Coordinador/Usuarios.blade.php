@@ -57,7 +57,7 @@
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaUsuarios'])
                         @slot('columns', [
-                            'Cedula',
+                            'Documento',
                             'Nombre',
                             'Apellido',
                             'Correo',
@@ -109,7 +109,7 @@
         table = $('#listaUsuarios');
         url = "{{ route('UsuariosGesap.List')}}";
         columns = [
-            {data: 'User_Cedula', name: 'User_Cedula'},
+            {data: 'PK_User_Codigo', name: 'PK_User_Codigo'},
             {data: 'User_Nombre1', name: 'User_Nombre1'},
             {data: 'User_Apellido1', name: 'User_Apellido1'},
             {data: 'User_Correo', name: 'User_Correo'},
