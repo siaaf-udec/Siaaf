@@ -24,17 +24,18 @@ use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\RolesUsuario;
+use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
 
-use App\Container\Gesap\src\Mail\EmailGesap;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Carbon\Carbon;
 
 use App\Container\Users\src\Controllers\UsersUdecController;
 
-use Carbon\Carbon;
 
 class CoordinatorController extends Controller
 {
@@ -109,9 +110,7 @@ class CoordinatorController extends Controller
            $estado = EstadoAnteproyecto::Find($nombre);
            $estadoante = $estado->get('Est_estado');
 		 */   return DataTables::of($anteproyecto)
-                //->addColumn('Estado',implode(',', $s))
-               //->addColumn('Estado', $aux) 
-		  	   ->removeColumn('created_at')
+               ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
 			    
 			   ->addIndexColumn()
@@ -142,7 +141,7 @@ class CoordinatorController extends Controller
     public function listarPreDirector(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $Pre_directores = Usuarios::Where('FK_User_IdRol','5')->get();
+            $Pre_directores = Usuarios::Where('FK_User_IdRol','2')->get();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos consultados correctamente.',
@@ -199,13 +198,99 @@ class CoordinatorController extends Controller
                 );
         }
     }
+
+    public function EliminarDesarrollador(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Desarrolladores::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+	public function DesarrolladoresList(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Desarrollador = Desarrolladores::where('FK_NPRY_IdMctr008',$id)->get();
+
+            $s=0;
+
+            foreach($Desarrollador as $desarrollo){
+                
+                $id_user[$s]= $Desarrollador[$s]-> FK_User_Codigo;
+            
+
+                $user = Usuarios::where('PK_User_Codigo',$id_user[$s])->first();
+
+                $nombre[$s] = $user -> User_Nombre1;
+
+                $Apellido[$s] = $user -> User_Apellido1;
+ 
+                $desarrollo->offsetSet('Codigo',$id_user[$s]);
+
+                $desarrollo->offsetSet('Nombre',$nombre[$s]);
+                
+                $desarrollo->offsetSet('Apellido',$Apellido[$s]);             
+
+                $s=$s+1;
+               }
+         
+         
+            
+              return DataTables::of($Desarrollador)
+              ->removeColumn('created_at')
+              ->removeColumn('updated_at')
+               
+              ->addIndexColumn()
+              ->make(true);
+            }
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        
+    }
+    
+   
     public function VerAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
-            $infoAnte->put('Estado',$infoAnte -> relacionEstado -> EST_estado);
-           
-            return response()->json($infoAnte);
+
+            $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
+            $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            
+          
+            $estado = $infoAnteproyecto -> relacionEstado -> EST_estado;
+
+            $Nombre = $infoAnteproyecto -> relacionPredirectores-> User_Nombre1;
+            
+            $Apellido = $infoAnteproyecto -> relacionPredirectores-> User_Apellido1;
+
+            $infoAnte->put('Estado',$estado);
+            
+            $infoAnte->put('Nombre',$Nombre);
+            
+            $infoAnte->put('Apellido',$Apellido);
+
+            $datos = $infoAnte;
+
+            
+
+                return view ($this->path .'VerAnteproyecto',
+                [
+                   
+                    'datos' => $datos,
+                ]);
+
                 return AjaxResponse::fail(
                     '¡Lo sentimos!',
                     'No se pudo completar tu solicitud.'
@@ -460,11 +545,9 @@ class CoordinatorController extends Controller
 
             $verificiaruser = Usuarios::find($request['PK_User_Codigo']); //validar codigo repetido en usuarios gesap
             $verificiarusercedula = Usuarios::where('User_Cedula','=',$request['User_Cedula'])->first();//validar cedula en usuarios gesap
-            $verificarCorreo = Usuarios::where('User_Correo', '=', $request['User_Correo'])->first(); //Validar correo en usuarios gesap
             $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
-            
           
-            if (is_null($verificiarusercedula) && empty($verificiaruser) && empty($verificarCorreo)){
+            if (is_null($verificiarusercedula) && empty($verificiaruser)){
 
                 if (is_null($verificarUserUdec) ) {
 
@@ -501,14 +584,10 @@ class CoordinatorController extends Controller
                             'FK_User_IdRol' => $request['FK_User_IdRol'],
                         ]);
 
-                        Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
-
                         return AjaxResponse::success(
                             '¡Bien hecho!',
                             'Datos creados en Usuarios'
                         );
-                        
-
                     }
                     else{
                         $IdError = 422;
@@ -524,15 +603,15 @@ class CoordinatorController extends Controller
             $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, la cedula, el codigo o el correo electronico ya está registrado.',
+                'No se pudo completar tu solicitud, la cedula o el codigo ya está registrado.',
                 $IdError
             );
-            }
-        //return view($this->path .'Usuarios'); 
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+        }
+            //return view($this->path .'Usuarios'); 
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
     
     }
 

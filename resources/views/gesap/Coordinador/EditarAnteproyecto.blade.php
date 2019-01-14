@@ -13,7 +13,7 @@
 
                 <div class="form-body">
                     <div class="row">
-                        <div class="col-md-6">
+                       
                         {!! Field:: text('PK_NPRY_IdMctr008',$infoAnte['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Codigo Interno Del Anteproyecto.','icon'=>'fa fa-credit-card'] ) !!}
 
@@ -24,7 +24,7 @@
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
                             {!! Field:: text('NPRY_Descripcion',$infoAnte['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
                             {!! Field:: text('NPRY_Duracion',$infoAnte['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
@@ -33,7 +33,7 @@
                  
 
                             {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director:']) !!}
-                      </div>
+                      
                     </div>
 
                     <div class="form-actions">
@@ -175,8 +175,8 @@
        var form = $('#form_update_anteproyecto');
         var formRules = {
             NPRY_Titulo: {minlength: 8, maxlength: 100, required: true,},
-            NPRY_Keywords: {minlength: 50, maxlength: 200, required: true,},
-            NPRY_Descripcion: {minlength: 50, maxlength: 250, required: true,},
+            NPRY_Keywords: {minlength: 30, maxlength: 200, required: true,},
+            NPRY_Descripcion: {minlength: 30, maxlength: 250, required: true,},
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             SelectEstado: {required: true},

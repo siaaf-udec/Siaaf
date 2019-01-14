@@ -24,6 +24,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
 			'as' => 'Anteproyecto.destroy'
 		]);
+		Route::delete('destroyDesarrollador/{id?}', [
+			'uses' => $controller . 'CoordinatorController@EliminarDesarrollador', 
+			'as' => 'Desarrollador.destroy'
+		]);
 		Route::get('editar/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EditarAnteproyecto',     
 			'as' => 'AnteproyectoGesap.edit'
@@ -35,6 +39,11 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('ver/{id?}', [
 			'uses' => $controller . 'CoordinatorController@VerAnteproyecto',     
 			'as' => 'AnteproyectoGesap.VerAnteproyecto'
+		]);
+		
+		Route::get('verdesarroladores/{id?}', [
+			'uses' => $controller . 'CoordinatorController@DesarrolladoresList',     
+			'as' => 'AnteproyectosGesap.Desarrolladoreslist'
 		]);
 		//menu al crear
 		Route::get('create', [

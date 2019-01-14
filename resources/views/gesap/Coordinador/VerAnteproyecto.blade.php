@@ -9,52 +9,68 @@
         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model ([$infoAnte], ['id'=>'form_update_anteproyecto', 'url' => '/forms'])  !!}
+                {!! Form::model ([$datos], ['id'=>'form_update_anteproyecto', 'url' => '/forms'])  !!}
 
                 <div class="form-body">
                     <div class="row">
-                        <div class="col-md-6">
-                        {!! Field:: text('PK_NPRY_IdMctr008',$infoAnte['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                       
+                        {!! Field:: text('PK_NPRY_IdMctr008',$datos[0]['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Codigo Interno Del Anteproyecto.','icon'=>'fa fa-credit-card'] ) !!}
 
-                        {!! Field:: text('NPRY_Titulo',$infoAnte['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                        {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
-                            {!! Field:: text('NPRY_Keywords',$infoAnte['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Keywords',$datos[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$infoAnte['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Descripcion',$datos[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
+
+                            {!! Field:: text('NPRY_Duracion',$datos[0]['NPRY_Duracion'],['label'=>'DURACION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$infoAnte['NPRY_Duracion'],['label'=>'DURACION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {!! Field:: text('FK_NPRY_Estado',$datos['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
+                            
+                            PRE DIRECTOR:
 
-                            {!! Field:: text('FK_NPRY_Estado',$infoAnte->relacion_estado['EST_estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
-                            
-                            {!! Field:: text('FK_NPRY_Estado',$infoAnte->relacion_predirectores['User_Nombre1'],['label'=>'Predirector:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
-                            
-                            {{$infoAnte->relacion_estado}}
+                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Nombre'],['label'=>'Nombres :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Apellido'],['label'=>'Apellidos:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                            
-                          
-                          
-                      </div>
+                            
+                            DESARROLLADORES :
+                      
           
                     </div>
-                    
-                   {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'Estudiante2','label'=>'Estudiante N°2:']) !!}
+                    @permission('GESAP_CREATE_USER')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon create"
+                                                       title="Registar un nuevo anteproyecto">
+                            <i class="fa fa-plus">
+                            </i>Agregar Desarrolador
+                        </a>@endpermission
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
+                        @slot('columns', [
+                            'Codigo',
+                            'Nombre',
+                            'Apellido',
+                            'Acciones'
+                        ])
+                    @endcomponent
           
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-4">
+                            <div class="col-md-12 col-md-offset-5">
                                 @permission('ADMIN_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
-                                    Cancelar
-                                </a>@endpermission
-                                @permission('ADMIN_GESAP'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
-                            </div>
+                                    Volver
+                                </a>
+                                @endpermission
+                               <!--  @permission('ADMIN_GESAP'){{ Form::submit('Asignar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('ADMIN_GESAP'){{ Form::submit('Re-Asignar', ['class' => 'btn yellow']) }}@endpermission
+                               -->        </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -71,7 +87,6 @@
 {!! Form::close() !!}
 </div>
 
-    <!-- Fin Modal Update Foto -->
 
 
 </div>
@@ -98,6 +113,88 @@ $.fn.select2.defaults.set("theme", "bootstrap");
             return m;
         }
     });
+
+    var table, url, columns;
+        table = $('#listadesarrolladores');
+        id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+        
+        url = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
+    
+         
+    
+        columns = [
+            {data: 'Codigo', name: 'Codigo'},
+            {data: 'Nombre', name: 'Nombre'},
+            {data: 'Apellido', name: 'Apellido'},
+            
+            
+      
+            {
+                defaultContent: '@permission('DELETE_DESARROLLADOR')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+
+        table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('Desarrollador.destroy') }}' + '/' + dataTable.PK_Id_desarrollo;
+             var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar este desarrollador?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó desarrollador", "error");
+                    }
+                });
+
+        });
+
 
      
     $('.button-cancel').on('click', function (e) {
