@@ -88,9 +88,15 @@
             {data: 'User_Apellido1', name: 'User_Apellido1'},
             {data: 'User_Correo', name: 'User_Correo'},
             
+         //{data: 'Codigo', name: 'Codigo'},
+            // {data: 'Cedula', name: 'Cedula'},
+            // {data: 'Nombre', name: 'Nombre'},
+            // {data: 'Apellido', name: 'Apellido'},
+            // {data: 'Correo', name: 'Correo'},
+            
             
       
-            {
+             {
                 defaultContent: '@permission('DELETE_DESARROLLADOR')<a href="javascript:;" title="Asignar" class="btn btn-simple btn-warning btn-icon crear"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
@@ -105,21 +111,27 @@
                 responsivePriority: 2
             }
         ];
-        
+
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
    
     
     
     table.on('click', '.crear', function (e) {
+
                     var route = '{{ route('AnteproyectosGesap.desarrolladorstore') }}';
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();
+                    
+                    e.preventDefault();
+                    $tr = $(this).closest('tr');
                     var dataTable = table.row($tr).data();
-                    formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
-                    formData.append('FK_User_Codigo', dataTable.PK_User_Codigo);
 
+                    
+                    
+                    formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
+                    formData.append('PK_User_Codigo', dataTable.PK_User_Codigo);
                     
                     $.ajax({
                         url: route,
@@ -162,9 +174,9 @@
     });
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
-            //$(".content-ajax").load(route);
+            var route = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + id;
+           // location.href="{{route('AnteproyectosGesap.index')}}";
+            $(".content-ajax").load(route);
         });
     
 });

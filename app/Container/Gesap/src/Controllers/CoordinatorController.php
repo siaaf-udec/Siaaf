@@ -203,19 +203,31 @@ class CoordinatorController extends Controller
     public function desarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-           
+            $datos = Desarrolladores::Where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->get();
+           // $datos = Desarrolladores::all();
+            $numero = $datos->count();
+            if ($numero >= 2){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud, el Anteproyecto ya tiene el numero maximo de desarrolladores asignados.',
+                    $IdError
+                );
 
-                      
+            }else{
+
+            
             Desarrolladores::create([
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
-                'FK_User_Codigo' => $request['FK_User_Codigo'],
+                'FK_User_Codigo' => $request['PK_User_Codigo'],
                
             ]);
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
 				'Desarrollador Asignado Al Anteproyecto.'
-			);
+            );
+        }
         }
     }
     
@@ -243,19 +255,18 @@ class CoordinatorController extends Controller
                         $correo[$i] = $usuarios[$i] -> User_Correo;
                            
        
-                        $collection->OffsetSet('Codigo',$codigo[$i]);
-                        $collection->OffsetSet('Cedula',$cedula[$i]);
-                        $collection->OffsetSet('Nombre',$nombre[$i]);
-                        $collection->OffsetSet('Apellido',$apellido[$i]);
-                        $collection->OffsetSet('Correo',$correo[$i]);
+                        $user->OffsetSet('Codigo',$codigo[$i]);
+                        $user->OffsetSet('Cedula',$cedula[$i]);
+                        $user->OffsetSet('Nombre',$nombre[$i]);
+                        $user->OffsetSet('Apellido',$apellido[$i]);
+                        $user->OffsetSet('Correo',$correo[$i]);
       
-                           
+                        $concatenado= $collection->concat(['Codigo'=>$codigo[$i],'Cedula'=>$cedula[$i],'Nombre'=>$nombre[$i],'Apellido'=>$apellido[$i],'Correo'=>$correo[$i]]);
                    }
                    $i=$i+1;
       
                }
-      
-
+               
             
 
             return DataTables::of($pro)
@@ -293,7 +304,6 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
-           // $numero = $proyecto->count();
      
             
                   return view($this->path .'AsignarDesarrolladores',
@@ -305,42 +315,44 @@ class CoordinatorController extends Controller
                     'No se pudo completar tu solicitud.'
                 );  
                 
-         /*        $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->first();
-                $i=0;
-                $datos =([]);
-                $collection = Collection::make($datos);
-                 $collection = collect();
-                  foreach($usuarios as $user){
-          
-                       $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
-                           
-                      $resultado = $desarrolladores->isEmpty();
-                       if($resultado == true){
-                              
-                            $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
-                            $cedula[$i] = $usuarios[$i] -> User_Cedula;
-                            $nombre[$i] = $usuarios[$i] -> User_Nombre1;
-                            $apellido[$i]= $usuarios[$i]-> User_Apellido1;
-                            $correo[$i] = $usuarios[$i] -> User_Correo;
-                               
-           
-                            $user->OffsetSet('Codigo',$codigo[$i]);
-                            $user->OffsetSet('Cedula',$cedula[$i]);
-                            $user->OffsetSet('Nombre',$nombre[$i]);
-                            $user->OffsetSet('Apellido',$apellido[$i]);
-                            $user->OffsetSet('Correo',$correo[$i]);
-          
-                               
-                       }
-                       $i=$i+1;
-          
-                   }
-          
-                 //  $datos = $collection->count();
+       
+                $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
             
+                // $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+                 $i=0;
+                 $datos=[];
+                 $collection = Collection::make($datos);
+                 
+                   foreach($usuarios as $user){
+           
+                        $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
+                      
+                       $resultado = $desarrolladores->isEmpty();
 
-       return $collection; 
-                */
+                        if($resultado == true){
+                               
+                             $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
+                             $cedula[$i] = $usuarios[$i] -> User_Cedula;
+                             $nombre[$i] = $usuarios[$i] -> User_Nombre1;
+                             $apellido[$i]= $usuarios[$i]-> User_Apellido1;
+                             $correo[$i] = $usuarios[$i] -> User_Correo;
+                                
+            
+                              $user->push('Codigo',$codigo[$i],'Cedula',$cedula[$i],'Nombre',$nombre[$i]);
+                              $user->OffsetSet('Cedula',$cedula[$i]);
+                              $user->OffsetSet('Nombre',$nombre[$i]);
+                             $user->OffsetSet('Apellido',$apellido[$i]);
+                            $user->OffsetSet('Correo',$correo[$i]);
+                            //$datos =['Codigo'=>$codigo[$i],'Cedula',$cedula[$i],'Nombre',$nombre[$i],'Apellido',$apellido[$i],'Correo',$correo[$i]];
+                            
+                         }
+                        $i=$i+1;
+                        
+                    }
+                    
+                 
+     $numero = $collection->count();
+                 return $usuarios;
 
             }              
         

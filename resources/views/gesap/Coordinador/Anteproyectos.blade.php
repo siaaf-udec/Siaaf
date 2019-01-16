@@ -37,16 +37,22 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                    @permission('GESAP_CREATE_USER')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon gestionar"
+                                                       title="Gestionar Mct">
+                            <i class="fa fa-plus">
+                            </i>Gestionar Mct
+                        </a>@endpermission
                         @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
-                            </i>Nuevo
+                            </i>Nuevo Anteproyecto
                         </a>@endpermission
                         @permission('GESAP_REPORT_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
-                            de Usuarios</a>@endpermission
+                            de Anteproyectos</a>@endpermission
                         <br>
                     </div>
 
