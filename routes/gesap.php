@@ -45,6 +45,19 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@DesarrolladoresList',     
 			'as' => 'AnteproyectosGesap.Desarrolladoreslist'
 		]);
+		Route::get('desarrolladores/{id?}', [
+			'uses' => $controller . 'CoordinatorController@AsignarDesarrollador',     
+			'as' => 'AnteproyectosGesap.AsignarDesarrollador'
+		]);
+		
+		Route::get('desarrolladoresstore/{id?}', [
+			'uses' => $controller . 'CoordinatorController@AsignarDesarrolladorstore',     
+			'as' => 'AnteproyectosGesap.AsignarDesarrolladorstore'
+		]);
+		Route::get('asignardesarrolladorlist', [
+			'uses' => $controller . 'CoordinatorController@AsignarDesarrolladoreslist',     
+			'as' => 'AnteproyectosGesap.AsignarDesarrolladoreslist'
+		]);
 		//menu al crear
 		Route::get('create', [
 			'uses' => $controller . 'CoordinatorController@CreateAnte',  
@@ -54,6 +67,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('store', [
             'uses' => $controller . 'CoordinatorController@store',   
             'as' => 'AnteproyectosGesap.store'
+		]);
+		Route::POST('creardesarrollador', [
+            'uses' => $controller . 'CoordinatorController@desarrolladorstore',   
+            'as' => 'AnteproyectosGesap.desarrolladorstore'
 		]);
 		//cargar list
 		Route::get('Pre_Director', [

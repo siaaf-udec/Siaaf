@@ -102,17 +102,8 @@
 
     $(document).ready(function () {
         
- alert('aishiajsia');
+ //alert('aishiajsia');
 
-$.fn.select2.defaults.set("theme", "bootstrap");
-    $(".pmd-select2").select2({
-        placeholder: "Seleccionar",
-        allowClear: true,
-        width: 'auto',
-        escapeMarkup: function (m) {
-            return m;
-        }
-    });
 
     var table, url, columns;
         table = $('#listadesarrolladores');
@@ -194,7 +185,12 @@ $.fn.select2.defaults.set("theme", "bootstrap");
                 });
 
         });
+    $(".create").on('click', function (e) {
+        e.preventDefault();
+        var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
+        $(".content-ajax").load(route);
 
+    });
 
      
     $('.button-cancel').on('click', function (e) {

@@ -6,6 +6,7 @@ namespace App\Container\Gesap\src\Controllers;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection as Collection;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -182,6 +183,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    
     public function AsignarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -198,6 +200,152 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    public function desarrolladorstore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+           
+
+                      
+            Desarrolladores::create([
+                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                'FK_User_Codigo' => $request['FK_User_Codigo'],
+               
+            ]);
+            
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Desarrollador Asignado Al Anteproyecto.'
+			);
+        }
+    }
+    
+    public function AsignarDesarrolladoreslist(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            
+            $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            $i=0;
+            $datos =[[]];
+            $collection = Collection::make($datos);
+              foreach($usuarios as $user){
+      
+                   $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
+                       
+                  $resultado = $desarrolladores->isEmpty();
+                   if($resultado == true){
+                          
+                        $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
+                        $cedula[$i] = $usuarios[$i] -> User_Cedula;
+                        $nombre[$i] = $usuarios[$i] -> User_Nombre1;
+                        $apellido[$i]= $usuarios[$i]-> User_Apellido1;
+                        $correo[$i] = $usuarios[$i] -> User_Correo;
+                           
+       
+                        $collection->OffsetSet('Codigo',$codigo[$i]);
+                        $collection->OffsetSet('Cedula',$cedula[$i]);
+                        $collection->OffsetSet('Nombre',$nombre[$i]);
+                        $collection->OffsetSet('Apellido',$apellido[$i]);
+                        $collection->OffsetSet('Correo',$correo[$i]);
+      
+                           
+                   }
+                   $i=$i+1;
+      
+               }
+      
+
+            
+
+            return DataTables::of($pro)
+                
+			   ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
+    public function AsignarDesarrolladorstore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Mctr008'])->get();
+           // $numero = $proyecto->count();
+     
+            
+                  return view($this->path .'AsignarDesarrolladores',
+                [
+                    'datos' => $datos,
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                ); 
+            }
+    }
+    public function AsignarDesarrollador(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
+           // $numero = $proyecto->count();
+     
+            
+                  return view($this->path .'AsignarDesarrolladores',
+                [
+                    'datos' => $datos,
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                
+         /*        $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->first();
+                $i=0;
+                $datos =([]);
+                $collection = Collection::make($datos);
+                 $collection = collect();
+                  foreach($usuarios as $user){
+          
+                       $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
+                           
+                      $resultado = $desarrolladores->isEmpty();
+                       if($resultado == true){
+                              
+                            $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
+                            $cedula[$i] = $usuarios[$i] -> User_Cedula;
+                            $nombre[$i] = $usuarios[$i] -> User_Nombre1;
+                            $apellido[$i]= $usuarios[$i]-> User_Apellido1;
+                            $correo[$i] = $usuarios[$i] -> User_Correo;
+                               
+           
+                            $user->OffsetSet('Codigo',$codigo[$i]);
+                            $user->OffsetSet('Cedula',$cedula[$i]);
+                            $user->OffsetSet('Nombre',$nombre[$i]);
+                            $user->OffsetSet('Apellido',$apellido[$i]);
+                            $user->OffsetSet('Correo',$correo[$i]);
+          
+                               
+                       }
+                       $i=$i+1;
+          
+                   }
+          
+                 //  $datos = $collection->count();
+            
+
+       return $collection; 
+                */
+
+            }              
+        
+    }
+
 
     public function EliminarDesarrollador(Request $request, $id)
     {
