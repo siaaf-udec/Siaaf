@@ -82,17 +82,17 @@
          
     
         columns = [
-            {data: 'PK_User_Codigo', name: 'PK_User_Codigo'},
-            {data: 'User_Cedula', name: 'User_Cedula'},
-            {data: 'User_Nombre1', name: 'User_Nombre1'},
-            {data: 'User_Apellido1', name: 'User_Apellido1'},
-            {data: 'User_Correo', name: 'User_Correo'},
+            // {data: 'PK_User_Codigo', name: 'PK_User_Codigo'},
+            // {data: 'User_Cedula', name: 'User_Cedula'},
+            // {data: 'User_Nombre1', name: 'User_Nombre1'},
+            // {data: 'User_Apellido1', name: 'User_Apellido1'},
+            // {data: 'User_Correo', name: 'User_Correo'},
             
-         //{data: 'Codigo', name: 'Codigo'},
-            // {data: 'Cedula', name: 'Cedula'},
-            // {data: 'Nombre', name: 'Nombre'},
-            // {data: 'Apellido', name: 'Apellido'},
-            // {data: 'Correo', name: 'Correo'},
+         {data: 'Codigo', name: 'Codigo'},
+            {data: 'Cedula', name: 'Cedula'},
+            {data: 'Nombre', name: 'Nombre'},
+            {data: 'Apellido', name: 'Apellido'},
+            {data: 'Correo', name: 'Correo'},
             
             
       
@@ -131,7 +131,7 @@
                     
                     
                     formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
-                    formData.append('PK_User_Codigo', dataTable.PK_User_Codigo);
+                    formData.append('PK_User_Codigo', dataTable.Codigo);
                     
                     $.ajax({
                         url: route,

@@ -239,37 +239,41 @@ class CoordinatorController extends Controller
             
             $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
             $i=0;
-            $datos =[[]];
-            $collection = Collection::make($datos);
+           // $datos =[[]];
+           $concatenado=[];
               foreach($usuarios as $user){
       
-                   $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
+                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
                        
-                  $resultado = $desarrolladores->isEmpty();
-                   if($resultado == true){
-                          
-                        $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
-                        $cedula[$i] = $usuarios[$i] -> User_Cedula;
-                        $nombre[$i] = $usuarios[$i] -> User_Nombre1;
-                        $apellido[$i]= $usuarios[$i]-> User_Apellido1;
-                        $correo[$i] = $usuarios[$i] -> User_Correo;
-                           
+                 
+                   if(is_null($desarrollador)){
+                    $collection = collect([]);
+                    $collection->put('Codigo',$user-> PK_User_Codigo);
+                    
+                    $collection->put('Cedula',$user-> User_Cedula);
+                    $collection->put('Nombre',$user->  User_Nombre1);
+                    $collection->put('Apellido',$user->  User_Apellido1);
+                    $collection->put('Correo',$user-> User_Correo);
+                       
        
-                        $user->OffsetSet('Codigo',$codigo[$i]);
-                        $user->OffsetSet('Cedula',$cedula[$i]);
-                        $user->OffsetSet('Nombre',$nombre[$i]);
-                        $user->OffsetSet('Apellido',$apellido[$i]);
-                        $user->OffsetSet('Correo',$correo[$i]);
-      
-                        $concatenado= $collection->concat(['Codigo'=>$codigo[$i],'Cedula'=>$cedula[$i],'Nombre'=>$nombre[$i],'Apellido'=>$apellido[$i],'Correo'=>$correo[$i]]);
-                   }
-                   $i=$i+1;
-      
+                        
+                    $concatenado[$i]= $collection;
+
+                    $i=$i+1;
+                       
+                    }
+                   
+               
+                   
                }
+
                
             
 
-            return DataTables::of($pro)
+               
+            
+
+            return DataTables::of($concatenado)
                 
 			   ->addIndexColumn()
                ->make(true);
@@ -314,45 +318,44 @@ class CoordinatorController extends Controller
                     '¡Lo sentimos!',
                     'No se pudo completar tu solicitud.'
                 );  
-                
+                 
        
-                $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            //     $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
             
-                // $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-                 $i=0;
-                 $datos=[];
-                 $collection = Collection::make($datos);
-                 
-                   foreach($usuarios as $user){
-           
-                        $desarrolladores = Desarrolladores::where('FK_User_Codigo',  $usuarios[$i]->PK_User_Codigo)->get();
-                      
-                       $resultado = $desarrolladores->isEmpty();
-
-                        if($resultado == true){
-                               
-                             $codigo[$i] = $usuarios[$i] -> PK_User_Codigo; 
-                             $cedula[$i] = $usuarios[$i] -> User_Cedula;
-                             $nombre[$i] = $usuarios[$i] -> User_Nombre1;
-                             $apellido[$i]= $usuarios[$i]-> User_Apellido1;
-                             $correo[$i] = $usuarios[$i] -> User_Correo;
-                                
-            
-                              $user->push('Codigo',$codigo[$i],'Cedula',$cedula[$i],'Nombre',$nombre[$i]);
-                              $user->OffsetSet('Cedula',$cedula[$i]);
-                              $user->OffsetSet('Nombre',$nombre[$i]);
-                             $user->OffsetSet('Apellido',$apellido[$i]);
-                            $user->OffsetSet('Correo',$correo[$i]);
-                            //$datos =['Codigo'=>$codigo[$i],'Cedula',$cedula[$i],'Nombre',$nombre[$i],'Apellido',$apellido[$i],'Correo',$correo[$i]];
-                            
-                         }
-                        $i=$i+1;
+            //     $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            //     $i=0;
+            //    // $datos =[[]];
+               
+            //       foreach($usuarios as $user){
+          
+            //            $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
+                           
+                     
+            //            if(is_null($desarrollador)){
+            //             $collection = collect([]);
+            //             $collection->put('Codigo',$user-> PK_User_Codigo);
                         
-                    }
-                    
-                 
-     $numero = $collection->count();
-                 return $usuarios;
+            //             $collection->put('Cedula',$user-> User_Cedula);
+            //             $collection->put('Nombre',$user->  User_Nombre1);
+            //             $collection->put('Apellido',$user->  User_Apellido1);
+            //             $collection->put('Correo',$user-> User_Correo);
+                           
+           
+                            
+            //             $concatenado[$i]= $collection;
+
+            //             $i=$i+1;
+                           
+            //             }
+                       
+                   
+                       
+            //        }
+    
+                   
+                
+    
+            //     return $concatenado;
 
             }              
         
