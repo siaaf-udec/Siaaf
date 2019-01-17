@@ -124,13 +124,23 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Permiso para el admin de eliminar un anteproyecto';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'DELETE_DESARROLLADOR';
         $permissionFuncionario->display_name = 'Anteproyecto Gesap';
         $permissionFuncionario->description = 'Permiso para el admin de eliminar un desarrollador';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
-            
+        
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'GESAP_ADMIN_MCT';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin Editar los contenidos entregables del MCT';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        
         //Fin de permisos para el CRUD de Admin
         
         //Inicio de los permisos para el crud de Usuarios con el rol Admin

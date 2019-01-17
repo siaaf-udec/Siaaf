@@ -27,6 +27,7 @@ use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
+use App\Container\Gesap\src\Mctr008;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
@@ -51,7 +52,9 @@ class CoordinatorController extends Controller
 		
 			return view($this->path . 'Anteproyectos');
 		
-	}
+    }
+    
+   
 	public function usuariosindex(Request $request)
 	{
 		
@@ -139,6 +142,20 @@ class CoordinatorController extends Controller
         );
 
     }
+    public function mctindex(Request $request)
+	{
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            return view($this->path .'Mct',
+                [
+                   
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+	}
     public function listarPreDirector(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -184,6 +201,22 @@ class CoordinatorController extends Controller
         );
     }
     
+    public function listaActividades(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Actividades = Mctr008::all();
+
+            return DataTables::of($Actividades)
+                
+			   ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
     public function AsignarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -266,12 +299,6 @@ class CoordinatorController extends Controller
                
                    
                }
-
-               
-            
-
-               
-            
 
             return DataTables::of($concatenado)
                 
@@ -479,6 +506,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    
 	
 
 	public function store(Request $request)

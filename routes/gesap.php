@@ -91,6 +91,16 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@listarEstado',
             'as' => 'AnteproyectoGesap.listarEstado'
 		]);	
+		Route::get('mct', [
+            'uses' => $controller . 'CoordinatorController@mctindex',
+            'as' => 'AnteproyectosGesap.mct'
+		]);	
+		Route::get('mctlist', [
+            'uses' => $controller . 'CoordinatorController@listaActividades',
+            'as' => 'AnteproyectosGesap.listaActividades'
+		]);	
+		
+
 		Route::get('Users/Ajax', [
 			'uses' => $controller.'CoordinatorController@indexAjaxUsuarios',
 			'as' => 'UsuariosGesap.index.Ajax'

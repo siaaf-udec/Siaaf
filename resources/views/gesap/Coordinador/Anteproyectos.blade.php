@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                    @permission('GESAP_CREATE_USER')<a href="javascript:;"
+                    @permission('GESAP_ADMIN_MCT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -195,6 +195,13 @@
             var route = '{{ route('AnteproyectosGesap.create') }}';
             $(".content-ajax").load(route);
         });
+
+        $(".gestionar").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.mct') }}';
+            $(".content-ajax").load(route);
+        });
+        
 
         table.on('click', '.Ver', function (e) {
             e.preventDefault();

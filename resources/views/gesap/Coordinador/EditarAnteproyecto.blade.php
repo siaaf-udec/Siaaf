@@ -29,7 +29,7 @@
                             {!! Field:: text('NPRY_Duracion',$infoAnte['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
 
-                            {!! Field::select('FK_NPRY_Estado', null,['name' => 'SelectEstado','label'=>'Estado :']) !!}
+                            {!! Field::select('FK_NPRY_Estado', null,['name' => 'SelectEstado','label'=>'Estado :','readonly']) !!}
                  
 
                             {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director:']) !!}
