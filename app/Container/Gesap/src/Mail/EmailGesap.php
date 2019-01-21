@@ -44,7 +44,7 @@ class EmailGesap extends Mailable
     {
         $cuerpoMensaje = 'Señor usuario, se ha creado un perfil con sus datos por favor ingrese al siguiente el link para confirmar.';
 
-        return $this->from(['address' => 'modulogesap@gmail.com', 'name' => 'Usuarios GESAP'])
+        return $this->from(['address' => 'no-reply@ucundinamarca.edu.co', 'name' => 'Usuarios GESAP'])
             ->with([
                 'subject' => $this->nombre.': Creación de nuevo usaurio GESAP',
                 'title' => $this->nombre.': Creación de nuevo usaurio GESAP',

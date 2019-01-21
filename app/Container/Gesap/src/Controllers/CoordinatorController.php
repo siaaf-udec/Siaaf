@@ -558,7 +558,7 @@ class CoordinatorController extends Controller
             $usuario -> User_Apellido1 = $request['User_Apellido1'];
             $usuario -> User_Correo = $request['User_Correo'];
             $usuario -> User_Direccion = $request['User_Direccion'];
-            //$usuario -> FK_User_IdEstado = $request['FK_User_IdEstado'];
+            $usuario -> FK_User_IdEstado = $request['FK_User_IdEstado'];
             $usuario -> FK_User_IdRol = $request['FK_User_IdRol'];
             $usuario->save();
  
