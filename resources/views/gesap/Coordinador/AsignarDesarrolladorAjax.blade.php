@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del Anteproyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de desarrolladores de Anteproyecto de grado'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -24,11 +24,14 @@
                       
           
                     </div>
+                    <br><br>
+                    <br><br>
                     @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon search"
                                                        title="Buscar Estudiante">
                             <i class="fa fa-search">
                             </i>Buscar Estudiante
+                            <br><br>
                         </a>@endpermission
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
                         @slot('columns', [

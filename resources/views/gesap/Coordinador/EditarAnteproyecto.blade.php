@@ -14,24 +14,27 @@
                 <div class="form-body">
                     <div class="row">
                        
-                        {!! Field:: text('PK_NPRY_IdMctr008',$infoAnte['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('PK_NPRY_IdMctr008',$infoAnte[0]['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Codigo Interno Del Anteproyecto.','icon'=>'fa fa-credit-card'] ) !!}
 
-                        {!! Field:: text('NPRY_Titulo',$infoAnte['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Titulo',$infoAnte[0]['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
-                            {!! Field:: text('NPRY_Keywords',$infoAnte['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$infoAnte['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$infoAnte['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Duracion',$infoAnte[0]['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
-
-                            {!! Field::select('FK_NPRY_Estado', null,['name' => 'SelectEstado','label'=>'Estado :','readonly']) !!}
-                 
-
+                            {!! Field:: text('NPRY_FCH_Radicacion',$infoAnte[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
+                          
+                            
+                            {!! Field:: text('FK_NPRY_Estado',$infoAnte['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}  
+                            
                             {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director:']) !!}
                       
                     </div>
@@ -79,22 +82,9 @@
     $(document).ready(function () {
         
    
-        var $widget_select_SelectEstado = $('select[name="SelectEstado"]');
-
-        var valorSelected = <?php echo $infoAnte['FK_NPRY_Estado']; ?>
-
-        var route_Estado = '{{ route('AnteproyectoGesap.listarEstado') }}';
-        $.get(route_Estado, function (response, status) {
-            $(response.data).each(function (key, value) {
-                $widget_select_SelectEstado.append(new Option(value.EST_estado, value.PK_EST_Id));
-            });
-            $widget_select_SelectEstado.val();
-            $('#FK_NPRY_Estado').val(valorSelected);
-        });
-
-    
+   
         var $widget_select_Pre_Director = $('select[name="SelectPre_Director"]');
-        var valorSelectedPre = <?php echo $infoAnte['FK_NPRY_Pre_Director']; ?>
+        var valorSelectedPre = <?php echo $infoAnte[0]['FK_NPRY_Pre_Director']; ?>
 
         var route_Pre_Director = '{{ route('AnteproyectoGesap.listarpredirector') }}';
         $.get(route_Pre_Director, function (response, status) {
@@ -123,7 +113,7 @@
             return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
         });
         
-        //sirve
+     $estado = '{{ $infoAnte[0]['FK_NPRY_Estado'] }}';
     var updateAnte = function(){
         
            return{
@@ -137,7 +127,7 @@
                     formData.append('NPRY_Descripcion', $('input:text[name="NPRY_Descripcion"]').val());
                     formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
                     formData.append('FK_NPRY_Pre_Director', $('select[name="SelectPre_Director"]').val());
-                    formData.append('FK_NPRY_Estado', $('select[name="SelectEstado"]').val());
+                    //formData.append('FK_NPRY_Estado', $estado;
                     formData.append('PK_NPRY_IdMctr008', $('input:text[name="PK_NPRY_IdMctr008"]').val());
                     
                     $.ajax({

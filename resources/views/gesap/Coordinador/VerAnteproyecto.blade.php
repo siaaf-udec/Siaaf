@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del Anteproyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Anteproyecto De Grado Seccional Facatativa'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -31,7 +31,9 @@
 
                             {!! Field:: text('FK_NPRY_Estado',$datos['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                            
+                            {!! Field:: text('NPRY_FCH_Radicacion',$datos[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
+                           
                             PRE DIRECTOR:
 
                             {!! Field:: text('FK_NPRY_Pre_Director',$datos['Nombre'],['label'=>'Nombres :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -39,9 +41,9 @@
                             {!! Field:: text('FK_NPRY_Pre_Director',$datos['Apellido'],['label'=>'Apellidos:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                            
-                            
-                            DESARROLLADORES :
-                      
+                                                             <br><br>
+                           <h4> DESARROLLADORES :</h4>
+                                <br><br>
           
                     </div>
                     @permission('GESAP_CREATE_USER')<a href="javascript:;"
@@ -49,7 +51,9 @@
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
                             </i>Agregar Desarrolador
+                           
                         </a>@endpermission
+                        <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',

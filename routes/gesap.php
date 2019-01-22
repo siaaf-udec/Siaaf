@@ -19,10 +19,18 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@anteproyectoList',
 			'as' => 'AnteproyectosGesap.List'
 		]);
+		Route::get('MctCreate', [
+			'uses' => $controller.'CoordinatorController@MctCreate',
+			'as' => 'AnteproyectosGesap.MctCreate'
+		]);
 		
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
 			'as' => 'Anteproyecto.destroy'
+		]);
+		Route::delete('destroyAcMct/{id?}', [
+			'uses' => $controller . 'CoordinatorController@EliminarActividadMct', 
+			'as' => 'Anteproyecto.mctdestroy'
 		]);
 		Route::delete('destroyDesarrollador/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EliminarDesarrollador', 
@@ -40,6 +48,15 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@VerAnteproyecto',     
 			'as' => 'AnteproyectoGesap.VerAnteproyecto'
 		]);
+		Route::post('createmct', [
+			'uses' => $controller . 'CoordinatorController@CreateMCT',  
+			'as' => 'AnteproyectosGesap.createmct'
+		]);
+		Route::get('mctlimit', [
+			'uses' => $controller . 'CoordinatorController@MctLimit',  
+			'as' => 'AnteproyectosGesap.MctLimit'
+		]);
+		
 		
 		Route::get('verdesarroladores/{id?}', [
 			'uses' => $controller . 'CoordinatorController@DesarrolladoresList',     
@@ -58,6 +75,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@AsignarDesarrolladoreslist',     
 			'as' => 'AnteproyectosGesap.AsignarDesarrolladoreslist'
 		]);
+		Route::get('listfechas', [
+			'uses' => $controller . 'CoordinatorController@listfechas',     
+			'as' => 'AnteproyectosGesap.listfechas'
+		]);
 		//menu al crear
 		Route::get('create', [
 			'uses' => $controller . 'CoordinatorController@CreateAnte',  
@@ -67,6 +88,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('store', [
             'uses' => $controller . 'CoordinatorController@store',   
             'as' => 'AnteproyectosGesap.store'
+		]);
+		Route::post('storefechas', [
+            'uses' => $controller . 'CoordinatorController@storefechas',   
+            'as' => 'AnteproyectosGesap.storefechas'
 		]);
 		Route::POST('creardesarrollador', [
             'uses' => $controller . 'CoordinatorController@desarrolladorstore',   

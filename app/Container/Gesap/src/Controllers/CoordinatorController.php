@@ -24,6 +24,7 @@ use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
+use App\Container\Gesap\src\Fechas;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
@@ -173,6 +174,46 @@ class CoordinatorController extends Controller
         );
 
     }
+    public function listfechas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $fechas = Fechas::all();
+            if(($fechas->isempty())==true){
+                $concatenado=[];
+            }else{
+            $i=0;
+            // $datos =[[]];
+            $concatenado=[];
+              
+            $ultimo = $fechas ->last();     
+                  
+                    
+            $collection = collect([]);
+
+            $collection->put('FCH_Radicacion_principal',$ultimo-> FCH_Radicacion_principal);
+                     
+            $collection->put('FCH_Radicacion_secundaria',$ultimo-> FCH_Radicacion_secundaria);
+
+            $concatenado[$i]= $collection;
+        
+            } 
+                    
+              
+ 
+
+            return DataTables::of($concatenado)
+                
+                   ->addIndexColumn()
+                   ->make(true);
+    
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
     public function updateAnte(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -183,8 +224,7 @@ class CoordinatorController extends Controller
             $anteproyecto -> NPRY_Descripcion = $request['NPRY_Descripcion'];
             $anteproyecto -> NPRY_Duracion = $request['NPRY_Duracion'];
             $anteproyecto -> FK_NPRY_Pre_Director = $request['FK_NPRY_Pre_Director'];
-            $anteproyecto -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
-
+            
             $anteproyecto -> save();
 
 
@@ -199,6 +239,20 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
+    }
+    
+    public function MctLimit(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path .'MctLimit',
+            [
+               
+            ]);
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
     
     public function listaActividades(Request $request)
@@ -317,9 +371,7 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Mctr008'])->get();
-           // $numero = $proyecto->count();
-     
-            
+                      
                   return view($this->path .'AsignarDesarrolladores',
                 [
                     'datos' => $datos,
@@ -346,54 +398,49 @@ class CoordinatorController extends Controller
                     'No se pudo completar tu solicitud.'
                 );  
                  
-       
-            //     $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-            
-            //     $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-            //     $i=0;
-            //    // $datos =[[]];
-               
-            //       foreach($usuarios as $user){
-          
-            //            $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
-                           
-                     
-            //            if(is_null($desarrollador)){
-            //             $collection = collect([]);
-            //             $collection->put('Codigo',$user-> PK_User_Codigo);
-                        
-            //             $collection->put('Cedula',$user-> User_Cedula);
-            //             $collection->put('Nombre',$user->  User_Nombre1);
-            //             $collection->put('Apellido',$user->  User_Apellido1);
-            //             $collection->put('Correo',$user-> User_Correo);
-                           
-           
-                            
-            //             $concatenado[$i]= $collection;
-
-            //             $i=$i+1;
-                           
-            //             }
-                       
-                   
-                       
-            //        }
-    
-                   
-                
-    
-            //     return $concatenado;
-
             }              
         
     }
-
+    
+    public function MctCreate(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+                      
+                  return view($this->path .'MctCrear',
+                [
+                    
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
+    }
 
     public function EliminarDesarrollador(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
             
 			Desarrolladores::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    public function EliminarActividadMct(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Mctr008::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'
@@ -511,16 +558,71 @@ class CoordinatorController extends Controller
 
 	public function store(Request $request)
     {
-		if ($request->ajax() && $request->isMethod('POST')) {	
-        
 	
+        if ($request->ajax() && $request->isMethod('POST')) {	
+            
+            $fechas = Fechas::all();
+            if(($fechas->isempty())==true){
+                $concatenado=[];
+                $fecha = 'null';
+            }else{
+                $ultimo = $fechas ->last(); 
+                $fecha = $ultimo-> FCH_Radicacion_principal;
+            }
+            if($fecha == 'null'){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud, no hay fechas disponibles de radicación.',
+                    $IdError
+                );
+            }else{
 			Anteproyecto::create([
 			 'NPRY_Titulo' => $request['NPRY_Titulo'],
 			 'NPRY_Keywords' => $request['NPRY_Keywords'],
 			 'NPRY_Descripcion' => $request['NPRY_Descripcion'],
 			 'NPRY_Duracion' => $request['NPRY_Duracion'],
 			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
-			 'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
+             'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
+             'NPRY_FCH_Radicacion' => $fecha,
+            ]);
+            return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Datos Creados.'
+			);
+            }
+        }
+	
+			
+        
+    }
+    public function storefechas(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('POST')) {	
+        
+	
+			Fechas::create([
+             'FCH_Radicacion_principal' => $request['FCH_Radicacion_principal'],
+             'FCH_Radicacion_secundaria' => $request['FCH_Radicacion_secundaria']
+               
+			]);
+		}
+	
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Datos Creados.'
+			);
+        
+    }
+    public function CreateMct(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('POST')) {	
+        
+	
+			Mctr008::create([
+			 'MCT_Actividad' => $request['MCT_Actividad'],
+			 'MCT_Descripcion' => $request['MCT_Descripcion'],
+			 
 			]);
 		}
 	
@@ -554,13 +656,13 @@ class CoordinatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
            
-            $infoAnte = Anteproyecto::find($id);
+            $datos = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->first();
+            $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->get();
 
-            //$Nombre = $infoAnte -> relacionEstado -> EST_estado;
-            //$Estado= $infoAnte -> relacionPredirectores-> User_Nombre1;
-              
-           // $x = compact('infoAnte', 'Nombre' , 'Estado');
-           $Estado = EstadoAnteproyecto::all();
+            $estado = $datos-> relacionEstado-> EST_estado;
+
+            $infoAnte->put('Estado',$estado);
+            
                     
             return view($this->path .'EditarAnteproyecto',
                 [
@@ -574,6 +676,20 @@ class CoordinatorController extends Controller
         );
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
 	//Index para vista de Usuarios

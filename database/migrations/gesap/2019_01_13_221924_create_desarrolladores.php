@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Desarrolladores extends Migration
+class CreateDesarrolladores extends Migration
 {
     /**
      * Run the migrations.
@@ -18,10 +18,10 @@ class Desarrolladores extends Migration
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
                 ->references('PK_NPRY_IdMctr008')
-                ->on('TBL_Usuario')
+                ->on('TBL_Anteproyecto')
                 ->onDelete('cascade');
             $table->bigInteger('FK_User_Codigo')->unsigned();
-            $table->foreign('PK_User_Codigo')
+            $table->foreign('FK_User_Codigo')
                 ->references('PK_User_Codigo')
                 ->on('TBL_Usuario')
                 ->onDelete('cascade');

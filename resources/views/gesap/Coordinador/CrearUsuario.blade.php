@@ -139,30 +139,8 @@
         $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
-        /*
-         //hola
-         $('.divcode').hide();
+       
         
-
-         $("#FK_User_IdRol").on('change', function () {
-            var tipo = $('select[name="SelectRol"]').val();
-            if (tipo == 1) {
-                $('.divcode').show();
-                
-            }
-            if (tipo == 2) {
-                $('.divcode').hide();
-                
-            }
-            if (tipo == 3) {
-                $('.divcode').hide();
-                
-            }
-            if (tipo == 4) {
-                $('.divcode').hide();
-               
-            }
-        }); */
 
 
         jQuery.validator.addMethod("letters", function(value, element) {

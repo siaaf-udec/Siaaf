@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del Anteproyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de desarrolladores de Anteproyecto de grado'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -24,6 +24,8 @@
                       
           
                     </div>
+                    <br><br>
+                    <br><br>
                   
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
                         @slot('columns', [

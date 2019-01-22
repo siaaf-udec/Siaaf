@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de datos del Anteproyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -9,16 +9,23 @@
         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model ( ['id'=>'form_update_anteproyecto', 'url' => '/forms'])  !!}
+                {!! Form::model ( ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
 
                 <div class="form-body">
                
                     @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar un nuevo anteproyecto">
+                                                       title="Registar una Actividad">
                             <i class="fa fa-plus">
                             </i>Agregar Nuevo Elemento Al Mct
                         </a>@endpermission
+                        @permission('GESAP_MCT_DATE')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon limit"
+                                                       title="Fechas limite mct">
+                            <i class="fa fa-plus">
+                            </i>FECHAS LIMITE
+                        </a>@endpermission
+                        <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaActividades'])
                         @slot('columns', [
                             'Actividad',
@@ -36,9 +43,7 @@
                                     Volver
                                 </a>
                                 @endpermission
-                               <!--  @permission('ADMIN_GESAP'){{ Form::submit('Asignar', ['class' => 'btn blue']) }}@endpermission
-                                @permission('ADMIN_GESAP'){{ Form::submit('Re-Asignar', ['class' => 'btn yellow']) }}@endpermission
-                               -->        </div>
+                                </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -78,12 +83,12 @@
     
         columns = [
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
-            {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
+            {data: 'MCT_descripcion', name: 'MCT_descripcion'},
             
             
       
             {
-                defaultContent: '@permission('DELETE_DESARROLLADOR')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('DELETE_ACTIVIDAD_MCT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -100,8 +105,65 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
+        table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('Anteproyecto.mctdestroy') }}' + '/' + dataTable.PK_MCT_IdMctr008;
+             var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar esta Actividad?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó la actividad", "error");
+                    }
+                });
+
+        });
         
 
+
+        $(".limit").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
+            $(".content-ajax").load(route);
+        });  
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.MctCreate') }}';
+            $(".content-ajax").load(route);
+        });
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

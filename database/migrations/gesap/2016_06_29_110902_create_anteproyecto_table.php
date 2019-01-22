@@ -29,7 +29,7 @@ class CreateAnteproyectoTable extends Migration
                 ->references('PK_EST_Id')
                 ->on('tbl_Estado_Anteproyecto')
                 ->onDelete('cascade');
-      
+            $table->date('NPRY_FCH_Radicacion');
             $table->timestamps();
         });
 

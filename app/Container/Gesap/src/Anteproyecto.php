@@ -20,7 +20,8 @@ class Anteproyecto extends Model
         ,'NPRY_Descripcion'
         ,'NPRY_Duracion'
         ,'FK_NPRY_Pre_Director'
-        ,'FK_NPRY_Estado',
+        ,'FK_NPRY_Estado'
+        ,'NPRY_FCH_Radicacion',
     ];
 
     public function relacionPredirectores()

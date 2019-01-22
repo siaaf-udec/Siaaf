@@ -124,6 +124,13 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Permiso para el admin de eliminar un anteproyecto';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'GESAP_MCT_DATE';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de colocar fechas limites de radicacion del MCT';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
 
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'DELETE_DESARROLLADOR';
@@ -133,6 +140,13 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->save();
         
         
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DELETE_ACTIVIDAD_MCT';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de eliminar actividades del Mct';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'GESAP_ADMIN_MCT';
         $permissionFuncionario->display_name = 'Anteproyecto Gesap';
