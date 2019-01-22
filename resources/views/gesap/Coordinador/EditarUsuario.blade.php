@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de usuarios'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de Edición de usuarios'])
         @slot('actions', [
             'link_cancel' => [
                 'link' => '',
@@ -24,6 +24,7 @@
                                 
                             </div>
                             <br><br>
+                        <br><br>
                         <br><br>
                         <br><br>
                         <br><br>

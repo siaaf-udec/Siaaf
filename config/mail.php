@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'smtp-mail.outlook.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'modulogesap@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@ucundinamarca.edu.co'),
         'name' => env('MAIL_FROM_NAME', 'SIAAF'),
     ],
 
