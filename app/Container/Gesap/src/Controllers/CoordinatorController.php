@@ -853,8 +853,9 @@ class CoordinatorController extends Controller
             $verificiaruser = Usuarios::find($request['PK_User_Codigo']); //validar codigo repetido en usuarios gesap
             $verificiarusercedula = Usuarios::where('User_Cedula','=',$request['User_Cedula'])->first();//validar cedula en usuarios gesap
             $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
+            $verificarCorreo = Usuarios::where('User_Correo', '=', $request['User_Correo'])->first(); //validar correo en la tabla usaurios gesap
           
-            if (is_null($verificiarusercedula) && empty($verificiaruser)){
+            if (is_null($verificiarusercedula) && empty($verificiaruser && empty($verificarCorreo))){
 
                 if (is_null($verificarUserUdec) ) {
 
