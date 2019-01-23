@@ -13,38 +13,7 @@
 
                 <div class="form-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div>
-                                <span class="label label-primary">Modifique los datos necesarios</span>
-                                 <br><br>
-                            </div>
-                            
-                          
-                             <div class="form-group divcode">
-                                
-                            </div>
-                            <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
-                        </div>
-
-
-                        <div class="col-md-6">
+                        
 
                             {!! Field:: text('PK_User_Codigo',$infoUsuario['PK_User_Codigo'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite codigo interno del usuario en la universidad.','icon'=>'fa fa-credit-card'] ) !!}  
@@ -80,7 +49,7 @@
 
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
                         
-                        </div>
+                        
                     </div>
 
 

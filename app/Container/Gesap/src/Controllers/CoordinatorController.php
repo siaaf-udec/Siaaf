@@ -855,7 +855,7 @@ class CoordinatorController extends Controller
             $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
             $verificarCorreo = Usuarios::where('User_Correo', '=', $request['User_Correo'])->first(); //validar correo en la tabla usaurios gesap
           
-            if (is_null($verificiarusercedula) && empty($verificiaruser && empty($verificarCorreo))){
+            if (is_null($verificiarusercedula) && empty($verificiaruser) && empty($verificarCorreo)){
 
                 if (is_null($verificarUserUdec) ) {
 
@@ -911,7 +911,7 @@ class CoordinatorController extends Controller
             $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, la cedula o el codigo ya está registrado.',
+                'No se pudo completar tu solicitud, la cedula, el codigo o el correo ya está registrado.',
                 $IdError
             );
         }
