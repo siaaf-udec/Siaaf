@@ -87,7 +87,7 @@
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
-
+        
 
         
 
@@ -98,8 +98,8 @@
                     var route = '{{ route('AnteproyectosGesap.storefechas') }}';
                     var async = async || false;
 
-                    formData.append('FCH_Radicacion_principal', '2019-02-28');
-                    formData.append('FCH_Radicacion_secundaria', '2019-02-28');
+                    formData.append('FCH_Radicacion_principal', $('[name="FCH_Radicacion_principal"]').val());
+                    formData.append('FCH_Radicacion_secundaria', $('[name="FCH_Radicacion_secundaria"]').val());
                     $.ajax({
                         url: route,
                         type: 'POST',

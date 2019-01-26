@@ -2,216 +2,157 @@
 
 namespace App\Container\Gesap\src\Controllers;
 
+
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection as Collection;
 
 use Illuminate\Support\Facades\Storage;
 
-use Yajra\DataTables\DataTables;
 use Exception;
 use Validator;
-use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 
 
 use App\Container\Overall\Src\Facades\AjaxResponse;
-use App\Container\Overall\Src\Facades\UploadFile;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Container\Gesap\src\Anteproyecto;
-use App\Container\Gesap\src\Documentos;
+use App\Container\Gesap\src\Proyecto;
+use App\Container\Gesap\src\Actividad;
+use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
+use App\Container\Gesap\src\Usuarios;
+use App\Container\Gesap\src\Fechas;
+use App\Container\Gesap\src\RolesUsuario;
+use App\Container\Gesap\src\Desarrolladores;
+use App\Container\Gesap\src\Estados;
+use App\Container\Gesap\src\Mctr008;
+use App\Container\Users\src\User;
+use App\Container\Gesap\src\EstadoAnteproyecto;
+use App\Container\Users\src\UsersUdec;
+
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Carbon\Carbon;
+
+use App\Container\Users\src\Controllers\UsersUdecController;
+
 
 class StudentController extends Controller
 {
 
     private $path = 'gesap.Estudiante.';
-    protected $connection = 'gesap';
 
-    /*
-     * Listado de proyectos asignados como estudiantes
-     *
-     * @param  \Illuminate\Http\Request
-	 *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function proyecto(Request $request)
-    {
-        if ($request->isMethod('GET')) {
-            return view($this->path . 'ProponenteList');
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+    public function index(Request $request)
+	{
+		
+			return view($this->path . 'IndexEstudiante');
+		
     }
-
-    /*
-     * Listado de proyectos asignados como estudiantes
-     *
-     * @param  \Illuminate\Http\Request
-	 *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function proyectoAjax(Request $request)
+    public function VerActividadesList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return view($this->path . 'ProponenteList-ajax');
+
+           $Actividades=Actividad::all();
+
+        
+               return DataTables::of($Actividades)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
         }
+
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
     }
-
-    /*
-     * Formulario para subir las actividades del proyecto
-     *
-     * @param  int $id 
-     * @param  \Illuminate\Http\Request 
-     *
-     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function actividad($id, Request $request)
+    public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $anteproyecto = Anteproyecto::select('*')
-                ->where('PK_NPRY_IdMinr008', '=', $id)
-                ->with(['radicacion',
-                    'proyecto' => function ($proyecto) {
-                        $proyecto->with(['documentos' => function ($documento) {
-                            $documento->with('actividad');
-                        }]);
-                    }])
-                ->get();
-
-            return view($this->path . 'Actividades', [
-                'id' => $id,
-                'anteproyecto' => $anteproyecto
-            ]);
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
+                      
+                  return view($this->path .'ActividadesEstudiante',
+                [
+                    
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
     }
-
-    /*
-     * Subida de archivo por actividad
-     *
-     * @param  \Illuminate\Http\Request 
-     *
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function uploadActividad(Request $request)
+    public function SubirActividad(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('POST')) {
-            $date = Carbon::now();
-            $date = $date->format('his');
-            $files = $request->file('file');
-            $ubicacion = "gesap/proyecto/" . $request->get('PK_actividad');
-            foreach ($files as $file) {
-                $nombre = $date . "_" . $file->getClientOriginalName();
-                Storage::disk('local')->putFileAs($ubicacion, $file, $nombre);
-                $documento = Documentos::findOrFail($request->get('PK_actividad'));
-                $documento->DMNT_Archivo = $nombre;
-                $documento->save();
+        if ($request->ajax() && $request->isMethod('GET')) {
+                      
+                $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
+                
+                
+
+                  return view($this->path .'SubirActividad',
+                [
+                    'datos' => $Actividad,
+                ]);
+               
+                 
+            }     
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );         
+        
+    }
+    public function AnteproyectoList(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id) ->first();
+
+           if($Desarrollo===null){
+               $anteproyecto = [];
+           }else{
+            $anteproyecto = $Desarrollo -> relacionAnteproyecto()->get();   
+               if( $anteproyecto[0]->FK_NPRY_Estado <= 1){
+                $anteproyecto = [];
+               }else{
+                
+           
+                $i=0;
+                $i2=0;
+     
+                foreach($anteproyecto as $ante){
+                 $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
+                
+                    $i=$i+1;
+                }
+                $j=0;
+                foreach ($anteproyecto as $ante) {
+                
+                 $ante->offsetSet('Estado', $s[$j]);
+                 $j=$j+1;
+                
+               }
             }
-            return AjaxResponse::success(
-                'COMPLETADA SUBIDA',
-                'SUBIDA CORRECTAMENTE.',
-                $request->get('PK_actividad')
-            );
         }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-    }
+          
+               return DataTables::of($anteproyecto)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
 
-    /*
-    * Consulta de proyectos con sus datos correspondientes asignados al usuario actual como estudiante
-    *
-    * @param  \Illuminate\Http\Request 
-    *
-    * @return Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
-    */
-    public function studentList(Request $request)
-    {
-        if ($request->isMethod('GET')) {
-            $anteproyectos = Encargados::where(function ($query) {
-                $query->where('NCRD_Cargo', '=', "Estudiante 1");
-                $query->orwhere('NCRD_Cargo', '=', "Estudiante 2");
-            })
-                ->where('FK_Developer_User_Id', '=', $request->user()->id)
-                ->with(['anteproyecto' => function ($proyecto) {
-                    $proyecto->with(['radicacion',
-                        'director',
-                        'jurado1',
-                        'jurado2',
-                        'estudiante1',
-                        'estudiante2',
-                        'conceptoFinal',
-                        'proyecto']);
-                }])
-                ->get();
-
-            return Datatables::of($anteproyectos)
-                ->removeColumn('created_at')
-                ->removeColumn('updated_at')
-                ->addColumn('NPRY_Estado', function ($users) {
-                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'EN REVISION')) {
-                        return "<span class='label label-sm label-warning'>"
-                            . $users->anteproyecto->NPRY_Estado . "</span>";
-                    } else {
-                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'PENDIENTE')) {
-                            return "<span class='label label-sm label-warning'>"
-                                . $users->anteproyecto->NPRY_Estado . "</span>";
-                        } else {
-                            if (!strcmp($users->anteproyecto->NPRY_Estado, 'APROBADO')) {
-                                return "<span class='label label-sm label-success'>"
-                                    . $users->anteproyecto->NPRY_Estado . "</span>";
-                            } else {
-                                if (!strcmp($users->anteproyecto->NPRY_Estado, 'APLAZADO')) {
-                                    return "<span class='label label-sm label-danger'>"
-                                        . $users->anteproyecto->NPRY_Estado . "</span>";
-                                } else {
-                                    if (!strcmp($users->anteproyecto->NPRY_Estado, 'RECHAZADO')) {
-                                        return "<span class='label label-sm label-danger'>"
-                                            . $users->anteproyecto->NPRY_Estado . "</span>";
-                                    } else {
-                                        if (!strcmp($users->anteproyecto->NPRY_Estado, 'COMPLETADO')) {
-                                            return "<span class='label label-sm label-success'>"
-                                                . $users->anteproyecto->NPRY_Estado . "</span>";
-                                        } else {
-                                            return "<span class='label label-sm label-info'>"
-                                                . $users->anteproyecto->NPRY_Estado . "</span>";
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                })
-                ->addColumn('NPRY_Titulo', function ($title) {
-                    $marca = "<!--corte-->";
-                    $largo = 50;
-                    $titulo = $title->anteproyecto->NPRY_Titulo;
-                    if (strlen($titulo) > $largo) {
-                        $titulo = wordwrap($title->anteproyecto->NPRY_Titulo, $largo, $marca);
-                        $titulo = explode($marca, $titulo);
-                        $texto1 = $titulo[0];
-                        unset($titulo[0]);
-                        $texto2 = implode(' ', $titulo);
-                        return '<p><span class="texto-mostrado">'
-                            . $texto1
-                            . '<span class="puntos">... </span></span><span class="texto-ocultado" style="display:none">'
-                            . $texto2
-                            . '</span> <span class="boton_mas_info">Ver más</span></p>';
-                    }
-                    return '<p>' . $titulo . '</p>';
-                })
-                ->rawColumns(['NPRY_Estado', 'NPRY_Titulo'])
-                ->addIndexColumn()->make(true);
         }
+
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'

@@ -179,5 +179,65 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 		
 	});
+	//rutas estudiantes//
+	Route::group(['prefix' => 'EstudianteGesap', 'middleware' => ['permission:STUDENT_GESAP']], function () {
+		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('index', [
+			'uses' => $controller . 'StudentController@index',  
+			'as' => 'EstudianteGesap.index'
+		]);
+		Route::get('Anteproyecto/{id?}', [
+			'uses' => $controller . 'StudentController@AnteproyectoList',  
+			'as' => 'EstudianteGesap.Desarrolladores'
+		]);
+		Route::get('Actividades/{id?}', [
+			'uses' => $controller . 'StudentController@VerActividades',  
+			'as' => 'EstudianteGesap.VerActividades'
+		]);
+		Route::get('SubirActividad/{id?}', [
+			'uses' => $controller . 'StudentController@SubirActividad',  
+			'as' => 'EstudianteGesap.SubirActividad'
+		]);
+		
+	});
+	//
+	//rutas PROFESORES//
+	Route::group(['prefix' => 'DocenteGesap', 'middleware' => ['permission:TEACHER_GESAP']], function () {
+		
+		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('index', [
+			'uses' => $controller . 'DocenteController@index',  
+			'as' => 'DocenteGesap.index'
+		]);
+		Route::get('indexAjax', [
+			'uses' => $controller . 'DocenteController@index',  
+			'as' => 'DocenteGesap.index.ajax'
+		]);
+
+		Route::get('Anteproyecto/{id?}', [
+			'uses' => $controller . 'DocenteController@VerAnteproyecto',  
+			'as' => 'DocenteGesap.VerAnteproyecto'
+		]);
+		Route::get('AnteproyectoList/{id?}', [
+			'uses' => $controller . 'DocenteController@Anteproyectolist',  
+			'as' => 'DocenteGesap.Anteproyectolist'
+		]);
+		Route::get('Desarrolladores/{id?}', [
+			'uses' => $controller . 'DocenteController@DesarrolladoresList',  
+			'as' => 'DocenteGesap.Desarrolladores'
+		]);
+
+		Route::get('Asignar/{id?}', [
+			'uses' => $controller . 'DocenteController@Asignar',  
+			'as' => 'DocenteGesap.Asignar'
+		]);
+
+
+
+	
+	});
+	//
 
 });	

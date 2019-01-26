@@ -24,7 +24,11 @@ class Anteproyecto extends Model
         ,'NPRY_FCH_Radicacion',
     ];
 
-    public function relacionPredirectores()
+    public function relacionDesarrolladores()
+    {
+         return $this->hasMany(Desarrolladores::class, 'FK_NPRY_IdMctr008', 'PK_NPRY_IdMctr008');
+     }
+    public function relacionPredirectores() 
     {
          return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_NPRY_Pre_Director');
      }

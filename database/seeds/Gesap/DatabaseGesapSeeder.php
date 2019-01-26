@@ -13,7 +13,7 @@ class DatabaseGesapSeeder extends Seeder
     {
         
         //$this->call(RoleGesapSeeder::class);
-        //$this->call(PermissionGesapSeeder::class);
+       // $this->call(PermissionGesapSeeder::class);
         $this->call(ActividadesGesapSeeder::class);
         $this->call(EstadoAnteproyectoGesapSeeder::class);
 

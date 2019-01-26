@@ -83,7 +83,7 @@ class PermissionGesapSeeder extends Seeder
 
        
         $permissionFuncionario = new Permission;
-        $permissionFuncionario->name = 'DELATE_ANTE';
+        $permissionFuncionario->name = 'DELETE_ANTE';
         $permissionFuncionario->display_name = 'Anteproyecto Gesap';
         $permissionFuncionario->description = 'Permiso para eliminar anteproyectos';
         $permissionFuncionario->module_id = 7;
@@ -108,6 +108,13 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->name = 'ADD_ANTEPROYECTO';
         $permissionFuncionario->display_name = 'Anteproyecto Gesap';
         $permissionFuncionario->description = 'Permiso para el admin de registrar un anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'VER_ANTE';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para el admin de ver lainformacion completa del anteporyecto';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
 
@@ -153,9 +160,107 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Permiso para el admin Editar los contenidos entregables del MCT';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'TEACHER_GESAP';
+        $permissionFuncionario->display_name = 'profesor Gesap';
+        $permissionFuncionario->description = 'Permiso para el profesor';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
         
         
         //Fin de permisos para el CRUD de Admin
+        //permisos Estudiantes
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'STUDENT_GESAP';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso el estudiante';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'VER_ACTIVIDAD';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso el estudiante de ver las actividades de su anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'MY_ANTE_PROYECTO';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para que el estudiante vea su anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ADD_ACTIVITY_STUDENT';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para que el estudiante cargue su actividad de MCT';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ACTIVITY_STUDENT_MCT';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para ingresar a las actividades del MCT';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ACTIVITY_STUDENT_COMENT';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para hacer un comentario en la actividad';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ACTIVITY_STUDENT_RELOAD';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para modificar el documento en la actividad';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        //Fin permisos Estudiantes
+        // permisos Coordinadores/jurados
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ANTE_DIRECTOR';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para ver los anteproyectos asignados como director o predirector';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ANTE_JURADO';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para ver los anteproyectos asignados como jurado';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ANTE_CONFIRM';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para confirmar la asignacion de proyecto de grado';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ANTE_COMENT';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para realizar un comentario en la actividad del MCT';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'PROYECT_COMENT';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para realizar un comentario en la actividad del Libro de proyecto de grado';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+
+        // Fin permisos Coordinadores/jurados
         
         //Inicio de los permisos para el crud de Usuarios con el rol Admin
         $permissionFuncionario = new Permission;

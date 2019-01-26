@@ -20,8 +20,8 @@ class Desarrolladores extends Model
     ];
 
     
-    public function relacionEstado()
+    public function relacionAnteproyecto()
     {
-         return $this->hasMany(EstadoAnteproyecto::class, 'PK_EST_id', 'FK_NPRY_Estado');
+         return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
      }
 }

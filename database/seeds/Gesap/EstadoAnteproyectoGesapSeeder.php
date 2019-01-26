@@ -14,7 +14,8 @@ class EstadoAnteproyectoGesapSeeder extends Seeder
             ['EST_estado'=>'APROVADO'],
             ['EST_estado'=>'RECHAZADO'],
             ['EST_estado'=>'APLAZADO'],
-            ['EST_estado'=>'ASIGNADO']
+            ['EST_estado'=>'ASIGNADO'],
+            ['EST_estado'=>'EN REVISION']
         ]);
     }
 }

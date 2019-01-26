@@ -47,7 +47,7 @@ class CoordinatorController extends Controller
 
 
 	// CONTROLLERS CREADOS PARA GESAP V2.0//
-
+    /// VISTAS ////////
 	public function index(Request $request)
 	{
 		
@@ -73,76 +73,8 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
 		);
-	}
-
-	public function anteproyectoList(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-
-		   
-           $anteproyecto=Anteproyecto::all();
-           
-           $i=0;
-           $i2=0;
-
-           foreach($anteproyecto as $ante){
-            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
-           
-               $i=$i+1;
-           }
-           $j=0;
-           foreach ($anteproyecto as $ante) {
-           
-            $ante->offsetSet('Estado', $s[$j]);
-            $j=$j+1;
-            }
-
-            foreach($anteproyecto as $antep){
-                $s2[$i2]=$anteproyecto[$i2]-> relacionPredirectores-> User_Nombre1;
-               
-                $i2=$i2+1;
-            }
-            $j2=0;
-           foreach ($anteproyecto as $antep) {
-           
-            $antep->offsetSet('Nombre', $s2[$j2]);
-            $j2=$j2+1;
-            }
-          
-            
-
-        /*    $nombre = $anteproyecto->get('FK_NPRY_Estado');
-           $estado = EstadoAnteproyecto::Find($nombre);
-           $estadoante = $estado->get('Est_estado');
-		 */   return DataTables::of($anteproyecto)
-               ->removeColumn('created_at')
-			   ->removeColumn('updated_at')
-			    
-			   ->addIndexColumn()
-			   ->make(true);
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
-    public function CreateAnte(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            $Pre_directores = Usuarios::Where('FK_User_IdRol','5')->get();
-            return view($this->path .'CrearAnteproyecto',
-                [
-                    'Pre_directores' => $Pre_directores,
-                ]);
-        }
 
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
     public function mctindex(Request $request)
 	{
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -156,89 +88,6 @@ class CoordinatorController extends Controller
                     'No se pudo completar tu solicitud.'
                 );
         }
-	}
-    public function listarPreDirector(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            $Pre_directores = Usuarios::Where('FK_User_IdRol','2')->get();
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos consultados correctamente.',
-                $Pre_directores
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }
-    public function listfechas(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-
-            $fechas = Fechas::all();
-            if(($fechas->isempty())==true){
-                $concatenado=[];
-            }else{
-            $i=0;
-            // $datos =[[]];
-            $concatenado=[];
-              
-            $ultimo = $fechas ->last();     
-                  
-                    
-            $collection = collect([]);
-
-            $collection->put('FCH_Radicacion_principal',$ultimo-> FCH_Radicacion_principal);
-                     
-            $collection->put('FCH_Radicacion_secundaria',$ultimo-> FCH_Radicacion_secundaria);
-
-            $concatenado[$i]= $collection;
-        
-            } 
-                    
-              
- 
-
-            return DataTables::of($concatenado)
-                
-                   ->addIndexColumn()
-                   ->make(true);
-    
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-        
-    }
-    public function updateAnte(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('POST')) {
-            $anteproyecto = Anteproyecto::Where('PK_NPRY_IdMctr008', $request['PK_NPRY_IdMctr008'])->first();
-            
-            $anteproyecto -> NPRY_Titulo = $request['NPRY_Titulo']; 
-            $anteproyecto -> NPRY_Keywords = $request['NPRY_Keywords'];
-            $anteproyecto -> NPRY_Descripcion = $request['NPRY_Descripcion'];
-            $anteproyecto -> NPRY_Duracion = $request['NPRY_Duracion'];
-            $anteproyecto -> FK_NPRY_Pre_Director = $request['FK_NPRY_Pre_Director'];
-            
-            $anteproyecto -> save();
-
-
-
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
     }
     
     public function MctLimit(Request $request)
@@ -255,22 +104,6 @@ class CoordinatorController extends Controller
         }
     }
     
-    public function listaActividades(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            $Actividades = Mctr008::all();
-
-            return DataTables::of($Actividades)
-                
-			   ->addIndexColumn()
-               ->make(true);
-               
-                return AjaxResponse::fail(
-                    '¡Lo sentimos!',
-                    'No se pudo completar tu solicitud.'
-                );
-        }
-    }
     public function AsignarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -287,85 +120,6 @@ class CoordinatorController extends Controller
                 );
         }
     }
-    public function desarrolladorstore(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('POST')) {
-            $datos = Desarrolladores::Where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->get();
-           // $datos = Desarrolladores::all();
-            $numero = $datos->count();
-            if ($numero >= 2){
-                $IdError = 422;
-                return AjaxResponse::success(
-                    '¡Lo sentimos!',
-                    'No se pudo completar tu solicitud, el Anteproyecto ya tiene el numero maximo de desarrolladores asignados.',
-                    $IdError
-                );
-
-            }else{
-
-            
-            Desarrolladores::create([
-                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
-                'FK_User_Codigo' => $request['PK_User_Codigo'],
-               
-            ]);
-            
-			return AjaxResponse::success(
-				'¡Esta Hecho!',
-				'Desarrollador Asignado Al Anteproyecto.'
-            );
-        }
-        }
-    }
-    
-    public function AsignarDesarrolladoreslist(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-
-            $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-            
-            $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-            $i=0;
-           // $datos =[[]];
-           $concatenado=[];
-              foreach($usuarios as $user){
-      
-                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
-                       
-                 
-                   if(is_null($desarrollador)){
-                    $collection = collect([]);
-                    $collection->put('Codigo',$user-> PK_User_Codigo);
-                    
-                    $collection->put('Cedula',$user-> User_Cedula);
-                    $collection->put('Nombre',$user->  User_Nombre1);
-                    $collection->put('Apellido',$user->  User_Apellido1);
-                    $collection->put('Correo',$user-> User_Correo);
-                       
-       
-                        
-                    $concatenado[$i]= $collection;
-
-                    $i=$i+1;
-                       
-                    }
-                   
-               
-                   
-               }
-
-            return DataTables::of($concatenado)
-                
-			   ->addIndexColumn()
-               ->make(true);
-               
-                return AjaxResponse::fail(
-                    '¡Lo sentimos!',
-                    'No se pudo completar tu solicitud.'
-                );
-        }
-    }
-    
     public function AsignarDesarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -419,14 +173,63 @@ class CoordinatorController extends Controller
         
     }
 
-    public function EliminarDesarrollador(Request $request, $id)
+    ///// LISTADOS /////
+	public function anteproyectoList(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-			Desarrolladores::destroy($id);
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+		   
+           $anteproyecto=Anteproyecto::all();
+           
+           $i=0;
+           $i2=0;
+
+           foreach($anteproyecto as $ante){
+            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
+           
+               $i=$i+1;
+           }
+           $j=0;
+           foreach ($anteproyecto as $ante) {
+           
+            $ante->offsetSet('Estado', $s[$j]);
+            $j=$j+1;
+            }
+
+            foreach($anteproyecto as $antep){
+                $s2[$i2]=$anteproyecto[$i2]-> relacionPredirectores-> User_Nombre1;
+               
+                $i2=$i2+1;
+            }
+            $j2=0;
+           foreach ($anteproyecto as $antep) {
+           
+            $antep->offsetSet('Nombre', $s2[$j2]);
+            $j2=$j2+1;
+            }
+          
+               return DataTables::of($anteproyecto)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+			   ->make(true);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    public function listarPreDirector(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Pre_directores = Usuarios::Where('FK_User_IdRol','2')->get();
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Datos eliminados correctamente.'
+                'Datos consultados correctamente.',
+                $Pre_directores
             );
         }
 
@@ -436,23 +239,108 @@ class CoordinatorController extends Controller
         );
 
     }
-    public function EliminarActividadMct(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-			Mctr008::destroy($id);
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
 
+    public function listfechas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $fechas = Fechas::all();
+            if(($fechas->isempty())==true){
+                $concatenado=[];
+            }else{
+            $i=0;
+            $concatenado=[];
+              
+            $ultimo = $fechas ->last();     
+                  
+                    
+            $collection = collect([]);
+
+            $collection->put('FCH_Radicacion_principal',$ultimo-> FCH_Radicacion_principal);
+                     
+            $collection->put('FCH_Radicacion_secundaria',$ultimo-> FCH_Radicacion_secundaria);
+
+            $concatenado[$i]= $collection;
+        
+            } 
+  
+            return DataTables::of($concatenado)
+                
+                   ->addIndexColumn()
+                   ->make(true);
+    
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
+        
     }
+
+    public function listaActividades(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Actividades = Mctr008::all();
+
+            return DataTables::of($Actividades)
+                
+			   ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+
+    public function AsignarDesarrolladoreslist(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            
+            $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
+            $i=0;
+            $concatenado=[];
+              foreach($usuarios as $user){
+      
+                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
+                       
+                 
+                   if(is_null($desarrollador)){
+                    $collection = collect([]);
+                    $collection->put('Codigo',$user-> PK_User_Codigo);
+                    
+                    $collection->put('Cedula',$user-> User_Cedula);
+                    $collection->put('Nombre',$user->  User_Nombre1);
+                    $collection->put('Apellido',$user->  User_Apellido1);
+                    $collection->put('Correo',$user-> User_Correo);
+                       
+       
+                        
+                    $concatenado[$i]= $collection;
+
+                    $i=$i+1;
+                       
+                    }
+                   
+               
+                   
+               }
+
+            return DataTables::of($concatenado)
+                
+			   ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
 	public function DesarrolladoresList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -497,7 +385,6 @@ class CoordinatorController extends Controller
         
     }
     
-   
     public function VerAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -554,8 +441,53 @@ class CoordinatorController extends Controller
 
     }
     
-	
+    /////////////// CREATE ////////
+    public function CreateAnte(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Pre_directores = Usuarios::Where('FK_User_IdRol','5')->get();
+            return view($this->path .'CrearAnteproyecto',
+                [
+                    'Pre_directores' => $Pre_directores,
+                ]);
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    public function desarrolladorstore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $datos = Desarrolladores::Where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->get();
+            $numero = $datos->count();
+            if ($numero >= 2){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud, el Anteproyecto ya tiene el numero maximo de desarrolladores asignados.',
+                    $IdError
+                );
+
+            }else{
+
+            
+            Desarrolladores::create([
+                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                'FK_User_Codigo' => $request['PK_User_Codigo'],
+               
+            ]);
+            
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Desarrollador Asignado Al Anteproyecto.'
+            );
+        }
+        }
+    }
+    
 	public function store(Request $request)
     {
 	
@@ -633,14 +565,27 @@ class CoordinatorController extends Controller
         
     }
           
-	public function EliminarAnte(Request $request, $id)
+    //////////////// EDITARR ///////
+    
+   
+    public function updateAnte(Request $request)
     {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $anteproyecto = Anteproyecto::Where('PK_NPRY_IdMctr008', $request['PK_NPRY_IdMctr008'])->first();
             
-			Anteproyecto::destroy($id);
+            $anteproyecto -> NPRY_Titulo = $request['NPRY_Titulo']; 
+            $anteproyecto -> NPRY_Keywords = $request['NPRY_Keywords'];
+            $anteproyecto -> NPRY_Descripcion = $request['NPRY_Descripcion'];
+            $anteproyecto -> NPRY_Duracion = $request['NPRY_Duracion'];
+            $anteproyecto -> FK_NPRY_Pre_Director = $request['FK_NPRY_Pre_Director'];
+            
+            $anteproyecto -> save();
+
+
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Datos eliminados correctamente.'
+                'Datos modificados correctamente.'
             );
         }
 
@@ -648,9 +593,9 @@ class CoordinatorController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
-	
+
+    	
 
 	public function EditarAnteproyecto(Request $request, $id)
     {
@@ -679,18 +624,59 @@ class CoordinatorController extends Controller
 
 
 
+    ///////// ELIMINAR /////
+       
+    public function EliminarDesarrollador(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Desarrolladores::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
+    }
+    public function EliminarActividadMct(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Mctr008::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
+    }
+    public function EliminarAnte(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Anteproyecto::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
 
-
-
-
-
-
-    
+    }   
     //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
 	//Index para vista de Usuarios
 	public function indexUsuarios(Request $request)

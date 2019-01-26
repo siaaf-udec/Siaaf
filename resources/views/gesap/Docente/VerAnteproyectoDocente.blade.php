@@ -33,35 +33,19 @@
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                             {!! Field:: text('NPRY_FCH_Radicacion',$datos[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                           
-                            PRE DIRECTOR:
-
-                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Nombre'],['label'=>'Nombres :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
-                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Apellido'],['label'=>'Apellidos:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                           
+                                 
                                                              <br><br>
                            <h4> DESARROLLADORES :</h4>
                                 <br><br>
           
                     </div>
                    
-                            @if($datos['Estado'] == "EN ESPERA" )
-                            @permission('GESAP_CREATE_USER')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar un nuevo anteproyecto">
-                            <i class="fa fa-plus">
-                            </i>Agregar Desarrolador
-                                @endif
-                        </a>@endpermission
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
-                            'Apellido',
-                            'Acciones'
+                            'Apellido'       
                         ])
                     @endcomponent
           
@@ -74,9 +58,16 @@
                                     Volver
                                 </a>
                                 @endpermission
-                               <!--  @permission('ADMIN_GESAP'){{ Form::submit('Asignar', ['class' => 'btn blue']) }}@endpermission
-                                @permission('ADMIN_GESAP'){{ Form::submit('Re-Asignar', ['class' => 'btn yellow']) }}@endpermission
-                               -->        </div>
+                                @if($datos['Estado'] == "EN ESPERA" )
+                                @permission('ADMIN_GESAP')<a href="javascript:;"
+                                                               class="btn btn-warning yellow button-asignar"><i
+                                ></i>
+                                    Asignar
+                                </a>
+                                @endpermission
+                                @endif
+                               
+                            </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -115,7 +106,7 @@
         table = $('#listadesarrolladores');
         id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
         
-        url = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
+        url = '{{ route('DocenteGesap.Desarrolladores') }}'+ '/' + id;
     
          
     
@@ -124,87 +115,26 @@
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Apellido', name: 'Apellido'},
             
-            
-      
-            {
-                defaultContent: '@permission('DELETE_DESARROLLADOR')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            }
         ];
         
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
-        table.on('click', '.remove', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            var route = '{{ route('Desarrollador.destroy') }}' + '/' + dataTable.PK_Id_desarrollo;
-             var type = 'DELETE';
-            var async = async || false;
-            swal({
-                    title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este desarrollador?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "De acuerdo",
-                    cancelButtonText: "Cancelar",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: route,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'error') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            }
-                        });
-                    } else {
-                        swal("Cancelado", "No se eliminó desarrollador", "error");
-                    }
-                });
-
-        });
-    $(".create").on('click', function (e) {
-        e.preventDefault();
-        var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
-        $(".content-ajax").load(route);
-
-    });
 
      
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
+            var route = '{{ route('DocenteGesap.index.ajax') }}';
+            location.href="{{route('DocenteGesap.index')}}";
             //$(".content-ajax").load(route);
         });
+
+    $('.button-asignar').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('DocenteGesap.Asignar') }}'+ '/' + id;
+            //location.href="{{route('DocenteGesap.Asignar')}}";
+            $(".content-ajax").load(route);            
+    });
     });
 </script>
 

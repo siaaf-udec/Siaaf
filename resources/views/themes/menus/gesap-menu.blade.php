@@ -5,11 +5,26 @@
       <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
                <i class="fa fa-cube"></i>
         <span class="title">Gesap</span>
-        <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*'], 'open') }}"></span>
+        <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*','DocenteGesap.*','EstudianteGesap.*', ], 'open') }}"></span>
     </a>
 
     <ul class="sub-menu">
-	
+		@permission('ANTE_DIRECTOR')
+		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('DocenteGesap.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-user"></i>
+                <span class="title">Mis Anteproyectos(Direcctor)</span>
+            </a>    	    	
+    	</li>
+		@endpermission
+		@permission('MY_ANTE_PROYECTO')
+		<li class="nav-item {{ active(['EstudianteGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('EstudianteGesap.index') }}" class="nav-link nav-toggle">
+                <i class="fa fa-user"></i>
+                <span class="title">Mis Anteproyectos(Estudiante)</span>
+            </a>    	    	
+    	</li>
+		@endpermission
 		@permission('LIST_ANTEPROYECTOS')
 		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
     	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
