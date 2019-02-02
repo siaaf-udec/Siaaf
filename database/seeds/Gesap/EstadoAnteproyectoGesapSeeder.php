@@ -11,11 +11,12 @@ class EstadoAnteproyectoGesapSeeder extends Seeder
     {
         EstadoAnteproyecto::insert([
             ['EST_estado'=>'EN ESPERA'],
+            ['EST_estado'=>'ASIGNADO'],            
+            ['EST_estado'=>'RADICADO'],
             ['EST_estado'=>'APROVADO'],
             ['EST_estado'=>'RECHAZADO'],
-            ['EST_estado'=>'APLAZADO'],
-            ['EST_estado'=>'ASIGNADO'],
-            ['EST_estado'=>'EN REVISION']
+            ['EST_estado'=>'APLAZADO']
+                   
         ]);
     }
 }

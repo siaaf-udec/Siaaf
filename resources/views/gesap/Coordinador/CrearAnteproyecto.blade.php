@@ -21,10 +21,10 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: text('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                {!! Field:: textArea('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                                {!! Field:: text('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
                                 {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
@@ -115,8 +115,9 @@ $(document).ready(function(){
                     var async = async || false;
 
                     formData.append('NPRY_Titulo', $('input:text[name="NPRY_Titulo"]').val());
-                    formData.append('NPRY_Keywords', $('input:text[name="NPRY_Keywords"]').val());
-                    formData.append('NPRY_Descripcion', $('input:text[name="NPRY_Descripcion"]').val());
+                    formData.append('NPRY_Keywords', $('#NPRY_Keywords').val());
+                    
+                    formData.append('NPRY_Descripcion', $('#NPRY_Descripcion').val());
                     formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
                     formData.append('FK_NPRY_Pre_Director', $('select[name="SelectPre_Director"]').val());
                     formData.append('FK_NPRY_Estado', '1');

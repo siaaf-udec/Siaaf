@@ -12,7 +12,7 @@ class DatabaseGesapSeeder extends Seeder
     public function run()
     {
         
-        //$this->call(RoleGesapSeeder::class);
+        $this->call(CheckListSeeder::class);
        // $this->call(PermissionGesapSeeder::class);
         $this->call(ActividadesGesapSeeder::class);
         $this->call(EstadoAnteproyectoGesapSeeder::class);

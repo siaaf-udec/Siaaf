@@ -25,6 +25,13 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Acceso a solo este modulo';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DELETE_JUDMENT';
+        $permissionFuncionario->display_name = 'Lista de Anteproyectos';
+        $permissionFuncionario->description = 'permiso del administrados para eliminar jurados asignados';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
 
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'LIST_ANTEPROYECTOS';
@@ -160,11 +167,25 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->description = 'Permiso para el admin Editar los contenidos entregables del MCT';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
-
+        
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'TEACHER_GESAP';
-        $permissionFuncionario->display_name = 'profesor Gesap';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
         $permissionFuncionario->description = 'Permiso para el profesor';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ADD_DEVELOPER';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para administrador de asignar un desarollador';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ADD_JUDMENT';
+        $permissionFuncionario->display_name = 'Anteproyecto Gesap';
+        $permissionFuncionario->description = 'Permiso para administrador de asignar un jurado';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
         
@@ -222,14 +243,77 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
         
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'GESAP_SOLICITUD_STUDENT';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para que el estudiante haga alguna solicitud al adminitrador';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'STUDENT_BACK';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'habilitar el boton back para el rol estudiante';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'RADICAR_ANTE';
+        $permissionFuncionario->display_name = 'Gesap estudiante';
+        $permissionFuncionario->description = 'Permiso para radicar anteproyecto';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        
         //Fin permisos Estudiantes
         // permisos Coordinadores/jurados
+            
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ANTE_DIRECTOR';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para ingresar al modulo como director o predirector';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'ANTE_JURADO';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso para ver los anteproyectos asignados como jurado';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'VER_ANTE_JURADO';
         $permissionFuncionario->display_name = 'Gesap profesor';
         $permissionFuncionario->description = 'Permiso para ver los anteproyectos asignados como director o predirector';
         $permissionFuncionario->module_id = 7;
         $permissionFuncionario->save();
+        
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'DOCENTE_SOLICITUD';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'Permiso solicitar una solicitud especial con rol docente';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'BACK_DOCENTE';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'habilita el back para docente';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+
+        $permissionFuncionario = new Permission;
+        $permissionFuncionario->name = 'AVAL_DOCENTE';
+        $permissionFuncionario->display_name = 'Gesap profesor';
+        $permissionFuncionario->description = 'da el aval de alguna actividad en especifico';
+        $permissionFuncionario->module_id = 7;
+        $permissionFuncionario->save();
+        
 
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ANTE_JURADO';

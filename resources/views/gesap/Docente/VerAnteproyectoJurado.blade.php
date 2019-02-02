@@ -41,7 +41,7 @@
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
-                            'Codigo',
+                            'Codigo jurado',
                             'Nombre',
                             'Apellido'       
                         ])
@@ -56,14 +56,6 @@
                                     Volver
                                 </a>
                                 @endpermission
-                                @if($datos['Estado'] == "EN ESPERA" )
-                                @permission('ANTE_CONFIRM')<a href="javascript:;"
-                                                               class="btn btn-warning yellow button-asignar"><i
-                                ></i>
-                                    Asignar
-                                </a>
-                                @endpermission
-                                @endif
                                 @if($datos['Estado'] != "EN ESPERA" )
                                 @permission('VER_ANTE_JURADO')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Actividades"><i
@@ -135,66 +127,13 @@
             //$(".content-ajax").load(route);
         });
 
-    $('.button-asignar').on('click', function (e) {
-                 
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.Asignar') }}'+ '/' + id;
-           var type = 'GET';
-            var async = async || false;
-            swal({
-                    title: "¿Está seguro?",
-                    text: "¿Está seguro que desa Asignar este Anteproyecto?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Seguro",
-                    cancelButtonText: "Cancelar",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: route,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    var route = '{{ route('DocenteGesap.VerAnteproyecto') }}' + '/' + '{{$datos[0]['PK_NPRY_IdMctr008']}}';
-                                    $(".content-ajax").load(route);
-                             
-                                }
-                            },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'error') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    var route = '{{ route('DocenteGesap.VerAnteproyecto') }}' + '/' + '{{$datos[0]['PK_NPRY_IdMctr008']}}';
-           
-                                    $(".content-ajax").load(route);
-                             
-                                }
-                            }
-                        });
-                    } else {
-                        swal("Cancelado", "No se Asigno el Anteproyecto", "error");
-                    }
-                });
-
-    });
+ 
 
          $('.button-Actividades').on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.VerActividades') }}' + '/' + '{{$datos[0]['PK_NPRY_IdMctr008']}}';
+            var route = '{{ route('DocenteGesap.VerActividadesJurado') }}' + '/' + '{{$datos[0]['PK_NPRY_IdMctr008']}}';
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);

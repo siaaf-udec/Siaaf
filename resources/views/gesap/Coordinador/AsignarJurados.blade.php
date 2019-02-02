@@ -14,7 +14,8 @@
                 <div class="form-body">
                     <div class="row">
                        
-                             {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                    
+                        {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                          
@@ -24,7 +25,7 @@
                     <br><br>
                     <br><br>
                   
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listajurados'])
                         @slot('columns', [
                             'Codigo',
                             'Cedula',
@@ -75,8 +76,8 @@
    
         var table, url, columns;
         id = '{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
-        table = $('#listadesarrolladoreslist');
-        url = '{{ route('AnteproyectosGesap.AsignarDesarrolladoreslist') }}';
+        table = $('#listajurados');
+        url = '{{ route('AnteproyectosGesap.AsignarJuradoslist') }}'+'/'+'{{$datos[0]['PK_NPRY_IdMctr008']}}';
     
          
     
@@ -87,7 +88,7 @@
             // {data: 'User_Apellido1', name: 'User_Apellido1'},
             // {data: 'User_Correo', name: 'User_Correo'},
             
-         {data: 'Codigo', name: 'Codigo'},
+            {data: 'Codigo', name: 'Codigo'},
             {data: 'Cedula', name: 'Cedula'},
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Apellido', name: 'Apellido'},
@@ -96,7 +97,7 @@
             
       
              {
-                defaultContent: '@permission('ADD_DEVELOPER')<a href="javascript:;" title="Asignar" class="btn btn-simple btn-warning btn-icon crear"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('ADD_JUDMENT')<a href="javascript:;" title="Asignar" class="btn btn-simple btn-warning btn-icon crear"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -113,63 +114,65 @@
 
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
-   
-    
-    
-    table.on('click', '.crear', function (e) {
-                    var route = '{{ route('AnteproyectosGesap.desarrolladorStore') }}';
-                    var type = 'POST';
-                    var async = async || false;
-                    var formData = new FormData();
-                    
-                    e.preventDefault();
-                    $tr = $(this).closest('tr');
-                    var dataTable = table.row($tr).data();
 
-                    
-                    
-                    formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
-                    formData.append('PK_User_Codigo', dataTable.Codigo);
-                    
-                    $.ajax({
-                        url: route,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        cache: false,
-                        type: type,
-                        contentType: false,
-                        data: formData,
-                        processData: false,
-                        async: async,
-                        beforeSend: function () {
-                            App.blockUI({target: '.portlet-form', animate: true});
-                        },
-                        success: function (response, xhr, request) {
-                            console.log(response);
-                            if (request.status === 200 && xhr === 'success') {
-                                if (response.data == 422) {
-                                    xhr = "warning"
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
-                                    var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
-                                   // location.href="{{route('AnteproyectosGesap.AsignarDesarrollador')}}"+ '/' + id;
-                                    $(".content-ajax").load(route);;
-                                } else {
-                                   // $('#form_usuario_create')[0].reset(); //Limpia formulario
-                                    UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
-                                    var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
-                                    //location.href="{{route('AnteproyectosGesap.AsignarDesarrollador')}}"+ '/' + id;
-                                    $(".content-ajax").load(route);
-                                    }
-                            }
-                        },
-                        error: function (response, xhr, request) {
-                            if (request.status === 422 && xhr === 'error') {
-                                UIToastr.init(xhr, response.title, response.message);
-                            }
+        
+    table.on('click', '.crear', function (e) {
+
+        var route = '{{ route('AnteproyectosGesap.juradostore') }}';
+        var type = 'POST';
+        var async = async || false;
+        var formData = new FormData();
+
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var dataTable = table.row($tr).data();
+
+
+
+        formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
+        formData.append('PK_User_Codigo', dataTable.Codigo);
+
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            cache: false,
+            type: type,
+            contentType: false,
+            data: formData,
+            processData: false,
+            async: async,
+            beforeSend: function () {
+                App.blockUI({target: '.portlet-form', animate: true});
+            },
+            success: function (response, xhr, request) {
+                console.log(response);
+                if (request.status === 200 && xhr === 'success') {
+                    if (response.data == 422) {
+                        xhr = "warning"
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                        var route = '{{ route('AnteproyectosGesap.AsignarJurados') }}'+ '/' + '{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+                        $(".content-ajax").load(route);
+                    } else {
+                    // $('#form_usuario_create')[0].reset(); //Limpia formulario
+                        UIToastr.init(xhr, response.title, response.message);
+                        App.unblockUI('.portlet-form');
+                        var route = '{{ route('AnteproyectosGesap.AsignarJurados') }}'+ '/' + '{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+                        $(".content-ajax").load(route);
                         }
-                    });
-    });
+                }
+            },
+            error: function (response, xhr, request) {
+                if (request.status === 422 && xhr === 'error') {
+                    UIToastr.init(xhr, response.title, response.message);
+                }
+            }
+        });
+        });
+        
+    
+    
+    
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + id;

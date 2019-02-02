@@ -14,10 +14,8 @@
                 <div class="form-body">
                     <div class="row">
                        
-                        {!! Field:: text('PK_NPRY_IdMctr008',$datos[0]['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Codigo Interno Del Anteproyecto.','icon'=>'fa fa-credit-card'] ) !!}
-
-                        {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+              
+                            {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                             {!! Field:: text('NPRY_Keywords',$datos[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -49,12 +47,13 @@
                    
                             @if($datos['Estado'] == "EN ESPERA" )
                             @permission('GESAP_CREATE_USER')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon create"
+                                                       class="btn btn-simple btn-success btn-icon desarrollador"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
                             </i>Agregar Desarrolador
+                            </a>@endpermission
                                 @endif
-                        </a>@endpermission
+                        
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
@@ -63,8 +62,25 @@
                             'Apellido',
                             'Acciones'
                         ])
-                    @endcomponent
-          
+                        @endcomponent
+                        @if($datos['Estado'] == "RADICADO" )
+                        <h4> JURADOS ASIGNADOS </h4>
+                        @permission('GESAP_CREATE_USER')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon juez"
+                                                       title="Registar un nuevo anteproyecto">
+                            <i class="fa fa-plus">
+                            </i>Agregar Jurados
+                            
+                            </a>@endpermission
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listajurados'])
+                        @slot('columns', [
+                            'Codigo',
+                            'Nombre',
+                            'Apellido',
+                            'Acciones'
+                        ])
+                        @endcomponent
+                        @endif
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
@@ -107,22 +123,18 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        
- //alert('aishiajsia');
-
-
-    var table, url, columns;
-        table = $('#listadesarrolladores');
+        var table1, url1, columns1;
+        table1 = $('#listadesarrolladores');
         id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
         
-        url = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
+        url1 = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
     
          
     
-        columns = [
-            {data: 'Codigo', name: 'Codigo'},
-            {data: 'Nombre', name: 'Nombre'},
-            {data: 'Apellido', name: 'Apellido'},
+        columns1 = [
+            {data: 'CodigoJ', name: 'CodigoJ'},
+            {data: 'NombreJ', name: 'NombreJ'},
+            {data: 'ApellidoJ', name: 'ApellidoJ'},
             
             
       
@@ -141,20 +153,106 @@
                 responsivePriority: 2
             }
         ];
-        
-        dataTableServer.init(table, url, columns);
-        table = table.DataTable();
+        dataTableServer.init(table1, url1, columns1);
+        table1 = table1.DataTable();
 
-        table.on('click', '.remove', function (e) {
+        table1.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            var route = '{{ route('Desarrollador.destroy') }}' + '/' + dataTable.PK_Id_desarrollo;
-             var type = 'DELETE';
+            var dataTable = table1.row($tr).data();
+            var route = '{{ route('Desarrollador.destroy') }}' + '/' + dataTable.CodigoJ;
+            var type = 'DELETE';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
                     text: "¿Está seguro de eliminar este desarrollador?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    
+                                    var route = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + id;
+                                    $(".content-ajax").load(route);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    var route = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + id;
+                                    $(".content-ajax").load(route);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó desarrollador", "error");
+                    }
+                });
+
+        });
+
+
+        var table, url, columns;
+        table = $('#listajurados');
+        id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+        
+        url = '{{ route('AnteproyectosGesap.JuradosList') }}'+ '/' + id;
+    
+         
+    
+        columns = [
+            {data: 'Codigo', name: 'Codigo'},
+            {data: 'Nombre', name: 'Nombre'},
+            {data: 'Apellido', name: 'Apellido'},
+            
+            
+      
+            {
+                defaultContent: '@permission('DELETE_JUDMENT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon removej"><i class="icon-trash"></i></a>@endpermission' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+        
+        table.on('click', '.removej', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('AnteproyectoGesap.EliminarJurados') }}' + '/' + dataTable.Codigo;
+          var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar este anteproyecto?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -186,14 +284,23 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó desarrollador", "error");
+                        swal("Cancelado", "No se eliminó ningun anteproyecto", "error");
                     }
                 });
 
         });
-    $(".create").on('click', function (e) {
+        
+
+    $(".desarrollador").on('click', function (e) {
         e.preventDefault();
         var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
+        $(".content-ajax").load(route);
+
+    });
+
+    $(".juez").on('click', function (e) {
+        e.preventDefault();
+        var route = '{{ route('AnteproyectosGesap.AsignarJurados') }}'+ '/' + '{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
         $(".content-ajax").load(route);
 
     });

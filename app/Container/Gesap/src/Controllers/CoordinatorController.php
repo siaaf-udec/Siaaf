@@ -25,6 +25,7 @@ use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\Fechas;
+use App\Container\Gesap\src\Jurados;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
@@ -144,6 +145,25 @@ class CoordinatorController extends Controller
      
             
                   return view($this->path .'AsignarDesarrolladores',
+                [
+                    'datos' => $datos,
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
+    }
+    public function AsignarJurados(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
+     
+            
+                  return view($this->path .'AsignarJurados',
                 [
                     'datos' => $datos,
                 ]);
@@ -300,8 +320,7 @@ class CoordinatorController extends Controller
 
             $usuarios = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
             
-            $pro = Usuarios::where('FK_User_IdRol',1)->where('FK_User_IdEstado',1)->get();
-            $i=0;
+             $i=0;
             $concatenado=[];
               foreach($usuarios as $user){
       
@@ -340,6 +359,99 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    public function AsignarJuradoslist(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+//disponibles
+            $usuarios = Usuarios::where('FK_User_IdRol',2)->where('FK_User_IdEstado',1)->get();       
+//unico no disponible
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            $Predirector =  $anteproyecto -> FK_NPRY_Pre_Director;
+
+            $i=0;
+            $concatenado=[];
+
+              foreach($usuarios as $user){
+      
+                   $jurado = $user -> PK_User_Codigo;
+                   if($jurado != $Predirector) {
+                    $jurados= Jurados::where('FK_User_Codigo',$jurado)->first();
+                    if(is_null($jurados)){
+                    $collection = collect([]);
+                    $collection->put('Codigo',$user-> PK_User_Codigo);
+                   
+                    $collection->put('Cedula',$user-> User_Cedula);
+                    $collection->put('Nombre',$user->  User_Nombre1);
+                    $collection->put('Apellido',$user->  User_Apellido1);
+                    $collection->put('Correo',$user-> User_Correo);
+                      
+      
+                       
+                    $concatenado[$i]= $collection;
+
+                    $i=$i+1;
+                    }
+                   }     
+               
+                   
+               }
+
+               return DataTables::of($concatenado)
+               ->removeColumn('created_at')
+               ->removeColumn('updated_at')
+                
+               ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    public function JuradosList(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+
+            $s=0;
+
+            foreach($Jurados as $juez){
+                
+                $id_user[$s]= $juez -> FK_User_Codigo;
+            
+
+                $user = Usuarios::where('PK_User_Codigo',$id_user[$s])->first();
+
+                $nombre[$s] = $user -> User_Nombre1;
+
+                $Apellido[$s] = $user -> User_Apellido1;
+ 
+                $juez->offsetSet('Codigo',$id_user[$s]);
+
+                $juez->offsetSet('Nombre',$nombre[$s]);
+                
+                $juez->offsetSet('Apellido',$Apellido[$s]);             
+
+                $s=$s+1;
+               }
+         
+         
+            
+              return DataTables::of($Jurados)
+              ->removeColumn('created_at')
+              ->removeColumn('updated_at')
+               
+              ->addIndexColumn()
+              ->make(true);
+            }
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        
+    }
     
 	public function DesarrolladoresList(Request $request,$id)
     {
@@ -360,11 +472,11 @@ class CoordinatorController extends Controller
 
                 $Apellido[$s] = $user -> User_Apellido1;
  
-                $desarrollo->offsetSet('Codigo',$id_user[$s]);
+                $desarrollo->offsetSet('CodigoJ',$id_user[$s]);
 
-                $desarrollo->offsetSet('Nombre',$nombre[$s]);
+                $desarrollo->offsetSet('NombreJ',$nombre[$s]);
                 
-                $desarrollo->offsetSet('Apellido',$Apellido[$s]);             
+                $desarrollo->offsetSet('ApellidoJ',$Apellido[$s]);             
 
                 $s=$s+1;
                }
@@ -482,7 +594,38 @@ class CoordinatorController extends Controller
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
-				'Desarrollador Asignado Al Anteproyecto.'
+				'Desarrollador Asignado al Anteproyecto.'
+            );
+        }
+        }
+    }
+    public function juradostore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $datos = Jurados::Where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->get();
+            $numero = $datos->count();
+            if ($numero >= 2){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud, el Anteproyecto ya tiene el numero maximo de jurados asignados.',
+                    $IdError
+                );
+
+            }else{
+
+            
+            Jurados::create([
+                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                'FK_User_Codigo' => $request['PK_User_Codigo'],
+                'FK_NPRY_Estado' => 3,
+                'JR_Comentario' => "Sin Comentarios.",
+               
+            ]);
+            
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Jurado Asignado al Anteproyecto.'
             );
         }
         }
@@ -626,11 +769,34 @@ class CoordinatorController extends Controller
 
     ///////// ELIMINAR /////
        
+   
     public function EliminarDesarrollador(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
             
-			Desarrolladores::destroy($id);
+            
+            $usuario = Desarrolladores::where('FK_User_Codigo',$id)->first();
+            
+            $usuario -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+   
+    public function EliminarJurado(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            $usuario = Jurados::where('FK_User_Codigo',$id)->first();
+            $usuario -> delete();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'

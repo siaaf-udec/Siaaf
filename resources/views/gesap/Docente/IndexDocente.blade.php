@@ -32,29 +32,31 @@
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                    @permission('GESAP_ADMIN_MCT')<a href="javascript:;"
+                        @permission('DOCENTE_SOLICITUD')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Solicitudes
                         </a>@endpermission
                        
-                        @permission('GESAP_REPORT_USER')<a href="javascript:;"
+                        <!-- @permission('DOCENTE_REPORT_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Anteproyectos</a>@endpermission
-                        <br>
+                        <br> -->
                     </div>
 
                 </div>
             </div>
             <br>
             <div class="row">
+            <h3>Anteproyectos Activos</h3>
+
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
@@ -68,6 +70,22 @@
                         ])
                     @endcomponent
                 </div>
+                <br><br>
+            <h3>Anteproyectos Asignados(Jurado)</h3>
+    
+    <br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyectojurado'])
+                    @slot('columns', [
+                        'Titulo',
+                        'Descripción',
+                        'Duracion',
+                        'Fecha Radicación',
+                        'Director',
+                        'Acciones'
+                    ])
+                @endcomponent
+            </div>
             </div>
         @endcomponent
     </div>
@@ -120,7 +138,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -145,6 +163,52 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
                 route_ver = '{{ route('DocenteGesap.VerAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route_ver);
+        });
+
+        var table1, url1, columns1;
+        table1 = $('#listaAnteproyectojurado');
+        idj = 111100009;//variable de sesion
+        url1 = '{{ route('DocenteGesap.AnteproyectoListJurado')}}'+ '/' + idj;
+        columns1 = [
+            
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Descripcion', name: 'Descripcion'},
+            {data: 'Duracion', name: 'Duracion'},
+            {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
+            {data: 'Director', name: 'Director'},
+           
+            {
+                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+        dataTableServer.init(table1, url1, columns1);
+        table1 = table1.DataTable();
+
+        table1.on('click', '.VerJ', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table1.row($tr).data(),
+                route_ver = '{{ route('DocenteGesap.VerAnteproyectoJurado') }}' + '/' + dataTable.Codigo;
+            $(".content-ajax").load(route_ver);
+        });
+        table1.on('click', '.Calificar', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table1.row($tr).data(),
+                route_ver = '{{ route('DocenteGesap.CalificarJurado') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route_ver);
         });
 

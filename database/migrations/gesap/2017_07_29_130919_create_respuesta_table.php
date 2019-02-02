@@ -18,10 +18,7 @@ class CreateRespuestaTable extends Migration
             $table->string('RPST_RMct');
             $table->string('RPST_Requerimientos');
             $table->integer('FK_TBL_Observaciones_Id')->unsigned();
-            $table->foreign('FK_TBL_Observaciones_Id')
-                ->references('PK_BVCS_IdObservacion')
-                ->on('TBL_Observaciones')
-                ->onDelete('cascade');
+           
             $table->timestamps();
         });
     }

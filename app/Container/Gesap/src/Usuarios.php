@@ -44,4 +44,8 @@ class Usuarios extends Model
     {
         return $this->hasMany(Anteproyecto::class, 'FK_NPRY_Pre_Director', 'PK_User_Codigo');
     }
+    public function relacionCommits()
+    {
+        return $this->hasMany(Commits::class, 'FK_User_Codigo', 'PK_User_Codigo');
+    }
 }

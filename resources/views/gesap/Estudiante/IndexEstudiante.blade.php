@@ -32,12 +32,13 @@
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                    @permission('GESAP_ADMIN_MCT')<a href="javascript:;"
+                    
+                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -64,6 +65,7 @@
                             'Acciones'
                         ])
                     @endcomponent
+                    
                 </div>
             </div>
         @endcomponent
@@ -117,7 +119,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-danger Actividades" ><i class="icon-folder"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-danger Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-warning Radicar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -133,16 +135,74 @@
         ];
         
       
-     
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
         table.on('click', '.Actividades', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data(),
-                route_ver = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
-            $(".content-ajax").load(route_ver);
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route);
+
+     //       $(".content-ajax").load(route_ver);
+        });
+        table.on('click', '.Radicar', function (e) {
+      
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+            var type = 'GET';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro que desea radicar el anteproyecto?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                              success: function (response, xhr, request) {
+                                        console.log(response);
+                                        if (request.status === 200 && xhr === 'success') {
+                                            if (response.data == 422) {
+                                                xhr = "warning"
+                                                UIToastr.init(xhr, response.title, response.message);
+                                                App.unblockUI('.portlet-form');
+                                               
+                                            } else {
+                                                table.ajax.reload();
+                                                UIToastr.init(xhr, response.title, response.message);
+                           
+                                                }
+                                        }
+                        },
+                        error: function (response, xhr, request) {
+                                        if (request.status === 422 && xhr === 'error') {
+                                            UIToastr.init(xhr, response.title, response.message);
+                                        }
+                        }
+                                
+                        });
+                    } else {
+                        swal("Cancelado", "No se radico el anteproyecto", "error");
+                    }
+                });
+
         });
 
         

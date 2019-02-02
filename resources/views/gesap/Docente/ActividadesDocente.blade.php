@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de  Actividades del MCT'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -28,7 +28,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('STUDENT_BACK')<a href="javascript:;"
+                                @permission('BACK_DOCENTE')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -68,7 +68,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('EstudianteGesap.VerActividadesList') }}';
+        url = '{{ route('DocenteGesap.VerActividadesList') }}';
     
         idp='{{  $Anteproyecto[0]  }}';
     
@@ -80,7 +80,7 @@
             
       
             {
-                defaultContent: '@permission('ADD_ACTIVITY_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-danger btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('ANTE_DIRECTOR')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -102,7 +102,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 
@@ -115,11 +115,10 @@
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('EstudianteGesap.index.ajax') }}';
-
-            location.href="{{route('EstudianteGesap.index')}}";
-
-           // $(".content-ajax").load(route);
+           
+            var route =  '{{ route('DocenteGesap.VerAnteproyecto') }}' + '/' + idp;
+            //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
         });
     });
 </script>
