@@ -8,16 +8,16 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailGesap extends Mailable  
+class EmailGesap extends Mailable implements ShouldQueue
 {
-    //use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
     /**
      * The number of times the job may be attempted.
      *
      * @var int
      */
-    //public $tries = 3;
+    public $tries = 3;
     /**
      * @var
      */

@@ -33,6 +33,8 @@ use App\Container\Gesap\src\Mctr008;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
+use App\Container\Gesap\src\Mail\EmailGesap;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -661,6 +663,12 @@ class CoordinatorController extends Controller
              'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
              'NPRY_FCH_Radicacion' => $fecha,
             ]);
+
+            $user = Usuarios::where('PK_User_Codigo','=','FK_NPRY_Pre_Director')->first();
+            $correo = $user->User_Correo;
+            $nombre = $user->User_Nombre1;
+            Mail::to($correo)->send(new EmailGesap($nombre));
+
             return AjaxResponse::success(
 				'¡Esta Hecho!',
 				'Datos Creados.'
@@ -1043,6 +1051,8 @@ class CoordinatorController extends Controller
                             'FK_User_IdEstado' => $request['FK_User_IdEstado'],
                             'FK_User_IdRol' => $request['FK_User_IdRol'],
                         ]);
+
+                        Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
 
                         return AjaxResponse::success(
                             '¡Bien hecho!',
