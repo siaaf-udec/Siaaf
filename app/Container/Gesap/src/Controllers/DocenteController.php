@@ -515,7 +515,7 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
-            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',1 )->first();
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id )->first();
             $Nombre1 = $Anteproyecto -> relacionPredirectores -> User_Nombre1;
             $Apellido = $Anteproyecto -> relacionPredirectores -> User_Apellido1;
             $space = " ";

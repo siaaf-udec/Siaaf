@@ -315,13 +315,7 @@ class PermissionGesapSeeder extends Seeder
         $permissionFuncionario->save();
         
 
-        $permissionFuncionario = new Permission;
-        $permissionFuncionario->name = 'ANTE_JURADO';
-        $permissionFuncionario->display_name = 'Gesap profesor';
-        $permissionFuncionario->description = 'Permiso para ver los anteproyectos asignados como jurado';
-        $permissionFuncionario->module_id = 7;
-        $permissionFuncionario->save();
-
+     
         $permissionFuncionario = new Permission;
         $permissionFuncionario->name = 'ANTE_CONFIRM';
         $permissionFuncionario->display_name = 'Gesap profesor';

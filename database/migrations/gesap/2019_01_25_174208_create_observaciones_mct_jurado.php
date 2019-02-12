@@ -31,7 +31,6 @@ class CreateObservacionesMctJurado extends Migration
                         ->on('TBL_Usuario')
                         ->onDelete('cascade');
             $table->string('OBS_observacion', 600);
-            $table->date('OBS_Limit'); 
             $table->timestamps();
         });
     }

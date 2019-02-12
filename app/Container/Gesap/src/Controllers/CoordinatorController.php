@@ -664,7 +664,7 @@ class CoordinatorController extends Controller
              'NPRY_FCH_Radicacion' => $fecha,
             ]);
 
-            $user = Usuarios::where('PK_User_Codigo','=','FK_NPRY_Pre_Director')->first();
+            $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
             $correo = $user->User_Correo;
             $nombre = $user->User_Nombre1;
             Mail::to($correo)->send(new EmailGesap($nombre));
