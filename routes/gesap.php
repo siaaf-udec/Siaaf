@@ -222,6 +222,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@VerActividades',  
 			'as' => 'EstudianteGesap.VerActividades'
 		]);
+	
 		Route::get('ActividadesList/{id?}', [
 			'uses' => $controller . 'StudentController@VerActividadesList',  
 			'as' => 'EstudianteGesap.VerActividadesList'
@@ -234,6 +235,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@Comentarios',  
 			'as' => 'EstudianteGesap.Comentarios'
 		]);
+		Route::get('DetallesPersona/{id?}', [
+			'uses' => $controller . 'StudentController@DetallesPersona',  
+			'as' => 'EstudianteGesap.DetallesPersona'
+		]);
 		Route::get('Radicar/{id?}', [
 			'uses' => $controller . 'StudentController@Radicar',  
 			'as' => 'EstudianteGesap.RADICAR'
@@ -241,6 +246,14 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('ActividadStore', [
 			'uses' => $controller . 'StudentController@ActividadStore',  
 			'as' => 'EstudianteGesap.ActividadStore'
+		]);
+		Route::post('PersonaDatos', [
+			'uses' => $controller . 'StudentController@PersonaDatos',  
+			'as' => 'EstudianteGesap.PersonaDatos'
+		]);
+		Route::delete('PersonaDatosdelete/{id?}', [
+			'uses' => $controller . 'StudentController@PersonaDatosdelete',  
+			'as' => 'EstudianteGesap.PersonaDatosdelete'
 		]);
 		Route::post('ComentarioStore', [
 			'uses' => $controller . 'StudentController@ComentarioStore',  

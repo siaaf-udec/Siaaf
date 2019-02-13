@@ -24,6 +24,8 @@ use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
+
+use App\Container\Gesap\src\PersonaMct;
 use App\Container\Gesap\src\Fechas;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
@@ -224,32 +226,99 @@ class StudentController extends Controller
             }              
         
     }
+    public function PersonaDatos(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+          
+                PersonaMct::create([
+                        'MCT_Detalles_Entidad'=>$request['MCT_Detalles_Entidad'],
+                        'MCT_Detalles_Primer_Apellido'=>$request['MCT_Detalles_Primer_Apellido'],
+                        'MCT_Detalles_Segundo_Apellido'=>$request['MCT_Detalles_Segundo_Apellido'],
+                        'MCT_Detalles_Nombres'=>$request['MCT_Detalles_Nombres'],
+                        'MCT_Detalles_Genero'=>$request['MCT_Detalles_Genero'],
+                        'MCT_Detalles_Fecha_Nacimiento'=>$request['MCT_Detalles_Fecha_Nacimiento'],
+                        'MCT_Detalles_Pais'=>$request['MCT_Detalles_Pais'],
+                        'MCT_Detalles_Correo'=>$request['MCT_Detalles_Correo'],
+                        'MCT_Detalles_Tipo_Doc'=>$request['MCT_Detalles_Tipo_Doc'],
+                        'MCT_Detalles_Numero'=>$request['MCT_Detalles_Numero'],
+                        'MCT_Detalles_Funcion'=>$request['MCT_Detalles_Funcion'],
+                        'MCT_Detalles_Horas_Semanales'=>$request['MCT_Detalles_Horas_Semanales'],
+                        'MCT_Detalles_Numero_meses'=>$request['MCT_Detalles_Numero_meses'],
+                        'MCT_Detalles_Tipo_vinculacion'=>$request['MCT_Detalles_Tipo_vinculacion'],
+                        'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+              
+
+                ]);
+                Commits::create([
+                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                 'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                 'FK_User_Codigo' => $request['FK_User_Codigo'],
+                 'CMMT_Commit' => $request['CMMT_Commit'],
+                 'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                ]);
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Creados.'
+            );
+          
+       
+            }              
+        
+    }
+    public function PersonaDatosdelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
     public function SubirActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-                      
-                $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
-                
-                $Actividad->offsetSet('Anteproyecto', $idp);
 
-                $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
-                $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
-                if($commit2 == null)
-                {
-                    $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
-                    $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
                     
-                }else{
-                    $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
-                    $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
-     
-                }
+            $Actividad->offsetSet('Anteproyecto', $idp);
 
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null)
+            {
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
+                $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                
+            }else{
+                $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+            }
+
+            if($id == 13){
+                return view($this->path .'SubirActividadDetalles',
+                [
+                'datos' => $Actividad,
+                ]);
+
+            }else{
                 return view($this->path .'SubirActividad',
                 [
-                    'datos' => $Actividad,
+                'datos' => $Actividad,
                 ]);
-               
+            }
                
                  
             }     
@@ -291,6 +360,21 @@ class StudentController extends Controller
         }
    
     }
+    public function DetallesPersona(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $DPersona = PersonaMct::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($DPersona)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

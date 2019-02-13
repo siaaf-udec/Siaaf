@@ -20,7 +20,7 @@
                         @slot('columns', [
                             '#',
                             'Actividad',
-                            'Descripcion',
+                            'Descripción',
                             'Acciones'
                         ])
                     @endcomponent
