@@ -32,6 +32,10 @@ class CreateObservacionesMctJurado extends Migration
                         ->onDelete('cascade');
             $table->string('OBS_observacion', 600);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+          
+>>>>>>> Stashed changes
 =======
           
 >>>>>>> Stashed changes
