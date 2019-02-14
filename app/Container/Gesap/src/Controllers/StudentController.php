@@ -25,6 +25,8 @@ use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 
+use App\Container\Gesap\src\Resultados;
+use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
 use App\Container\Gesap\src\Fechas;
 use App\Container\Gesap\src\RolesUsuario;
@@ -296,12 +298,32 @@ class StudentController extends Controller
             }              
         
     }
-    public function PersonaDatosdelete(Request $request, $id)
+     public function PersonaDatosdelete(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
             
             
             $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+    public function Financiaciondelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = Financiacion::where('PK_Id_Financiacion',$id)->first();
             
             $persona -> delete();
             return AjaxResponse::success(
@@ -343,12 +365,26 @@ class StudentController extends Controller
                 'datos' => $Actividad,
                 ]);
 
-            }else{
-                return view($this->path .'SubirActividad',
+            }if($id == 14){
+                return view($this->path .'SubirActividadFinanciacion',
                 [
                 'datos' => $Actividad,
                 ]);
+
+            
+            }if($id == 16){
+                return view($this->path .'SubirActividadResultados',
+                [
+                'datos' => $Actividad,
+                ]);
+
             }
+        
+               return view($this->path .'SubirActividad',
+                [
+                'datos' => $Actividad,
+                ]);
+            
                
                  
             }     
@@ -358,6 +394,99 @@ class StudentController extends Controller
             );         
         
     }
+    //Resultados
+    public function ResultadoDelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $resultado = Resultados::where('PK_Id_Resultados',$id)->first();
+            
+            $resultado -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+
+
+    public function ResultadoStore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+          
+                Resultados::create([
+                    'MCT_Resultado'=>$request['MCT_Resultado'],
+                    'MCT_Producto_Esperado'=>$request['MCT_Producto_Esperado'],
+                    'MCT_Indicador'=>$request['MCT_Indicador'],    
+                    'MCT_Beneficiario'=>$request['MCT_Beneficiario'],
+                    'MCT_Categoria'=>$request['MCT_Categoria'],    
+                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],          
+
+                ]);
+                Commits::create([
+                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                    'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                    'FK_User_Codigo' => $request['FK_User_Codigo'],
+                    'CMMT_Commit' => $request['CMMT_Commit'],
+                    'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                ]);
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Creados.'
+            );
+          
+       
+            }              
+        
+    }
+    public function Resultados(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $resultado = Resultados::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($resultado)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    public function EditarResultado(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+            $resultado = Resultados::where('PK_Id_Resultados',$request['PK_Id_Resultados'])->first();
+
+            $resultado -> MCT_Resultado = $request['MCT_EDITAR_Resultado'];
+            $resultado -> MCT_Producto_Esperado = $request['MCT_EDITAR_Producto_Esperado'];
+            $resultado -> MCT_Indicador = $request['MCT_EDITAR_Indicador'];
+            $resultado -> MCT_Beneficiario = $request['MCT_EDITAR_Beneficiario'];
+            $resultado -> MCT_Categoria = $request['MCT_EDITAR_Categoria'];
+            
+            $resultado -> save();
+
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Modificados.'
+            );
+          
+       
+            }              
+        
+    }
+
+
+    //
     
     public function Comentarios(Request $request, $id, $idp)
     {
@@ -397,6 +526,69 @@ class StudentController extends Controller
                 $DPersona = PersonaMct::where('FK_NPRY_IdMctr008', $id)->get();
 
                 return DataTables::of($DPersona)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    public function EditarFinanciacion(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+            $financiacion = Financiacion::where('PK_Id_Financiacion',$request['PK_Id_Financiacion'])->first();
+
+            $financiacion -> MCT_Financiacion = $request['MCT_EDITAR_Financiacion'];
+            $financiacion -> MCT_Fuente = $request['MCT_EDITAR_Fuente'];
+            $financiacion -> MCT_Valor_Aportado = $request['MCT_EDITAR_Valor_Aportado'];
+            $financiacion -> save();
+
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Modificados.'
+            );
+          
+       
+            }              
+        
+    }
+  
+    public function FinanciacionStore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+          
+                Financiacion::create([
+                    'MCT_Financiacion'=>$request['MCT_Financiacion'],
+                    'MCT_Fuente'=>$request['MCT_Fuente'],
+                    'MCT_Valor_Aportado'=>$request['MCT_Valor_Aportado'],    
+                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],          
+
+                ]);
+                Commits::create([
+                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                    'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                    'FK_User_Codigo' => $request['FK_User_Codigo'],
+                    'CMMT_Commit' => $request['CMMT_Commit'],
+                    'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                ]);
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Creados.'
+            );
+          
+       
+            }              
+        
+    }
+    public function Financiacion(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $Financiacion = Financiacion::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($Financiacion)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
 			    

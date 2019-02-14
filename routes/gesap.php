@@ -239,6 +239,45 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@DetallesPersona',  
 			'as' => 'EstudianteGesap.DetallesPersona'
 		]);
+		
+		Route::get('Financiacion/{id?}', [
+			'uses' => $controller . 'StudentController@Financiacion',  
+			'as' => 'EstudianteGesap.Financiacion'
+		]);
+		
+		Route::post('FinanciacionStore', [
+			'uses' => $controller . 'StudentController@FinanciacionStore',  
+			'as' => 'EstudianteGesap.FinanciacionStore'
+		]);
+		Route::post('EditarFinanciacion', [
+			'uses' => $controller . 'StudentController@EditarFinanciacion',  
+			'as' => 'EstudianteGesap.EditarFinanciacion'
+		]);
+		//
+		Route::post('ResultadoStore', [
+			'uses' => $controller . 'StudentController@ResultadoStore',  
+			'as' => 'EstudianteGesap.ResultadoStore'
+		]);
+		
+		Route::post('EditarResultado', [
+			'uses' => $controller . 'StudentController@EditarResultado',  
+			'as' => 'EstudianteGesap.EditarResultado'
+		]);
+		Route::delete('ResultadoDelete/{id?}', [
+			'uses' => $controller . 'StudentController@ResultadoDelete',  
+			'as' => 'EstudianteGesap.ResultadoDelete'
+		]);
+		Route::get('Resultados/{id?}', [
+			'uses' => $controller . 'StudentController@Resultados',  
+			'as' => 'EstudianteGesap.Resultados'
+		]);
+		
+		//
+		
+		Route::delete('Financiaciondelete/{id?}', [
+			'uses' => $controller . 'StudentController@Financiaciondelete',  
+			'as' => 'EstudianteGesap.Financiaciondelete'
+		]);
 		Route::get('Radicar/{id?}', [
 			'uses' => $controller . 'StudentController@Radicar',  
 			'as' => 'EstudianteGesap.RADICAR'

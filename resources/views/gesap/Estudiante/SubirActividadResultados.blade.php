@@ -30,48 +30,32 @@
                 
             </div>
             <!--MODAL CREAR COMENTARIO-->
-             <!--MODAL CREAR Persona-->
+             <!--MODAL CREAR Resultado-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-person" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_create-person', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_create-Resultado', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir persona</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Resultado</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_Detalles_Entidad',null,['label'=>'Entidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Primer_Apellido',null,['label'=>'Primer Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su primer Apellido','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Segundo_Apellido',null,['label'=>'Segundo Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su segundo Apellido','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Nombres',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su nombre','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_Detalles_Genero',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
-                                   {!! Field:: date('MCT_Detalles_Fecha_Nacimiento',null,['label'=>'Fecha Nacimiento:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Coloque su fecha de nacimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Pais',null,['label'=>'Pais:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite su pais de nacimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Correo',null,['label'=>'Correo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su correo','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_Detalles_Tipo_Doc',['Cédula de Ciudadania'=>'Cédula de Ciudadania', 'Registro civil de nacimiento'=>'Registro civil de nacimiento',
-                                                                                     'Tarjeta de identidad'=>'Tarjeta de identidad','Cédula de Extranjeria'=>'Cédula de Extranjeria' ],null,['label'=>'Tipo Documento: ']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Numero',null,['label'=>'Número:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite Numero de Identificación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Funcion',null,['label'=>'Función del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la función que ejerce en el proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Horas_Semanales',null,['label'=>'Dedicación horas semanales:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la cantidad de horas semanales aplicadas al proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Numero_meses',null,['label'=>'Número de meses:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite el numero de meses que tarda en el proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Detalles_Tipo_vinculacion',null,['label'=>'Tipo vinculación del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite su tipó de vinculación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('MCT_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
+                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
+                                 
                                
                                
                                 </div>
@@ -85,52 +69,36 @@
                     </div>
                 
             </div>
-            <!--MODAL CREAR persona-->
-            <!--MODAL EDITAR Persona-->
+            <!--MODAL CREAR Resultado-->
+            <!--MODAL EDITAR Resultado-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-edit-person" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-edit-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_edit-person', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_edit-Resultado', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Editar persona</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Editar Resultado</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                
-                                   {!! Field:: Text('PK_Id_EDITAR_Dpersona',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
+                                  {!! Field:: Text('PK_Id_Resultados',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Entidad',null,['label'=>'Entidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Primer_Apellido',null,['label'=>'Primer Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su primer Apellido','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Segundo_Apellido',null,['label'=>'Segundo Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su segundo Apellido','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Nombres',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su nombre','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_EDITAR_Detalles_Genero',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
-                                   {!! Field:: date('MCT_EDITAR_Detalles_Fecha_Nacimiento',null,['label'=>'Fecha Nacimiento:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Coloque su fecha de nacimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Pais',null,['label'=>'Pais:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite su pais de nacimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Correo',null,['label'=>'Correo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su correo','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_EDITAR_Detalles_Tipo_Doc',['Cédula de Ciudadania'=>'Cédula de Ciudadania', 'Registro civil de nacimiento'=>'Registro civil de nacimiento',
-                                                                                     'Tarjeta de identidad'=>'Tarjeta de identidad','Cédula de Extranjeria'=>'Cédula de Extranjeria' ],null,['label'=>'Tipo Documento: ']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Numero',null,['label'=>'Número:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite Numero de Identificación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Funcion',null,['label'=>'Función del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la función que ejerce en el proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Horas_Semanales',null,['label'=>'Dedicación horas semanales:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la cantidad de horas semanales aplicadas al proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Numero_meses',null,['label'=>'Número de meses:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite el numero de meses que tarda en el proyecto','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Detalles_Tipo_vinculacion',null,['label'=>'Tipo vinculación del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite su tipó de vinculación','icon'=>'fa fa-book']) !!}
+                                 
+                                   {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('MCT_EDITAR_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
+                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
+                                 
                                
                                
                                 </div>
@@ -144,7 +112,7 @@
                     </div>
                 
             </div>
-            <!--MODAL EDITAR persona-->
+            <!--MODAL EDITAR Resultado-->
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
         <div class="row">
@@ -181,27 +149,18 @@
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Agregar Persona
+                            </i>Agregar Resultado
                         </a>@endpermission
                     @endif
                     <br><br>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DetallesPerson'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Resultados'])
                     @slot('columns', [
-                            'Entidad',
-                            'Primer Apellido',
-                            'Segundo Apellido',
-                            'Nombres',
-                            'Genero',
-                            'Fecha Nacimiento',
-                            'Pais',
-                            'Correo Electrónico',
-                            'Tipo Identificación',
-                            'Numero',
-                            'Función del proyecto',
-                            'Dedicación horas semanales',
-                            'Número de meses',
-                            'Tipo de vinculación del proyecto',
-                            'Acciónes',
+                            'Resultado',
+                            'Producto Esperado',
+                            'Indicador',
+                            'Beneficio',
+                            'Categoria',
+                            'Acciones'
     
                     ])
                     @endcomponent
@@ -254,6 +213,7 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+    
     $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
             placeholder: "Selecciónar",
@@ -267,7 +227,6 @@ $(document).ready(function(){
         $('.pmd-select2', form).change(function () {
             form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
         });
-
 
     id = 123456189 ;
 
@@ -287,15 +246,12 @@ $(document).ready(function(){
         table = table.DataTable();
 
         
-       
-      
-
-        
             $('.gestionar').on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-coment').modal('toggle');
             });
-           
+            
+
 
             var CrearComentario = function () {
                 return {
@@ -360,28 +316,19 @@ $(document).ready(function(){
      
         var table1, url1, columns1;
         
-        table1 = $('#DetallesPerson');
+        table1 = $('#Resultados');
        
            
-        url1 = '{{ route('EstudianteGesap.DetallesPersona') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url1 = '{{ route('EstudianteGesap.Resultados') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns1 = [
             
-            {data: 'MCT_Detalles_Entidad', name: 'MCT_Detalles_Entidad'},
-            {data: 'MCT_Detalles_Primer_Apellido', name: 'MCT_Detalles_Primer_Apellido'},
-            {data: 'MCT_Detalles_Segundo_Apellido', name: 'MCT_Detalles_Segundo_Apellido'},            
-            {data: 'MCT_Detalles_Nombres', name: 'MCT_Detalles_Nombres'},
-            {data: 'MCT_Detalles_Genero', name: 'MCT_Detalles_Genero'},
-            {data: 'MCT_Detalles_Fecha_Nacimiento', name: 'MCT_Detalles_Fecha_Nacimiento'},
-            {data: 'MCT_Detalles_Pais', name: 'MCT_Detalles_Pais'},            
-            {data: 'MCT_Detalles_Correo', name: 'MCT_Detalles_Correo'},
-            {data: 'MCT_Detalles_Tipo_Doc', name: 'MCT_Detalles_Tipo_Doc'},
-            {data: 'MCT_Detalles_Numero', name: 'MCT_Detalles_Numero'},
-            {data: 'MCT_Detalles_Funcion', name: 'MCT_Detalles_Funcion'},            
-            {data: 'MCT_Detalles_Horas_Semanales', name: 'MCT_Detalles_Horas_Semanales'},
-            {data: 'MCT_Detalles_Numero_meses', name: 'MCT_Detalles_Numero_meses'},
-            {data: 'MCT_Detalles_Tipo_vinculacion', name: 'MCT_Detalles_Tipo_vinculacion'},
+            {data: 'MCT_Resultado', name: 'MCT_Resultado'},
+            {data: 'MCT_Producto_Esperado', name: 'MCT_Producto_Esperado'},
+            {data: 'MCT_Indicador', name: 'MCT_Indicador'},
+            {data: 'MCT_Beneficiario', name: 'MCT_Beneficiario'},
+            {data: 'MCT_Categoria', name: 'MCT_Categoria'},  
            
             {
                 defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
@@ -404,30 +351,25 @@ $(document).ready(function(){
         
         $('.person').on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-person').modal('toggle');
+            $('#modal-create-Resultado').modal('toggle');
         });
-        var CrearPersona = function () {
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+                 return this.optional(element) || /^[0-9]+$/i.test(value);
+        });
+        var CrearResultado = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.PersonaDatos') }}';
+                        var route = '{{ route('EstudianteGesap.ResultadoStore') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MCT_Detalles_Entidad', $('#MCT_Detalles_Entidad').val());
-                        formData.append('MCT_Detalles_Primer_Apellido', $('#MCT_Detalles_Primer_Apellido').val());
-                        formData.append('MCT_Detalles_Segundo_Apellido', $('#MCT_Detalles_Segundo_Apellido').val());
-                        formData.append('MCT_Detalles_Nombres', $('#MCT_Detalles_Nombres').val());
-                        formData.append('MCT_Detalles_Genero', $('select[name="MCT_Detalles_Genero"]').val());
-                        formData.append('MCT_Detalles_Fecha_Nacimiento', $('[name="MCT_Detalles_Fecha_Nacimiento"]').val());
-                        formData.append('MCT_Detalles_Pais', $('#MCT_Detalles_Pais').val());
-                        formData.append('MCT_Detalles_Correo', $('#MCT_Detalles_Correo').val());
-                        formData.append('MCT_Detalles_Tipo_Doc', $('#MCT_Detalles_Tipo_Doc').val());
-                        formData.append('MCT_Detalles_Numero', $('#MCT_Detalles_Numero').val());
-                        formData.append('MCT_Detalles_Funcion', $('#MCT_Detalles_Funcion').val());
-                        formData.append('MCT_Detalles_Horas_Semanales', $('#MCT_Detalles_Horas_Semanales').val());
-                        formData.append('MCT_Detalles_Numero_meses',$('#MCT_Detalles_Numero_meses').val());
-                        formData.append('MCT_Detalles_Tipo_vinculacion', $('#MCT_Detalles_Tipo_vinculacion').val());
+                        formData.append('MCT_Resultado', $('#MCT_Resultado').val());
+                        formData.append('MCT_Producto_Esperado', $('#MCT_Producto_Esperado').val());
+                        formData.append('MCT_Indicador', $('#MCT_Indicador').val());
+                        formData.append('MCT_Beneficiario', $('#MCT_Beneficiario').val());
+                        formData.append('MCT_Categoria', $('#MCT_Categoria').val());
+                        
             
 ///LA OTRA TABLA///
                         formData.append('FK_NPRY_IdMctr008', '{{$datos['Anteproyecto']}}');
@@ -453,8 +395,8 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-create-person').modal('hide');
-                                    $('#from_create-person')[0].reset(); //Limpia formulario
+                                    $('#modal-create-Resultado').modal('hide');
+                                    $('#form_create-Resultado')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
@@ -475,40 +417,31 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form1 = $('#from_create-person');
+            var form1 = $('#form_create-Resultado');
             var rules1 = {
                 
-            MCT_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
-            MCT_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
-            MCT_Detalles_Genero:{required: true},
-            MCT_Detalles_Fecha_Nacimiento:{required: true},
-            MCT_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
-            MCT_Detalles_Tipo_Doc:{required: true},
-            MCT_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
-            MCT_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
-            MCT_Detalles_Horas_Semanales:{minlength: 1, maxlength: 2, required: true, number: true,},
-            MCT_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
-            MCT_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
-         
-              
+                MCT_Resultado:{minlength: 1, maxlength: 100, required: true},
+                MCT_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
+                MCT_Indicador:{minlength: 1, maxlength: 100, required: true,},       
+                MCT_Beneficiario:{minlength: 1, maxlength: 100, required: true},
+                MCT_Categoria:{required: true},       
+           
             };
 
-            FormValidationMd.init(form1, rules1, false, CrearPersona()); 
+
+            FormValidationMd.init(form1, rules1, false, CrearResultado()); 
 
             table1.on('click', '.Eliminar', function (e) {
             e.preventDefault();
             $tr1 = $(this).closest('tr');
 
             var dataTable1 = table1.row($tr1).data();
-            var route1 = '{{ route('EstudianteGesap.PersonaDatosdelete') }}' + '/' + dataTable1.PK_Id_Dpersona;
+            var route1 = '{{ route('EstudianteGesap.ResultadoDelete') }}' + '/' + dataTable1.PK_Id_Resultados;
             var type1 = 'DELETE';
             var async1 = async1 || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar esta persona?",
+                    text: "¿Está seguro de eliminar este Resultado?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -529,7 +462,7 @@ $(document).ready(function(){
                             async: async1,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
+                                    table1.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -540,57 +473,39 @@ $(document).ready(function(){
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ninguna persona", "error");
+                        swal("Cancelado", "No se eliminó ningun Resultado", "error");
                     }
                 });
 
         });
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
-            $('#modal-edit-person').modal('toggle');
+            $('#modal-edit-Resultado').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            $('#PK_Id_EDITAR_Dpersona').val(dataTable1.PK_Id_Dpersona);
-            $('#MCT_EDITAR_Detalles_Entidad').val(dataTable1.MCT_Detalles_Entidad);
-            $('#MCT_EDITAR_Detalles_Primer_Apellido').val(dataTable1.MCT_Detalles_Primer_Apellido);
-            $('#MCT_EDITAR_Detalles_Segundo_Apellido').val(dataTable1.MCT_Detalles_Segundo_Apellido);
-            $('#MCT_EDITAR_Detalles_Nombres').val(dataTable1.MCT_Detalles_Nombres);
-            $('#MCT_EDITAR_Detalles_Genero').val(dataTable1.MCT_Detalles_Genero);
-            $('#MCT_EDITAR_Detalles_Fecha_Nacimiento').val(dataTable1.MCT_Detalles_Fecha_Nacimiento);
-            $('#MCT_EDITAR_Detalles_Pais').val(dataTable1.MCT_Detalles_Pais);
-            $('#MCT_EDITAR_Detalles_Correo').val(dataTable1.MCT_Detalles_Correo);
-            $('#MCT_EDITAR_Detalles_Tipo_Doc').val(dataTable1.MCT_Detalles_Tipo_Doc);
-            $('#MCT_EDITAR_Detalles_Numero').val(dataTable1.MCT_Detalles_Numero);
-            $('#MCT_EDITAR_Detalles_Funcion').val(dataTable1.MCT_Detalles_Funcion);
-            $('#MCT_EDITAR_Detalles_Horas_Semanales').val(dataTable1.MCT_Detalles_Horas_Semanales);
-            $('#MCT_EDITAR_Detalles_Numero_meses').val(dataTable1.MCT_Detalles_Numero_meses);
-            $('#MCT_EDITAR_Detalles_Tipo_vinculacion').val(dataTable1.MCT_Detalles_Tipo_vinculacion);
+            $('#PK_Id_Resultados').val(dataTable1.PK_Id_Resultados);
+            $('#MCT_EDITAR_Resultado').val(dataTable1.MCT_Resultado);
+            $('#MCT_EDITAR_Producto_Esperado').val(dataTable1.MCT_Producto_Esperado);
+            $('#MCT_EDITAR_Indicador').val(dataTable1.MCT_Indicador);
+            $('#MCT_EDITAR_Beneficiario').val(dataTable1.MCT_Beneficiario);
+            $('#MCT_EDITAR_Categoria').val(dataTable1.MCT_Categoria);
         });
 
-        var EditaPersona = function () {
+        var EditarResultado = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.EditarPersonaDatos') }}';
+                        var route = '{{ route('EstudianteGesap.EditarResultado') }}';
                         var type = 'POST';
                         var async = async || false;
 
-                        var formData = new FormData();
-                        formData.append('PK_Id_EDITAR_Dpersona', $('#PK_Id_EDITAR_Dpersona').val());
-                        formData.append('MCT_EDITAR_Detalles_Entidad', $('#MCT_EDITAR_Detalles_Entidad').val());
-                        formData.append('MCT_EDITAR_Detalles_Primer_Apellido', $('#MCT_EDITAR_Detalles_Primer_Apellido').val());
-                        formData.append('MCT_EDITAR_Detalles_Segundo_Apellido', $('#MCT_EDITAR_Detalles_Segundo_Apellido').val());
-                        formData.append('MCT_EDITAR_Detalles_Nombres', $('#MCT_EDITAR_Detalles_Nombres').val());
-                        formData.append('MCT_EDITAR_Detalles_Genero', $('select[name="MCT_EDITAR_Detalles_Genero"]').val());
-                        formData.append('MCT_EDITAR_Detalles_Fecha_Nacimiento', $('[name="MCT_EDITAR_Detalles_Fecha_Nacimiento"]').val());
-                        formData.append('MCT_EDITAR_Detalles_Pais', $('#MCT_EDITAR_Detalles_Pais').val());
-                        formData.append('MCT_EDITAR_Detalles_Correo', $('#MCT_EDITAR_Detalles_Correo').val());
-                        formData.append('MCT_EDITAR_Detalles_Tipo_Doc', $('#MCT_EDITAR_Detalles_Tipo_Doc').val());
-                        formData.append('MCT_EDITAR_Detalles_Numero', $('#MCT_EDITAR_Detalles_Numero').val());
-                        formData.append('MCT_EDITAR_Detalles_Funcion', $('#MCT_EDITAR_Detalles_Funcion').val());
-                        formData.append('MCT_EDITAR_Detalles_Horas_Semanales', $('#MCT_EDITAR_Detalles_Horas_Semanales').val());
-                        formData.append('MCT_EDITAR_Detalles_Numero_meses',$('#MCT_EDITAR_Detalles_Numero_meses').val());
-                        formData.append('MCT_EDITAR_Detalles_Tipo_vinculacion', $('#MCT_EDITAR_Detalles_Tipo_vinculacion').val());         
-
+                        var formData = new FormData();      
+                        formData.append('PK_Id_Resultados', $('#PK_Id_Resultados').val());
+                        formData.append('MCT_EDITAR_Resultado', $('#MCT_EDITAR_Resultado').val());
+                        formData.append('MCT_EDITAR_Producto_Esperado', $('#MCT_EDITAR_Producto_Esperado').val());
+                        formData.append('MCT_EDITAR_Indicador', $('#MCT_EDITAR_Indicador').val());
+                        formData.append('MCT_EDITAR_Beneficiario', $('#MCT_EDITAR_Beneficiario').val());
+                        formData.append('MCT_EDITAR_Categoria', $('#MCT_EDITAR_Categoria').val());
+                        
 
                         $.ajax({
                             url: route,
@@ -607,8 +522,8 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-edit-person').modal('hide');
-                                    $('#form_edit-person')[0].reset(); //Limpia formulario
+                                    $('#modal-edit-Resultado').modal('hide');
+                                    $('#form_edit-Resultado')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
@@ -629,26 +544,18 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form2 = $('#form_edit-person');
+            var form2 = $('#form_edit-Resultado');
             var rules2 = {
-            PK_Id_EDITAR_Dperson: {minlength: 1, maxlength: 10, required: true, number: true,},//opcional
-            MCT_EDITAR_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
-            MCT_EDITAR_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
-            MCT_EDITAR_Detalles_Genero:{required: true},
-            MCT_EDITAR_Detalles_Fecha_Nacimiento:{required: true},
-            MCT_EDITAR_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
-            MCT_EDITAR_Detalles_Tipo_Doc:{required: true},
-            MCT_EDITAR_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
-            MCT_EDITAR_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
-            MCT_EDITAR_Detalles_Horas_Semanales:{minlength: 1, maxlength: 3, required: true, number: true,},
-            MCT_EDITAR_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
-            MCT_EDITAR_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
-            };
+                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 100, required: true},
+                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
+                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 100, required: true,},       
+                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 100, required: true},
+                MCT_EDITAR_Categoria:{required: true},       
+                 
+             };
 
-            FormValidationMd.init(form2, rules2, false, EditaPersona()); 
+
+            FormValidationMd.init(form2, rules2, false, EditarResultado()); 
 
         
         
