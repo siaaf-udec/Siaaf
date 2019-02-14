@@ -85,6 +85,64 @@
                 
             </div>
             <!--MODAL CREAR persona-->
+            <!--MODAL EDITAR Persona-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-edit-person" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_edit-person', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir persona</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                
+                                   {!! Field:: Text('PK_Id_EDITAR_Dpersona',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Entidad',null,['label'=>'Entidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Primer_Apellido',null,['label'=>'Primer Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su primer Apellido','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Segundo_Apellido',null,['label'=>'Segundo Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su segundo Apellido','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Nombres',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su nombre','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('MCT_EDITAR_Detalles_Genero',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
+                                   {!! Field:: date('MCT_EDITAR_Detalles_Fecha_Nacimiento',null,['label'=>'Fecha Nacimiento:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Coloque su fecha de nacimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Pais',null,['label'=>'Pais:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite su pais de nacimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Correo',null,['label'=>'Correo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su correo','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('MCT_EDITAR_Detalles_Tipo_Doc',['CC'=>'CC', 'CC extranjera'=>'CC extranjera', 'TDE'=>'TDE'],null,['label'=>'Tipo Documento: ']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Numero',null,['label'=>'Número:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite Numero de Identificación','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Funcion',null,['label'=>'Función del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la función que ejerce en el proyecto','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Horas_Semanales',null,['label'=>'Dedicación horas semanales:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la cantidad de horas semanales aplicadas al proyecto','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Numero_meses',null,['label'=>'Número de meses:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el numero de meses que tarda en el proyecto','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Detalles_Tipo_vinculacion',null,['label'=>'Tipo vinculación del proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite su tipó de vinculación','icon'=>'fa fa-book']) !!}
+                               
+                               
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL EDITAR persona-->
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
         <div class="row">
@@ -124,6 +182,7 @@
                             </i>Agregar Persona
                         </a>@endpermission
                     @endif
+                    <br><br>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DetallesPerson'])
                     @slot('columns', [
                             'Entidad',
@@ -416,6 +475,22 @@ $(document).ready(function(){
             };
             var form1 = $('#from_create-person');
             var rules1 = {
+                
+            MCT_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
+            MCT_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
+            MCT_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
+            MCT_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
+            MCT_Detalles_Genero:{required: true},
+            MCT_Detalles_Fecha_Nacimiento:{required: true},
+            MCT_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
+            MCT_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
+            MCT_Detalles_Tipo_Doc:{required: true},
+            MCT_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
+            MCT_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
+            MCT_Detalles_Horas_Semanales:{minlength: 1, maxlength: 2, required: true, number: true,},
+            MCT_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
+            MCT_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
+         
               
             };
 
@@ -468,6 +543,112 @@ $(document).ready(function(){
                 });
 
         });
+        table1.on('click', '.Editar', function (e) {
+            e.preventDefault();
+            $('#modal-edit-person').modal('toggle');
+            $tr1 = $(this).closest('tr');
+            var dataTable1 = table1.row($tr1).data();
+            $('#PK_Id_EDITAR_Dpersona').val(dataTable1.PK_Id_Dpersona);
+            $('#MCT_EDITAR_Detalles_Entidad').val(dataTable1.MCT_Detalles_Entidad);
+            $('#MCT_EDITAR_Detalles_Primer_Apellido').val(dataTable1.MCT_Detalles_Primer_Apellido);
+            $('#MCT_EDITAR_Detalles_Segundo_Apellido').val(dataTable1.MCT_Detalles_Segundo_Apellido);
+            $('#MCT_EDITAR_Detalles_Nombres').val(dataTable1.MCT_Detalles_Nombres);
+            $('#MCT_EDITAR_Detalles_Genero').val(dataTable1.MCT_Detalles_Genero);
+            $('#MCT_EDITAR_Detalles_Fecha_Nacimiento').val(dataTable1.MCT_Detalles_Fecha_Nacimiento);
+            $('#MCT_EDITAR_Detalles_Pais').val(dataTable1.MCT_Detalles_Pais);
+            $('#MCT_EDITAR_Detalles_Correo').val(dataTable1.MCT_Detalles_Correo);
+            $('#MCT_EDITAR_Detalles_Tipo_Doc').val(dataTable1.MCT_Detalles_Tipo_Doc);
+            $('#MCT_EDITAR_Detalles_Numero').val(dataTable1.MCT_Detalles_Numero);
+            $('#MCT_EDITAR_Detalles_Funcion').val(dataTable1.MCT_Detalles_Funcion);
+            $('#MCT_EDITAR_Detalles_Horas_Semanales').val(dataTable1.MCT_Detalles_Horas_Semanales);
+            $('#MCT_EDITAR_Detalles_Numero_meses').val(dataTable1.MCT_Detalles_Numero_meses);
+            $('#MCT_EDITAR_Detalles_Tipo_vinculacion').val(dataTable1.MCT_Detalles_Tipo_vinculacion);
+        });
+
+        var EditaPersona = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('EstudianteGesap.EditarPersonaDatos') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('PK_Id_EDITAR_Dpersona', $('#PK_Id_EDITAR_Dpersona').val());
+                        formData.append('MCT_EDITAR_Detalles_Entidad', $('#MCT_EDITAR_Detalles_Entidad').val());
+                        formData.append('MCT_EDITAR_Detalles_Primer_Apellido', $('#MCT_EDITAR_Detalles_Primer_Apellido').val());
+                        formData.append('MCT_EDITAR_Detalles_Segundo_Apellido', $('#MCT_EDITAR_Detalles_Segundo_Apellido').val());
+                        formData.append('MCT_EDITAR_Detalles_Nombres', $('#MCT_EDITAR_Detalles_Nombres').val());
+                        formData.append('MCT_EDITAR_Detalles_Genero', $('select[name="MCT_EDITAR_Detalles_Genero"]').val());
+                        formData.append('MCT_EDITAR_Detalles_Fecha_Nacimiento', $('[name="MCT_EDITAR_Detalles_Fecha_Nacimiento"]').val());
+                        formData.append('MCT_EDITAR_Detalles_Pais', $('#MCT_EDITAR_Detalles_Pais').val());
+                        formData.append('MCT_EDITAR_Detalles_Correo', $('#MCT_EDITAR_Detalles_Correo').val());
+                        formData.append('MCT_EDITAR_Detalles_Tipo_Doc', $('#MCT_EDITAR_Detalles_Tipo_Doc').val());
+                        formData.append('MCT_EDITAR_Detalles_Numero', $('#MCT_EDITAR_Detalles_Numero').val());
+                        formData.append('MCT_EDITAR_Detalles_Funcion', $('#MCT_EDITAR_Detalles_Funcion').val());
+                        formData.append('MCT_EDITAR_Detalles_Horas_Semanales', $('#MCT_EDITAR_Detalles_Horas_Semanales').val());
+                        formData.append('MCT_EDITAR_Detalles_Numero_meses',$('#MCT_EDITAR_Detalles_Numero_meses').val());
+                        formData.append('MCT_EDITAR_Detalles_Tipo_vinculacion', $('#MCT_EDITAR_Detalles_Tipo_vinculacion').val());         
+
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-edit-person').modal('hide');
+                                    $('#form_edit-person')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    $(".content-ajax").load(route);
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    $(".content-ajax").load(route);
+                                   
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var form2 = $('#form_edit-person');
+            var rules2 = {
+            PK_Id_EDITAR_Dperson: {minlength: 1, maxlength: 10, required: true, number: true,},//opcional
+            MCT_EDITAR_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
+            MCT_EDITAR_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
+            MCT_EDITAR_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
+            MCT_EDITAR_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
+            MCT_EDITAR_Detalles_Genero:{required: true},
+            MCT_EDITAR_Detalles_Fecha_Nacimiento:{required: true},
+            MCT_EDITAR_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
+            MCT_EDITAR_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
+            MCT_EDITAR_Detalles_Tipo_Doc:{required: true},
+            MCT_EDITAR_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
+            MCT_EDITAR_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
+            MCT_EDITAR_Detalles_Horas_Semanales:{minlength: 1, maxlength: 2, required: true, number: true,},
+            MCT_EDITAR_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
+            MCT_EDITAR_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
+            };
+
+            FormValidationMd.init(form2, rules2, false, EditaPersona()); 
+
+        
         
       
 

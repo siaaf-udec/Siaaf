@@ -266,6 +266,36 @@ class StudentController extends Controller
             }              
         
     }
+    public function EditarPersonaDatos(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+            $persona = PersonaMct::where('PK_Id_Dpersona',$request['PK_Id_EDITAR_Dpersona'])->first();
+            $persona -> MCT_Detalles_Entidad = $request['MCT_EDITAR_Detalles_Entidad'];
+            $persona -> MCT_Detalles_Primer_Apellido = $request['MCT_EDITAR_Detalles_Primer_Apellido'];
+            $persona -> MCT_Detalles_Segundo_Apellido = $request['MCT_EDITAR_Detalles_Segundo_Apellido'];
+            $persona -> MCT_Detalles_Nombres = $request['MCT_EDITAR_Detalles_Nombres'];
+            $persona -> MCT_Detalles_Genero = $request['MCT_EDITAR_Detalles_Genero'];
+            $persona -> MCT_Detalles_Fecha_Nacimiento = $request['MCT_EDITAR_Detalles_Fecha_Nacimiento'];
+            $persona -> MCT_Detalles_Pais = $request['MCT_EDITAR_Detalles_Pais'];
+            $persona -> MCT_Detalles_Correo = $request['MCT_EDITAR_Detalles_Correo'];
+            $persona -> MCT_Detalles_Tipo_Doc = $request['MCT_EDITAR_Detalles_Tipo_Doc'];
+            $persona -> MCT_Detalles_Numero = $request['MCT_EDITAR_Detalles_Numero'];
+            $persona -> MCT_Detalles_Funcion = $request['MCT_EDITAR_Detalles_Funcion'];
+            $persona -> MCT_Detalles_Horas_Semanales = $request['MCT_EDITAR_Detalles_Horas_Semanales'];
+            $persona -> MCT_Detalles_Numero_meses = $request['MCT_EDITAR_Detalles_Numero_meses'];
+            $persona -> MCT_Detalles_Tipo_vinculacion = $request['MCT_EDITAR_Detalles_Tipo_vinculacion'];
+            $persona -> save();
+
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Datos Modificados.'
+            );
+          
+       
+            }              
+        
+    }
     public function PersonaDatosdelete(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	

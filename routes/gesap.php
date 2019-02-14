@@ -251,6 +251,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@PersonaDatos',  
 			'as' => 'EstudianteGesap.PersonaDatos'
 		]);
+		Route::post('EditarPersonaDatos', [
+			'uses' => $controller . 'StudentController@EditarPersonaDatos',  
+			'as' => 'EstudianteGesap.EditarPersonaDatos'
+		]);
 		Route::delete('PersonaDatosdelete/{id?}', [
 			'uses' => $controller . 'StudentController@PersonaDatosdelete',  
 			'as' => 'EstudianteGesap.PersonaDatosdelete'
