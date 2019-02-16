@@ -9,23 +9,22 @@
         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-           
                 {!! Form::model ([$Anteproyecto], ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
-                
-            
-                <div class="form-body">
                 @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
-                                                       class="btn btn-simple btn-warning btn-icon Requerimientos"
-                                                       title="Requerimientos">
+                                                       class="btn btn-simple btn-warning btn-icon Actividades"
+                                                       title="Actividades MCT">
                             <i class="fa fa-plus">
-                            </i>Requerimientos
+                            </i>Actividades MCT
                         </a>@endpermission    
+               
+                <div class="form-body">
+               
                    
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaActividades'])
                         @slot('columns', [
                             '#',
-                            'Actividad',
+                            'Requerimiento',
                             'Descripción',
                             'Acciones'
                         ])
@@ -74,7 +73,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('EstudianteGesap.VerActividadesList') }}';
+        url = '{{ route('EstudianteGesap.VerRequerimientosList') }}';
     
         idp='{{  $Anteproyecto[0]  }}';
     
@@ -113,21 +112,19 @@
             $(".content-ajax").load(route);
 
         });
-        
-        $('.Requerimientos').on('click', function (e) {
+      
+       
+        $('.Actividades').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + idp;
-           $(".content-ajax").load(route);
+            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + idp;
+            $(".content-ajax").load(route);
 
      //      $(".content-ajax").load(route_ver);
         });
 
-       
-      
-
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-           // var route = '{{ route('EstudianteGesap.index.ajax') }}';
+            var route = '{{ route('EstudianteGesap.index.ajax') }}';
 
             location.href="{{route('EstudianteGesap.index')}}";
 

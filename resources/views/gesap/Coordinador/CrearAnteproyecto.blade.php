@@ -164,9 +164,9 @@ $(document).ready(function(){
        }
        var form = $('#form_anteproyectos_create');
         var formRules = {
-            NPRY_Titulo: {minlength: 8, maxlength: 100, required: true,},
-            NPRY_Keywords: {minlength: 30, maxlength: 200, required: true,},
-            NPRY_Descripcion: {minlength: 30, maxlength: 250, required: true,},
+            NPRY_Titulo: {minlength: 1, maxlength: 100, required: true,},
+            NPRY_Keywords: {minlength: 1, maxlength: 200, required: true,},
+            NPRY_Descripcion: {minlength: 1, maxlength: 250, required: true,},
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             FK_NPRY_Estado: {required: true},

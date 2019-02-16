@@ -3,6 +3,7 @@
 namespace App\container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Mctr008 extends Model
 {
@@ -13,12 +14,21 @@ class Mctr008 extends Model
  
      protected $primaryKey = 'PK_MCT_IdMctr008';
      
-     protected $fillable = ['MCT_Actividad', 'MCT_Descripcion'];
+     protected $fillable = [
+          'MCT_Actividad',
+          'MCT_Descripcion',
+          'FK_Id_Formato'
+        ];
 
 
      public function relacionCommits()
     {
         return $this->hasMany(Commits::class, 'FK_MCT_IdMctr008', 'PK_MCT_IdMctr008');
+    }
+    
+    public function relacionFormato()
+    {
+        return $this->hasMany(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
     }
      
  

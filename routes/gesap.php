@@ -222,10 +222,18 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@VerActividades',  
 			'as' => 'EstudianteGesap.VerActividades'
 		]);
+		Route::get('VerRequerimientos/{id?}', [
+			'uses' => $controller . 'StudentController@VerRequerimientos',  
+			'as' => 'EstudianteGesap.VerRequerimientos'
+		]);
 	
 		Route::get('ActividadesList/{id?}', [
 			'uses' => $controller . 'StudentController@VerActividadesList',  
 			'as' => 'EstudianteGesap.VerActividadesList'
+		]);
+		Route::get('Requerimientoslist/{id?}', [
+			'uses' => $controller . 'StudentController@VerRequerimientosList',  
+			'as' => 'EstudianteGesap.VerRequerimientosList'
 		]);
 		Route::get('SubirActividad/{id?}/{idp?}', [
 			'uses' => $controller . 'StudentController@SubirActividad',  
@@ -270,6 +278,27 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Resultados/{id?}', [
 			'uses' => $controller . 'StudentController@Resultados',  
 			'as' => 'EstudianteGesap.Resultados'
+		]);
+		
+		//
+		
+		//
+		Route::post('CronogramaStore', [
+			'uses' => $controller . 'StudentController@CronogramaStore',  
+			'as' => 'EstudianteGesap.CronogramaStore'
+		]);
+		
+		Route::post('EditarCronograma', [
+			'uses' => $controller . 'StudentController@EditarCronograma',  
+			'as' => 'EstudianteGesap.EditarCronograma'
+		]);
+		Route::delete('CronogramaDelete/{id?}', [
+			'uses' => $controller . 'StudentController@CronogramaDelete',  
+			'as' => 'EstudianteGesap.CronogramaDelete'
+		]);
+		Route::get('Cronograma/{id?}', [
+			'uses' => $controller . 'StudentController@Cronograma',  
+			'as' => 'EstudianteGesap.Cronograma'
 		]);
 		
 		//
@@ -319,6 +348,24 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@index',  
 			'as' => 'DocenteGesap.index.ajax'
 		]);
+
+		Route::get('Resultados/{id?}', [
+			'uses' => $controller . 'DocenteController@Resultados',  
+			'as' => 'DocenteGesap.Resultados'
+		]);
+		Route::get('Financiacion/{id?}', [
+			'uses' => $controller . 'DocenteController@Financiacion',  
+			'as' => 'DocenteGesap.Financiacion'
+		]);
+		Route::get('DetallesPersona/{id?}', [
+			'uses' => $controller . 'DocenteController@DetallesPersona',  
+			'as' => 'DocenteGesap.DetallesPersona'
+		]);
+		Route::get('Cronograma/{id?}', [
+			'uses' => $controller . 'DocenteController@Cronograma',  
+			'as' => 'DocenteGesap.Cronograma'
+		]);
+		
 		Route::get('Comentarios/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@Comentarios',  
 			'as' => 'DocenteGesap.Comentarios'
@@ -378,6 +425,14 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('ActividadesJurado/{id?}', [
 			'uses' => $controller . 'DocenteController@VerActividadesJurado',  
 			'as' => 'DocenteGesap.VerActividadesJurado'
+		]);
+		Route::get('ActividadesDocente/{id?}', [
+			'uses' => $controller . 'DocenteController@VerRequerimientosDocente',  
+			'as' => 'DocenteGesap.VerRequerimientosDocente'
+		]);
+		Route::get('VerRequerimientosList/{id?}', [
+			'uses' => $controller . 'DocenteController@VerRequerimientosList',  
+			'as' => 'DocenteGesap.VerRequerimientosList'
 		]);
 
 		Route::get('Anteproyecto/{id?}', [

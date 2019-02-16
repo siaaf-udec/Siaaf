@@ -303,6 +303,10 @@ class CoordinatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $Actividades = Mctr008::all();
+            foreach($Actividades as $Actividad){
+                $Formato = $Actividad->relacionFormato[0]-> MCT_Formato;
+                $Actividad->offsetSet('Formato',$Formato);
+            }
 
             return DataTables::of($Actividades)
                 
@@ -704,7 +708,8 @@ class CoordinatorController extends Controller
 	
 			Mctr008::create([
 			 'MCT_Actividad' => $request['MCT_Actividad'],
-			 'MCT_Descripcion' => $request['MCT_Descripcion'],
+             'MCT_Descripcion' => $request['MCT_Descripcion'],
+			 'FK_Id_Formato' => $request['FK_Id_Formato'],
 			 
 			]);
 		}

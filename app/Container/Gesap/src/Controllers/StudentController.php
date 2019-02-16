@@ -24,7 +24,7 @@ use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
-
+use App\Container\Gesap\src\Cronograma;
 use App\Container\Gesap\src\Resultados;
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
@@ -61,7 +61,12 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-               $Actividades=Mctr008::all();
+               $Actividades=Mctr008::where('FK_Id_Formato',1)->get();
+               $numero = 1 ;
+               foreach($Actividades as $Actividad){
+                   $Actividad->offsetSet('Numero', $numero);
+                   $numero = $numero +1 ;
+               }
                   
         
                return DataTables::of($Actividades)
@@ -94,6 +99,48 @@ class StudentController extends Controller
                     '¡Lo sentimos!',
                     'No se pudo completar tu solicitud.'
                 );  
+                 
+            }              
+        
+    }
+    public function VerRequerimientos(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+                $Anteproyecto = $id;
+
+                return view($this->path .'RequerimientosEstudiante',
+                [
+                    'Anteproyecto' => $Anteproyecto,
+                ]);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
+    }
+    public function VerRequerimientosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $Actividades=Mctr008::where('FK_Id_Formato',2)->get();
+            $numero = 1 ;
+
+            foreach($Actividades as $Actividad){
+                $Actividad->offsetSet('Numero', $numero);
+                $numero = $numero +1 ;
+            }
+                  
+        
+            return DataTables::of($Actividades)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+             
+            ->addIndexColumn()
+            ->make(true);
                  
             }              
         
@@ -358,21 +405,28 @@ class StudentController extends Controller
                 $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
 
             }
+            $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+            if($act->MCT_Actividad == "Cronograma"){
+                return view($this->path .'SubirActividadCronograma',
+                [
+                'datos' => $Actividad,
+                ]);
 
-            if($id == 13){
+            
+            }if($act->MCT_Actividad == "Detalles de personas"){
                 return view($this->path .'SubirActividadDetalles',
                 [
                 'datos' => $Actividad,
                 ]);
 
-            }if($id == 14){
+            }if($act->MCT_Actividad == "Financiacion"){
                 return view($this->path .'SubirActividadFinanciacion',
                 [
                 'datos' => $Actividad,
                 ]);
 
             
-            }if($id == 16){
+            }if($act->MCT_Actividad == "Resultados"){
                 return view($this->path .'SubirActividadResultados',
                 [
                 'datos' => $Actividad,
@@ -394,6 +448,106 @@ class StudentController extends Controller
             );         
         
     }
+        //cronograma
+        public function CronogramaDelete(Request $request, $id)
+        {
+            if ($request->ajax() && $request->isMethod('DELETE')) {	
+                
+                
+                $Cronograma = Cronograma::where('PK_Id_Cronograma',$id)->first();
+                
+                $Cronograma -> delete();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos eliminados correctamente.'
+                );
+            }
+    
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+    
+        }   
+    
+    
+        public function CronogramaStore(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                
+              
+                    Cronograma::create([
+                        'MCT_CRN_Actividad'=>$request['MCT_CRN_Actividad'],
+                        'MCT_CRN_Semana_inicio'=>$request['MCT_CRN_Semana_inicio'],
+                        'MCT_CRN_Semana_fin'=>$request['MCT_CRN_Semana_fin'],    
+                        'MCT_CRN_Responsable' => $request['MCT_CRN_Responsable'],  
+                        'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+    
+                    ]);
+                    Commits::create([
+                        'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                        'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                        'FK_User_Codigo' => $request['FK_User_Codigo'],
+                        'CMMT_Commit' => $request['CMMT_Commit'],
+                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                    ]);
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Creados.'
+                );
+              
+           
+                }              
+            
+        }
+        public function Cronograma(Request $request,$id)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+    
+                    $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $id)->get();
+                    foreach($Cronograma as $Crono){
+                        $inicio = $Crono-> MCT_CRN_Semana_inicio ;
+                        $fin = $Crono-> MCT_CRN_Semana_fin ;
+                        $tab = '-';
+                        $fecha =  $inicio.$tab.$fin;
+                        $Crono ->offsetSet('Semana',$fecha);
+
+                    }
+    
+                    return DataTables::of($Cronograma)
+                   ->removeColumn('created_at')
+                   ->removeColumn('updated_at')
+                    
+                   ->addIndexColumn()
+                   ->make(true);
+            }
+        }
+        public function EditarCronograma(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                
+                $Cronograma = Cronograma::where('PK_Id_Cronograma',$request['PK_Id_Cronograma'])->first();
+    
+                $Cronograma -> MCT_CRN_Actividad = $request['MCT_EDITAR_CRN_Actividad'];
+                $Cronograma -> MCT_CRN_Semana_inicio = $request['MCT_EDITAR_CRN_Semana_inicio'];
+                $Cronograma -> MCT_CRN_Semana_fin = $request['MCT_EDITAR_CRN_Semana_fin'];
+                $Cronograma -> MCT_CRN_Responsable = $request['MCT_EDITAR_CRN_Responsable'];
+                
+                $Cronograma -> save();
+    
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Modificados.'
+                );
+              
+           
+                }              
+            
+        }
+    
+    
+        //
+    
     //Resultados
     public function ResultadoDelete(Request $request, $id)
     {

@@ -30,32 +30,30 @@
                 
             </div>
             <!--MODAL CREAR COMENTARIO-->
-             <!--MODAL CREAR Resultado-->
+             <!--MODAL CREAR Cronograma-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-Cronograma" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_create-Resultado', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_create-Cronograma', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Resultado</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
-                                 
+                                   {!! Field:: Text('MCT_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
+                                                    
                                
                                
                                 </div>
@@ -69,36 +67,34 @@
                     </div>
                 
             </div>
-            <!--MODAL CREAR Resultado-->
-            <!--MODAL EDITAR Resultado-->
+            <!--MODAL CREAR Cronograma-->
+            <!--MODAL EDITAR Cronograma-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-edit-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-edit-Cronograma" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_edit-Resultado', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_edit-Cronograma', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Editar Resultado</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Editar Actividad</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                  {!! Field:: Text('PK_Id_Resultados',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
+                                {!! Field:: Text('PK_Id_Cronograma',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
-                                 
-                                   {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_EDITAR_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
-                                 
+                            
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
+                                   
                                
                                
                                 </div>
@@ -112,7 +108,7 @@
                     </div>
                 
             </div>
-            <!--MODAL EDITAR Resultado-->
+            <!--MODAL EDITAR Cronograma-->
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
         <div class="row">
@@ -149,35 +145,19 @@
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Agregar Resultado
+                            </i>Agregar Cronograma
                         </a>@endpermission
                     @endif
                     <br><br>
-                    @if($datos['Estado'] != "APROVADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Resultados'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Cronograma'])
                     @slot('columns', [
-                            'Resultado',
-                            'Producto Esperado',
-                            'Indicador',
-                            'Beneficio',
-                            'Categoria',
-                            'Acciones'
+                            'Actividad',
+                            'Fecha realización (numero semana)',
+                            'Responsable de la Actividad',
+                            'Acciones',
     
                     ])
                     @endcomponent
-                    @endif
-                    @if($datos['Estado'] == "APROVADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ResultadosF'])
-                    @slot('columns', [
-                            'Resultado',
-                            'Producto Esperado',
-                            'Indicador',
-                            'Beneficio',
-                            'Categoria'
-    
-                    ])
-                    @endcomponent
-                    @endif
 
                     <div class="form-actions">
                         <div class="row">
@@ -330,19 +310,17 @@ $(document).ready(function(){
      
         var table1, url1, columns1;
         
-        table1 = $('#Resultados');
+        table1 = $('#Cronograma');
        
            
-        url1 = '{{ route('EstudianteGesap.Resultados') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url1 = '{{ route('EstudianteGesap.Cronograma') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns1 = [
             
-            {data: 'MCT_Resultado', name: 'MCT_Resultado'},
-            {data: 'MCT_Producto_Esperado', name: 'MCT_Producto_Esperado'},
-            {data: 'MCT_Indicador', name: 'MCT_Indicador'},
-            {data: 'MCT_Beneficiario', name: 'MCT_Beneficiario'},
-            {data: 'MCT_Categoria', name: 'MCT_Categoria'},  
+            {data: 'MCT_CRN_Actividad', name: 'MCT_CRN_Actividad'},
+            {data: 'Semana', name: 'Semana'},
+            {data: 'MCT_CRN_Responsable', name: 'MCT_CRN_Responsable'},
            
             {
                 defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
@@ -361,42 +339,27 @@ $(document).ready(function(){
         ];
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
-       
-        var tabler, urlr, columnsr;
-        tabler = $('#ResultadosF');
-        urlr = '{{ route('EstudianteGesap.Resultados') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnsr = [
-            
-            {data: 'MCT_Resultado', name: 'MCT_Resultado'},
-            {data: 'MCT_Producto_Esperado', name: 'MCT_Producto_Esperado'},
-            {data: 'MCT_Indicador', name: 'MCT_Indicador'},
-            {data: 'MCT_Beneficiario', name: 'MCT_Beneficiario'},
-            {data: 'MCT_Categoria', name: 'MCT_Categoria'},  
-        ];
-        dataTableServer.init(tabler, urlr, columnsr);
-        tabler = tabler.DataTable();
 
         
         $('.person').on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-Resultado').modal('toggle');
+            $('#modal-create-Cronograma').modal('toggle');
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
                  return this.optional(element) || /^[0-9]+$/i.test(value);
         });
-        var CrearResultado = function () {
+        var CrearCronograma = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.ResultadoStore') }}';
+                        var route = '{{ route('EstudianteGesap.CronogramaStore') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MCT_Resultado', $('#MCT_Resultado').val());
-                        formData.append('MCT_Producto_Esperado', $('#MCT_Producto_Esperado').val());
-                        formData.append('MCT_Indicador', $('#MCT_Indicador').val());
-                        formData.append('MCT_Beneficiario', $('#MCT_Beneficiario').val());
-                        formData.append('MCT_Categoria', $('#MCT_Categoria').val());
+                        formData.append('MCT_CRN_Actividad', $('#MCT_CRN_Actividad').val());
+                        formData.append('MCT_CRN_Semana_inicio', $('#MCT_CRN_Semana_inicio').val());
+                        formData.append('MCT_CRN_Semana_fin', $('#MCT_CRN_Semana_fin').val());
+                        formData.append('MCT_CRN_Responsable', $('#MCT_CRN_Responsable').val());
                         
             
 ///LA OTRA TABLA///
@@ -423,8 +386,8 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-create-Resultado').modal('hide');
-                                    $('#form_create-Resultado')[0].reset(); //Limpia formulario
+                                    $('#modal-create-Cronograma').modal('hide');
+                                    $('#form_create-Cronograma')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
@@ -445,31 +408,30 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form1 = $('#form_create-Resultado');
+            var form1 = $('#form_create-Cronograma');
             var rules1 = {
                 
-                MCT_Resultado:{minlength: 1, maxlength: 100, required: true},
-                MCT_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
-                MCT_Indicador:{minlength: 1, maxlength: 100, required: true,},       
-                MCT_Beneficiario:{minlength: 1, maxlength: 100, required: true},
-                MCT_Categoria:{required: true},       
+                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
+                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
+                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
+                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
            
             };
 
 
-            FormValidationMd.init(form1, rules1, false, CrearResultado()); 
+            FormValidationMd.init(form1, rules1, false, CrearCronograma()); 
 
             table1.on('click', '.Eliminar', function (e) {
             e.preventDefault();
             $tr1 = $(this).closest('tr');
 
             var dataTable1 = table1.row($tr1).data();
-            var route1 = '{{ route('EstudianteGesap.ResultadoDelete') }}' + '/' + dataTable1.PK_Id_Resultados;
+            var route1 = '{{ route('EstudianteGesap.CronogramaDelete') }}' + '/' + dataTable1.PK_Id_Cronograma;
             var type1 = 'DELETE';
             var async1 = async1 || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este Resultado?",
+                    text: "¿Está seguro de eliminar este Cronograma?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -501,38 +463,36 @@ $(document).ready(function(){
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun Resultado", "error");
+                        swal("Cancelado", "No se eliminó ningun Cronograma", "error");
                     }
                 });
 
         });
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
-            $('#modal-edit-Resultado').modal('toggle');
+            $('#modal-edit-Cronograma').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            $('#PK_Id_Resultados').val(dataTable1.PK_Id_Resultados);
-            $('#MCT_EDITAR_Resultado').val(dataTable1.MCT_Resultado);
-            $('#MCT_EDITAR_Producto_Esperado').val(dataTable1.MCT_Producto_Esperado);
-            $('#MCT_EDITAR_Indicador').val(dataTable1.MCT_Indicador);
-            $('#MCT_EDITAR_Beneficiario').val(dataTable1.MCT_Beneficiario);
-            $('#MCT_EDITAR_Categoria').val(dataTable1.MCT_Categoria);
+            $('#PK_Id_Cronograma').val(dataTable1.PK_Id_Cronograma);
+            $('#MCT_EDITAR_CRN_Actividad').val(dataTable1.MCT_CRN_Actividad);
+            $('#MCT_EDITAR_CRN_Semana_inicio').val(dataTable1.MCT_CRN_Semana_inicio);
+            $('#MCT_EDITAR_CRN_Semana_fin').val(dataTable1.MCT_CRN_Semana_fin);
+            $('#MCT_EDITAR_CRN_Responsable').val(dataTable1.MCT_CRN_Responsable);
         });
 
-        var EditarResultado = function () {
+        var EditarCronograma = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.EditarResultado') }}';
+                        var route = '{{ route('EstudianteGesap.EditarCronograma') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();      
-                        formData.append('PK_Id_Resultados', $('#PK_Id_Resultados').val());
-                        formData.append('MCT_EDITAR_Resultado', $('#MCT_EDITAR_Resultado').val());
-                        formData.append('MCT_EDITAR_Producto_Esperado', $('#MCT_EDITAR_Producto_Esperado').val());
-                        formData.append('MCT_EDITAR_Indicador', $('#MCT_EDITAR_Indicador').val());
-                        formData.append('MCT_EDITAR_Beneficiario', $('#MCT_EDITAR_Beneficiario').val());
-                        formData.append('MCT_EDITAR_Categoria', $('#MCT_EDITAR_Categoria').val());
+                        formData.append('PK_Id_Cronograma', $('#PK_Id_Cronograma').val());
+                        formData.append('MCT_EDITAR_CRN_Actividad', $('#MCT_EDITAR_CRN_Actividad').val());
+                        formData.append('MCT_EDITAR_CRN_Semana_inicio', $('#MCT_EDITAR_CRN_Semana_inicio').val());
+                        formData.append('MCT_EDITAR_CRN_Semana_fin', $('#MCT_EDITAR_CRN_Semana_fin').val());
+                        formData.append('MCT_EDITAR_CRN_Responsable', $('#MCT_EDITAR_CRN_Responsable').val());
                         
 
                         $.ajax({
@@ -550,8 +510,8 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-edit-Resultado').modal('hide');
-                                    $('#form_edit-Resultado')[0].reset(); //Limpia formulario
+                                    $('#modal-edit-Cronograma').modal('hide');
+                                    $('#form_edit-Cronograma')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
@@ -572,18 +532,17 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form2 = $('#form_edit-Resultado');
+            var form2 = $('#form_edit-Cronograma');
             var rules2 = {
-                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 100, required: true},
-                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
-                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 100, required: true,},       
-                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 100, required: true},
-                MCT_EDITAR_Categoria:{required: true},       
-                 
+                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
+                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
+                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
+                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
+           
              };
 
 
-            FormValidationMd.init(form2, rules2, false, EditarResultado()); 
+            FormValidationMd.init(form2, rules2, false, EditarCronograma()); 
 
         
         

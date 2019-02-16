@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMctr008Gesap extends Migration
+class CreateMctr008 extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,11 @@ class CreateMctr008Gesap extends Migration
             $table->increments('PK_MCT_IdMctr008');
             $table->String('MCT_Actividad', 50);
             $table->String('MCT_descripcion', 500);
+            $table->integer('FK_Id_Formato')->unsigned();
+            $table->foreign('FK_Id_Formato')
+                    ->references('PK_Id_Formato')
+                    ->on('TBL_MCT_Formato')
+                    ->onDelete('cascade');
             
 
             $table->timestamps();
@@ -30,6 +35,6 @@ class CreateMctr008Gesap extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_GESAP_Mctr008');
+        Schema::dropIfExists('TBL_Mctr008');
     }
 }

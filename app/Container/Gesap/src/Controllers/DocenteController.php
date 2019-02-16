@@ -28,9 +28,15 @@ use App\Container\Gesap\src\Fechas;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
+use App\Container\Gesap\src\Resultados;
 
+use App\Container\Gesap\src\Cronograma;
 use App\Container\Gesap\src\Jurados;
 use App\Container\Gesap\src\Mctr008;
+
+use App\Container\Gesap\src\PersonaMct;
+
+use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\ObservacionesMct;
 
 use App\Container\Gesap\src\ObservacionesMctJurado;
@@ -311,7 +317,12 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-               $Actividades=Mctr008::all();
+               $Actividades=Mctr008::where('FK_Id_Formato',1)->get();
+               $numero = 1 ;
+               foreach($Actividades as $Actividad){
+                   $Actividad->offsetSet('Numero', $numero);
+                   $numero = $numero +1 ;
+               }
                   
         
                return DataTables::of($Actividades)
@@ -605,6 +616,28 @@ class DocenteController extends Controller
         }
    
     }
+    public function Cronograma(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $id)->get();
+                foreach($Cronograma as $Crono){
+                    $inicio = $Crono-> MCT_CRN_Semana_inicio ;
+                    $fin = $Crono-> MCT_CRN_Semana_fin ;
+                    $tab = '-';
+                    $fecha =  $inicio.$tab.$fin;
+                    $Crono ->offsetSet('Semana',$fecha);
+
+                }
+
+                return DataTables::of($Cronograma)
+               ->removeColumn('created_at')
+               ->removeColumn('updated_at')
+                
+               ->addIndexColumn()
+               ->make(true);
+        }
+    }
     public function ComentariosJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -675,6 +708,52 @@ class DocenteController extends Controller
             }              
         
     }
+    public function VerRequerimientosDocente(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+                $Anteproyecto = $id;
+
+                return view($this->path .'RequerimientosDocente',
+                [
+                    'Anteproyecto' => $Anteproyecto,
+                ]);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
+    }
+    public function VerRequerimientosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+               $Actividades=Mctr008::where('FK_Id_Formato',2)->get();
+               $numero = 1 ;
+               foreach($Actividades as $Actividad){
+                   $Actividad->offsetSet('Numero', $numero);
+                   $numero = $numero +1 ;
+               }
+                  
+        
+               return DataTables::of($Actividades)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 
     public function CalificarAnteproyecto(Request $request, $id)
     {
@@ -688,32 +767,103 @@ class DocenteController extends Controller
             );         
         
     }
+    public function Resultados(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $resultado = Resultados::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($resultado)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    public function Financiacion(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $Financiacion = Financiacion::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($Financiacion)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    public function DetallesPersona(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $DPersona = PersonaMct::where('FK_NPRY_IdMctr008', $id)->get();
+
+                return DataTables::of($DPersona)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+
     public function VerActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-                      
-                $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
-                
-                $Actividad->offsetSet('Anteproyecto', $idp);
 
-                $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
-//$commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
-                if($commit-> isEmpty() )
-                {
-                    $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
-                    $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
                     
-                }else{
-                    $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
-                    $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
-     
-                }
+            $Actividad->offsetSet('Anteproyecto', $idp);
 
-                return view($this->path .'VerActividadDocente',
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null)
+            {
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
+                $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                
+            }else{
+                $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+            }
+            $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+            if($act->MCT_Actividad == "Cronograma"){
+                return view($this->path .'ActividadCronograma',
                 [
-                    'datos' => $Actividad,
+                'datos' => $Actividad,
                 ]);
-               
+
+            
+            }if($act->MCT_Actividad == "Detalles de personas"){
+                return view($this->path .'ActividadDetalles',
+                [
+                'datos' => $Actividad,
+                ]);
+
+            }if($act->MCT_Actividad == "Financiacion"){
+                return view($this->path .'ActividadFinanciacion',
+                [
+                'datos' => $Actividad,
+                ]);
+
+            
+            }if($act->MCT_Actividad == "Resultados"){
+                return view($this->path .'ActividadResultados',
+                [
+                'datos' => $Actividad,
+                ]);
+
+            }
+        
+               return view($this->path .'VerActividadDocente',
+                [
+                'datos' => $Actividad,
+                ]);
+            
                
                  
             }     
@@ -723,6 +873,7 @@ class DocenteController extends Controller
             );         
         
     }
+  
     public function VerActividadJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

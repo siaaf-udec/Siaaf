@@ -30,7 +30,9 @@
                         @slot('columns', [
                             'Actividad',
                             'Descripcion',
-                            'Acciones'
+                            'Formato',
+                            'Acciones',
+                            
                         ])
                     @endcomponent
           
@@ -84,6 +86,7 @@
         columns = [
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
             {data: 'MCT_descripcion', name: 'MCT_descripcion'},
+            {data: 'Formato', name: 'Formato'},
             
             
       

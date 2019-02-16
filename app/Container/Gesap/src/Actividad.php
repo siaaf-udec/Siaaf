@@ -16,7 +16,7 @@ class Actividad extends Model
      protected $primaryKey = 'PK_CTVD_IdActividad';
      
      //las q se llenan
-     protected $fillable = ['CTVD_Nombre', 'CTVD_Descripcion','CTVD_Default'];
+     protected $fillable = ['CTVD_Nombre', 'CTVD_Descripcion','CTVD_Default','FK_Id_Formato'];
  
     protected $dates = ['deleted_at'];
 

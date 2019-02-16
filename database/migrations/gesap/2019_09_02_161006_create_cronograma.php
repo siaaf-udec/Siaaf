@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResultados extends Migration
+class CreateCronograma extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateResultados extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_MCT_Resultados', function (Blueprint $table) {
-            $table->increments('PK_Id_Resultados');
-            $table->String('MCT_Resultado');
-            $table->String('MCT_Producto_Esperado');
-            $table->String('MCT_Indicador');
-            $table->String('MCT_Beneficiario');
-            $table->String('MCT_Categoria');
+        Schema::connection('gesap')->create('TBL_MCT_Cronograma', function (Blueprint $table) {
+            $table->increments('PK_Id_Cronograma');
+            $table->String('MCT_CRN_Actividad');
+            $table->String('MCT_CRN_Semana_inicio');
+            $table->String('MCT_CRN_Semana_fin');
+            $table->String('MCT_CRN_Responsable');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
                   ->references('PK_NPRY_IdMctr008')
                   ->on('TBL_Anteproyecto')
                   ->onDelete('cascade');
-           
             $table->timestamps();
         });
     }
@@ -37,6 +35,6 @@ class CreateResultados extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_MCT_Resultados');
+        Schema::dropIfExists('TBL_MCT_Cronograma');
     }
 }

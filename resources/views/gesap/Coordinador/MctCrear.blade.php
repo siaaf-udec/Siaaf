@@ -18,9 +18,11 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: text('MCT_Descripcion',null,['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'350','autocomplete'=>'off'],
+                                {!! Field:: textArea('MCT_Descripcion',null,['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'350','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+                                {!! Field::select('FK_Id_Formato',['1'=>'Mct', '2'=>'Requerimientos'],null,['label'=>'Formato: ']) !!}
 
+                                 
                                 </div>
                     </div>
 
@@ -67,6 +69,19 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $.fn.select2.defaults.set("theme", "bootstrap");
+        $(".pmd-select2").select2({
+            placeholder: "Selecciónar",
+            allowClear: true,
+            width: 'auto',
+            escapeMarkup: function (m) {
+                return m;
+            }
+        });
+
+        $('.pmd-select2', form).change(function () {
+            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+        });
 
         var crearante = function(){
            return{
@@ -76,7 +91,10 @@
                     var async = async || false;
 
                     formData.append('MCT_Actividad', $('input:text[name="MCT_Actividad"]').val());
-                    formData.append('MCT_Descripcion', $('input:text[name="MCT_Descripcion"]').val());
+                    formData.append('MCT_Descripcion', $('#MCT_Descripcion').val());
+                    formData.append('FK_Id_Formato', $('#FK_Id_Formato').val());
+                    
+                   
                    
                     $.ajax({
                         url: route,
@@ -120,8 +138,8 @@
        }
        var form = $('#form_create_mct_activity');
         var formRules = {
-            MCT_Actividad: {minlength: 8, maxlength: 100, required: true,},
-            MCT_Descripcion: {minlength: 30, maxlength: 350, required: true,},
+            MCT_Actividad: {minlength: 1, maxlength: 100, required: true,},
+            MCT_Descripcion: {minlength: 1, maxlength: 350, required: true,},
            
         };
 

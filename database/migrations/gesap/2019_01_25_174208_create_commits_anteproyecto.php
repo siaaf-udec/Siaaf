@@ -35,6 +35,7 @@ class CreateCommitsAnteproyecto extends Migration
                         ->references('PK_CHK_Checklist')
                         ->on('TBL_checklist')
                         ->onDelete('cascade');
+          
             $table->String('CMMT_Commit', 500);
             
             $table->timestamps();
@@ -48,6 +49,6 @@ class CreateCommitsAnteproyecto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_commits');
+        Schema::dropIfExists('TBL_commits_anteproyecto');
     }
 }
