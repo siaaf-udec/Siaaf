@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de Requerimientos'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -107,7 +107,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 

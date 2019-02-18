@@ -102,8 +102,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 
-                                   {!! Field:: Text('PK_Id_EDITAR_Dpersona',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Detalles_Entidad',null,['label'=>'Entidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Detalles_Primer_Apellido',null,['label'=>'Primer Apellido:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
@@ -185,6 +183,7 @@
                         </a>@endpermission
                     @endif
                     <br><br>
+                    @if($datos['Estado'] != "APROVADO" )
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DetallesPerson'])
                     @slot('columns', [
                             'Entidad',
@@ -205,7 +204,29 @@
     
                     ])
                     @endcomponent
-
+                    @endif
+                    @if($datos['Estado'] == "APROVADO" )
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DetallesPersonF'])
+                    @slot('columns', [
+                            'Entidad',
+                            'Primer Apellido',
+                            'Segundo Apellido',
+                            'Nombres',
+                            'Genero',
+                            'Fecha Nacimiento',
+                            'Pais',
+                            'Correo Electrónico',
+                            'Tipo Identificación',
+                            'Numero',
+                            'Función del proyecto',
+                            'Dedicación horas semanales',
+                            'Número de meses',
+                            'Tipo de vinculación del proyecto',
+                          
+    
+                    ])
+                    @endcomponent
+                    @endif
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
@@ -401,6 +422,37 @@ $(document).ready(function(){
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
 
+
+        var table2, url2, columns2;
+        
+        table2 = $('#DetallesPersonF');
+       
+           
+        url2 = '{{ route('EstudianteGesap.DetallesPersona') }}'+'/'+'{{$datos['Anteproyecto']}}';
+       
+       
+        columns2 = [
+            
+            {data: 'MCT_Detalles_Entidad', name: 'MCT_Detalles_Entidad'},
+            {data: 'MCT_Detalles_Primer_Apellido', name: 'MCT_Detalles_Primer_Apellido'},
+            {data: 'MCT_Detalles_Segundo_Apellido', name: 'MCT_Detalles_Segundo_Apellido'},            
+            {data: 'MCT_Detalles_Nombres', name: 'MCT_Detalles_Nombres'},
+            {data: 'MCT_Detalles_Genero', name: 'MCT_Detalles_Genero'},
+            {data: 'MCT_Detalles_Fecha_Nacimiento', name: 'MCT_Detalles_Fecha_Nacimiento'},
+            {data: 'MCT_Detalles_Pais', name: 'MCT_Detalles_Pais'},            
+            {data: 'MCT_Detalles_Correo', name: 'MCT_Detalles_Correo'},
+            {data: 'MCT_Detalles_Tipo_Doc', name: 'MCT_Detalles_Tipo_Doc'},
+            {data: 'MCT_Detalles_Numero', name: 'MCT_Detalles_Numero'},
+            {data: 'MCT_Detalles_Funcion', name: 'MCT_Detalles_Funcion'},            
+            {data: 'MCT_Detalles_Horas_Semanales', name: 'MCT_Detalles_Horas_Semanales'},
+            {data: 'MCT_Detalles_Numero_meses', name: 'MCT_Detalles_Numero_meses'},
+            {data: 'MCT_Detalles_Tipo_vinculacion', name: 'MCT_Detalles_Tipo_vinculacion'},
+           
+           
+        ];
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
+
         
         $('.person').on('click', function (e) {
             e.preventDefault();
@@ -545,12 +597,13 @@ $(document).ready(function(){
                 });
 
         });
+        var id_persona = 0;
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
             $('#modal-edit-person').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            $('#PK_Id_EDITAR_Dpersona').val(dataTable1.PK_Id_Dpersona);
+            id_persona = dataTable1.PK_Id_Dpersona;
             $('#MCT_EDITAR_Detalles_Entidad').val(dataTable1.MCT_Detalles_Entidad);
             $('#MCT_EDITAR_Detalles_Primer_Apellido').val(dataTable1.MCT_Detalles_Primer_Apellido);
             $('#MCT_EDITAR_Detalles_Segundo_Apellido').val(dataTable1.MCT_Detalles_Segundo_Apellido);
@@ -575,7 +628,7 @@ $(document).ready(function(){
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('PK_Id_EDITAR_Dpersona', $('#PK_Id_EDITAR_Dpersona').val());
+                        formData.append('PK_Id_EDITAR_Dpersona', id_persona);
                         formData.append('MCT_EDITAR_Detalles_Entidad', $('#MCT_EDITAR_Detalles_Entidad').val());
                         formData.append('MCT_EDITAR_Detalles_Primer_Apellido', $('#MCT_EDITAR_Detalles_Primer_Apellido').val());
                         formData.append('MCT_EDITAR_Detalles_Segundo_Apellido', $('#MCT_EDITAR_Detalles_Segundo_Apellido').val());

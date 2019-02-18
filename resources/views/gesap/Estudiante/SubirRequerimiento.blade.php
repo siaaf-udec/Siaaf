@@ -31,7 +31,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Los Requerimientos del Anteproyecto'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -46,7 +46,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Requerimiento:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
@@ -86,7 +86,7 @@
                             <i class="fa fa-plus">
                             </i>Agregar Observación
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentarios'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
                         @slot('columns', [
                             'Fecha de realización',
                             'Observación',
@@ -158,14 +158,14 @@ $(document).ready(function(){
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';
+                                                var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + '{{$datos['Anteproyecto']}}';
                                                 $(".content-ajax").load(route);
                                             
                                             } else {
                                                 $('#form_subir_actividad')[0].reset(); 
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';
+                                                var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + '{{$datos['Anteproyecto']}}';
                                                 $(".content-ajax").load(route);
                                                 
                                                 }
@@ -234,7 +234,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -243,7 +243,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -264,8 +264,8 @@ $(document).ready(function(){
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';
-
+            var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + '{{$datos['Anteproyecto']}}';
+            
             //location.href="{{route('EstudianteGesap.index')}}";
            $(".content-ajax").load(route);
         });

@@ -15,11 +15,9 @@ class Usuarios extends Model
 
     protected $fillable = [
         'PK_User_Codigo'
-        , 'User_Cedula'
+        , 'User_Codigo'
         , 'User_Nombre1'
-        , 'User_Nombre2'
         , 'User_Apellido1'
-        , 'User_Apellido2'
         , 'User_Correo'
         , 'User_Contra'
         , 'User_Direccion'

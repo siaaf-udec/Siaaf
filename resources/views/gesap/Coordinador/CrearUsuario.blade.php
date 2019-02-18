@@ -16,65 +16,65 @@
                         <div class="col-md-6">
                             <div>
                                 <span class="label label-primary">Ingrese los Datos</span>
-                                 <br><br>
+                                <br><br>
+                                <br><br> 
+                                
+                                {!! Field:: text('User_Codigo',null,['label'=>'Codigo Interno del Usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el codigo interno del usuario.','icon'=>'fa fa-credit-card']) !!}
+                                
+                                {!! Field::select('User_Tipo_Documento',['T.I'=>'T.I', 'C.C'=>'C.C'],null,['label'=>'Tipo Documento: ']) !!}
+                             
+                                
+                                {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user'] ) !!}
+
+                                {!! Field:: text('User_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
+
+                                {!! Field:: email('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'150','autocomplete'=>'off'],
+                                                                ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
+
+                                {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
+                                
+                                {!! Field::select('FK_User_IdRol',['1'=>'Estudiante', '2'=>'Docente','3'=>'Administrador'],null,['label'=>'ROL: ']) !!}
+                             
+                                     
+                               
                             </div>
                             
                           
                              <div class="form-group divcode">
                                 
                             </div>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
-                        <br><br>
+                            
                         <br><br>
                         <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
                         </div>
 
 
                         <div class="col-md-6">
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
 
-                             {!! Field:: text('PK_User_Codigo',null,['label'=>'Codigo Interno del Usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el codigo interno del usuario.','icon'=>'fa fa-credit-card']) !!}
+                            {!! Field:: text('User_Cedula',null,['label'=>'Documento:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
+                            {!! Field::date('User_Fecha_Expedicion',null,['label'=>'Fecha de expedición :'],
+                                                                ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
 
-                            {!! Field:: text('User_Cedula',null,['label'=>'Cedula:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
+                           
 
-                            {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user'] ) !!}
+                            {!! Field::select('User_Sexo',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
+                                   
+                            
+                            {!! Field::date('User_Nacimiento',null,['label'=>'Fecha de nacimiento :'],
+                                                                ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
 
-                            {{--{!! Field:: text('User_Nombre2',null,['label'=>'Nombre 2:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el segundo nombre.','icon'=>'fa fa-user'] ) !!} --}}
-
-                            {!! Field:: text('User_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
-
-                            {{--{!! Field:: text('User_Apellido2',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite el segundo apellido.','icon'=>'fa fa-user'] ) !!}--}}
-
-                            {!! Field:: email('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'150','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
-
-                            {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
-
-                            {{--{!! Field::select('FK_User_IdEstado',['1'=>'ACTIVO', '2'=>'INACTIVO'],null,['label'=>'ESTADO: ']) !!}--}}
-
-                            {{--{!! Field::select('FK_User_IdRol',['1'=>'ESTUDIANTE', '2'=>'PROFESOR', '3'=>'ADMINISTRADOR'],null,['label'=>'ROL: ']) !!}--}}
-
-                            {!! Field::select('FK_User_IdRol', null,['name' => 'SelectRol','label'=>'ROL: ']) !!}
-
+                      
+                             
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
                         </div>
@@ -114,7 +114,7 @@
     
         /* Configuración del Select cargado de la BD */
 
-        var $widget_select_SelectRol = $('select[name="SelectRol"]');
+       /*  var $widget_select_SelectRol = $('select[name="SelectRol"]');
 
         var route_Rol = '{{ route('UsuariosGesap.listRoles') }}';
         $.get(route_Rol, function (response, status) {
@@ -124,7 +124,7 @@
             $widget_select_SelectRol.val([]);
             $('#FK_User_IdRol').val(1);
         });
-
+ */
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
@@ -157,18 +157,20 @@
                     var formData = new FormData();
                     var async = async || false;
 
-                    formData.append('PK_User_Codigo', $('input:text[name="PK_User_Codigo"]').val());
-                    formData.append('User_Cedula', $('input:text[name="User_Cedula"]').val());
+                    formData.append('PK_User_Codigo', $('input:text[name="User_Cedula"]').val());
+                    formData.append('User_Codigo', $('input:text[name="User_Codigo"]').val());
                     formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
-                    //formData.append('User_Nombre2', $('input:text[name="User_Nombre2"]').val());
                     formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
-                    //formData.append('User_Apellido2', $('input:text[name="User_Apellido2"]').val());
                     formData.append('User_Correo', $('input[name="User_Correo"]').val());
-                    formData.append('User_Contra', $('input:text[name="User_Nombre1"]').val());
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
                     formData.append('FK_User_IdEstado', '2');
-                    //formData.append('FK_User_IdRol', $('select[name="FK_User_IdRol"]').val());
-                    formData.append('FK_User_IdRol', $('select[name="SelectRol"]').val());
+                    formData.append('User_Tipo_Documento', $('select[name="User_Tipo_Documento"]').val());
+                    formData.append('User_Sexo', $('select[name="User_Sexo"]').val());
+                    formData.append('User_Nacimiento', $('#User_Nacimiento').val());
+                    formData.append('User_Fecha_Expedicion', $('#User_Fecha_Expedicion').val());
+                    formData.append('FK_User_IdRol', $('#FK_User_IdRol').val());
+                    
+                                     
                  
                     $.ajax({
                         url: route,

@@ -85,8 +85,6 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                  {!! Field:: Text('PK_Id_Resultados',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
                                  
                                    {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
@@ -506,12 +504,13 @@ $(document).ready(function(){
                 });
 
         });
+        var id_actividad = 0;
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
             $('#modal-edit-Resultado').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            $('#PK_Id_Resultados').val(dataTable1.PK_Id_Resultados);
+            id_actividad = dataTable1.PK_Id_Resultados;
             $('#MCT_EDITAR_Resultado').val(dataTable1.MCT_Resultado);
             $('#MCT_EDITAR_Producto_Esperado').val(dataTable1.MCT_Producto_Esperado);
             $('#MCT_EDITAR_Indicador').val(dataTable1.MCT_Indicador);
@@ -527,7 +526,7 @@ $(document).ready(function(){
                         var async = async || false;
 
                         var formData = new FormData();      
-                        formData.append('PK_Id_Resultados', $('#PK_Id_Resultados').val());
+                        formData.append('PK_Id_Resultados', id_actividad);
                         formData.append('MCT_EDITAR_Resultado', $('#MCT_EDITAR_Resultado').val());
                         formData.append('MCT_EDITAR_Producto_Esperado', $('#MCT_EDITAR_Producto_Esperado').val());
                         formData.append('MCT_EDITAR_Indicador', $('#MCT_EDITAR_Indicador').val());

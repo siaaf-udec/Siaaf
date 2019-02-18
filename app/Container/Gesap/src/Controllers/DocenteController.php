@@ -809,12 +809,63 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    public function Funcion(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
 
+                $Funciones = Funciones::where('FK_NPRY_IdMctr008', $id)->get();
+                return DataTables::of($Funciones)
+               ->removeColumn('created_at')
+               ->removeColumn('updated_at')
+                
+               ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    public function VerRequerimientos(Request $request, $id, $idp)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
+                    
+            $Actividad->offsetSet('Anteproyecto', $idp);
+
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null)
+            {
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta Requerimiento.");
+                $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                
+            }else{
+                $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+            }
+            $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+            if($act->MCT_Actividad == "Funciones"){
+                return view($this->path .'VerRequerimientoFunciones',
+                [
+                'datos' => $Actividad,
+                ]);   
+                 
+            }     
+            return view($this->path .'VerRequerimiento',
+            [
+            'datos' => $Actividad,
+            ]);
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );         
+        
+    }
+}
     public function VerActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
 

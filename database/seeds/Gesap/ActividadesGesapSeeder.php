@@ -13,7 +13,7 @@ class ActividadesGesapSeeder extends Seeder
 
             ['MCT_Actividad'=>'Titulo Del Proyecto', 'MCT_Descripcion'=>'Nombre que describe brevemente el anteproyecto o proyecto que se desarrollara.', 'FK_Id_Formato'=>'1'],
             ['MCT_Actividad'=>'Palabras Clave', 'MCT_Descripcion'=>'Palabras que sirven como instrumento para dar una idea de los términos mas usados o significativos en la investigación del proyecto.', 'FK_Id_Formato'=>'1'],
-            ['MCT_Actividad'=>'Impacto Del Proyecto', 'MCT_Descripcion'=>' Se refiere a la incidencia del proyecto dentro de espacios regionales, nacionales y/o globales en relación a los términos socioeconómicos, académicos, ambientales, de productividad.', 'FK_Id_Formato'=>'1'],
+         /*    ['MCT_Actividad'=>'Impacto Del Proyecto', 'MCT_Descripcion'=>' Se refiere a la incidencia del proyecto dentro de espacios regionales, nacionales y/o globales en relación a los términos socioeconómicos, académicos, ambientales, de productividad.', 'FK_Id_Formato'=>'1'],
             ['MCT_Actividad'=>'Trayectoria y capacidad en investigación', 'MCT_Descripcion'=>'desarrollo tecnológico e innovación del grupo: Es la trayectoria que ha tenido el grupo de investigación GITSFA desde el aval en Colciencias del 2010.', 'FK_Id_Formato'=>'1'],
             ['MCT_Actividad'=>'Resumen Ejecutivo', 'MCT_Descripcion'=>'Es una idea precisa de la pertinencia y calidad del proyecto.', 'FK_Id_Formato'=>'1'],
             ['MCT_Actividad'=>'Planteamiento del problema', 'MCT_Descripcion'=>'Descripción precisa y concreta de la idea del proyecto, debe contener la formulación de la pregunta a la cual se desea responder con la elaboración del proyecto.  Se debe tener claro cuál será el aporte con el desarrollo del proyecto.', 'FK_Id_Formato'=>'1'],
@@ -30,9 +30,22 @@ class ActividadesGesapSeeder extends Seeder
             
             ['MCT_Actividad'=>'requerimiento 1', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             ['MCT_Actividad'=>'requerimiento 2', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
-            
             ['MCT_Actividad'=>'requerimiento 3', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
-            
+            ['MCT_Actividad'=>'requerimiento 4', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'Definiciones', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 6', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 2', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 3', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 4', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 5', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'Funciones', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 2', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 3', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 4', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 5', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 8', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
+            ['MCT_Actividad'=>'requerimiento 2', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'], */
+            ['MCT_Actividad'=>'requerimiento 3', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             ['MCT_Actividad'=>'requerimiento 4', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             ['MCT_Actividad'=>'requerimiento 5', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             

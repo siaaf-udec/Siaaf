@@ -18,6 +18,9 @@ use Yajra\DataTables\DataTables;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Crypt;
 
+
+use Illuminate\Support\Facades\Auth;
+
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Actividad;
@@ -26,6 +29,7 @@ use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\Cronograma;
 use App\Container\Gesap\src\Resultados;
+use App\Container\Gesap\src\Funciones;
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
 use App\Container\Gesap\src\Fechas;
@@ -173,6 +177,7 @@ class StudentController extends Controller
             $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
             $mct = Mctr008::all();
+            $requerimientos = Mctr008::where('FK_Id_Formato',2)->get();
             $commitsN = $commits->count();
             $mctN = $mct->count();
             $N = 0;
@@ -299,6 +304,9 @@ class StudentController extends Controller
               
 
                 ]);
+                $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                if($commit == null){
+
                 Commits::create([
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                  'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
@@ -306,7 +314,8 @@ class StudentController extends Controller
                  'CMMT_Commit' => $request['CMMT_Commit'],
                  'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
                 ]);
-            return AjaxResponse::success(
+                }
+                return AjaxResponse::success(
                 '¡Esta Hecho!',
                 'Datos Creados.'
             );
@@ -389,7 +398,7 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->get();
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
 
@@ -448,6 +457,45 @@ class StudentController extends Controller
             );         
         
     }
+    public function SubirRequerimiento(Request $request, $id, $idp)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
+                    
+            $Actividad->offsetSet('Anteproyecto', $idp);
+
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null)
+            {
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta Requerimiento.");
+                $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                
+            }else{
+                $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+            }
+            $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+            if($act->MCT_Actividad == "Funciones"){
+                return view($this->path .'SubirRequerimientoFunciones',
+                [
+                'datos' => $Actividad,
+                ]);   
+                 
+            }     
+            return view($this->path .'SubirRequerimiento',
+            [
+            'datos' => $Actividad,
+            ]);
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );         
+        
+    }
+}
         //cronograma
         public function CronogramaDelete(Request $request, $id)
         {
@@ -484,6 +532,9 @@ class StudentController extends Controller
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
     
                     ]);
+                    $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                    if($commit == null){
+    
                     Commits::create([
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                         'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
@@ -491,6 +542,7 @@ class StudentController extends Controller
                         'CMMT_Commit' => $request['CMMT_Commit'],
                         'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
                     ]);
+                    }
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
                     'Datos Creados.'
@@ -549,6 +601,98 @@ class StudentController extends Controller
         //
     
     //Resultados
+        //cronograma
+        public function FuncionDelete(Request $request, $id)
+        {
+            if ($request->ajax() && $request->isMethod('DELETE')) {	
+                
+                
+                $Funcion = Funciones::where('PK_Id_Funcion',$id)->first();
+                
+                $Funcion -> delete();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos eliminados correctamente.'
+                );
+            }
+    
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+    
+        }   
+    
+    
+        public function FuncionStore(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                
+              
+                    Funciones::create([
+                        'MCT_Funcion_Nombre'=>$request['MCT_Funcion_Nombre'],
+                        'MCT_Funcion_Funcion'=>$request['MCT_Funcion_Funcion'], 
+                        'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+    
+                    ]);
+                    $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                    if($commit == null){
+                        Commits::create([
+                            'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                            'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                            'FK_User_Codigo' => $request['FK_User_Codigo'],
+                            'CMMT_Commit' => $request['CMMT_Commit'],
+                            'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                        ]);
+                    }
+                    
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Creados.'
+                );
+              
+           
+                }              
+            
+        }
+        public function Funcion(Request $request,$id)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+    
+                    $Funciones = Funciones::where('FK_NPRY_IdMctr008', $id)->get();
+                    return DataTables::of($Funciones)
+                   ->removeColumn('created_at')
+                   ->removeColumn('updated_at')
+                    
+                   ->addIndexColumn()
+                   ->make(true);
+            }
+        }
+        public function EditarFuncion(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                
+                $Funcion = Funciones::where('PK_Id_Funcion',$request['PK_Id_Funcion'])->first();
+    
+                $Funcion -> MCT_Funcion_Nombre = $request['MCT_EDITAR_Funcion_Nombre'];
+                $Funcion -> MCT_Funcion_Funcion = $request['MCT_EDITAR_Funcion_Funcion'];
+                $Funcion -> save();
+    
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Modificados.'
+                );
+              
+           
+                }              
+            
+        }
+    
+    
+        //
+    
+    //Resultados
+ 
     public function ResultadoDelete(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -585,13 +729,17 @@ class StudentController extends Controller
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],          
 
                 ]);
-                Commits::create([
-                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
-                    'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                    'FK_User_Codigo' => $request['FK_User_Codigo'],
-                    'CMMT_Commit' => $request['CMMT_Commit'],
-                    'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
-                ]);
+                $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                if($commit == null){
+
+                    Commits::create([
+                        'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                        'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                        'FK_User_Codigo' => $request['FK_User_Codigo'],
+                        'CMMT_Commit' => $request['CMMT_Commit'],
+                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                    ]);
+                }
             return AjaxResponse::success(
                 '¡Esta Hecho!',
                 'Datos Creados.'
@@ -720,6 +868,9 @@ class StudentController extends Controller
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],          
 
                 ]);
+                $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                if($commit == null){
+
                 Commits::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                     'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
@@ -727,7 +878,8 @@ class StudentController extends Controller
                     'CMMT_Commit' => $request['CMMT_Commit'],
                     'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
                 ]);
-            return AjaxResponse::success(
+                }
+                return AjaxResponse::success(
                 '¡Esta Hecho!',
                 'Datos Creados.'
             );
@@ -754,6 +906,9 @@ class StudentController extends Controller
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
+            $user = Auth::user();
+		
+       
 
            $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id) ->first();
 

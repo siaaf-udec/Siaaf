@@ -302,6 +302,26 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 		
 		//
+				//
+		Route::post('FuncionStore', [
+			'uses' => $controller . 'StudentController@FuncionStore',  
+			'as' => 'EstudianteGesap.FuncionStore'
+		]);
+		
+		Route::post('EditarFuncion', [
+			'uses' => $controller . 'StudentController@EditarFuncion',  
+			'as' => 'EstudianteGesap.EditarFuncion'
+		]);
+		Route::delete('FuncionDelete/{id?}', [
+			'uses' => $controller . 'StudentController@FuncionDelete',  
+			'as' => 'EstudianteGesap.FuncionDelete'
+		]);
+		Route::get('Funcion/{id?}', [
+			'uses' => $controller . 'StudentController@Funcion',  
+			'as' => 'EstudianteGesap.Funcion'
+		]);
+		
+		//
 		
 		Route::delete('Financiaciondelete/{id?}', [
 			'uses' => $controller . 'StudentController@Financiaciondelete',  
@@ -331,7 +351,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@ComentarioStore',  
 			'as' => 'EstudianteGesap.ComentarioStore'
 		]);
-		
+		Route::get('SubirRequerimiento/{id?}/{idp?}', [
+			'uses' => $controller . 'StudentController@SubirRequerimiento',  
+			'as' => 'EstudianteGesap.SubirRequerimiento'
+		]);
 	});
 	//
 	//rutas PROFESORES//
@@ -414,6 +437,14 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerActividad',  
 			'as' => 'DocenteGesap.VerActividad'
 		]);
+		Route::get('Funciones/{id?}', [
+			'uses' => $controller . 'DocenteController@Funciones',  
+			'as' => 'DocenteGesap.Funciones'
+		]);
+		Route::get('VerRequerimientos/{id?}/{idp?}', [
+			'uses' => $controller . 'DocenteController@VerRequerimientos',  
+			'as' => 'DocenteGesap.VerRequerimientos'
+		]);
 		Route::get('VerActividadJurado/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividadJurado',  
 			'as' => 'DocenteGesap.VerActividadJurado'
@@ -426,7 +457,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerActividadesJurado',  
 			'as' => 'DocenteGesap.VerActividadesJurado'
 		]);
-		Route::get('ActividadesDocente/{id?}', [
+		Route::get('RequerimientosDocente/{id?}', [
 			'uses' => $controller . 'DocenteController@VerRequerimientosDocente',  
 			'as' => 'DocenteGesap.VerRequerimientosDocente'
 		]);

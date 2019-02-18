@@ -30,13 +30,13 @@
                 
             </div>
             <!--MODAL CREAR COMENTARIO-->
-             <!--MODAL CREAR Cronograma-->
+             <!--MODAL CREAR Funcion-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-Cronograma" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-Funcion" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_create-Cronograma', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_create-Funcion', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -45,14 +45,10 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
                                                     
                                
                                
@@ -67,14 +63,14 @@
                     </div>
                 
             </div>
-            <!--MODAL CREAR Cronograma-->
-            <!--MODAL EDITAR Cronograma-->
+            <!--MODAL CREAR Funcion-->
+            <!--MODAL EDITAR Funcion-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-edit-Cronograma" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-edit-Funcion" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_edit-Cronograma', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_edit-Funcion', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -83,18 +79,11 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                            
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
-                                   
-                               
-                               
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
+                      
                                 </div>
                             </div>
                         </div>
@@ -106,9 +95,10 @@
                     </div>
                 
             </div>
-            <!--MODAL EDITAR Cronograma-->
+            <!--MODAL EDITAR Funcion-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
+  
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Los Requerimientos del Anteproyecto'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -143,29 +133,25 @@
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Agregar Cronograma
+                            </i>Agregar Función
                         </a>@endpermission
                     @endif
                     <br><br>
                     @if($datos['Estado'] != "APROVADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Cronograma'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Funcion'])
                     @slot('columns', [
-                            'Actividad',
-                            'Fecha realización (numero semana)',
-                            'Responsable de la Actividad',
+                            'Nombre',
+                            'Función',
                             'Acciones',
     
                     ])
                     @endcomponent
                     @endif
                     @if($datos['Estado'] == "APROVADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'CronogramaF'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'FuncionF'])
                     @slot('columns', [
-                            'Actividad',
-                            'Fecha realización (numero semana)',
-                            'Responsable de la Actividad',
-                            
-    
+                            'Nombre',
+                            'Función',
                     ])
                     @endcomponent
                     @endif
@@ -218,20 +204,6 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    
-    $.fn.select2.defaults.set("theme", "bootstrap");
-        $(".pmd-select2").select2({
-            placeholder: "Selecciónar",
-            allowClear: true,
-            width: 'auto',
-            escapeMarkup: function (m) {
-                return m;
-            }
-        });
-
-        $('.pmd-select2', form).change(function () {
-            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-        });
 
     id = 123456189 ;
 
@@ -292,7 +264,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -301,7 +273,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -321,18 +293,16 @@ $(document).ready(function(){
      
         var table1, url1, columns1;
         
-        table1 = $('#Cronograma');
+        table1 = $('#Funcion');
        
            
-        url1 = '{{ route('EstudianteGesap.Cronograma') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url1 = '{{ route('EstudianteGesap.Funcion') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns1 = [
             
-            {data: 'MCT_CRN_Actividad', name: 'MCT_CRN_Actividad'},
-            {data: 'Semana', name: 'Semana'},
-            {data: 'MCT_CRN_Responsable', name: 'MCT_CRN_Responsable'},
-           
+            {data: 'MCT_Funcion_Nombre', name: 'MCT_Funcion_Nombre'},
+            {data: 'MCT_Funcion_Funcion', name: 'MCT_Funcion_Funcion'},
             {
                 defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
@@ -350,22 +320,20 @@ $(document).ready(function(){
         ];
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
-        
+
         var table2, url2, columns2;
         
-        table2 = $('#CronogramaF');
+        table2 = $('#FuncionF');
        
            
-        url2 = '{{ route('EstudianteGesap.Cronograma') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url2 = '{{ route('EstudianteGesap.Funcion') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns2 = [
             
-            {data: 'MCT_CRN_Actividad', name: 'MCT_CRN_Actividad'},
-            {data: 'Semana', name: 'Semana'},
-            {data: 'MCT_CRN_Responsable', name: 'MCT_CRN_Responsable'},
-           
-          
+            {data: 'MCT_Funcion_Nombre', name: 'MCT_Funcion_Nombre'},
+            {data: 'MCT_Funcion_Funcion', name: 'MCT_Funcion_Funcion'},
+            
         ];
         dataTableServer.init(table2, url2, columns2);
         table2 = table2.DataTable();
@@ -373,23 +341,21 @@ $(document).ready(function(){
         
         $('.person').on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-Cronograma').modal('toggle');
+            $('#modal-create-Funcion').modal('toggle');
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
                  return this.optional(element) || /^[0-9]+$/i.test(value);
         });
-        var CrearCronograma = function () {
+        var CrearFuncion = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.CronogramaStore') }}';
+                        var route = '{{ route('EstudianteGesap.FuncionStore') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MCT_CRN_Actividad', $('#MCT_CRN_Actividad').val());
-                        formData.append('MCT_CRN_Semana_inicio', $('#MCT_CRN_Semana_inicio').val());
-                        formData.append('MCT_CRN_Semana_fin', $('#MCT_CRN_Semana_fin').val());
-                        formData.append('MCT_CRN_Responsable', $('#MCT_CRN_Responsable').val());
+                        formData.append('MCT_Funcion_Nombre', $('#MCT_Funcion_Nombre').val());
+                        formData.append('MCT_Funcion_Funcion', $('#MCT_Funcion_Funcion').val());
                         
             
 ///LA OTRA TABLA///
@@ -416,11 +382,11 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-create-Cronograma').modal('hide');
-                                    $('#form_create-Cronograma')[0].reset(); //Limpia formulario
+                                    $('#modal-create-Funcion').modal('hide');
+                                    $('#form_create-Funcion')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -429,7 +395,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -438,30 +404,28 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form1 = $('#form_create-Cronograma');
+            var form1 = $('#form_create-Funcion');
             var rules1 = {
                 
-                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
-                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
-                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
-                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 100, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 250, required: true},
            
             };
 
 
-            FormValidationMd.init(form1, rules1, false, CrearCronograma()); 
-
+            FormValidationMd.init(form1, rules1, false, CrearFuncion()); 
+            
             table1.on('click', '.Eliminar', function (e) {
             e.preventDefault();
             $tr1 = $(this).closest('tr');
 
             var dataTable1 = table1.row($tr1).data();
-            var route1 = '{{ route('EstudianteGesap.CronogramaDelete') }}' + '/' + dataTable1.PK_Id_Cronograma;
+            var route1 = '{{ route('EstudianteGesap.FuncionDelete') }}' + '/' + dataTable1.PK_Id_Funcion;
             var type1 = 'DELETE';
             var async1 = async1 || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este Cronograma?",
+                    text: "¿Está seguro de eliminar esta Funcion?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -493,37 +457,34 @@ $(document).ready(function(){
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun Cronograma", "error");
+                        swal("Cancelado", "No se eliminó ninguna Funcion", "error");
                     }
                 });
 
         });
-        var id_cronograma = 0 ;
+        var id_tabla = 0;
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
-            $('#modal-edit-Cronograma').modal('toggle');
+            $('#modal-edit-Funcion').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            id_cronograma = dataTable1.PK_Id_Cronograma;
-            $('#MCT_EDITAR_CRN_Actividad').val(dataTable1.MCT_CRN_Actividad);
-            $('#MCT_EDITAR_CRN_Semana_inicio').val(dataTable1.MCT_CRN_Semana_inicio);
-            $('#MCT_EDITAR_CRN_Semana_fin').val(dataTable1.MCT_CRN_Semana_fin);
-            $('#MCT_EDITAR_CRN_Responsable').val(dataTable1.MCT_CRN_Responsable);
+            id_tabla = dataTable1.PK_Id_Funcion;
+            $('#PK_Id_Funcion').val(dataTable1.PK_Id_Funcion);
+            $('#MCT_EDITAR_Funcion_Nombre').val(dataTable1.MCT_Funcion_Nombre);
+            $('#MCT_EDITAR_Funcion_Funcion').val(dataTable1.MCT_Funcion_Funcion);
         });
 
-        var EditarCronograma = function () {
+        var EditarFuncion = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.EditarCronograma') }}';
+                        var route = '{{ route('EstudianteGesap.EditarFuncion') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();      
-                        formData.append('PK_Id_Cronograma', id_cronograma);
-                        formData.append('MCT_EDITAR_CRN_Actividad', $('#MCT_EDITAR_CRN_Actividad').val());
-                        formData.append('MCT_EDITAR_CRN_Semana_inicio', $('#MCT_EDITAR_CRN_Semana_inicio').val());
-                        formData.append('MCT_EDITAR_CRN_Semana_fin', $('#MCT_EDITAR_CRN_Semana_fin').val());
-                        formData.append('MCT_EDITAR_CRN_Responsable', $('#MCT_EDITAR_CRN_Responsable').val());
+                        formData.append('PK_Id_Funcion', id_tabla);
+                        formData.append('MCT_EDITAR_Funcion_Nombre', $('#MCT_EDITAR_Funcion_Nombre').val());
+                        formData.append('MCT_EDITAR_Funcion_Funcion', $('#MCT_EDITAR_Funcion_Funcion').val());
                         
 
                         $.ajax({
@@ -541,11 +502,11 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-edit-Cronograma').modal('hide');
-                                    $('#form_edit-Cronograma')[0].reset(); //Limpia formulario
+                                    $('#modal-edit-Funcion').modal('hide');
+                                    $('#form_edit-Funcion')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -554,7 +515,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -563,31 +524,27 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form2 = $('#form_edit-Cronograma');
+            var form2 = $('#form_edit-Funcion');
             var rules2 = {
-                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
-                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
-                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
-                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 100, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 250, required: true},
            
              };
 
 
-            FormValidationMd.init(form2, rules2, false, EditarCronograma()); 
+            FormValidationMd.init(form2, rules2, false, EditarFuncion()); 
 
         
         
       
 
-
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';
-
+            var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + '{{$datos['Anteproyecto']}}';
+            
             //location.href="{{route('EstudianteGesap.index')}}";
            $(".content-ajax").load(route);
         });
-   
     
 })
 </script>    

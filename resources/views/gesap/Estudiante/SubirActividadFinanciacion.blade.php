@@ -81,9 +81,6 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('PK_Id_Financiacion',null,['label'=>'Entidaaad:','class'=> 'form-control','hidden','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite la entidad del proyecto','icon'=>'fa fa-book']) !!}
-                                 
                                    {!! Field:: Text('MCT_EDITAR_Financiacion',null,['label'=>'Tipo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Fuente',null,['label'=>'Fuente:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
@@ -145,6 +142,7 @@
                         </a>@endpermission
                     @endif
                     <br><br>
+                    @if($datos['Estado'] != "APROVADO" )
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Financiacion'])
                     @slot('columns', [
                             'Tipo',
@@ -154,6 +152,18 @@
     
                     ])
                     @endcomponent
+                    @endif
+                    @if($datos['Estado'] == "APROVADO" )
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'FinanciacionF'])
+                    @slot('columns', [
+                            'Tipo',
+                            'Fuente',
+                            'Valor Aportado',
+                            
+    
+                    ])
+                    @endcomponent
+                    @endif
 
                     <div class="form-actions">
                         <div class="row">
@@ -326,6 +336,24 @@ $(document).ready(function(){
         ];
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
+        
+        var table2, url2, columns2;
+        
+        table2 = $('#FinanciacionF');
+       
+           
+        url2 = '{{ route('EstudianteGesap.Financiacion') }}'+'/'+'{{$datos['Anteproyecto']}}';
+       
+       
+        columns2 = [
+            
+            {data: 'MCT_Financiacion', name: 'MCT_Financiacion'},
+            {data: 'MCT_Fuente', name: 'MCT_Fuente'},
+            {data: 'MCT_Valor_Aportado', name: 'MCT_Valor_Aportado'},  
+           
+        ];
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
 
         
         $('.person').on('click', function (e) {
@@ -455,12 +483,14 @@ $(document).ready(function(){
                 });
 
         });
+        var id_financiacion = 0 ;
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
             $('#modal-edit-Financiacion').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            $('#PK_Id_Financiacion').val(dataTable1.PK_Id_Financiacion);
+            
+            id_financiacion = dataTable1.PK_Id_Financiacion;
             $('#MCT_EDITAR_Financiacion').val(dataTable1.MCT_Financiacion);
             $('#MCT_EDITAR_Fuente').val(dataTable1.MCT_Fuente);
             $('#MCT_EDITAR_Valor_Aportado').val(dataTable1.MCT_Valor_Aportado);
@@ -474,7 +504,7 @@ $(document).ready(function(){
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('PK_Id_Financiacion', $('#PK_Id_Financiacion').val());
+                        formData.append('PK_Id_Financiacion', id_financiacion);
                         formData.append('MCT_EDITAR_Financiacion', $('#MCT_EDITAR_Financiacion').val());
                         formData.append('MCT_EDITAR_Fuente', $('#MCT_EDITAR_Fuente').val());
                         formData.append('MCT_EDITAR_Valor_Aportado', $('#MCT_EDITAR_Valor_Aportado').val());

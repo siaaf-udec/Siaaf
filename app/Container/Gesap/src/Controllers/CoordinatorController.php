@@ -33,6 +33,10 @@ use App\Container\Gesap\src\Mctr008;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
+
+
+use Illuminate\Support\Facades\Auth;
+
 use App\Container\Gesap\src\Mail\EmailGesap;
 use Illuminate\Support\Facades\Mail;
 
@@ -60,7 +64,7 @@ class CoordinatorController extends Controller
     
    
 	public function usuariosindex(Request $request)
-	{
+	{   
 		
 			return view($this->path . 'Anteproyectos');
 		
@@ -1008,85 +1012,103 @@ class CoordinatorController extends Controller
 	public function createUsuario(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
-            $documento=(string)$request['User_Cedula'];
+          /* vairables que resive
+             formData.append('PK_User_Codigo', $('input:text[name="User_Cedula"]').val());
+            formData.append('User_Codigo', $('input:text[name="User_Codigo"]').val());
+            formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
+            formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
+            formData.append('User_Correo', $('input[name="User_Correo"]').val());
+            formData.append('User_Contra', $('input:text[name="User_Cedula"]').val());
+            formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
+            formData.append('FK_User_IdEstado', '2');
+            formData.append('User_Tipo_Documento', $('select[name="User_Tipo_Documento"]').val());
+            formData.append('User_Sexo', $('select[name="User_Sexo"]').val());
+            formData.append('User_Nacimiento', $('#User_Nacimiento').val());
+            formData.append('User_Fecha_Expedicion', $('#User_Fecha_Expedicion').val());
+           */
 
-            if($request['PK_User_Codigo']==null){
-                $request['PK_User_Codigo']=$request['User_Cedula'];
-
-           }
-
-            $verificiaruser = Usuarios::find($request['PK_User_Codigo']); //validar codigo repetido en usuarios gesap
-            $verificiarusercedula = Usuarios::where('User_Cedula','=',$request['User_Cedula'])->first();//validar cedula en usuarios gesap
-            $verificarUserUdec= UsersUdec::find($documento);//validar cedula en user_udec
-            $verificarCorreo = Usuarios::where('User_Correo', '=', $request['User_Correo'])->first(); //validar correo en la tabla usaurios gesap
-          
-            if (is_null($verificiarusercedula) && empty($verificiaruser) && empty($verificarCorreo)){
-
-                if (is_null($verificarUserUdec) ) {
-
-                    $perfil=RolesUsuario::where('PK_Id_Rol_Usuario', $request['FK_User_IdRol'])->first();
-
-                        UsersUdec::create([
-
-                            'number_document' => $documento,
-                            'code' => $request['PK_User_Codigo'],
-                            'username' => $request['User_Nombre1'],               
-                            'lastname' => $request['User_Apellido1'],
-                            'type_user'=>$perfil['Rol_Usuario'],
-                            //'number_phone' => $request['CU_Telefono'],
-                            'place'=>"Facatativá",
-                            'email' => $request['User_Correo'],
-                            
-                        ]);
-
-                    }
-
-                    if(empty($verificiaruser)){
-
-                        Usuarios::create([
-                            'PK_User_Codigo' => $request['PK_User_Codigo'],
-                            'User_Cedula' => $request['User_Cedula'],
-                            'User_Nombre1' => $request['User_Nombre1'],
-                            //'User_Nombre2' => $request['User_Nombre2'],
-                            'User_Apellido1' => $request['User_Apellido1'],
-                            //'User_Apellido2' => $request['User_Apellido2'],
-                            'User_Correo' => $request['User_Correo'],
-                            'User_Contra' => Crypt::encrypt($request['User_Cedula']),
-                            'User_Direccion' => $request['User_Direccion'],
-                            'FK_User_IdEstado' => $request['FK_User_IdEstado'],
-                            'FK_User_IdRol' => $request['FK_User_IdRol'],
-                        ]);
-
-                        Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
-
-                        return AjaxResponse::success(
-                            '¡Bien hecho!',
-                            'Datos creados en Usuarios'
-                        );
-                    }
-                    else{
-                        $IdError = 422;
-                        return AjaxResponse::success(
-                            '¡Lo sentimos!',
-                            'No se pudo completar tu solicitud, el código ya está registrado.',
-                            $IdError
-                        );
-                    }
-                }
-            
-
+           //validar Documento identidad           
+           $vdocumento = Usuarios::where('PK_User_Codigo',$request['PK_User_Codigo'])->first(); 
+           //validar correo
+           $vcorreo = Usuarios::where('User_Correo',$request['User_Correo'])->first(); 
+           //validar cod interno
+           $vcodigo = Usuarios::where('User_Codigo',$request['User_Codigo'])->first();
+           
+           if($vdocumento != null){
             $IdError = 422;
             return AjaxResponse::success(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud, la cedula, el codigo o el correo ya está registrado.',
+                '¡Error!',
+                'El Documento de identidad ya se enuentra registrado.',
                 $IdError
             );
+           }
+           if($vcorreo != null){
+            $IdError = 422;
+            return AjaxResponse::success(
+                
+                '¡Error!',
+                'El Documento de identidad ya se enuentra registrado.',
+                $IdError 
+              ); 
+           }
+           if($vcodigo != null){
+               $IdError = 422;
+            return AjaxResponse::success( 
+                '¡Error!',
+                'El Documento de identidad ya se enuentra registrado.',
+                $IdError
+            ); 
+           }
+           
+           $perfil=RolesUsuario::where('PK_Id_Rol_Usuario', $request['FK_User_IdRol'])->first();
+
+           UsersUdec::create([
+
+            'number_document' => $request['PK_User_Codigo'],
+            'code' => $request['User_Codigo'],
+            'username' => $request['User_Nombre1'],               
+            'lastname' => $request['User_Apellido1'],
+            'type_user'=>$perfil['Rol_Usuario'],
+            'place'=>"Facatativá",
+            'email' => $request['User_Correo'],
+            
+          ]);
+          
+          Usuarios::create([
+            'PK_User_Codigo' => $request['PK_User_Codigo'],
+            'User_Codigo' => $request['User_Codigo'],
+            'User_Nombre1' => $request['User_Nombre1'],
+            'User_Apellido1' => $request['User_Apellido1'],
+            'User_Correo' => $request['User_Correo'],
+            'User_Contra' => Crypt::encrypt($request['PK_User_Codigo']),
+            'User_Direccion' => $request['User_Direccion'],
+            'FK_User_IdEstado' => $request['FK_User_IdEstado'],
+            'FK_User_IdRol' => $request['FK_User_IdRol'],
+         ]);
+         User::create([
+            'name'=> $request['User_Nombre1'],
+            'lastname'=>$request['User_Apellido1'],
+            'birthday'=>$request['User_Nacimiento'],
+            'identity_type'=>$request['User_Tipo_Documento'],
+            'identity_no'=>$request['PK_User_Codigo'],
+            'address'=>$request['User_Direccion'],
+            'sexo'=>$request['User_Sexo'],
+            'email'=>$request['User_Correo'],
+            'password'=> Crypt::encrypt($request['PK_User_Codigo']),
+            'state' => 'Aprobado',
+         ]);
+
+
+
+     //   Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
+
+        return AjaxResponse::success(
+            '¡Bien hecho!',
+            'Datos creados en Usuarios'
+        );
+
+        
         }
-            //return view($this->path .'Usuarios'); 
-            return AjaxResponse::fail(
-                '¡Lo sentimos!',
-                'No se pudo completar tu solicitud.'
-            );
     
     }
 
