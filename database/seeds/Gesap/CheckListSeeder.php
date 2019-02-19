@@ -12,7 +12,7 @@ class CheckListSeeder extends Seeder
 
 
             ['CHK_Checlist'=>'EN CALIFICACIÓN', 'CHK_Checlist_Data'=>'En proceso de calificación la actividad del MCT y/ó proyecto'],
-            ['CHK_Checlist'=>'APROVADO', 'CHK_Checlist_Data'=>'Aprovada la actividad'],
+            ['CHK_Checlist'=>'APROBADO', 'CHK_Checlist_Data'=>'Aprovada la actividad'],
             
         ]);
     }

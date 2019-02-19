@@ -125,6 +125,10 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@listarPreDirector',
             'as' => 'AnteproyectoGesap.listarpredirector'
 		]);
+		Route::get('FechasWindget', [
+            'uses' => $controller . 'CoordinatorController@FechasRadicacion',
+            'as' => 'AnteproyectoGesap.FechasRadicacion'
+		]);
 	});
 	// Rutas para la parte de Usuarios
 

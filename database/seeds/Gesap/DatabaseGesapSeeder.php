@@ -11,6 +11,7 @@ class DatabaseGesapSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(FechasGesapSeeder::class);
         $this->call(FormatoGesapSeeder::class);
         $this->call(CheckListSeeder::class);
         //$this->call(PermissionGesapSeeder::class);

@@ -13,8 +13,7 @@ class Fechas extends Model
     protected $primaryKey = 'PK_Id_Radicacion';
 
     protected $fillable = [
-        'FCH_Radicacion_principal',
-        'FCH_Radicacion_secundaria',
+        'FCH_Radicacion'
     ];
 
     //Relacion del Estado con el Usuario

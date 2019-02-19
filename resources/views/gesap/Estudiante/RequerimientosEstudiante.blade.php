@@ -85,7 +85,7 @@
             
       
             {
-                defaultContent: '@permission('ADD_ACTIVITY_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-danger btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('ADD_ACTIVITY_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

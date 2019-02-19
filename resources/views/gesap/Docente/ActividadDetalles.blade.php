@@ -42,7 +42,7 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
@@ -115,7 +115,7 @@
                                 @permission('AVAL_DOCENTE')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Avalar"><i
                                 ></i>
-                                    Dar Aval
+                                    Aprobar Actividad
                                 </a>
                                 @endpermission
                                 @endif
@@ -234,7 +234,7 @@ $(document).ready(function(){
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro que desa dar Aval A esta Actividad?",
+                    text: "¿Está seguro que desea Aprobar esta Actividad?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -278,7 +278,7 @@ $(document).ready(function(){
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se avalo la actividad", "error");
+                        swal("Cancelado", "No se Aprobo la actividad", "error");
                     }
                 });
 

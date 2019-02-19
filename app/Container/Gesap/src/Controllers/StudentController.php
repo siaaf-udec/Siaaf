@@ -406,7 +406,7 @@ class StudentController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -469,7 +469,7 @@ class StudentController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta Requerimiento.");
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a este Requerimiento.");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{

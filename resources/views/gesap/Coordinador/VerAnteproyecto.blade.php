@@ -50,7 +50,7 @@
                                                        class="btn btn-simple btn-success btn-icon desarrollador"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
-                            </i>Agregar Desarrolador
+                            </i>Agregar Desarrollador
                             </a>@endpermission
                                 @endif
                         

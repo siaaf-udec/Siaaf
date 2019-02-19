@@ -114,7 +114,7 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        

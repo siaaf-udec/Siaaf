@@ -265,32 +265,37 @@ class CoordinatorController extends Controller
         );
 
     }
+    public function FechasRadicacion(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Fechas = Fechas::all();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos consultados correctamente.',
+                $Fechas
+            );
+        }
 
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
     public function listfechas(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $fechas = Fechas::all();
-            if(($fechas->isempty())==true){
-                $concatenado=[];
-            }else{
-            $i=0;
-            $concatenado=[];
-              
-            $ultimo = $fechas ->last();     
-                  
+                $i = 1;
+                foreach($fechas as $fecha){
+                    $titulo = 'Fecha De radicacion Numero -';
                     
-            $collection = collect([]);
-
-            $collection->put('FCH_Radicacion_principal',$ultimo-> FCH_Radicacion_principal);
-                     
-            $collection->put('FCH_Radicacion_secundaria',$ultimo-> FCH_Radicacion_secundaria);
-
-            $concatenado[$i]= $collection;
-        
-            } 
-  
-            return DataTables::of($concatenado)
+                    $fecha->offsetSet('Radicacion',$titulo.$i);
+                    
+                    $i = $i +1;
+                }
+            return DataTables::of($fechas)
                 
                    ->addIndexColumn()
                    ->make(true);
@@ -646,30 +651,14 @@ class CoordinatorController extends Controller
 	
         if ($request->ajax() && $request->isMethod('POST')) {	
             
-            $fechas = Fechas::all();
-            if(($fechas->isempty())==true){
-                $concatenado=[];
-                $fecha = 'null';
-            }else{
-                $ultimo = $fechas ->last(); 
-                $fecha = $ultimo-> FCH_Radicacion_principal;
-            }
-            if($fecha == 'null'){
-                $IdError = 422;
-                return AjaxResponse::success(
-                    '¡Lo sentimos!',
-                    'No se pudo completar tu solicitud, no hay fechas disponibles de radicación.',
-                    $IdError
-                );
-            }else{
-			Anteproyecto::create([
+           Anteproyecto::create([
 			 'NPRY_Titulo' => $request['NPRY_Titulo'],
 			 'NPRY_Keywords' => $request['NPRY_Keywords'],
 			 'NPRY_Descripcion' => $request['NPRY_Descripcion'],
 			 'NPRY_Duracion' => $request['NPRY_Duracion'],
 			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
              'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
-             'NPRY_FCH_Radicacion' => $fecha,
+             'NPRY_FCH_Radicacion' => $request['NPRY_FCH_Radicacion'],
             ]);
 
             $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
@@ -681,7 +670,7 @@ class CoordinatorController extends Controller
 				'¡Esta Hecho!',
 				'Datos Creados.'
 			);
-            }
+            
         }
 	
 			
@@ -690,14 +679,28 @@ class CoordinatorController extends Controller
     public function storefechas(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
-        
+            
+        /*     
+            if(empty($request['FCH_Radicacion_principal'])==true){
+                $fecha = Fechas::where('PK_Id_Radicacion',2)->first();
+                $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
+                $fecha -> save();
+            }
+            if(empty($request['FCH_Radicacion_secundaria'])==true){
+                $fecha = Fechas::where('PK_Id_Radicacion',1)->first();
+                $fecha -> FCH_Radicacion = $request['FCH_Radicacion_principal'];
+                $fecha -> save();
+            } */
+            $fecha = Fechas::where('PK_Id_Radicacion',1)->first();
+            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
+            $fecha -> save();
+            $fecha = Fechas::where('PK_Id_Radicacion',2)->first();
+            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_principal'];
+            $fecha -> save();
+     
+        }
 	
-			Fechas::create([
-             'FCH_Radicacion_principal' => $request['FCH_Radicacion_principal'],
-             'FCH_Radicacion_secundaria' => $request['FCH_Radicacion_secundaria']
-               
-			]);
-		}
+		
 	
 			return AjaxResponse::success(
 				'¡Esta Hecho!',

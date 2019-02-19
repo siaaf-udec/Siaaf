@@ -22,7 +22,7 @@
 
 
                                 {!! Field:: textArea('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
-                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+                                                                ['help' => 'Digite las palabras clave. (SEPARADAS POR UNA (,))','icon'=>'fa fa-book'] ) !!}
 
                                 {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
@@ -33,6 +33,7 @@
 
                                 {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director: ']) !!}
 
+                                {!! Field::select('NPRY_FCH_Radicacion', null,['name' => 'Select_Fecha','label'=>'Fecha De Radicación: ']) !!}
                                                              
                                 {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
                              </div>
@@ -80,6 +81,17 @@ $(document).ready(function(){
     $('#FK_NPRY_Pre_Director').val();
     });
 
+    var $widget_select_Fecha = $('select[name="Select_Fecha"]');
+
+    var route_Fecha = '{{ route('AnteproyectoGesap.FechasRadicacion') }}';
+    $.get(route_Fecha, function (response, status) {
+    $(response.data).each(function (key, value) {
+        $widget_select_Fecha.append(new Option(value.FCH_Radicacion, value.FCH_Radicacion ));
+    });
+    $widget_select_Fecha.val([]);
+    $('#NPRY_FCH_Radicacion').val();
+    });
+
     jQuery.validator.addMethod("numbers", function(value, element) {
             return this.optional(element) || /^[0-9," "]+$/i.test(value);
         });
@@ -116,10 +128,10 @@ $(document).ready(function(){
 
                     formData.append('NPRY_Titulo', $('input:text[name="NPRY_Titulo"]').val());
                     formData.append('NPRY_Keywords', $('#NPRY_Keywords').val());
-                    
                     formData.append('NPRY_Descripcion', $('#NPRY_Descripcion').val());
                     formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
                     formData.append('FK_NPRY_Pre_Director', $('select[name="SelectPre_Director"]').val());
+                    formData.append('NPRY_FCH_Radicacion', $('select[name="Select_Fecha"]').val());
                     formData.append('FK_NPRY_Estado', '1');
                     
                     $.ajax({

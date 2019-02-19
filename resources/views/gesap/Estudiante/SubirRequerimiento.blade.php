@@ -42,7 +42,7 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
@@ -70,7 +70,7 @@
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>@endpermission
-                                @if($datos['Estado'] != "APROVADO" )
+                                @if($datos['Estado'] != "APROBADO" )
                                 @permission('ADD_ACTIVITY_STUDENT'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
                                 @endif
                             </div>
@@ -186,7 +186,7 @@ $(document).ready(function(){
         var form = $('#form_subir_actividad');
        
         var formRules = {
-            CMMT_Commit: {minlength: 8, maxlength: 100, required: true,}, 
+            CMMT_Commit: {minlength: 8, maxlength: 500, required: true,}, 
         };
 
         var formMessage = {

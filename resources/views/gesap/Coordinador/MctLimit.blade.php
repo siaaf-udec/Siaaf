@@ -14,9 +14,9 @@
                     <div class="row">
                             <div class="col-md-6">
 
-                               {!! Field::date('FCH_Radicacion_principal',null,['label'=>'FECHA LIMITE SEMESTRE ACTUAL:'],
+                               {!! Field::date('FCH_Radicacion_principal',null,['label'=>'Primer Fecha De Radicación:'],
                                                                 ['help' => 'Digite la segunda fecha de radicacion de este semestre','icon'=>'fa fa-calendar']) !!}
-                               {!! Field::date('FCH_Radicacion_secundaria',null,['label'=>'PRIMER FECHA DEL PROXIMO SEMESTRE :'],
+                               {!! Field::date('FCH_Radicacion_secundaria',null,['label'=>'Segunda Fecha De Radicación:'],
                                                                 ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
 
 
@@ -33,7 +33,7 @@
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('GESAP_CREATE_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_CREATE_USER'){{ Form::submit('Cambiar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                         
@@ -43,8 +43,8 @@
                    <br><br>
                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listafechas'])
                         @slot('columns', [
-                            'Fecha Proxima',
-                            'Fecha Lejana'
+                            '#',
+                            'Fecha radicacion'
                         ])
                     @endcomponent
                    
@@ -82,8 +82,8 @@
         url = '{{ route('AnteproyectosGesap.listfechas') }}';
     
         columns = [
-            {data: 'FCH_Radicacion_principal', name: 'FCH_Radicacion_principal'},
-            {data: 'FCH_Radicacion_secundaria', name: 'FCH_Radicacion_secundaria'}
+            {data: 'Radicacion', name: 'Radicacion'},
+            {data: 'FCH_Radicacion', name: 'FCH_Radicacion'}
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
@@ -116,16 +116,16 @@
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-                                                location.href="{{route('AnteproyectosGesap.index')}}";
-                                            
+                                                var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
+                                                //location.href="{{route('AnteproyectosGesap.index')}}";
+                                                $(".content-ajax").load(route);
                                             } else {
                                                 $('#form_create_limit')[0].reset(); 
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-                                                location.href="{{route('AnteproyectosGesap.index')}}";
-                                                
+                                                var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
+                                                //location.href="{{route('AnteproyectosGesap.index')}}";
+                                                $(".content-ajax").load(route);  
                                                 }
                                         }
                         },

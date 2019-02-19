@@ -469,9 +469,16 @@ class DocenteController extends Controller
                         '¡Bien hecho!',
                         'Datos modificados correctamente.'
                     );
-                }else{
+                }
+                if(($suma/12)==1){
                     $anteproyecto -> FK_NPRY_Estado = 6;
+                    //aplazado
                     $anteproyecto -> save();
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+                }else{
                     return AjaxResponse::success(
                         '¡Bien hecho!',
                         'Datos modificados correctamente.'
@@ -834,7 +841,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta Requerimiento.");
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a este Requerimiento.");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -873,7 +880,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
+                $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -937,7 +944,7 @@ class DocenteController extends Controller
 //$commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
                 if($commit-> isEmpty() )
                 {
-                    $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningun cambio a esta actividad del MCT.");
+                    $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
                     $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                     
                 }else{
