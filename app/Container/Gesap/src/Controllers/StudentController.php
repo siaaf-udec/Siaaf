@@ -40,6 +40,10 @@ use App\Container\Gesap\src\Mctr008;
 use App\Container\Gesap\src\ObservacionesMct;
 use App\Container\Gesap\src\Commits;
 use App\Container\Users\src\User;
+use App\Container\Gesap\src\RubroPersonal;
+use App\Container\Gesap\src\RubroEquipos;
+use App\Container\Gesap\src\RubroMaterial;
+use App\Container\Gesap\src\RubroTecnologico;
 use App\Container\Gesap\src\EstadoAnteproyecto;
 use App\Container\Users\src\UsersUdec;
 
@@ -231,9 +235,10 @@ class StudentController extends Controller
                 
                 }
         }else{
-            $fechas = Fechas::all();
-            $ultimo = $fechas ->last();
-            $anteproyecto  -> NPRY_FCH_Radicacion = $ultimo -> FCH_Radicacion_secundaria ;
+            $fechas = Fechas::where('PK_Id_Radicacion',2)->first();
+           
+
+            $anteproyecto  -> NPRY_FCH_Radicacion = $fechas -> FCH_Radicacion ;
             $anteproyecto  -> save();
             return AjaxResponse::success(
                 '¡Lo sentimos!',
@@ -441,6 +446,12 @@ class StudentController extends Controller
                 'datos' => $Actividad,
                 ]);
 
+            }if($act->MCT_Actividad == "Resumen De Rubros"){
+                return view($this->path .'SubirActividadRubros',
+                [
+                'datos' => $Actividad,
+                ]);
+
             }
         
                return view($this->path .'SubirActividad',
@@ -599,7 +610,435 @@ class StudentController extends Controller
     
     
         //
-    
+
+               //RUBRO PERSONAL
+               public function RubroPersonalDelete(Request $request, $id)
+               {
+                   if ($request->ajax() && $request->isMethod('DELETE')) {	
+                       
+                       
+                       $RubroPersonal = RubroPersonal::where('PK_RBR_Personal',$id)->first();
+                       
+                       $RubroPersonal -> delete();
+                       return AjaxResponse::success(
+                           '¡Bien hecho!',
+                           'Datos eliminados correctamente.'
+                       );
+                   }
+           
+                   return AjaxResponse::fail(
+                       '¡Lo sentimos!',
+                       'No se pudo completar tu solicitud.'
+                   );
+           
+               }   
+           
+           
+               public function RubroPersonalStore(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                     
+                    RubroPersonal::create([
+                               'RBR_PER_Nombre'=>$request['RBR_PER_Nombre'],
+                               'RBR_PER_Funcion'=>$request['RBR_PER_Funcion'],
+                               'RBR_PER_Tipo'=>$request['RBR_PER_Tipo'],    
+                               'RBR_PER_Dedicacion' => $request['RBR_PER_Dedicacion'],  
+                               'RBR_PER_Entidad' => $request['RBR_PER_Entidad'],
+                               'RBR_PER_Solicitado_Udec'=>$request['RBR_PER_Solicitado_Udec'],
+                               'RBR_PER_Contra_Udec'=>$request['RBR_PER_Contra_Udec'],    
+                               'RBR_PER_Contra_Otro' => $request['RBR_PER_Contra_Otro'],  
+                               'RBR_PER_Total' => $request['RBR_PER_Total'],  
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+                             
+           
+                           ]);
+                           $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                           if($commit == null){
+           
+                           Commits::create([
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                               'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'CMMT_Commit' => $request['CMMT_Commit'],
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                           ]);
+                           }
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Creados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+               public function RubroPersonal(Request $request,$id)
+               {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           
+                           $RubroPersonal = RubroPersonal::where('FK_NPRY_IdMctr008', $id)->get();
+                          
+                           return DataTables::of($RubroPersonal)
+                          ->removeColumn('created_at')
+                          ->removeColumn('updated_at')
+                           
+                          ->addIndexColumn()
+                          ->make(true);
+                   }
+               }
+               public function EditarRubroPersonal(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                       $RubroPersonal = RubroPersonal::where('PK_RBR_Personal',$request['PK_RBR_Personal'])->first();
+           
+                       $RubroPersonal -> RBR_PER_Nombre = $request['RBR_PER_EDITAR_Nombre'];
+                       $RubroPersonal -> RBR_PER_Funcion = $request['RBR_PER_EDITAR_Funcion'];
+                       $RubroPersonal -> RBR_PER_Tipo = $request['RBR_PER_EDITAR_Tipo'];
+                       $RubroPersonal -> RBR_PER_Dedicacion = $request['RBR_PER_EDITAR_Dedicacion'];
+                       $RubroPersonal -> RBR_PER_Entidad = $request['RBR_PER_EDITAR_Entidad'];
+                       $RubroPersonal -> RBR_PER_Solicitado_Udec = $request['RBR_PER_EDITAR_Solicitado_Udec'];
+                       $RubroPersonal -> RBR_PER_Contra_Udec = $request['RBR_PER_EDITAR_Contra_Udec'];
+                       $RubroPersonal -> RBR_PER_Contra_Otro = $request['RBR_PER_EDITAR_Contra_Otro'];
+                       $RubroPersonal -> RBR_PER_Total = $request['RBR_PER_EDITAR_Total'];
+                       
+                       $RubroPersonal -> save();
+           
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Modificados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+           
+           
+               //
+           
+               //RUBRO EQUIPOS
+               public function RubroEquiposDelete(Request $request, $id)
+               {
+                   if ($request->ajax() && $request->isMethod('DELETE')) {	
+                       
+                       
+                       $RubroEquipos = RubroEquipos::where('PK_RBR_Equipo',$id)->first();
+                       
+                       $RubroEquipos -> delete();
+                       return AjaxResponse::success(
+                           '¡Bien hecho!',
+                           'Datos eliminados correctamente.'
+                       );
+                   }
+           
+                   return AjaxResponse::fail(
+                       '¡Lo sentimos!',
+                       'No se pudo completar tu solicitud.'
+                   );
+           
+               }   
+           
+           
+               public function RubroEquiposStore(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                     
+                    RubroEquipos::create([
+                               'RBR_EQP_Descripcion'=>$request['RBR_EQP_Descripcion'],
+                               'RBR_EQP_Lab'=>$request['RBR_EQP_Lab'],
+                               'RBR_EQP_Actividades'=>$request['RBR_EQP_Actividades'],    
+                               'RBR_EQP_Justificacion' => $request['RBR_EQP_Justificacion'],  
+                               'RBR_EQP_Cantidad' => $request['RBR_EQP_Cantidad'],
+                               'RBR_EQP_Val'=>$request['RBR_EQP_Val'],
+                               'RBR_EQP_Solicitado'=>$request['RBR_EQP_Solicitado'],    
+                               'RBR_EQP_Contra_Udec' => $request['RBR_EQP_Contra_Udec'],  
+                               'RBR_EQP_Contra_Otro' => $request['RBR_EQP_Contra_Otro'],  
+                               'RBR_EQP_Total' => $request['RBR_EQP_Total'],  
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+                             
+           
+                           ]);
+                           $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                           if($commit == null){
+           
+                           Commits::create([
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                               'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'CMMT_Commit' => $request['CMMT_Commit'],
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                           ]);
+                           }
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Creados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+               public function RubroEquipos(Request $request,$id)
+               {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           
+                           $RubroEquipos = RubroEquipos::where('FK_NPRY_IdMctr008', $id)->get();
+                          
+                           return DataTables::of($RubroEquipos)
+                          ->removeColumn('created_at')
+                          ->removeColumn('updated_at')
+                           
+                          ->addIndexColumn()
+                          ->make(true);
+                   }
+               }
+               public function EditarRubroEquipos(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                       $RubroEquipos = RubroEquipos::where('PK_RBR_Equipo',$request['PK_RBR_Equipo'])->first();
+           
+                       $RubroEquipos -> RBR_EQP_Descripcion = $request['RBR_EQP_EDITAR_Descripcion'];
+                       $RubroEquipos -> RBR_EQP_Lab = $request['RBR_EQP_EDITAR_Lab'];
+                       $RubroEquipos -> RBR_EQP_Actividades = $request['RBR_EQP_EDITAR_Actividades'];
+                       $RubroEquipos -> RBR_EQP_Justificacion = $request['RBR_EQP_EDITAR_Justificacion'];
+                       $RubroEquipos -> RBR_EQP_Cantidad = $request['RBR_EQP_EDITAR_Cantidad'];
+                       $RubroEquipos -> RBR_EQP_Val = $request['RBR_EQP_EDITAR_Val'];
+                       $RubroEquipos -> RBR_EQP_Solicitado = $request['RBR_EQP_EDITAR_Solicitado'];
+                       $RubroEquipos -> RBR_EQP_Contra_Udec = $request['RBR_EQP_EDITAR_Contra_Udec'];
+                       $RubroEquipos -> RBR_EQP_Contra_Otro = $request['RBR_EQP_EDITAR_Contra_Otro'];
+                       $RubroEquipos -> RBR_EQP_Total = $request['RBR_EQP_EDITAR_Total'];
+                       
+                       $RubroEquipos -> save();
+           
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Modificados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+           
+           
+               //
+           
+       
+               //RUBRO MATERIAL
+               public function RubroMaterialDelete(Request $request, $id)
+               {
+                   if ($request->ajax() && $request->isMethod('DELETE')) {	
+                       
+                       
+                       $RubroMaterial = RubroMaterial::where('PK_RBR_Material',$id)->first();
+                       
+                       $RubroMaterial -> delete();
+                       return AjaxResponse::success(
+                           '¡Bien hecho!',
+                           'Datos eliminados correctamente.'
+                       );
+                   }
+           
+                   return AjaxResponse::fail(
+                       '¡Lo sentimos!',
+                       'No se pudo completar tu solicitud.'
+                   );
+           
+               }   
+           
+           
+               public function RubroMaterialStore(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                     
+                    RubroMaterial::create([
+                               'RBR_MTL_Descripcion'=>$request['RBR_MTL_Descripcion'],
+                               'RBR_MTL_Justificacion'=>$request['RBR_MTL_Justificacion'],
+                               'RBR_MTL_Cantidad'=>$request['RBR_MTL_Cantidad'],    
+                               'RBR_MTL_Val' => $request['RBR_MTL_Val'],  
+                               'RBR_MTL_Solicitado_Udec' => $request['RBR_MTL_Solicitado_Udec'],
+                               'RBR_MTL_Contra_Udec'=>$request['RBR_MTL_Contra_Udec'],
+                               'RBR_MTL_Contra_Otro'=>$request['RBR_MTL_Contra_Otro'],    
+                               'RBR_MTL_Total' => $request['RBR_MTL_Total'],  
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+                             
+           
+                           ]);
+                           $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                           if($commit == null){
+           
+                           Commits::create([
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                               'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'CMMT_Commit' => $request['CMMT_Commit'],
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                           ]);
+                           }
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Creados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+               public function RubroMaterial(Request $request,$id)
+               {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           
+                           $RubroMaterial = RubroMaterial::where('FK_NPRY_IdMctr008', $id)->get();
+                          
+                           return DataTables::of($RubroMaterial)
+                          ->removeColumn('created_at')
+                          ->removeColumn('updated_at')
+                           
+                          ->addIndexColumn()
+                          ->make(true);
+                   }
+               }
+               public function EditarRubroMaterial(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                       $RubroMaterial = RubroMaterial::where('PK_RBR_Material',$request['PK_RBR_Material'])->first();
+           
+                       $RubroMaterial -> RBR_MTL_Descripcion = $request['RBR_MTL_EDITAR_Descripcion'];
+                       $RubroMaterial -> RBR_MTL_Justificacion = $request['RBR_MTL_EDITAR_Justificacion'];
+                       $RubroMaterial -> RBR_MTL_Cantidad = $request['RBR_MTL_EDITAR_Cantidad'];
+                       $RubroMaterial -> RBR_MTL_Val = $request['RBR_MTL_EDITAR_Val'];
+                       $RubroMaterial -> RBR_MTL_Solicitado_Udec = $request['RBR_MTL_EDITAR_Solicitado_Udec'];
+                       $RubroMaterial -> RBR_MTL_Contra_Udec = $request['RBR_MTL_EDITAR_Contra_Udec'];
+                       $RubroMaterial -> RBR_MTL_Contra_Otro = $request['RBR_MTL_EDITAR_Contra_Otro'];
+                       $RubroMaterial -> RBR_MTL_Total = $request['RBR_MTL_EDITAR_Total'];
+                       
+                       $RubroMaterial -> save();
+           
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Modificados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+           
+           
+               //
+           
+               //RUBRO TECNOLOGICO
+               public function RubroTecnologicoDelete(Request $request, $id)
+               {
+                   if ($request->ajax() && $request->isMethod('DELETE')) {	
+                       
+                       
+                       $RubroTecnologico = RubroTecnologico::where('PK_RBR_Material',$id)->first();
+                       
+                       $RubroTecnologico -> delete();
+                       return AjaxResponse::success(
+                           '¡Bien hecho!',
+                           'Datos eliminados correctamente.'
+                       );
+                   }
+           
+                   return AjaxResponse::fail(
+                       '¡Lo sentimos!',
+                       'No se pudo completar tu solicitud.'
+                   );
+           
+               }   
+           
+           
+               public function RubroTecnologicoStore(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                     
+                    RubroTecnologico::create([
+                               'RBR_TEC_Descripcion'=>$request['RBR_TEC_Descripcion'],
+                               'RBR_TEC_Justificacion'=>$request['RBR_TEC_Justificacion'],
+                               'RBR_TEC_Val'=>$request['RBR_TEC_Val'],    
+                               'RBR_TEC_Entidad' => $request['RBR_TEC_Entidad'],  
+                               'RBR_TEC_Solicitado_Udec' => $request['RBR_TEC_Solicitado_Udec'],
+                               'RBR_TEC_Contra_Udec'=>$request['RBR_TEC_Contra_Udec'],
+                               'RBR_TEC_Contra_Otro'=>$request['RBR_TEC_Contra_Otro'],    
+                               'RBR_TEC_Total' => $request['RBR_TEC_Total'],  
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+                             
+           
+                           ]);
+                           $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                           if($commit == null){
+           
+                           Commits::create([
+                               'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                               'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'CMMT_Commit' => $request['CMMT_Commit'],
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                           ]);
+                           }
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Creados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+               public function RubroTecnologico(Request $request,$id)
+               {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           
+                           $RubroTecnologico = RubroTecnologico::where('FK_NPRY_IdMctr008', $id)->get();
+                          
+                           return DataTables::of($RubroTecnologico)
+                          ->removeColumn('created_at')
+                          ->removeColumn('updated_at')
+                           
+                          ->addIndexColumn()
+                          ->make(true);
+                   }
+               }
+               public function EditarRubroTecnologico(Request $request)
+               {
+                   if ($request->ajax() && $request->isMethod('POST')) {
+                       
+                       $RubroTecnologico = RubroTecnologico::where('PK_RBR_Tecnologico',$request['PK_RBR_Tecnologico'])->first();
+           
+                       $RubroTecnologico -> RBR_TEC_Descripcion = $request['RBR_TEC_EDITAR_Descripcion'];
+                       $RubroTecnologico -> RBR_TEC_Justificacion = $request['RBR_TEC_EDITAR_Justificacion'];
+                       $RubroTecnologico -> RBR_TEC_Val = $request['RBR_TEC_EDITAR_Val'];
+                       $RubroTecnologico -> RBR_TEC_Entidad = $request['RBR_TEC_EDITAR_Entidad'];
+                       $RubroTecnologico -> RBR_TEC_Solicitado_Udec = $request['RBR_TEC_EDITAR_Solicitado_Udec'];
+                       $RubroTecnologico -> RBR_TEC_Contra_Udec = $request['RBR_TEC_EDITAR_Contra_Udec'];
+                       $RubroTecnologico -> RBR_TEC_Contra_Otro = $request['RBR_TEC_EDITAR_Contra_Otro'];
+                       $RubroTecnologico -> RBR_TEC_Total = $request['RBR_TEC_EDITAR_Total'];
+                       
+                       $RubroTecnologico -> save();
+           
+                       return AjaxResponse::success(
+                           '¡Esta Hecho!',
+                           'Datos Modificados.'
+                       );
+                     
+                  
+                       }              
+                   
+               }
+           
+           
+               //
+           
+       
     //Resultados
         //cronograma
         public function FuncionDelete(Request $request, $id)
@@ -911,7 +1350,7 @@ class StudentController extends Controller
        
 
            $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id) ->first();
-
+        
            if($Desarrollo===null){
                $anteproyecto = [];
            }else{

@@ -26,8 +26,8 @@
                   
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
                         @slot('columns', [
-                            'Codigo',
                             'Cedula',
+                            'Codigo',
                             'Nombre',
                             'Apellido',
                             'Correo',
@@ -87,8 +87,8 @@
             // {data: 'User_Apellido1', name: 'User_Apellido1'},
             // {data: 'User_Correo', name: 'User_Correo'},
             
-         {data: 'Codigo', name: 'Codigo'},
-            {data: 'Cedula', name: 'Cedula'},
+         {data: 'Cedula', name: 'Cedula'},
+            {data: 'Codigo', name: 'Codigo'},
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Apellido', name: 'Apellido'},
             {data: 'Correo', name: 'Correo'},
@@ -129,7 +129,7 @@
                     
                     
                     formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
-                    formData.append('PK_User_Codigo', dataTable.Codigo);
+                    formData.append('PK_User_Codigo', dataTable.Cedula);
                     
                     $.ajax({
                         url: route,

@@ -28,7 +28,11 @@ class Mctr008 extends Model
     
     public function relacionFormato()
     {
-        return $this->hasMany(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
+        return $this->hasone(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
+    }
+    public function relacionFormatos()
+    {
+        return $this->hasmany(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
     }
      
  

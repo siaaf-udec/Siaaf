@@ -36,7 +36,7 @@ class CreateCommitsAnteproyecto extends Migration
                         ->on('TBL_checklist')
                         ->onDelete('cascade');
           
-            $table->String('CMMT_Commit', 500);
+            $table->String('CMMT_Commit', 4000);
             
             $table->timestamps();
         });

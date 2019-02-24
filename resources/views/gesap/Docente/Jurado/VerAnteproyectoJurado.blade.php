@@ -96,8 +96,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        
- //alert('aishiajsia');
 
 
     var table, url, columns;

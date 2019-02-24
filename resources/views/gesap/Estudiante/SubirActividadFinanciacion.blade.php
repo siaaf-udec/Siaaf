@@ -132,7 +132,7 @@
                         {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','readonly','autocomplete'=>'off'],
                     
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
-                    @if($datos['Estado'] != "APROVADO" )
+                    @if($datos['Estado'] != "APROBADO" )
                                 
                     @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon person"
@@ -142,7 +142,7 @@
                         </a>@endpermission
                     @endif
                     <br><br>
-                    @if($datos['Estado'] != "APROVADO" )
+                    @if($datos['Estado'] != "APROBADO" )
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Financiacion'])
                     @slot('columns', [
                             'Tipo',
@@ -153,7 +153,7 @@
                     ])
                     @endcomponent
                     @endif
-                    @if($datos['Estado'] == "APROVADO" )
+                    @if($datos['Estado'] == "APROBADO" )
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'FinanciacionF'])
                     @slot('columns', [
                             'Tipo',

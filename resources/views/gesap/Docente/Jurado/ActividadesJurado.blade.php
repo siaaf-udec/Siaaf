@@ -10,9 +10,15 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([$Anteproyecto], ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
-
             
+                @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon Requerimientos"
+                                                       title="Requerimientos">
+                            <i class="fa fa-plus">
+                            </i>Requerimientos
+                        </a>@endpermission    
                 <div class="form-body">
+               
                
                    
                         <br><br>
@@ -108,7 +114,13 @@
 
         });
         
-
+        $('.Requerimientos').on('click', function (e) {
+            e.preventDefault();
+           
+            var route =  '{{ route('DocenteGesap.VerRequerimientosJurado') }}' + '/' + idp;
+            //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
+        });
 
        
       

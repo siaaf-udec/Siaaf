@@ -285,6 +285,86 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 		
 		//
+		//
+		Route::post('RubroPersonalStore', [
+			'uses' => $controller . 'StudentController@RubroPersonalStore',  
+			'as' => 'EstudianteGesap.RubroPersonalStore'
+		]);
+		
+		Route::post('EditarRubroPersonal', [
+			'uses' => $controller . 'StudentController@EditarRubroPersonal',  
+			'as' => 'EstudianteGesap.EditarRubroPersonal'
+		]);
+		Route::delete('RubroPersonalDelete/{id?}', [
+			'uses' => $controller . 'StudentController@RubroPersonalDelete',  
+			'as' => 'EstudianteGesap.RubroPersonalDelete'
+		]);
+		Route::get('RubroPersonal/{id?}', [
+			'uses' => $controller . 'StudentController@RubroPersonal',  
+			'as' => 'EstudianteGesap.RubroPersonal'
+		]);
+		
+		//
+			//
+		Route::post('RubroEquiposStore', [
+			'uses' => $controller . 'StudentController@RubroEquiposStore',  
+			'as' => 'EstudianteGesap.RubroEquiposStore'
+		]);
+		
+		Route::post('EditarRubroEquipos', [
+			'uses' => $controller . 'StudentController@EditarRubroEquipos',  
+			'as' => 'EstudianteGesap.EditarRubroEquipos'
+		]);
+		Route::delete('RubroEquiposDelete/{id?}', [
+			'uses' => $controller . 'StudentController@RubroEquiposDelete',  
+			'as' => 'EstudianteGesap.RubroEquiposDelete'
+		]);
+		Route::get('RubroEquipos/{id?}', [
+			'uses' => $controller . 'StudentController@RubroEquipos',  
+			'as' => 'EstudianteGesap.RubroEquipos'
+		]);
+		
+		//
+			//
+			Route::post('RubroMaterialStore', [
+				'uses' => $controller . 'StudentController@RubroMaterialStore',  
+				'as' => 'EstudianteGesap.RubroMaterialStore'
+			]);
+			
+			Route::post('EditarRubroMaterial', [
+				'uses' => $controller . 'StudentController@EditarRubroMaterial',  
+				'as' => 'EstudianteGesap.EditarRubroMaterial'
+			]);
+			Route::delete('RubroMaterialDelete/{id?}', [
+				'uses' => $controller . 'StudentController@RubroMaterialDelete',  
+				'as' => 'EstudianteGesap.RubroMaterialDelete'
+			]);
+			Route::get('RubroMaterial/{id?}', [
+				'uses' => $controller . 'StudentController@RubroMaterial',  
+				'as' => 'EstudianteGesap.RubroMaterial'
+			]);
+			
+		
+		//
+			//
+			Route::post('RubroTecnologicoStore', [
+				'uses' => $controller . 'StudentController@RubroTecnologicoStore',  
+				'as' => 'EstudianteGesap.RubroTecnologicoStore'
+			]);
+			
+			Route::post('EditarRubroTecnologico', [
+				'uses' => $controller . 'StudentController@EditarRubroTecnologico',  
+				'as' => 'EstudianteGesap.EditarRubroTecnologico'
+			]);
+			Route::delete('RubroTecnologicoDelete/{id?}', [
+				'uses' => $controller . 'StudentController@RubroTecnologicoDelete',  
+				'as' => 'EstudianteGesap.RubroTecnologicoDelete'
+			]);
+			Route::get('RubroTecnologico/{id?}', [
+				'uses' => $controller . 'StudentController@RubroTecnologico',  
+				'as' => 'EstudianteGesap.RubroTecnologico'
+			]);
+		//
 		
 		//
 		Route::post('CronogramaStore', [
@@ -449,6 +529,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerRequerimientos',  
 			'as' => 'DocenteGesap.VerRequerimientos'
 		]);
+		Route::get('RequerimientosJurado/{id?}/{idp?}', [
+			'uses' => $controller . 'DocenteController@RequerimientosJurado',  
+			'as' => 'DocenteGesap.RequerimientosJurado'
+		]);
 		Route::get('VerActividadJurado/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividadJurado',  
 			'as' => 'DocenteGesap.VerActividadJurado'
@@ -464,6 +548,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('RequerimientosDocente/{id?}', [
 			'uses' => $controller . 'DocenteController@VerRequerimientosDocente',  
 			'as' => 'DocenteGesap.VerRequerimientosDocente'
+		]);
+		Route::get('VerRequerimientosJurado/{id?}', [
+			'uses' => $controller . 'DocenteController@VerRequerimientosJurado',  
+			'as' => 'DocenteGesap.VerRequerimientosJurado'
 		]);
 		Route::get('VerRequerimientosList/{id?}', [
 			'uses' => $controller . 'DocenteController@VerRequerimientosList',  
@@ -498,6 +586,26 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Asignar/{id?}', [
 			'uses' => $controller . 'DocenteController@Asignar',  
 			'as' => 'DocenteGesap.Asignar'
+		]);
+
+		Route::get('RubroMaterial/{id?}', [
+			'uses' => $controller . 'DocenteController@RubroMaterial',  
+			'as' => 'DocenteGesap.RubroMaterial'
+		]);
+
+		Route::get('RubroTecnologico/{id?}', [
+			'uses' => $controller . 'DocenteController@RubroTecnologico',  
+			'as' => 'DocenteGesap.RubroTecnologico'
+		]);
+
+		Route::get('RubroEquipos/{id?}', [
+		'uses' => $controller . 'DocenteController@RubroEquipos',  
+		'as' => 'DocenteGesap.RubroEquipos'
+		]);
+
+		Route::get('RubroPersonal/{id?}', [
+		'uses' => $controller . 'DocenteController@RubroPersonal',  
+		'as' => 'DocenteGesap.RubroPersonal'
 		]);
 
 

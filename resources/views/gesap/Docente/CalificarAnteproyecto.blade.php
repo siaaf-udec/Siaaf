@@ -62,7 +62,7 @@
                             <i class="fa fa-plus">
                             </i>Tomar Desición
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DesicionJurados'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados'])
                         @slot('columns', [
                             'Jurado',
                             'Estado Proyecto',
@@ -71,7 +71,7 @@
                     @endcomponent
                     <h4> Observaciónes del Mct Hecha Por los Jurados</h4>
                      <br>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentariosJurados'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentariosJurados'])
                         @slot('columns', [
                             'Fecha de realización',
                             'Observación',
@@ -240,6 +240,14 @@ $(document).ready(function(){
                 e.preventDefault();
                 $('#modal-create-coment').modal('toggle');
             });
+             
+    $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('DocenteGesap.index.ajax') }}';
+            location.href="{{route('DocenteGesap.index')}}";
+            //$(".content-ajax").load(route);
+        });
+            
            
 
 })

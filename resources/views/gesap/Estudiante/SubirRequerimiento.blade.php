@@ -50,7 +50,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'9000','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
                                
@@ -186,7 +186,7 @@ $(document).ready(function(){
         var form = $('#form_subir_actividad');
        
         var formRules = {
-            CMMT_Commit: {minlength: 8, maxlength: 500, required: true,}, 
+            CMMT_Commit: {minlength: 8, maxlength: 9000, required: true,}, 
         };
 
         var formMessage = {

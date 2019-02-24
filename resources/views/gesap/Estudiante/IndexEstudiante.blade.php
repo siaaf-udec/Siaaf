@@ -119,7 +119,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-danger Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-warning Radicar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

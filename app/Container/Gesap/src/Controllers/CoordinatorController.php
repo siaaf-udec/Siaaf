@@ -313,7 +313,7 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $Actividades = Mctr008::all();
             foreach($Actividades as $Actividad){
-                $Formato = $Actividad->relacionFormato[0]-> MCT_Formato;
+                $Formato = $Actividad->relacionFormato-> MCT_Formato;
                 $Actividad->offsetSet('Formato',$Formato);
             }
 
@@ -344,9 +344,9 @@ class CoordinatorController extends Controller
                  
                    if(is_null($desarrollador)){
                     $collection = collect([]);
-                    $collection->put('Codigo',$user-> PK_User_Codigo);
+                    $collection->put('Codigo',$user-> User_Codigo);
                     
-                    $collection->put('Cedula',$user-> User_Cedula);
+                    $collection->put('Cedula',$user-> PK_User_Codigo);
                     $collection->put('Nombre',$user->  User_Nombre1);
                     $collection->put('Apellido',$user->  User_Apellido1);
                     $collection->put('Correo',$user-> User_Correo);

@@ -125,7 +125,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
