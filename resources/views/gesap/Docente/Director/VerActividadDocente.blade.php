@@ -88,8 +88,8 @@
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
-                                @if( $datos['Estado'] == "EN CALIFICACIÓN" )
-                                @permission('AVAL_DOCENTE')<a href="javascript:;"
+                                @if( $datos['Estado'] == "EN CALIFICACION" )
+                                @permission('PROYECT_COMENT')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Avalar"><i
                                 ></i>
                                     Aprobar Actividad

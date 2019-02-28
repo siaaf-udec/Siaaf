@@ -65,16 +65,16 @@
                             {!! Field::date('User_Fecha_Expedicion',null,['label'=>'Fecha de expedición :'],
                                                                 ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
 
-                           
-
-                            {!! Field::select('User_Sexo',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
-                                   
-                            
                             {!! Field::date('User_Nacimiento',null,['label'=>'Fecha de nacimiento :'],
                                                                 ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
 
-                      
-                             
+                            {!! Field::select('User_Sexo',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+
                             {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
 
                         </div>
