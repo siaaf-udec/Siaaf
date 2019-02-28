@@ -398,8 +398,8 @@ class StudentController extends Controller
                $commit = Commits::where('FK_NPRY_idMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_idMctr008',$request['FK_MCT_IdMctr008'])->first(); 
               // $file = $request->file('CMMT_Commit');
               $img = $request->file('PYT_Actividad');
-              $url = Storage::disk('developer')->putFile('carpark/usuarios', $img);
-              $url = "developer/" . $url;
+              $url = Storage::disk('gesap')->putFile('gesap/libro', $img);
+              $url = "gesap/" . $url;
 
              
                 if(is_null($commit)){
@@ -418,8 +418,7 @@ class StudentController extends Controller
                 );
                }else{
 
-                 $commit -> CMMT_Commit = $request['CMMT_Commit'];
-            
+                 $commit -> CMMT_Commit = $url;          
                  $commit -> save();
                  return AjaxResponse::success(
                     '¡Esta Hecho!',
