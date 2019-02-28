@@ -39,7 +39,7 @@
                     </div>
                    
                         <br><br>
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',

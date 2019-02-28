@@ -18,6 +18,7 @@ class Jurados extends Model
         'FK_NPRY_IdMctr008'
         ,'FK_User_Codigo'
         ,'FK_NPRY_Estado'
+        ,'FK_NPRY_Estado_Proyecto'
         ,'JR_Comentario'
     ];
 
@@ -34,5 +35,9 @@ class Jurados extends Model
      {
           return $this->hasOne(EstadoAnteproyecto::class, 'PK_EST_Id', 'FK_NPRY_Estado');
       }
+      public function relacionEstadoJurado()
+      {
+           return $this->hasOne(EstadoAnteproyecto::class, 'PK_EST_Id', 'FK_NPRY_Estado_Proyecto');
+       }
       
 }

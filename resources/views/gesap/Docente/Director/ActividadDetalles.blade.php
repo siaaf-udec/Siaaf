@@ -60,7 +60,7 @@
                         {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
                     <br><br>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'DetallesPerson'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DetallesPerson'])
                     @slot('columns', [
                             'Entidad',
                             'Primer Apellido',
@@ -93,7 +93,7 @@
                             <i class="fa fa-plus">
                             </i>Agregar Observación
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentarios'])
                         @slot('columns', [
                             'Fecha de realización',
                             'Observación',

@@ -28,9 +28,40 @@
 @section('title', '| Información de los Anteproyectos')
 
 @section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
+ 
 
 @section('content')
     @permission('ADMIN_GESAP')
+     <!--MODAL CREAR COMENTARIO-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-solicitud" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'from_create-solicitud', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Comentario</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   {!! Field:: textArea('Sol_Solicitud',null,['label'=>'Comentario:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su comentario para realizar la solicitud','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('FK_NPRY_IdMctr008', null,['name' => 'Select_Solicitud','label'=>'Proyecto o Anteproyecto al cual desea hacer la solicitud: ']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL CREAR COMENTARIO-->
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
             <br>
@@ -38,7 +69,7 @@
                 <div class="col-md-12">
                     <div class="actions">
                         @permission('DOCENTE_SOLICITUD')<a href="javascript:;"
-                                                       class="btn btn-simple btn-warning btn-icon gestionar"
+                                                       class="btn btn-simple btn-warning btn-icon Solicitud"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Solicitudes
@@ -55,10 +86,10 @@
             </div>
             <br>
             <div class="row">
-            <h3>Anteproyectos Activos</h3>
+            <h3>Anteproyectos Asignados</h3>
 
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
                             'Titulo',
                             'Palabras clave',
@@ -71,11 +102,42 @@
                     @endcomponent
                 </div>
                 <br><br>
-            <h3>Anteproyectos Asignados(Jurado)</h3>
+            <h3>Anteproyectos Asignados como Jurado</h3>
     
     <br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyectojurado'])
+                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyectojurado'])
+                    @slot('columns', [
+                        'Titulo',
+                        'Descripción',
+                        'Duracion',
+                        'Fecha Radicación',
+                        'Director',
+                        'Acciones'
+                    ])
+                @endcomponent
+            </div>
+    <h3>Proyectos Asignados</h3>
+    
+    <br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyectos'])
+                    @slot('columns', [
+                        'Titulo',
+                        'Descripción',
+                        'Duracion',
+                        'Fecha Radicación',
+                        'Director',
+                        'Estado',
+                        'Acciones'
+                    ])
+                @endcomponent
+            </div>
+    <h3>Proyectos Asigandos como Jurado</h3>
+    
+    <br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyetoJurado'])
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
@@ -88,6 +150,8 @@
             </div>
             </div>
         @endcomponent
+        
+        
     </div>
     @endpermission
 @endsection
@@ -116,13 +180,24 @@
 
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/scripts/form-validation-md.js') }}" type = "text/javascript" ></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+
     @endpush
     @push('functions')
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
     <script type="text/javascript">
+jQuery(document).ready(function () {
 
-    jQuery(document).ready(function () {
+ 
+
+
+
+
 
         var table, url, columns;
         table = $('#listaAnteproyecto');
@@ -197,6 +272,95 @@
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
 
+        var tablep, urlp, columnsp;
+        tablep = $('#listaProyectos');
+        idp = 123400009;//variable de sesion
+        urlp = '{{ route('DocenteGesap.ProyectosList')}}'+ '/' + idp;
+        columnsp = [
+            
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Descripcion', name: 'Descripcion'},
+            {data: 'Duracion', name: 'Duracion'},
+            {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
+            {data: 'Director', name: 'Director'},
+            {data: 'Estado', name: 'Estado'},
+           
+            {
+                defaultContent: ' @permission('ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+        dataTableServer.init(tablep, urlp, columnsp);
+        tablep = tablep.DataTable();
+        
+        var tablepr, urlpr, columnspr;
+        tablepr = $('#listaProyetoJurado');
+        idpr = 111100009;//variable de sesion
+        urlpr = '{{ route('DocenteGesap.ProyectosListRadicados')}}'+ '/' + idpr;
+        columnspr = [
+            
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Descripcion', name: 'Descripcion'},
+            {data: 'Duracion', name: 'Duracion'},
+            {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
+            {data: 'Director', name: 'Director'},
+            {
+                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+        dataTableServer.init(tablepr, urlpr, columnspr);
+        tablepr = tablepr.DataTable();
+        
+        tablepr.on('click', '.VerPJ', function (e) {
+           
+           e.preventDefault();
+           $tr = $(this).closest('tr');
+           var dataTable = tablepr.row($tr).data(),
+               route_verP = '{{ route('DocenteGesap.VerActividadesProyectoJurado') }}' + '/' + dataTable.Codigo;
+           $(".content-ajax").load(route_verP);
+       });
+
+       tablepr.on('click', '.Calificar', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = tablepr.row($tr).data(),
+                route_ver = '{{ route('DocenteGesap.CalificarProyectoJurado') }}' + '/' + dataTable.Codigo;
+            $(".content-ajax").load(route_ver);
+        });
+
+
+        tablep.on('click', '.VerP', function (e) {
+           
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = tablep.row($tr).data(),
+                route_verP = '{{ route('DocenteGesap.VerActividadesProyecto') }}' + '/' + dataTable.Codigo;
+            $(".content-ajax").load(route_verP);
+        });
+
         table1.on('click', '.VerJ', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -212,7 +376,10 @@
             $(".content-ajax").load(route_ver);
         });
 
-        
+        $('.Solicitud').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-create-solicitud').modal('toggle');
+        });
     
 
     });

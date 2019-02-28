@@ -92,6 +92,33 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    public function VerActividadesListProyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+               $Actividades=Mctr008::where('FK_Id_Formato',3)->get();
+               $numero = 1 ;
+               foreach($Actividades as $Actividad){
+                   $Actividad->offsetSet('Numero', $numero);
+                   $numero = $numero +1 ;
+               }
+                  
+        
+               return DataTables::of($Actividades)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
     public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -177,11 +204,11 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
-            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->get();
-            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();//miro los comits que se han hecho de Anteproyecto
+            
             $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
-            $mct = Mctr008::all();
-            $requerimientos = Mctr008::where('FK_Id_Formato',2)->get();
+            $mct = Mctr008::where('FK_Id_Formato','!=',3)->get();//miro la cantidad de actividades qeu hay en el mct
+            
             $commitsN = $commits->count();
             $mctN = $mct->count();
             $N = 0;
@@ -249,6 +276,83 @@ class StudentController extends Controller
         
     }
 
+    
+    public function RadicarProyecto(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();//miro los comits que se han hecho de proyecto
+          //  $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
+            $proyt = Mctr008::where('FK_Id_Formato',3)->get();//miro la cantidad de actividades para proyecto
+
+            $commitsN = $commits->count();//cuento los commits hechos
+            $proytN = $proyt->count();//cuento las actvidades
+            $N = 0; 
+            $now = date('Y-d-m');//tomo la fecha de hoy
+          //  if($limit >= now()->toDateString()){
+            if($commitsN == $proytN){
+
+                    foreach($commits as $commit){
+                        $numero = $commit-> FK_CHK_Checklist;
+                        if($numero == 2){
+                            $N = $N +  1 ;
+                        }
+                    }
+                    $resultado = $proytN - $N ;
+                    if($resultado == 0){
+                        $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+                        $estado = $proyecto -> FK_EST_Id;
+                        if($estado == 3){
+                            $IdError = 422;
+                            return AjaxResponse::success(
+                                '¡Lo sentimos!',
+                                'El Proyecto Ya esta radicado.',
+                                $IdError
+                            );
+                        }else{
+                        $proyecto -> FK_EST_Id = 3 ;
+                        $proyecto->save();
+                        return AjaxResponse::success(
+                            '¡Esta Hecho!',
+                            'Proyecto Radicado.'
+                        );
+                    }
+
+                    }else{
+                        $IdError = 422;
+                        return AjaxResponse::success(
+                            '¡Lo sentimos!',
+                            'No se han avalado todas las Actividades Correspondientes Del Proyecto.',
+                            $IdError
+                        );
+                    }
+
+                }else{
+
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No se han subido todas las Actividades Correspondientes Del Proyecto.',
+                        $IdError
+                    );
+                    
+                
+                 }
+        /*}else{
+            // $fechas = Fechas::where('PK_Id_Radicacion',2)->first();
+           
+
+            // $anteproyecto  -> NPRY_FCH_Radicacion = $fechas -> FCH_Radicacion ;
+            // $anteproyecto  -> save();
+            return AjaxResponse::success(
+                '¡Lo sentimos!',
+                'La fecha de Radicación ya expiro.'
+            );
+        } */
+            }              
+        
+    }
+
     public function ActividadStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -280,11 +384,55 @@ class StudentController extends Controller
                 
                }
 
-
                  
             }              
         
     }
+
+    
+    public function ActividadStoreProyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            
+           // $commit = Commits::where('FK_NPRY_idmctr008',1)->where('FK_MCT_idMctr008',1)->where('FK_User_Codigo', 123456189)->first();
+               $commit = Commits::where('FK_NPRY_idMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_idMctr008',$request['FK_MCT_IdMctr008'])->first(); 
+              // $file = $request->file('CMMT_Commit');
+              $img = $request->file('PYT_Actividad');
+              $url = Storage::disk('developer')->putFile('carpark/usuarios', $img);
+              $url = "developer/" . $url;
+
+             
+                if(is_null($commit)){
+
+                 Commits::create([
+                    'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                     'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'CMMT_Commit' =>$url,
+                     'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                     'CMMT_Formato'=>$request['CMMT_Formato']
+                    ]);
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Creados.'
+                );
+               }else{
+
+                 $commit -> CMMT_Commit = $request['CMMT_Commit'];
+            
+                 $commit -> save();
+                 return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Modificados.'
+                );
+                
+               }
+                 
+            }              
+        
+    }
+    
+    
     public function PersonaDatos(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -399,6 +547,42 @@ class StudentController extends Controller
         );
 
     }   
+    public function SubirActividadProyecto(Request $request, $id, $idp)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
+                    
+            $Actividad->offsetSet('Anteproyecto', $idp);
+
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null)
+            {
+                $Actividad->offsetSet('Commit', "Aún NO se ha SUBIDO ningún Archivo a la actividad del Libro.");
+                $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                
+            }else{
+                $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+            }
+        
+               return view($this->path .'.Proyecto.SubirActividadProyecto',
+                [
+                'datos' => $Actividad,
+                ]);
+            
+               
+                 
+            }     
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );         
+        
+    }
+    
     public function SubirActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1340,6 +1524,48 @@ class StudentController extends Controller
 			   ->addIndexColumn()
                ->make(true);
         }
+    }
+    public function ListaProyecto(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $user = Auth::user();//variable sesion
+            $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->first(); 
+            $Proyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Anteproyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Estado',4)->get();
+            foreach($Proyecto as $Proyect){
+                $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
+               
+                $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_estado  );
+            }
+            
+            return DataTables::of($Proyecto)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+             
+            ->addIndexColumn()
+            ->make(true);
+
+        }
+    }
+    
+    
+
+    public function VerActividadesProyecto(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $Anteproyecto = $id;
+
+            return view($this->path .'.Proyecto.ActividadesEstudianteProyecto',
+            [
+                'Anteproyecto' => $Anteproyecto,
+            ]);
+           
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );  
+             
+        }              
     }
     
     public function AnteproyectoList(Request $request, $id)

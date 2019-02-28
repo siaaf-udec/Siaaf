@@ -57,80 +57,8 @@
                                </div>
                              
                         </div>
-                        {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
-                    <br><br>
-                    <h4>DETALLES RUBROS</h4> 
-                    <br><br>                    
-                    <h4>Detalles de persona</h4>
-                    <br><br>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Rubro_Personal'])
-                    @slot('columns', [
-                            'Nombre',
-                            'Funcion En el proyecto',
-                            'Tipo de vinculación',
-                            'Dedicación Horas/Semana',
-                            'Entidad a la que pertenece',
-                            'Solicitado en efectivo UDEC',
-                            'Contrapartida en especie (UDEC)',
-                            'Contrapartida en especie (Otros)',
-                            'Total',
-                            'Acciones'
-    
-                    ])
-                    @endcomponent
-                    <br><br>                    
-                    <h4>Descripción de equipo</h4>
-                    <br><br>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Rubro_Equipo'])
-                    @slot('columns', [
-                            'Descripción',
-                            'Laboratorio y/o espacio academico',
-                            'Actividad del cronograma',
-                            'Justificación',
-                            'Cantidad',
-                            'ValorUnitario',
-                            'Solicitado en efectivo a UDEC',
-                            'Contrapartida en especie (UDEC)',
-                            'Contrapartida en especie (Otros)',
-                            'Total',
-                            'Acciones'
-    
-                    ])
-                    @endcomponent
-                    <br><br>                    
-                    <h4>Descripción de materiales e insumos</h4>
-                    <br><br>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Rubro_Material'])
-                    @slot('columns', [
-                            'Descrición',
-                            'Justificación',
-                            'Cantidad',
-                            'Valor Unitario',
-                            'Solicitado en efectivo a UDEC',
-                            'Contrapartida en especie (UDEC)',
-                            'Contrapartida en especie (Otros)',
-                            'Total',
-                            'Acciones'
-                    ])
-                    @endcomponent
-                    <br><br>                    
-                    <h4>Descripción de servicios tecnológicos</h4>
-                    <br><br>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Rubro_Tecnologico'])
-                    @slot('columns', [
-                        'Descrición',
-                            'Justificación',
-                            'Valor',
-                            'Entidad',
-                            'Solicitado en efectivo a UDEC',
-                            'Contrapartida en especie (UDEC)',
-                            'Contrapartida en especie (Otros)',
-                            'Total',
-                            'Acciones'
-                    ])
-                    @endcomponent
-                    <br><br>
 
                     
 
@@ -283,7 +211,7 @@ $(document).ready(function(){
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro que desa Aprobar esta Actividad?",
+                    text: "¿Está seguro que desea Aprobar esta Actividad?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -332,87 +260,11 @@ $(document).ready(function(){
                 });
 
         });
-        
-     
-//rubro personal
-        var tabler, urlr, columnsr;
-        tabler = $('#Rubro_Personal');
-        urlr = '{{ route('DocenteGesap.RubroPersonal') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnsr = [
-            
-            {data: 'RBR_PER_Nombre', name: 'RBR_PER_Nombre'},
-            {data: 'RBR_PER_Funcion', name: 'RBR_PER_Funcion'},
-            {data: 'RBR_PER_Tipo', name: 'RBR_PER_Tipo'},
-            {data: 'RBR_PER_Dedicacion', name: 'RBR_PER_Dedicacion'},
-            {data: 'RBR_PER_Entidad', name: 'RBR_PER_Entidad'},
-            {data: 'RBR_PER_Solicitado_Udec', name: 'RBR_PER_Solicitado_Udec'},
-            {data: 'RBR_PER_Contra_Udec', name: 'RBR_PER_Contra_Udec'},
-            {data: 'RBR_PER_Contra_Otro', name: 'RBR_PER_Contra_Otro'},
-            {data: 'RBR_PER_Total', name: 'RBR_PER_Total'},  
-        ];
-        dataTableServer.init(tabler, urlr, columnsr);
-        tabler = tabler.DataTable();
-///Rubro equipo
-var tableef, urlef, columnsef;
-        tableef = $('#Rubro_Equipo');
-        urlef = '{{ route('DocenteGesap.RubroEquipos') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnsef = [
-            
-            {data: 'RBR_EQP_Descripcion', name: 'RBR_EQP_Descripcion'},
-            {data: 'RBR_EQP_Lab', name: 'RBR_EQP_Lab'},
-            {data: 'RBR_EQP_Actividades', name: 'RBR_EQP_Actividades'},
-            {data: 'RBR_EQP_Justificacion', name: 'RBR_EQP_Justificacion'},
-            {data: 'RBR_EQP_Cantidad', name: 'RBR_EQP_Cantidad'},
-            {data: 'RBR_EQP_Val', name: 'RBR_EQP_Val'},
-            {data: 'RBR_EQP_Solicitado', name: 'RBR_EQP_Solicitado'},
-            {data: 'RBR_EQP_Contra_Udec', name: 'RBR_EQP_Contra_Udec'},
-            {data: 'RBR_EQP_Contra_Otro', name: 'RBR_EQP_Contra_Otro'},
-            {data: 'RBR_EQP_Total', name: 'RBR_EQP_Total'},  
-        ];
-        dataTableServer.init(tableef, urlef, columnsef);
-        tableef = tableef.DataTable();
-////rubro equipo
-var tablemf, urlmf, columnsmf;
-        tablemf = $('#Rubro_Material');
-        urlmf = '{{ route('DocenteGesap.RubroMaterial') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnsmf = [
-            
-              
-            {data: 'RBR_MTL_Descripcion', name: 'RBR_MTL_Descripcion'},
-            {data: 'RBR_MTL_Justificacion', name: 'RBR_MTL_Justificacion'},
-            {data: 'RBR_MTL_Cantidad', name: 'RBR_MTL_Cantidad'},
-            {data: 'RBR_MTL_Val', name: 'RBR_MTL_Val'},
-            {data: 'RBR_MTL_Solicitado_Udec', name: 'RBR_MTL_Solicitado_Udec'},
-            {data: 'RBR_MTL_Contra_Udec', name: 'RBR_MTL_Contra_Udec'},
-            {data: 'RBR_MTL_Contra_Otro', name: 'RBR_MTL_Contra_Otro'},
-            {data: 'RBR_MTL_Total', name: 'RBR_MTL_Total'},
-        ];
-        dataTableServer.init(tablemf, urlmf, columnsmf);
-        tablemf = tablemf.DataTable();
-//rubro tecnologico
-var tabletf, urltf, columnstf;
-        tabletf = $('#Rubro_Tecnologico');
-        urltf = '{{ route('DocenteGesap.RubroTecnologico') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnstf = [
-            
-             
-            {data: 'RBR_TEC_Descripcion', name: 'RBR_TEC_Descripcion'},
-            {data: 'RBR_TEC_Justificacion', name: 'RBR_TEC_Justificacion'},
-            {data: 'RBR_TEC_Val', name: 'RBR_TEC_Val'},
-            {data: 'RBR_TEC_Entidad', name: 'RBR_TEC_Entidad'},
-            {data: 'RBR_TEC_Solicitado_Udec', name: 'RBR_TEC_Solicitado_Udec'},
-            {data: 'RBR_TEC_Contra_Udec', name: 'RBR_TEC_Contra_Udec'},
-            {data: 'RBR_TEC_Contra_Otro', name: 'RBR_TEC_Contra_Otro'},
-            {data: 'RBR_TEC_Total', name: 'RBR_TEC_Total'},
-        ];
-        dataTableServer.init(tabletf, urltf, columnstf);
-        tabletf = tabletf.DataTable();
-
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             
-            var route = '{{ route('DocenteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';;
+            var route = '{{ route('DocenteGesap.VerActividadesProyecto') }}' + '/' + '{{$datos['Anteproyecto']}}';;
             //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
         });

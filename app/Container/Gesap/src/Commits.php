@@ -20,6 +20,7 @@ class Commits extends Model
         ,'FK_User_Codigo'
         ,'CMMT_Commit'
         ,'FK_CHK_Checklist'
+        ,'CMMT_Formato'
         
     ];
     public function relacionEstado()

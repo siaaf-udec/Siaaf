@@ -70,7 +70,7 @@
                             <i class="fa fa-plus">
                             </i>Agregar Observación
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentarios'])
                         @slot('columns', [
                             'Fecha de realización',
                             'Observación',

@@ -25,14 +25,14 @@
 
 @endpush
 
-@section('title', '| Información de los Anteproyectos')
+@section('title', '| Información de Gesap')
 
-@section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', ' Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap: '])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -54,7 +54,22 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
+                <h4>Anteproyecto De Grado </h4>
                     @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
+                        @slot('columns', [
+                            'Titulo',
+                            'Palabras clave',
+                            'Descripción',
+                            'Duracion',
+                            'Estado',
+                            'Fecha Radicación',
+                            'Acciones'
+                        ])
+                    @endcomponent
+                    <br><br>
+                    <br><br>
+                    <h4>Proyecto De Grado </h4>
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyecto'])
                         @slot('columns', [
                             'Titulo',
                             'Palabras clave',
@@ -204,9 +219,105 @@
                 });
 
         });
+        var tablep, urlp, columnsp;
+        tablep = $('#listaProyecto');
+        idp = 123456189 ;
+        urlp = '{{ route('EstudianteGesap.ListaProyecto')}}'+ '/' + id;
+        columnsp = [
+            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
+            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
+            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
+            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
+            {data: 'Estado', name: 'Estado'},
+            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+      
+            {
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+      tablep.on('click', '.RadicarP', function (e) {
+      
+      e.preventDefault();
+      $tr = $(this).closest('tr');
+      var dataTable = tablep.row($tr).data();
+      var route = '{{ route('EstudianteGesap.RADICARPROYECTO') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+      var type = 'GET';
+      var async = async || false;
+      swal({
+              title: "¿Está seguro?",
+              text: "¿Está seguro que desea radicar el Proyecto?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "De acuerdo",
+              cancelButtonText: "Cancelar",
+              closeOnConfirm: true,
+              closeOnCancel: false
+          },
+          function (isConfirm) {
+              if (isConfirm) {
+                  $.ajax({
+                      url: route,
+                      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                      cache: false,
+                      type: type,
+                      contentType: false,
+                      processData: false,
+                      async: async,
+                        success: function (response, xhr, request) {
+                                  console.log(response);
+                                  if (request.status === 200 && xhr === 'success') {
+                                      if (response.data == 422) {
+                                          xhr = "warning"
+                                          UIToastr.init(xhr, response.title, response.message);
+                                          App.unblockUI('.portlet-form');
+                                         
+                                      } else {
+                                          table.ajax.reload();
+                                          UIToastr.init(xhr, response.title, response.message);
+                     
+                                          }
+                                  }
+                  },
+                  error: function (response, xhr, request) {
+                                  if (request.status === 422 && xhr === 'error') {
+                                      UIToastr.init(xhr, response.title, response.message);
+                                  }
+                  }
+                          
+                  });
+              } else {
+                  swal("Cancelado", "No se radico el Proyecto", "error");
+              }
+          });
+
+  });
+      
+        dataTableServer.init(tablep, urlp, columnsp);
+        tablep = tablep.DataTable();
 
         
-    
+        tablep.on('click', '.Actividades', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route);
+
+     //       $(".content-ajax").load(route_ver);
+        });
 
     });
 </script>

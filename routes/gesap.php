@@ -23,7 +23,6 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@MctCreate',
 			'as' => 'AnteproyectosGesap.MctCreate'
 		]);
-		
 		Route::delete('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
 			'as' => 'Anteproyecto.destroy'
@@ -226,6 +225,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@VerActividades',  
 			'as' => 'EstudianteGesap.VerActividades'
 		]);
+		Route::get('ActividadesProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@VerActividadesProyecto',  
+			'as' => 'EstudianteGesap.VerActividadesProyecto'
+		]);
 		Route::get('VerRequerimientos/{id?}', [
 			'uses' => $controller . 'StudentController@VerRequerimientos',  
 			'as' => 'EstudianteGesap.VerRequerimientos'
@@ -235,6 +238,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@VerActividadesList',  
 			'as' => 'EstudianteGesap.VerActividadesList'
 		]);
+		Route::get('ActividadesListProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@VerActividadesListProyecto',  
+			'as' => 'EstudianteGesap.VerActividadesListProyecto'
+		]);
 		Route::get('Requerimientoslist/{id?}', [
 			'uses' => $controller . 'StudentController@VerRequerimientosList',  
 			'as' => 'EstudianteGesap.VerRequerimientosList'
@@ -242,6 +249,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('SubirActividad/{id?}/{idp?}', [
 			'uses' => $controller . 'StudentController@SubirActividad',  
 			'as' => 'EstudianteGesap.SubirActividad'
+		]);
+		Route::get('SubirActividadProyecto/{id?}/{idp?}', [
+			'uses' => $controller . 'StudentController@SubirActividadProyecto',  
+			'as' => 'EstudianteGesap.SubirActividadProyecto'
 		]);
 		Route::get('Comentarios/{id?}/{idp?}', [
 			'uses' => $controller . 'StudentController@Comentarios',  
@@ -415,9 +426,17 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@Radicar',  
 			'as' => 'EstudianteGesap.RADICAR'
 		]);
+		Route::get('RadicarProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@RadicarProyecto',  
+			'as' => 'EstudianteGesap.RADICARPROYECTO'
+		]);
 		Route::post('ActividadStore', [
 			'uses' => $controller . 'StudentController@ActividadStore',  
 			'as' => 'EstudianteGesap.ActividadStore'
+		]);
+		Route::post('ActividadStoreProyecto', [
+			'uses' => $controller . 'StudentController@ActividadStoreProyecto',  
+			'as' => 'EstudianteGesap.ActividadStoreProyecto'
 		]);
 		Route::post('PersonaDatos', [
 			'uses' => $controller . 'StudentController@PersonaDatos',  
@@ -438,6 +457,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('SubirRequerimiento/{id?}/{idp?}', [
 			'uses' => $controller . 'StudentController@SubirRequerimiento',  
 			'as' => 'EstudianteGesap.SubirRequerimiento'
+		]);
+		Route::get('ListaProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@ListaProyecto',  
+			'as' => 'EstudianteGesap.ListaProyecto'
 		]);
 	});
 	//
@@ -485,6 +508,26 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'DocenteController@listarEstadoJurado',
             'as' => 'DocenteGesap.listarEstadoJurado'
 		]);
+		Route::get('VerActividadesProyecto/{id?}', [
+            'uses' => $controller . 'DocenteController@VerActividadesProyecto',
+            'as' => 'DocenteGesap.VerActividadesProyecto'
+		]);
+		Route::get('VerActividadesProyectoJurado/{id?}', [
+            'uses' => $controller . 'DocenteController@VerActividadesProyectoJurado',
+            'as' => 'DocenteGesap.VerActividadesProyectoJurado'
+		]);
+		Route::get('VerActividadesListProyectoDirector/{id?}', [
+			'uses' => $controller . 'DocenteController@VerActividadesListProyectoDirector',  
+			'as' => 'DocenteGesap.VerActividadesListProyectoDirector'
+		]);
+		Route::get('VerActividadProyecto/{id?}/{idp?}', [
+			'uses' => $controller . 'DocenteController@VerActividadProyecto',  
+			'as' => 'DocenteController.VerActividadProyecto'
+		]);
+		Route::get('VerActividadProyectoJurado/{id?}/{idp?}', [
+			'uses' => $controller . 'DocenteController@VerActividadProyectoJurado',  
+			'as' => 'DocenteController.VerActividadProyectoJurado'
+		]);
 		Route::get('Avalar/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@Avalar',  
 			'as' => 'DocenteGesap.Avalar'
@@ -493,6 +536,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@CalificarJurado',  
 			'as' => 'DocenteGesap.CalificarJurado'
 		]);
+		Route::get('CalificarProyectoJurado/{id?}', [
+			'uses' => $controller . 'DocenteController@CalificarProyectoJurado',  
+			'as' => 'DocenteGesap.CalificarProyectoJurado'
+		]);
 		Route::get('ComentariosJu/{id?}', [
 			'uses' => $controller . 'DocenteController@ComentariosJu',  
 			'as' => 'DocenteGesap.ComentariosJu'
@@ -500,6 +547,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('DesicionJurados/{id?}', [
 			'uses' => $controller . 'DocenteController@DesicionJurados',  
 			'as' => 'DocenteGesap.DesicionJurados'
+		]);
+		Route::get('DesicionJuradosProyecto/{id?}', [
+			'uses' => $controller . 'DocenteController@DesicionJuradosProyecto',  
+			'as' => 'DocenteGesap.DesicionJuradosProyecto'
 		]);
 		Route::post('ComentarioStore', [
 			'uses' => $controller . 'DocenteController@ComentarioStore',  
@@ -574,6 +625,14 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@AnteproyectoListJurado',  
 			'as' => 'DocenteGesap.AnteproyectoListJurado'
 		]);
+		Route::get('ProyectosListRadicados/{id?}', [
+			'uses' => $controller . 'DocenteController@ProyectosListRadicados',  
+			'as' => 'DocenteGesap.ProyectosListRadicados'
+		]);
+		Route::get('ProyectosList/{id?}', [
+			'uses' => $controller . 'DocenteController@ProyectosList',  
+			'as' => 'DocenteGesap.ProyectosList'
+		]);
 		Route::get('CalificarAnteproyecto/{id?}', [
 			'uses' => $controller . 'DocenteController@CalificarAnteproyecto',  
 			'as' => 'DocenteGesap.Calificar'
@@ -582,6 +641,11 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@DesarrolladoresList',  
 			'as' => 'DocenteGesap.Desarrolladores'
 		]);
+		Route::get('Anteproyectosdocente', [
+			'uses' => $controller.'DocenteController@Anteproyectosdocente',
+			'as' => 'DocenteGesap.Anteproyectosdocente'
+		]);
+		
 
 		Route::get('Asignar/{id?}', [
 			'uses' => $controller . 'DocenteController@Asignar',  

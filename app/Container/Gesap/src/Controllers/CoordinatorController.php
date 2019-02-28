@@ -311,7 +311,7 @@ class CoordinatorController extends Controller
     public function listaActividades(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $Actividades = Mctr008::all();
+            $Actividades = Mctr008::where('FK_Id_Formato','!=',3)->get();
             foreach($Actividades as $Actividad){
                 $Formato = $Actividad->relacionFormato-> MCT_Formato;
                 $Actividad->offsetSet('Formato',$Formato);
@@ -393,9 +393,9 @@ class CoordinatorController extends Controller
                     $jurados= Jurados::where('FK_User_Codigo',$jurado)->first();
                     if(is_null($jurados)){
                     $collection = collect([]);
-                    $collection->put('Codigo',$user-> PK_User_Codigo);
+                    $collection->put('Codigo',$user-> User_Codigo);
                    
-                    $collection->put('Cedula',$user-> User_Cedula);
+                    $collection->put('Cedula',$user-> PK_User_Codigo);
                     $collection->put('Nombre',$user->  User_Nombre1);
                     $collection->put('Apellido',$user->  User_Apellido1);
                     $collection->put('Correo',$user-> User_Correo);

@@ -33,7 +33,7 @@
                             </i>Buscar Estudiante
                             <br><br>
                         </a>@endpermission
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladoreslist'])
                         @slot('columns', [
                             'Codigo',
                             'Cedula',

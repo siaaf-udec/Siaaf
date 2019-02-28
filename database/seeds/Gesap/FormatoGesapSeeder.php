@@ -13,6 +13,7 @@ class FormatoGesapSeeder extends Seeder
 
             ['PK_Id_Formato'=>'1', 'MCT_Formato'=>'Mct'],
             ['PK_Id_Formato'=>'2', 'MCT_Formato'=>'Requerimiento'],
+            ['PK_Id_Formato'=>'3', 'MCT_Formato'=>'Libro'],
          
         ]);
     }

@@ -13,10 +13,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: textArea('OBS_observacion',null,['label'=>'Comentario:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
-                                    {!! Field::select('Estado', null,['name' => 'Select_Estado','label'=>'Estado: ']) !!}
-
+                                
                                 </div>
                             </div>
                         </div>
@@ -30,10 +29,10 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Califiacr el Formato Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Ver la Actividad Del libro'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-            {!! Form::model ([$datos],['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
+            {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
        <div class="form-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -41,42 +40,37 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['NPRY_Titulo'],['label'=>'Titulo:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}                      
-                                {!! Field:: text('MCT_Actividad',$datos['Director'],['label'=>'Director:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'Estado Anteproyecto:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                              
+                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
+
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
                                
                                </div>
                              
                         </div>
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                                                ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                    <h4> Desiciónes de los jurados</h4>
+                    
+
+                    <h4> Observaciónes acerca de esta Actividad del Mct</h4>
                     <br><br>
                     @permission('PROYECT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Tomar Desición
+                            </i>Agregar Observación
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
                         @slot('columns', [
-                            'Jurado',
-                            'Estado AnteProyecto',
-                            'Observaciónes'                           
-                        ])
-                    @endcomponent
-                    <h4> Observaciónes del Mct Hecha Por los Jurados</h4>
-                     <br>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentariosJurados'])
-                        @slot('columns', [
-                            'Fecha de realización',
+                            {{--'Fecha de realización',--}}
                             'Observación',
-                            'Realizada por',
-                            'Actividad'
+                            'Realizada por'
+                        
                             
                         ])
                     @endcomponent
@@ -89,6 +83,7 @@
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
+                               
                             </div>
                             
                         </div>
@@ -109,53 +104,43 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    ////////widget/////////
-
-    var $widget_Select_Estado = $('select[name="Select_Estado"]');
-
-    var route_Estado = '{{ route('DocenteGesap.listarEstadoJurado') }}';
-
-    $.get(route_Estado, function (response, status) {
-    $(response.data).each(function (key, value) {
-        $widget_Select_Estado.append(new Option(value.EST_estado, value.PK_EST_Id ));
-    });
-    $widget_Select_Estado.val([]);
-    $('#Estado').val();
-    });
 
 
-        $.fn.select2.defaults.set("theme", "bootstrap");
-        $(".pmd-select2").select2({
-            placeholder: "Seleccionar",
-            allowClear: true,
-            width: 'auto',
-            escapeMarkup: function (m) {
-                return m;
-            }
-        });
+    
+    //id = 123400009 ;
+    id2 = 111100009 ;
 
-        $('.pmd-select2', form).change(function () {
-            form.validate().element($(this)); 
-        });
-   ////////////FIN WIDGET////////////////
-   ////////////MODEL//////////////
-        id = 111100009;
-        //id = 111101119;
+    var table, url, columns;
+        table = $('#ListaComentarios');
+        url = '{{ route('DocenteGesap.ComentariosJurado') }}'+'/'+'{{$datos[0]['PK_MCT_IdMctr008']}}'+'/'+'{{$datos['Anteproyecto']}}';
+         
+        columns = [
+            //{data: 'updated_at', name: 'updated_at'},
+            {data: 'OBS_observacion', name: 'OBS_observacion'},
+            {data: 'Usuario', name: 'Usuario'},
+          
+        ];
 
-      var CrearComentario = function () {
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+     
+            $('.gestionar').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-create-coment').modal('toggle');
+            });
+            id = 111100009;
+            var CrearComentario = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('DocenteGesap.CambiarEstadoJurado') }}';
+                        var route = '{{ route('DocenteGesap.ComentarioStoreJurado') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-
-                        formData.append('JR_Comentario', $('#Desicion').val());
-                        formData.append('FK_NPRY_Estado', $('select[name="Select_Estado"]').val());
-                        formData.append('FK_User_Codigo', id);
-                        formData.append('PK_NPRY_Id_Mctr008', '{{$datos['PK_NPRY_IdMctr008']}}');
-                       
+                        formData.append('FK_NPRY_IdMctr008', '{{$datos['Anteproyecto']}}');
+                        formData.append('FK_MCT_IdMctr008', '{{$datos[0]['PK_MCT_IdMctr008']}}');
+                        formData.append('FK_User_Codigo', id2);
+                        formData.append('OBS_observacion', $('#OBS_observacion').val());
                       
 
                         $.ajax({
@@ -177,17 +162,17 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.CalificarJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
-                             }
+                                }
                             },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.CalificarJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
-                               }
+                                }
                             }
                         });
                     }
@@ -195,60 +180,22 @@ $(document).ready(function(){
             };
             var form = $('#from_create-coment');
             var rules = {
-                Desicion: {required: true, minlength: 1, maxlength: 600},
-                Select_Estado :{required: true},
+                OBS_observacion: {required: true, minlength: 1, maxlength: 600},
+              
             };
 
-                FormValidationMd.init(form, rules, false, CrearComentario());
-/////////FIN MODEL////////
-//////tabla1/////////////
-        var table, url, columns;
-        table = $('#DesicionJurados');
-        url = '{{ route('DocenteGesap.DesicionJurados') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
-         
-        columns = [
-            {data: 'Jurado', name: 'Jurado'},
-            {data: 'Estado', name: 'Estado'},
-            {data: 'JR_Comentario', name: 'JR_Comentario'},
-          
-            
-        ];
-
-        dataTableServer.init(table, url, columns);
-        table = table.DataTable();
-////////////tabla2/////////
-
-        var table1, url1, columns1;
-        table1 = $('#ListaComentariosJurados');
-        url1 = '{{ route('DocenteGesap.ComentariosJu') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
-         
-        columns1 = [
-            {data: 'created_at', name: 'created_at'},
-            {data: 'OBS_observacion', name: 'OBS_observacion'},
-            {data: 'Nombre', name: 'Nombre'},
-            {data: 'Actividad', name: 'Actividad'}
-          
-            
-        ];
-
-        dataTableServer.init(table1, url1, columns1);
-        table1 = table1.DataTable();
-
-        
-
-        $('.gestionar').on('click', function (e) {
-                e.preventDefault();
-                $('#modal-create-coment').modal('toggle');
-            });
-             
-    $('.button-cancel').on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('DocenteGesap.index.ajax') }}';
-            location.href="{{route('DocenteGesap.index')}}";
-            //$(".content-ajax").load(route);
-        });
-            
+            FormValidationMd.init(form, rules, false, CrearComentario());
            
 
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            
+            var route = '{{ route('DocenteGesap.VerActividadesJurado') }}' + '/' + '{{$datos['Anteproyecto']}}';;
+            //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
+        });
+   
+    
 })
 </script>    

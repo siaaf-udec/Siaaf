@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de  Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -9,23 +9,18 @@
         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+           
                 {!! Form::model ([$Anteproyecto], ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
-
-                @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
-                                                       class="btn btn-simple btn-warning btn-icon Actividades"
-                                                       title="Actividades">
-                            <i class="fa fa-plus">
-                            </i>Actividades MCT
-                        </a>@endpermission    
+                
+            
                 <div class="form-body">
                
-                   
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaActividades'])
                         @slot('columns', [
-                            '#',
+                            '#Director',
                             'Actividad',
-                            'Descripcion',
+                            'Descripción',
                             'Acciones'
                         ])
                     @endcomponent
@@ -33,7 +28,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('BACK_DOCENTE')<a href="javascript:;"
+                                @permission('STUDENT_BACK')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -73,7 +68,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerRequerimientosList') }}';
+        url = '{{ route('DocenteGesap.VerActividadesListProyectoDirector') }}';
     
         idp='{{  $Anteproyecto[0]  }}';
     
@@ -85,7 +80,7 @@
             
       
             {
-                defaultContent: '@permission('ANTE_DIRECTOR')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('ADD_ACTIVITY_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -107,31 +102,21 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('DocenteController.VerActividadProyecto') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 
         });
-        
-
-
-       
+   
       
-        $('.Actividades').on('click', function (e) {
-            e.preventDefault();
-           
-            var route =  '{{ route('DocenteGesap.VerActividades') }}' + '/' + idp;
-            //location.href="{{route('DocenteGesap.index')}}";
-            $(".content-ajax").load(route);
-        });
-
+  
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-           
-            var route =  '{{ route('DocenteGesap.VerAnteproyecto') }}' + '/' + idp;
-            //location.href="{{route('DocenteGesap.index')}}";
-            $(".content-ajax").load(route);
+            var route = '{{ route('DocenteGesap.index.ajax') }}';
+            location.href="{{route('DocenteGesap.index')}}";
+            //$(".content-ajax").load(route);
         });
+
     });
 </script>
 

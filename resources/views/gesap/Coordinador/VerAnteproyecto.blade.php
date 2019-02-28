@@ -55,7 +55,7 @@
                                 @endif
                         
                         <br><br>
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladores'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
@@ -72,7 +72,7 @@
                             </i>Agregar Jurados
                             
                             </a>@endpermission
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listajurados'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listajurados'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',

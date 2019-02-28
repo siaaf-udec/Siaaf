@@ -21,7 +21,7 @@
                
                    
                         <br><br>
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaActividades'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaActividades'])
                         @slot('columns', [
                             '#',
                             'Actividad',

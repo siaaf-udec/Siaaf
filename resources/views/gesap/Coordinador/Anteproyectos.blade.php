@@ -61,7 +61,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
                             'Titulo',
                             'Palabras clave',

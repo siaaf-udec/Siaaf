@@ -30,7 +30,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Califiacr el Formato Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Calificar el Libro'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos],['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -65,7 +65,7 @@
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados'])
                         @slot('columns', [
                             'Jurado',
-                            'Estado AnteProyecto',
+                            'Estado Proyecto',
                             'Observaciónes'                           
                         ])
                     @endcomponent
@@ -204,7 +204,7 @@ $(document).ready(function(){
 //////tabla1/////////////
         var table, url, columns;
         table = $('#DesicionJurados');
-        url = '{{ route('DocenteGesap.DesicionJurados') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
+        url = '{{ route('DocenteGesap.DesicionJuradosProyecto') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
          
         columns = [
             {data: 'Jurado', name: 'Jurado'},

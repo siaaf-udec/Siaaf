@@ -24,7 +24,7 @@
                     <br><br>
                     <br><br>
                   
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listadesarrolladoreslist'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladoreslist'])
                         @slot('columns', [
                             'Cedula',
                             'Codigo',

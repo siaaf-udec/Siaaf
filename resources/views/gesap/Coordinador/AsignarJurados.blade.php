@@ -25,10 +25,10 @@
                     <br><br>
                     <br><br>
                   
-                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listajurados'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listajurados'])
                         @slot('columns', [
-                            'Codigo',
                             'Cedula',
+                            'Codigo',
                             'Nombre',
                             'Apellido',
                             'Correo',
