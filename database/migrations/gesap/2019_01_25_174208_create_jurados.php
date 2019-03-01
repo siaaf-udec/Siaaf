@@ -36,6 +36,7 @@ class CreateJurados extends Migration
                     ->on('tbl_Estado_Anteproyecto')
                     ->onDelete('cascade');
             $table->String('JR_Comentario', 500);
+            $table->String('JR_Comentario_Proyecto', 500);
            
             $table->timestamps();
         });

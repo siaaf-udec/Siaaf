@@ -13,7 +13,7 @@
 		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
     	   <a href="{{ route('DocenteGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-user"></i>
-                <span class="title">Mis Anteproyectos Y Proyectos(Direcctor)</span>
+                <span class="title">Mis Anteproyectos Y Proyectos(Docente)</span>
             </a>    	    	
     	</li>
 		@endpermission

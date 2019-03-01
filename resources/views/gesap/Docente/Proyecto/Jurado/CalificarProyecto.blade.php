@@ -145,13 +145,13 @@ $(document).ready(function(){
       var CrearComentario = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('DocenteGesap.CambiarEstadoJurado') }}';
+                        var route = '{{ route('DocenteGesap.CambiarEstadoJuradoProyecto') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
 
-                        formData.append('JR_Comentario', $('#Desicion').val());
+                        formData.append('JR_Comentario_Proyecto', $('#Desicion').val());
                         formData.append('FK_NPRY_Estado', $('select[name="Select_Estado"]').val());
                         formData.append('FK_User_Codigo', id);
                         formData.append('PK_NPRY_Id_Mctr008', '{{$datos['PK_NPRY_IdMctr008']}}');
@@ -209,7 +209,7 @@ $(document).ready(function(){
         columns = [
             {data: 'Jurado', name: 'Jurado'},
             {data: 'Estado', name: 'Estado'},
-            {data: 'JR_Comentario', name: 'JR_Comentario'},
+            {data: 'JR_Comentario_Proyecto', name: 'JR_Comentario_Proyecto'},
           
             
         ];
@@ -220,7 +220,7 @@ $(document).ready(function(){
 
         var table1, url1, columns1;
         table1 = $('#ListaComentariosJurados');
-        url1 = '{{ route('DocenteGesap.ComentariosJu') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
+        url1 = '{{ route('DocenteGesap.ComentariosJuProyecto') }}'+'/'+'{{$datos['PK_NPRY_IdMctr008']}}';
          
         columns1 = [
             {data: 'created_at', name: 'created_at'},

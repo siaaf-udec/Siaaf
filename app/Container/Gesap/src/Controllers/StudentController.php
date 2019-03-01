@@ -558,7 +558,7 @@ class StudentController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha SUBIDO ningún Archivo a la actividad del Libro.");
+                $Actividad->offsetSet('Commit', "gesap/gesap/libro/GESAPPDF.pdf");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{

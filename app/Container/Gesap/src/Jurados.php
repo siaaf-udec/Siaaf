@@ -20,6 +20,7 @@ class Jurados extends Model
         ,'FK_NPRY_Estado'
         ,'FK_NPRY_Estado_Proyecto'
         ,'JR_Comentario'
+        ,'JR_Comentario_Proyecto'
     ];
 
     

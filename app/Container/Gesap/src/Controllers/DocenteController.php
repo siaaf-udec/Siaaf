@@ -171,6 +171,9 @@ class DocenteController extends Controller
 
                 $ante = $jur -> FK_NPRY_IdMctr008;
                 $proyecto = Proyecto::where('FK_NPRY_IdMctr008', $ante)->first();
+                if( $proyecto == null){
+                    $concatenado=[];
+                }else{
 
                 $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $proyecto-> FK_NPRY_IdMctr008)->first();
                 
@@ -191,6 +194,7 @@ class DocenteController extends Controller
                 $concatenado[$i]= $collection;
     
                 $i=$i+1;
+                }
         }
           
                return DataTables::of($concatenado)
@@ -608,6 +612,7 @@ class DocenteController extends Controller
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $request['FK_User_Codigo'],
                      'OBS_observacion' => $request['OBS_observacion'],
+                     'OBS_Formato' => $request['OBS_Formato'],
                      
 
                     ]);
@@ -768,6 +773,72 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    public function CambiarEstadoJuradoproyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            //variable de sesion
+
+            $Jurado = Jurados::where('FK_User_Codigo',$request['FK_User_Codigo'])->first();
+
+            $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
+            $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
+            
+            $Jurado -> save();
+            $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+            $i = 0;
+            $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
+            $if= $Jurado->count();
+            if($if==2){
+                foreach($Jurado as $jur)
+                {
+                 $numero[$i] = $jur -> FK_NPRY_Estado_Proyecto;
+                 $i = $i + 1 ;   
+                }
+                $i = 0 ;
+                $suma = $numero[0]+$numero[1];
+                if(($suma/8)==1){
+                    $Proyecto -> FK_EST_Id = 4;
+                    $Proyecto -> save();
+                    //aprobado
+                    
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+                }
+                if(($suma/10)==1){
+                    $Proyecto -> FK_EST_Id = 5;
+                    //rechazado
+                    $Proyecto -> save();
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+                }
+                if(($suma/12)==1){
+                    $Proyecto -> FK_EST_Id = 6;
+                    //aplazado
+                    $Proyecto -> save();
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+                }else{
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+                }
+                
+
+            }
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 
 
     
@@ -775,7 +846,43 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
-            $ObservacionesJurado = ObservacionesMctJurado::where('FK_NPRY_IdMctr008',$id)->get();
+            $ObservacionesJurado = ObservacionesMctJurado::where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->get();
+
+            foreach($ObservacionesJurado as $observacion){
+               
+                $Nombre1 = $observacion -> relacionUsuario -> User_Nombre1;
+                $Apellido = $observacion -> relacionUsuario -> User_Apellido1;
+                $space = " ";
+                $Nombre = $Nombre1.$space.$Apellido;
+
+                $Actividad = $observacion -> relacionActividad -> MCT_Actividad;
+                $tipo = $observacion -> relacionActividad;
+                $formato = $tipo -> relacionFormato -> MCT_Formato;
+                $linea="-";
+
+                $nombreActividad = $Actividad.$linea.$formato;
+                $observacion -> offsetSet('Nombre',$Nombre);
+                $observacion -> offsetSet('Actividad',$nombreActividad);
+
+            }
+                     
+            return DataTables::of($ObservacionesJurado)
+           
+            ->addIndexColumn()
+            ->make(true);
+       
+            }
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );              
+        
+    }
+    public function ComentariosJuProyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $ObservacionesJurado = ObservacionesMctJurado::where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->get();
 
             foreach($ObservacionesJurado as $observacion){
                

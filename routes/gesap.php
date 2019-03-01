@@ -522,11 +522,11 @@ Route::group(['middleware' => ['auth']], function () {
 		]);
 		Route::get('VerActividadProyecto/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividadProyecto',  
-			'as' => 'DocenteController.VerActividadProyecto'
+			'as' => 'DocenteGesap.VerActividadProyecto'
 		]);
 		Route::get('VerActividadProyectoJurado/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividadProyectoJurado',  
-			'as' => 'DocenteController.VerActividadProyectoJurado'
+			'as' => 'DocenteGesap.VerActividadProyectoJurado'
 		]);
 		Route::get('Avalar/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@Avalar',  
@@ -544,6 +544,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@ComentariosJu',  
 			'as' => 'DocenteGesap.ComentariosJu'
 		]);
+		Route::get('ComentariosJuProyecto/{id?}', [
+			'uses' => $controller . 'DocenteController@ComentariosJuProyecto',  
+			'as' => 'DocenteGesap.ComentariosJuProyecto'
+		]);
 		Route::get('DesicionJurados/{id?}', [
 			'uses' => $controller . 'DocenteController@DesicionJurados',  
 			'as' => 'DocenteGesap.DesicionJurados'
@@ -552,6 +556,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@DesicionJuradosProyecto',  
 			'as' => 'DocenteGesap.DesicionJuradosProyecto'
 		]);
+		
 		Route::post('ComentarioStore', [
 			'uses' => $controller . 'DocenteController@ComentarioStore',  
 			'as' => 'DocenteGesap.ComentarioStore'
@@ -559,6 +564,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('CambiarEstadoJurado', [
 			'uses' => $controller . 'DocenteController@CambiarEstadoJurado',  
 			'as' => 'DocenteGesap.CambiarEstadoJurado'
+		]);
+		Route::post('CambiarEstadoJuradoProyecto', [
+			'uses' => $controller . 'DocenteController@CambiarEstadoJuradoProyecto',  
+			'as' => 'DocenteGesap.CambiarEstadoJuradoProyecto'
 		]);
 		Route::post('ComentarioStoreJurado', [
 			'uses' => $controller . 'DocenteController@ComentarioStoreJurado',  

@@ -27,8 +27,8 @@
                   
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listajurados'])
                         @slot('columns', [
-                            'Cedula',
                             'Codigo',
+                            'Cedula',
                             'Nombre',
                             'Apellido',
                             'Correo',
@@ -130,7 +130,7 @@
 
 
         formData.append('FK_NPRY_IdMctr008', '{{  $datos[0]['PK_NPRY_IdMctr008']  }}' );
-        formData.append('PK_User_Codigo', dataTable.Codigo);
+        formData.append('PK_User_Codigo', dataTable.Cedula);
 
         $.ajax({
             url: route,

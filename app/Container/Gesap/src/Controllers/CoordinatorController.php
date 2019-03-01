@@ -634,7 +634,9 @@ class CoordinatorController extends Controller
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                 'FK_User_Codigo' => $request['PK_User_Codigo'],
                 'FK_NPRY_Estado' => 3,
+                'FK_NPRY_Estado_Proyecto' => 3,
                 'JR_Comentario' => "Sin Comentarios.",
+                'JR_Comentario_Proyecto' => "Sin Comentarios.",
                
             ]);
             

@@ -19,6 +19,7 @@ class ObservacionesMctJurado extends Model
         ,'FK_MCT_IdMctr008'
         ,'FK_User_Codigo'
         ,'OBS_observacion'
+        ,'OBS_Formato'
         
         
     ];

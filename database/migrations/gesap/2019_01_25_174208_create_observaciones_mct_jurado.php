@@ -30,7 +30,10 @@ class CreateObservacionesMctJurado extends Migration
                         ->references('PK_User_Codigo')
                         ->on('TBL_Usuario')
                         ->onDelete('cascade');
+                        
+            $table->Integer('OBS_Formato');
             $table->string('OBS_observacion', 600);
+            
           
             $table->timestamps();
         });

@@ -36,33 +36,30 @@
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
        <div class="form-body">
+       {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+
+                       
+        {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+
+
+        {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+        <iframe src="{{ asset(Storage::url($datos['Commit'])) }}"embedded="true" width="800" height="500" style="border: none;"></iframe>
+    
                     <div class="row">
                         <div class="col-md-6">
                                <br>
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-
-                       
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-
-
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
-                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
-
-                               
-                               </div>
+                                          </div>
                              
                         </div>
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
-                                                                ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
-
                     
 
-                    <h4> Observaciónes acerca de esta Actividad del Mct</h4>
+                    <h4> Observaciónes acerca de esta Actividad del Libro</h4>
                     <br><br>
                     @permission('PROYECT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"

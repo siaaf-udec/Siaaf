@@ -143,6 +143,7 @@ $(document).ready(function(){
                         formData.append('FK_MCT_IdMctr008', '{{$datos[0]['PK_MCT_IdMctr008']}}');
                         formData.append('FK_User_Codigo', id2);
                         formData.append('OBS_observacion', $('#OBS_observacion').val());
+                        formData.append('OBS_Formato', 1);
                       
 
                         $.ajax({
