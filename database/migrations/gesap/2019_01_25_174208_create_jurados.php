@@ -35,8 +35,8 @@ class CreateJurados extends Migration
                     ->references('PK_EST_Id')
                     ->on('tbl_Estado_Anteproyecto')
                     ->onDelete('cascade');
-            $table->String('JR_Comentario', 500);
-            $table->String('JR_Comentario_Proyecto', 500);
+            $table->String('JR_Comentario', 4000);
+            $table->String('JR_Comentario_Proyecto', 4000);
            
             $table->timestamps();
         });

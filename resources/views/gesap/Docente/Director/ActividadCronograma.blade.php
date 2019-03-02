@@ -249,10 +249,14 @@ $(document).ready(function(){
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
+                                                var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                                 $(".content-ajax").load(route);
                                                
                                             } else {
                                                 table.ajax.reload();
                                                 UIToastr.init(xhr, response.title, response.message);
+                                                var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                               $(".content-ajax").load(route);
                            
                                                 }
                                         }

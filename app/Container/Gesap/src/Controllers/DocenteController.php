@@ -690,7 +690,7 @@ class DocenteController extends Controller
     public function listarEstadoJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $Estado = EstadoAnteproyecto::Where('PK_EST_Id','>','3  ')->get();
+            $Estado = EstadoAnteproyecto::Where('PK_EST_Id','>',3)->where('PK_EST_Id',1)->get();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos consultados correctamente.',

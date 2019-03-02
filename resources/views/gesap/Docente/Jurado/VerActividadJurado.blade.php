@@ -107,8 +107,8 @@ $(document).ready(function(){
 
 
     
-    //id = 123400009 ;
-    id2 = 111100009 ;
+    id2 = 111109999 ;
+    //id2 = 111100009 ;
 
     var table, url, columns;
         table = $('#ListaComentarios');
@@ -128,7 +128,7 @@ $(document).ready(function(){
                 e.preventDefault();
                 $('#modal-create-coment').modal('toggle');
             });
-            id = 111100009;
+           
             var CrearComentario = function () {
                 return {
                     init: function () {

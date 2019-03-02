@@ -204,8 +204,8 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
-            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();//miro los comits que se han hecho de Anteproyecto
-            
+            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',1)->get();//miro los comits que se han hecho de Anteproyecto
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
             $mct = Mctr008::where('FK_Id_Formato','!=',3)->get();//miro la cantidad de actividades qeu hay en el mct
             
@@ -246,7 +246,7 @@ class StudentController extends Controller
                         $IdError = 422;
                         return AjaxResponse::success(
                             '¡Lo sentimos!',
-                            'No se han avalado todas las Actividades Correspondientes.',
+                            'No se han aprobado todas las Actividades Correspondientes.',
                             $IdError
                         );
                     }
@@ -322,7 +322,7 @@ class StudentController extends Controller
                         $IdError = 422;
                         return AjaxResponse::success(
                             '¡Lo sentimos!',
-                            'No se han avalado todas las Actividades Correspondientes Del Proyecto.',
+                            'No se han aprobado todas las Actividades Correspondientes Del Libro.',
                             $IdError
                         );
                     }
@@ -366,7 +366,8 @@ class StudentController extends Controller
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $request['FK_User_Codigo'],
                      'CMMT_Commit' => $request['CMMT_Commit'],
-                     'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                     'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                     'CMMT_Formato' => $request['CMMT_Formato']
                     ]);
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
@@ -383,6 +384,12 @@ class StudentController extends Controller
                 );
                 
                }
+               $IdError = 413;
+               return AjaxResponse::success(
+                   '¡Lo sentimos!',
+                   'El archivo es Demasiado Grande.',
+                   $IdError
+               );
 
                  
             }              
@@ -426,6 +433,7 @@ class StudentController extends Controller
                 );
                 
                }
+
                  
             }              
         
@@ -464,7 +472,8 @@ class StudentController extends Controller
                  'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                  'FK_User_Codigo' => $request['FK_User_Codigo'],
                  'CMMT_Commit' => $request['CMMT_Commit'],
-                 'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                 'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                 'CMMT_Formato' => $request['CMMT_Formato']
                 ]);
                 }
                 return AjaxResponse::success(
@@ -734,7 +743,8 @@ class StudentController extends Controller
                         'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                         'FK_User_Codigo' => $request['FK_User_Codigo'],
                         'CMMT_Commit' => $request['CMMT_Commit'],
-                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                        'CMMT_Formato' => $request['CMMT_Formato']
                     ]);
                     }
                 return AjaxResponse::success(
@@ -844,7 +854,8 @@ class StudentController extends Controller
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                                'FK_User_Codigo' => $request['FK_User_Codigo'],
                                'CMMT_Commit' => $request['CMMT_Commit'],
-                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                               'CMMT_Formato' => $request['CMMT_Formato']
                            ]);
                            }
                        return AjaxResponse::success(
@@ -952,7 +963,8 @@ class StudentController extends Controller
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                                'FK_User_Codigo' => $request['FK_User_Codigo'],
                                'CMMT_Commit' => $request['CMMT_Commit'],
-                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                               'CMMT_Formato' => $request['CMMT_Formato']
                            ]);
                            }
                        return AjaxResponse::success(
@@ -1060,7 +1072,8 @@ class StudentController extends Controller
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                                'FK_User_Codigo' => $request['FK_User_Codigo'],
                                'CMMT_Commit' => $request['CMMT_Commit'],
-                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                               'CMMT_Formato' => $request['CMMT_Formato']
                            ]);
                            }
                        return AjaxResponse::success(
@@ -1122,7 +1135,7 @@ class StudentController extends Controller
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
                        
                        
-                       $RubroTecnologico = RubroTecnologico::where('PK_RBR_Material',$id)->first();
+                       $RubroTecnologico = RubroTecnologico::where('PK_RBR_Tecnologico',$id)->first();
                        
                        $RubroTecnologico -> delete();
                        return AjaxResponse::success(
@@ -1165,7 +1178,8 @@ class StudentController extends Controller
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                                'FK_User_Codigo' => $request['FK_User_Codigo'],
                                'CMMT_Commit' => $request['CMMT_Commit'],
-                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                               'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                               'CMMT_Formato' => $request['CMMT_Formato']
                            ]);
                            }
                        return AjaxResponse::success(
@@ -1264,7 +1278,8 @@ class StudentController extends Controller
                             'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                             'FK_User_Codigo' => $request['FK_User_Codigo'],
                             'CMMT_Commit' => $request['CMMT_Commit'],
-                            'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                            'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                            'CMMT_Formato' => $request['CMMT_Formato']
                         ]);
                     }
                     
@@ -1359,7 +1374,8 @@ class StudentController extends Controller
                         'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                         'FK_User_Codigo' => $request['FK_User_Codigo'],
                         'CMMT_Commit' => $request['CMMT_Commit'],
-                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                        'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                        'CMMT_Formato' => $request['CMMT_Formato']
                     ]);
                 }
             return AjaxResponse::success(
@@ -1498,7 +1514,8 @@ class StudentController extends Controller
                     'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                     'FK_User_Codigo' => $request['FK_User_Codigo'],
                     'CMMT_Commit' => $request['CMMT_Commit'],
-                    'FK_CHK_Checklist' => $request['FK_CHK_Checklist']
+                    'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                    'CMMT_Formato' => $request['CMMT_Formato']
                 ]);
                 }
                 return AjaxResponse::success(
@@ -1529,11 +1546,16 @@ class StudentController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();//variable sesion
             $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->first(); 
-            $Proyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Anteproyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Estado',4)->get();
-            foreach($Proyecto as $Proyect){
-                $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
-               
-                $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_estado  );
+            if($Anteproyecto == null){
+                $Proyecto = collect([]);
+            }else{
+                $Proyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Anteproyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Estado',4)->get();
+         
+                foreach($Proyecto as $Proyect){
+                    $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
+                   
+                    $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_estado  );
+                }
             }
             
             return DataTables::of($Proyecto)

@@ -160,7 +160,7 @@
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Total',null,['label'=>'Total) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -210,7 +210,7 @@
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Total',null,['label'=>'Total) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -305,7 +305,7 @@
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Total',null,['label'=>'Total) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -468,7 +468,7 @@
                             'Tipo de vinculación',
                             'Dedicación Horas/Semana',
                             'Entidad a la que pertenece',
-                            'Solicitado en efectivo UDEC',
+                            'Solicitado a la UDEC',
                             'Contrapartida en especie (UDEC)',
                             'Contrapartida en especie (Otros)',
                             'Total',
@@ -485,7 +485,7 @@
                             'Tipo de vinculación',
                             'Dedicación Horas/Semana',
                             'Entidad a la que pertenece',
-                            'Solicitado en efectivo UDEC',
+                            'Solicitado a la UDEC',
                             'Contrapartida en especie (UDEC)',
                             'Contrapartida en especie (Otros)',
                             'Total',
@@ -857,6 +857,7 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id);
                         formData.append('CMMT_Commit', 'Tabla Subida');
                         formData.append('FK_CHK_Checklist', 1);
+                        formData.append('CMMT_Formato', 1);
             
 
 
@@ -973,7 +974,7 @@ $(document).ready(function(){
             $('#RBR_PER_EDITAR_Tipo').val(dataTable1.RBR_PER_Tipo);
             $('#RBR_PER_EDITAR_Dedicacion').val(dataTable1.RBR_PER_Dedicacion);
             $('#RBR_PER_EDITAR_Entidad').val(dataTable1.RBR_PER_Entidad);
-            $('#RBR_PER_EDITAR_Solicitado_Udec').val(dataTable1-RBR_PER_Solicitado_Udec);
+            $('#RBR_PER_EDITAR_Solicitado_Udec').val(dataTable1.RBR_PER_Solicitado_Udec);
             $('#RBR_PER_EDITAR_Contra_Udec').val(dataTable1.RBR_PER_Contra_Udec);
             $('#RBR_PER_EDITAR_Contra_Otro').val(dataTable1.RBR_PER_Contra_Otro);
             $('#RBR_PER_EDITAR_Total').val(dataTable1.RBR_PER_Total);
@@ -1150,6 +1151,7 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id);
                         formData.append('CMMT_Commit', 'Tabla Subida');
                         formData.append('FK_CHK_Checklist', 1);
+                        formData.append('CMMT_Formato', 1);
             
 
 
@@ -1209,12 +1211,12 @@ $(document).ready(function(){
             FormValidationMd.init(forme, rulese, false, CrearRubroEquipo()); 
 
             tablee.on('click', '.EliminarE', function (e) {
-            alert('hola')
+            
                 e.preventDefault();
                 $tre = $(this).closest('tr');
 
                 var dataTablee = tablee.row($tre).data();
-                var routee = '{{ route('EstudianteGesap.RubroEquiposDelete') }}' + '/' + dataTable1.PK_RBR_Equipo;
+                var routee = '{{ route('EstudianteGesap.RubroEquiposDelete') }}' + '/' + dataTablee.PK_RBR_Equipo;
                 var typee = 'DELETE';
                 var asynce = asynce || false;
                 swal({
@@ -1231,16 +1233,16 @@ $(document).ready(function(){
                     function (isConfirm) {
                         if (isConfirm) {
                             $.ajax({
-                                url: route1,
+                                url: routee,
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                                 cache: false,
-                                type: type1,
+                                type: typee,
                                 contentType: false,
                                 processData: false,
-                                async: async1,
+                                async: asynce,
                                 success: function (response, xhr, request) {
                                     if (request.status === 200 && xhr === 'success') {
-                                        table1.ajax.reload();
+                                        tablee.ajax.reload();
                                         UIToastr.init(xhr, response.title, response.message);
                                     }
                                 },
@@ -1256,6 +1258,7 @@ $(document).ready(function(){
                     });
 
         });
+
         var id_actividad_eq = 0;
             tablee.on('click', '.Editar', function (e) {
             e.preventDefault();
@@ -1445,6 +1448,7 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id);
                         formData.append('CMMT_Commit', 'Tabla Subida');
                         formData.append('FK_CHK_Checklist', 1);
+                        formData.append('CMMT_Formato', 1);
             
 
 
@@ -1505,7 +1509,7 @@ $(document).ready(function(){
             $trm = $(this).closest('tr');
 
             var dataTablem = tablem.row($trm).data();
-            var routem = '{{ route('EstudianteGesap.RubroMaterialDelete') }}' + '/' + dataTable1.PK_RBR_Material;
+            var routem = '{{ route('EstudianteGesap.RubroMaterialDelete') }}' + '/' + dataTablem.PK_RBR_Material;
             var typem = 'DELETE';
             var asyncm = asyncm || false;
             swal({
@@ -1522,16 +1526,16 @@ $(document).ready(function(){
                 function (isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: route1,
+                            url: routem,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             cache: false,
-                            type: type1,
+                            type: typem,
                             contentType: false,
                             processData: false,
-                            async: async1,
+                            async: asyncm,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table1.ajax.reload();
+                                    tablem.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },
@@ -1732,6 +1736,7 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id);
                         formData.append('CMMT_Commit', 'Tabla Subida');
                         formData.append('FK_CHK_Checklist', 1);
+                        formData.append('CMMT_Formato', 1);
             
 
 
@@ -1789,12 +1794,12 @@ $(document).ready(function(){
 
             tablet.on('click', '.Eliminar', function (e) {
             e.preventDefault();
-            $trm = $(this).closest('tr');
+            $trt = $(this).closest('tr');
 
-            var dataTablet = tablet.row($trm).data();
-            var routem = '{{ route('EstudianteGesap.RubroTecnologicoDelete') }}' + '/' + dataTable1.PK_RBR_Tecnologico;
-            var typem = 'DELETE';
-            var asyncm = asyncm || false;
+            var dataTablet = tablet.row($trt).data();
+            var routet = '{{ route('EstudianteGesap.RubroTecnologicoDelete') }}' + '/' + dataTablet.PK_RBR_Tecnologico;
+            var typet = 'DELETE';
+            var asynct = asynct || false;
             swal({
                     title: "¿Está seguro?",
                     text: "¿Está seguro de eliminar este Rubro?",
@@ -1809,16 +1814,16 @@ $(document).ready(function(){
                 function (isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: route1,
+                            url: routet,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             cache: false,
-                            type: type1,
+                            type: typet,
                             contentType: false,
                             processData: false,
-                            async: async1,
+                            async: asynct,
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
-                                    table1.ajax.reload();
+                                    tablet.ajax.reload();
                                     UIToastr.init(xhr, response.title, response.message);
                                 }
                             },

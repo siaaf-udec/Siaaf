@@ -114,6 +114,7 @@ $(document).ready(function(){
 
 
     id = 123456189 ;
+    id = 123450089;//est 2
 
     var table, url, columns;
         table = $('#ListaComentarios');
@@ -141,6 +142,7 @@ $(document).ready(function(){
                     formData.append('FK_User_Codigo', id);
                     formData.append('CMMT_Commit', $('#CMMT_Commit').val());
                     formData.append('FK_CHK_Checklist', 1);
+                    formData.append('CMMT_Formato', 1);
                     
                     $.ajax({
                         url: route,

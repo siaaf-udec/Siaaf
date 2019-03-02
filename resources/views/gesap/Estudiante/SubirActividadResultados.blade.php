@@ -152,7 +152,7 @@
                     @endif
                     <br><br>
                     @if($datos['Estado'] != "APROBADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'Resultados'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Resultados'])
                     @slot('columns', [
                             'Resultado',
                             'Producto Esperado',
@@ -165,7 +165,7 @@
                     @endcomponent
                     @endif
                     @if($datos['Estado'] == "APROBADO" )
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ResultadosF'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ResultadosF'])
                     @slot('columns', [
                             'Resultado',
                             'Producto Esperado',
@@ -200,7 +200,7 @@
                             </i>Agregar Observación
                         </a>@endpermission
                     
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentarios'])
                         @slot('columns', [
                             'Fecha de realización',
                             'Observación',
@@ -403,6 +403,7 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id);
                         formData.append('CMMT_Commit', 'Tabla Subida');
                         formData.append('FK_CHK_Checklist', 1);
+                        formData.append('CMMT_Formato', 1);
             
 
 

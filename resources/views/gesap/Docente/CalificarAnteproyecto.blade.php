@@ -13,10 +13,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
-                                    {!! Field::select('Estado', null,['name' => 'Select_Estado','label'=>'Estado: ']) !!}
-
+                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'4000','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el por que de la decision, tenga en cuenta que esta informacion se le mostrara al estudiante.','icon'=>'fa fa-book']) !!}
+                                     {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
                                 </div>
                             </div>
                         </div>
@@ -111,7 +110,7 @@
 $(document).ready(function(){
     ////////widget/////////
 
-    var $widget_Select_Estado = $('select[name="Select_Estado"]');
+    /* var $widget_Select_Estado = $('select[name="Select_Estado"]');
 
     var route_Estado = '{{ route('DocenteGesap.listarEstadoJurado') }}';
 
@@ -122,7 +121,7 @@ $(document).ready(function(){
     $widget_Select_Estado.val([]);
     $('#Estado').val();
     });
-
+ */
 
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
@@ -139,8 +138,8 @@ $(document).ready(function(){
         });
    ////////////FIN WIDGET////////////////
    ////////////MODEL//////////////
-        id = 111100009;
-        //id = 111101119;
+        //id = 111100009;
+        id = 111109999;
 
       var CrearComentario = function () {
                 return {
@@ -152,7 +151,7 @@ $(document).ready(function(){
                         var formData = new FormData();
 
                         formData.append('JR_Comentario', $('#Desicion').val());
-                        formData.append('FK_NPRY_Estado', $('select[name="Select_Estado"]').val());
+                        formData.append('FK_NPRY_Estado', $('#Estado').val());
                         formData.append('FK_User_Codigo', id);
                         formData.append('PK_NPRY_Id_Mctr008', '{{$datos['PK_NPRY_IdMctr008']}}');
                        

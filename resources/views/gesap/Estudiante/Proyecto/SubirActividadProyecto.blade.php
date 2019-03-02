@@ -169,7 +169,7 @@ $(document).ready(function(){
                                                 var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + '{{$datos['Anteproyecto']}}';
                                                 $(".content-ajax").load(route);
                                             
-                                            } else {
+                                            }else {
                                                 $('#form_subir_actividad')[0].reset(); 
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
@@ -239,7 +239,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirActividadProyecto') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -248,11 +248,21 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirActividadProyecto') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    $(".content-ajax").load(route);
+                                   
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 413 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('EstudianteGesap.SubirActividadProyecto') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
                             }
+                            
                         });
                     }
                 }

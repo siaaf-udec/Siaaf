@@ -57,7 +57,7 @@
                                </div>
                              
                         </div>
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'9000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
                     
@@ -141,6 +141,7 @@ $(document).ready(function(){
                     formData.append('FK_User_Codigo', id);
                     formData.append('CMMT_Commit', $('#CMMT_Commit').val());
                     formData.append('FK_CHK_Checklist', 1);
+                    formData.append('CMMT_Formato', 1);
                     
                     $.ajax({
                         url: route,

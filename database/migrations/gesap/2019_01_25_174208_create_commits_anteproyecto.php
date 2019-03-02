@@ -35,12 +35,8 @@ class CreateCommitsAnteproyecto extends Migration
                         ->references('PK_CHK_Checklist')
                         ->on('TBL_checklist')
                         ->onDelete('cascade');
-            $table->Integer('CMMT_Formato')->unsigned();
-            $table->foreign('CMMT_Formato')
-                        ->references('PK_Id_Formato')
-                        ->on('TBL_MCT_Formato')
-                        ->onDelete('cascade');
-            $table->String('CMMT_Commit', 4000);
+            $table->Integer('CMMT_Formato');//diferenciar actividades de MCT y de Proyecto para radicar
+            $table->String('CMMT_Commit', 9000);
             
             $table->timestamps();
         });

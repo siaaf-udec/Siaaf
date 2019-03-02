@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-md-12">
                 <h4>Anteproyecto De Grado </h4>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteproyecto'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyecto'])
                         @slot('columns', [
                             'Titulo',
                             'Palabras clave',
@@ -69,7 +69,7 @@
                     <br><br>
                     <br><br>
                     <h4>Proyecto De Grado </h4>
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyecto'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyecto'])
                         @slot('columns', [
                             'Titulo',
                             'Palabras clave',

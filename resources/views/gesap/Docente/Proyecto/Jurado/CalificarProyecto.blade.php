@@ -15,7 +15,7 @@
                                 <div class="col-md-12">
                                    {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
-                                    {!! Field::select('Estado', null,['name' => 'Select_Estado','label'=>'Estado: ']) !!}
+                                    {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
 
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
 $(document).ready(function(){
     ////////widget/////////
 
-    var $widget_Select_Estado = $('select[name="Select_Estado"]');
+   /*  var $widget_Select_Estado = $('select[name="Select_Estado"]');
 
     var route_Estado = '{{ route('DocenteGesap.listarEstadoJurado') }}';
 
@@ -121,7 +121,7 @@ $(document).ready(function(){
     });
     $widget_Select_Estado.val([]);
     $('#Estado').val();
-    });
+    }); */
 
 
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -139,8 +139,8 @@ $(document).ready(function(){
         });
    ////////////FIN WIDGET////////////////
    ////////////MODEL//////////////
-        id = 111100009;
-        //id = 111101119;
+       // id = 111100009;
+        id = 111109999;
 
       var CrearComentario = function () {
                 return {
@@ -152,7 +152,7 @@ $(document).ready(function(){
                         var formData = new FormData();
 
                         formData.append('JR_Comentario_Proyecto', $('#Desicion').val());
-                        formData.append('FK_NPRY_Estado', $('select[name="Select_Estado"]').val());
+                        formData.append('FK_NPRY_Estado', $('#Estado').val());
                         formData.append('FK_User_Codigo', id);
                         formData.append('PK_NPRY_Id_Mctr008', '{{$datos['PK_NPRY_IdMctr008']}}');
                        
@@ -177,7 +177,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.CalificarJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
+                                    var route = '{{ route('DocenteGesap.CalificarProyectoJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
                                     $(".content-ajax").load(route);
                              }
                             },
@@ -185,7 +185,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.CalificarJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
+                                    var route = '{{ route('DocenteGesap.CalificarProyectoJurado') }}' + '/' + '{{$datos['PK_NPRY_IdMctr008']}}';
                                     $(".content-ajax").load(route);
                                }
                             }
