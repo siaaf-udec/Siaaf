@@ -25,6 +25,11 @@ class CreateDesarrolladores extends Migration
                 ->references('PK_User_Codigo')
                 ->on('TBL_Usuario')
                 ->onDelete('cascade');
+            $table->integer('Fk_IdEstado')->unsigned();
+            $table->foreign('Fk_IdEstado')
+                ->references('Pk_IdEstado')
+                ->on('TBL_Estados')
+                ->onDelete('cascade');
            
             $table->timestamps();
         });

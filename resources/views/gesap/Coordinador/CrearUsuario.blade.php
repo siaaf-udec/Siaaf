@@ -163,7 +163,7 @@
                     formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
                     formData.append('User_Correo', $('input[name="User_Correo"]').val());
                     formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-                    formData.append('FK_User_IdEstado', '2');
+                    formData.append('FK_User_IdEstado', '1');
                     formData.append('User_Tipo_Documento', $('select[name="User_Tipo_Documento"]').val());
                     formData.append('User_Sexo', $('select[name="User_Sexo"]').val());
                     formData.append('User_Nacimiento', $('#User_Nacimiento').val());

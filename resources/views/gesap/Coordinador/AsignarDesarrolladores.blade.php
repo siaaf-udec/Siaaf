@@ -87,7 +87,7 @@
             // {data: 'User_Apellido1', name: 'User_Apellido1'},
             // {data: 'User_Correo', name: 'User_Correo'},
             
-         {data: 'Cedula', name: 'Cedula'},
+            {data: 'Cedula', name: 'Cedula'},
             {data: 'Codigo', name: 'Codigo'},
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Apellido', name: 'Apellido'},

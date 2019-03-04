@@ -125,7 +125,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -142,17 +142,19 @@
         
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
+ 
+
 
         table.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('Anteproyecto.destroy') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
-            var type = 'DELETE';
+            var route = '{{ route('Anteproyecto.Cancelar') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var type = 'GET';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este anteproyecto?",
+                    text: "¿Está seguro que desea CANCELAR este anteproyecto?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -172,24 +174,35 @@
                             processData: false,
                             async: async,
                             success: function (response, xhr, request) {
-                                if (request.status === 200 && xhr === 'success') {
-                                    table.ajax.reload();
-                                    UIToastr.init(xhr, response.title, response.message);
-                                }
-                            },
+                                        console.log(response);
+                                        if (request.status === 200 && xhr === 'success') {
+                                            if (response.data == 422) {
+                                                xhr = "warning"
+                                                UIToastr.init(xhr, response.title, response.message);
+                                                App.unblockUI('.portlet-form');
+                                               
+                                               
+                                            } else {
+                                                table.ajax.reload();
+                                                UIToastr.init(xhr, response.title, response.message);
+                                              
+                           
+                                                }
+                                        }
+                        },
                             error: function (response, xhr, request) {
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
+                                
                                 }
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun anteproyecto", "error");
+                        swal("Cancelado", "No se CANCELO ningun anteproyecto", "error");
                     }
                 });
 
         });
-        
       
         $(".create").on('click', function (e) {
             e.preventDefault();

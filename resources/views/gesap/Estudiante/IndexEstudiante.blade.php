@@ -43,7 +43,13 @@
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Solicitudes
-                        </a>@endpermission
+                    </a>@endpermission
+                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon Banco"
+                                                       title="Banco De Proyectos">
+                            <i class="fa fa-plus">
+                            </i>Banco De proyetos
+                    </a>@endpermission
                        
                         
                         <br>
@@ -122,7 +128,7 @@
 
         var table, url, columns;
         table = $('#listaAnteproyecto');
-        id = 123456189 ;
+        id = 123456789 ;
         url = '{{ route('EstudianteGesap.Desarrolladores')}}'+ '/' + id;
         columns = [
             {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
@@ -134,7 +140,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -158,6 +164,17 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route);
+
+     //       $(".content-ajax").load(route_ver);
+        });
+
+        
+        table.on('click', '.Ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.VerComentariosJuradoAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);
@@ -229,10 +246,10 @@
             {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
             {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
             {data: 'Estado', name: 'Estado'},
-            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -308,12 +325,28 @@
         dataTableServer.init(tablep, urlp, columnsp);
         tablep = tablep.DataTable();
 
-        
+        $('.Banco').on('click', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var route = '{{ route('EstudianteGesap.BancoDeProyectos') }}';
+                $(".content-ajax").load(route);
+        });
+
         tablep.on('click', '.Actividades', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            $(".content-ajax").load(route);
+
+     //       $(".content-ajax").load(route_ver);
+        });
+        tablep.on('click', '.Ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.VerComentariosJuradoProyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);

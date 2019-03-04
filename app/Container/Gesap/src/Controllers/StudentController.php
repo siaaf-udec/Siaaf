@@ -33,6 +33,7 @@ use App\Container\Gesap\src\Funciones;
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
 use App\Container\Gesap\src\Fechas;
+use App\Container\Gesap\src\Jurados;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
@@ -138,6 +139,30 @@ class StudentController extends Controller
             }              
         
     }
+    public function VerProyectoCompleto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+                $datos = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+
+                $Director = $datos->relacionPredirectores->User_Nombre1." ".$datos->relacionPredirectores->User_Apellido1;
+
+                $datos -> offsetSet('Director', $Director);
+
+                return view($this->path .'.BancoP.BancoVer',
+                [
+                    'datos' => $datos,
+                ]);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );  
+                 
+            }              
+        
+    }
+    
     public function VerRequerimientos(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -213,7 +238,7 @@ class StudentController extends Controller
             $mctN = $mct->count();
             $N = 0;
             $now = date('Y-d-m');
-            if($limit >= now()->toDateString()){
+            if($limit == now()->toDateString()){
                 if($commitsN == $mctN){
 
                     foreach($commits as $commit){
@@ -261,96 +286,231 @@ class StudentController extends Controller
                     );
                 
                 }
-        }else{
-            $fechas = Fechas::where('PK_Id_Radicacion',2)->first();
-           
-
-            $anteproyecto  -> NPRY_FCH_Radicacion = $fechas -> FCH_Radicacion ;
-            $anteproyecto  -> save();
+        }
+        if($limit < now()->toDateString()){
+          
+            $IdError = 422;
+            return AjaxResponse::success(
+ 
+                '¡Lo sentimos!',
+                'La fecha para radicar ya Expiro.',
+                $IdError
+            );
+        }
+        if($limit > now()->toDateString()){
+          
+            $IdError = 422;
             return AjaxResponse::success(
                 '¡Lo sentimos!',
-                'La fecha de Radicación ya expiro.'
+                'Aun no es fecha para radicar.',
+                $IdError
             );
         }
             }              
         
     }
+    
+    public function ListComentariosJuradoAnteproyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+                $user = Auth::user();
 
+                $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+                foreach($jurados as $jurado){
+                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
+                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
+                    $total = $nombre." ".$apellido;
+                    $jurado ->offsetSet('Nombre',$total);
+
+                }
+               return DataTables::of($jurados)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    public function ListComentariosJuradoProyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+                $user = Auth::user();
+
+                $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+                foreach($jurados as $jurado){
+                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
+                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
+                    $total = $nombre." ".$apellido;
+                    $jurado ->offsetSet('Nombre',$total);
+
+                }
+               return DataTables::of($jurados)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    public function VerComentariosJuradoAnteproyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+
+            return view($this->path .'ComentariosJurados',
+            [
+                'Anteproyecto' => $Anteproyecto,
+            ]);
+           
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );  
+             
+        }             
+        
+    }
+    public function VerComentariosJuradoProyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            $estado = $Anteproyecto -> relacionProyecto -> FK_EST_Id ;
+            $Anteproyecto -> offsetSet('Estado', $estado);
+
+            return view($this->path .'.Proyecto.ComentariosJurados',
+            [
+                'Anteproyecto' => $Anteproyecto,
+            ]);
+           
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );  
+             
+        }             
+        
+    }
+    
+    public function BancoDeProyectos(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+
+            return view($this->path .'.BancoP.BancoIndex',
+            [
+                
+            ]);
+           
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );  
+             
+        }             
+        
+    }
     
     public function RadicarProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();//miro los comits que se han hecho de proyecto
-          //  $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
             $proyt = Mctr008::where('FK_Id_Formato',3)->get();//miro la cantidad de actividades para proyecto
 
             $commitsN = $commits->count();//cuento los commits hechos
             $proytN = $proyt->count();//cuento las actvidades
             $N = 0; 
             $now = date('Y-d-m');//tomo la fecha de hoy
-          //  if($limit >= now()->toDateString()){
-            if($commitsN == $proytN){
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+            $limit = $proyecto -> PYT_Fecha_Radicacion;
+            if($limit == now()->toDateString()){
+                if($commitsN == $proytN){
 
-                    foreach($commits as $commit){
-                        $numero = $commit-> FK_CHK_Checklist;
-                        if($numero == 2){
-                            $N = $N +  1 ;
+                        foreach($commits as $commit){
+                            $numero = $commit-> FK_CHK_Checklist;
+                            if($numero == 2){
+                                $N = $N +  1 ;
+                            }
                         }
-                    }
-                    $resultado = $proytN - $N ;
-                    if($resultado == 0){
-                        $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
-                        $estado = $proyecto -> FK_EST_Id;
-                        if($estado == 3){
-                            $IdError = 422;
-                            return AjaxResponse::success(
-                                '¡Lo sentimos!',
-                                'El Proyecto Ya esta radicado.',
-                                $IdError
-                            );
+                        $resultado = $proytN - $N ;
+                        if($resultado == 0){
+                                $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+                                $estado = $proyecto -> FK_EST_Id;
+                                if($estado == 3){
+                                    $IdError = 422;
+                                    return AjaxResponse::success(
+                                        '¡Lo sentimos!',
+                                        'El Proyecto Ya esta radicado.',
+                                        $IdError
+                                    );
+                                }else{
+                                    $proyecto -> FK_EST_Id = 3 ;
+                                    $proyecto->save();
+                                    return AjaxResponse::success(
+                                        '¡Esta Hecho!',
+                                        'Proyecto Radicado.'
+                                    );
+                                }
+
                         }else{
-                        $proyecto -> FK_EST_Id = 3 ;
-                        $proyecto->save();
-                        return AjaxResponse::success(
-                            '¡Esta Hecho!',
-                            'Proyecto Radicado.'
-                        );
-                    }
+                                $IdError = 422;
+                                return AjaxResponse::success(
+                                    '¡Lo sentimos!',
+                                    'No se han aprobado todas las Actividades Correspondientes Del Libro.',
+                                    $IdError
+                                );
+                        }
 
                     }else{
+
                         $IdError = 422;
                         return AjaxResponse::success(
                             '¡Lo sentimos!',
-                            'No se han aprobado todas las Actividades Correspondientes Del Libro.',
+                            'No se han subido todas las Actividades Correspondientes Del Proyecto.',
                             $IdError
                         );
-                    }
-
-                }else{
-
-                    $IdError = 422;
-                    return AjaxResponse::success(
-                        '¡Lo sentimos!',
-                        'No se han subido todas las Actividades Correspondientes Del Proyecto.',
-                        $IdError
-                    );
+                        
                     
-                
-                 }
-        /*}else{
-            // $fechas = Fechas::where('PK_Id_Radicacion',2)->first();
-           
-
-            // $anteproyecto  -> NPRY_FCH_Radicacion = $fechas -> FCH_Radicacion ;
-            // $anteproyecto  -> save();
-            return AjaxResponse::success(
-                '¡Lo sentimos!',
-                'La fecha de Radicación ya expiro.'
-            );
-        } */
-            }              
+                    }
+            }
+            if($limit < now()->toDateString()){
+          
+                $IdError = 422;
+                return AjaxResponse::success(
+     
+                    '¡Lo sentimos!',
+                    'La fecha para radicar ya Expiro.',
+                    $IdError
+                );
+            }
+            if($limit > now()->toDateString()){
+              
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'Aun no es fecha para radicar.',
+                    $IdError
+                );
+            }    
         
+        }
     }
 
     public function ActividadStore(Request $request)
@@ -1401,6 +1561,44 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    public function BancoProyectosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+             $Anteproyectos = Anteproyecto::all();
+             $i=0;
+             $concatenado=[];
+             foreach($Anteproyectos as $Anteproyecto){
+             
+             $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $Anteproyecto -> PK_NPRY_IdMctr008)->where('FK_EST_Id',4)->first();
+             if($Proyecto != null){
+                $collection = collect([]);
+                    
+                $collection->put('Codigo',$Anteproyecto->  PK_NPRY_IdMctr008);
+                $collection->put('Titulo',$Anteproyecto->  NPRY_Titulo);
+                $collection->put('Palabras',$Anteproyecto->  NPRY_Keywords);
+                $Nombre = $Anteproyecto -> relacionPredirectores -> User_Nombre1;
+                $Apellido = $Anteproyecto -> relacionPredirectores -> User_Apellido1;
+                $total = $Nombre." ".$Apellido;
+                $collection->put('Director',$total);
+                $collection->put('Descripcion',$Anteproyecto->  NPRY_Descripcion);
+                
+                
+
+                $concatenado[$i]= $collection;
+
+                $i=$i+1;
+             }
+            }
+             return DataTables::of($concatenado)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    
     public function EditarResultado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1555,6 +1753,8 @@ class StudentController extends Controller
                     $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
                    
                     $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_estado  );
+                    $Proyect->OffsetSet('Fecha',$ProyectoEstado -> PYT_Fecha_Radicacion  );
+                     
                 }
             }
             
@@ -1596,13 +1796,13 @@ class StudentController extends Controller
 		
        
 
-           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id) ->first();
+           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('Fk_IdEstado',1)->first();
         
            if($Desarrollo===null){
                $anteproyecto = [];
            }else{
             $anteproyecto = $Desarrollo -> relacionAnteproyecto()->get();   
-               if( $anteproyecto[0]->FK_NPRY_Estado <= 1){
+               if( $anteproyecto[0]->FK_NPRY_Estado == 1 || $anteproyecto[0]->FK_NPRY_Estado == 5 || $anteproyecto[0]->FK_NPRY_Estado == 7 ){
                 $anteproyecto = [];
                }else{
                 

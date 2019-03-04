@@ -339,7 +339,7 @@ class CoordinatorController extends Controller
             $concatenado=[];
               foreach($usuarios as $user){
       
-                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->first();
+                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->where('Fk_IdEstado',1)->first();
                        
                  
                    if(is_null($desarrollador)){
@@ -604,6 +604,7 @@ class CoordinatorController extends Controller
             Desarrolladores::create([
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                 'FK_User_Codigo' => $request['PK_User_Codigo'],
+                'Fk_IdEstado' => 1 ,
                
             ]);
             
@@ -682,23 +683,21 @@ class CoordinatorController extends Controller
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
             
-        /*     
-            if(empty($request['FCH_Radicacion_principal'])==true){
-                $fecha = Fechas::where('PK_Id_Radicacion',2)->first();
-                $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
-                $fecha -> save();
-            }
-            if(empty($request['FCH_Radicacion_secundaria'])==true){
-                $fecha = Fechas::where('PK_Id_Radicacion',1)->first();
-                $fecha -> FCH_Radicacion = $request['FCH_Radicacion_principal'];
-                $fecha -> save();
-            } */
+  
             $fecha = Fechas::where('PK_Id_Radicacion',1)->first();
-            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
-            $fecha -> save();
-            $fecha = Fechas::where('PK_Id_Radicacion',2)->first();
             $fecha -> FCH_Radicacion = $request['FCH_Radicacion_principal'];
             $fecha -> save();
+            $fecha = Fechas::where('PK_Id_Radicacion',2)->first();
+            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
+            $fecha -> save();
+
+            $anteproyectos = Anteproyecto::where('FK_NPRY_Estado',6)->get();
+            foreach($anteproyectos as $anteproyecto){
+
+                $anteproyecto -> NPRY_FCH_Radicacion =  $request['FCH_Radicacion_principal'];
+                $anteproyecto -> save();
+
+            }
      
         }
 	
@@ -786,6 +785,39 @@ class CoordinatorController extends Controller
         );
 
     }
+    public function CancelarAnte(Request $request, $id)
+    {
+        if ($request->isMethod('GET')) {	
+            
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->first(); 
+            $anteproyecto-> FK_NPRY_Estado = 7;
+            $anteproyecto->save();
+            
+            $Desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$id)->get();
+            if(empty($Desarrolladores )){
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Anteproyecto Cancelado Correctamente.'
+                );
+            }else{
+                foreach($Desarrolladores as $Desarrollador){
+                    $Desarrollador -> Fk_IdEstado = 2;
+                    $Desarrollador -> save();
+                }
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Anteproyecto Cancelado Correctamente.'
+            );
+            }
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
 
 
 
@@ -848,23 +880,7 @@ class CoordinatorController extends Controller
         );
 
     }
-    public function EliminarAnte(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-			Anteproyecto::destroy($id);
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }   
+   
     //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
 	//Index para vista de Usuarios
 	public function indexUsuarios(Request $request)

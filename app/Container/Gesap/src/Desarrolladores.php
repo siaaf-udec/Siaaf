@@ -17,6 +17,7 @@ class Desarrolladores extends Model
     protected $fillable = [
         'FK_NPRY_IdMctr008'
         ,'FK_User_Codigo'
+        ,'Fk_IdEstado'
     ];
 
     

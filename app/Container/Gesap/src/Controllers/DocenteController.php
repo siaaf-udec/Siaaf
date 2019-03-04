@@ -176,13 +176,13 @@ class DocenteController extends Controller
                 }else{
 
                 $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $proyecto-> FK_NPRY_IdMctr008)->first();
-                
+                $proyectofecha = Proyecto::where('FK_NPRY_IdMctr008', $proyecto-> FK_NPRY_IdMctr008)->first();
                 $collection = collect([]);
                 $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
                 $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
                 $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
-                $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);
-                $collection->put('Fecha_Radicacion',$anteproyecto-> NPRY_FCH_Radicacion);
+                $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);                
+                $collection->put('Fecha_Radicacion',$proyectofecha-> PYT_Fecha_Radicacion);
                 $director = Usuarios::where('PK_user_Codigo', $anteproyecto-> FK_NPRY_Pre_Director)->first();
                 $nombred = $director -> User_Nombre1;
                 $apellidod = $director -> User_Apellido1;
@@ -369,7 +369,7 @@ class DocenteController extends Controller
                        
                     $collection->put('Descripcion',$proyectodirector-> NPRY_Descripcion);
                     $collection->put('Duracion',$proyectodirector->  NPRY_Duracion);
-                    $collection->put('Fecha_Radicacion',$proyectodirector->  NPRY_FCH_Radicacion);
+                    $collection->put('Fecha_Radicacion',$proyecto->  PYT_Fecha_Radicacion);
                     $collection->put('Director',$proyectodirector -> relacionPredirectores -> User_Nombre1 );
                     $collection->put('Estado',$proyecto->relacionEstado->EST_estado );
                           
@@ -733,7 +733,8 @@ class DocenteController extends Controller
                     //aprovado
                     Proyecto::create([
                         'FK_EST_Id' => 2 , 
-                        'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008']
+                        'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
+                        'PYT_Fecha_Radicacion' => $request['NPRY_FCH_Radicacion']
                     ]);
                     return AjaxResponse::success(
                         '¡Bien hecho!',

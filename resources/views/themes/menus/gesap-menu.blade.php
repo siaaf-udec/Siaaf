@@ -50,6 +50,7 @@
 			</a>
 		</li>
 		@endpermission
+		
 		@permission('FIND_DB_GESAP')
 		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
     	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">

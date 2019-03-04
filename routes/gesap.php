@@ -23,9 +23,9 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@MctCreate',
 			'as' => 'AnteproyectosGesap.MctCreate'
 		]);
-		Route::delete('destroy/{id?}', [
-			'uses' => $controller . 'CoordinatorController@EliminarAnte', 
-			'as' => 'Anteproyecto.destroy'
+		Route::get('CANCELAR/{id?}', [
+			'uses' => $controller . 'CoordinatorController@CancelarAnte', 
+			'as' => 'Anteproyecto.Cancelar'
 		]);
 		Route::delete('EliminarJurados/{id?}', [
 			'uses' => $controller . 'CoordinatorController@EliminarJurado', 
@@ -224,6 +224,36 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Actividades/{id?}', [
 			'uses' => $controller . 'StudentController@VerActividades',  
 			'as' => 'EstudianteGesap.VerActividades'
+		]);
+		Route::get('BancoProyectosList', [
+			'uses' => $controller . 'StudentController@BancoProyectosList',  
+			'as' => 'EstudianteGesap.BancoProyectosList'
+		]);
+		
+		Route::get('VerProyectoCompleto/{id?}', [
+			'uses' => $controller . 'StudentController@VerProyectoCompleto',  
+			'as' => 'EstudianteGesap.VerProyectoCompleto'
+		]);
+		
+		Route::get('ListComentariosJuradoAnteproyecto/{id?}', [
+			'uses' => $controller . 'StudentController@ListComentariosJuradoAnteproyecto',  
+			'as' => 'EstudianteGesap.ListComentariosJuradoAnteproyecto'
+		]);
+		Route::get('BancoDeProyectos/{id?}', [
+			'uses' => $controller . 'StudentController@BancoDeProyectos',  
+			'as' => 'EstudianteGesap.BancoDeProyectos'
+		]);
+		Route::get('ListComentariosJuradoProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@ListComentariosJuradoProyecto',  
+			'as' => 'EstudianteGesap.ListComentariosJuradoProyecto'
+		]);
+		Route::get('VerComentariosJuradoAnteproyecto/{id?}', [
+			'uses' => $controller . 'StudentController@VerComentariosJuradoAnteproyecto',  
+			'as' => 'EstudianteGesap.VerComentariosJuradoAnteproyecto'
+		]);
+		Route::get('VerComentariosJuradoProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@VerComentariosJuradoProyecto',  
+			'as' => 'EstudianteGesap.VerComentariosJuradoProyecto'
 		]);
 		Route::get('ActividadesProyecto/{id?}', [
 			'uses' => $controller . 'StudentController@VerActividadesProyecto',  

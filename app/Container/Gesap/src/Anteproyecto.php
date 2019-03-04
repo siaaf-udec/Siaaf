@@ -40,5 +40,9 @@ class Anteproyecto extends Model
     {
          return $this->hasMany(Commits::class, 'FK_NPRY_IdMctr008', 'PK_NPRY_IdMctr008');
      }
+     public function relacionProyecto()
+    {
+         return $this->hasone(Proyecto::class, 'FK_NPRY_IdMctr008', 'PK_NPRY_IdMctr008');
+     }
     
 }
