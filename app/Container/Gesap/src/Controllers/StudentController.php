@@ -29,6 +29,7 @@ use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\Cronograma;
 use App\Container\Gesap\src\Resultados;
+use App\Container\Gesap\src\Solicitud;
 use App\Container\Gesap\src\Funciones;
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
@@ -120,6 +121,29 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    public function VerSolicitud(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+               $Solicitudes=Solicitud::where('FK_User_Codigo',$id)->get();
+               
+        
+               return DataTables::of($Solicitudes)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
     public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -180,6 +204,34 @@ class StudentController extends Controller
                 );  
                  
             }              
+        
+    }
+    
+    public function DesarrolladoresEstudiante(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $Desarrolladores=Desarrolladores::where('FK_NPRY_IdMctr008',$id)->where('Fk_IdEstado',1)->get();
+            if(empty($Desarrolladores)){
+                $Desarrolladores = [];
+            }else{
+            foreach($Desarrolladores as $Desarrollador){
+                $Nombre = $Desarrollador->relacionUsuario->User_Nombre1." ".$Desarrollador->relacionUsuario->User_Apellido1;
+                $Codigo = $Desarrollador->relacionUsuario->User_Codigo;  
+                $Desarrollador->offsetSet('Nombre', $Nombre);
+                $Desarrollador->offsetSet('Codigo', $Codigo);
+            }
+                  
+        }
+            return DataTables::of($Desarrolladores)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+             
+            ->addIndexColumn()
+            ->make(true);
+                 
+                
+        }         
         
     }
     public function VerRequerimientosList(Request $request)
@@ -675,6 +727,27 @@ class StudentController extends Controller
             }              
         
     }
+    
+    public function EliminarSolicitud(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$id)->first();
+            
+            $solicitud -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
      public function PersonaDatosdelete(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1571,6 +1644,7 @@ class StudentController extends Controller
              foreach($Anteproyectos as $Anteproyecto){
              
              $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $Anteproyecto -> PK_NPRY_IdMctr008)->where('FK_EST_Id',4)->first();
+             
              if($Proyecto != null){
                 $collection = collect([]);
                     
@@ -1598,6 +1672,66 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    
+    
+    public function SolicitudStore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $Desarrollador = Desarrolladores::where('FK_User_Codigo',$request['ID'])->first();
+            
+           // $Anteproyecto = Anteproyecto::where('K_NPRY_IdMctr008', $Desarrollador -> FK_NPRY_IdMctr008)->first();
+            Solicitud::create([
+                'Sol_Solicitud' => $request['Sol_Solicitud'],
+                'Sol_Estado' => "EN ESPERA",
+                'FK_NPRY_IdMctr008' => $Desarrollador -> FK_NPRY_IdMctr008,
+                'FK_User_Codigo' =>$request['ID'],
+            ]);
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Solicitud Hecha.'
+            );
+          
+        }
+    }
+    
+    public function BancoAnteProyectosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+             $Anteproyectos = Anteproyecto::Where('FK_NPRY_Estado',1)->get();
+             $i=0;
+             $concatenado=[];
+             foreach($Anteproyectos as $Anteproyecto){
+             
+           
+                $collection = collect([]);
+                    
+                $collection->put('Codigo',$Anteproyecto->  PK_NPRY_IdMctr008);
+                $collection->put('Titulo',$Anteproyecto->  NPRY_Titulo);
+                $collection->put('Palabras',$Anteproyecto->  NPRY_Keywords);
+                $Nombre = $Anteproyecto -> relacionPredirectores -> User_Nombre1;
+                $Apellido = $Anteproyecto -> relacionPredirectores -> User_Apellido1;
+                $total = $Nombre." ".$Apellido;
+                $collection->put('Director',$total);
+                $collection->put('Descripcion',$Anteproyecto->  NPRY_Descripcion);
+                
+                
+
+                $concatenado[$i]= $collection;
+
+                $i=$i+1;
+             
+            }
+             return DataTables::of($concatenado)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        }
+    }
+    
     
     public function EditarResultado(Request $request)
     {

@@ -27,7 +27,7 @@
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
                      
                                                              <br><br>
-                           <h4> DESARROLLADORES :</h4>
+                           <h4> DESARROLLADORES ASIGNADOS:</h4>
                                 <br><br>
           
                     </div>
@@ -37,7 +37,7 @@
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
-                            'Apellido'       
+                                
                         ])
                     @endcomponent
           
@@ -50,20 +50,6 @@
                                     Volver
                                 </a>
                                 @endpermission
-                               
-                                @permission('VER_ANTE_JURADO')<a href="javascript:;"
-                                                               class="btn btn-warning yellow button-Actividades"><i
-                                ></i>
-                                    Ver Mct
-                                </a>
-                                @endpermission
-                                @permission('VER_ANTE_JURADO')<a href="javascript:;"
-                                                               class="btn btn-warning yellow button-Actividades"><i
-                                ></i>
-                                    Ver Libro
-                                </a>
-                                @endpermission
-                               
                                
                             </div>
                         </div>
@@ -100,24 +86,24 @@
  //alert('aishiajsia');
 
 
-   /*  var table, url, columns;
+     var table, url, columns;
         table = $('#listadesarrolladores');
-        id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+        id='{{  $datos['PK_NPRY_IdMctr008']  }}';
         
-        url = '{{ route('DocenteGesap.Desarrolladores') }}'+ '/' + id;
+        url = '{{ route('EstudianteGesap.DesarrolladoresEstudiante') }}'+ '/' + id;
     
          
     
         columns = [
-            {data: 'Codigo', name: 'Codigo'},
+            ///{data: 'Codigo', name: 'Codigo'},
             {data: 'Nombre', name: 'Nombre'},
-            {data: 'Apellido', name: 'Apellido'},
+            {data: 'Codigo', name: 'Codigo'},
             
         ];
         
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
- */
+ 
 
      
     $('.button-cancel').on('click', function (e) {

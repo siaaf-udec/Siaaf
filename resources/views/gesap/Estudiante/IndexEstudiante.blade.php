@@ -25,11 +25,75 @@
 
 @endpush
 
+
 @section('title', '| Información de Gesap')
 
 @section('page-title', ' Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
+<!--MODAL CREAR SOLICITUD-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_create-Solicitud', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Crear Una Solicitud</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   {!! Field:: textArea('Sol_Solicitud',null,['label'=>'Solicitud:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite la solicitud que desea hacer','icon'=>'fa fa-book']) !!}
+                               </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL CREAR SOLICITUD-->
+            <!--VER SOLICITUDES-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-ver-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'from_ver-Solicitud', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Ver Mis Solicitudes</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
+                        @slot('columns', [
+                            'Solicitud',
+                            'Estado',
+                            'Acciones'
+                        ])
+                    @endcomponent   
+                    </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--FIN VER SOLICITUDES-->
     @permission('ADMIN_GESAP')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap: '])
@@ -43,6 +107,12 @@
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Solicitudes
+                    </a>@endpermission
+                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon mygestionar"
+                                                       title="Gestionar Mct">
+                            <i class="fa fa-plus">
+                            </i>Mis Solicitudes
                     </a>@endpermission
                     @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Banco"
@@ -125,6 +195,93 @@
     <script type="text/javascript">
 
     jQuery(document).ready(function () {
+
+        var tablesol, urlsol, columnssol;
+        tablesol = $('#listaSolicitudes');
+        urlsol = '{{ route('EstudianteGesap.VerSolicitud')}}'+ '/' + 123456789;
+        columnssol = [
+            {data: 'Sol_Solicitud', name: 'Sol_Solicitud'},
+            {data: 'Sol_Estado', name: 'Sol_Estado'},
+      
+            {
+                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+      
+        dataTableServer.init(tablesol, urlsol, columnssol);
+        tablesol = tablesol.DataTable();
+
+      tablesol.on('click', '.Eliminar', function (e) {
+        
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var dataTable = tablesol.row($tr).data();
+        var route = '{{ route('EstudianteGesap.EliminarSolicitud') }}'+'/'+dataTable.Pk_Id_Solicitud;
+        var type = 'DELETE';
+        var async = async || false;
+        swal({
+                title: "¿Está seguro?",
+                text: "¿Está seguro que desea Eliminar esta solicitud?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "De acuerdo",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        processData: false,
+                        async: async,
+                            success: function (response, xhr, request) {
+                                    console.log(response);
+                                    if (request.status === 200 && xhr === 'success') {
+                                        if (response.data == 422) {
+                                            xhr = "warning"
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
+                                            
+                                        } else {
+                                            table.ajax.reload();
+                                            UIToastr.init(xhr, response.title, response.message);
+                        
+                                            }
+                                    }
+                    },
+                    error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                    }
+                            
+                    });
+                } else {
+                    swal("Cancelado", "No se elimino la solicitud", "error");
+                }
+            });
+
+  });
+
+
 
         var table, url, columns;
         table = $('#listaAnteproyecto');
@@ -324,6 +481,74 @@
       
         dataTableServer.init(tablep, urlp, columnsp);
         tablep = tablep.DataTable();
+
+        $('.gestionar').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-create-Solicitud').modal('toggle');
+        });
+
+        var CrearSolicitud = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('EstudianteGesap.SolicitudStore') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('Sol_Solicitud', $('#Sol_Solicitud').val());
+                        formData.append('ID', 123456789);
+
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-create-Solicitud').modal('hide');
+                                    $('#form_create-Solicitud')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                   
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                   
+                                   
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var form1 = $('#form_create-Solicitud');
+            var rules1 = {
+                
+                Sol_Solicitud:{maxlength: 1000, required: true},
+                
+            };
+
+
+            FormValidationMd.init(form1, rules1, false, CrearSolicitud()); 
+
+        $('.mygestionar').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-ver-Solicitud').modal('toggle');
+        });
+           
 
         $('.Banco').on('click', function (e) {
                 e.preventDefault();

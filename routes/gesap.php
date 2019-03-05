@@ -230,9 +230,24 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'EstudianteGesap.BancoProyectosList'
 		]);
 		
+		Route::get('VerSolicitud/{id?}', [
+			'uses' => $controller . 'StudentController@VerSolicitud',  
+			'as' => 'EstudianteGesap.VerSolicitud'
+		]);
+		
+		Route::get('BancoAnteProyectosList', [
+			'uses' => $controller . 'StudentController@BancoAnteProyectosList',  
+			'as' => 'EstudianteGesap.BancoAnteProyectosList'
+		]);
+		
+		
 		Route::get('VerProyectoCompleto/{id?}', [
 			'uses' => $controller . 'StudentController@VerProyectoCompleto',  
 			'as' => 'EstudianteGesap.VerProyectoCompleto'
+		]);
+		Route::get('DesarrolladoresEstudiante/{id?}', [
+			'uses' => $controller . 'StudentController@DesarrolladoresEstudiante',  
+			'as' => 'EstudianteGesap.DesarrolladoresEstudiante'
 		]);
 		
 		Route::get('ListComentariosJuradoAnteproyecto/{id?}', [
@@ -298,6 +313,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'EstudianteGesap.Financiacion'
 		]);
 		
+		Route::post('SolicitudStore', [
+			'uses' => $controller . 'StudentController@SolicitudStore',  
+			'as' => 'EstudianteGesap.SolicitudStore'
+		]);
 		Route::post('FinanciacionStore', [
 			'uses' => $controller . 'StudentController@FinanciacionStore',  
 			'as' => 'EstudianteGesap.FinanciacionStore'
@@ -319,6 +338,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::delete('ResultadoDelete/{id?}', [
 			'uses' => $controller . 'StudentController@ResultadoDelete',  
 			'as' => 'EstudianteGesap.ResultadoDelete'
+		]);
+		Route::delete('EliminarSolicitud/{id?}', [
+			'uses' => $controller . 'StudentController@EliminarSolicitud',  
+			'as' => 'EstudianteGesap.EliminarSolicitud'
 		]);
 		Route::get('Resultados/{id?}', [
 			'uses' => $controller . 'StudentController@Resultados',  

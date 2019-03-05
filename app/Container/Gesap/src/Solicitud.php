@@ -16,7 +16,9 @@ class Solicitud extends Model
 
     protected $fillable = [
         'Sol_Solicitud',
-        'FK_NPRY_IdMctr008'
+        'Sol_Estado',
+        'FK_NPRY_IdMctr008',
+        'FK_User_Codigo'
     ];
     
 }

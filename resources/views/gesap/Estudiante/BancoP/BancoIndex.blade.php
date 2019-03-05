@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario De Banco De Proyectos'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -14,7 +14,7 @@
                 
             
                 <div class="form-body">
-              
+                <h4>Proyectos Realizados Anteriormente: <h4>
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyectos'])
                         @slot('columns', [
@@ -25,7 +25,19 @@
                             'Acciones'
                         ])
                     @endcomponent
-          
+                    <br><br>
+                    <br><br>
+                    <h4>Anteproyectos Disponibles Sin Asignar: <h4>
+                        <br><br>
+                        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaAnteProyectos'])
+                        @slot('columns', [
+                            'Titulo',
+                            'Palabras Clave',
+                            'Descripción',
+                            'Director',
+                            'Acciones'
+                        ])
+                    @endcomponent
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
@@ -101,6 +113,44 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
+            var route = '{{ route('EstudianteGesap.VerProyectoCompleto') }}' + '/' + dataTable.Codigo;
+            $(".content-ajax").load(route);
+
+        });
+
+        tableA = $('#listaAnteProyectos');
+        urlA = '{{ route('EstudianteGesap.BancoAnteProyectosList') }}';
+
+        columnsA = [
+   
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Palabras', name: 'Palabras'},
+            {data: 'Descripcion', name: 'Descripcion'},
+            {data: 'Director', name: 'Director'},
+
+             {
+                defaultContent: '@permission('ADD_DEVELOPER')<a href="javascript:;" title="Ver Archivos" class="btn btn-simple btn-warning btn-icon Ver"><i class="icon-eye"></i></a>@endpermission' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+
+        dataTableServer.init(tableA, urlA, columnsA);
+        tableA = tableA.DataTable();
+
+        tableA.on('click', '.Ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = tableA.row($tr).data();
             var route = '{{ route('EstudianteGesap.VerProyectoCompleto') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 

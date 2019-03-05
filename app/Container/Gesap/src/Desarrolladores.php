@@ -25,4 +25,8 @@ class Desarrolladores extends Model
     {
          return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
      }
+     public function relacionUsuario()
+    {
+         return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_User_Codigo');
+     }
 }
