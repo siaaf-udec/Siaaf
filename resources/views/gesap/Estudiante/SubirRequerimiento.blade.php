@@ -65,13 +65,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('STUDENT_BACK')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>@endpermission
                                 @if($datos['Estado'] != "APROBADO" )
-                                @permission('ADD_ACTIVITY_STUDENT'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
+                                @permission('SUBMIT_STUDENT'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
                                 @endif
                             </div>
                             

@@ -13,6 +13,8 @@ class FechasGesapSeeder extends Seeder
 
             ['FCH_Radicacion'=>'01-01-0001'],
             ['FCH_Radicacion'=>'01-01-0001'],
+            ['FCH_Radicacion'=>'01-01-0001'],
+            ['FCH_Radicacion'=>'01-01-0001'],
            
          
         ]);

@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del LIBRO'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -8,18 +8,50 @@
                         ],
         ])
         <div class="row">
+               <!--MODAL CREAR COMENTARIO-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-libro" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_create-libro', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad: LIBRO</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   {!! Field:: text('MCT_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el nombre de la actividad que desea agregar al libro','icon'=>'fa fa-book']) !!}
+                                    {!! Field:: textArea('MCT_Descripcion',null,['label'=>'Descripción : ','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Coloque la decripción de esa actividad','icon'=>'fa fa-book']) !!}
+                             
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL CREAR COMENTARIO-->
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ( ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
 
                 <div class="form-body">
                
-                    @permission('GESAP_CREATE_ACT_MCT')<a href="javascript:;"
+                    @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar una Actividad">
                             <i class="fa fa-plus">
-                            </i>Agregar Nuevo Elemento Al Mct
+                            </i>Agregar Nuevo Elemento Al Libro
                         </a>@endpermission
-                        @permission('GESAP_FECHAS_MCT')<a href="javascript:;"
+                        @permission('GESAP_MCT_DATE')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon limit"
                                                        title="Fechas limite mct">
                             <i class="fa fa-plus">
@@ -39,7 +71,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('ADMIN_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -79,7 +111,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('AnteproyectosGesap.listaActividades') }}';
+        url = '{{ route('Proyecto.listaActividadesLibro') }}';
     
          
     
@@ -112,7 +144,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('Anteproyecto.mctdestroy') }}' + '/' + dataTable.PK_MCT_IdMctr008;
+            var route = '{{ route('Proyecto.mctdestroyLibro') }}' + '/' + dataTable.PK_MCT_IdMctr008;
              var type = 'DELETE';
             var async = async || false;
             swal({
@@ -157,22 +189,88 @@
         
 
 
-        $(".limit").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
-            $(".content-ajax").load(route);
-        });  
+       
         $(".create").on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.MctCreate') }}';
-            $(".content-ajax").load(route);
+            $('#modal-create-libro').modal('toggle');
         });
+        
 
+        var crearante = function(){
+           return{
+               init : function (){
+                    var formData = new FormData();
+                    var route = '{{ route('Proyectos.createlibro') }}';
+                    var async = async || false;
+                    var type = 'POST';
+
+                    formData.append('MCT_Actividad', $('#MCT_Actividad').val());
+                    formData.append('MCT_Descripcion', $('#MCT_Descripcion').val());
+                    formData.append('FK_Id_Formato', 3);
+                    
+                   
+                   
+                    $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-create-libro').modal('hide');
+                                    $('#form_create-libro')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('Proyecto.Libro') }}';
+                                    $(".content-ajax").load(route);
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                    var route = '{{ route('Proyecto.Libro') }}';
+
+                                    $(".content-ajax").load(route);
+                                   
+                                }
+                            }
+                        });
+
+               }
+           }
+       }
+       var form = $('#form_create-libro');
+        var formRules = {
+            MCT_Actividad: {minlength: 1, maxlength: 100, required: true,},
+            MCT_Descripcion: {minlength: 1, maxlength: 350, required: true,},
+           
+        };
+
+      
+        FormValidationMd.init(form, formRules, false, crearante());
+
+
+
+        $(".limit").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('Proyectos.LibroLimit') }}';
+            $(".content-ajax").load(route);
+        });  
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
-            //$(".content-ajax").load(route);
+            var route = '{{ route('Proyectos.indexajax') }}';
+            location.href="{{route('Proyectos.indexajax')}}";
+           // $(".content-ajax").load(route);
         });
     });
 </script>

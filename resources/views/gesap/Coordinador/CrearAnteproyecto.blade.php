@@ -35,21 +35,20 @@
 
                                 {!! Field::select('NPRY_FCH_Radicacion', null,['name' => 'Select_Fecha','label'=>'Fecha De Radicación: ']) !!}
                                                              
-                                {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
-                             </div>
+                                </div>
                     </div>
 
 
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('GESAP_CREATE_USER')<a href="javascript:;"
+                                @permission('CANCEL_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('GESAP_CREATE_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('SUBMIT_GESAP'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -182,7 +181,7 @@ $(document).ready(function(){
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             FK_NPRY_Estado: {required: true},
-            acceptTeminos2:{required: true},
+           
         };
 
         var formMessage = {

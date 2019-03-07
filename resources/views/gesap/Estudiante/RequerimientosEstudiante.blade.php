@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([$Anteproyecto], ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
-                @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                @permission('VER_ACTIVIDAD_ESTUDIANTE')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Actividades"
                                                        title="Actividades MCT">
                             <i class="fa fa-plus">
@@ -33,7 +33,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('STUDENT_BACK')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -85,7 +85,7 @@
             
       
             {
-                defaultContent: '@permission('ADD_ACTIVITY_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

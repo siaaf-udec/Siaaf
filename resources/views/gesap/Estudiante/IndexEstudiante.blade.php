@@ -94,7 +94,7 @@
                 
             </div>
             <!--FIN VER SOLICITUDES-->
-    @permission('ADMIN_GESAP')
+    @permission('STUDENT_GESAP')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap: '])
             <br>
@@ -108,13 +108,13 @@
                             <i class="fa fa-plus">
                             </i>Solicitudes
                     </a>@endpermission
-                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
+                    @permission('MYS_SOLICITUDES_STUDEN')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon mygestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Mis Solicitudes
                     </a>@endpermission
-                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
+                    @permission('BANCO_PROYETOS')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Banco"
                                                        title="Banco De Proyectos">
                             <i class="fa fa-plus">
@@ -297,7 +297,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -406,7 +406,7 @@
             {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR_ANTE')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

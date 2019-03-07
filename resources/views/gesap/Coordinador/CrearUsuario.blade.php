@@ -24,12 +24,16 @@
                                 
                                 {!! Field::select('User_Tipo_Documento',['T.I'=>'T.I', 'C.C'=>'C.C'],null,['label'=>'Tipo Documento: ']) !!}
                              
-                                
+                                {!! Field:: text('User_Cedula',null,['label'=>'Documento:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
+                            
                                 {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite los nombres del usuario.','icon'=>'fa fa-user'] ) !!}
 
                                 {!! Field:: text('User_Apellido1',null,['label'=>'Apellidos:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite los apellidos del usuario.','icon'=>'fa fa-user'] ) !!}
+
+                                {!! Field::select('User_Sexo',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
 
                                 {!! Field:: email('User_Correo',null,['label'=>'Correo Electronico:', 'class'=> 'form-control', 'autofocus','maxlength'=>'150','autocomplete'=>'off'],
                                                                 ['help' => 'Digite la direccion electronica del usuario.','icon'=>'fa fa-envelope-open'] ) !!}
@@ -38,6 +42,9 @@
                                                                 ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
                                 
                                 {!! Field::select('FK_User_IdRol',['1'=>'Estudiante', '2'=>'Docente','3'=>'Administrador'],null,['label'=>'ROL: ']) !!}
+                            
+                            
+                               
                              
                                      
                                
@@ -49,33 +56,30 @@
                             </div>
                             
                         <br><br>
-                        <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
                         </div>
 
 
                         <div class="col-md-6">
+                        <br><br>
+                            <br><br>
+                            <br><br>
+                        {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
+                        <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
+                      
+                            
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>  <br><br>
+                            <br><br>
+                      
                             <br><br>
                             <br><br>
                             <br><br>
                             <br><br>
                             <br><br>
 
-                            {!! Field:: text('User_Cedula',null,['label'=>'Documento:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
-                            {!! Field::date('User_Fecha_Expedicion',null,['label'=>'Fecha de expedición :'],
-                                                                ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
-
-                            {!! Field::date('User_Nacimiento',null,['label'=>'Fecha de nacimiento :'],
-                                                                ['help' => 'Digite la primera fecha de radicacion del proximo este semestre','icon'=>'fa fa-calendar']) !!}
-
-                            {!! Field::select('User_Sexo',['Masculino'=>'Masculino', 'Femenino'=>'Femenino'],null,['label'=>'Genero: ']) !!}
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-
-                            {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
+                            
 
                         </div>
                     </div>
@@ -84,13 +88,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('ADD_USER')<a href="javascript:;"
+                                @permission('CANCEL_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('ADD_USER'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('SUBMIT_GESAP'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -112,19 +116,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
     
-        /* Configuración del Select cargado de la BD */
-
-       /*  var $widget_select_SelectRol = $('select[name="SelectRol"]');
-
-        var route_Rol = '{{ route('UsuariosGesap.listRoles') }}';
-        $.get(route_Rol, function (response, status) {
-            $(response.data).each(function (key, value) {
-                $widget_select_SelectRol.append(new Option(value.Rol_Usuario, value.PK_Id_Rol_Usuario));
-            });
-            $widget_select_SelectRol.val([]);
-            $('#FK_User_IdRol').val(1);
-        });
- */
+    
         /*Configuracion de Select*/
         $.fn.select2.defaults.set("theme", "bootstrap");
         $(".pmd-select2").select2({
@@ -156,20 +148,34 @@
                     var route = '{{ route('UsuariosGesap.createUsuario') }}';
                     var formData = new FormData();
                     var async = async || false;
-
-                    formData.append('PK_User_Codigo', $('input:text[name="User_Cedula"]').val());
-                    formData.append('User_Codigo', $('input:text[name="User_Codigo"]').val());
-                    formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
-                    formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
-                    formData.append('User_Correo', $('input[name="User_Correo"]').val());
-                    formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-                    formData.append('FK_User_IdEstado', '1');
-                    formData.append('User_Tipo_Documento', $('select[name="User_Tipo_Documento"]').val());
-                    formData.append('User_Sexo', $('select[name="User_Sexo"]').val());
-                    formData.append('User_Nacimiento', $('#User_Nacimiento').val());
-                    formData.append('User_Fecha_Expedicion', $('#User_Fecha_Expedicion').val());
-                    formData.append('FK_User_IdRol', $('#FK_User_IdRol').val());
+                    //formulario UserControllerGesap
+                    formData.append('name', $('input:text[name="User_Nombre1"]').val());
+                    formData.append('lastname', $('input:text[name="User_Apellido1"]').val());
+                    formData.append('birthday', "");
+                    formData.append('sexo', $('select[name="User_Sexo"]').val());
+                    formData.append('identity_type', $('select[name="User_Tipo_Documento"]').val());
+                    formData.append('identity_no', $('input:text[name="User_Cedula"]').val());
+                    formData.append('identity_expe_date', "");
+                    formData.append('identity_expe_place', "");
+                    formData.append('phone', "");
                     
+                    formData.append('state', "Aprobado");
+                    formData.append('email', $('input[name="User_Correo"]').val());
+                    formData.append('password', 12345);
+                    formData.append('address_create', $('input:text[name="User_Direccion"]').val());
+                   
+                    
+                   
+                   
+                
+                    formData.append('countries_id', 1);
+                    formData.append('regions_id', 1);
+                    formData.append('cities_id', 1);
+                    formData.append('multi_select_roles_create', "3");
+                    formData.append('image_profile_create', "undefined");
+                    formData.append('identicon', "data:image/svg xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0MjAnIGhlaWdodD0nNDIwJyBzdHlsZT0nYmFja2dyb3VuZC1jb2xvcjpyZ2JhKDI1NSwyNTUsMjU1LDEpOyc PGcgc3R5bGU9J2ZpbGw6cmdiYSgwLDAsMCwxKTsgc3Ryb2tlOnJnYmEoMCwwLDAsMSk7IHN0cm9rZS13aWR0aDoyLjE7Jz48cmVjdCAgeD0nMTg1JyB5PSc4NScgd2lkdGg9JzUwJyBoZWlnaHQ9JzUwJy8 PHJlY3QgIHg9JzE4NScgeT0nMjg1JyB3aWR0aD0nNTAnIGhlaWdodD0nNTAnLz48cmVjdCAgeD0nMTM1JyB5PScxODUnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCcvPjxyZWN0ICB4PScyMzUnIHk9JzE4NScgd2lkdGg9JzUwJyBoZWlnaHQ9JzUwJy8 PHJlY3QgIHg9Jzg1JyB5PSc4NScgd2lkdGg9JzUwJyBoZWlnaHQ9JzUwJy8 PHJlY3QgIHg9JzI4NScgeT0nODUnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCcvPjxyZWN0ICB4PSc4NScgeT0nMTg1JyB3aWR0aD0nNTAnIGhlaWdodD0nNTAnLz48cmVjdCAgeD0nMjg1JyB5PScxODUnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCcvPjxyZWN0ICB4PSc4NScgeT0nMjM1JyB3aWR0aD0nNTAnIGhlaWdodD0nNTAnLz48cmVjdCAgeD0nMjg1JyB5PScyMzUnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCcvPjxyZWN0ICB4PSc4NScgeT0nMjg1JyB3aWR0aD0nNTAnIGhlaWdodD0nNTAnLz48cmVjdCAgeD0nMjg1JyB5PScyODUnIHdpZHRoPSc1MCcgaGVpZ2h0PSc1MCcvPjwvZz48L3N2Zz4=");
+
+
                                      
                  
                     $.ajax({
@@ -232,7 +238,7 @@
             User_Direccion: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
 
-        FormValidationMd.init(form, formRules, formMessage, createUsers());
+        FormValidationMd.init(form, false, false, createUsers());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

@@ -123,6 +123,8 @@ class StudentController extends Controller
     }
     public function VerSolicitud(Request $request,$id)
     {
+        $user = Auth::user();
+		$id = $user->identity_no;
         if ($request->ajax() && $request->isMethod('GET')) {
 
                $Solicitudes=Solicitud::where('FK_User_Codigo',$id)->get();
@@ -260,11 +262,12 @@ class StudentController extends Controller
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
+        $user = Auth::user();
+		$id = $user->identity_no;
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'FK_User_Codigo' => $id,
                      'OBS_observacion' => $request['OBS_observacion'],
                      'OBS_Limit' => $request['OBS_Limit']
 
@@ -365,7 +368,7 @@ class StudentController extends Controller
     public function ListComentariosJuradoAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-                $user = Auth::user();
+                
 
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
                 foreach($jurados as $jurado){
@@ -393,8 +396,7 @@ class StudentController extends Controller
     public function ListComentariosJuradoProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-                $user = Auth::user();
-
+                
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
                 foreach($jurados as $jurado){
                     $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
@@ -568,7 +570,8 @@ class StudentController extends Controller
     public function ActividadStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
+            $user = Auth::user();
+		    $id = $user->identity_no;
            // $commit = Commits::where('FK_NPRY_idmctr008',1)->where('FK_MCT_idMctr008',1)->where('FK_User_Codigo', 123456189)->first();
                $commit = Commits::where('FK_NPRY_idMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_idMctr008',$request['FK_MCT_IdMctr008'])->first(); 
                 if(is_null($commit)){
@@ -576,7 +579,7 @@ class StudentController extends Controller
                  Commits::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'FK_User_Codigo' => $id,
                      'CMMT_Commit' => $request['CMMT_Commit'],
                      'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                      'CMMT_Formato' => $request['CMMT_Formato']
@@ -619,6 +622,8 @@ class StudentController extends Controller
               $img = $request->file('PYT_Actividad');
               $url = Storage::disk('gesap')->putFile('gesap/libro', $img);
               $url = "gesap/" . $url;
+              $user = Auth::user();
+	        	$id = $user->identity_no;
 
              
                 if(is_null($commit)){
@@ -626,7 +631,7 @@ class StudentController extends Controller
                  Commits::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'FK_User_Codigo' => $id,
                      'CMMT_Commit' =>$url,
                      'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                      'CMMT_Formato'=>$request['CMMT_Formato']
@@ -656,7 +661,8 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             
-          
+            $user = Auth::user();
+            $id = $user->identity_no;
                 PersonaMct::create([
                         'MCT_Detalles_Entidad'=>$request['MCT_Detalles_Entidad'],
                         'MCT_Detalles_Primer_Apellido'=>$request['MCT_Detalles_Primer_Apellido'],
@@ -682,7 +688,7 @@ class StudentController extends Controller
                 Commits::create([
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                  'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                 'FK_User_Codigo' => $request['FK_User_Codigo'],
+                 'FK_User_Codigo' => $id,
                  'CMMT_Commit' => $request['CMMT_Commit'],
                  'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                  'CMMT_Formato' => $request['CMMT_Formato']
@@ -959,7 +965,8 @@ class StudentController extends Controller
         {
             if ($request->ajax() && $request->isMethod('POST')) {
                 
-              
+                $user = Auth::user();
+                $id = $user->identity_no;
                     Cronograma::create([
                         'MCT_CRN_Actividad'=>$request['MCT_CRN_Actividad'],
                         'MCT_CRN_Semana_inicio'=>$request['MCT_CRN_Semana_inicio'],
@@ -974,7 +981,7 @@ class StudentController extends Controller
                     Commits::create([
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                         'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                        'FK_User_Codigo' => $request['FK_User_Codigo'],
+                        'FK_User_Codigo' => $id,
                         'CMMT_Commit' => $request['CMMT_Commit'],
                         'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                         'CMMT_Formato' => $request['CMMT_Formato']
@@ -1063,7 +1070,8 @@ class StudentController extends Controller
                public function RubroPersonalStore(Request $request)
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
-                       
+                    $user = Auth::user();
+                    $id = $user->identity_no;
                      
                     RubroPersonal::create([
                                'RBR_PER_Nombre'=>$request['RBR_PER_Nombre'],
@@ -1085,7 +1093,7 @@ class StudentController extends Controller
                            Commits::create([
                                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'FK_User_Codigo' => $id,
                                'CMMT_Commit' => $request['CMMT_Commit'],
                                'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                                'CMMT_Formato' => $request['CMMT_Formato']
@@ -1172,7 +1180,8 @@ class StudentController extends Controller
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
                        
-                     
+                    $user = Auth::user();
+                    $id = $user->identity_no;
                     RubroEquipos::create([
                                'RBR_EQP_Descripcion'=>$request['RBR_EQP_Descripcion'],
                                'RBR_EQP_Lab'=>$request['RBR_EQP_Lab'],
@@ -1194,7 +1203,7 @@ class StudentController extends Controller
                            Commits::create([
                                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'FK_User_Codigo' => $id,
                                'CMMT_Commit' => $request['CMMT_Commit'],
                                'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                                'CMMT_Formato' => $request['CMMT_Formato']
@@ -1283,7 +1292,8 @@ class StudentController extends Controller
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
                        
-                     
+                    $user = Auth::user();
+                    $id = $user->identity_no;
                     RubroMaterial::create([
                                'RBR_MTL_Descripcion'=>$request['RBR_MTL_Descripcion'],
                                'RBR_MTL_Justificacion'=>$request['RBR_MTL_Justificacion'],
@@ -1303,7 +1313,7 @@ class StudentController extends Controller
                            Commits::create([
                                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'FK_User_Codigo' => $id,
                                'CMMT_Commit' => $request['CMMT_Commit'],
                                'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                                'CMMT_Formato' => $request['CMMT_Formato']
@@ -1389,7 +1399,8 @@ class StudentController extends Controller
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
                        
-                     
+                    $user = Auth::user();
+                    $id = $user->identity_no;
                     RubroTecnologico::create([
                                'RBR_TEC_Descripcion'=>$request['RBR_TEC_Descripcion'],
                                'RBR_TEC_Justificacion'=>$request['RBR_TEC_Justificacion'],
@@ -1409,7 +1420,7 @@ class StudentController extends Controller
                            Commits::create([
                                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                                'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                               'FK_User_Codigo' => $request['FK_User_Codigo'],
+                               'FK_User_Codigo' => $id,
                                'CMMT_Commit' => $request['CMMT_Commit'],
                                'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                                'CMMT_Formato' => $request['CMMT_Formato']
@@ -1497,7 +1508,8 @@ class StudentController extends Controller
         {
             if ($request->ajax() && $request->isMethod('POST')) {
                 
-              
+                $user = Auth::user();
+                $id = $user->identity_no;
                     Funciones::create([
                         'MCT_Funcion_Nombre'=>$request['MCT_Funcion_Nombre'],
                         'MCT_Funcion_Funcion'=>$request['MCT_Funcion_Funcion'], 
@@ -1509,7 +1521,7 @@ class StudentController extends Controller
                         Commits::create([
                             'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                             'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                            'FK_User_Codigo' => $request['FK_User_Codigo'],
+                            'FK_User_Codigo' => $id,
                             'CMMT_Commit' => $request['CMMT_Commit'],
                             'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                             'CMMT_Formato' => $request['CMMT_Formato']
@@ -1588,7 +1600,8 @@ class StudentController extends Controller
     public function ResultadoStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
+            $user = Auth::user();
+		$id = $user->identity_no;
           
                 Resultados::create([
                     'MCT_Resultado'=>$request['MCT_Resultado'],
@@ -1605,7 +1618,7 @@ class StudentController extends Controller
                     Commits::create([
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                         'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                        'FK_User_Codigo' => $request['FK_User_Codigo'],
+                        'FK_User_Codigo' => $id,
                         'CMMT_Commit' => $request['CMMT_Commit'],
                         'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                         'CMMT_Formato' => $request['CMMT_Formato']
@@ -1677,15 +1690,16 @@ class StudentController extends Controller
     public function SolicitudStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
-            $Desarrollador = Desarrolladores::where('FK_User_Codigo',$request['ID'])->first();
+            $user = Auth::user();
+		$id = $user->identity_no;
+            $Desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->first();
             
            // $Anteproyecto = Anteproyecto::where('K_NPRY_IdMctr008', $Desarrollador -> FK_NPRY_IdMctr008)->first();
             Solicitud::create([
                 'Sol_Solicitud' => $request['Sol_Solicitud'],
                 'Sol_Estado' => "EN ESPERA",
                 'FK_NPRY_IdMctr008' => $Desarrollador -> FK_NPRY_IdMctr008,
-                'FK_User_Codigo' =>$request['ID'],
+                'FK_User_Codigo' =>$id,
             ]);
             return AjaxResponse::success(
                 '¡Esta Hecho!',
@@ -1829,7 +1843,8 @@ class StudentController extends Controller
     public function FinanciacionStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
+            $user = Auth::user();
+		$id = $user->identity_no;
           
                 Financiacion::create([
                     'MCT_Financiacion'=>$request['MCT_Financiacion'],
@@ -1844,7 +1859,7 @@ class StudentController extends Controller
                 Commits::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                     'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                    'FK_User_Codigo' => $request['FK_User_Codigo'],
+                    'FK_User_Codigo' => $id,
                     'CMMT_Commit' => $request['CMMT_Commit'],
                     'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                     'CMMT_Formato' => $request['CMMT_Formato']
@@ -1876,7 +1891,8 @@ class StudentController extends Controller
     public function ListaProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $user = Auth::user();//variable sesion
+            $user = Auth::user();
+            $id = $user->identity_no;
             $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->first(); 
             if($Anteproyecto == null){
                 $Proyecto = collect([]);
@@ -1927,7 +1943,7 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
-		
+		    $id = $user->identity_no;
        
 
            $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('Fk_IdEstado',1)->first();

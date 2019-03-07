@@ -128,16 +128,6 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@FechasRadicacion',
             'as' => 'AnteproyectoGesap.FechasRadicacion'
 		]);
-	});
-	// Rutas para la parte de Usuarios
-
-	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADD_USER_GESAP']], function () {
-			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
-
-		Route::get('Users/', [
-            'uses' => $controller . 'CoordinatorController@indexUsuarios',   
-            'as' => 'UsuariosGesap.index'
-		]);
 		Route::get('Estado_Ante', [
             'uses' => $controller . 'CoordinatorController@listarEstado',
             'as' => 'AnteproyectoGesap.listarEstado'
@@ -150,6 +140,88 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'CoordinatorController@listaActividades',
             'as' => 'AnteproyectosGesap.listaActividades'
 		]);	
+		Route::post('updateAnteproyecto', [
+            'uses' => $controller . 'CoordinatorController@updateAnte',      
+            'as' => 'AnteproyectoGesap.updateAnte'
+        ]);
+	});
+	//rutas proyectos
+
+	Route::group(['prefix' => 'Proyectos', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('ProyectoGesap/', [
+            'uses' => $controller . 'CoordinatorController@indexProyecto',   
+            'as' => 'Proyectos.index'
+		]);
+		
+		Route::get('ProyectoGesapAjax/', [
+            'uses' => $controller . 'CoordinatorController@indexProyectoajax',   
+            'as' => 'Proyectos.indexajax'
+		]);
+
+		Route::get('Proyectos/', [
+            'uses' => $controller . 'CoordinatorController@ProyectosList',   
+            'as' => 'Proyectos.List'
+		]);
+		
+		Route::get('VerProyecto/{id?}', [
+            'uses' => $controller . 'CoordinatorController@VerProyecto',   
+            'as' => 'Proyectos.VerProyecto'
+		]);
+		
+		Route::post('createactividadlibro/', [
+            'uses' => $controller . 'CoordinatorController@createlibro',   
+            'as' => 'Proyectos.createlibro'
+		]);
+		
+		Route::post('storefechasProyecto/', [
+            'uses' => $controller . 'CoordinatorController@storefechasProyecto',   
+            'as' => 'Proyectos.storefechasProyecto'
+		]);
+		Route::get('LibroLimit/', [
+            'uses' => $controller . 'CoordinatorController@LibroLimit',   
+            'as' => 'Proyectos.LibroLimit'
+		]);
+		
+		Route::get('listfechasProyecto/', [
+            'uses' => $controller . 'CoordinatorController@listfechasProyecto',   
+            'as' => 'Proyectos.listfechasProyecto'
+		]);
+		
+		
+		
+		Route::get('CancelarProyecto/{id?}', [
+            'uses' => $controller . 'CoordinatorController@CancelarProyecto',   
+            'as' => 'Proyecto.Cancelar'
+		]);
+
+		Route::get('Libro/{id?}', [
+            'uses' => $controller . 'CoordinatorController@Libro',   
+            'as' => 'Proyecto.Libro'
+		]);
+		Route::get('listaActividadesLibro/{id?}', [
+            'uses' => $controller . 'CoordinatorController@listaActividadesLibro',   
+            'as' => 'Proyecto.listaActividadesLibro'
+		]);
+		
+		Route::delete('mctdestroyLibro/{id?}', [
+			'uses' => $controller . 'CoordinatorController@mctdestroyLibro', 
+			'as' => 'Proyecto.mctdestroyLibro'
+		]);
+		
+	
+	});
+	// Rutas para la parte de Usuarios
+
+	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('Users/', [
+            'uses' => $controller . 'CoordinatorController@indexUsuarios',   
+            'as' => 'UsuariosGesap.index'
+		]);
+		
 		
 
 		Route::get('Users/Ajax', [
@@ -161,10 +233,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@usuariosList',
 			'as' => 'UsuariosGesap.List'
 		]);
-		Route::post('updateAnteproyecto', [
-            'uses' => $controller . 'CoordinatorController@updateAnte',      
-            'as' => 'AnteproyectoGesap.updateAnte'
-        ]);
+		
 
 		//Ruta que carga la información de roles ancladas a los usuarios
         Route::get('RolesUser', [
@@ -198,11 +267,12 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@createUser',  
 			'as' => 'UsuariosGesap.create'
 		]);
-
-		Route::post('store', [
-            'uses' => $controller . 'CoordinatorController@createUsuario',   
+		/////USER DEVELOPER////
+		Route::post('storeusuarios', [
+            'uses' => $controller . 'UserControllerGesap@store',   
             'as' => 'UsuariosGesap.createUsuario'
 		]);
+		/////////////
 		
 	});
 	//rutas estudiantes//
@@ -518,7 +588,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	//
 	//rutas PROFESORES//
-	Route::group(['prefix' => 'DocenteGesap', 'middleware' => ['permission:TEACHER_GESAP']], function () {
+	Route::group(['prefix' => 'DocenteGesap', 'middleware' => ['permission:DOCENTE_GESAP']], function () {
 		
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 

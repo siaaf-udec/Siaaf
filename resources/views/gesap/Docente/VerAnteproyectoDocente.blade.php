@@ -50,14 +50,14 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('BACK_DOCENTE')<a href="javascript:;"
+                                @permission('CANCEL_DOCENTE')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>
                                 @endpermission
                                 @if($datos['Estado'] == "EN ESPERA" )
-                                @permission('ANTE_CONFIRM')<a href="javascript:;"
+                                @permission('ASIGNAR_DESARROLLADORES')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-asignar"><i
                                 ></i>
                                     Asignar
@@ -65,7 +65,7 @@
                                 @endpermission
                                 @endif
                                 @if($datos['Estado'] != "EN ESPERA" )
-                                @permission('VER_ANTE_JURADO')<a href="javascript:;"
+                                @permission('VER_ACTIVIDADES')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Actividades"><i
                                 ></i>
                                     Ver Actividades

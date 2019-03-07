@@ -25,9 +25,9 @@
 
 @endpush
 
-@section('title', '| Información de los Anteproyectos')
+@section('title', '| Información de los Proyectos')
 
-@section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', 'Proyectos Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
     @permission('ADMIN_GESAP')
@@ -41,18 +41,13 @@
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Gestionar Mct
+                            </i>Gestionar Libro
                         </a>@endpermission
-                        @permission('GESAP_CREATE_USER')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon create"
-                                                       title="Registar un nuevo anteproyecto">
-                            <i class="fa fa-plus">
-                            </i>Nuevo Anteproyecto
-                        </a>@endpermission
-                        @permission('GESAP_REPORT_ANTE_ALL')<a href="javascript:;"
+                        @permission('GESAP_REPORT_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
-                            de Anteproyectos</a>@endpermission
+                            de Proyectos</a>
+                            @endpermission
                         <br>
                     </div>
 
@@ -67,7 +62,7 @@
                             'Palabras clave',
                             'Descripción',
                             'Duracion',
-                            'Pre Director',
+                            'Director',
                             'Estado',
                             'Fecha Radicación',
                             'Acciones'
@@ -104,8 +99,8 @@
 
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    @endpush
-    @push('functions')
+@endpush
+@push('functions')
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
     <script type="text/javascript">
@@ -114,18 +109,18 @@
 
         var table, url, columns;
         table = $('#listaAnteproyecto');
-        url = "{{ route('AnteproyectosGesap.List')}}";
+        url = "{{ route('Proyectos.List')}}";
         columns = [
-            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
-            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-            {data: 'Nombre', name: 'Nombre'},
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Palabras', name: 'Palabras'},
+            {data: 'Descripcion', name: 'Descripcion'},
+            {data: 'Duracion', name: 'Duracion'},
+            {data: 'Director', name: 'Director'},
             {data: 'Estado', name: 'Estado'},
-            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: '@permission('REPORT_ANTE')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('CANCEL_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -143,18 +138,17 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
  
-
-
+        
         table.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('Anteproyecto.Cancelar') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('Proyecto.Cancelar') }}' + '/' + dataTable.PK_Id_Proyecto;
             var type = 'GET';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro que desea CANCELAR este anteproyecto?",
+                    text: "¿Está seguro que desea CANCELAR este Proyecto?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -198,42 +192,24 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se CANCELO ningun anteproyecto", "error");
+                        swal("Cancelado", "No se CANCELO ningun Proyecto", "error");
                     }
                 });
 
         });
-      
-        $(".create").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.create') }}';
-            $(".content-ajax").load(route);
-        });
-
-        $(".gestionar").on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.mct') }}';
-            $(".content-ajax").load(route);
-        });
-        
-
         table.on('click', '.Ver', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_ver = '{{ route('AnteproyectoGesap.VerAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+                route_ver = '{{ route('Proyectos.VerProyecto') }}' + '/' + dataTable.PK_Id_Proyecto;
             $(".content-ajax").load(route_ver);
         });
-
-        table.on('click', '.editar', function (e) {
+        $(".gestionar").on('click', function (e) {
             e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('AnteproyectoGesap.edit') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
-            $(".content-ajax").load(route_edit);
+            var route = '{{ route('Proyecto.Libro') }}';
+            $(".content-ajax").load(route);
         });
-
-    
+        
 
     });
 </script>

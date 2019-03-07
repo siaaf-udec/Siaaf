@@ -449,7 +449,7 @@
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
                     @if($datos['Estado'] != "APROBADO" )
                                 
-                    @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Rubro">
                             <i class="fa fa-plus">
@@ -495,7 +495,7 @@
                     @endcomponent
                     @endif
                     @if($datos['Estado'] != "APROBADO" )
-                    @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon equip"
                                                        title="Gestionar Rubro">
                             <i class="fa fa-plus">
@@ -543,7 +543,7 @@
                     @endif
                     
                     @if($datos['Estado'] != "APROBADO" )
-                    @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Material"
                                                        title="Gestionar Rubro">
                             <i class="fa fa-plus">
@@ -586,7 +586,7 @@
                     @endcomponent
                     @endif
                     @if($datos['Estado'] != "APROBADO" )
-                    @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Tecnologic"
                                                        title="Gestionar Rubro">
                             <i class="fa fa-plus">
@@ -635,7 +635,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('STUDENT_BACK')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -648,7 +648,7 @@
                     </div>
                     <h4> Observaciónes acerca de esta Actividad del Mct</h4>
                     <br><br>
-                    @permission('ACTIVITY_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('STUDENT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -789,7 +789,7 @@ $(document).ready(function(){
             {data: 'RBR_PER_Total', name: 'RBR_PER_Total'},  
            
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('UPDATE_STUDENT')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -1080,7 +1080,7 @@ $(document).ready(function(){
             {data: 'RBR_EQP_Total', name: 'RBR_EQP_Total'},  
            
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger EliminarE" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar" class="btn btn-danger EliminarE" ><i class="icon-trash"></i></a>@endpermission @permission('UPDATE_STUDENT')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -1380,7 +1380,7 @@ $(document).ready(function(){
           
            
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('UPDATE_STUDENT')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -1668,7 +1668,7 @@ $(document).ready(function(){
           
            
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('UPDATE_STUDENT')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

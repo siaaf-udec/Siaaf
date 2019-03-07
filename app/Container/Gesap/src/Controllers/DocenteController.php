@@ -14,7 +14,7 @@ use Exception;
 use Validator;
 use Yajra\DataTables\DataTables;
 
-
+use Illuminate\Support\Facades\Auth;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Illuminate\Support\Facades\Crypt;
 
@@ -70,7 +70,8 @@ class DocenteController extends Controller
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-
+            $user = Auth::user();
+            $id = $user->identity_no;
            $anteproyecto=Anteproyecto::where('FK_NPRY_Pre_Director', $id) -> get();
            $anteproyecto = Anteproyecto::where('FK_NPRY_Pre_Director', $id)->where('FK_NPRY_Estado','!=',4)->get();
               
@@ -119,7 +120,8 @@ class DocenteController extends Controller
     public function AnteproyectoListJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-
+            $user = Auth::user();
+            $id = $user->identity_no;
            $jurado = Jurados::where('FK_User_Codigo',$id)->get(); 
            $i=0;
            $concatenado=[];
@@ -163,7 +165,8 @@ class DocenteController extends Controller
     public function ProyectosListRadicados(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
-
+            $user = Auth::user();
+            $id = $user->identity_no;
            $jurado = Jurados::where('FK_User_Codigo',$id)->get(); 
            $i=0;
            $concatenado=[];
@@ -351,7 +354,8 @@ class DocenteController extends Controller
     public function ProyectosList(Request $request, $id)
     {
         if ( $request->isMethod('GET')) {
-
+            $user = Auth::user();
+            $id = $user->identity_no;
             $proyectos=Proyecto::all();
             $i=0;
             $concatenado=[];
@@ -586,11 +590,13 @@ class DocenteController extends Controller
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+            $user = Auth::user();
+		$id = $user->identity_no;
             
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'FK_User_Codigo' => $id,
                      'OBS_observacion' => $request['OBS_observacion'],
                      'OBS_Limit' => $request['OBS_Limit']
 
@@ -606,11 +612,12 @@ class DocenteController extends Controller
     public function ComentarioStoreJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-            
+            $user = Auth::user();
+		$id = $user->identity_no;
                      ObservacionesMctJurado::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
-                     'FK_User_Codigo' => $request['FK_User_Codigo'],
+                     'FK_User_Codigo' => $id,
                      'OBS_observacion' => $request['OBS_observacion'],
                      'OBS_Formato' => $request['OBS_Formato'],
                      
@@ -708,8 +715,10 @@ class DocenteController extends Controller
     public function CambiarEstadoJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+            $user = Auth::user();
+		$id = $user->identity_no;
 
-            $Jurado = Jurados::where('FK_User_Codigo',$request['FK_User_Codigo'])->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$id)->first();
 
             $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
@@ -778,8 +787,10 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             //variable de sesion
+            $user = Auth::user();
+            $id = $user->identity_no;
 
-            $Jurado = Jurados::where('FK_User_Codigo',$request['FK_User_Codigo'])->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$id)->first();
 
             $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];

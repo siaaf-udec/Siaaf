@@ -96,11 +96,64 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    public function Libro(Request $request)
+	{
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            return view($this->path .'.Proyecto.Libro',
+                [
+                   
+                ]);
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
+    public function indexProyecto(Request $request)
+	{
+        return view($this->path .'Proyecto.ProyectoGesap',
+        [
+           
+        ]);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    public function indexProyectoajax(Request $request)
+	{
+        //if ($request->ajax() && $request->isMethod('GET')) {
+        return view($this->path .'Proyecto.ProyectoGesap',
+        [
+           
+        ]);
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+   // }
+    }
+    
     
     public function MctLimit(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             return view($this->path .'MctLimit',
+            [
+               
+            ]);
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+    public function LibroLimit(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return view($this->path .'Proyecto.LibroLimit',
             [
                
             ]);
@@ -217,8 +270,7 @@ class CoordinatorController extends Controller
            }
            $j=0;
            foreach ($anteproyecto as $ante) {
-           
-            $ante->offsetSet('Estado', $s[$j]);
+            $ante->offsetSet('Estado',  $s[$j] );
             $j=$j+1;
             }
 
@@ -282,11 +334,93 @@ class CoordinatorController extends Controller
         );
 
     }
+    public function ProyectosList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Proyectos = Proyecto::all();
+            if(empty($Proyectos)){
+
+                $Proyectos = [];
+                
+            }else{
+
+                foreach($Proyectos as $proyecto){
+
+                    $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$proyecto-> FK_NPRY_IdMctr008)->first();
+
+                    $proyecto->offsetSet('Titulo',$Anteproyecto->NPRY_Titulo);
+                    $proyecto->offsetSet('Palabras',$Anteproyecto->NPRY_Keywords);
+                    $proyecto->offsetSet('Descripcion',$Anteproyecto->NPRY_Descripcion);
+                    $proyecto->offsetSet('Duracion',$Anteproyecto->NPRY_Duracion);
+                    $proyecto->offsetSet('Director',$Anteproyecto->relacionPredirectores -> User_Nombre1. " ".$Anteproyecto -> relacionPredirectores -> User_Apellido1 );
+                    $proyecto->offsetSet('Estado',$proyecto->relacionEstado->EST_estado);
+                    $proyecto->offsetSet('Fecha',$proyecto->PYT_Fecha_Radicacion);
+
+
+
+                }
+
+            }
+          
+            return DataTables::of($Proyectos)
+                
+                   ->addIndexColumn()
+                   ->make(true);
+    
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
+    
+    public function CancelarProyecto(Request $request, $id)
+    {
+        if ($request->isMethod('GET')) {	
+
+            $Proyecto=Proyecto::where('PK_Id_Proyecto',$id)->first();
+            $Proyecto->FK_EST_Id=7;
+            $Proyecto->save();
+
+            
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Proyecto->FK_NPRY_IdMctr008)->first(); 
+            $anteproyecto-> FK_NPRY_Estado = 7;
+            $anteproyecto->save();
+            
+            $Desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$Proyecto->FK_NPRY_IdMctr008)->get();
+            if(empty($Desarrolladores )){
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Anteproyecto Cancelado Correctamente.'
+                );
+            }else{
+                foreach($Desarrolladores as $Desarrollador){
+                    $Desarrollador -> Fk_IdEstado = 2;
+                    $Desarrollador -> save();
+                }
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Anteproyecto Cancelado Correctamente.'
+            );
+            }
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+
+
     public function listfechas(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $fechas = Fechas::all();
+            $fechas = Fechas::where('PK_Id_Radicacion','<',3)->get();
                 $i = 1;
                 foreach($fechas as $fecha){
                     $titulo = 'Fecha De radicacion Numero -';
@@ -307,11 +441,58 @@ class CoordinatorController extends Controller
         );
         
     }
+    
+    public function listfechasProyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $fechas = Fechas::where('PK_Id_Radicacion','>',2)->get();
+                $i = 1;
+                foreach($fechas as $fecha){
+                    $titulo = 'Fecha De radicacion Numero -';
+                    
+                    $fecha->offsetSet('Radicacion',$titulo.$i);
+                    
+                    $i = $i +1;
+                }
+            return DataTables::of($fechas)
+                
+                   ->addIndexColumn()
+                   ->make(true);
+    
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
+    
 
     public function listaActividades(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $Actividades = Mctr008::where('FK_Id_Formato','!=',3)->get();
+            foreach($Actividades as $Actividad){
+                $Formato = $Actividad->relacionFormato-> MCT_Formato;
+                $Actividad->offsetSet('Formato',$Formato);
+            }
+
+            return DataTables::of($Actividades)
+                
+			   ->addIndexColumn()
+               ->make(true);
+               
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    public function listaActividadesLibro(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $Actividades = Mctr008::where('FK_Id_Formato',3)->get();
             foreach($Actividades as $Actividad){
                 $Formato = $Actividad->relacionFormato-> MCT_Formato;
                 $Actividad->offsetSet('Formato',$Formato);
@@ -548,6 +729,39 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    public function VerProyecto(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Proyectos= Proyecto::where('FK_NPRY_IdMctr008',$id)->get();
+            foreach($Proyectos as $Proyecto){
+            $Proyecto->offsetSet('Estado',$Proyecto->relacionEstado->EST_estado);
+            $Proyecto->offsetSet('id_proyecto',$Proyecto->FK_NPRY_IdMctr008);
+            
+            $Proyecto->offsetSet('Director',$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Nombre1. " ".$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Apellido1 );
+            
+            $Proyecto->offsetSet('Titulo', $Proyecto->relacionAnteproyecto->NPRY_Titulo);
+            $Proyecto->offsetSet('Palabras', $Proyecto->relacionAnteproyecto->PRY_Keywords);
+            $Proyecto->offsetSet('Descripcion', $Proyecto->relacionAnteproyecto->NPRY_Descripcion);
+            
+            $Proyecto->offsetSet('Fecha', $Proyecto->PYT_Fecha_Radicacion);
+            $Proyecto->offsetSet('Duracion', $Proyecto->relacionAnteproyecto->NPRY_Duracion);
+            
+            }
+            
+            $datos = $Proyecto;
+                return view ($this->path .'Proyecto.VerProyecto',
+                [
+                   
+                    'datos' => $datos,
+                ]);
+
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
     
 	
 	public function listarEstado(Request $request)
@@ -709,7 +923,63 @@ class CoordinatorController extends Controller
 			);
         
     }
+    public function storefechasProyecto(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('POST')) {	
+            
+  
+            $fecha = Fechas::where('PK_Id_Radicacion',3)->first();
+            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_principal'];
+            $fecha -> save();
+            $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
+            $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
+            $fecha -> save();
+
+            $ProyectosA = Proyecto::where('FK_EST_Id',6)->get();
+            foreach($ProyectosA as $ProyectoA){
+
+                $ProyectoA -> PYT_Fecha_Radicacion =  $request['FCH_Radicacion_principal'];
+                $ProyectoA -> save();
+
+            }
+            $ProyectosAs = Proyecto::where('FK_EST_Id',2)->get();
+            foreach($ProyectosAs as $ProyectoAs){
+
+                $ProyectoAs -> PYT_Fecha_Radicacion =  $request['FCH_Radicacion_principal'];
+                $ProyectoAs -> save();
+
+            }
+     
+        }
+	
+		
+	
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Datos Creados.'
+			);
+        
+    }
     public function CreateMct(Request $request)
+    {
+		if ($request->ajax() && $request->isMethod('POST')) {	
+        
+	
+			Mctr008::create([
+			 'MCT_Actividad' => $request['MCT_Actividad'],
+             'MCT_Descripcion' => $request['MCT_Descripcion'],
+			 'FK_Id_Formato' => $request['FK_Id_Formato'],
+			 
+			]);
+		}
+	
+			return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Datos Creados.'
+			);
+        
+    }
+    public function createlibro(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
         
@@ -864,6 +1134,23 @@ class CoordinatorController extends Controller
 
     }
     public function EliminarActividadMct(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+			Mctr008::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    public function mctdestroyLibro(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
             
@@ -1101,7 +1388,7 @@ class CoordinatorController extends Controller
             'User_Nombre1' => $request['User_Nombre1'],
             'User_Apellido1' => $request['User_Apellido1'],
             'User_Correo' => $request['User_Correo'],
-            'User_Contra' => Crypt::encrypt($request['PK_User_Codigo']),
+            'User_Contra' => 132,
             'User_Direccion' => $request['User_Direccion'],
             'FK_User_IdEstado' => $request['FK_User_IdEstado'],
             'FK_User_IdRol' => $request['FK_User_IdRol'],
@@ -1115,7 +1402,7 @@ class CoordinatorController extends Controller
             'address'=>$request['User_Direccion'],
             'sexo'=>$request['User_Sexo'],
             'email'=>$request['User_Correo'],
-            'password'=> Crypt::encrypt($request['PK_User_Codigo']),
+            'password'=> 123,
             'state' => 'Aprobado',
          ]);
 

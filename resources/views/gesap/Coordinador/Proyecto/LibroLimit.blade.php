@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de fechas limite para radicación'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de fechas limite para radicación del Proyecto'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -27,13 +27,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('SUBMIT_GESAP'){{ Form::submit('Cambiar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_CREATE_USER'){{ Form::submit('Cambiar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                         
@@ -79,7 +79,7 @@
     $(document).ready(function () {
         table = $('#listafechas');
                 
-        url = '{{ route('AnteproyectosGesap.listfechas') }}';
+        url = '{{ route('Proyectos.listfechasProyecto') }}';
     
         columns = [
             {data: 'Radicacion', name: 'Radicacion'},
@@ -95,7 +95,7 @@
            return{
                init : function (){
                     var formData = new FormData();
-                    var route = '{{ route('AnteproyectosGesap.storefechas') }}';
+                    var route = '{{ route('Proyectos.storefechasProyecto') }}';
                     var async = async || false;
 
                     formData.append('FCH_Radicacion_principal', $('[name="FCH_Radicacion_principal"]').val());
@@ -116,16 +116,12 @@
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
-                                                //location.href="{{route('AnteproyectosGesap.index')}}";
-                                                $(".content-ajax").load(route);
+                                            
                                             } else {
                                                 $('#form_create_limit')[0].reset(); 
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('AnteproyectosGesap.MctLimit') }}';
-                                                //location.href="{{route('AnteproyectosGesap.index')}}";
-                                                $(".content-ajax").load(route);  
+                                            
                                                 }
                                         }
                         },
@@ -148,17 +144,16 @@
           
         };
 
-        var formMessage = {
-           
-        };
+     
 
-        FormValidationMd.init(form, formRules, formMessage, crearfecha());
+        FormValidationMd.init(form, formRules, false, crearfecha());
 
 
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.mct') }}';
+            var route = '{{ route('Proyecto.Libro') }}';
+
            // location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
         });

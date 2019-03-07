@@ -31,7 +31,7 @@
  
 
 @section('content')
-    @permission('ADMIN_GESAP')
+    @permission('DOCENTE_GESAP')
      <!--MODAL CREAR COMENTARIO-->
             <!-- Modal -->
             <div class="modal fade" id="modal-create-solicitud" tabindex="-1" role="dialog" aria-hidden="true">
@@ -193,12 +193,6 @@
     <script type="text/javascript">
 jQuery(document).ready(function () {
 
- 
-
-
-
-
-
         var table, url, columns;
         table = $('#listaAnteproyecto');
         id = 123400009 ;
@@ -213,7 +207,7 @@ jQuery(document).ready(function () {
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -254,7 +248,7 @@ jQuery(document).ready(function () {
             {data: 'Director', name: 'Director'},
            
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -286,7 +280,7 @@ jQuery(document).ready(function () {
             {data: 'Estado', name: 'Estado'},
            
             {
-                defaultContent: ' @permission('ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -316,7 +310,7 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {
-                defaultContent: ' @permission('ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

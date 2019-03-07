@@ -39,7 +39,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('ADMIN_GESAP')<a href="javascript:;"
+                                @permission('CANCEL_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -82,11 +82,7 @@
          
     
         columns = [
-            // {data: 'PK_User_Codigo', name: 'PK_User_Codigo'},
-            // {data: 'User_Cedula', name: 'User_Cedula'},
-            // {data: 'User_Nombre1', name: 'User_Nombre1'},
-            // {data: 'User_Apellido1', name: 'User_Apellido1'},
-            // {data: 'User_Correo', name: 'User_Correo'},
+         
             
             {data: 'Codigo', name: 'Codigo'},
             {data: 'Cedula', name: 'Cedula'},

@@ -15,76 +15,62 @@
                     <div class="row">
                        
               
-                            {!! Field:: text('NPRY_Titulo',$datos[0]['NPRY_Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Titulo',$datos['Titulo'],['label'=>'TITULO:','readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
-                            {!! Field:: text('NPRY_Keywords',$datos[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Keywords',$datos['Palabras'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$datos[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Descripcion',$datos['Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$datos[0]['NPRY_Duracion'],['label'=>'DURACION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Duracion',$datos['Duracion'],['label'=>'DURACION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
 
                             {!! Field:: text('FK_NPRY_Estado',$datos['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                            {!! Field:: text('NPRY_FCH_Radicacion',$datos[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_FCH_Radicacion',$datos['Fecha'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                            
-                            PRE DIRECTOR:
-
-                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Nombre'],['label'=>'Nombres :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Director'],['label'=>'Director :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
-                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Apellido'],['label'=>'Apellidos:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                           
+                          
                                                              <br><br>
                            <h4> DESARROLLADORES :</h4>
                                 <br><br>
           
                     </div>
                    
-                            @if($datos['Estado'] == "EN ESPERA" )
-                            @permission('ADD_DEVELOPER_VW')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon desarrollador"
-                                                       title="Registar un nuevo anteproyecto">
-                            <i class="fa fa-plus">
-                            </i>Agregar Desarrollador
-                            </a>@endpermission
-                                @endif
                         
+                      
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
-                            'Apellido',
-                            'Acciones'
+                            'Apellido'
+                          
                         ])
                         @endcomponent
-                        @if($datos['Estado'] == "RADICADO" )
+                        
+                        <br><br>
+                        
+                        <br><br>
                         <h4> JURADOS ASIGNADOS </h4>
-                        @permission('ADD_JUDMENT_VW')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon juez"
-                                                       title="Registar un nuevo anteproyecto">
-                            <i class="fa fa-plus">
-                            </i>Agregar Jurados
-                            
-                            </a>@endpermission
+                   
+                        <br><br>
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listajurados'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
-                            'Apellido',
-                            'Acciones'
+                            'Apellido'
                         ])
                         @endcomponent
-                        @endif
+                        
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('ADMIN_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -125,7 +111,7 @@
     $(document).ready(function () {
         var table1, url1, columns1;
         table1 = $('#listadesarrolladores');
-        id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+        id='{{  $datos['id_proyecto'] }}';
         
         url1 = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
     
@@ -138,20 +124,6 @@
             
             
       
-            {
-                defaultContent: '@permission('DELETE_DEVELOPER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            }
         ];
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
@@ -211,7 +183,8 @@
 
         var table, url, columns;
         table = $('#listajurados');
-        id='{{  $datos[0]['PK_NPRY_IdMctr008']  }}';
+        id='{{  $datos['id_proyecto'] }}';
+       
         
         url = '{{ route('AnteproyectosGesap.JuradosList') }}'+ '/' + id;
     
@@ -224,20 +197,6 @@
             
             
       
-            {
-                defaultContent: '@permission('DELETE_JUDMENT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon removej"><i class="icon-trash"></i></a>@endpermission' ,
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            }
         ];
         
         dataTableServer.init(table, url, columns);
