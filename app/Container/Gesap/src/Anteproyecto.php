@@ -10,7 +10,7 @@ class Anteproyecto extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_anteproyecto';
+    protected $table = 'TBL_anteproyecto';
 
     protected $primaryKey = 'PK_NPRY_IdMctr008';
 

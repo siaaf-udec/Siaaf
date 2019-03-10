@@ -8,7 +8,7 @@ class Fechas extends Model
 {
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_fechas_radicacion';
+    protected $table = 'TBL_fechas_radicacion';
 
     protected $primaryKey = 'PK_Id_Radicacion';
 

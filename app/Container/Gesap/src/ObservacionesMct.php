@@ -10,7 +10,7 @@ class ObservacionesMct extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_observaciones_mct';
+    protected $table = 'TBL_observaciones_mct';
 
     protected $primaryKey = 'PK_Id_Observacion';
 

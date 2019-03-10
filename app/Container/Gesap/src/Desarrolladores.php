@@ -10,7 +10,7 @@ class Desarrolladores extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_desarrolladores';
+    protected $table = 'TBL_desarrolladores';
 
     protected $primaryKey = 'PK_Id_desarrollo';
 

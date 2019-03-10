@@ -10,7 +10,7 @@ class Jurados extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_jurados';
+    protected $table = 'TBL_jurados';
 
     protected $primaryKey = 'PK_Id_jurados';
 

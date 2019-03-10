@@ -10,7 +10,7 @@ class Mctr008 extends Model
 
     protected $connection = 'gesap';
 
-     protected $table = 'tbl_mctr008';
+     protected $table = 'TBL_mctr008';
  
      protected $primaryKey = 'PK_MCT_IdMctr008';
      

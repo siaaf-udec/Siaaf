@@ -10,7 +10,7 @@ class ObservacionesMctJurado extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_observaciones_mct_jurado';
+    protected $table = 'TBL_observaciones_mct_jurado';
 
     protected $primaryKey = 'PK_Id_Observacion_jurado';
 

@@ -10,7 +10,7 @@ class EstadoAnteproyecto extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_estado_anteproyecto';
+    protected $table = 'TBL_estado_anteproyecto';
 
     protected $primaryKey = 'PK_EST_Id';
 
