@@ -1,90 +1,76 @@
-
 {{-- MENÚ DE EJEMPLO --}}
-
-<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
-      <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
-               <i class="fa fa-cube"></i>
-        <span class="title">Gesap</span>
-        <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*','DocenteGesap.*','EstudianteGesap.*','Proyectos.*','CoordinadorGesap.*' ], 'open') }}"></span>
-    </a>
-
-    <ul class="sub-menu">
-		@permission('DOCENTE_GESAP')
-		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('DocenteGesap.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-list-alt"></i>
-                <span class="title">Mis Anteproyectos Y Proyectos(Docente)</span>
-            </a>    	    	
-    	</li>
+<li class="nav-item {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'start active open') }}">
+	<a class="nav-link nav-toggle" href="javascript:;">
+		<i class="fa fa-cube">
+		</i>
+		<span class="title">
+			Gesap
+		</span>
+		<span class="arrow {{ active(['gesap.*','min.*','project.*','anteproyecto.*','report.*','graficos.*'], 'open') }}">
+		</span>
+	</a>
+	<ul class="sub-menu">
+		@permission('CREATE_ACTIVITY_DEFAULT_GESAP')
+		<li class="nav-item {{ active(['activity.default'], 'start active open') }}">
+			<a href="{{ route('activity.default') }}" class="nav-link nav-toggle">
+				<i class="fa fa-list-alt"></i>
+				<span class="title">Entregables</span>
+			</a>
+		</li>
 		@endpermission
-		@permission('STUDENT_GESAP')
-		<li class="nav-item {{ active(['EstudianteGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('EstudianteGesap.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-list-alt"></i>
-                <span class="title">Mis Anteproyectos Y Proyectos(Estudiante)</span>
-            </a>    	    	
-    	</li>
-		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-list-alt"></i>
-                <span class="title">Lista de Anteproyectos</span>
-            </a>    	    	
-    	</li>
-		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['Proyectos*'], 'start active open') }}">
-			<a href="{{ route('Proyectos.index') }}" class="nav-link nav-toggle">
+		@permission('SEE_ALL_PROJECT_GESAP')
+		<li class="nav-item {{ active(['min.index'], 'start active open') }}">
+			<a href="{{ route('min.index') }}" class="nav-link nav-toggle">
+				<i class="fa fa-list-alt"></i>
+				<span class="title">Listar Anteproyectos</span>
+			</a>
+		</li>
+		<li class="nav-item {{ active(['project.index'], 'start active open') }}">
+			<a href="{{ route('project.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
 				<span class="title">Listar Proyectos</span>
 			</a>
 		</li>
-		
 		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['UsuariosGesap.*'], 'start active open') }}">
-			<a href="{{ route('UsuariosGesap.index') }}" class="nav-link nav-toggle">
+		@permission('DIRECTOR_LIST_GESAP')
+		<li class="nav-item {{ active(['anteproyecto.index.directorList'], 'start active open') }}">
+			<a href="{{ route('anteproyecto.index.directorList') }}" class="nav-link nav-toggle">
 				<i class="fa fa-user"></i>
-				<span class="title">Lista De Usuarios</span>
+				<span class="title">Director de Proyecto</span>
 			</a>
 		</li>
 		@endpermission
-		
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-search"></i>
-				<span class="title">Busquedas</span>
-			</a>
-		</li>
-		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-search"></i>
-				<span class="title">Solicitudes</span>
+		@permission('JURY_LIST_GESAP')
+		<li class="nav-item {{ active(['anteproyecto.index.juryList'], 'start active open') }}">
+			<a class="nav-link nav-toggle" href="{{ route('anteproyecto.index.juryList') }} ">
+				<i class="fa fa-user"></i>
+				<span class="title">Jurado de Proyecto</span>
 			</a>
 		</li>
 		@endpermission
 
 
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-book"></i>
+		@permission('REPORT_GESAP')
+		<li class="nav-item {{ active(['report.index'], 'start active open') }}">
+			<a class="nav-link " href="{{ route('report.index') }}">
+				<i class="fa fa-book"></i>
 				<span class="title">Reportes</span>
 			</a>
 		</li>
-		
+		<li class="nav-item {{ active(['graficos.index'], 'start active open') }}">
+			<a class="nav-link " href="{{ route('graficos.index') }}">
+				<i class="fa fa-bar-chart"></i>
+				<span class="title">Graficos</span>
+			</a>
+		</li>
 		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-bar-chart">
+		@permission('STUDENT_LIST_GESAP')
+		<li class="nav-item {{ active(['anteproyecto.index.studentList'], 'start active open') }}">
+			<a class="nav-link " href="{{ route('anteproyecto.index.studentList') }}">
+				<i class="fa fa-list-alt">
 				</i>
 				<span class="title">
-					Graficos
+					Proyectos
 				</span>
 			</a>
 		</li>

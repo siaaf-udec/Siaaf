@@ -1,31 +1,56 @@
 <?php
 
-namespace App\Container\Gesap\src;
+namespace App\container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class Proyecto extends Model
 {
-    
+    /**
+     * Conexión de la base de datos usada por el modelo
+     *
+     * @var string
+     */
     protected $connection = 'gesap';
 
+    /**
+     * Tabla utilizada por el modelo.
+     *
+     * @var string
+     */
     protected $table = 'TBL_Proyecto';
 
-    protected $primaryKey = 'PK_Id_Proyecto';
+    /**
+     * Nombre de columna primary_key de tabla .
+     *
+     * @var string
+     */
+    protected $primaryKey = 'PK_PRYT_IdProyecto';
 
-    protected $fillable = [
-        'FK_NPRY_IdMctr008',
-        'FK_EST_Id',
-        'PYT_Fecha_Radicacion'
-    ];
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
+    protected $fillable = ['PRYT_Estado', 'FK_TBL_Anteproyecto_Id'];
 
-    public function relacionAnteproyecto()
+    /*	
+	*Función de relacion entre las tablas de Proyecto y Anteproyecto 
+	*por los campo de FK_TBL_Anteproyecto_Id y PK_NPRY_IdMinr008 
+	*para realizar las busquedas complementarias
+	*/
+    public function anteproyecto()
     {
-         return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
+        return $this->belongsto(Anteproyecto::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
     }
-    public function relacionEstado()
+
+    /*	
+	*Función de relacion entre las tablas de Proyecto y Documentos 
+	*por los campo de FK_TBL_Proyecto_Id y PK_PRYT_IdProyecto 
+	*para realizar las busquedas complementarias
+	*/
+    public function documentos()
     {
-          return $this->hasone(EstadoAnteproyecto::class, 'PK_EST_Id', 'FK_EST_Id');
+        return $this->hasMany(Documentos::class, 'FK_TBL_Proyecto_Id', 'PK_PRYT_IdProyecto');
     }
 }
