@@ -1,0 +1,142 @@
+@extends('material.layouts.dashboard')
+
+@push('styles')
+<!-- Datatables Styles -->
+<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
+      type="text/css"/>
+<!-- toastr Styles -->
+<link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
+
+<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css"/>
+
+<!-- File Styles -->
+<link href="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css"/>
+
+<!-- Modal Styles -->
+<link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
+
+<!-- Date Styles -->
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
+
+@endpush
+
+@section('title', '| Información de los Anteproyectos')
+
+@section('page-title', 'Solicitudes Universidad De Cundinamarca Extensión Facatativá:')
+
+@section('content')
+    @permission('ADMIN_GESAP')
+    <div class="col-md-12">
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Solicitudes registradas:'])
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="actions">
+                 
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
+                        @slot('columns', [
+                            'Solicitud',
+                            'Hecha por',
+                            'Para el Proyecto o Ante',
+                            'Estado',
+                            'Accion'
+                        ])
+                    @endcomponent
+                </div>
+            </div>
+        @endcomponent
+    </div>
+    @endpermission
+@endsection
+
+@push('plugins')
+<!-- Datatables Scripts -->
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript">
+</script>
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
+</script>
+
+<script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    @endpush
+    @push('functions')
+    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
+    <script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        
+        var table, url, columns;
+        table = $('#listaSolicitudes');
+      
+        url = '{{ route('CoordinadorGesap.SolicitudesList')}}';
+        columns = [
+            {data: 'Sol_Solicitud', name: 'Sol_Solicitud'},
+            {data: 'Usuario', name: 'Usuario'},
+            {data: 'Proyecto', name: 'Proyecto'},
+            {data: 'Sol_Estado', name: 'Sol_Estado'},
+           
+      
+            {
+                defaultContent: ' @permission('VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+      
+     
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+
+        table.on('click', '.Ver', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_ver = '{{ route('CoordinadorGesap.VerProyectoSolicitud') }}' + '/' + dataTable.IdProyecto + '/' + dataTable.Pk_Id_Solicitud;
+            $(".content-ajax").load(route_ver);
+        });
+
+
+
+    });
+</script>
+@endpush
