@@ -28,12 +28,12 @@ class CreateJurados extends Migration
             $table->integer('FK_NPRY_Estado')->unsigned();
             $table->foreign('FK_NPRY_Estado')
                     ->references('PK_EST_Id')
-                    ->on('tbl_Estado_Anteproyecto')
+                    ->on('TBL_Estado_Anteproyecto')
                     ->onDelete('cascade');
             $table->integer('FK_NPRY_Estado_Proyecto')->unsigned();
             $table->foreign('FK_NPRY_Estado_Proyecto')
                     ->references('PK_EST_Id')
-                    ->on('tbl_Estado_Anteproyecto')
+                    ->on('TBL_Estado_Anteproyecto')
                     ->onDelete('cascade');
             $table->String('JR_Comentario', 4000);
             $table->String('JR_Comentario_Proyecto', 4000);
