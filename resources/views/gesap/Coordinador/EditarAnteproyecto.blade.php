@@ -14,10 +14,7 @@
                 <div class="form-body">
                     <div class="row">
                        
-                            {!! Field:: text('PK_NPRY_IdMctr008',$infoAnte[0]['PK_NPRY_IdMctr008'],['label'=>'Código interno:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Codigo Interno Del Anteproyecto.','icon'=>'fa fa-credit-card'] ) !!}
-
-                            {!! Field:: text('NPRY_Titulo',$infoAnte[0]['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('NPRY_Titulo',$infoAnte[0]['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                             {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],

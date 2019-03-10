@@ -85,7 +85,7 @@
             
       
             {
-                defaultContent: '@permission('VER_REQU_DOENTE')<a href="javascript:;" title="Ver Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('VER_REQU_DOCENTE')<a href="javascript:;" title="Ver Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

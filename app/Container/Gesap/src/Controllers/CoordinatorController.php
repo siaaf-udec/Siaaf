@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
+use App\Container\Gesap\src\Solicitud;
 use App\Container\Gesap\src\Actividad;
 use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
@@ -59,6 +60,29 @@ class CoordinatorController extends Controller
 	{
 		
 			return view($this->path . 'Anteproyectos');
+		
+    }
+    
+    public function indexSolicitudes(Request $request)
+	{
+		
+			return view($this->path . 'Coordinador.IndexSolicitudes');
+		
+    }
+    public function indexSolicitudesajax(Request $request, $ids)
+	{
+		
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
+            $solicitud ->Sol_Estado = 'Realizada';
+            $solicitud -> save();
+            return view($this->path . 'Coordinador.IndexSolicitudes');
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+		);
 		
     }
     
@@ -107,6 +131,23 @@ class CoordinatorController extends Controller
                 return AjaxResponse::fail(
                     '¡Lo sentimos!',
                     'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
+    
+    public function CerrarSolicitud(Request $request,$ids)
+	{
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
+            $solicitud ->Sol_Estado = 'Realizada';
+            $solicitud -> save();
+
+
+                return AjaxResponse::success(
+                    '¡Hecho!',
+                    'Solicitud Cerrada.'
                 );
         }
     }
@@ -320,7 +361,7 @@ class CoordinatorController extends Controller
     public function FechasRadicacion(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $Fechas = Fechas::all();
+            $Fechas = Fechas::where('PK_Id_Radicacion', '<', 3)->get();
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos consultados correctamente.',
@@ -364,6 +405,43 @@ class CoordinatorController extends Controller
             }
           
             return DataTables::of($Proyectos)
+                
+                   ->addIndexColumn()
+                   ->make(true);
+    
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
+
+    public function SolicitudesList(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Solicitudes = Solicitud::all();
+
+            if(empty($Solicitudes)){
+
+                $Solicitudes = [];
+                
+            }else{
+
+                foreach($Solicitudes as $Solicitud){
+
+
+                    $Solicitud->offsetSet('Usuario',$Solicitud->relacionUsuario->User_Nombre1." ".$Solicitud->relacionUsuario->User_Apellido1);
+                    $Solicitud->offsetSet('Proyecto',$Solicitud->relacionProyecto->NPRY_Titulo);
+                    $Solicitud->offsetSet('IdProyecto',$Solicitud->relacionProyecto->PK_NPRY_IdMctr008);
+                    
+
+                }
+
+            }
+          
+            return DataTables::of($Solicitudes)
                 
                    ->addIndexColumn()
                    ->make(true);
@@ -763,6 +841,46 @@ class CoordinatorController extends Controller
         }
     }
     
+    public function VerProyectoSolicitud(Request $request, $id,$ids)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $Solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
+            $Proyecto= Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+
+
+            $Proyecto->offsetSet('Solicitud',$Solicitud->Sol_Solicitud);
+            $Proyecto->offsetSet('IDSolicitud',$ids);
+            $Proyecto->offsetSet('Solicitud_usuario',$Solicitud ->relacionUsuario->User_Nombre1." ".$Solicitud ->relacionUsuario->User_Apellido1);
+            
+            $Proyecto->OffsetSet('Proyecto',$Proyecto->NPRY_Titulo);
+            $Proyecto->OffsetSet('IdProyecto',$Proyecto->PK_NPRY_IdMctr008);
+            $Proyecto->OffsetSet('FechaAnteproyecto',$Proyecto->NPRY_FCH_Radicacion);
+            
+            $Proyecto->OffsetSet('Director',$Proyecto->User_Nombre1." ".$Proyecto->User_Apellido1);
+            $Proyecto->OffsetSet('IdDirector',$Proyecto->FK_NPRY_Pre_Director);
+
+            $ProyectoRadicado = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+            if($ProyectoRadicado != null){
+                $Proyecto->OffsetSet('FechaProyecto',$ProyectoRadicado->PYT_Fecha_Radicacion);
+            }else{
+                $Proyecto->OffsetSet('FechaProyecto','Aun No Es Un Proyecto Valido');
+            }
+            
+            $datos = $Proyecto;
+                return view ($this->path .'Coordinador.VerProyectoSolicitud',
+                [
+                   
+                    'datos' => $datos,
+                ]);
+
+                return AjaxResponse::fail(
+                    '¡Lo sentimos!',
+                    'No se pudo completar tu solicitud.'
+                );
+        }
+    }
+    
 	
 	public function listarEstado(Request $request)
     {
@@ -828,6 +946,37 @@ class CoordinatorController extends Controller
             );
         }
         }
+    }
+    public function editarfechas(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['proyecto'])->first();
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$request['proyecto'])->first();
+          
+            if($request['Fecha1'] != "undefined"){
+
+                $anteproyecto -> NPRY_FCH_Radicacion = $request['Fecha1'];
+                $anteproyecto -> save();    
+                
+		
+            }
+            if($proyecto != null){
+                
+                if($request['Fecha2'] != "undefined"){
+                    $proyecto -> PYT_Fecha_Radicacion = $request['Fecha2'];
+                    $proyecto -> save();    
+                    
+            
+                }
+            }
+            
+            return AjaxResponse::success(
+				'¡Esta Hecho!',
+				'Fecha Cambiada.'
+            );        
+        }
+        
     }
     public function juradostore(Request $request)
     {
@@ -935,7 +1084,7 @@ class CoordinatorController extends Controller
             $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
             $fecha -> save();
 
-            $ProyectosA = Proyecto::where('FK_EST_Id',6)->get();
+            $ProyectosA = Proyecto::where('FK_EST_Id',4)->get();
             foreach($ProyectosA as $ProyectoA){
 
                 $ProyectoA -> PYT_Fecha_Radicacion =  $request['FCH_Radicacion_principal'];

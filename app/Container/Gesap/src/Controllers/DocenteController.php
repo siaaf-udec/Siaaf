@@ -28,7 +28,10 @@ use App\Container\Gesap\src\Fechas;
 use App\Container\Gesap\src\RolesUsuario;
 use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
+
 use App\Container\Gesap\src\Resultados;
+
+use App\Container\Gesap\src\Funciones;
 
 use App\Container\Gesap\src\RubroPersonal;
 use App\Container\Gesap\src\RubroEquipos;
@@ -42,7 +45,7 @@ use App\Container\Gesap\src\PersonaMct;
 
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\ObservacionesMct;
-
+use App\Container\Gesap\src\Solicitud;
 use App\Container\Gesap\src\ObservacionesMctJurado;
 use App\Container\Gesap\src\Commits;
 use App\Container\Users\src\User;
@@ -72,8 +75,8 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
-           $anteproyecto=Anteproyecto::where('FK_NPRY_Pre_Director', $id) -> get();
-           $anteproyecto = Anteproyecto::where('FK_NPRY_Pre_Director', $id)->where('FK_NPRY_Estado','!=',4)->get();
+           //$anteproyecto=Anteproyecto::where('FK_NPRY_Pre_Director', $id) -> get();
+           $anteproyecto = Anteproyecto::where('FK_NPRY_Pre_Director', $id)->where('FK_NPRY_Estado','!=',7)->get();
               
            
            $i=0;
@@ -117,6 +120,60 @@ class DocenteController extends Controller
         );
     }
 
+    public function VerSolicitud(Request $request)
+    {
+        $user = Auth::user();
+		$id = $user->identity_no;
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+               $Solicitudes=Solicitud::where('FK_User_Codigo',$id)->get();
+               
+        
+               return DataTables::of($Solicitudes)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    public function EliminarSolicitud(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$id)->first();
+
+            if(empty($solicitud)){
+
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Los Datos Ya Fueron Eliminados.'
+                );
+            }else{
+
+                $solicitud -> delete();
+            }
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
     public function AnteproyectoListJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -213,7 +270,50 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
     
+    public function WidgetProyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $user = Auth::user();
+            $id = $user->identity_no;
+
+            
+                $Anteproyectos = Anteproyecto::Where('FK_NPRY_Pre_Director',$id)->get();
+
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos consultados correctamente.',
+                    $Anteproyectos
+                );
+            
+    
+       
+    
+        }              
+    }
+
+    public function SolicitudStore(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $user = Auth::user();
+		$id = $user->identity_no;
+         
+           // $Anteproyecto = Anteproyecto::where('K_NPRY_IdMctr008', $Desarrollador -> FK_NPRY_IdMctr008)->first();
+            Solicitud::create([
+                'Sol_Solicitud' => $request['Sol_Solicitud'],
+                'Sol_Estado' => "EN ESPERA",
+                'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                'FK_User_Codigo' =>$id,
+            ]);
+            return AjaxResponse::success(
+                '¡Esta Hecho!',
+                'Solicitud Hecha.'
+            );
+          
+        }
+    }
     
 
     public function VerActividadesProyecto(Request $request,$id)
@@ -356,7 +456,7 @@ class DocenteController extends Controller
         if ( $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
-            $proyectos=Proyecto::all();
+            $proyectos=Proyecto::where('FK_EST_Id','!=',7)->get();
             $i=0;
             $concatenado=[];
             foreach($proyectos as $proyecto){
@@ -728,6 +828,7 @@ class DocenteController extends Controller
             $i = 0;
             $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
             $if= $Jurado->count();
+            $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
             if($if==2){
                 foreach($Jurado as $jur)
                 {
@@ -743,7 +844,7 @@ class DocenteController extends Controller
                     Proyecto::create([
                         'FK_EST_Id' => 2 , 
                         'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
-                        'PYT_Fecha_Radicacion' => $request['NPRY_FCH_Radicacion']
+                        'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion
                     ]);
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -972,6 +1073,8 @@ class DocenteController extends Controller
             $Anteproyecto -> offsetSet('Director', $Nombre);
             $proyecto = proyecto::where('FK_NPRY_IdMctr008',$id )->first();
             $Estado = $proyecto -> relacionestado -> EST_estado ;
+            $idEstado = $proyecto->FK_EST_Id;
+            $Anteproyecto -> offsetSet('IdEstado', $idEstado);
             $Anteproyecto -> offsetSet('Estado', $Estado);
 
                 

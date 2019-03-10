@@ -58,10 +58,11 @@
                                  </div>
                                
                         </div>
-                        <span class="label label-primary">Seleccione el archivo de la Actividad (PDF)</span>
-                            
+                        @if($datos['Estado'] != "APROBADO" )
+                                <span class="label label-primary">Seleccione el archivo de la Actividad (PDF)</span>
+                        
                                {!! Field:: file('PYT_Actividad',['label'=>'Archivo:', 'class'=> 'form-control-file']) !!}
-
+                        @endif
 
                         <br><br>
                        
@@ -149,8 +150,9 @@ $(document).ready(function(){
                     formData.append('FK_CHK_Checklist', 1);
                     formData.append('CMMT_Formato', 3);
                     
-                    
-                    $.ajax({
+                    if (File.files[0].size < (1024 * 1024 * 5)){
+
+                        $.ajax({
                         url: route,
                         type: 'POST',
                         data: formData,
@@ -185,7 +187,13 @@ $(document).ready(function(){
                                         }
                         }
                                             
-                    })
+                    })  
+                    }  
+                else{
+                    alert('El archivo no debe superar los 5Mb de tamaño');
+                }
+ 
+                    
 
                }
            }

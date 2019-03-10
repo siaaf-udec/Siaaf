@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                          
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -108,7 +108,7 @@
                             <i class="fa fa-plus">
                             </i>Solicitudes
                     </a>@endpermission
-                    @permission('MYS_SOLICITUDES_STUDEN')<a href="javascript:;"
+                    @permission('MYS_SOLICITUDES_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon mygestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -204,7 +204,7 @@
             {data: 'Sol_Estado', name: 'Sol_Estado'},
       
             {
-                defaultContent: ' @permission('VER_ACTIVIDAD')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

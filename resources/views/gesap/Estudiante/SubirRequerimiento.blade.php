@@ -42,23 +42,27 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off']) !!}
 
                        
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Requerimiento:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Requerimiento:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off']) !!}
 
 
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'9000','autocomplete'=>'off'],
-                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'9000','autocomplete'=>'off']) !!}
 
                                
                                </div>
                              
                         </div>
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'9000','autocomplete'=>'off'],
-                                                                ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                        
+                        @if($datos['Estado'] != "APROBADO" )
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control','autofocus','maxlength'=>'9000','autocomplete'=>'off'],
+                                                                ['help' => 'Coloque aqui el contenido de su actividad..','icon'=>'fa fa-book'] ) !!}
+                        @endif
+                        @if($datos['Estado'] == "APROBADO" )
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'readonly','autofocus','maxlength'=>'9000','autocomplete'=>'off'],
+                                                                ['help' => 'Coloque aqui el contenido de su actividad.','icon'=>'fa fa-book'] ) !!}
+                        @endif
 
                     
 

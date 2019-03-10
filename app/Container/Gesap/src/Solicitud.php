@@ -21,4 +21,14 @@ class Solicitud extends Model
         'FK_User_Codigo'
     ];
     
+    public function relacionUsuario() 
+    {
+         return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_User_Codigo');
+     }
+   public function relacionProyecto()
+   {
+        return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
+    }
+
+
 }

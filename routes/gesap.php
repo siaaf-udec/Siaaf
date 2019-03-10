@@ -705,8 +705,8 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'DocenteGesap.VerActividad'
 		]);
 		Route::get('Funciones/{id?}', [
-			'uses' => $controller . 'DocenteController@Funciones',  
-			'as' => 'DocenteGesap.Funciones'
+			'uses' => $controller . 'DocenteController@Funcion',  
+			'as' => 'DocenteGesap.Funcion'
 		]);
 		Route::get('VerRequerimientos/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerRequerimientos',  
@@ -769,6 +769,19 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@CalificarAnteproyecto',  
 			'as' => 'DocenteGesap.Calificar'
 		]);
+		Route::get('VerSolicitud', [
+			'uses' => $controller . 'DocenteController@VerSolicitud',  
+			'as' => 'DocenteGesap.VerSolicitud'
+		]);
+		Route::get('WidgetProyecto', [
+			'uses' => $controller . 'DocenteController@WidgetProyecto',  
+			'as' => 'DocenteGesap.WidgetProyecto'
+		]);
+		
+		Route::post('SolicitudStore', [
+			'uses' => $controller . 'DocenteController@SolicitudStore',  
+			'as' => 'DocenteGesap.SolicitudStore'
+		]);
 		Route::get('Desarrolladores/{id?}', [
 			'uses' => $controller . 'DocenteController@DesarrolladoresList',  
 			'as' => 'DocenteGesap.Desarrolladores'
@@ -778,6 +791,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'DocenteGesap.Anteproyectosdocente'
 		]);
 		
+		Route::delete('EliminarSolicitud/{id?}', [
+			'uses' => $controller.'DocenteController@EliminarSolicitud',
+			'as' => 'DocenteGesap.EliminarSolicitud'
+		]);
 
 		Route::get('Asignar/{id?}', [
 			'uses' => $controller . 'DocenteController@Asignar',  
@@ -809,5 +826,46 @@ Route::group(['middleware' => ['auth']], function () {
 	
 	});
 	//
+	Route::group(['prefix' => 'CoordinadorGesap', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+		
+		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
+
+		Route::get('index', [
+			'uses' => $controller . 'CoordinatorController@indexSolicitudes',  
+			'as' => 'CoordinadorGesap.indexSolicitudes'
+		]);
+
+		
+		Route::get('solicitudesindex/{ids?}', [
+			'uses' => $controller . 'CoordinatorController@indexSolicitudesajax',  
+			'as' => 'CoordinadorGesap.indexSolicitudes.Ajax'
+		]);
+
+		Route::get('SolicitudesList', [
+			'uses' => $controller . 'CoordinatorController@SolicitudesList',  
+			'as' => 'CoordinadorGesap.SolicitudesList'
+		]);
+
+		Route::get('CerrarSolicitud/{ids?}', [
+			'uses' => $controller . 'CoordinatorController@CerrarSolicitud',  
+			'as' => 'CoordinadorGesap.CerrarSolicitud'
+		]);
+
+		
+		Route::get('VerProyectoSolicitud/{id?}/{ids?}', [
+			'uses' => $controller . 'CoordinatorController@VerProyectoSolicitud',  
+			'as' => 'CoordinadorGesap.VerProyectoSolicitud'
+		]);
+
+		
+		Route::post('editarfechas', [
+			'uses' => $controller . 'CoordinatorController@editarfechas',  
+			'as' => 'CoordinadorGesap.editarfechas'
+		]);
+
+		
+
+
+	});
 
 });	

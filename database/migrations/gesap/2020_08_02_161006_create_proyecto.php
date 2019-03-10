@@ -25,7 +25,8 @@ class CreateProyecto extends Migration
                 ->references('PK_EST_Id')
                 ->on('tbl_Estado_Anteproyecto')
                 ->onDelete('cascade');
-            
+            $table->date('PYT_Fecha_Radicacion');
+           
             $table->timestamps();
         });
     }

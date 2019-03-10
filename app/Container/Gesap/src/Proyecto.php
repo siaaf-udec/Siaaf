@@ -16,7 +16,8 @@ class Proyecto extends Model
 
     protected $fillable = [
         'FK_NPRY_IdMctr008',
-        'FK_EST_Id'
+        'FK_EST_Id',
+        'PYT_Fecha_Radicacion'
     ];
 
     public function relacionAnteproyecto()

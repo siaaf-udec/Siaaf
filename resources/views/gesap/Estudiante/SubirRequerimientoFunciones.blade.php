@@ -101,6 +101,7 @@
 @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Los Requerimientos del Anteproyecto'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+            
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
        <div class="form-body">
                     <div class="row">
@@ -129,7 +130,7 @@
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
                     @if($datos['Estado'] != "APROBADO" )
                                 
-                    @permission('ADD_ACTIVIDAD_ESTUDIANTE')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">

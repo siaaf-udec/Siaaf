@@ -5,7 +5,7 @@
       <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
                <i class="fa fa-cube"></i>
         <span class="title">Gesap</span>
-        <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*','DocenteGesap.*','EstudianteGesap.*','Proyectos.*', ], 'open') }}"></span>
+        <span class="arrow {{ active(['AnteproyectosGesap.*', 'UsuariosGesap.*','DocenteGesap.*','EstudianteGesap.*','Proyectos.*','CoordinadorGesap.*' ], 'open') }}"></span>
     </a>
 
     <ul class="sub-menu">
@@ -52,18 +52,26 @@
 		@endpermission
 		
 		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
      			<i class="fa fa-search"></i>
 				<span class="title">Busquedas</span>
+			</a>
+		</li>
+		@endpermission
+		@permission('ADMIN_GESAP')
+		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
+     			<i class="fa fa-search"></i>
+				<span class="title">Solicitudes</span>
 			</a>
 		</li>
 		@endpermission
 
 
 		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
      			<i class="fa fa-book"></i>
 				<span class="title">Reportes</span>
 			</a>
@@ -71,8 +79,8 @@
 		
 		@endpermission
 		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
+		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
      			<i class="fa fa-bar-chart">
 				</i>
 				<span class="title">

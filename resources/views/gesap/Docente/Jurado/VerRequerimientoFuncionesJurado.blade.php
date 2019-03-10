@@ -200,7 +200,7 @@ $(document).ready(function(){
         table2 = $('#FuncionF');
        
            
-        url2 = '{{ route('EstudianteGesap.Funcion') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url2 = '{{ route('DocenteGesap.Funcion') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns2 = [

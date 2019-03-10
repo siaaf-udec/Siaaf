@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use Yajra\DataTables\DataTables;
+use App\Container\Users\src\User;
+use App\Container\Gesap\src\Usuarios;
+use App\Container\Permissions\src\Role;
 
 class UserControllerGesap extends Controller
 {
@@ -170,45 +173,125 @@ class UserControllerGesap extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
 
             /*Guarda Usuario*/
-            $request['name'] = "prueba cambiando nombre";
-            $user = $this->userRepository->store($request->all());
-
-            /*Guarda la imagen */
-            $img = $request->file('image_profile_create');
-            if ($img !== null) {
-                $url = Storage::disk('developer')->putFile('avatars', $img);
-                $user->images()->create([
-                    'url' => $url,
-                ]);
-            } else {
-                $user->images()->create([
-                    'url' => $request->get('identicon'),
-                ]);
+            $validacionUsuario = User::where('identity_no',$request['identity_no'])->first();
+         
+            if($request['multi_select_roles_create']==1){
+                $rolgesap = Role::Where('name','=','EstudianteGesap')->first();
+                $request['multi_select_roles_create'] = $rolgesap->id;
+            }elseif($request['multi_select_roles_create']==2){
+                $rolgesap = Role::Where('name','=','DocenteGesap')->first();
+                $request['multi_select_roles_create'] = $rolgesap->id;
+            }elseif($request['multi_select_roles_create']==3){
+                $rolgesap = Role::Where('name','=','AdminGesap')->first();
+                $request['multi_select_roles_create'] = $rolgesap->id;
             }
 
-            /*Guarda los Roles*/
-           /*  busca cual rol es gesap user_errortrae idatequema el idate
-            [2]
-            2 */
-            //$roles = $request->get('multi_select_roles_create');
-            $roles = $request->get('multi_select_roles_create');
-            $user->roles()->sync(
-                ($roles !== null) ? explode(',', $roles) : []
-            );
+            if($validacionUsuario == null){
+                    
+                $request['password'] = substr( $request['identity_no'], 0,5);
+                $user = $this->userRepository->store($request->all());
 
-            /*Crea Notificacion*/
-            $data = [
-                'url'         => 'https://www.google.com.co/',
-                'description' => '¡Bienvenidos a Siaaf!',
-                'image'       => 'assets/layouts/layout2/img/avatar3.jpg',
-            ];
-            $user->notify(new HeaderSiaaf($data));
+                /*Guarda la imagen */
+                $img = $request->file('image_profile_create');
+                if ($img !== null) {
+                    $url = Storage::disk('developer')->putFile('avatars', $img);
+                    $user->images()->create([
+                        'url' => $url,
+                    ]);
+                } else {
+                    $user->images()->create([
+                        'url' => $request->get('identicon'),
+                    ]);
+                }
 
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos modificados correctamente.'
-            );
+                /*Guarda los Roles*/
+            /*  busca cual rol es gesap user_errortrae idatequema el idate
+                [2]
+                2 */
+                //$roles = $request->get('multi_select_roles_create');
+                $roles = $request->get('multi_select_roles_create');
+                $user->roles()->sync(
+                    ($roles !== null) ? explode(',', $roles) : []
+                );
+
+                /*Crea Notificacion*/
+                $data = [
+                    'url'         => 'https://www.google.com.co/',
+                    'description' => '¡Bienvenidos a Siaaf!',
+                    'image'       => 'assets/layouts/layout2/img/avatar3.jpg',
+                ];
+                $user->notify(new HeaderSiaaf($data));
+
+                Usuarios::create([
+                    'PK_User_Codigo' => $request['identity_no'],
+                    'User_Codigo' => $request['User_Codigo'],
+                    'User_Nombre1' => $request['name'],
+                    'User_Apellido1' => $request['lastname'],
+                    'User_Correo' => $request['email'],
+                    'User_Contra' => substr( $request['identity_no'], 0,5),
+                    'User_Direccion' => $request['address_create'],
+                    'FK_User_IdEstado' => 1,
+                    'FK_User_IdRol' => $request['rol_gesap'],
+                ]);
+               
+
+
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+        }else{
+            if($validacionUsuario->email != $request['email']){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Error!',
+                    'Ya Estas Registrado Pero Con Correos Diferentes, !revisa!.',
+                    $IdError
+                );
+            }else{
+                    // aca los datos de developer estan duplicados//
+                    $validarusuariogesap = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
+                    $i = 0 ;
+                    foreach ($validacionUsuario ->roles as $role){
+                        if($i == 0){
+                            $aux = $role->id;
+                            $i = 1 ;
+                        }else{
+                            $aux = $aux.",".$role->id;
+                        }
+                    }
+                    
+                    
+                
+                    $aux =$aux.','.$request['multi_select_roles_create'];
+                    $roles = $aux;
+                    $validacionUsuario->roles()->sync(
+                        ($roles !== null) ? explode(',', $roles) : []
+                    );
+
+                    Usuarios::create([
+                    'PK_User_Codigo' => $request['identity_no'],
+                    'User_Codigo' => $request['User_Codigo'],
+                    'User_Nombre1' => $request['name'],
+                    'User_Apellido1' => $request['lastname'],
+                    'User_Correo' => $request['email'],
+                    'User_Contra' => 12345,
+                    'User_Direccion' => $request['address_create'],
+                    'FK_User_IdEstado' => 1,
+                    'FK_User_IdRol' => $request['rol_gesap'],
+                    ]);
+
+                    
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+
+            }
+       
         }
+            }
+
 
         return AjaxResponse::fail(
             '¡Lo sentimos!',

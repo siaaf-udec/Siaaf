@@ -741,7 +741,17 @@ class StudentController extends Controller
             
             $solicitud = Solicitud::where('Pk_Id_Solicitud',$id)->first();
             
-            $solicitud -> delete();
+            if(empty($solicitud)){
+
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Los Datos Ya Fueron Eliminados.'
+                );
+            }else{
+
+                $solicitud -> delete();
+            }
+            
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos eliminados correctamente.'

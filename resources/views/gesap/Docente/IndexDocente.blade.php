@@ -34,15 +34,15 @@
     @permission('DOCENTE_GESAP')
      <!--MODAL CREAR COMENTARIO-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-solicitud" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_create-solicitud', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_create-Solicitud', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Comentario</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Crear Solicitud</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -62,6 +62,41 @@
                 
             </div>
             <!--MODAL CREAR COMENTARIO-->
+              <!--VER SOLICITUDES-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-ver-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'from_ver-Solicitud', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Ver Mis Solicitudes</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
+                        @slot('columns', [
+                            'Solicitud',
+                            'Estado',
+                            'Acciones'
+                        ])
+                    @endcomponent   
+                    </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--FIN VER SOLICITUDES-->
+
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
             <br>
@@ -70,9 +105,15 @@
                     <div class="actions">
                         @permission('DOCENTE_SOLICITUD')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Solicitud"
-                                                       title="Gestionar Mct">
+                                                       title="Solicitud">
                             <i class="fa fa-plus">
                             </i>Solicitudes
+                        </a>@endpermission
+                        @permission('MY_SOLICITUD')<a href="javascript:;"
+                                                       class="btn btn-simple btn-warning btn-icon MySolicitud"
+                                                       title="Mis Solicitudes">
+                            <i class="fa fa-plus">
+                            </i>Mis Solicitudes
                         </a>@endpermission
                        
                         <!-- @permission('DOCENTE_REPORT_USER')<a href="javascript:;"
@@ -193,6 +234,179 @@
     <script type="text/javascript">
 jQuery(document).ready(function () {
 
+    $.fn.select2.defaults.set("theme", "bootstrap");
+        $(".pmd-select2").select2({
+            placeholder: "Selecciónar",
+            allowClear: true,
+            width: 'auto',
+            escapeMarkup: function (m) {
+                return m;
+            }
+        });
+
+        var $Widget_Select_Solicitud = $('select[name="Select_Solicitud"]');
+
+        var route_Solicitud = '{{ route('DocenteGesap.WidgetProyecto') }}';
+        $.get(route_Solicitud, function (response, status) {
+        $(response.data).each(function (key, value) {
+            $Widget_Select_Solicitud.append(new Option(value.NPRY_Titulo, value.PK_NPRY_IdMctr008 ));
+        });
+        $Widget_Select_Solicitud.val([]);
+        $('#FK_NPRY_IdMctr008').val();
+        });
+
+        
+        var CrearSolicitud = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('DocenteGesap.SolicitudStore') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();
+                        formData.append('Sol_Solicitud', $('#Sol_Solicitud').val());
+                        formData.append('ID', 123456789);
+                        formData.append('FK_NPRY_IdMctr008', $('select[name="Select_Solicitud"]').val());
+                       
+
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-create-Solicitud').modal('hide');
+                                    $('#form_create-Solicitud')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                   
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                   
+                                   
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var form1 = $('#form_create-Solicitud');
+            var rules1 = {
+                
+                Sol_Solicitud:{maxlength: 1000, required: true},
+                Select_Solicitud:{required: true},
+                
+            };
+
+
+            FormValidationMd.init(form1, rules1, false, CrearSolicitud()); 
+
+
+        var tablesol, urlsol, columnssol;
+        tablesol = $('#listaSolicitudes');
+        urlsol = '{{ route('DocenteGesap.VerSolicitud')}}';
+        columnssol = [
+            {data: 'Sol_Solicitud', name: 'Sol_Solicitud'},
+            {data: 'Sol_Estado', name: 'Sol_Estado'},
+      
+            {
+                defaultContent: ' @permission('DELETE_SOL')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        
+      
+        dataTableServer.init(tablesol, urlsol, columnssol);
+        tablesol = tablesol.DataTable();
+
+        
+
+      tablesol.on('click', '.Eliminar', function (e) {
+        
+        e.preventDefault();
+        $tr = $(this).closest('tr');
+        var dataTable = tablesol.row($tr).data();
+        var route = '{{ route('DocenteGesap.EliminarSolicitud') }}'+'/'+dataTable.Pk_Id_Solicitud;
+        var type = 'DELETE';
+        var async = async || false;
+        swal({
+                title: "¿Está seguro?",
+                text: "¿Está seguro que desea Eliminar esta solicitud?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "De acuerdo",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        processData: false,
+                        async: async,
+                            success: function (response, xhr, request) {
+                                    console.log(response);
+                                    if (request.status === 200 && xhr === 'success') {
+                                        if (response.data == 422) {
+                                            xhr = "warning"
+                                            UIToastr.init(xhr, response.title, response.message);
+                                            App.unblockUI('.portlet-form');
+                                            
+                                        } else {
+                                            table.ajax.reload();
+                                            UIToastr.init(xhr, response.title, response.message);
+                        
+                                            }
+                                    }
+                    },
+                    error: function (response, xhr, request) {
+                                    if (request.status === 422 && xhr === 'error') {
+                                        UIToastr.init(xhr, response.title, response.message);
+                                    }
+                    }
+                            
+                    });
+                } else {
+                    swal("Cancelado", "No se elimino la solicitud", "error");
+                }
+            });
+
+  });
+
+
+            
+
         var table, url, columns;
         table = $('#listaAnteproyecto');
         id = 123400009 ;
@@ -269,7 +483,7 @@ jQuery(document).ready(function () {
         var tablep, urlp, columnsp;
         tablep = $('#listaProyectos');
         idp = 123400009;//variable de sesion
-        urlp = '{{ route('DocenteGesap.ProyectosList')}}'+ '/' + idp;
+        urlp = '{{ route('DocenteGesap.ProyectosList')}}'+ '/' + idp;//ver proyectos Director
         columnsp = [
             
             {data: 'Titulo', name: 'Titulo'},
@@ -301,7 +515,7 @@ jQuery(document).ready(function () {
         var tablepr, urlpr, columnspr;
         tablepr = $('#listaProyetoJurado');
         idpr = 111100009;//variable de sesion
-        urlpr = '{{ route('DocenteGesap.ProyectosListRadicados')}}'+ '/' + idpr;
+        urlpr = '{{ route('DocenteGesap.ProyectosListRadicados')}}'+ '/' + idpr;//ver proyectos Jurado
         columnspr = [
             
             {data: 'Titulo', name: 'Titulo'},
@@ -310,7 +524,7 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {
-                defaultContent: ' @permission('VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('ANTE_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -372,7 +586,11 @@ jQuery(document).ready(function () {
 
         $('.Solicitud').on('click', function (e) {
                 e.preventDefault();
-                $('#modal-create-solicitud').modal('toggle');
+                $('#modal-create-Solicitud').modal('toggle');
+        });
+        $('.MySolicitud').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-ver-Solicitud').modal('toggle');
         });
     
 

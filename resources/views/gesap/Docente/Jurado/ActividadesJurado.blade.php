@@ -86,7 +86,7 @@
             
       
             {
-                defaultContent: '@permission('ANTE_DIRECTOR')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('VER_ACT_DOCENTE')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

@@ -11,8 +11,7 @@
                             <br>
                  
                             
-                                <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
-                        </div>
+                                        </div>
 
 
                         <div class="col-md-6">

@@ -86,7 +86,7 @@
                                     Regresar
                                 </a>@endpermission
                                 @if( $datos['Estado'] == "EN CALIFICACIÓN" )
-                                @permission('AVAL_DOCENTE')<a href="javascript:;"
+                                @permission('APROBAR_ACTIVIDAD')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Avalar"><i
                                 ></i>
                                     Aprobar Actividad
