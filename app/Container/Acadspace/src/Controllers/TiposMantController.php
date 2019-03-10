@@ -12,6 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class TiposMantController extends Controller
 {
+    private $path='acadspace.TiposMant';
     public function index(Request $request)
     {
 
@@ -63,8 +64,8 @@ class TiposMantController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $tiposmant = TiposMant::select();
-            return Datatables::of($tiposmant)
+            $tiposMant = TiposMant::select();
+            return Datatables::of($tiposMant)
                 ->removeColumn('create_at')
                 ->removeColumn('updated_at')
                 ->addIndexColumn()
@@ -76,6 +77,43 @@ class TiposMantController extends Controller
         );
 
     }
+         /*funcion para buscar un tipo y pasarle la información
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function editarTipo(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $tiposMant = TiposMant::findOrFail($id);
+            return view($this->path.'.formularioEditarTiposMant',compact('tiposMant'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /*funcion para modificar un tipo 
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarTipo(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $tiposMant = TiposMant::findOrFail($id);
+            $tiposMant->MAN_Nombre = $request->MAN_Nombre;
+            $tiposMant->MAN_Descripcion = $request->MAN_Descripcion;
+            $tiposMant->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
        /**
      * Funcion para eliminar tipos entre los registrados
      * retorna mensaje ajax
@@ -86,8 +124,8 @@ class TiposMantController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-            $tipomant = TiposMant::find($id);
-            $tipomant->delete();
+            $tipoMant = TiposMant::find($id);
+            $tipoMant->delete();
             return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Tipo eliminado correctamente.'

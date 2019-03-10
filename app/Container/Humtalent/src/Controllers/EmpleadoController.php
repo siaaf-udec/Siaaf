@@ -358,6 +358,10 @@ class EmpleadoController extends Controller
                     if (count($empleado) > 0) {
                         $cont++;
                     } else {
+                        if($datum['cedula']==null){
+                           break; 
+                        }
+
                         Persona::create([
                             'PK_PRSN_Cedula' => $datum['cedula'],
                             'PRSN_Rol' => mb_strtoupper($datum['rol'], 'UTF-8'),

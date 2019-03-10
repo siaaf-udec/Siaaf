@@ -19,10 +19,7 @@ class CreateCkeckObservacionesTable extends Migration
             $table->boolean('CBSV_Estudiante2')->default(0);
             $table->boolean('CBSV_Director')->default(0);
             $table->integer('FK_TBL_Observaciones_Id')->unsigned();
-            $table->foreign('FK_TBL_Observaciones_Id')
-                ->references('PK_BVCS_IdObservacion')
-                ->on('TBL_Observaciones')
-                ->onDelete('cascade');
+         
             $table->timestamps();
         });
     }

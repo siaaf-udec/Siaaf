@@ -15,6 +15,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class ReportesController extends Controller
@@ -111,30 +112,30 @@ class ReportesController extends Controller
     public function descargarreporteUsuariosRegistrados(Request $request)
     {
         if ($request->isMethod('GET')) {
-            try {
-
+        
+        try {
                 $cont = 1;
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-                return SnappyPdf::loadView('carpark.reportes.reporteUsuariosRegistrados',
-                    compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf');
+               return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados', 
+                    compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf'); 
 
-            } catch (Exception $e) {
 
-                return view('carpark.reportes.reporteUsuariosRegistrados',
-                    compact('infoUsuarios', 'date', 'time', 'cont'));
+        
+         } catch (Exception $e) {
+
+                return view('carpark.reportes.reporteMotosRegistradas',
+                    compact('infoMotos', 'date', 'time', 'cont'));
 
             }
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
 
-    }
-
+}
     /**
      * Permite generar el reporte correspondiente a los usuarios registrados.
      *
@@ -187,7 +188,7 @@ class ReportesController extends Controller
                     $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
 
                 }
-                return SnappyPdf::loadView('carpark.reportes.reporteMotosRegistradas',
+                return PDF::loadView('carpark.reportes.reporteMotosRegistradas',
                     compact('infoMotos', 'date', 'time', 'cont'))->download('ReporteMotosRegistradas.pdf');
 
             } catch (Exception $e) {

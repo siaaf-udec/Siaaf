@@ -1,4 +1,4 @@
-
+@permission('ACAD_MANT')
 @extends('material.layouts.dashboard')
 
 @push('styles')
@@ -38,11 +38,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
+                        @permission('ACAD_REGISTRAR_MANT')
                         <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
                             Registrar Mantenimiento
                         </a>
+                        @endpermission
                     </div>
                 </div>
             </div>
@@ -50,16 +52,20 @@
             </div>
             <br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax', 'class' => 'table table-striped 
-                table-bordered table-hover dt-responsive no-footer dtr-column collapsed'])
+                @permission('ACAD_CONSULTAR_MANT')
+                @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax',
+                'class' => 'table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-column collapsed'])
                     @slot('columns', [
                     'id_mantenimiento',
                     '',
                     '#',
+                    'Placa del Articulo',
                     'Nombre tecnico',
+                    'Estado',
                     'Acciones' => ['style' => 'width:70px;']
                     ])
                 @endcomponent
+                @endpermission
             </div>
             <div class="clearfix">
             </div>
@@ -76,6 +82,10 @@
                                 </i>
                                 Registrar Mantenimiento
                             </h2>
+                            <h5>
+                                <i class="fa fa-warning"></i>    
+                                Antes de intentar registrar un mantenimiento agregue por lo menos un artículo y un tipo de mantenimiento.
+                            </h5>
                         </div>
                         <div class="modal-body">
                             {!! Form::open(['id' => 'form_mant', 'class' => '', 'url'=>'/forms']) !!}
@@ -83,22 +93,28 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('nom_tecnico',null,
-                                    ['label'=>'Nombre tecnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del tecnico','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre técnico:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del técnico','icon'=>'fa fa-user'] ) !!}
+
+                                    {!! Field:: select('Placa del artículo:',$articulos,
+                                    ['id' => 'articulos', 'name' => 'articulos'])
+                                    !!} 
                                     
                                     {!! Field::select('Tipo de mantenimiento:',$tipos, ['id' => 'mantenimiento',
                                     'name' => 'mantenimiento']) !!}
 
                                     {!! Field:: textarea('descripcion',null,
                                     ['label'=>'Descripción:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Descripción porque se realizara el mantenimiento','icon'=>'fa fa-user'] ) !!}
+                                    ['help' => 'Descripción del por qué se realizara el mantenimiento','icon'=>'fa fa-user'] ) !!}
 
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
+                            @permission('ACAD_REGISTRAR_MANT')
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -193,9 +209,18 @@
                     "defaultContent": ''
                 },
                 {data: 'DT_Row_Index'},
-                {data: 'MANT_Nombre_Tecnico', name: 'Nombre Tecnico'},
+                {   data: 'id_articulo',
+                    name: 'Placa del articulo'
+
+                },
+                {   data: 'MANT_Nombre_Tecnico', 
+                    name: 'Nombre Tecnico'
+                },
+                {   data:'estado',
+                    name:'Estado'
+                },
                 {
-                    defaultContent: '@permission('ACAD_ELIMINAR_INCIDENTE') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-edit"></i> Editar </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_MANT') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="edit"><i class="fa fa-edit"></i> Ver/Asignar Diagnostico </a></li><li><a href="javascript:;" class="remove"><i class="fa fa-trash"></i> Eliminar</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     title: 'Acciones',
@@ -264,6 +289,16 @@
                 e.preventDefault();
                 $('#modal-create-mant').modal('toggle');
             });
+
+            /*EDITAR LA CATEGORIA*/
+            table.on('click', '.edit', function(e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('espacios.academicos.mantenimiento.editMantenimiento') }}'+'/'+dataTable.PK_MANT_Id_Registro;
+                $(".content-ajax").load(route_edit);
+             });
+
             /*CREAR MARCA CON VALIDACIONES*/
             var createPermissions = function () {
                 return {
@@ -273,9 +308,11 @@
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MANT_Nombre_Tecnico', $('input:text[name="nom_tecnico"]').val());
+                        formData.append('MANT_Nombre_Tecnico', $('input:text[name="nom_tecnico"]').val());                      
+                        formData.append('ART_Codigo', $('select[name="articulos"]').val());
                         formData.append('MANT_Descripcion', $('textarea[name="descripcion"]').val());
                         formData.append('FK_MANT_Id_Tipo', $('select[name="mantenimiento"]').val());
+
 
                         $.ajax({
                             url: route,
@@ -318,3 +355,4 @@
 
     </script>
 @endpush
+@endpermission

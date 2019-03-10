@@ -45,14 +45,6 @@ articulo{{-- MENÚ DE EJEMPLO --}}
             </a>
         </li>
         @endpermission
-        @permission('ACAD_INCIDENTES')
-        <li class="nav-item {{ active(['espacios.academicos.incidente.index'], 'start active open') }}">
-            <a href="{{ route('espacios.academicos.incidente.index') }}" class="nav-link nav-toggle">
-                <i class="fa fa-warning"></i>
-                <span class="title">Incidentes</span>
-            </a>
-        </li>
-        @endpermission
         @permission('ACAD_SOLICITUDES')
         @permission('ACAD_REALIZAR_SOLICITUDES')
         <li class="nav-item {{ active(['espacios.academicos.solacad.indexDoc'], 'start active open') }}">
@@ -122,6 +114,12 @@ articulo{{-- MENÚ DE EJEMPLO --}}
                     <a href="{{ route('espacios.academicos.report.indexCarr') }}" class="nav-link nav-toggle">
                         <i class="fa fa-graduation-cap"></i>
                         <span class="title">Carreras</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active(['espacios.academicos.report.indexInc'], 'start active open') }}">
+                    <a href="{{ route('espacios.academicos.report.indexInc') }}" class="nav-link nav-toggle">
+                        <i class="fa fa-graduation-cap"></i>
+                        <span class="title">Incidentes</span>
                     </a>
                 </li>
             </ul>
@@ -197,6 +195,14 @@ articulo{{-- MENÚ DE EJEMPLO --}}
                             <span class="title">Marcas</span>
                         </a>
                     </li>
+                    @permission('ACAD_INCIDENTES')
+                    <li class="nav-item {{ active(['espacios.academicos.incidente.index'], 'start active open') }}">
+                        <a href="{{ route('espacios.academicos.incidente.index') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-warning"></i>
+                            <span class="title">Incidentes</span>
+                        </a>
+                    </li>
+                    @endpermission
                     <li class="nav-item {{ active(['espacios.academicos.tiposmant.index'], 'start active open') }}">
                         <a href="{{ route('espacios.academicos.tiposmant.index') }}" class="nav-link nav-toggle">
                             <i class="fa fa-wrench"></i>

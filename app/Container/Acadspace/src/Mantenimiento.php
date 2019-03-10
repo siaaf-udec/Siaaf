@@ -41,15 +41,20 @@ class Mantenimiento extends Model
             
     ];   
     /**
-     *  Función que retorna la relación entre la tabla 'TBL_Categoria' y la tabla
-     * 'TBL_Articulos' a través de la llave foránea 'FK_ART_Id_Categoria'
-     *  y la llave 'PK_CAT_Id_Categoria'
+     *  Función que retorna la relación entre la tabla 'TBL_Hojavida' y la tabla
+     * 'TBL_Registro_Mantenimientos' a través de la llave foránea 'FK_MANT_Id_Hojavida'
+     *  y la llave 'PK_HOJ_Id_Hojavida'
      */
     public function hojavida()
     {
         return $this->hasMany(Hojavida::class, 'FK_MANT_Id_Hojavida', 'PK_HOJ_Id_Hojavida');
     }
     
+     /**
+     *  Función que retorna la relación entre la tabla 'TBL_Registro_Manteniemientos' y la tabla
+     * 'TBL_Tipos_Mantenimientos' a través de la llave foránea 'FK_MANT_Id_Tipo'
+     *  y la llave 'PK_MAN_Id_Tipo'
+     */
     public function tiposmant()
     {
         return $this->hasMany(TiposMant::class, 'FK_MANT_Id_Tipo', 'PK_MAN_Id_Tipo');

@@ -65,6 +65,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapCrmUdecRoutes();
 
         $this->mapAutoevaluationRoutes();
+
+        $this->mapCalidadPcsRoutes();
+
+
     }
 
     /**
@@ -198,5 +202,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/autoevaluation.php'));
+    }
+
+    protected function mapCalidadPcsRoutes()
+    {
+        Route::prefix('calidadpcs')
+            ->middleware(['web', 'auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/calidadpcs.php'));
     }
 }

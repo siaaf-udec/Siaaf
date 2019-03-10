@@ -36,6 +36,7 @@ class ModulesTableSeeder extends Seeder
             ['name' => 'Usuarios Udec', 'description' => 'Modulo Usuarios Udec'],
             ['name' => 'Admisiones y Registro', 'description' => 'Modulo de Admisiones y Registro'],
             ['name' => 'Autoevaluacion', 'description' => 'Modulo de Autoevaluacion'],
+            ['name' => 'Calidadpcs', 'description' => 'Modulo de Cmmi-dev Pmbok Scrum'],
         ];
 
         foreach ($modules as $module) {

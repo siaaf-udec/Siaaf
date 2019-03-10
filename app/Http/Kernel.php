@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+        \Barryvdh\Cors\HandleCors::class,
     ];
 
     /**
@@ -38,11 +39,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // Lenguaje
             \App\Http\Middleware\LangMiddleware::class,
+            
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
+            \Barryvdh\Cors\HandleCors::class,
         ],
     ];
 
@@ -71,5 +74,6 @@ class Kernel extends HttpKernel
         'check.cost'  =>  \App\Container\Financial\src\Middleware\CheckCosts::class,
         'sanitization'  =>  \App\Container\Financial\src\Middleware\RequestSanitization::class,
         'check.latest.request'  =>  \App\Container\Financial\src\Middleware\CheckLatestRequest::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class,
     ];
 }

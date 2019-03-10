@@ -1,26 +1,30 @@
-@permission('ACAD_INCIDENTES') @extends('material.layouts.dashboard') @push('styles') {{--Select2--}}
-<link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css"
-/>
-<link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
+@permission('ACAD_ARTICULO')
+@extends('material.layouts.dashboard') 
+
+@push('styles') 
+{{--Select2--}}
+    <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/dropzone/basic.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- MODAL -->
-<link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"
-/>
-<link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"
-/>
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
 <!-- DATATABLE  -->
-<link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet"
+    <link href="{{ asset('https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
-    type="text/css" /> {{--toast--}} {{--
-<link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />--}} {{--JQuery datatable and row details--}}
-<link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css" /> @endpush @section('content') {{-- BEGIN HTML SAMPLE --}}
+    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
+    type="text/css" /> 
+{{--toast--}} 
+    <link href="{{asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" /> {{--JQuery datatable and row details--}}
+    <link href="{{ asset('assets/main/acadspace/css/rowdetails.css') }}" rel="stylesheet" type="text/css" /> 
+@endpush 
+@section('content') {{-- BEGIN HTML SAMPLE --}}
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Registrar Articulo'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Registrar Artículo'])
     <div class="clearfix">
     </div>
     <br>
@@ -29,11 +33,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="actions">
-                @permission('ACAD_REGISTRAR_INCIDENTE')
+                @permission('ACAD_REGISTRAR_ARTICULO')
                 <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                     <i class="fa fa-plus">
                     </i>
-                    Registrar Articulo
+                    Registrar Artículo
                 </a>
                 @endpermission
             </div>
@@ -45,9 +49,9 @@
     <div class="col-md-12">
         {{--DATATABLE--}}
         <div class="portlet-body">
-            @permission('ACAD_CONSULTAR_INCIDENTE') @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax',
+            @permission('ACAD_CONSULTAR_ARTICULO') @component('themes.bootstrap.elements.tables.datatables', ['id' => 'art-table-ajax',
             'class' => 'table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-column collapsed']) @slot('columns', ['id_articulo',' ',
-            'Codigo', 'Procedencia', 'Categoria', 'Hoja de vida', ' ' => ['style' => 'width:60px;'] ]) @endcomponent @endpermission
+            'Placa del Articulo', 'Procedencia', 'Categoria', 'Hoja de vida', ' ' => ['style' => 'width:60px;'] ]) @endcomponent @endpermission
         </div>
     </div>
     <div class="clearfix">
@@ -61,57 +65,61 @@
                 <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
                 </button>
                 <h2 class="modal-title">
-                    <i class="glyphicon glyphicon-tv">
-                    </i>
-                    Registrar articulo.
+                    <i class="glyphicon glyphicon-tv"></i>
+                    Registrar artículo.
                 </h2>
+                <h5>
+                    <i class="fa fa-warning"></i>    
+                    Antes de intentar registrar un articulo agregue primero al menos una categoría y una procedencía
+                </h5>
             </div>
             <div class="modal-body">
-                <div class="portlet light " id="form_wizard_1">
-                    <div class="portlet-body form">
-                        {!! Form::open(['id' => 'form_create_inventary', 'class' => '', 'url'=>'/forms']) !!}
-                        <div class="form-wizard">
+                    {!! Form::open(['id' => 'form_articulo', 'class' => '', 'url'=>'/forms', 'files'=>true]) !!}
+                        <div class="row">
                             <div class="col-md-12">
-                                {!! Field:: text('codigo',['required', 'label' => 'codigo', 'max' => '30', 'min' => '3', 'auto' => 'off', 'rows' => '1'],
-                                ['help' => 'Escriba el codigo o serial asociado al articulo que pretende registrar','icon'=>'fa
+                                {!! Field:: text('ART_Codigo',['required', 'label' => 'Placa del Articulo', 'max' => '30', 'min' => '2', 'auto' => 'off', 'rows' => '1','pattern'=> '[A-Za-zñÑ 0-9\-\/]+','title'=>'En este campo solo se admiten letras y numeros, sin espacios'],
+                                ['help' => 'Escriba la placa asociada al artículo que va a registrar','icon'=>'fa
                                 fa-barcode'] ) !!}
 
-                                {!! Field::select('Categoria del articulo:',$categoria, ['id' => 'categoria',
-                                'name' => 'categoria']) !!}
+                                {!! Field::select('Categoría del artículo:',$categoria, 
+                                ['id' => 'FK_ART_Id_Categoria',
+                                'name' => 'FK_ART_Id_Categoria']) !!}
 
-                                {!! Field:: textarea('descripcion',['required', 'label' => 'descripcion',
-                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '3'], ['help' => 'Digite la descripción
-                                del articulo','icon'=>'fa fa-desktop'] ) !!}
+                                {!! Field::select('Procedencía del artículo:',$procedencia, 
+                                ['id' => 'FK_ART_Id_Procedencia',
+                                'name' => 'FK_ART_Id_Procedencia']) !!}
+
+                                {!! Field:: textarea('ART_Descripcion',['required', 'label' => 'descripción del artículo',
+                                'max' => '450', 'min' => '15', 'auto' => 'off', 'rows' => '2','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ,.-/ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'], ['help' => 'Digite la descripción
+                                del artículo','icon'=>'fa fa-desktop'] ) !!}
                                 <div>
-                                    <h3 class="block">Subir imagenes del articulo</h3>
-                                    <h6>10 archivos maximos</h6>
+                                    <h3 class="block">Subir imagen del artículo</h3>
                                 </div>
                                 <div class="form-group">
-                                    <div class="dropzone dropzone-file-area data-dz-size" id="my_dropzone">
+                                    <div class="dropzone dropzone-file-area data-dz-size" id="myDropzone">
                                         <h3 class="sbold">Arrastra o da click aquí para cargar las imagenes</h3>
                                         <p> Solo se admiten formatos JPEG - JPG - PNG </p>
                                     </div>
                                 </div>
-                            </div>
-
+                        
+                        <div class="modal-footer">
+                            @permission('ACAD_REGISTRAR_ARTICULO')
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            @endpermission
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
-                        <div class="form-actions">
-                            <div class="modal-footer">
-                                @permission('ACAD_CONSULTAR_INCIDENTE') {!! Form::submit('Guardar', ['class' => 'btn blue button-submit']) !!} @endpermission
-                                {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
-                            </div>
-                        </div>
-                    </div>
                     {!! Form::close() !!}
                 </div>
             </div>
-            <div class="modal-footer">
-            </div>
-            {{-- END HTML MODAL CREATE--}} {{-- END HTML MODAL CREATE--}}
         </div>
+
+                </div>
+              </div>
         @endcomponent
     </div>
-    {{-- END HTML SAMPLE --}} @endsection @push('plugins')
+@endsection 
+
+@push('plugins')
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-validation/js/localization/messages_es.js') }}" type="text/javascript"></script>
@@ -154,27 +162,32 @@
     <script src="{{ asset('assets/main/scripts/dropzone.js') }}" type="text/javascript"></script>
     {{--ROW DETAILS DESPLEGABLE--}}
 
-    <script>
+    <script type="text/javascript">
         function format(d) {
             // `d` is the original data object for the row
-            return '<table class=table table-striped table-bordered table-hover dt-responsive dataTable no-footer collapsed">' +
+            return '<table class=table table-striped table-bordered table-hover dt-responsive dataTable collapsed">' +
                 '<tr>' +
-                '<td>Full name:</td>' +
-                '<td>'+d.codigo_articulo + '</td>' +
-                '</tr>' +
+                '<td>Descripcion:</td>' +
+                '<td>'+d.ART_Descripcion + '</td>' +
+                '</tr>'+
                 '<tr>' +
-                '<td>Extension number:</td>' +
-                '<td>' +d.codigo_articulo+ '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Extra info:</td>' +
-                '<td>And any further details here (images etc)...</td>' +
-                '</tr>' +
+                '<td>Imagen:</td>' +
+                '<td><img src="'+d.imagen+'" widht="250px" height="250px"></td>' +
+                '</tr>'
                 '</table>';
         }
-        $(document).ready(function () {
-            //inicializar select
+        
+        Dropzone.options.myDropzone ={
+            url: 'espacios.academicos.articulo.regisArticulo',
+            uploadMultiple: false,
+            maxFiles: 1,
+            maxFilesize: 4,
+            acceptedFiles: 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
+            addRemoveLinks: true,
+        }
 
+    jQuery(document).ready(function () {
+            //inicializar select
             $.fn.select2.defaults.set("theme", "bootstrap");
             $(".pmd-select2").select2({
                 placeholder: "Seleccionar",
@@ -184,41 +197,7 @@
                     return m;
                 }
             });
-            /*Validaciones*/
-            var $form = $('#form_create_inventary'),
-                $wizard = $('#form_wizard_1');
-            var rules = {
-                codigo: {
-                    minlength: 3,
-                    required: true
-                },
-                descripcion: {
-                    required: true,
-                    minlength: 15
-                },
-                email: {
-                    email: true,
-                    required: true
-                }
-            };
-            var messages = {};
-            $wizard.bootstrapWizard(FormWizard.init($wizard, $form, rules, messages, false));
-            var method = function () {
-                return {
-                    init: function () {
-                        return valores = {
-                            'titulo': $('input[name="titulo"]').val(),
-                            'descripcion': $('textarea[name="descripcion"]').val(),
-                            'email': $('input[name="email"]').val()
-                        }
-                    }
-                };
-            };
-            var type_crud = 'CREATE',
-                route_store = route('espacios.academicos.formacad.store'),
-                formatfile = 'image/*,.jpeg,.jpg,.png,.JPEG,.JPG,.PNG',
-                numfile = 10;
-            FormDropzone.init(route_store, formatfile, numfile, method(), type_crud);
+
             var table, url, columns;
             //Define que tabla cargara los datos
             table = $('#art-table-ajax');
@@ -256,7 +235,7 @@
                 },
                 {
                     //Boton para descargar el archivo
-                    defaultContent: '@permission('ACAD_DESCARGAR_FORMATO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;"><i class="fa fa-file-pdf-o"></i> Ver imagenes </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i> Asignar Hoja de vida</a></li></ul></div> @endpermission',
+                    defaultContent: '@permission('ACAD_ELIMINAR_ARTICULO') <div class="btn-group pull-right"><button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Opciones<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu pull-right"><li><a href="javascript:;" class="remove"><i class="fa fa-print"></i> Eliminar </a></li><li><a href="javascript:;" class="hoja"><i class="fa fa-file-excel-o"></i>Ver o Asignar Hoja de vida</a></li></ul></div> @endpermission',
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -270,6 +249,7 @@
             ];
             dataTableServer.init(table, url, columns);
             table = table.DataTable();
+
             //BOTON DETALLES
             // Array to track the ids of the details displayed rows
             // Add event listener for opening and closing details
@@ -278,17 +258,52 @@
                 var row = table.row(tr);
                 if (row.child.isShown()) {
                     // This row is already open - close it
+                    tr.removeClass('details');
                     row.child.hide();
-                    tr.removeClass('shown');
 
                 } else {
                     // Open this row
+                    
+                    tr.addClass('details');
                     row.child(format(row.data())).show();
-                    tr.addClass('shown');
 
                 }
             });
 
+            /*ELIMINAR REGISTROS*/
+            table.on('click', '.remove', function (e) {
+                e.preventDefault();
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                var route = '{{ route('espacios.academicos.articulo.destroy') }}' + '/' + dataTable.PK_ART_Id_Articulo;
+                var type = 'DELETE';
+                var async = async || false;
+
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: type,
+                    contentType: false,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        if (request.status === 200 && xhr === 'success') {
+                            table.ajax.reload();
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    },
+                    error: function (response, xhr, request) {
+                        if (request.status === 422 && xhr === 'error') {
+                            UIToastr.init(xhr, response.title, response.message);
+                        }
+                    }
+                });
+
+            });
             /*ABRIR MODAL*/
             $(".create").on('click', function (e) {
                 e.preventDefault();
@@ -298,11 +313,79 @@
             /*ABRIR FORMULARIO HOJA DE VIDA*/
             table.on('click', '.hoja', function(e) {
                 e.preventDefault();
-                route1 = '{{ route('espacios.academicos.hojavida.index') }}';
+                $tr = $(this).closest('tr');
+                var dataTable = table.row($tr).data();
+                route1 = '{{ route('espacios.academicos.hojavida.index') }}' + '/' + dataTable.PK_ART_Id_Articulo;
                 $(".content-ajax").load(route1);
             });
 
+            /*AGREGAR UN NUEVO ARTICULO*/
+            var createArt = function () {
+                return {
+                    init: function () {
+                        console.log($('#myDropzone')[0].dropzone.getAcceptedFiles()[0]);
+                        var route = '{{ route('espacios.academicos.articulo.regisArticulo') }}';
+                        var type = 'POST';
+                        var async = async || false;
+                        var formData = new FormData();
+                        formData.append('ART_Codigo', $('input:text[name="ART_Codigo"]').val());
+                        formData.append('FK_ART_Id_Categoria', $('select[name="FK_ART_Id_Categoria"]').val());
+                        formData.append('FK_ART_Id_Procedencia', $('select[name="FK_ART_Id_Procedencia"]').val());
+                        formData.append('ART_Descripcion', $('textarea[name="ART_Descripcion"]').val());
+                        formData.append('Imagen', $('#myDropzone')[0].dropzone.getAcceptedFiles()[0]);
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    $('#modal-create-articulo').modal('hide');
+                                    $('#form_articulo')[0].reset(); //Limpia formulario
+                                    $('#myDropzone')[0].dropzone.removeAllFiles();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    }
+                 }
+            };
+        /*Validaciones*/
+        var form = $('#form_articulo');
+        var rules = {
+                ART_Codigo: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 40
+                 },
+                ART_Descripcion: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 300
+                },
+                FK_ART_Id_Categoria: {
+                    required: true
+                },
+                FK_ART_Id_Procedencia: {
+                    required: true
+                }
 
+            };
+
+        FormValidationMd.init(form, rules, false, createArt());
         });
+        
     </script>
-    @endpush @endpermission
+    @endpush
+    @endpermission

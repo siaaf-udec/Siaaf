@@ -12,9 +12,10 @@ use Yajra\DataTables\DataTables;
 
 class CategoriaController extends Controller
 {
+    private $path='acadspace.Categoria';
     public function index(Request $request)
     {
-        return view('acadspace.Categoria.formularioCategoria');
+        return view($this->path.'.formularioCategoria');
     }
 
     /**
@@ -61,6 +62,41 @@ class CategoriaController extends Controller
             'No se pudo completar tu solicitud.'
         );
 
+    }
+     /*funcion para buscar una cateria y pasarle la información
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function editarCategoria(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $categoria = Categoria::findOrFail($id);
+            return view($this->path.'.formularioEditarCategoria',compact('categoria'));
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /*funcion para modificar una categoria 
+    *@param int id
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse 
+    */
+    public function modificarCategoria(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $categoria = Categoria::findOrFail($id);
+            $categoria->CAT_Nombre = $request->CAT_Nombre;
+            $categoria->save();
+            return AjaxResponse::success('¡Bien hecho!', 'Datos modificados correctamente.');
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
     }
        /**
      * Funcion para eliminar categoria entre los registrados
