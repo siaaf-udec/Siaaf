@@ -180,6 +180,7 @@ class UsuariosController extends UsersUdecController
 
                     }
         
+
             
                 if (empty($verificiaruser)) {
 
@@ -215,7 +216,7 @@ class UsuariosController extends UsersUdecController
                         $IdError
                     );
                 }
-            }
+        }
 
 
 
