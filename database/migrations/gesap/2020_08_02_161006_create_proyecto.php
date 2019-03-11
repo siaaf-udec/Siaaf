@@ -23,7 +23,7 @@ class CreateProyecto extends Migration
             $table->integer('FK_EST_Id')->unsigned();
             $table->foreign('FK_EST_Id')
                 ->references('PK_EST_Id')
-                ->on('tbl_Estado_Anteproyecto')
+                ->on('TBL_Estado_Anteproyecto')
                 ->onDelete('cascade');
             $table->date('PYT_Fecha_Radicacion');
            
