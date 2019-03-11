@@ -24,7 +24,7 @@
                                 
                                 {!! Field::select('User_Tipo_Documento',['T.I'=>'T.I', 'C.C'=>'C.C'],null,['label'=>'Tipo Documento: ']) !!}
                              
-                                {!! Field:: text('User_Cedula',null,['label'=>'Documento:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                                {!! Field:: text('User_Cedula',null,['label'=>'Documento:','class'=> 'form-control', 'autofocus', 'maxlength'=>'10','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el número de identificación del usuario. ','icon'=>'fa fa-credit-card']) !!}
                             
                                 {!! Field:: text('User_Nombre1',null,['label'=>'Nombres:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
@@ -222,7 +222,7 @@
         };
         var form = $('#form_crear_usuario');
         var formRules = {
-            PK_User_Codigo: {minlength: 7, maxlength: 9, required: true, number: true,},
+            PK_User_Codigo: {minlength: 7, maxlength: 10, required: true, number: true,},
             User_Cedula: {minlength: 8, maxlength: 10, required: true, number: true,},
             User_Nombre1: {required: true, letters: true},
             //User_Nombre2: {required: true, letters: true},
