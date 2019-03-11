@@ -172,31 +172,95 @@ class UserControllerGesap extends Controller
     public function store(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+               /*Guarda Usuario*/
+               $validacionUsuario = User::where('identity_no',$request['identity_no'])->first();
+               $validacionUsuarioCorreo = User::where('email',$request['email'])->first();
+               if($request['multi_select_roles_create']==1){
+                   $rolgesap = Role::Where('name','=','EstudianteGesap')->first();
+                   $request['multi_select_roles_create'] = $rolgesap->id;
+               }elseif($request['multi_select_roles_create']==2){
+                   $rolgesap = Role::Where('name','=','DocenteGesap')->first();
+                   $request['multi_select_roles_create'] = $rolgesap->id;
+               }elseif($request['multi_select_roles_create']==3){
+                   $rolgesap = Role::Where('name','=','AdminGesap')->first();
+                   $request['multi_select_roles_create'] = $rolgesap->id;
+               }
 
-            /*Guarda Usuario*/
-            $validacionUsuario = User::where('identity_no',$request['identity_no'])->first();
-            $validacionUsuarioCorreo = User::where('email',$request['email'])->first();
-            if($request['multi_select_roles_create']==1){
-                $rolgesap = Role::Where('name','=','EstudianteGesap')->first();
-                $request['multi_select_roles_create'] = $rolgesap->id;
-            }elseif($request['multi_select_roles_create']==2){
-                $rolgesap = Role::Where('name','=','DocenteGesap')->first();
-                $request['multi_select_roles_create'] = $rolgesap->id;
-            }elseif($request['multi_select_roles_create']==3){
-                $rolgesap = Role::Where('name','=','AdminGesap')->first();
-                $request['multi_select_roles_create'] = $rolgesap->id;
-            }
+               
+            if($validacionUsuarioCorreo != null && $validacionUsuario != null){
+                //esta registrado en developer con id y correo igual
+                $validarusuariogesap = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
+                $i = 0 ;
+                foreach ($validacionUsuario ->roles as $role){
+                    if($i == 0){
+                        $aux = $role->id;
+                        $i = 1 ;
+                    }else{
+                        $aux = $aux.",".$role->id;
+                    }
+                }
+                
+                
+            
+                $aux =$aux.','.$request['multi_select_roles_create'];
+                $roles = $aux;
+                $validacionUsuario->roles()->sync(
+                    ($roles !== null) ? explode(',', $roles) : []
+                );
 
-            if($validacionUsuarioCorreo != null){
+                Usuarios::create([
+                    'PK_User_Codigo' => $request['identity_no'],
+                    'User_Codigo' => $request['User_Codigo'],
+                    'User_Nombre1' => $request['name'],
+                    'User_Apellido1' => $request['lastname'],
+                    'User_Correo' => $request['email'],
+                    'User_Contra' => 12345,
+                    'User_Direccion' => $request['address_create'],
+                    'FK_User_IdEstado' => 1,
+                    'FK_User_IdRol' => $request['rol_gesap'],
+                    ]);
+
+                    if($userudec = UsersUdec::where('number_document',$request['identity_no'])->first() == null){
+                        UsersUdec::create([
+
+                            'number_document' => $request['identity_no'],
+                            'code' => $request['User_Codigo'],
+                            'username' => $request['name'],               
+                            'lastname' => $request['lastname'],
+                            'type_user'=>$request['rol_gesap'],
+                            'place'=>"Facatativá",
+                            'email' => $request['email'],
+                            
+                        ]);
+                   
+                    }
+                    
+    
+                    
+                    return AjaxResponse::success(
+                        '¡Bien hecho!',
+                        'Datos modificados correctamente.'
+                    );
+
+
+
+            }elseif($validacionUsuarioCorreo != null  && $validacionUsuario == null){
+                //esta registrado el correo
                 $IdError = 422;
                 return AjaxResponse::success(
                     '¡Error!',
-                    'Ese Correo Ya se encuentra registrado!.',
+                    'Ese correo ya se encuentra registrado.',
+                    $IdError
+                );
+            }elseif($validacionUsuarioCorreo == null  && $validacionUsuario != null){
+                //esta registrado con un correo diferente
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Error!',
+                    'Ese docuemnto ya se encuentra registrado.',
                     $IdError
                 );
             }else{
-
-            if($validacionUsuario == null){
                     
                 $request['password'] = substr( $request['identity_no'], 0,5);
                 $user = $this->userRepository->store($request->all());
@@ -232,18 +296,6 @@ class UserControllerGesap extends Controller
                 ];
                 $user->notify(new HeaderSiaaf($data));
 
-                UsersUdec::create([
-
-                    'number_document' => $request['identity_no'],
-                    'code' => $request['User_Codigo'],
-                    'username' => $request['name'],               
-                    'lastname' => $request['lastname'],
-                    'type_user'=>$request['rol_gesap'],
-                    'place'=>"Facatativá",
-                    'email' => $request['email'],
-                    
-                ]);
-           
 
                 Usuarios::create([
                     'PK_User_Codigo' => $request['identity_no'],
@@ -258,74 +310,36 @@ class UserControllerGesap extends Controller
                 ]);
 
               
+                if($userudec = UsersUdec::where('number_document',$request['identity_no'])->first() == null){
+                    UsersUdec::create([
+
+                        'number_document' => $request['identity_no'],
+                        'code' => $request['User_Codigo'],
+                        'username' => $request['name'],               
+                        'lastname' => $request['lastname'],
+                        'type_user'=>$request['rol_gesap'],
+                        'place'=>"Facatativá",
+                        'email' => $request['email'],
+                        
+                    ]);
                
+                }
+           
 
 
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos creados correctamente.'
                 );
-        }else{
-            if($validacionUsuario->email != $request['email']){
-                $IdError = 422;
-                return AjaxResponse::success(
-                    '¡Error!',
-                    'Ya Estas Registrado Pero Con Correos Diferentes, !revisa!.',
-                    $IdError
-                );
-            }else{
-                    // aca los datos de developer estan duplicados//
-                    $validarusuariogesap = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
-                    $i = 0 ;
-                    foreach ($validacionUsuario ->roles as $role){
-                        if($i == 0){
-                            $aux = $role->id;
-                            $i = 1 ;
-                        }else{
-                            $aux = $aux.",".$role->id;
-                        }
-                    }
-                    
-                    
-                
-                    $aux =$aux.','.$request['multi_select_roles_create'];
-                    $roles = $aux;
-                    $validacionUsuario->roles()->sync(
-                        ($roles !== null) ? explode(',', $roles) : []
-                    );
-
-                    Usuarios::create([
-                    'PK_User_Codigo' => $request['identity_no'],
-                    'User_Codigo' => $request['User_Codigo'],
-                    'User_Nombre1' => $request['name'],
-                    'User_Apellido1' => $request['lastname'],
-                    'User_Correo' => $request['email'],
-                    'User_Contra' => 12345,
-                    'User_Direccion' => $request['address_create'],
-                    'FK_User_IdEstado' => 1,
-                    'FK_User_IdRol' => $request['rol_gesap'],
-                    ]);
-
-                      
-                    
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-
-            }
-       
         }
-    }
-            }
 
-
+        }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-    }
 
+    }
     /**
      * Store a newly created resource in storage.
      *
