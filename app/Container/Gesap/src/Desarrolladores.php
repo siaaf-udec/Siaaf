@@ -10,14 +10,14 @@ class Desarrolladores extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_desarrolladores';
+    protected $table = 'TBL_Desarrolladores';
 
-    protected $primaryKey = 'PK_Id_desarrollo';
+    protected $primaryKey = 'PK_Id_Desarrollo';
 
     protected $fillable = [
         'FK_NPRY_IdMctr008'
         ,'FK_User_Codigo'
-        ,'Fk_IdEstado'
+        ,'FK_IdEstado'
     ];
 
     

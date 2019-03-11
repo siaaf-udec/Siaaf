@@ -50,7 +50,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
                                
@@ -76,7 +76,7 @@
 
                     <h4> Observaciónes acerca de esta Actividad del Mct</h4>
                     <br><br>
-                    @permission('DOCENTE_COMENT')<a href="javascript:;"
+                    @permission('GESAP_DOCENTE_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -95,13 +95,13 @@
                      <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_DOCENTE')<a href="javascript:;"
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
                                 @if( $datos['Estado'] == "EN CALIFICACIÓN" )
-                                @permission('APROBAR_ACTIVIDAD')<a href="javascript:;"
+                                @permission('GESAP_DOCENTE_APROBAR_ACTIVIDAD')<a href="javascript:;"
                                                                class="btn btn-warning yellow button-Avalar"><i
                                 ></i>
                                     Aprobar Actividad
@@ -141,7 +141,7 @@ $(document).ready(function(){
          
         columns = [
             {data: 'updated_at', name: 'updated_at'},
-            {data: 'OBS_observacion', name: 'OBS_observacion'},
+            {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},
             {data: 'OBS_Limit', name: 'OBS_Limit'},
             

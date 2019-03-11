@@ -31,7 +31,7 @@
  
 
 @section('content')
-    @permission('DOCENTE_GESAP')
+    @permission('GESAP_DOCENTE')
      <!--MODAL CREAR COMENTARIO-->
             <!-- Modal -->
             <div class="modal fade" id="modal-create-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
@@ -103,13 +103,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('DOCENTE_SOLICITUD')<a href="javascript:;"
+                        @permission('GESAP_DOCENTE_SOLICITUD')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Solicitud"
                                                        title="Solicitud">
                             <i class="fa fa-plus">
                             </i>Solicitudes
                         </a>@endpermission
-                        @permission('MY_SOLICITUD')<a href="javascript:;"
+                        @permission('GESAP_DOCENTE_MY_SOLICITUD')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon MySolicitud"
                                                        title="Mis Solicitudes">
                             <i class="fa fa-plus">
@@ -325,7 +325,7 @@ jQuery(document).ready(function () {
             {data: 'Sol_Estado', name: 'Sol_Estado'},
       
             {
-                defaultContent: ' @permission('DELETE_SOL')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: ' @permission('GESAP_DOCENTE_DELETE_SOL')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -351,7 +351,7 @@ jQuery(document).ready(function () {
         e.preventDefault();
         $tr = $(this).closest('tr');
         var dataTable = tablesol.row($tr).data();
-        var route = '{{ route('DocenteGesap.EliminarSolicitud') }}'+'/'+dataTable.Pk_Id_Solicitud;
+        var route = '{{ route('DocenteGesap.EliminarSolicitud') }}'+'/'+dataTable.PK_Id_Solicitud;
         var type = 'DELETE';
         var async = async || false;
         swal({
@@ -421,7 +421,7 @@ jQuery(document).ready(function () {
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -462,7 +462,7 @@ jQuery(document).ready(function () {
             {data: 'Director', name: 'Director'},
            
             {
-                defaultContent: ' @permission('VER_ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -494,7 +494,7 @@ jQuery(document).ready(function () {
             {data: 'Estado', name: 'Estado'},
            
             {
-                defaultContent: ' @permission('VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -524,7 +524,7 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {
-                defaultContent: ' @permission('VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

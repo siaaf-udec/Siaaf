@@ -70,7 +70,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('ADMIN_GESAP')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver

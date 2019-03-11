@@ -15,7 +15,7 @@ class CreateEstadosAnteproyectosGesap extends Migration
     {
         Schema::connection('gesap')->create('TBL_Estado_Anteproyecto', function (Blueprint $table) {
             $table->increments('PK_EST_Id');
-            $table->string('EST_estado', 70);
+            $table->string('EST_Estado', 70);
             $table->timestamps();
         });
     }

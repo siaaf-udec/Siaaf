@@ -45,12 +45,12 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
-                                @permission('SUBMIT_GESAP'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_ADMIN_SUBMIT'){{ Form::submit('Guardar Cambios', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>

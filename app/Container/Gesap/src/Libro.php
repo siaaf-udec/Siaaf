@@ -10,7 +10,7 @@ class Libro extends Model
 
     protected $connection = 'gesap';
 
-     protected $table = 'tbl_libro';
+     protected $table = 'TBL_Libro';
  
      protected $primaryKey = 'PK_PYT_Libro';
      

@@ -30,20 +30,20 @@
 @section('page-title', 'Usuarios del Modulo Gesap')
 
 @section('content')
-    @permission('ADMIN_GESAP')
+    @permission('GESAP_ADMIN')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Usuarios registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                        @permission('ADD_USER')<a href="javascript:;"
+                        @permission('GESAP_ADMIN_ADD_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar un nuevo usuario">
                             <i class="fa fa-plus">
                             </i>Nuevo
                         </a>@endpermission
-                        @permission('USER_REPORTS')<a href="javascript:;"
+                        @permission('GESAP_ADMIN_USER_REPORTS')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Usuarios</a>@endpermission
@@ -117,7 +117,7 @@
             {data: 'Rol', name: 'Rol'},
            
             {
-                defaultContent: '@permission('USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('CANCEL_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

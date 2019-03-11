@@ -44,7 +44,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-        {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+        {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
        <iframe src="{{ asset(Storage::url($datos['Commit'])) }}"embedded="true" width="800" height="500" style="border: none;"></iframe>
@@ -71,13 +71,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('CANCEL_STUDENT')<a href="javascript:;"
+                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>@endpermission
                                 @if($datos['Estado'] != "APROBADO" )
-                                @permission('ADD_ACTIVIDAD_STUDENT'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_STUDENT_ADD_ACTIVIDAD'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
                                 @endif
                             </div>
                             
@@ -86,7 +86,7 @@
                     </div>
                     <h4> Observaciónes acerca de esta Actividad del Libro</h4>
                     <br><br>
-                    @permission('STUDENT_COMENT')<a href="javascript:;"
+                    @permission('GESAP_STUDENT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -127,7 +127,7 @@ $(document).ready(function(){
          
         columns = [
             {data: 'updated_at', name: 'updated_at'},
-            {data: 'OBS_observacion', name: 'OBS_observacion'},
+            {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},            
             {data: 'OBS_Limit', name: 'OBS_Limit'},
             
