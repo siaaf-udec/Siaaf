@@ -15,7 +15,6 @@ use Validator;
 use Yajra\DataTables\DataTables;
 use App\Container\Users\src\User;
 use App\Container\Gesap\src\Usuarios;
-use App\Container\Users\src\UsersUdec;
 use App\Container\Permissions\src\Role;
 
 class UserControllerGesap extends Controller
@@ -175,7 +174,7 @@ class UserControllerGesap extends Controller
 
             /*Guarda Usuario*/
             $validacionUsuario = User::where('identity_no',$request['identity_no'])->first();
-            $validacionUsuarioCorreo = User::where('email',$request['email'])->first();
+         
             if($request['multi_select_roles_create']==1){
                 $rolgesap = Role::Where('name','=','EstudianteGesap')->first();
                 $request['multi_select_roles_create'] = $rolgesap->id;
@@ -186,15 +185,6 @@ class UserControllerGesap extends Controller
                 $rolgesap = Role::Where('name','=','AdminGesap')->first();
                 $request['multi_select_roles_create'] = $rolgesap->id;
             }
-
-            if($validacionUsuarioCorreo != null){
-                $IdError = 422;
-                return AjaxResponse::success(
-                    '¡Error!',
-                    'Ese Correo Ya se encuentra registrado!.',
-                    $IdError
-                );
-            }else{
 
             if($validacionUsuario == null){
                     
@@ -232,19 +222,6 @@ class UserControllerGesap extends Controller
                 ];
                 $user->notify(new HeaderSiaaf($data));
 
-                UsersUdec::create([
-
-                    'number_document' => $request['identity_no'],
-                    'code' => $request['User_Codigo'],
-                    'username' => $request['name'],               
-                    'lastname' => $request['lastname'],
-                    'type_user'=>$request['rol_gesap'],
-                    'place'=>"Facatativá",
-                    'email' => $request['email'],
-                    
-                ]);
-           
-
                 Usuarios::create([
                     'PK_User_Codigo' => $request['identity_no'],
                     'User_Codigo' => $request['User_Codigo'],
@@ -256,14 +233,12 @@ class UserControllerGesap extends Controller
                     'FK_User_IdEstado' => 1,
                     'FK_User_IdRol' => $request['rol_gesap'],
                 ]);
-
-              
                
 
 
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Datos creados correctamente.'
+                    'Datos modificados correctamente.'
                 );
         }else{
             if($validacionUsuario->email != $request['email']){
@@ -306,7 +281,6 @@ class UserControllerGesap extends Controller
                     'FK_User_IdRol' => $request['rol_gesap'],
                     ]);
 
-                      
                     
                     return AjaxResponse::success(
                         '¡Bien hecho!',
@@ -316,7 +290,6 @@ class UserControllerGesap extends Controller
             }
        
         }
-    }
             }
 
 

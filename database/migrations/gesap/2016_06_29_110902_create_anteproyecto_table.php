@@ -27,7 +27,7 @@ class CreateAnteproyectoTable extends Migration
             $table->integer('FK_NPRY_Estado')->unsigned();
             $table->foreign('FK_NPRY_Estado')
                 ->references('PK_EST_Id')
-                ->on('TBL_Estado_Anteproyecto')
+                ->on('tbl_Estado_Anteproyecto')
                 ->onDelete('cascade');
             $table->date('NPRY_FCH_Radicacion');
             $table->timestamps();

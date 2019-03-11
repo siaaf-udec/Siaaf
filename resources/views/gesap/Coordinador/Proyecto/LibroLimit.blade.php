@@ -27,13 +27,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
-                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
+                                @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('GESAP_ADMIN_ADD_USER'){{ Form::submit('Cambiar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_CREATE_USER'){{ Form::submit('Cambiar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                         

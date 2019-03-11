@@ -13,8 +13,8 @@ class CreateDesarrolladores extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Desarrolladores', function (Blueprint $table) {
-            $table->increments('PK_Id_Desarrollo');
+        Schema::connection('gesap')->create('TBL_desarrolladores', function (Blueprint $table) {
+            $table->increments('PK_Id_desarrollo');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
                 ->references('PK_NPRY_IdMctr008')
@@ -27,7 +27,7 @@ class CreateDesarrolladores extends Migration
                 ->onDelete('cascade');
             $table->integer('Fk_IdEstado')->unsigned();
             $table->foreign('Fk_IdEstado')
-                ->references('PK_IdEstado')
+                ->references('Pk_IdEstado')
                 ->on('TBL_Estados')
                 ->onDelete('cascade');
            

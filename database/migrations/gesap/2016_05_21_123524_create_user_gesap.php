@@ -26,7 +26,7 @@ class CreateUserGesap extends Migration
             $table->String('User_Direccion', 70)->nullable();
             $table->integer('FK_User_IdEstado')->unsigned();
             $table->foreign('FK_User_IdEstado')
-                ->references('PK_IdEstado')
+                ->references('Pk_IdEstado')
                 ->on('TBL_Estados')
                 ->onDelete('cascade');
             $table->integer('FK_User_IdRol')->unsigned();

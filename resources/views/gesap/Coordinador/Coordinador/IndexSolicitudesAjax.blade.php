@@ -3,7 +3,7 @@
 @section('page-title', 'Solicitudes Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-    @permission('GESAP_ADMIN')
+    @permission('ADMIN_GESAP')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Solicitudes registradas:'])
             <br>
@@ -80,7 +80,7 @@
            
       
             {
-                defaultContent: ' @permission('GESAP_ADMIN_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -104,7 +104,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_ver = '{{ route('CoordinadorGesap.VerProyectoSolicitud') }}' + '/' + dataTable.IdProyecto + '/' + dataTable.PK_Id_Solicitud;
+                route_ver = '{{ route('CoordinadorGesap.VerProyectoSolicitud') }}' + '/' + dataTable.IdProyecto + '/' + dataTable.Pk_Id_Solicitud;
             $(".content-ajax").load(route_ver);
         });
 

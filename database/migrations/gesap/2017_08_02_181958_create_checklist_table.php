@@ -13,7 +13,7 @@ class CreateChecklistTable extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Checklist', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_checklist', function (Blueprint $table) {
             $table->increments('PK_CHK_Checklist');
             $table->string('CHK_Checlist');
             $table->string('CHK_Checlist_Data');

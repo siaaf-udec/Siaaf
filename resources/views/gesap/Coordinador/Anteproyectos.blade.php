@@ -30,7 +30,7 @@
 @section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-    @permission('GESAP_ADMIN')
+    @permission('ADMIN_GESAP')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
@@ -43,13 +43,13 @@
                             <i class="fa fa-plus">
                             </i>Gestionar Mct
                         </a>@endpermission
-                        @permission('GESAP_ADMIN_CREATE_ANTE')<a href="javascript:;"
+                        @permission('GESAP_CREATE_USER')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
                             </i>Nuevo Anteproyecto
                         </a>@endpermission
-                        @permission('GESAP_ADMIN_REPORT_ANTE_ALL')<a href="javascript:;"
+                        @permission('GESAP_REPORT_ANTE_ALL')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Anteproyectos</a>@endpermission
@@ -125,7 +125,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: '@permission('GESAP_ADMIN_REPORT_ANTE')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_ADMIN_VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('REPORT_ANTE')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('CANCEL_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

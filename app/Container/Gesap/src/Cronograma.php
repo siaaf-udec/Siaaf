@@ -16,8 +16,8 @@ class Cronograma extends Model
 
     protected $fillable = [
         'MCT_CRN_Actividad',
-        'MCT_CRN_Semana_Inicio',
-        'MCT_CRN_Semana_Fin',
+        'MCT_CRN_Semana_inicio',
+        'MCT_CRN_Semana_fin',
         'MCT_CRN_Responsable',
         'FK_NPRY_IdMctr008'
     ];

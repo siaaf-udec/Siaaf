@@ -46,7 +46,7 @@
                     </div>
                    
                             @if($datos['Estado'] == "EN ESPERA" )
-                            @permission('GESAP_ADMIN_ADD_DEVELOPER_VW')<a href="javascript:;"
+                            @permission('ADD_DEVELOPER_VW')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon desarrollador"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
@@ -65,7 +65,7 @@
                         @endcomponent
                         @if($datos['Estado'] == "RADICADO" )
                         <h4> JURADOS ASIGNADOS </h4>
-                        @permission('GESAP_ADMIN_ADD_JUDMENT_VW')<a href="javascript:;"
+                        @permission('ADD_JUDMENT_VW')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon juez"
                                                        title="Registar un nuevo anteproyecto">
                             <i class="fa fa-plus">
@@ -84,7 +84,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -139,7 +139,7 @@
             
       
             {
-                defaultContent: '@permission('GESAP_ADMIN_DELETE_DEVELOPER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('DELETE_DEVELOPER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -225,7 +225,7 @@
             
       
             {
-                defaultContent: '@permission('GESAP_ADMIN_DELETE_JUDMENT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon removej"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('DELETE_JUDMENT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon removej"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

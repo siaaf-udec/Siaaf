@@ -13,7 +13,7 @@ class CreateObservacionesMctJurado extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Observaciones_Mct_Jurado', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_Observaciones_mct_jurado', function (Blueprint $table) {
             $table->increments('PK_Id_Observacion_Jurado');       
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
@@ -32,7 +32,7 @@ class CreateObservacionesMctJurado extends Migration
                         ->onDelete('cascade');
                         
             $table->Integer('OBS_Formato');
-            $table->string('OBS_Observacion', 600);
+            $table->string('OBS_observacion', 600);
             
           
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateCommitsAnteproyecto extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Commits_Anteproyecto', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_commits_anteproyecto', function (Blueprint $table) {
             $table->increments('PK_Id_Commit');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
@@ -33,7 +33,7 @@ class CreateCommitsAnteproyecto extends Migration
             $table->Integer('FK_CHK_Checklist')->unsigned();
             $table->foreign('FK_CHK_Checklist')
                         ->references('PK_CHK_Checklist')
-                        ->on('TBL_Checklist')
+                        ->on('TBL_checklist')
                         ->onDelete('cascade');
             $table->Integer('CMMT_Formato');//diferenciar actividades de MCT y de Proyecto para radicar
             $table->String('CMMT_Commit', 9000);

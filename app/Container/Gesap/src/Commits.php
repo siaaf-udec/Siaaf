@@ -10,7 +10,7 @@ class Commits extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'TBL_Commits_Anteproyecto';
+    protected $table = 'TBL_commits_anteproyecto';
 
     protected $primaryKey = 'PK_Id_Commit';
 

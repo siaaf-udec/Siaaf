@@ -55,7 +55,7 @@
 
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
-                    @permission('GESAP_DOCENTE_DECISION_JUDMENT')<a href="javascript:;"
+                    @permission('DECISION_JUDMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -83,7 +83,7 @@
                      <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_DOCENTE')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Regresar
@@ -210,7 +210,7 @@ $(document).ready(function(){
          
         columns1 = [
             {data: 'created_at', name: 'created_at'},
-            {data: 'OBS_Observacion', name: 'OBS_Observacion'},
+            {data: 'OBS_observacion', name: 'OBS_observacion'},
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Actividad', name: 'Actividad'}
           

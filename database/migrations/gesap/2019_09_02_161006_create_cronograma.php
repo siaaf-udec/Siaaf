@@ -16,8 +16,8 @@ class CreateCronograma extends Migration
         Schema::connection('gesap')->create('TBL_MCT_Cronograma', function (Blueprint $table) {
             $table->increments('PK_Id_Cronograma');
             $table->String('MCT_CRN_Actividad');
-            $table->String('MCT_CRN_Semana_Inicio');
-            $table->String('MCT_CRN_Semana_Fin');
+            $table->String('MCT_CRN_Semana_inicio');
+            $table->String('MCT_CRN_Semana_fin');
             $table->String('MCT_CRN_Responsable');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')

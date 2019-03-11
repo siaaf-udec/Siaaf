@@ -50,12 +50,6 @@ class ActividadesGesapSeeder extends Seeder
             ['MCT_Actividad'=>'Requisitos de Rendimiento', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             ['MCT_Actividad'=>'Requisitos de Diseño', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
             ['MCT_Actividad'=>'Requisitos del Sistema', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'2'],
-            ///Libro
-            ['MCT_Actividad'=>'Libro de Software', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'3'],
-            ['MCT_Actividad'=>'Libro', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'3'],
-            ['MCT_Actividad'=>'Libro', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'3'],
-            ['MCT_Actividad'=>'Libro de Diseño', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'3'],
-            ['MCT_Actividad'=>'Libro del Sistema', 'MCT_Descripcion'=>'Una tabla más específica del financiamiento del proyecto, dividiendo por categorías lo que se necesita para el desarrollo del m', 'FK_Id_Formato'=>'3'],
             
 
         ]);

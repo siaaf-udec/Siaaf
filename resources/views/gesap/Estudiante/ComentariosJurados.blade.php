@@ -22,7 +22,7 @@
                         @if($Anteproyecto['FK_NPRY_Estado'] > 3)
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ComentariosJurados'])
                         @slot('columns', [
-                          
+                            '#',
                             'Jurado',
                             'Comentario'
                         ])
@@ -32,7 +32,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver

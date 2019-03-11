@@ -73,7 +73,7 @@ class CoordinatorController extends Controller
 	{
 		
         if ($request->ajax() && $request->isMethod('GET')) {
-            $solicitud = Solicitud::where('PK_Id_Solicitud',$ids)->first();
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
             $solicitud ->Sol_Estado = 'Realizada';
             $solicitud -> save();
             return view($this->path . 'Coordinador.IndexSolicitudes');
@@ -140,7 +140,7 @@ class CoordinatorController extends Controller
 	{
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $solicitud = Solicitud::where('PK_Id_Solicitud',$ids)->first();
+            $solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
             $solicitud ->Sol_Estado = 'Realizada';
             $solicitud -> save();
 
@@ -305,7 +305,7 @@ class CoordinatorController extends Controller
            $i2=0;
 
            foreach($anteproyecto as $ante){
-            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
+            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
            
                $i=$i+1;
            }
@@ -395,7 +395,7 @@ class CoordinatorController extends Controller
                     $proyecto->offsetSet('Descripcion',$Anteproyecto->NPRY_Descripcion);
                     $proyecto->offsetSet('Duracion',$Anteproyecto->NPRY_Duracion);
                     $proyecto->offsetSet('Director',$Anteproyecto->relacionPredirectores -> User_Nombre1. " ".$Anteproyecto -> relacionPredirectores -> User_Apellido1 );
-                    $proyecto->offsetSet('Estado',$proyecto->relacionEstado->EST_Estado);
+                    $proyecto->offsetSet('Estado',$proyecto->relacionEstado->EST_estado);
                     $proyecto->offsetSet('Fecha',$proyecto->PYT_Fecha_Radicacion);
 
 
@@ -475,7 +475,7 @@ class CoordinatorController extends Controller
                 );
             }else{
                 foreach($Desarrolladores as $Desarrollador){
-                    $Desarrollador -> FK_IdEstado = 2;
+                    $Desarrollador -> Fk_IdEstado = 2;
                     $Desarrollador -> save();
                 }
 
@@ -598,7 +598,7 @@ class CoordinatorController extends Controller
             $concatenado=[];
               foreach($usuarios as $user){
       
-                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->where('FK_IdEstado',1)->first();
+                   $desarrollador= Desarrolladores::where('FK_User_Codigo',  $user->PK_User_Codigo)->where('Fk_IdEstado',1)->first();
                        
                  
                    if(is_null($desarrollador)){
@@ -779,7 +779,7 @@ class CoordinatorController extends Controller
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             
           
-            $estado = $infoAnteproyecto -> relacionEstado -> EST_Estado;
+            $estado = $infoAnteproyecto -> relacionEstado -> EST_estado;
 
             $Nombre = $infoAnteproyecto -> relacionPredirectores-> User_Nombre1;
             
@@ -813,7 +813,7 @@ class CoordinatorController extends Controller
 
             $Proyectos= Proyecto::where('FK_NPRY_IdMctr008',$id)->get();
             foreach($Proyectos as $Proyecto){
-            $Proyecto->offsetSet('Estado',$Proyecto->relacionEstado->EST_Estado);
+            $Proyecto->offsetSet('Estado',$Proyecto->relacionEstado->EST_estado);
             $Proyecto->offsetSet('id_proyecto',$Proyecto->FK_NPRY_IdMctr008);
             
             $Proyecto->offsetSet('Director',$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Nombre1. " ".$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Apellido1 );
@@ -845,7 +845,7 @@ class CoordinatorController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $Solicitud = Solicitud::where('PK_Id_Solicitud',$ids)->first();
+            $Solicitud = Solicitud::where('Pk_Id_Solicitud',$ids)->first();
             $Proyecto= Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
 
 
@@ -936,7 +936,7 @@ class CoordinatorController extends Controller
             Desarrolladores::create([
                 'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                 'FK_User_Codigo' => $request['PK_User_Codigo'],
-                'FK_IdEstado' => 1 ,
+                'Fk_IdEstado' => 1 ,
                
             ]);
             
@@ -1187,7 +1187,7 @@ class CoordinatorController extends Controller
             $datos = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->first();
             $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->get();
 
-            $estado = $datos-> relacionEstado-> EST_Estado;
+            $estado = $datos-> relacionEstado-> EST_estado;
 
             $infoAnte->put('Estado',$estado);
             
@@ -1220,7 +1220,7 @@ class CoordinatorController extends Controller
                 );
             }else{
                 foreach($Desarrolladores as $Desarrollador){
-                    $Desarrollador -> FK_IdEstado = 2;
+                    $Desarrollador -> Fk_IdEstado = 2;
                     $Desarrollador -> save();
                 }
 

@@ -12,7 +12,7 @@ class Solicitud extends Model
 
     protected $table = 'TBL_Solicitud';
 
-    protected $primaryKey = 'PK_Id_Solicitud';
+    protected $primaryKey = 'Pk_Id_Solicitud';
 
     protected $fillable = [
         'Sol_Solicitud',

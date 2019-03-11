@@ -10,7 +10,7 @@ class Checklist extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'TBL_Checklist';
+    protected $table = 'TBL_checklist';
 
     protected $primaryKey = 'PK_CHK_Checklist';
 

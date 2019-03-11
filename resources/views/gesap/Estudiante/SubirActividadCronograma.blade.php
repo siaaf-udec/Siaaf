@@ -127,7 +127,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: text('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Descripcion',$datos[0]['MCT_descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
                                
@@ -139,7 +139,7 @@
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
                     @if($datos['Estado'] != "APROBADO" )
                                 
-                    @permission('GESAP_STUDENT_ADD_ACTIVIDAD')<a href="javascript:;"
+                    @permission('ADD_ACTIVIDAD_STUDENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -173,7 +173,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -186,7 +186,7 @@
                     </div>
                     <h4> Observaciónes acerca de esta Actividad del Mct</h4>
                     <br><br>
-                    @permission('GESAP_STUDENT_COMENT')<a href="javascript:;"
+                    @permission('STUDENT_COMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -241,7 +241,7 @@ $(document).ready(function(){
          
         columns = [
             {data: 'updated_at', name: 'updated_at'},
-            {data: 'OBS_Observacion', name: 'OBS_Observacion'},
+            {data: 'OBS_observacion', name: 'OBS_observacion'},
             {data: 'Usuario', name: 'Usuario'},            
             {data: 'OBS_Limit', name: 'OBS_Limit'},
             
@@ -334,7 +334,7 @@ $(document).ready(function(){
             {data: 'MCT_CRN_Responsable', name: 'MCT_CRN_Responsable'},
            
             {
-                defaultContent: ' @permission('GESAP_STUDENT_DELETE')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('GESAP_STUDENT_UPDATE')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('UPDATE_STUDENT')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -507,8 +507,8 @@ $(document).ready(function(){
             var dataTable1 = table1.row($tr1).data();
             id_cronograma = dataTable1.PK_Id_Cronograma;
             $('#MCT_EDITAR_CRN_Actividad').val(dataTable1.MCT_CRN_Actividad);
-            $('#MCT_EDITAR_CRN_Semana_inicio').val(dataTable1.MCT_CRN_Semana_Inicio);
-            $('#MCT_EDITAR_CRN_Semana_fin').val(dataTable1.MCT_CRN_Semana_Fin);
+            $('#MCT_EDITAR_CRN_Semana_inicio').val(dataTable1.MCT_CRN_Semana_inicio);
+            $('#MCT_EDITAR_CRN_Semana_fin').val(dataTable1.MCT_CRN_Semana_fin);
             $('#MCT_EDITAR_CRN_Responsable').val(dataTable1.MCT_CRN_Responsable);
         });
 

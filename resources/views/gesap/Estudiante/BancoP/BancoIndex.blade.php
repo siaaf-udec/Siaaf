@@ -41,7 +41,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_STUDENT')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -91,7 +91,7 @@
             {data: 'Director', name: 'Director'},
 
              {
-                defaultContent: '@permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Ver Archivos" class="btn btn-simple btn-warning btn-icon Ver"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('VER_FOLDER')<a href="javascript:;" title="Ver Archivos" class="btn btn-simple btn-warning btn-icon Ver"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -129,7 +129,7 @@
             {data: 'Director', name: 'Director'},
 
              {
-                defaultContent: '@permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Ver Archivos" class="btn btn-simple btn-warning btn-icon Ver"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('VER_FOLDER')<a href="javascript:;" title="Ver Archivos" class="btn btn-simple btn-warning btn-icon Ver"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

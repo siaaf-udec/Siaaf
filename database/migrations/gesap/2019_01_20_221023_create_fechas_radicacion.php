@@ -13,7 +13,7 @@ class CreateFechasRadicacion extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Fechas_Radicacion', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_fechas_radicacion', function (Blueprint $table) {
             $table->increments('PK_Id_Radicacion');
             $table->date('FCH_Radicacion');
            

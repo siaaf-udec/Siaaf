@@ -11,7 +11,7 @@
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([$Anteproyecto], ['id'=>'form_mct_actividades', 'url' => '/forms'])  !!}
 
-                @permission('GESAP_DOCENTE_VER_REQ')<a href="javascript:;"
+                @permission('VER_REQ_DOCENTE')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Requerimientos"
                                                        title="Requerimientos">
                             <i class="fa fa-plus">
@@ -33,7 +33,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_DOCENTE')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -80,12 +80,12 @@
         columns = [
             {data: 'Numero', name: 'Numero'},
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
-            {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
+            {data: 'MCT_descripcion', name: 'MCT_descripcion'},
             
             
       
             {
-                defaultContent: '@permission('GESAP_DOCENTE_VER_ACT')<a href="javascript:;" title="Ver Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('VER_ACT_DOCENTE')<a href="javascript:;" title="Ver Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

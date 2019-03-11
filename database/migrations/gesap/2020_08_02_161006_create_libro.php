@@ -17,7 +17,16 @@ class CreateLibro extends Migration
             $table->increments('PK_PYT_Libro');
             $table->String('PYT_Actividad', 50);
             $table->String('PYT_Descripcion', 500);
-      
+            /*
+            $table->integer('FK_Id_Formato')->unsigned();
+            $table->foreign('FK_Id_Formato')
+                    ->references('PK_Id_Formato')
+                    ->on('TBL_MCT_Formato')
+                    ->onDelete('cascade');
+            
+
+            $table->timestamps();
+     */
         });
     }
 

@@ -27,8 +27,8 @@ class PersonaMct extends Model
         'MCT_Detalles_Numero',
         'MCT_Detalles_Funcion',
         'MCT_Detalles_Horas_Semanales',
-        'MCT_Detalles_Numero_Meses',
-        'MCT_Detalles_Tipo_Vinculacion',
+        'MCT_Detalles_Numero_meses',
+        'MCT_Detalles_Tipo_vinculacion',
         'FK_NPRY_IdMctr008'
     ];
     

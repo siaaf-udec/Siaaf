@@ -9,7 +9,7 @@
     </a>
 
     <ul class="sub-menu">
-		@permission('GESAP_DOCENTE')
+		@permission('DOCENTE_GESAP')
 		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
     	   <a href="{{ route('DocenteGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-list-alt"></i>
@@ -17,7 +17,7 @@
             </a>    	    	
     	</li>
 		@endpermission
-		@permission('GESAP_STUDENT')
+		@permission('STUDENT_GESAP')
 		<li class="nav-item {{ active(['EstudianteGesap.*'], 'start active open') }}">
     	   <a href="{{ route('EstudianteGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-list-alt"></i>
@@ -25,7 +25,7 @@
             </a>    	    	
     	</li>
 		@endpermission
-		@permission('GESAP_ADMIN')
+		@permission('ADMIN_GESAP')
 		<li class="nav-item {{ active(['AnteproyectosGesap.*'], 'start active open') }}">
     	   <a href="{{ route('AnteproyectosGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-list-alt"></i>
@@ -33,7 +33,7 @@
             </a>    	    	
     	</li>
 		@endpermission
-		@permission('GESAP_ADMIN')
+		@permission('ADMIN_GESAP')
 		<li class="nav-item {{ active(['Proyectos*'], 'start active open') }}">
 			<a href="{{ route('Proyectos.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-list-alt"></i>
@@ -42,7 +42,7 @@
 		</li>
 		
 		@endpermission
-		@permission('GESAP_ADMIN')
+		@permission('ADMIN_GESAP')
 		<li class="nav-item {{ active(['UsuariosGesap.*'], 'start active open') }}">
 			<a href="{{ route('UsuariosGesap.index') }}" class="nav-link nav-toggle">
 				<i class="fa fa-user"></i>
@@ -51,7 +51,7 @@
 		</li>
 		@endpermission
 		
-		@permission('GESAP_ADMIN')
+		@permission('ADMIN_GESAP')
 		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
     	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
      			<i class="fa fa-search"></i>
@@ -59,7 +59,7 @@
 			</a>
 		</li>
 		@endpermission
-		@permission('GESAP_ADMIN')
+		@permission('ADMIN_GESAP')
 		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
     	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
      			<i class="fa fa-search"></i>

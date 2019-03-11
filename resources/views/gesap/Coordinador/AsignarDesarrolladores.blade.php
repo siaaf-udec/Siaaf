@@ -38,7 +38,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
+                                @permission('CANCEL_GESAP')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -91,7 +91,7 @@
             
       
              {
-                defaultContent: '@permission('GESAP_ADMIN_ADD_DEVELOPER')<a href="javascript:;" title="Asignar" class="btn btn-simple btn-warning btn-icon crear"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('ADD_DEVELOPER')<a href="javascript:;" title="Asignar" class="btn btn-simple btn-warning btn-icon crear"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
