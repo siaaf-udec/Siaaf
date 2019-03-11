@@ -10,7 +10,7 @@ class ObservacionesMct extends Model
     
     protected $connection = 'gesap';
 
-    protected $table = 'tbl_observaciones_mct';
+    protected $table = 'TBL_Observaciones_Mct';
 
     protected $primaryKey = 'PK_Id_Observacion';
 
@@ -18,7 +18,7 @@ class ObservacionesMct extends Model
         'FK_NPRY_IdMctr008'
         ,'FK_MCT_IdMctr008'
         ,'FK_User_Codigo'
-        ,'OBS_observacion'
+        ,'OBS_Observacion'
         ,'OBS_Limit'
         
     ];

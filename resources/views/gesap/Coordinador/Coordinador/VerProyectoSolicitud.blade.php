@@ -60,9 +60,9 @@
                     
           
                             {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director:']) !!}
-                            @permission('GESAP_ADMIN_MCT')<a href="javascript:;"
+                            @permission('GESAP_ADMIN_FECHAS_SOLICITUDES')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
-                                                       title="Gestionar Mct">
+                                                       title="fechas">
                             <i class="fa fa-plus">
                             </i>Fechas 
                         </a>@endpermission
@@ -91,9 +91,13 @@
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
                              
-                          
+                               @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
+                                                               class="btn btn-outline red button-volver"><i
+                                            class="fa fa-angle-left"></i>
+                                    Volver 
+                                </a>@endpermission
                               
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline blue button-cerrar"><i
                                             class="fa fa-angle-right"></i>
                                     Cerrar Solicitud
@@ -147,7 +151,6 @@
         });
 
         var $widget_select_Fecha = $('select[name="Select_Fecha1"]');
-        var valorfecha1 = <?php echo $datos['FechaAnteproyecto']; ?>
 
         var route_Fecha = '{{ route('AnteproyectoGesap.FechasRadicacion') }}';
         $.get(route_Fecha, function (response, status) {
@@ -159,7 +162,6 @@
         });
 
         var $widget_select_Fecha2 = $('select[name="Select_Fecha2"]');
-        var valorFecha2 = <?php echo $datos['FechaProyecto']; ?>
 
         var route_Fecha2 = '{{ route('AnteproyectoGesap.FechasRadicacion') }}';
         $.get(route_Fecha2, function (response, status) {
@@ -252,7 +254,7 @@
             
       
             {
-                defaultContent: '@permission('DELETE_DEVELOPER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_ADMIN_DELETE_DEVELOPER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -344,8 +346,65 @@
            
                 
         ids='{{   $datos['IDSolicitud']   }}';  
-   
         $('.button-cerrar').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('CoordinadorGesap.CerrarSolicitud') }}'+'/'+ids;
+            var type = 'GET';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro que desea CERRAR esta Solicitud?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                        console.log(response);
+                                        if (request.status === 200 && xhr === 'success') {
+                                            if (response.data == 422) {
+                                                xhr = "warning"
+                                                UIToastr.init(xhr, response.title, response.message);
+                                                App.unblockUI('.portlet-form');
+                                               
+                                               
+                                            } else {
+                                                table.ajax.reload();
+                                                UIToastr.init(xhr, response.title, response.message);
+                                              
+                           
+                                                }
+                                        }
+                        },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se Cerro ninguna solicitud", "error");
+                    }
+                });
+
+        });
+   
+        $('.button-volver').on('click', function (e) {
+
             e.preventDefault();
             var route = '{{ route('CoordinadorGesap.indexSolicitudes.Ajax') }}'+'/'+ids;
 

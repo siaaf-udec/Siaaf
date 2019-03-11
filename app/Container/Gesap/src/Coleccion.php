@@ -10,10 +10,10 @@ class Coleccion extends Model
     protected $connection = 'gesap';
 
     //la tabla
-     protected $table = 'tbl_coleccion';
+     protected $table = 'TBL_Coleccion';
  
      //la pk
-     protected $primaryKey = 'PK_coleccion';
+     protected $primaryKey = 'PK_Coleccion';
      
      //las q se llenan
     

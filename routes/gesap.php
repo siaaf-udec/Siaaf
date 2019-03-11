@@ -3,7 +3,7 @@
 $controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 Route::group(['middleware' => ['auth']], function () {
-	Route::group(['prefix' => 'AnteproyectosGesap', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+	Route::group(['prefix' => 'AnteproyectosGesap', 'middleware' => ['permission:GESAP_ADMIN']], function () {
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 		Route::get('Mctr008/', [
@@ -147,7 +147,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	//rutas proyectos
 
-	Route::group(['prefix' => 'Proyectos', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+	Route::group(['prefix' => 'Proyectos', 'middleware' => ['permission:GESAP_ADMIN']], function () {
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 		Route::get('ProyectoGesap/', [
@@ -214,7 +214,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	// Rutas para la parte de Usuarios
 
-	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+	Route::group(['prefix' => 'UsuariosGesap', 'middleware' => ['permission:GESAP_ADMIN']], function () {
 			$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 		Route::get('Users/', [
@@ -276,7 +276,7 @@ Route::group(['middleware' => ['auth']], function () {
 		
 	});
 	//rutas estudiantes//
-	Route::group(['prefix' => 'EstudianteGesap', 'middleware' => ['permission:STUDENT_GESAP']], function () {
+	Route::group(['prefix' => 'EstudianteGesap', 'middleware' => ['permission:GESAP_STUDENT']], function () {
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
 		Route::get('index', [
@@ -588,7 +588,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	//
 	//rutas PROFESORES//
-	Route::group(['prefix' => 'DocenteGesap', 'middleware' => ['permission:DOCENTE_GESAP']], function () {
+	Route::group(['prefix' => 'DocenteGesap', 'middleware' => ['permission:GESAP_DOCENTE']], function () {
 		
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 
@@ -826,7 +826,7 @@ Route::group(['middleware' => ['auth']], function () {
 	
 	});
 	//
-	Route::group(['prefix' => 'CoordinadorGesap', 'middleware' => ['permission:ADMIN_GESAP']], function () {
+	Route::group(['prefix' => 'CoordinadorGesap', 'middleware' => ['permission:GESAP_ADMIN']], function () {
 		
 		$controller = "\\App\\Container\\Gesap\\src\\Controllers\\";
 

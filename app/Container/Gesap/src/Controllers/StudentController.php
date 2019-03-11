@@ -213,7 +213,7 @@ class StudentController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
-            $Desarrolladores=Desarrolladores::where('FK_NPRY_IdMctr008',$id)->where('Fk_IdEstado',1)->get();
+            $Desarrolladores=Desarrolladores::where('FK_NPRY_IdMctr008',$id)->where('FK_IdEstado',1)->get();
             if(empty($Desarrolladores)){
                 $Desarrolladores = [];
             }else{
@@ -268,7 +268,7 @@ class StudentController extends Controller
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
-                     'OBS_observacion' => $request['OBS_observacion'],
+                     'OBS_Observacion' => $request['OBS_observacion'],
                      'OBS_Limit' => $request['OBS_Limit']
 
                     ]);
@@ -676,8 +676,8 @@ class StudentController extends Controller
                         'MCT_Detalles_Numero'=>$request['MCT_Detalles_Numero'],
                         'MCT_Detalles_Funcion'=>$request['MCT_Detalles_Funcion'],
                         'MCT_Detalles_Horas_Semanales'=>$request['MCT_Detalles_Horas_Semanales'],
-                        'MCT_Detalles_Numero_meses'=>$request['MCT_Detalles_Numero_meses'],
-                        'MCT_Detalles_Tipo_vinculacion'=>$request['MCT_Detalles_Tipo_vinculacion'],
+                        'MCT_Detalles_Numero_Meses'=>$request['MCT_Detalles_Numero_meses'],
+                        'MCT_Detalles_Tipo_Vinculacion'=>$request['MCT_Detalles_Tipo_vinculacion'],
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
               
 
@@ -720,8 +720,8 @@ class StudentController extends Controller
             $persona -> MCT_Detalles_Numero = $request['MCT_EDITAR_Detalles_Numero'];
             $persona -> MCT_Detalles_Funcion = $request['MCT_EDITAR_Detalles_Funcion'];
             $persona -> MCT_Detalles_Horas_Semanales = $request['MCT_EDITAR_Detalles_Horas_Semanales'];
-            $persona -> MCT_Detalles_Numero_meses = $request['MCT_EDITAR_Detalles_Numero_meses'];
-            $persona -> MCT_Detalles_Tipo_vinculacion = $request['MCT_EDITAR_Detalles_Tipo_vinculacion'];
+            $persona -> MCT_Detalles_Numero_Meses = $request['MCT_EDITAR_Detalles_Numero_meses'];
+            $persona -> MCT_Detalles_Tipo_Vinculacion = $request['MCT_EDITAR_Detalles_Tipo_vinculacion'];
             $persona -> save();
 
             return AjaxResponse::success(
@@ -979,8 +979,8 @@ class StudentController extends Controller
                 $id = $user->identity_no;
                     Cronograma::create([
                         'MCT_CRN_Actividad'=>$request['MCT_CRN_Actividad'],
-                        'MCT_CRN_Semana_inicio'=>$request['MCT_CRN_Semana_inicio'],
-                        'MCT_CRN_Semana_fin'=>$request['MCT_CRN_Semana_fin'],    
+                        'MCT_CRN_Semana_Inicio'=>$request['MCT_CRN_Semana_inicio'],
+                        'MCT_CRN_Semana_Fin'=>$request['MCT_CRN_Semana_fin'],    
                         'MCT_CRN_Responsable' => $request['MCT_CRN_Responsable'],  
                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
     
@@ -1012,8 +1012,8 @@ class StudentController extends Controller
     
                     $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $id)->get();
                     foreach($Cronograma as $Crono){
-                        $inicio = $Crono-> MCT_CRN_Semana_inicio ;
-                        $fin = $Crono-> MCT_CRN_Semana_fin ;
+                        $inicio = $Crono-> MCT_CRN_Semana_Inicio ;
+                        $fin = $Crono-> MCT_CRN_Semana_Fin ;
                         $tab = '-';
                         $fecha =  $inicio.$tab.$fin;
                         $Crono ->offsetSet('Semana',$fecha);
@@ -1035,8 +1035,8 @@ class StudentController extends Controller
                 $Cronograma = Cronograma::where('PK_Id_Cronograma',$request['PK_Id_Cronograma'])->first();
     
                 $Cronograma -> MCT_CRN_Actividad = $request['MCT_EDITAR_CRN_Actividad'];
-                $Cronograma -> MCT_CRN_Semana_inicio = $request['MCT_EDITAR_CRN_Semana_inicio'];
-                $Cronograma -> MCT_CRN_Semana_fin = $request['MCT_EDITAR_CRN_Semana_fin'];
+                $Cronograma -> MCT_CRN_Semana_Inicio = $request['MCT_EDITAR_CRN_Semana_inicio'];
+                $Cronograma -> MCT_CRN_Semana_Fin = $request['MCT_EDITAR_CRN_Semana_fin'];
                 $Cronograma -> MCT_CRN_Responsable = $request['MCT_EDITAR_CRN_Responsable'];
                 
                 $Cronograma -> save();
@@ -1912,7 +1912,7 @@ class StudentController extends Controller
                 foreach($Proyecto as $Proyect){
                     $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
                    
-                    $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_estado  );
+                    $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_Estado  );
                     $Proyect->OffsetSet('Fecha',$ProyectoEstado -> PYT_Fecha_Radicacion  );
                      
                 }
@@ -1956,7 +1956,7 @@ class StudentController extends Controller
 		    $id = $user->identity_no;
        
 
-           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('Fk_IdEstado',1)->first();
+           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('FK_IdEstado',1)->first();
         
            if($Desarrollo===null){
                $anteproyecto = [];
@@ -1971,7 +1971,7 @@ class StudentController extends Controller
                 $i2=0;
      
                 foreach($anteproyecto as $ante){
-                 $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
+                 $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
                 
                     $i=$i+1;
                 }

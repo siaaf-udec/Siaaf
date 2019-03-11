@@ -83,7 +83,7 @@ class DocenteController extends Controller
            $i2=0;
 
            foreach($anteproyecto as $ante){
-            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_estado;
+            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
            
                $i=$i+1;
            }
@@ -149,7 +149,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('DELETE')) {	
             
             
-            $solicitud = Solicitud::where('Pk_Id_Solicitud',$id)->first();
+            $solicitud = Solicitud::where('PK_Id_Solicitud',$id)->first();
 
             if(empty($solicitud)){
 
@@ -553,7 +553,7 @@ class DocenteController extends Controller
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             
           
-            $estado = $infoAnteproyecto -> relacionEstado -> EST_estado;
+            $estado = $infoAnteproyecto -> relacionEstado -> EST_Estado;
 
             $Nombre = $infoAnteproyecto -> relacionPredirectores-> User_Nombre1;
             
@@ -589,7 +589,7 @@ class DocenteController extends Controller
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             
           
-            $estado = $infoAnteproyecto -> relacionEstado -> EST_estado;
+            $estado = $infoAnteproyecto -> relacionEstado -> EST_Estado;
 
             $Nombre = $infoAnteproyecto -> relacionPredirectores-> User_Nombre1;
             
@@ -631,7 +631,7 @@ class DocenteController extends Controller
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             
           
-            $estado = $infoAnteproyecto -> relacionEstado -> EST_estado;
+            $estado = $infoAnteproyecto -> relacionEstado -> EST_Estado;
 
             $Nombre = $infoAnteproyecto -> relacionPredirectores-> User_Nombre1;
             
@@ -697,7 +697,7 @@ class DocenteController extends Controller
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
-                     'OBS_observacion' => $request['OBS_observacion'],
+                     'OBS_Observacion' => $request['OBS_observacion'],
                      'OBS_Limit' => $request['OBS_Limit']
 
                     ]);
@@ -718,7 +718,7 @@ class DocenteController extends Controller
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
-                     'OBS_observacion' => $request['OBS_observacion'],
+                     'OBS_Observacion' => $request['OBS_observacion'],
                      'OBS_Formato' => $request['OBS_Formato'],
                      
 
@@ -744,7 +744,7 @@ class DocenteController extends Controller
                 $Apellido = $des -> relacionUsuarios -> User_Apellido1;
                 $space = " ";
                 $Nombre = $Nombre1.$space.$Apellido;
-                $Estado = $des -> relacionEstado -> EST_estado;
+                $Estado = $des -> relacionEstado -> EST_Estado;
 
                 $des-> offsetSet('Jurado',$Nombre);
                 $des-> offsetSet('Estado',$Estado);
@@ -775,7 +775,7 @@ class DocenteController extends Controller
                 $Apellido = $des -> relacionUsuarios -> User_Apellido1;
                 $space = " ";
                 $Nombre = $Nombre1.$space.$Apellido;
-                $Estado = $des -> relacionEstadoJurado -> EST_estado;
+                $Estado = $des -> relacionEstadoJurado -> EST_Estado;
 
                 $des-> offsetSet('Jurado',$Nombre);
                 $des-> offsetSet('Estado',$Estado);
@@ -1039,7 +1039,7 @@ class DocenteController extends Controller
             $Nombre = $Nombre1.$space.$Apellido;
             
             $Anteproyecto -> offsetSet('Director', $Nombre);
-            $Estado = $Anteproyecto -> relacionEstado -> EST_estado;
+            $Estado = $Anteproyecto -> relacionEstado -> EST_Estado;
             $Anteproyecto -> offsetSet('Estado', $Estado);
 
                 
@@ -1072,7 +1072,7 @@ class DocenteController extends Controller
             
             $Anteproyecto -> offsetSet('Director', $Nombre);
             $proyecto = proyecto::where('FK_NPRY_IdMctr008',$id )->first();
-            $Estado = $proyecto -> relacionestado -> EST_estado ;
+            $Estado = $proyecto -> relacionestado -> EST_Estado ;
             $idEstado = $proyecto->FK_EST_Id;
             $Anteproyecto -> offsetSet('IdEstado', $idEstado);
             $Anteproyecto -> offsetSet('Estado', $Estado);
@@ -1163,8 +1163,8 @@ class DocenteController extends Controller
 
                 $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $id)->get();
                 foreach($Cronograma as $Crono){
-                    $inicio = $Crono-> MCT_CRN_Semana_inicio ;
-                    $fin = $Crono-> MCT_CRN_Semana_fin ;
+                    $inicio = $Crono-> MCT_CRN_Semana_Inicio ;
+                    $fin = $Crono-> MCT_CRN_Semana_Fin ;
                     $tab = '-';
                     $fecha =  $inicio.$tab.$fin;
                     $Crono ->offsetSet('Semana',$fecha);

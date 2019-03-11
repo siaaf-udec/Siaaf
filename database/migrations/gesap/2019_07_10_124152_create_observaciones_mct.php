@@ -13,7 +13,7 @@ class CreateObservacionesMct extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_Observaciones_mct', function (Blueprint $table) {
+        Schema::connection('gesap')->create('TBL_Observaciones_Mct', function (Blueprint $table) {
             $table->increments('PK_Id_Observacion');       
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
@@ -30,7 +30,7 @@ class CreateObservacionesMct extends Migration
                         ->references('PK_User_Codigo')
                         ->on('TBL_Usuario')
                         ->onDelete('cascade');
-            $table->string('OBS_observacion', 600);
+            $table->string('OBS_Observacion', 600);
             $table->date('OBS_Limit'); 
             $table->timestamps();
         });

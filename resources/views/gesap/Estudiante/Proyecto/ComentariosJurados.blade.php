@@ -32,7 +32,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_STUDENT')<a href="javascript:;"
+                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver

@@ -13,13 +13,13 @@
 
                 <div class="form-body">
                
-                    @permission('GESAP_CREATE_ACT_MCT')<a href="javascript:;"
+                    @permission('GESAP_ADMIN_CREATE_ACT_MCT')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon create"
                                                        title="Registar una Actividad">
                             <i class="fa fa-plus">
                             </i>Agregar Nuevo Elemento Al Mct
                         </a>@endpermission
-                        @permission('GESAP_FECHAS_MCT')<a href="javascript:;"
+                        @permission('GESAP_ADMIN_FECHAS_MCT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon limit"
                                                        title="Fechas limite mct">
                             <i class="fa fa-plus">
@@ -39,7 +39,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -85,13 +85,13 @@
     
         columns = [
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
-            {data: 'MCT_descripcion', name: 'MCT_descripcion'},
+            {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
             {data: 'Formato', name: 'Formato'},
             
             
       
             {
-                defaultContent: '@permission('DELETE_ACTIVIDAD_MCT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_ADMIN_DELETE_ACTIVIDAD_MCT')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
