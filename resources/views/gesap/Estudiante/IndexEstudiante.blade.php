@@ -94,7 +94,7 @@
                 
             </div>
             <!--FIN VER SOLICITUDES-->
-    @permission('STUDENT_GESAP')
+    @permission('GESAP_STUDENT')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap: '])
             <br>
@@ -102,19 +102,19 @@
                 <div class="col-md-12">
                     <div class="actions">
                     
-                    @permission('GESAP_SOLICITUD_STUDENT')<a href="javascript:;"
+                    @permission('GESAP_STUDENT_SOLICITUD')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Solicitudes
                     </a>@endpermission
-                    @permission('MYS_SOLICITUDES_STUDENT')<a href="javascript:;"
+                    @permission('GESAP_STUDENT_SOLICITUDES')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon mygestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Mis Solicitudes
                     </a>@endpermission
-                    @permission('BANCO_PROYETOS')<a href="javascript:;"
+                    @permission('GESAP_STUDENT_BANCO_PROYECTOS')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Banco"
                                                        title="Banco De Proyectos">
                             <i class="fa fa-plus">
@@ -204,7 +204,7 @@
             {data: 'Sol_Estado', name: 'Sol_Estado'},
       
             {
-                defaultContent: ' @permission('DELETE_STUDENT')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: ' @permission('GESAP_STUDENT_DELETE')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -297,7 +297,7 @@
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
       
             {
-                defaultContent: ' @permission('FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -406,7 +406,7 @@
             {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: ' @permission('FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission @permission('VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

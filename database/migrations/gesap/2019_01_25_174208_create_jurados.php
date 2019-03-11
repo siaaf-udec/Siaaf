@@ -13,8 +13,8 @@ class CreateJurados extends Migration
      */
     public function up()
     {
-        Schema::connection('gesap')->create('TBL_jurados', function (Blueprint $table) {
-            $table->increments('PK_Id_jurados');
+        Schema::connection('gesap')->create('TBL_Jurados', function (Blueprint $table) {
+            $table->increments('PK_Id_Jurados');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
                 ->references('PK_NPRY_IdMctr008')

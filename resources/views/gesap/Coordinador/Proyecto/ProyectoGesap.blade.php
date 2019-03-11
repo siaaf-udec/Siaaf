@@ -30,20 +30,20 @@
 @section('page-title', 'Proyectos Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
-    @permission('ADMIN_GESAP')
+    @permission('GESAP_ADMIN')
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="actions">
-                    @permission('GESAP_ADMIN_MCT')<a href="javascript:;"
+                    @permission('GESAP_ADMIN_LIBRO')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Gestionar Libro
                         </a>@endpermission
-                        @permission('GESAP_REPORT_USER')<a href="javascript:;"
+                        @permission('GESAP_ADMIN_REPORT_LIBROS')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Proyectos</a>
@@ -120,7 +120,7 @@
             {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: '@permission('REPORT_GESAP')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_ADMIN_REPORT_LIBRO')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_VER_LIBRO')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

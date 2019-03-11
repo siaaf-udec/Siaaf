@@ -14,7 +14,7 @@ class CreateSolicitud extends Migration
     public function up()
     {
         Schema::connection('gesap')->create('TBL_Solicitud', function (Blueprint $table) {
-            $table->increments('Pk_Id_Solicitud');
+            $table->increments('PK_Id_Solicitud');
             $table->String('Sol_Solicitud');
             $table->String('Sol_Estado',12);
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();

@@ -15,8 +15,8 @@ class CreateMctr008 extends Migration
     {
         Schema::connection('gesap')->create('TBL_Mctr008', function (Blueprint $table) {
             $table->increments('PK_MCT_IdMctr008');
-            $table->String('MCT_Actividad', 50);
-            $table->String('MCT_descripcion', 500);
+            $table->String('MCT_Actividad', 150);
+            $table->String('MCT_Descripcion', 1500);
             $table->integer('FK_Id_Formato')->unsigned();
             $table->foreign('FK_Id_Formato')
                     ->references('PK_Id_Formato')

@@ -14,7 +14,7 @@
                 
             
                 <div class="form-body">
-                @permission('VER_REQ_STUDENT')<a href="javascript:;"
+                @permission('GESAP_STUDENT_VER_REQ')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Requerimientos"
                                                        title="Requerimientos">
                             <i class="fa fa-plus">
@@ -34,7 +34,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_STUDENT')<a href="javascript:;"
+                                @permission('GESAP_STUDENT_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Volver
@@ -81,12 +81,12 @@
         columns = [
             {data: 'Numero', name: 'Numero'},
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
-            {data: 'MCT_descripcion', name: 'MCT_descripcion'},
+            {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
             
             
       
             {
-                defaultContent: '@permission('VER_ACTIVIDAD_ESTUDIANTE')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_STUDENT_VER_ACTIVIDAD')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-plus"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

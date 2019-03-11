@@ -88,13 +88,13 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">
-                                @permission('CANCEL_GESAP')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>@endpermission
 
-                                @permission('SUBMIT_GESAP'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
+                                @permission('GESAP_ADMIN_SUBMIT'){{ Form::submit('Registrar', ['class' => 'btn blue']) }}@endpermission
                             </div>
                         </div>
                     </div>
@@ -165,6 +165,7 @@
                     formData.append('password', 12345);
                     formData.append('address_create', $('input:text[name="User_Direccion"]').val());
                    
+                    formData.append('User_Codigo', $('#User_Codigo').val());
                     
                    
                    
@@ -197,14 +198,16 @@
                                     xhr = "warning"
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('UsuariosGesap.index.Ajax') }}';
-                                    location.href="{{route('UsuariosGesap.index')}}";
+
+                                
                                 } else {
                                     $('#form_crear_usuario')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('UsuariosGesap.index.Ajax') }}';
                                     location.href="{{route('UsuariosGesap.index')}}";
+                                    //$(".content-ajax").load(route);
+                             
                                      }
                             }
                         },

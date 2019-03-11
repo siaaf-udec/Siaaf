@@ -57,7 +57,7 @@
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
                     @if($datos['IdEstado'] >= '3')
-                    @permission('CALIFICAR_JURADO')<a href="javascript:;"
+                    @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -86,7 +86,7 @@
                      <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-5">
-                                @permission('CANCEL_DOCENTE')<a href="javascript:;"
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Regresar
@@ -213,7 +213,7 @@ $(document).ready(function(){
          
         columns1 = [
             {data: 'created_at', name: 'created_at'},
-            {data: 'OBS_observacion', name: 'OBS_observacion'},
+            {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Actividad', name: 'Actividad'}
           

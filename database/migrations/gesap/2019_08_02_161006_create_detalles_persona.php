@@ -27,8 +27,8 @@ class CreateDetallesPersona extends Migration
             $table->String('MCT_Detalles_Numero');
             $table->String('MCT_Detalles_Funcion');
             $table->String('MCT_Detalles_Horas_Semanales');
-            $table->String('MCT_Detalles_Numero_meses');
-            $table->String('MCT_Detalles_Tipo_vinculacion');
+            $table->String('MCT_Detalles_Numero_Meses');
+            $table->String('MCT_Detalles_Tipo_Vinculacion');
             $table->Integer('FK_NPRY_IdMctr008')->unsigned();
             $table->foreign('FK_NPRY_IdMctr008')
                   ->references('PK_NPRY_IdMctr008')
