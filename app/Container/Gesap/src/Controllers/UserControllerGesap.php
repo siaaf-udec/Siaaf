@@ -201,8 +201,13 @@ class UserControllerGesap extends Controller
                 }
                 
                 
-            
-                $aux =$aux.','.$request['multi_select_roles_create'];
+                if( $validacionUsuario ->roles->isEmpty() ){
+                   $aux =$request['multi_select_roles_create'];
+                }else{
+                    $aux =$aux.','.$request['multi_select_roles_create'];
+                }
+
+                
                 $roles = $aux;
                 $validacionUsuario->roles()->sync(
                     ($roles !== null) ? explode(',', $roles) : []
