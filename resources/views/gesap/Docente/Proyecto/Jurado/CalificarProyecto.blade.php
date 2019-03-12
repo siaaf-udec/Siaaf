@@ -13,7 +13,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'4000','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
                                     {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
 
@@ -184,7 +184,7 @@ $(document).ready(function(){
             };
             var form = $('#from_create-coment');
             var rules = {
-                Desicion: {required: true, minlength: 1, maxlength: 600},
+                Desicion: {required: true, minlength: 1, maxlength: 4000},
                 Select_Estado :{required: true},
             };
 

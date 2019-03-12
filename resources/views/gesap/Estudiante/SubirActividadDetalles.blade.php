@@ -531,20 +531,20 @@ $(document).ready(function(){
             var form1 = $('#from_create-person');
             var rules1 = {
                 
-            MCT_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
-            MCT_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
+            MCT_Detalles_Entidad:{minlength: 1, maxlength: 60, required: true},
+            MCT_Detalles_Primer_Apellido:{minlength: 1, maxlength: 60, required: true},
+            MCT_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 60, required: true},
+            MCT_Detalles_Nombres:{minlength: 1, maxlength: 60, required: true},
             MCT_Detalles_Genero:{required: true},
             MCT_Detalles_Fecha_Nacimiento:{required: true},
-            MCT_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
-            MCT_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
+            MCT_Detalles_Pais:{minlength: 1, maxlength: 60, required: true},
+            MCT_Detalles_Correo:{minlength: 1, maxlength: 60, required: true, email:true},
             MCT_Detalles_Tipo_Doc:{required: true},
-            MCT_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
-            MCT_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
+            MCT_Detalles_Numero:{minlength: 1, maxlength: 60, required: true, number: true,},
+            MCT_Detalles_Funcion:{minlength: 1, maxlength: 60, required: true},
             MCT_Detalles_Horas_Semanales:{minlength: 1, maxlength: 2, required: true, number: true,},
             MCT_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
-            MCT_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
+            MCT_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 60, required: true},
          
               
             };
@@ -685,21 +685,21 @@ $(document).ready(function(){
             };
             var form2 = $('#form_edit-person');
             var rules2 = {
-            PK_Id_EDITAR_Dperson: {minlength: 1, maxlength: 10, required: true, number: true,},//opcional
-            MCT_EDITAR_Detalles_Entidad:{minlength: 1, maxlength: 30, required: true},
-            MCT_EDITAR_Detalles_Primer_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Nombres:{minlength: 1, maxlength: 40, required: true},
+            PK_Id_EDITAR_Dperson: {minlength: 1, maxlength: 60, required: true, number: true,},//opcional
+            MCT_EDITAR_Detalles_Entidad:{minlength: 1, maxlength: 60, required: true},
+            MCT_EDITAR_Detalles_Primer_Apellido:{minlength: 1, maxlength: 60, required: true},
+            MCT_EDITAR_Detalles_Segundo_Apellido:{minlength: 1, maxlength: 60, required: true},
+            MCT_EDITAR_Detalles_Nombres:{minlength: 1, maxlength: 60, required: true},
             MCT_EDITAR_Detalles_Genero:{required: true},
             MCT_EDITAR_Detalles_Fecha_Nacimiento:{required: true},
-            MCT_EDITAR_Detalles_Pais:{minlength: 1, maxlength: 20, required: true},
-            MCT_EDITAR_Detalles_Correo:{minlength: 1, maxlength: 40, required: true, email:true},
+            MCT_EDITAR_Detalles_Pais:{minlength: 1, maxlength: 60, required: true},
+            MCT_EDITAR_Detalles_Correo:{minlength: 1, maxlength: 60, required: true, email:true},
             MCT_EDITAR_Detalles_Tipo_Doc:{required: true},
-            MCT_EDITAR_Detalles_Numero:{minlength: 1, maxlength: 20, required: true, number: true,},
-            MCT_EDITAR_Detalles_Funcion:{minlength: 1, maxlength: 30, required: true},
+            MCT_EDITAR_Detalles_Numero:{minlength: 1, maxlength: 60, required: true, number: true,},
+            MCT_EDITAR_Detalles_Funcion:{minlength: 1, maxlength: 60, required: true},
             MCT_EDITAR_Detalles_Horas_Semanales:{minlength: 1, maxlength: 3, required: true, number: true,},
             MCT_EDITAR_Detalles_Numero_meses:{minlength: 1, maxlength: 2, required: true, number: true,},
-            MCT_EDITAR_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 25, required: true},
+            MCT_EDITAR_Detalles_Tipo_vinculacion:{minlength: 1, maxlength: 60, required: true},
             };
 
             FormValidationMd.init(form2, rules2, false, EditaPersona()); 
