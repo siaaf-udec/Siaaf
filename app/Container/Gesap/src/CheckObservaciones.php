@@ -1,6 +1,6 @@
 <?php
 
-namespace App\container\gesap\src;
+namespace App\Container\gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\container\Gesap\src;
+namespace App\Container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\container\Gesap\src;
+namespace App\Container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -30,10 +30,12 @@ class Mctr008 extends Model
     {
         return $this->hasone(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
     }
+    /*
     public function relacionFormatos()
     {
         return $this->hasmany(Formato::class, 'PK_Id_Formato', 'FK_Id_Formato');
     }
+    */
      
  
 }
