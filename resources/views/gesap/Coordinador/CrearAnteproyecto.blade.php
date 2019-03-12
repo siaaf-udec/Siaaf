@@ -16,14 +16,14 @@
 
                         <div class="col-md-6">
 
-                        {!! Field:: text('NPRY_Titulo',null,['label'=>'TITULO:','class'=> 'form-control', 'autofocus', 'maxlength'=>'100','autocomplete'=>'off'],
+                        {!! Field:: text('NPRY_Titulo',null,['label'=>'TITULO:','class'=> 'form-control', 'autofocus', 'maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: textArea('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
+                                {!! Field:: textArea('NPRY_Keywords',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave. (SEPARADAS POR UNA (,))','icon'=>'fa fa-book'] ) !!}
 
-                                {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
                                 {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
@@ -174,9 +174,9 @@ $(document).ready(function(){
        }
        var form = $('#form_anteproyectos_create');
         var formRules = {
-            NPRY_Titulo: {minlength: 1, maxlength: 100, required: true,},
-            NPRY_Keywords: {minlength: 1, maxlength: 200, required: true,},
-            NPRY_Descripcion: {minlength: 1, maxlength: 250, required: true,},
+            NPRY_Titulo: {minlength: 1, maxlength: 500, required: true,},
+            NPRY_Keywords: {minlength: 1, maxlength: 500, required: true,},
+            NPRY_Descripcion: {minlength: 1, maxlength: 1000, required: true,},
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             FK_NPRY_Estado: {required: true},

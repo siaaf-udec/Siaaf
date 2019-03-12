@@ -58,7 +58,7 @@
                              
                         </div>
                         @if($datos['Estado'] != "APROBADO" )
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'9000','autocomplete'=>'off'],
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'15000','autocomplete'=>'off'],
                             ['help' => 'Coloque aqui el contenido de su actividad.','icon'=>'fa fa-book']) !!}
                         @endif
                         @if($datos['Estado'] == "APROBADO" )
@@ -194,7 +194,7 @@ $(document).ready(function(){
         var form = $('#form_subir_actividad');
        
         var formRules = {
-            CMMT_Commit: {minlength: 8, maxlength: 9000, required: true,}, 
+            CMMT_Commit: {minlength: 8, maxlength: 15000, required: true,}, 
         };
 
         var formMessage = {

@@ -447,10 +447,10 @@ $(document).ready(function(){
             var form1 = $('#form_create-Resultado');
             var rules1 = {
                 
-                MCT_Resultado:{minlength: 1, maxlength: 100, required: true},
-                MCT_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
-                MCT_Indicador:{minlength: 1, maxlength: 100, required: true,},       
-                MCT_Beneficiario:{minlength: 1, maxlength: 100, required: true},
+                MCT_Resultado:{minlength: 1, maxlength: 500, required: true},
+                MCT_Producto_Esperado:{minlength: 1, maxlength: 500, required: true},
+                MCT_Indicador:{minlength: 1, maxlength: 500, required: true,},       
+                MCT_Beneficiario:{minlength: 1, maxlength: 500, required: true},
                 MCT_Categoria:{required: true},       
            
             };
@@ -574,10 +574,10 @@ $(document).ready(function(){
             };
             var form2 = $('#form_edit-Resultado');
             var rules2 = {
-                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 100, required: true},
-                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 100, required: true},
-                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 100, required: true,},       
-                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 100, required: true},
+                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 500, required: true},
+                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 500, required: true},
+                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 500, required: true,},       
+                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 500, required: true},
                 MCT_EDITAR_Categoria:{required: true},       
                  
              };

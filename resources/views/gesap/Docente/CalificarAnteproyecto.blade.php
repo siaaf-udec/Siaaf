@@ -181,7 +181,7 @@ $(document).ready(function(){
             };
             var form = $('#from_create-coment');
             var rules = {
-                Desicion: {required: true, minlength: 1, maxlength: 600},
+                Desicion: {required: true, minlength: 1, maxlength: 4000},
                 Select_Estado :{required: true},
             };
 
