@@ -650,7 +650,7 @@ class CoordinatorController extends Controller
       
                    $jurado = $user -> PK_User_Codigo;
                    if($jurado != $Predirector) {
-                    $jurados= Jurados::where('FK_User_Codigo',$jurado)->first();
+                    $jurados= Jurados::where('FK_User_Codigo',$jurado)->where('FK_NPRY_IdMctr008',$id)->first();
                     if(is_null($jurados)){
                     $collection = collect([]);
                     $collection->put('Codigo',$user-> User_Codigo);

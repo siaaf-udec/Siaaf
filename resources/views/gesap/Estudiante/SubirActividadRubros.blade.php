@@ -45,23 +45,23 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('RBR_PER_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_PER_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_PER_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                 
                                
@@ -93,23 +93,23 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                               {!! Field:: Text('RBR_PER_EDITAR_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                               {!! Field:: Text('RBR_PER_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                               {!! Field:: Text('RBR_PER_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                     ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                             
                            
@@ -142,25 +142,25 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('RBR_EQP_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -192,25 +192,25 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_EQP_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_EQP_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -245,21 +245,21 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('RBR_MTL_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -291,21 +291,21 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Solicitado_Udec',null,['label'=>':Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Solicitado_Udec',null,['label'=>':Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_MTL_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_MTL_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -339,21 +339,21 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('RBR_TEC_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -385,21 +385,21 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('RBR_TEC_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('RBR_TEC_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    
                            
@@ -433,7 +433,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'190','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
@@ -760,7 +760,7 @@ $(document).ready(function(){
             };
             var form = $('#from_create-coment');
             var rules = {
-                OBS_observacion: {required: true, minlength: 1, maxlength: 600},
+                OBS_observacion: {required: true, minlength: 1, maxlength: 190},
                 OBS_Limit:{required:true},
             };
 
@@ -900,15 +900,15 @@ $(document).ready(function(){
             };
             var form1 = $('#form_create_Rubro_Personal');
             var rules1 = {
-                RBR_PER_Nombre:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Funcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Tipo:{minlength: 1, maxlength: 100, required: true},
+                RBR_PER_Nombre:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Funcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Tipo:{minlength: 1, maxlength: 190, required: true},
                 RBR_PER_Dedicacion:{minlength: 1, maxlength: 2, required: true, number:true},
-                RBR_PER_Entidad:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_Total:{minlength: 1, maxlength: 100, required: true},
+                RBR_PER_Entidad:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_Total:{minlength: 1, maxlength: 190, required: true},
            
             };
 
@@ -1041,15 +1041,15 @@ $(document).ready(function(){
             };
             var form2 = $('#form_editar_Rubro_Personal');
             var rules2 = {
-                RBR_PER_EDITAR_Nombre:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Funcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Tipo:{minlength: 1, maxlength: 100, required: true},
+                RBR_PER_EDITAR_Nombre:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Funcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Tipo:{minlength: 1, maxlength: 190, required: true},
                 RBR_PER_EDITAR_Dedicacion:{minlength: 1, maxlength: 2, required: true,number:true},
-                RBR_PER_EDITAR_Entidad:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_PER_EDITAR_Total:{minlength: 1, maxlength: 100, required: true},
+                RBR_PER_EDITAR_Entidad:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_PER_EDITAR_Total:{minlength: 1, maxlength: 190, required: true},
            
                  
              };
@@ -1194,16 +1194,16 @@ $(document).ready(function(){
             };
             var forme = $('#form_create_Rubro_Equipo');
             var rulese = {
-                RBR_EQP_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Lab:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Actividades:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Cantidad:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_EQP_Val:{minlength: 1, maxlength: 100, required: true,number:true},
-                RBR_EQP_Solicitado:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_EQP_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Lab:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Actividades:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Cantidad:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_EQP_Val:{minlength: 1, maxlength: 190, required: true,number:true},
+                RBR_EQP_Solicitado:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_Total:{minlength: 1, maxlength: 190, required: true,number:true},
                
             };
 
@@ -1340,16 +1340,16 @@ $(document).ready(function(){
             };
             var formef = $('#form_editar_Rubro_Equipo');
             var rulesef = {
-                RBR_EQP_EDITAR_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Lab:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Actividades:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Cantidad:{minlength: 1, maxlength: 100, required: true,number:true},
-                RBR_EQP_EDITAR_Val:{minlength: 1, maxlength: 100, required: true,number:true},
-                RBR_EQP_EDITAR_Solicitado:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_EQP_EDITAR_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_EQP_EDITAR_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Lab:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Actividades:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Cantidad:{minlength: 1, maxlength: 190, required: true,number:true},
+                RBR_EQP_EDITAR_Val:{minlength: 1, maxlength: 190, required: true,number:true},
+                RBR_EQP_EDITAR_Solicitado:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_EQP_EDITAR_Total:{minlength: 1, maxlength: 190, required: true,number:true},
            
                  
              };
@@ -1491,14 +1491,14 @@ $(document).ready(function(){
             };
             var formm = $('#form_create_Rubro_Material');
             var rulesm = {
-                RBR_MTL_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_Cantidad:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_MTL_Val:{minlength: 1, maxlength: 100, required: true, number:true,number:true},
-                RBR_MTL_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_MTL_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_Cantidad:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_MTL_Val:{minlength: 1, maxlength: 190, required: true, number:true,number:true},
+                RBR_MTL_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_Total:{minlength: 1, maxlength: 190, required: true,number:true},
                
             };
             FormValidationMd.init(formm, rulesm, false, CrearRubroMaterial()); 
@@ -1628,14 +1628,14 @@ $(document).ready(function(){
             };
             var formmf = $('#form_editar_Rubro_Material');
             var rulesmf = {
-                RBR_MTL_EDITAR_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_EDITAR_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_EDITAR_Cantidad:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_MTL_EDITAR_Val:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_MTL_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_EDITAR_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_EDITAR_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_MTL_EDITAR_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_MTL_EDITAR_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_EDITAR_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_EDITAR_Cantidad:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_MTL_EDITAR_Val:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_MTL_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_EDITAR_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_EDITAR_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_MTL_EDITAR_Total:{minlength: 1, maxlength: 190, required: true,number:true},
            
                  
              };
@@ -1779,14 +1779,14 @@ $(document).ready(function(){
             };
             var formt = $('#form_create_Rubro_Tecnologico');
             var rulest = {
-                RBR_TEC_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Val:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_TEC_Entidad:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_TEC_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Val:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_TEC_Entidad:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_Total:{minlength: 1, maxlength: 190, required: true,number:true},
                
             };
             FormValidationMd.init(formt, rulest, false, CrearRubroTecnologico()); 
@@ -1916,14 +1916,14 @@ $(document).ready(function(){
             };
             var formtf = $('#form_editar_Rubro_Tecnologico');
             var rulestf = {
-                RBR_TEC_EDITAR_Descripcion:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Justificacion:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Val:{minlength: 1, maxlength: 100, required: true, number:true},
-                RBR_TEC_EDITAR_Entidad:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Contra_Udec:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Contra_Otro:{minlength: 1, maxlength: 100, required: true},
-                RBR_TEC_EDITAR_Total:{minlength: 1, maxlength: 100, required: true,number:true},
+                RBR_TEC_EDITAR_Descripcion:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Justificacion:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Val:{minlength: 1, maxlength: 190, required: true, number:true},
+                RBR_TEC_EDITAR_Entidad:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Solicitado_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Contra_Udec:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Contra_Otro:{minlength: 1, maxlength: 190, required: true},
+                RBR_TEC_EDITAR_Total:{minlength: 1, maxlength: 190, required: true,number:true},
            
                  
              };

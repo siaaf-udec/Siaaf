@@ -62,7 +62,7 @@
                             ['help' => 'Coloque aqui el contenido de su actividad.','icon'=>'fa fa-book']) !!}
                         @endif
                         @if($datos['Estado'] == "APROBADO" )
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'readonly','autofocus','maxlength'=>'9000','autocomplete'=>'off'],
+                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'readonly','autofocus','maxlength'=>'15000','autocomplete'=>'off'],
                             ['help' => 'Coloque aqui el contenido de su actividad.','icon'=>'fa fa-book'] ) !!}
                         @endif
                     
