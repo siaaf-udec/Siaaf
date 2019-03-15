@@ -45,13 +45,13 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    {!! Field::select('MCT_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
                                                          'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
@@ -86,13 +86,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                  
-                                   {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
                                    {!! Field::select('MCT_EDITAR_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
                                                          'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
@@ -447,10 +447,10 @@ $(document).ready(function(){
             var form1 = $('#form_create-Resultado');
             var rules1 = {
                 
-                MCT_Resultado:{minlength: 1, maxlength: 500, required: true},
-                MCT_Producto_Esperado:{minlength: 1, maxlength: 500, required: true},
-                MCT_Indicador:{minlength: 1, maxlength: 500, required: true,},       
-                MCT_Beneficiario:{minlength: 1, maxlength: 500, required: true},
+                MCT_Resultado:{minlength: 1, maxlength: 190, required: true},
+                MCT_Producto_Esperado:{minlength: 1, maxlength: 190, required: true},
+                MCT_Indicador:{minlength: 1, maxlength: 190, required: true,},       
+                MCT_Beneficiario:{minlength: 1, maxlength: 190, required: true},
                 MCT_Categoria:{required: true},       
            
             };
@@ -574,10 +574,10 @@ $(document).ready(function(){
             };
             var form2 = $('#form_edit-Resultado');
             var rules2 = {
-                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 500, required: true},
-                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 500, required: true},
-                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 500, required: true,},       
-                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 500, required: true},
+                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 190, required: true},
+                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 190, required: true},
+                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 190, required: true,},       
+                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 190, required: true},
                 MCT_EDITAR_Categoria:{required: true},       
                  
              };

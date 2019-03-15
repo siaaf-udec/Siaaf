@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de desarrolladores de Anteproyecto de grado'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualización de Jurados de Anteproyecto de grado'])
 
         @slot('actions', [
        'link_cancel' => [

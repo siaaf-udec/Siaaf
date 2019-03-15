@@ -45,9 +45,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
                                                     
                                
@@ -79,9 +79,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_EDITAR_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
                       
                                 </div>
@@ -409,8 +409,8 @@ $(document).ready(function(){
             var form1 = $('#form_create-Funcion');
             var rules1 = {
                 
-                MCT_Funcion_Nombre:{minlength: 1, maxlength: 100, required: true},
-                MCT_Funcion_Funcion:{minlength: 1, maxlength: 250, required: true},
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 190, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 190, required: true},
            
             };
 
@@ -528,8 +528,8 @@ $(document).ready(function(){
             };
             var form2 = $('#form_edit-Funcion');
             var rules2 = {
-                MCT_Funcion_Nombre:{minlength: 1, maxlength: 100, required: true},
-                MCT_Funcion_Funcion:{minlength: 1, maxlength: 250, required: true},
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 190, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 190, required: true},
            
              };
 

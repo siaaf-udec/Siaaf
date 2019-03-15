@@ -45,13 +45,13 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
                                                     
                                
@@ -84,13 +84,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                             
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Actividad',null,['label'=>'Actividad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite aqui la actividad que va ha realizar','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_inicio',null,['label'=>'Inicio:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la semana en que va ha iniciar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Semana_fin',null,['label'=>'Fin :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá la semana en la cual va ha terminar la actividad','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                   {!! Field:: Text('MCT_EDITAR_CRN_Responsable',null,['label'=>'Responsable :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el responsable de dicha actividad','icon'=>'fa fa-book']) !!}
                                    
                                
@@ -442,10 +442,10 @@ $(document).ready(function(){
             var form1 = $('#form_create-Cronograma');
             var rules1 = {
                 
-                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
-                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
-                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
-                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
+                MCT_CRN_Actividad:{minlength: 1, maxlength: 190, required: true},
+                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 190, required: true, number:true},
+                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 190, required: true,number:true},       
+                MCT_CRN_Responsable:{minlength: 1, maxlength: 190, required: true},
            
             };
 
@@ -566,10 +566,10 @@ $(document).ready(function(){
             };
             var form2 = $('#form_edit-Cronograma');
             var rules2 = {
-                MCT_CRN_Actividad:{minlength: 1, maxlength: 100, required: true},
-                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 100, required: true, number:true},
-                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 100, required: true,number:true},       
-                MCT_CRN_Responsable:{minlength: 1, maxlength: 100, required: true},
+                MCT_CRN_Actividad:{minlength: 1, maxlength: 190, required: true},
+                MCT_CRN_Semana_inicio:{minlength: 1, maxlength: 190, required: true, number:true},
+                MCT_CRN_Semana_fin:{minlength: 1, maxlength: 190, required: true,number:true},       
+                MCT_CRN_Responsable:{minlength: 1, maxlength: 190, required: true},
            
              };
 

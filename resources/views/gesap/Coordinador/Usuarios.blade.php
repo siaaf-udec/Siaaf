@@ -117,7 +117,7 @@
             {data: 'Rol', name: 'Rol'},
            
             {
-                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_UPDATE_USER')<a href="javascript:;" title="Editar" class="btn btn-primary editar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
