@@ -61,7 +61,7 @@
                             'Titulo',
                             'Palabras clave',
                             'Descripción',
-                            'Duracion',
+                            'Duracion en meses',
                             'Director',
                             'Estado',
                             'Fecha Radicación',

@@ -29,7 +29,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para revisar Actividades del Mctr008'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -40,18 +40,19 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                              
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-
-
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'200','autocomplete'=>'off'],
-                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
-
-                               
+                            
                                </div>
                              
                         </div>
+                                 
+                        {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+
+
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off'],
+                                                                ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
+
+                        
                         {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
@@ -69,7 +70,8 @@
                         @slot('columns', [
                             {{--'Fecha de realización',--}}
                             'Observación',
-                            'Realizada por'
+                            'Realizada por',
+                            'Fecha De realiación',
                         
                             
                         ])
@@ -118,6 +120,7 @@ $(document).ready(function(){
             //{data: 'updated_at', name: 'updated_at'},
             {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},
+            {data: 'created_at', name: 'created_at'},
           
         ];
 

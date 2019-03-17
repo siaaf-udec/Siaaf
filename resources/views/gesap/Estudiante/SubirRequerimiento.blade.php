@@ -42,19 +42,19 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off']) !!}
-
-                       
-                                {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Requerimiento:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off']) !!}
-
-
-                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'9000','autocomplete'=>'off']) !!}
-
                                
                                </div>
                              
                         </div>
-                        
+                        {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off']) !!}
+
+                       
+{!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Requerimiento:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off']) !!}
+
+
+{!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off']) !!}
+
+
                         @if($datos['Estado'] != "APROBADO" )
                         {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control','autofocus','maxlength'=>'9000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque aqui el contenido de su actividad..','icon'=>'fa fa-book'] ) !!}

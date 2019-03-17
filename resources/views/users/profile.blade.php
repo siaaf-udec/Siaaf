@@ -241,7 +241,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         {!! Field::select(
-                                                                'sasasasaasas', null,
+                                                                'Pais', null,
                                                                 ['name' => 'countries']) !!}
                                                         {!! Field::select(
                                                                 'Ciudad', null,

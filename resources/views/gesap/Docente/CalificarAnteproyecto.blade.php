@@ -4,7 +4,7 @@
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_create-coment', 'url' => '/forms']) !!}
+                        {!! Form::model([$datos],['id' => 'from_create-coment', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -13,9 +13,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'4000','autocomplete'=>'off'],
+                                {!! Field:: TextArea('Desicion',$datos['Comentarios_Jurado'],['label'=>'Tipo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el por que de la decision, tenga en cuenta que esta informacion se le mostrara al estudiante.','icon'=>'fa fa-book']) !!}
-                                     {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
+                                             {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Califiacr el Formato Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Calificar el Formato Mctr008 y Requerimientos'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos],['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -141,6 +141,7 @@ $(document).ready(function(){
                         formData.append('FK_NPRY_Estado', $('#Estado').val());
                         formData.append('FK_User_Codigo', id);
                         formData.append('PK_NPRY_Id_Mctr008', '{{$datos['PK_NPRY_IdMctr008']}}');
+                        
                        
                       
 
@@ -182,7 +183,7 @@ $(document).ready(function(){
             var form = $('#from_create-coment');
             var rules = {
                 Desicion: {required: true, minlength: 1, maxlength: 4000},
-                Select_Estado :{required: true},
+                Estado :{required: true},
             };
 
                 FormValidationMd.init(form, rules, false, CrearComentario());
@@ -225,7 +226,7 @@ $(document).ready(function(){
         $('.gestionar').on('click', function (e) {
                 e.preventDefault();
                 $('#modal-create-coment').modal('toggle');
-            });
+        });
              
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();

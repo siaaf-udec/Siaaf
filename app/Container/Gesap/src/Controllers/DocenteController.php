@@ -818,7 +818,7 @@ class DocenteController extends Controller
             $user = Auth::user();
 		$id = $user->identity_no;
 
-            $Jurado = Jurados::where('FK_User_Codigo',$id)->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
 
             $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
@@ -1031,23 +1031,60 @@ class DocenteController extends Controller
     public function CalificarJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            
-            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id )->first();
+            $user = Auth::user();
+            $idu = $user->identity_no;
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             $Nombre1 = $Anteproyecto -> relacionPredirectores -> User_Nombre1;
             $Apellido = $Anteproyecto -> relacionPredirectores -> User_Apellido1;
             $space = " ";
-            $Nombre = $Nombre1.$space.$Apellido;
             
+          
+            $Nombre = $Nombre1.$space.$Apellido;
+
+            $cadena = " ";
+            
+            $i=0;
+            $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->get();
+            $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->first();
+            if($Comentarios_Juradof == null){
+               
+                $Anteproyecto -> offsetSet('Comentarios_Jurado', "Sin Comentarios En las Actividades");
+                
+            }else{
+                if( $Jurado -> JR_Comentario == "Sin Comentarios."){
+                    foreach($Comentarios_Jurado as $Comentario_Jurado){
+                        
+                        $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                        if($i==0){
+                            $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            $i = $i +1 ; 
+                        }else{
+                            $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                        }      
+                    }
+                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                    
+                }else{
+                    
+                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
+                }
+                
+                
+            }
+
             $Anteproyecto -> offsetSet('Director', $Nombre);
             $Estado = $Anteproyecto -> relacionEstado -> EST_Estado;
             $Anteproyecto -> offsetSet('Estado', $Estado);
 
                 
-            return view ($this->path .'CalificarAnteproyecto',
+            return  view ($this->path .'CalificarAnteproyecto',
             [
                
                 'datos' => $Anteproyecto,
             ]);
+     
+           
     
 
                   
@@ -1063,12 +1100,45 @@ class DocenteController extends Controller
     public function CalificarProyectoJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            
+            $user = Auth::user();
+            $idu = $user->identity_no;
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id )->first();
             $Nombre1 = $Anteproyecto -> relacionPredirectores -> User_Nombre1;
             $Apellido = $Anteproyecto -> relacionPredirectores -> User_Apellido1;
             $space = " ";
             $Nombre = $Nombre1.$space.$Apellido;
+            $cadena = " ";
+            
+            $i=0;
+            $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->get();
+            $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->first();
+            if($Comentarios_Juradof == null){
+               
+                $Anteproyecto -> offsetSet('Comentarios_Jurado', "Sin Comentarios En las Actividades");
+                
+            }else{
+                if( $Jurado -> JR_Comentario_Proyecto == "Sin Comentarios."){
+                    foreach($Comentarios_Jurado as $Comentario_Jurado){
+                        
+                        $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                        if($i==0){
+                            $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            $i = $i +1 ; 
+                        }else{
+                            $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                        }      
+                    }
+                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                    
+                }else{
+                    
+                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario_Proyecto);
+                }
+                
+                
+            }
+
             
             $Anteproyecto -> offsetSet('Director', $Nombre);
             $proyecto = proyecto::where('FK_NPRY_IdMctr008',$id )->first();
@@ -1203,7 +1273,7 @@ class DocenteController extends Controller
                 
 
                 return DataTables::of($Comentario)
-                ->removeColumn('created_at')
+                //->removeColumn('created_at')
                 ->addIndexColumn()
                 ->make(true);
                

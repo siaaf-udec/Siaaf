@@ -135,7 +135,7 @@
                             'Titulo',
                             'Palabras clave',
                             'Descripción',
-                            'Duracion',
+                            'Duracion en meses',
                             'Estado',
                             'Fecha Radicación',
                             'Acciones'
@@ -151,7 +151,7 @@
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
-                        'Duracion',
+                        'Duracion en meses',
                         'Fecha Radicación',
                         'Director',
                         'Acciones'
@@ -166,7 +166,7 @@
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
-                        'Duracion',
+                        'Duracion en meses',
                         'Fecha Radicación',
                         'Director',
                         'Estado',
@@ -182,7 +182,7 @@
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
-                        'Duracion',
+                        'Duracion en meses',
                         'Fecha Radicación',
                         'Director',
                         'Acciones'

@@ -4,7 +4,7 @@
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_create-coment', 'url' => '/forms']) !!}
+                    {!! Form::model([$datos],['id' => 'from_create-coment', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -13,10 +13,9 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: textArea('Desicion',null,['label'=>'El porque de la Desición:','class'=> 'form-control', 'autofocus','maxlength'=>'4000','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
-                                    {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
-
+                                {!! Field:: TextArea('Desicion',$datos['Comentarios_Jurado'],['label'=>'Tipo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá el por que de la decision, tenga en cuenta que esta informacion se le mostrara al estudiante.','icon'=>'fa fa-book']) !!}
+                                            {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
                                 </div>
                             </div>
                         </div>
@@ -24,7 +23,7 @@
                             {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
-                        {!! Form::close() !!}
+                    {!! Form::close() !!}
                     </div>
                 
             </div>
@@ -57,7 +56,7 @@
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
                     @if($datos['IdEstado'] >= '3')
-                    @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;"
+                    @permission('GESAP_DOCENTE_DECISION_JUDMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
@@ -185,7 +184,7 @@ $(document).ready(function(){
             var form = $('#from_create-coment');
             var rules = {
                 Desicion: {required: true, minlength: 1, maxlength: 4000},
-                Select_Estado :{required: true},
+                Estado :{required: true},
             };
 
                 FormValidationMd.init(form, rules, false, CrearComentario());

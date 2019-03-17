@@ -136,7 +136,7 @@
                             'Titulo',
                             'Palabras clave',
                             'Descripción',
-                            'Duracion',
+                            'Duracion en meses',
                             'Estado',
                             'Fecha Radicación',
                             'Acciones'
@@ -150,7 +150,7 @@
                             'Titulo',
                             'Palabras clave',
                             'Descripción',
-                            'Duracion',
+                            'Duracion en meses',
                             'Estado',
                             'Fecha Radicación',
                             'Acciones'
