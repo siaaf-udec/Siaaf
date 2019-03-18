@@ -365,7 +365,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha SUBIDO ningún Archivo a la actividad del Libro.");
+                $Actividad->offsetSet('Commit', "gesap/gesap/libro/GESAPPDF.pdf");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -400,7 +400,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "Aún NO se ha SUBIDO ningún Archivo a la actividad del Libro.");
+                $Actividad->offsetSet('Commit',"gesap/gesap/libro/GESAPPDF.pdf");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -825,57 +825,54 @@ class DocenteController extends Controller
             
             $Jurado -> save();
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
-            $i = 0;
-            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
-            $if= $Jurado->count();
-            $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
-            if($if==2){
-                foreach($Jurado as $jur)
-                {
-                 $numero[$i] = $jur -> FK_NPRY_Estado;
-                 $i = $i + 1 ;   
-                }
-                $i = 0 ;
-                $suma = $numero[0]+$numero[1];
-                if(($suma/8)==1){
-                    $anteproyecto -> FK_NPRY_Estado = 4;
-                    $anteproyecto -> save();
-                    //aprovado
-                    Proyecto::create([
-                        'FK_EST_Id' => 2 , 
-                        'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
-                        'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion
-                    ]);
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
-                if(($suma/10)==1){
-                    $anteproyecto -> FK_NPRY_Estado = 5;
-                    //rechazado
-                    $anteproyecto -> save();
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
-                if(($suma/12)==1){
-                    $anteproyecto -> FK_NPRY_Estado = 6;
-                    //aplazado
-                    $anteproyecto -> save();
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }else{
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
-                
+            $DesiciónJuradoUno=$Jurado[0]->relacionEstado->EST_Estado ;
+            $DesiciónJuradoDos=$Jurado[1]->relacionEstado->EST_Estado ;
 
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
+            
+            $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
+
+            if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
+                $anteproyecto -> FK_NPRY_Estado = 4;
+                $anteproyecto -> save();
+                //aprobado
+                Proyecto::create([
+                    'FK_EST_Id' => 2 , 
+                    'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
+                    'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion
+                ]);
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+
+            }
+
+            if(($DesiciónJuradoUno=="REPROBADO")&&($DesiciónJuradoDos=="REPROBADO")){
+                $anteproyecto -> FK_NPRY_Estado = 5;
+                //rechazado
+                $anteproyecto -> save();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+
+            }
+            if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
+                $anteproyecto -> FK_NPRY_Estado = 6;
+                //aplazado
+                $anteproyecto -> save();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+            }
+            if($DesiciónJuradoUno != $DesiciónJuradoDos){
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+            
             }
         }
 
@@ -891,59 +888,56 @@ class DocenteController extends Controller
             $user = Auth::user();
             $id = $user->identity_no;
 
-            $Jurado = Jurados::where('FK_User_Codigo',$id)->first();
+            $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
 
             $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
             
             $Jurado -> save();
+            
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
-            $i = 0;
+            
             $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
-            $if= $Jurado->count();
-            if($if==2){
-                foreach($Jurado as $jur)
-                {
-                 $numero[$i] = $jur -> FK_NPRY_Estado_Proyecto;
-                 $i = $i + 1 ;   
-                }
-                $i = 0 ;
-                $suma = $numero[0]+$numero[1];
-                if(($suma/8)==1){
-                    $Proyecto -> FK_EST_Id = 4;
-                    $Proyecto -> save();
-                    //aprobado
-                    
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
-                if(($suma/10)==1){
-                    $Proyecto -> FK_EST_Id = 5;
-                    //rechazado
-                    $Proyecto -> save();
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
-                if(($suma/12)==1){
-                    $Proyecto -> FK_EST_Id = 6;
-                    //aplazado
-                    $Proyecto -> save();
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }else{
-                    return AjaxResponse::success(
-                        '¡Bien hecho!',
-                        'Datos modificados correctamente.'
-                    );
-                }
+            
+            $DesiciónJuradoUno=$Jurado[0]->relacionEstadoJurado ->EST_Estado ;
+            $DesiciónJuradoDos=$Jurado[1]->relacionEstadoJurado ->EST_Estado ;
+            if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
+                $Proyecto -> FK_EST_Id = 4;
+                $Proyecto -> save();
+                //aprobado
                 
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
 
+            }
+
+            if(($DesiciónJuradoUno=="REPROBADO")&&($DesiciónJuradoDos=="REPROBADO")){
+                $Proyecto -> FK_EST_Id = 5;
+                //rechazado
+                $Proyecto -> save();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+
+            }
+            if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
+                $Proyecto -> FK_EST_Id = 6;
+                //aplazado
+                $Proyecto -> save();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+            }
+            if($DesiciónJuradoUno != $DesiciónJuradoDos){
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos modificados correctamente.'
+                );
+            
             }
         }
 
