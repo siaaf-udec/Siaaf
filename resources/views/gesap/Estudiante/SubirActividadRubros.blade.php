@@ -429,7 +429,12 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                               
+                               
+                               </div>
+                             
+                        </div>
+                        {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
@@ -437,13 +442,9 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: text('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                               
-                               </div>
-                             
-                        </div>
                         {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','readonly','autocomplete'=>'off'],
                     
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}

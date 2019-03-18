@@ -24,7 +24,7 @@
                             {!! Field:: textArea('NPRY_Descripcion',$datos['Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$datos['Duracion'],['label'=>'DURACION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Duracion',$datos['Duracion'],['label'=>'DURACION EN MESES:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
 
                             {!! Field:: text('FK_NPRY_Estado',$datos['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],

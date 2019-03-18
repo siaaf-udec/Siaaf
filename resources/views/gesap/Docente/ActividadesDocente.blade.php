@@ -14,7 +14,7 @@
                 @permission('GESAP_DOCENTE_VER_REQ')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Requerimientos"
                                                        title="Requerimientos">
-                            <i class="fa fa-plus">
+                            <i class="fa fa-eye">
                             </i>Requerimientos
                         </a>@endpermission    
                 <div class="form-body">

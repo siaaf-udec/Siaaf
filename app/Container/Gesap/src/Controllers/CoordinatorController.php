@@ -392,6 +392,7 @@ class CoordinatorController extends Controller
                     $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$proyecto-> FK_NPRY_IdMctr008)->first();
 
                     $proyecto->offsetSet('Titulo',$Anteproyecto->NPRY_Titulo);
+                    $proyecto->offsetSet('Id_Proyecto',$Anteproyecto->PK_NPRY_IdMctr008);
                     $proyecto->offsetSet('Palabras',$Anteproyecto->NPRY_Keywords);
                     $proyecto->offsetSet('Descripcion',$Anteproyecto->NPRY_Descripcion);
                     $proyecto->offsetSet('Duracion',$Anteproyecto->NPRY_Duracion);

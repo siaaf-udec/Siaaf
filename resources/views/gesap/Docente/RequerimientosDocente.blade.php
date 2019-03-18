@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de  Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de  Actividades de Requerimientos'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -14,7 +14,7 @@
                 @permission('GESAP_DOCENTE_VER_ACT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon Actividades"
                                                        title="Actividades">
-                            <i class="fa fa-plus">
+                            <i class="fa fa-eye">
                             </i>Actividades MCT
                         </a>@endpermission    
                 <div class="form-body">

@@ -29,7 +29,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para Ver la Actividad Del libro'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario  para revisar la Actividad Del LIBRO'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
@@ -68,7 +68,8 @@
                         @slot('columns', [
                             {{--'Fecha de realización',--}}
                             'Observación',
-                            'Realizada por'
+                            'Realizada por',
+                            'Fecha De realización'
                         
                             
                         ])
@@ -117,6 +118,7 @@ $(document).ready(function(){
             //{data: 'updated_at', name: 'updated_at'},
             {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},
+            {data: 'created_at', name: 'created_at'},
           
         ];
 

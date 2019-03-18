@@ -31,7 +31,7 @@
             </div>
             <!--MODAL CREAR COMENTARIO-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para revisar Actividades del Libro'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
