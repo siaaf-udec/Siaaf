@@ -365,7 +365,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit', "gesap/gesap/libro/GESAPPDF.pdf");
+                $Actividad->offsetSet('Commit', "documents/GESAPPDF.pdf");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
@@ -400,7 +400,7 @@ class DocenteController extends Controller
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null)
             {
-                $Actividad->offsetSet('Commit',"gesap/gesap/libro/GESAPPDF.pdf");
+                $Actividad->offsetSet('Commit',"documents/GESAPPDF.pdf");
                 $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
                 
             }else{
