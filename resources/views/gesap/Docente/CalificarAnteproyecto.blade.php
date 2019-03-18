@@ -40,18 +40,18 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                {!! Field:: text('MCT_Actividad',$datos['NPRY_Titulo'],['label'=>'Titulo:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}                      
-                                {!! Field:: text('MCT_Actividad',$datos['Director'],['label'=>'Director:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'Estado Anteproyecto:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
-                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-
+                              
 
                                
                                </div>
                              
                         </div>
+                        {!! Field:: text('MCT_Actividad',$datos['NPRY_Titulo'],['label'=>'Titulo:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}                      
+                                {!! Field:: text('MCT_Actividad',$datos['Director'],['label'=>'Director:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
+                                {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'Estado Anteproyecto:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>

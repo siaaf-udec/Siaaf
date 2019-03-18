@@ -201,7 +201,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_ver = '{{ route('Proyectos.VerProyecto') }}' + '/' + dataTable.PK_Id_Proyecto;
+                route_ver = '{{ route('Proyectos.VerProyecto') }}' + '/' + dataTable.Id_Proyecto;
             $(".content-ajax").load(route_ver);
         });
         $(".gestionar").on('click', function (e) {
