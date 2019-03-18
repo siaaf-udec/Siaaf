@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Cerrar mantenimiento'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Ver diagnóstico técnico del mantenimiento'])
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
                 <div class="form-body">

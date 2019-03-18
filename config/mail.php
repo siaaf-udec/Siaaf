@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp-mail.outlook.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,6 +43,7 @@ return [
     */
 
     'port' => env('MAIL_PORT', 587),
+    //587
 
     /*
     |--------------------------------------------------------------------------
@@ -56,9 +57,10 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@ucundinamarca.edu.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@ucundinamarca.edu.co'),
         'name' => env('MAIL_FROM_NAME', 'SIAAF'),
     ],
+
 
     /*
     |--------------------------------------------------------------------------

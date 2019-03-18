@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Container\Acadspace\src\Mantenimiento;
 use App\Container\Acadspace\src\TiposMant;
+use App\Container\Acadspace\src\Hojavida;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -84,9 +85,19 @@ class MantenimientoController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $tipos = Mantenimiento::select();
             return Datatables::of($tipos)
-                ->removeColumn('MANT_Fecha_Fin')    
-                ->removeColumn('MANT_Descripcion_Errores')
-                ->removeColumn('FK_MANT_Id_Hojavida')
+                ->addColumn('estado',function($tipos) {
+                    if ($tipos->MANT_Descripcion_Errores==NULL) {
+                        return "<span class='label label-sm label-warning'>" . "Abierto" . "</span>";
+                    } else{
+                        return "<span class='label label-sm label-success'>" . "Cerrado" . "</span>";
+                    }
+                })
+                ->addColumn('id_articulo',function($tipos){
+                    $articulo = Articulo::select('ART_Codigo')->where('FK_ART_Id_Hojavida','=',$tipos->FK_MANT_Id_Hojavida)->get();
+                    return $articulo[0]->ART_Codigo;
+                })
+                ->rawColumns(['estado'])
+                ->removeColumn('MANT_Fecha_Fin') 
                 ->removeColumn('FK_MANT_Id_Tipo')
                 ->removeColumn('created_at')
                 ->removeColumn('updated_at')

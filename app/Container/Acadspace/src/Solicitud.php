@@ -2,7 +2,7 @@
 
 namespace App\Container\Acadspace\src;
 
-use App\Container\Users\src\UsersUdec;
+use App\Container\Users\src\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Solicitud extends Model
@@ -53,7 +53,7 @@ class Solicitud extends Model
      */
     public function user()
     {
-        return $this->belongsTo(UsersUdec::class, 'FK_SOL_Id_Docente');
+        return $this->belongsTo(User::class, 'FK_SOL_Id_Docente');
     }
 
 

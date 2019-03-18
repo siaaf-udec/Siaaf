@@ -86,7 +86,7 @@ class TiposMantController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $tiposMant = TiposMant::findOrFail($id);
-            return view($this->path.'.formularioEditartiposMant',compact('tiposMant'));
+            return view($this->path.'.formularioEditarTiposMant',compact('tiposMant'));
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',
