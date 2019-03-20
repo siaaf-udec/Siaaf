@@ -100,7 +100,7 @@
                     <div class="row-forget">
                         <!-- BEGIN FORGOT PASSWORD FORM -->
                         {!! Form::open(['role' => 'form', 'id' => 'form-forget', 'class' => 'forget-form', 'novalidate', 'method' => 'POST', 'url' => route('password.email')]) !!}
-                            <h3 class="font-green">¿Se te olvidó tu contraseña ?</h3>
+                            <h3 class="font-green">¿Se te olvidó tu contraseñadiego?</h3>
                             <p>Introduzca su dirección de correo electrónico a continuación para restablecer su contraseña. </p>
                             {!! Field::email('email_forget', old('email_forget'), ['required', 'max' => 60, 'label' => 'Correo', 'autofocus', 'auto' => 'off'], ['icon' => 'fa fa-envelope-o', 'help' => 'Digita un correo.']) !!}
                             <div class="form-actions">
