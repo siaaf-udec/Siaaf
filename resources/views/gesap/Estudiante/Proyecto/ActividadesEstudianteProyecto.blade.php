@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del MCT'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de actualizacion de las Actividades del LIBRO'])
 
         @slot('actions', [
        'link_cancel' => [
@@ -114,7 +114,7 @@
             e.preventDefault();
            // var route = '{{ route('EstudianteGesap.index.ajax') }}';
 
-            location.href="{{route('EstudianteGesap.index')}}";
+            location.href="{{route('EstudianteGesap.indexProyecto')}}";
 
            // $(".content-ajax").load(route);
         });

@@ -283,6 +283,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@index',  
 			'as' => 'EstudianteGesap.index'
 		]);
+		Route::get('indexProyecto', [
+			'uses' => $controller . 'StudentController@indexProyecto',  
+			'as' => 'EstudianteGesap.indexProyecto'
+		]);
 		Route::get('indexAjax', [
 			'uses' => $controller . 'StudentController@index',  
 			'as' => 'EstudianteGesap.index.ajax'
@@ -381,6 +385,11 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Financiacion/{id?}', [
 			'uses' => $controller . 'StudentController@Financiacion',  
 			'as' => 'EstudianteGesap.Financiacion'
+		]);
+		
+		Route::get('SeguimientoCrono', [
+			'uses' => $controller . 'StudentController@SeguimientoCrono',  
+			'as' => 'EstudianteGesap.SeguimientoCrono'
 		]);
 		
 		Route::post('SolicitudStore', [
@@ -596,6 +605,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('index', [
 			'uses' => $controller . 'DocenteController@index',  
 			'as' => 'DocenteGesap.index'
+		]);
+		Route::get('indexProyecto', [
+			'uses' => $controller . 'DocenteController@indexProyecto',  
+			'as' => 'DocenteGesap.indexProyecto'
 		]);
 		Route::get('indexAjax', [
 			'uses' => $controller . 'DocenteController@index',  

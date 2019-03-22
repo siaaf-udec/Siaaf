@@ -22,7 +22,7 @@
                         @if($Anteproyecto['Estado'] > 3)
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ComentariosJurados'])
                         @slot('columns', [
-                            '#',
+                         
                             'Jurado',
                             'Comentario'
                         ])
@@ -90,7 +90,7 @@
             e.preventDefault();
            // var route = '{{ route('EstudianteGesap.index.ajax') }}';
 
-            location.href="{{route('EstudianteGesap.index')}}";
+            location.href="{{route('EstudianteGesap.indexProyecto')}}";
 
            // $(".content-ajax").load(route);
         });

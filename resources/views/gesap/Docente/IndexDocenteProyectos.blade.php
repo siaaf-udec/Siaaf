@@ -25,7 +25,7 @@
 
 @endpush
 
-@section('title', '| Información de los Anteproyectos')
+@section('title', '| Información de los Proyectos')
 
 @section('page-title', 'Anteproyectos Universidad De Cundinamarca Extensión Facatativá:')
  
@@ -98,7 +98,7 @@
             <!--FIN VER SOLICITUDES-->
 
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos Asignados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos Asignados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -127,27 +127,12 @@
             </div>
             <br>
             <div class="row">
-            <h3>Anteproyectos Asignados Como Director</h3>
-
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyecto'])
-                        @slot('columns', [
-                            'Titulo',
-                            'Palabras clave',
-                            'Descripción',
-                            'Duracion en meses',
-                            'Estado',
-                            'Fecha Radicación',
-                            'Acciones'
-                        ])
-                    @endcomponent
-                </div>
-                <br><br>
-            <h3>Anteproyectos Asignados como Jurado</h3>
+          
+    <h3>Proyectos Asignados Como Director</h3>
     
     <br><br>
             <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyectojurado'])
+                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyectos'])
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
@@ -159,7 +144,24 @@
                     ])
                 @endcomponent
             </div>
-    @endcomponent
+    <h3>Proyectos Asigandos como Jurado</h3>
+    
+    <br><br>
+            <div class="col-md-12">
+                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyetoJurado'])
+                    @slot('columns', [
+                        'Titulo',
+                        'Descripción',
+                        'Duracion en meses',
+                        'Fecha Radicación',
+                        'Director',
+                        'Estado',
+                        'Acciones'
+                    ])
+                @endcomponent
+            </div>
+            </div>
+        @endcomponent
         
         
     </div>
@@ -429,7 +431,6 @@ jQuery(document).ready(function () {
             {data: 'Duracion', name: 'Duracion'},
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
-            {data: 'Estado' ,name: 'Estado'},
            
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
@@ -493,6 +494,8 @@ jQuery(document).ready(function () {
             {data: 'Duracion', name: 'Duracion'},
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
+            {data: 'Estado', name: 'Estado'},
+            
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',

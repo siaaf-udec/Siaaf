@@ -113,7 +113,7 @@
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('DocenteGesap.index.ajax') }}';
-            location.href="{{route('DocenteGesap.index')}}";
+            location.href="{{route('DocenteGesap.indexProyecto')}}";
             //$(".content-ajax").load(route);
         });
 

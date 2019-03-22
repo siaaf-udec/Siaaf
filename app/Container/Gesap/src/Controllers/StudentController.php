@@ -67,6 +67,12 @@ class StudentController extends Controller
 			return view($this->path . 'IndexEstudiante');
 		
     }
+    public function indexProyecto(Request $request)
+	{
+		
+			return view($this->path . 'IndexEstudianteProyecto');
+		
+    }
     public function VerActividadesList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -280,6 +286,39 @@ class StudentController extends Controller
             }              
         
     }
+
+    public function SeguimientoCrono(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+                
+
+            $user = Auth::user();
+            $id = $user->identity_no;
+            
+            $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->get();
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+            $now = date('Y-m-d');
+           // $dato =   ($Anteproyecto[0]->NPRY_FCH_Radicacion)->diffInDays($now) ;
+           $date =  Carbon::createFromFormat('Y-m-d', '2017-01-02 ');
+          //  $Anteproyecto[0] -> offsetSet('semana', $now);
+      
+            
+            return DataTables::of($date)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+             
+            ->addIndexColumn()
+            ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
     public function Radicar(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

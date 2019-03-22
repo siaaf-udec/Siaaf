@@ -70,6 +70,12 @@ class DocenteController extends Controller
 			return view($this->path . 'IndexDocente');
 		
     }
+    public function indexProyecto(Request $request)
+	{
+		
+			return view($this->path . 'IndexDocenteProyectos');
+		
+    }
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -189,6 +195,7 @@ class DocenteController extends Controller
                 $collection = collect([]);
                 $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
                 $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
+                $collection->put('Estado',$anteproyecto->relacionEstado->EST_Estado);
                 $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
                 $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);
                 $collection->put('Fecha_Radicacion',$anteproyecto-> NPRY_FCH_Radicacion);
@@ -241,6 +248,7 @@ class DocenteController extends Controller
                 $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
                 $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
                 $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
+                $collection->put('Estado',$anteproyecto-> relacionEstado->EST_Estado );
                 $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);                
                 $collection->put('Fecha_Radicacion',$proyectofecha-> PYT_Fecha_Radicacion);
                 $director = Usuarios::where('PK_user_Codigo', $anteproyecto-> FK_NPRY_Pre_Director)->first();
@@ -768,6 +776,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $desicion = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->get();
 
             foreach($desicion as $des){
                
@@ -776,10 +785,16 @@ class DocenteController extends Controller
                 $space = " ";
                 $Nombre = $Nombre1.$space.$Apellido;
                 $Estado = $des -> relacionEstadoJurado -> EST_Estado;
+                $estadoproyecto = $proyecto->relacionEstado->EST_Estado;
+                if($estadoproyecto == "ASIGNADO"){
+                    $des-> offsetSet('Estado',"ASIGNADO");
 
+                } else{
+                    $des-> offsetSet('Estado',$Estado);
+
+                }
                 $des-> offsetSet('Jurado',$Nombre);
-                $des-> offsetSet('Estado',$Estado);
-
+                
             }
                      
             return DataTables::of($desicion)
