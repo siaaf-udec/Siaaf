@@ -138,12 +138,13 @@
                             'Duracion en meses',
                             'Estado',
                             'Fecha Radicación',
+                            'Desarrolladores',
                             'Acciones'
                         ])
                     @endcomponent
                 </div>
                 <br><br>
-            <h3>Anteproyectos Asignados como Jurado</h3>
+            <h3>Anteproyectos Asignados Como Jurado</h3>
     
     <br><br>
             <div class="col-md-12">
@@ -155,6 +156,7 @@
                         'Fecha Radicación',
                         'Director',
                         'Estado',
+                        'Desarrolladores',
                         'Acciones'
                     ])
                 @endcomponent
@@ -388,6 +390,7 @@ jQuery(document).ready(function () {
            
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
       
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
@@ -430,6 +433,7 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {data: 'Estado' ,name: 'Estado'},
+            {data: 'Desarrolladores' ,name: 'Desarrolladores'},
            
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,

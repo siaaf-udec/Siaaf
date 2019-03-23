@@ -294,41 +294,42 @@ class CoordinatorController extends Controller
         
     }
 
-    ///// LISTADOS /////
+    //Funcion que sirve para listar la informacion de proyectos de grado para el rol coordinador
 	public function anteproyectoList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
 		   
-           $anteproyecto=Anteproyecto::all();
+           $anteproyectos=Anteproyecto::all();
            
-           $i=0;
-           $i2=0;
+           $desarrolladorP = "";
+           foreach($anteproyectos as $anteproyecto){
 
-           foreach($anteproyecto as $ante){
-            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
-           
-               $i=$i+1;
+            $estado = $anteproyecto -> relacionEstado -> EST_Estado;
+            $anteproyecto->offsetSet('Estado',  $estado );
+
+            $Predirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
+            $anteproyecto->offsetSet('Nombre',  $Predirector );
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->get();
+            $desarrolladoresv = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->first();
+            $i=0;
+            if($desarrolladores->IsEmpty()){
+                $anteproyecto->offsetSet('Desarrolladores',  'Sin Asignar' );
+            }else{
+                foreach($desarrolladores as $desarrollador){
+                    if($i==0){
+                        $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                        $i=1;
+                    }else{
+                        $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                    }
+                }
+                $anteproyecto->offsetSet('Desarrolladores',  $desarrolladorP );
+            }
+            
            }
-           $j=0;
-           foreach ($anteproyecto as $ante) {
-            $ante->offsetSet('Estado',  $s[$j] );
-            $j=$j+1;
-            }
 
-            foreach($anteproyecto as $antep){
-                $s2[$i2]=$anteproyecto[$i2]-> relacionPredirectores-> User_Nombre1;
-               
-                $i2=$i2+1;
-            }
-            $j2=0;
-           foreach ($anteproyecto as $antep) {
-           
-            $antep->offsetSet('Nombre', $s2[$j2]);
-            $j2=$j2+1;
-            }
-          
-               return DataTables::of($anteproyecto)
+               return DataTables::of($anteproyectos)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
 			    
@@ -376,6 +377,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion Que permite mostrar los datos de los proyectos de grado coordinador
     public function ProyectosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -399,8 +401,24 @@ class CoordinatorController extends Controller
                     $proyecto->offsetSet('Director',$Anteproyecto->relacionPredirectores -> User_Nombre1. " ".$Anteproyecto -> relacionPredirectores -> User_Apellido1 );
                     $proyecto->offsetSet('Estado',$proyecto->relacionEstado->EST_Estado);
                     $proyecto->offsetSet('Fecha',$proyecto->PYT_Fecha_Radicacion);
+                    $i=0;
+                    $desarrolladorP="";
+                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$proyecto-> FK_NPRY_IdMctr008)->get();
+                    if($desarrolladores->IsEmpty()){
+                        $proyecto->offsetSet('Desarrolladores',  'Sin Asignar' );
+                    }else{
+                        foreach($desarrolladores as $desarrollador){
+                            if($i==0){
+                                $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                $i=1;
+                            }else{
+                                $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            }
+                        }
+                    
+                        $proyecto->offsetSet('Desarrolladores',  $desarrolladorP );
 
-
+                    }
 
                 }
 

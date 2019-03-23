@@ -70,6 +70,7 @@
                             'Pre Director',
                             'Estado',
                             'Fecha Radicación',
+                            'Desarrolladores',
                             'Acciones'
                         ])
                     @endcomponent
@@ -123,7 +124,8 @@
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
-      
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
+
             {
                 defaultContent: '@permission('GESAP_ADMIN_REPORT_ANTE')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_ADMIN_VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',

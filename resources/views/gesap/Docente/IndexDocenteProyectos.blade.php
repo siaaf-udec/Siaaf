@@ -136,15 +136,16 @@
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
-                        'Duracion en meses',
+                        'Duracion',
                         'Fecha Radicación',
                         'Director',
                         'Estado',
+                        'Desarrolladores',
                         'Acciones'
                     ])
                 @endcomponent
             </div>
-    <h3>Proyectos Asigandos como Jurado</h3>
+    <h3>Proyectos Asigandos Como Jurado</h3>
     
     <br><br>
             <div class="col-md-12">
@@ -152,10 +153,11 @@
                     @slot('columns', [
                         'Titulo',
                         'Descripción',
-                        'Duracion en meses',
+                        'Duración',
                         'Fecha Radicación',
                         'Director',
                         'Estado',
+                        'Desarrolladores',
                         'Acciones'
                     ])
                 @endcomponent
@@ -463,6 +465,8 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {data: 'Estado', name: 'Estado'},
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
+            
            
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
@@ -495,6 +499,8 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {data: 'Estado', name: 'Estado'},
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
+
             
             {
                 defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,

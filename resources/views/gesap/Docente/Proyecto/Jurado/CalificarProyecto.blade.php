@@ -56,7 +56,7 @@
 
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
-                    @if($datos['IdEstado'] == '3')
+                    @if($datos['Estado'] == 'RADICADO')
                     @permission('GESAP_DOCENTE_DECISION_JUDMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
