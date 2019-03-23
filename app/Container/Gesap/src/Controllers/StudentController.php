@@ -297,13 +297,32 @@ class StudentController extends Controller
             
             $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->get();
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+            $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->first();
             $now = date('Y-m-d');
-           // $dato =   ($Anteproyecto[0]->NPRY_FCH_Radicacion)->diffInDays($now) ;
-           $date =  Carbon::createFromFormat('Y-m-d', '2017-01-02 ');
-          //  $Anteproyecto[0] -> offsetSet('semana', $now);
-      
+            $fechaactual = Carbon::now()->format('Y-m-d');
             
-            return DataTables::of($date)
+            $fecharadicacion = Carbon::parse($Proyecto ->PYT_Fecha_Radicacion );
+            $fechahoy = Carbon::parse($fechaactual);
+            $diasDiferencia = $fechahoy->diffInWeeks($fecharadicacion);
+            $Anteproyecto[0] -> offsetSet('semana', $diasDiferencia);
+            $Actividades = "";
+            $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+            $i = 0;
+            foreach($Cronograma as $crono){
+                $inicio = $crono->MCT_CRN_Semana_Inicio;
+                $fin =  $crono->MCT_CRN_Semana_Fin;
+                if($diasDiferencia >= $inicio && $diasDiferencia <= $fin ){
+                    if($i == 0){
+                        $Actividades = $Actividades."-".$crono->MCT_CRN_Actividad;
+                    }else{
+                        $Actividades = $Actividades.",".$crono->MCT_CRN_Actividad;
+                    }
+                }
+                
+            }
+            $Anteproyecto[0] -> offsetSet('actividades', $Actividades);
+            
+            return DataTables::of($Anteproyecto)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
              

@@ -150,7 +150,7 @@
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaCronograma'])
                         @slot('columns', [
                             'Semana',
-                            'Actividad(es)'
+                            'Actividad(es) Activas'
                         ])
                     @endcomponent
                     
@@ -194,16 +194,16 @@
     jQuery(document).ready(function () {
 
         var tablecrono, urlcrono, columnscrono;
-        // tablecrono = $('#listaCronograma');
-        // urlcrono = '{{ route('EstudianteGesap.SeguimientoCrono')}}';
-        // columnscrono = [
-        //     {data: 'semana', name: 'semana'},
-        //     {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
-        // ];
+        tablecrono = $('#listaCronograma');
+        urlcrono = '{{ route('EstudianteGesap.SeguimientoCrono')}}';
+        columnscrono = [
+            {data: 'semana', name: 'semana'},
+            {data: 'actividades', name: 'actividades'},
+        ];
         
       
-        // dataTableServer.init(tablecrono, urlcrono, columnscrono);
-        // tablecrono = tablecrono.DataTable();
+        dataTableServer.init(tablecrono, urlcrono, columnscrono);
+        tablecrono = tablecrono.DataTable();
 
         var tablesol, urlsol, columnssol;
         tablesol = $('#listaSolicitudes');
