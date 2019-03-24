@@ -289,13 +289,12 @@
         id = 123456789 ;
         url = '{{ route('EstudianteGesap.Desarrolladores')}}'+ '/' + id;
         columns = [
-            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
-            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-           
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Palabras', name: 'Palabras'},
+            {data: 'Des', name: 'Des'},
+            {data: 'Duracion', name: 'Duracion'},  
             {data: 'Estado', name: 'Estado'},
-            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Fecha', name: 'Fecha'},
       
             {
                 defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,

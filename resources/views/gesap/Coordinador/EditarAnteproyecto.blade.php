@@ -14,16 +14,16 @@
                 <div class="form-body">
                     <div class="row">
                        
-                                {!! Field:: text('NPRY_Titulo',$infoAnte[0]['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Titulo',$infoAnte[0]['NPRY_Titulo'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
-                            {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control','maxlength'=>'500', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
+                                                             ['help' => 'Digite una breve descripción del proyecto.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$infoAnte[0]['NPRY_Duracion'],['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Duracion',$infoAnte[0]['NPRY_Duracion'],['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
                             {!! Field:: text('NPRY_FCH_Radicacion',$infoAnte[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
@@ -119,14 +119,13 @@
                     var route = '{{ route('AnteproyectoGesap.updateAnte') }}';
                     var async = async || false;
                     
-                    formData.append('NPRY_Titulo', $('input:text[name="NPRY_Titulo"]').val());
-                    formData.append('NPRY_Keywords', $('input:text[name="NPRY_Keywords"]').val());
-                    formData.append('NPRY_Descripcion', $('input:text[name="NPRY_Descripcion"]').val());
-                    formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
+                    formData.append('NPRY_Titulo', $('#NPRY_Titulo').val());
+                    formData.append('NPRY_Keywords', $('#NPRY_Keywords').val());
+                    formData.append('NPRY_Descripcion', $('#NPRY_Descripcion').val());
+                    formData.append('NPRY_Duracion', $('#NPRY_Duracion').val());
                     formData.append('FK_NPRY_Pre_Director', $('select[name="SelectPre_Director"]').val());
                     //formData.append('FK_NPRY_Estado', $estado;
-                    formData.append('PK_NPRY_IdMctr008', $('input:text[name="PK_NPRY_IdMctr008"]').val());
-                    
+                    formData.append('PK_NPRY_IdMctr008', '{{$infoAnte[0]['PK_NPRY_IdMctr008']}}');
                     $.ajax({
                          url: route,
                         type: 'POST',
@@ -161,9 +160,9 @@
        }
        var form = $('#form_update_anteproyecto');
         var formRules = {
-            NPRY_Titulo: {minlength: 1, maxlength: 100, required: true,},
-            NPRY_Keywords: {minlength: 1, maxlength: 200, required: true,},
-            NPRY_Descripcion: {minlength: 1, maxlength: 250, required: true,},
+            NPRY_Titulo: {minlength: 1, maxlength: 500, required: true,},
+            NPRY_Keywords: {minlength: 1, maxlength: 500, required: true,},
+            NPRY_Descripcion: {minlength: 1, maxlength: 1000, required: true,},
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             SelectEstado: {required: true},

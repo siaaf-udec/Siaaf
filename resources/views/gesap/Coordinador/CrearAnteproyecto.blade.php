@@ -16,7 +16,12 @@
 
                         <div class="col-md-6">
 
-                        {!! Field:: text('NPRY_Titulo',null,['label'=>'TITULO:','class'=> 'form-control', 'autofocus', 'maxlength'=>'500','autocomplete'=>'off'],
+                                                             
+                                </div>
+                    </div>
+
+
+                    {!! Field:: text('NPRY_Titulo',null,['label'=>'TITULO:','class'=> 'form-control', 'autofocus', 'maxlength'=>'500','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
@@ -26,18 +31,13 @@
                                 {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                                {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
+                                {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
                                                                 ['help' => 'Digite la duracion del anteproyecto en meses.','icon'=>'fa fa-calendar'] ) !!}
 
 
                                 {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director: ']) !!}
 
                                 {!! Field::select('NPRY_FCH_Radicacion', null,['name' => 'Select_Fecha','label'=>'Fecha De Radicación: ']) !!}
-                                                             
-                                </div>
-                    </div>
-
-
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">

@@ -2006,49 +2006,42 @@ class StudentController extends Controller
              
         }              
     }
-    
+    //funcion que retorna los proyectos al estudiante
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
-		    $id = $user->identity_no;
-       
+            $id = $user->identity_no;
+            $i=0;
+            $Desarrollos=Desarrolladores::where('FK_User_Codigo', $id)->get();
+            $concatenado=[];
+            foreach($Desarrollos as $Desarrollo){
+                
+                if($Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 1 && $Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 7 ){
+                    $collection = collect([]);
+                    $collection->put('Titulo',$Desarrollo -> relacionAnteproyecto-> NPRY_Titulo);
+                    $collection->put('Palabras',$Desarrollo -> relacionAnteproyecto->NPRY_Keywords);
+                    $collection->put('Des',$Desarrollo -> relacionAnteproyecto->NPRY_Descripcion);
+                    $collection->put('Duracion',$Desarrollo -> relacionAnteproyecto-> NPRY_Duracion);
+                    $collection->put('Estado',$Desarrollo -> relacionAnteproyecto->relacionEstado->EST_Estado );
+                    $collection->put('Fecha',$Desarrollo -> relacionAnteproyecto->NPRY_FCH_Radicacion);
 
-           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('FK_IdEstado',1)->first();
-        
-           if($Desarrollo===null){
-               $anteproyecto = [];
-           }else{
-            $anteproyecto = $Desarrollo -> relacionAnteproyecto()->get();   
-               if( $anteproyecto[0]->FK_NPRY_Estado == 1 || $anteproyecto[0]->FK_NPRY_Estado == 5 || $anteproyecto[0]->FK_NPRY_Estado == 7 ){
-                $anteproyecto = [];
-               }else{
-                
-           
-                $i=0;
-                $i2=0;
-     
-                foreach($anteproyecto as $ante){
-                 $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
-                
+                    $concatenado[$i]= $collection;
+                    
                     $i=$i+1;
                 }
-                $j=0;
-                foreach ($anteproyecto as $ante) {
                 
-                 $ante->offsetSet('Estado', $s[$j]);
-                 $j=$j+1;
-                
-               }
             }
-        }
+        
+
+         
           
-               return DataTables::of($anteproyecto)
-               ->removeColumn('created_at')
-			   ->removeColumn('updated_at')
-			    
-			   ->addIndexColumn()
-               ->make(true);
+            return DataTables::of($concatenado)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+                    
+            ->addIndexColumn()
+            ->make(true);
         
 
         }

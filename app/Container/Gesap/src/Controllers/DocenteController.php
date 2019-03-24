@@ -899,9 +899,10 @@ class DocenteController extends Controller
             $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
 
             if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
+                //aprobado
                 $anteproyecto -> FK_NPRY_Estado = 4;
                 $anteproyecto -> save();
-                //aprobado
+                
                 Proyecto::create([
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
@@ -915,9 +916,17 @@ class DocenteController extends Controller
             }
 
             if(($DesiciónJuradoUno=="REPROBADO")&&($DesiciónJuradoDos=="REPROBADO")){
-                $anteproyecto -> FK_NPRY_Estado = 5;
                 //rechazado
+                $anteproyecto -> FK_NPRY_Estado = 5;
                 $anteproyecto -> save();
+                
+                $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $desarrollador-> Fk_IdEstado = 2;
+                    $desarrollador->save();
+
+                }
+                
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -925,9 +934,16 @@ class DocenteController extends Controller
 
             }
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
-                $anteproyecto -> FK_NPRY_Estado = 6;
                 //aplazado
+                
+                $anteproyecto -> FK_NPRY_Estado = 6;
                 $anteproyecto -> save();
+                $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get(); 
+                foreach($actividades as $actividad){
+                    $actividad->FK_CHK_Checklist = 1;
+                    $actividad->save();
+                }
+                
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
