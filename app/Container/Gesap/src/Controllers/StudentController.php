@@ -73,7 +73,7 @@ class StudentController extends Controller
 			return view($this->path . 'IndexEstudianteProyecto');
 		
     }
-    public function VerActividadesList(Request $request)
+    public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -81,6 +81,17 @@ class StudentController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Aprobar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
                    $numero = $numero +1 ;
                }
                   
@@ -100,7 +111,8 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    public function VerActividadesListProyecto(Request $request)
+    
+    public function VerActividadesListProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -108,6 +120,17 @@ class StudentController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Aprobar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
                    $numero = $numero +1 ;
                }
                   
@@ -242,7 +265,7 @@ class StudentController extends Controller
         }         
         
     }
-    public function VerRequerimientosList(Request $request)
+    public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
@@ -251,6 +274,17 @@ class StudentController extends Controller
 
             foreach($Actividades as $Actividad){
                 $Actividad->offsetSet('Numero', $numero);
+                $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                if($check != null){
+                    if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                       $Actividad->offsetSet('Check', 'Sin Aprobar');
+                    }else{
+                       $Actividad->offsetSet('Check', 'Aprobado');
+                    }
+                }else{
+                     $Actividad->offsetSet('Check', 'Sin Subir');
+                }
                 $numero = $numero +1 ;
             }
                   
@@ -2025,6 +2059,7 @@ class StudentController extends Controller
                     $collection->put('Duracion',$Desarrollo -> relacionAnteproyecto-> NPRY_Duracion);
                     $collection->put('Estado',$Desarrollo -> relacionAnteproyecto->relacionEstado->EST_Estado );
                     $collection->put('Fecha',$Desarrollo -> relacionAnteproyecto->NPRY_FCH_Radicacion);
+                    $collection->put('Codigo',$Desarrollo -> relacionAnteproyecto->PK_NPRY_IdMctr008);
 
                     $concatenado[$i]= $collection;
                     

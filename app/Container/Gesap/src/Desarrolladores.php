@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Desarrolladores extends Model
-{
+{   
+    //modelo en el cual se asignan los desarrolladores del proyecto
     
     protected $connection = 'gesap';
 
@@ -20,11 +21,12 @@ class Desarrolladores extends Model
         ,'FK_IdEstado'
     ];
 
-    
+    //a que poryecto se van ha asignar
     public function relacionAnteproyecto()
     {
          return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
      }
+     //el usuario el cual fue asignado
      public function relacionUsuario()
     {
          return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_User_Codigo');

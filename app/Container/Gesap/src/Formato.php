@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Formato extends Model
 {
-    
+    //modelo del mct
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Formato';

@@ -320,7 +320,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);
@@ -331,7 +331,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerComentariosJuradoAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerComentariosJuradoAnteproyecto') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);

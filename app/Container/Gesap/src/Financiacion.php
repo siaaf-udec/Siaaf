@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Financiacion extends Model
-{
+{   
+    //modelo del mct
     
     protected $connection = 'gesap';
 
