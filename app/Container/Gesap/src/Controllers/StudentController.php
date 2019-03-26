@@ -329,7 +329,10 @@ class StudentController extends Controller
             $user = Auth::user();
             $id = $user->identity_no;
             
-            $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->get();
+            $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->where('Fk_IdEstado',1)->get();
+            if($desarrollador->IsEmpty()){
+                $Anteproyecto=[];
+            }else{
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
             $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->first();
             $now = date('Y-m-d');
@@ -355,6 +358,7 @@ class StudentController extends Controller
                 
             }
             $Anteproyecto[0] -> offsetSet('actividades', $Actividades);
+        }
             
             return DataTables::of($Anteproyecto)
             ->removeColumn('created_at')
@@ -1995,22 +1999,26 @@ class StudentController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
-            $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->first(); 
-            if($Anteproyecto == null){
-                $Proyecto = collect([]);
-            }else{
-                $Proyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Anteproyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Estado',4)->get();
-         
-                foreach($Proyecto as $Proyect){
-                    $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
-                   
-                    $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_Estado  );
-                    $Proyect->OffsetSet('Fecha',$ProyectoEstado -> PYT_Fecha_Radicacion  );
-                     
-                }
-            }
+
+            $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->get(); 
             
-            return DataTables::of($Proyecto)
+           
+                foreach($Anteproyecto as $Ante){
+
+                        $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$Ante->FK_NPRY_IdMctr008)->first();
+                        if($Proyecto->FK_EST_Id != 1 && $Proyecto->FK_EST_Id != 7){
+                            $Ante->OffsetSet('Titulo',$Proyecto -> relacionAnteproyecto -> NPRY_Titulo  );
+                            $Ante->OffsetSet('Palabras',$Proyecto -> relacionAnteproyecto ->  NPRY_Keywords );                
+                            $Ante->OffsetSet('Des',$Proyecto ->  relacionAnteproyecto ->  NPRY_Descripcion);
+                            $Ante->OffsetSet('Duracion',$Proyecto -> relacionAnteproyecto ->  NPRY_Duracion  );                
+                            $Ante->OffsetSet('Estado',$Proyecto -> relacionEstado -> EST_Estado  );
+                            $Ante->OffsetSet('Fecha',$Proyecto -> PYT_Fecha_Radicacion  );                        
+                        }
+                }
+                
+            
+            
+            return DataTables::of($Anteproyecto)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
              

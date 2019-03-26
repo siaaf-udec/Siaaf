@@ -407,10 +407,10 @@
         idp = 123456189 ;
         urlp = '{{ route('EstudianteGesap.ListaProyecto')}}'+ '/' + id;
         columnsp = [
-            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
-            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Palabras', name: 'Palabras'},
+            {data: 'Des', name: 'Des'},
+            {data: 'Duracion', name: 'Duracion'},  
             {data: 'Estado', name: 'Estado'},
             {data: 'Fecha', name: 'Fecha'},
       

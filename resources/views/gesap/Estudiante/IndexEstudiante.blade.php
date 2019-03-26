@@ -341,7 +341,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.Codigo;
             var type = 'GET';
             var async = async || false;
             swal({

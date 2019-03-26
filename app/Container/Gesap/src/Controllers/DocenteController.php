@@ -240,7 +240,7 @@ class DocenteController extends Controller
         );
     }
     //funcion para listar los proyectos para el rol docente(Jurado)
-    public function ProyectosListRadicados(Request $request, $id)
+    public function ProyectosListRadicados(Request $request, $idx)
     {
         if ($request->isMethod('GET')) {
             $user = Auth::user();
@@ -264,7 +264,7 @@ class DocenteController extends Controller
                             $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
                             $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
                             $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
-                            $collection->put('Estado',$anteproyecto-> relacionEstado-> EST_Estado );
+                            $collection->put('Estado',$Proyecto-> relacionEstado-> EST_Estado );
                             $collection->put('Duracion',$anteproyecto-> NPRY_Duracion." meses");                
                             $collection->put('Fecha_Radicacion',$Proyecto-> PYT_Fecha_Radicacion);
                             $NombreDirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
@@ -884,7 +884,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $desicion = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
-            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->get();
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
 
             foreach($desicion as $des){
                
@@ -1031,7 +1031,7 @@ class DocenteController extends Controller
 
             $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
-            
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
             $Jurado -> save();
             
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
@@ -1056,6 +1056,15 @@ class DocenteController extends Controller
                 $Proyecto -> FK_EST_Id = 5;
                 //rechazado
                 $Proyecto -> save();
+                $anteproyecto -> FK_NPRY_Estado = 5;
+                $anteproyecto -> save();
+                
+                $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $desarrollador-> Fk_IdEstado = 2;
+                    $desarrollador->save();
+
+                }
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -1065,7 +1074,16 @@ class DocenteController extends Controller
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
                 $Proyecto -> FK_EST_Id = 6;
                 //aplazado
+                 
+               
                 $Proyecto -> save();
+                $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->where('CMMT_Formato',3)->get(); 
+                foreach($actividades as $actividad){
+                    $actividad->FK_CHK_Checklist = 1;
+                    $actividad->save();
+                }
+
+               
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
