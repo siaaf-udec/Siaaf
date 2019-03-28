@@ -53,6 +53,7 @@
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Anteproyectos</a>@endpermission
+                            
                         <br>
                     </div>
 
@@ -205,7 +206,15 @@
                 });
 
         });
-      
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}');
+            });
+        });
+
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('AnteproyectosGesap.create') }}';
@@ -218,6 +227,16 @@
             $(".content-ajax").load(route);
         });
         
+        
+        
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008);
+            });
+        });
 
         table.on('click', '.Ver', function (e) {
             e.preventDefault();

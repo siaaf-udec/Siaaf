@@ -59,6 +59,29 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@MctLimit',  
 			'as' => 'AnteproyectosGesap.MctLimit'
 		]);
+		Route::get('ReportesAnteproyectos', [
+			'uses' => $controller . 'PdfController@reporteAnteproyectos',  
+			'as' => 'AnteproyectosGesap.ReportesAnteproyecto'
+		]);
+
+		Route::get('ReportesAnteproyecto/{id?}', [
+			'uses' => $controller . 'PdfController@reporteAnteproyecto',  
+			'as' => 'AnteproyectosGesap.ReporteAnteproyecto'
+		]);
+		Route::get('ReportesProyectos', [
+			'uses' => $controller . 'PdfController@reporteProyectos',  
+			'as' => 'AnteproyectosGesap.ReportesProyecto'
+		]);
+		Route::get('ReportesProyecto/{id?}', [
+			'uses' => $controller . 'PdfController@reporteProyecto',  
+			'as' => 'AnteproyectosGesap.ReporteProyecto'
+		]);
+		
+	
+		Route::get('descargarReporteAnteproyectos', [
+			'uses' => $controller . 'PdfController@descargarReporteAnteproyectos',  
+			'as' => 'AnteproyectosGesap.descargarReporteAnteproyectos'
+		]);
 		
 		
 		Route::get('verdesarroladores/{id?}', [

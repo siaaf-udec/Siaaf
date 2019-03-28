@@ -199,6 +199,23 @@
                 });
 
         });
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReportesProyecto') }}');
+            });
+        });
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReporteProyecto') }}' + '/' + dataTable.FK_NPRY_IdMctr008);
+            });
+        });
+
         table.on('click', '.Ver', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
