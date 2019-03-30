@@ -9,7 +9,7 @@
         ])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model ([$datos], ['id'=>'form_update_anteproyecto', 'url' => '/forms'])  !!}
+                {!! Form::model ([$datos], ['id'=>'form_update_proyecto', 'url' => '/forms'])  !!}
 
                 <div class="form-body">
                     <div class="row">
@@ -31,9 +31,8 @@
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                             {!! Field:: text('NPRY_FCH_Radicacion',$datos['Fecha'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                           
-                            {!! Field:: text('FK_NPRY_Pre_Director',$datos['Director'],['label'=>'Director :', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                            
+                            {!! Field::select('FK_NPRY_Director', null,['name' => 'Select_Director','label'=>'Director:']) !!}
                           
                                                              <br><br>
                            <h4> DESARROLLADORES :</h4>
@@ -76,9 +75,8 @@
                                     Volver
                                 </a>
                                 @endpermission
-                               <!--  @permission('ADMIN_GESAP'){{ Form::submit('Asignar', ['class' => 'btn blue']) }}@endpermission
-                                @permission('ADMIN_GESAP'){{ Form::submit('Re-Asignar', ['class' => 'btn yellow']) }}@endpermission
-                               -->        </div>
+                                @permission('GESAP_ADMIN'){{ Form::submit('Cambiar Director', ['class' => 'btn blue']) }}@endpermission
+                                      </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -109,6 +107,31 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        var $widget_select_Director = $('select[name="Select_Director"]');
+        var valorSelected = <?php echo $datos['FK_NPRY_Director']; ?>
+
+        var route_Director = '{{ route('AnteproyectoGesap.listarpredirector') }}';
+        $.get(route_Director, function (response, status) {
+        $(response.data).each(function (key, value) {
+            $widget_select_Director.append(new Option(value.User_Nombre1, value.PK_User_Codigo ));
+        });
+            $widget_select_Director.val([]);
+            $('#FK_NPRY_Director').val(valorSelected);
+        });
+
+
+            
+        $.fn.select2.defaults.set("theme", "bootstrap");
+            $(".pmd-select2").select2({
+                placeholder: "Seleccionar",
+                allowClear: true,
+                width: 'auto',
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
+
         var table1, url1, columns1;
         table1 = $('#listadesarrolladores');
         id='{{  $datos['id_proyecto'] }}';
@@ -248,6 +271,54 @@
                 });
 
         });
+        var updateDirector = function(){
+        
+        return{
+            init : function (){
+                 var formData = new FormData();
+                 var route = '{{ route('Proyecto.updateProy') }}';
+                 var async = async || false;
+                 
+                 formData.append('FK_NPRY_Director', $('select[name="Select_Director"]').val());
+                 
+                  formData.append('FK_NPRY_IdMctr008', '{{$datos['FK_NPRY_IdMctr008']}}');
+                
+                 $.ajax({
+                      url: route,
+                     type: 'POST',
+                     data: formData,
+                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     async: async || false,
+                     success: function (response, xhr, request) {
+                         console.log(response);
+                         if (request.status === 200 && xhr === 'success') {
+                             $('#form_update_proyecto')[0].reset(); //Limpia formulario
+                             UIToastr.init(xhr, response.title, response.message);
+                             App.unblockUI('.portlet-form');
+                             var route = '{{ route('Proyectos.indexajax') }}';
+                             location.href="{{route('Proyectos.index')}}";
+                             
+                         }
+                     },
+                     error: function (response, xhr, request) {
+                         if (request.status === 422 && xhr === 'error') {
+                             UIToastr.init(xhr, response.title, response.message);
+                         }
+                     }
+                 })
+     
+   
+
+            }
+        }
+    }
+    var form = $('#form_update_proyecto');
+
+
+     FormValidationMd.init(form, false, false, updateDirector());
         
 
     $(".desarrollador").on('click', function (e) {
@@ -267,8 +338,8 @@
      
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('AnteproyectosGesap.index.Ajax') }}';
-            location.href="{{route('AnteproyectosGesap.index')}}";
+            var route = '{{ route('Proyectos.indexajax') }}';
+            location.href="{{route('Proyectos.index')}}";
             //$(".content-ajax").load(route);
         });
     });

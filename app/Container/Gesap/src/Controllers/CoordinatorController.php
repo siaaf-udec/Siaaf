@@ -164,6 +164,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    
     public function indexProyectoajax(Request $request)
 	{
         //if ($request->ajax() && $request->isMethod('GET')) {
@@ -398,7 +399,7 @@ class CoordinatorController extends Controller
                     $proyecto->offsetSet('Palabras',$Anteproyecto->NPRY_Keywords);
                     $proyecto->offsetSet('Descripcion',$Anteproyecto->NPRY_Descripcion);
                     $proyecto->offsetSet('Duracion',$Anteproyecto->NPRY_Duracion);
-                    $proyecto->offsetSet('Director',$Anteproyecto->relacionPredirectores -> User_Nombre1. " ".$Anteproyecto -> relacionPredirectores -> User_Apellido1 );
+                    $proyecto->offsetSet('Director',$proyecto->relacionDirectores -> User_Nombre1. " ".$proyecto -> relacionDirectores -> User_Apellido1 );
                     $proyecto->offsetSet('Estado',$proyecto->relacionEstado->EST_Estado);
                     $proyecto->offsetSet('Fecha',$proyecto->PYT_Fecha_Radicacion);
                     $i=0;
@@ -827,27 +828,28 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion apra ver y editar el director del proyecto como coordinador o administrador
     public function VerProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $Proyectos= Proyecto::where('FK_NPRY_IdMctr008',$id)->get();
-            foreach($Proyectos as $Proyecto){
-            $Proyecto->offsetSet('Estado',$Proyecto->relacionEstado->EST_Estado);
-            $Proyecto->offsetSet('id_proyecto',$Proyecto->FK_NPRY_IdMctr008);
+            $Proyectos= Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+          
+            $Proyectos->offsetSet('Estado',$Proyectos->relacionEstado->EST_Estado);
+            $Proyectos->offsetSet('id_proyecto',$Proyectos->FK_NPRY_IdMctr008);
             
-            $Proyecto->offsetSet('Director',$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Nombre1. " ".$Proyecto->relacionAnteproyecto->relacionPredirectores->User_Apellido1 );
+            $Proyectos->offsetSet('Director',$Proyectos->relacionDirectores->User_Nombre1);
             
-            $Proyecto->offsetSet('Titulo', $Proyecto->relacionAnteproyecto->NPRY_Titulo);
-            $Proyecto->offsetSet('Palabras', $Proyecto->relacionAnteproyecto->PRY_Keywords);
-            $Proyecto->offsetSet('Descripcion', $Proyecto->relacionAnteproyecto->NPRY_Descripcion);
+            $Proyectos->offsetSet('Titulo', $Proyectos->relacionAnteproyecto->NPRY_Titulo);
+            $Proyectos->offsetSet('Palabras', $Proyectos->relacionAnteproyecto->NPRY_Keywords);
+            $Proyectos->offsetSet('Descripcion', $Proyectos->relacionAnteproyecto->NPRY_Descripcion);
             
-            $Proyecto->offsetSet('Fecha', $Proyecto->PYT_Fecha_Radicacion);
-            $Proyecto->offsetSet('Duracion', $Proyecto->relacionAnteproyecto->NPRY_Duracion);
+            $Proyectos->offsetSet('Fecha', $Proyectos->PYT_Fecha_Radicacion);
+            $Proyectos->offsetSet('Duracion', $Proyectos->relacionAnteproyecto->NPRY_Duracion);
             
-            }
             
-            $datos = $Proyecto;
+            
+            $datos = $Proyectos;
                 return view ($this->path .'Proyecto.VerProyecto',
                 [
                    
@@ -1045,6 +1047,7 @@ class CoordinatorController extends Controller
 			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
              'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
              'NPRY_FCH_Radicacion' => $request['NPRY_FCH_Radicacion'],
+             'NPRY_Semillero' => $request['NPRY_Semillero'] 
             ]);
 
             $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
@@ -1170,7 +1173,7 @@ class CoordinatorController extends Controller
           
     //////////////// EDITARR ///////
     
-   
+   //editar el anteproyecto como tal
     public function updateAnte(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1197,8 +1200,30 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //editar el director de proyecto
+    public function updateProy(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $proyecto = Proyecto::Where('FK_NPRY_IdMctr008', $request['FK_NPRY_IdMctr008'])->first();
+            
+            $proyecto -> FK_NPRY_Director = $request['FK_NPRY_Director']; 
+            $proyecto -> save();
 
-    	
+
+
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    	//funcion que redirecciona los datos a la plantilla apra editar anteproyecto
 
 	public function EditarAnteproyecto(Request $request, $id)
     {

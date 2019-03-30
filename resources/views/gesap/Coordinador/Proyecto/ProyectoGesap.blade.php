@@ -32,7 +32,7 @@
 @section('content')
     @permission('GESAP_ADMIN')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -204,7 +204,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('AnteproyectosGesap.ReportesProyecto') }}');
+                window.open('{{ route('AnteproyectosGesap.ReportesProyecto') }}'+'/'+ 1);
             });
         });
         table.on('click', '.reporte', function (e) {
@@ -212,7 +212,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('AnteproyectosGesap.ReporteProyecto') }}' + '/' + dataTable.FK_NPRY_IdMctr008);
+                window.open('{{ route('AnteproyectosGesap.ReporteProyecto') }}' + '/' + dataTable.FK_NPRY_IdMctr008+'/'+1);
             });
         });
 

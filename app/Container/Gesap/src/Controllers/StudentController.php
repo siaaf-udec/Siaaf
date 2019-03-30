@@ -1994,13 +1994,14 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //funcion apra cargar los proyectos al estduiante
     public function ListaProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
 
-            $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->get(); 
+            $Anteproyecto = Desarrolladores::where('FK_User_Codigo',$id)->get(); 
             
            
                 foreach($Anteproyecto as $Ante){

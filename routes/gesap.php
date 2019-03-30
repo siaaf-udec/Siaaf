@@ -59,20 +59,29 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@MctLimit',  
 			'as' => 'AnteproyectosGesap.MctLimit'
 		]);
-		Route::get('ReportesAnteproyectos', [
+		Route::get('ReportesAnteproyectos/{id?}', [
 			'uses' => $controller . 'PdfController@reporteAnteproyectos',  
 			'as' => 'AnteproyectosGesap.ReportesAnteproyecto'
 		]);
+		
+		Route::get('ReportesUsuarios/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteUsuarios',  
+			'as' => 'AnteproyectosGesap.ReportesUsuarios'
+		]);
 
-		Route::get('ReportesAnteproyecto/{id?}', [
+		Route::get('ReportesAnteproyecto/{id?}/{idd?}', [
 			'uses' => $controller . 'PdfController@reporteAnteproyecto',  
 			'as' => 'AnteproyectosGesap.ReporteAnteproyecto'
 		]);
-		Route::get('ReportesProyectos', [
+		Route::get('ReportesProyectos/{id?}', [
 			'uses' => $controller . 'PdfController@reporteProyectos',  
 			'as' => 'AnteproyectosGesap.ReportesProyecto'
 		]);
-		Route::get('ReportesProyecto/{id?}', [
+		Route::get('reporteUsuario/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteUsuario',  
+			'as' => 'AnteproyectosGesap.reporteUsuario'
+		]);
+		Route::get('ReportesProyecto/{id?}/{idd?}', [
 			'uses' => $controller . 'PdfController@reporteProyecto',  
 			'as' => 'AnteproyectosGesap.ReporteProyecto'
 		]);
@@ -183,6 +192,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'Proyectos.indexajax'
 		]);
 
+		
+		Route::post('updateproy/', [
+            'uses' => $controller . 'CoordinatorController@updateProy',   
+            'as' => 'Proyecto.updateProy'
+		]);
 		Route::get('Proyectos/', [
             'uses' => $controller . 'CoordinatorController@ProyectosList',   
             'as' => 'Proyectos.List'

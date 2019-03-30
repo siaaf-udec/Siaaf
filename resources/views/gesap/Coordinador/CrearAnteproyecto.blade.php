@@ -30,10 +30,12 @@
 
                                 {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                                {!! Field:: text('NPRY_Semillero',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                                                ['help' => 'Digite acá el semillero al que pertenece.','icon'=>'fa fa-book'] ) !!}
 
                                 {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],
                                                                 ['help' => 'Digite la duracion del anteproyecto en meses.','icon'=>'fa fa-calendar'] ) !!}
-
+                              
 
                                 {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director: ']) !!}
 
@@ -127,6 +129,7 @@ $(document).ready(function(){
                     formData.append('NPRY_Titulo', $('input:text[name="NPRY_Titulo"]').val());
                     formData.append('NPRY_Keywords', $('#NPRY_Keywords').val());
                     formData.append('NPRY_Descripcion', $('#NPRY_Descripcion').val());
+                    formData.append('NPRY_Semillero', $('input:text[name="NPRY_Semillero"]').val());
                     formData.append('NPRY_Duracion', $('input:text[name="NPRY_Duracion"]').val());
                     formData.append('FK_NPRY_Pre_Director', $('select[name="SelectPre_Director"]').val());
                     formData.append('NPRY_FCH_Radicacion', $('select[name="Select_Fecha"]').val());
@@ -180,7 +183,8 @@ $(document).ready(function(){
             NPRY_Duracion: {minlength: 1, maxlength: 2,required: true,numbers: true,noSpecialCharacters: true,},
             SelectPre_Director: {required: true},
             FK_NPRY_Estado: {required: true},
-           
+            NPRY_Semillero: {minlength: 1, maxlength: 100, required: true,},
+            
         };
 
         var formMessage = {

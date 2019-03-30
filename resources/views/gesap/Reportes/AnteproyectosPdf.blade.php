@@ -71,7 +71,7 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-        <a href="">Descargar</a>
+        <a  href="{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}/ 2">Descargar</a>
  		
 	</div>
 

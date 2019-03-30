@@ -21,7 +21,8 @@ class Anteproyecto extends Model
         ,'NPRY_Duracion'
         ,'FK_NPRY_Pre_Director'
         ,'FK_NPRY_Estado'
-        ,'NPRY_FCH_Radicacion',
+        ,'NPRY_FCH_Radicacion'
+        ,'NPRY_Semillero'
     ];
     //esta es la relacion que tiene el anteproyecto con sus desarrolladores MAX 2
     public function relacionDesarrolladores()

@@ -71,7 +71,7 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-        <a href="">Descargar</a>
+        <a href="{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}/{{$anteproyecto->PK_NPRY_IdMctr008}}/ 2">Descargar</a>
  		
 	</div>
 
@@ -91,6 +91,10 @@
           <tr>
             <th><span contenteditable>Duración</span></th>
             <td><span contenteditable>{{$anteproyecto->Duracion}}</span></td>
+          </tr>
+          <tr>
+            <th><span contenteditable>Semillero</span></th>
+            <td><span contenteditable>{{$anteproyecto->NPRY_Semillero}}</span></td>
           </tr>
         </table>
 

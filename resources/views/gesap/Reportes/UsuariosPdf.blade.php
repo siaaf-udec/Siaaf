@@ -41,7 +41,7 @@
 
      table { font-size: 75%; table-layout: fixed; width: 100%; }
      table { border-collapse: separate; border-spacing: 2px; }
-     th, td { border-width: 3px; padding: 1em; position: relative; text-align: center; }
+     th, td { border-width: 3px; padding: 1em; position: relative; text-align: left; }
      th, td { border-radius: 0.5em; border-style: solid; }
      th { background: #EEE; border-color: #BBB; }
      td { border-color: #DDD; }
@@ -71,102 +71,66 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-    
-        <a href="{{ route('AnteproyectosGesap.ReportesProyecto') }}/{{$proyecto->FK_NPRY_IdMctr008}}/ 2">Descargar</a>
- 		    
- 			
+          
+        <a  href="{{ route('AnteproyectosGesap.ReportesUsuarios') }}/ 2">Descargar</a>
+ 		
+ 		
 	</div>
 
     <div id="features">
-
     <h1 class="features" >{{$title}}</h1>
-   
+       <br><br>
+    
     <table class="meta">
           <tr>
-            <th><span contenteditable>Fecha De Radicacón</span></th>
-            <td><span contenteditable>{{$proyecto->PYT_Fecha_Radicacion}}</span></td>
+            <th><span contenteditable># Usuarios Registrados</span></th>
+            <td><span contenteditable>{{$total}}</span></td>
           </tr>
           <tr>
-            <th><span contenteditable>Estado Del Proyecto</span></th>
-            <td><span contenteditable>{{$proyecto->Estado}}</span></td>
-          </tr>
+            <th><span contenteditable># De Estudiantes</span></th>
+            <td><span contenteditable>{{$estudiantes}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable>Duración</span></th>
-            <td><span contenteditable>{{$proyecto->Duracion}}</span></td>
-          </tr>
+            <th><span contenteditable># De Docentes</span></th>
+            <td><span contenteditable>{{$profesores}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable>Semillero</span></th>
-            <td><span contenteditable>{{$proyecto->Semillero}}</span></td>
-          </tr>
+            <th><span contenteditable># Administradores</span></th>
+            <td><span contenteditable>{{$admin}}</span></td>
+           </tr>
+          
         </table>
 
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Proyecto</b></th>
-            <th class="line"><b>Descripción</b></th>
-            <th class="line"><b>Palabras Clave</b></th>
-            <th class="line"><b>Director</b></th>
-           
+            <th class="line"><b>Codigo</b></th>
+            <th class="line"><b>Nombre</b></th>
+            <th class="line"><b>Apellido</b></th>
+            <th class="line"><b>Correo</b></th>
+            <th class="line"><b>Rol</b></th>
+            <th class="line"><b>Estado</b></th>
         </tr>
         </thead>
-      
+        @foreach($usuarios as $usuario)
             <tbody>
             <tr>
-                <td class="line">{{$proyecto->Titulo}}</td>
-                <td class="line">{{$proyecto->Descripcion}}</td>
-                <td class="line">{{$proyecto->Palabras}}</td>
-                <td class="line">{{$proyecto->Director}}</td>
+                <td class="line">{{$usuario->PK_User_Codigo}}</td>
+                <td class="line">{{$usuario->User_Nombre1}}</td>
+                <td class="line">{{$usuario->User_Apellido1}}</td>
+                <td class="line">{{$usuario->User_Correo}}</td>
+                <td class="line">{{$usuario->Rol}}</td>
+                <td class="line">{{$usuario->Estado}}</td>
               
             </tr>
+            @endforeach
             </tbody>
 
     </table>
-    <h1 class="features">Usuarios Asignados</h1>
-    <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th class="line"><b>Desarrollador N°1</b></th>
-            <th class="line"><b>Desarrollador N°2</b></th>
-            <th class="line"><b>Jurado N°1</b></th>
-            <th class="line"><b>Jurado N°2</b></th>
-           
-        </tr>
-        </thead>
-      
-            <tbody>
-            <tr>
-                <td class="line">{{$desarrollador1}}</td>
-                <td class="line">{{$desarrollador2}}</td>
-                <td class="line">{{$jurado1}}</td>
-                <td class="line">{{$jurado2}}</td>
-              
-            </tr>
-            </tbody>
+    
+	</div>
 
-    </table>
-    <h1 class="features">Decisión Jurados</h1>
-    <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th class="line"><b>Jurado </b></th>
-            <th class="line"><b>Comentarios</b></th>
-            <th class="line"><b>Decisión</b></th>
-           
-        </tr>
-        </thead>
-        @foreach($jurados as $jurado)
-            <tbody>
-            <tr>
-                <td class="line">{{$jurado->Jurado}}</td>
-                <td class="line">{{$jurado->Des}}</td>
-                <td class="line">{{$jurado->Estado}}</td>
-                
-            </tr>
-        @endforeach
-            </tbody>
 
-    </table>
 </body>
 <footer>
 <div id="head">

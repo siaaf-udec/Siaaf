@@ -211,7 +211,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}');
+                window.open('{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}'+ '/' + 1);
             });
         });
 
@@ -234,7 +234,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $.ajax({}).done(function () {
-                window.open('{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008);
+                window.open('{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008 + '/'+ 1);
             });
         });
 

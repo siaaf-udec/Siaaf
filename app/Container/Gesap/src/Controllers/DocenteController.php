@@ -547,10 +547,12 @@ class DocenteController extends Controller
             $concatenado=[];
             foreach($proyectos as $proyecto){
                 
-                $proyectodirector = Anteproyecto::where('PK_NPRY_IdMctr008',$proyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Pre_Director',$id)->first();
-                if($proyectodirector==null){
+                $proyectodirectorv = Proyecto::where('FK_NPRY_IdMctr008',$proyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Director',$id)->first();
+                if($proyectodirectorv==null){
                     $collection = collect([]);
                 }else{
+                    $proyectodirector = Anteproyecto::where('PK_NPRY_IdMctr008',$proyectodirectorv->FK_NPRY_IdMctr008)->first();
+                
                     $collection = collect([]);
 
                     $collection->put('Codigo',$proyectodirector-> PK_NPRY_IdMctr008);
@@ -560,7 +562,7 @@ class DocenteController extends Controller
                     $collection->put('Descripcion',$proyectodirector-> NPRY_Descripcion);
                     $collection->put('Duracion',$proyectodirector->  NPRY_Duracion." meses");
                     $collection->put('Fecha_Radicacion',$proyecto->  PYT_Fecha_Radicacion);
-                    $collection->put('Director',$proyectodirector -> relacionPredirectores -> User_Nombre1 );
+                    $collection->put('Director',$proyectodirectorv -> relacionDirectores -> User_Nombre1 );
                     $collection->put('Estado',$proyecto-> relacionEstado-> EST_Estado );
 
                     $j=0;
@@ -939,7 +941,7 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+		    $id = $user->identity_no;
 
             $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
 
@@ -963,7 +965,8 @@ class DocenteController extends Controller
                 Proyecto::create([
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
-                    'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion
+                    'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion,
+                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director
                 ]);
                 return AjaxResponse::success(
                     '¡Bien hecho!',

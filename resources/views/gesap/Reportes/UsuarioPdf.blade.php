@@ -41,7 +41,7 @@
 
      table { font-size: 75%; table-layout: fixed; width: 100%; }
      table { border-collapse: separate; border-spacing: 2px; }
-     th, td { border-width: 3px; padding: 1em; position: relative; text-align: center; }
+     th, td { border-width: 3px; padding: 1em; position: relative; text-align: left; }
      th, td { border-radius: 0.5em; border-style: solid; }
      th { background: #EEE; border-color: #BBB; }
      td { border-color: #DDD; }
@@ -71,102 +71,108 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-    
-        <a href="{{ route('AnteproyectosGesap.ReportesProyecto') }}/{{$proyecto->FK_NPRY_IdMctr008}}/ 2">Descargar</a>
- 		    
- 			
+          
+        <a  href="{{ route('AnteproyectosGesap.ReportesUsuarios') }}/ 2">Descargar</a>
+ 		
+ 		
 	</div>
 
     <div id="features">
-
     <h1 class="features" >{{$title}}</h1>
-   
+       <br><br>
+    
     <table class="meta">
           <tr>
-            <th><span contenteditable>Fecha De Radicacón</span></th>
-            <td><span contenteditable>{{$proyecto->PYT_Fecha_Radicacion}}</span></td>
+            <th><span contenteditable>Nombres</span></th>
+            <td><span contenteditable>{{$usuario->User_Nombre1}}</span></td>
           </tr>
           <tr>
-            <th><span contenteditable>Estado Del Proyecto</span></th>
-            <td><span contenteditable>{{$proyecto->Estado}}</span></td>
-          </tr>
+            <th><span contenteditable>Apellidos</span></th>
+            <td><span contenteditable>{{$usuario->User_Apellido1}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable>Duración</span></th>
-            <td><span contenteditable>{{$proyecto->Duracion}}</span></td>
-          </tr>
+            <th><span contenteditable>Rol</span></th>
+            <td><span contenteditable>{{$usuario->Rol}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable>Semillero</span></th>
-            <td><span contenteditable>{{$proyecto->Semillero}}</span></td>
-          </tr>
-        </table>
+            <th><span contenteditable>Estado</span></th>
+            <td><span contenteditable>{{$usuario->Estado}}</span></td>
+           </tr>
+          
+</table>
+<div>
+  @if($usuario->FK_User_IdRol == 1)
+  <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="line"><b>Anteproyecto</b></th>
+            <th class="line"><b>Pre Director</b></th>
+            <th class="line"><b>Estado</b></th>
+        </tr>
+        </thead>
+        @foreach($desarrollador as $desarrollo)
+            <tbody>
+            <tr>
+                <td class="line">{{$desarrollo->Ante}}</td>
+                <td class="line">{{$desarrollo->AntePreDirec}}</td>
+                <td class="line">{{$desarrollo->AnteEstado}}</td>
+              
+            </tr>
+            @endforeach
+            </tbody>
 
+    </table>
+    <h1 class="features" >Anteproyectos Registrados para este usuario</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Proyecto</b></th>
-            <th class="line"><b>Descripción</b></th>
-            <th class="line"><b>Palabras Clave</b></th>
+            <th class="line"><b>Anteproyecto</b></th>
             <th class="line"><b>Director</b></th>
-           
+            <th class="line"><b>Estado</b></th>
         </tr>
         </thead>
-      
+        @foreach($desarrollador as $desarrollo)
             <tbody>
             <tr>
-                <td class="line">{{$proyecto->Titulo}}</td>
-                <td class="line">{{$proyecto->Descripcion}}</td>
-                <td class="line">{{$proyecto->Palabras}}</td>
-                <td class="line">{{$proyecto->Director}}</td>
+                <td class="line">{{$desarrollo->Proy}}</td>
+                <td class="line">{{$desarrollo->Direc}}</td>
+                <td class="line">{{$desarrollo->ProyEstado}}</td>
               
             </tr>
+            @endforeach
             </tbody>
 
     </table>
-    <h1 class="features">Usuarios Asignados</h1>
+    <h1 class="features" >Proyectos Registrados para este usuario</h1>
+  
+    @endif    
+    @if($usuario->FK_User_IdRol == 2)
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Desarrollador N°1</b></th>
-            <th class="line"><b>Desarrollador N°2</b></th>
-            <th class="line"><b>Jurado N°1</b></th>
-            <th class="line"><b>Jurado N°2</b></th>
-           
+            <th class="line"><b>Titulo</b></th>
+            <th class="line"><b>Estado</b></th>
+            <th class="line"><b>Desarrolladores</b></th>
         </tr>
         </thead>
-      
+        @foreach($director as $direc)
             <tbody>
             <tr>
-                <td class="line">{{$desarrollador1}}</td>
-                <td class="line">{{$desarrollador2}}</td>
-                <td class="line">{{$jurado1}}</td>
-                <td class="line">{{$jurado2}}</td>
+                <td class="line">{{$direc->NPRY_Titulo}}</td>
+                <td class="line">{{$direc->AnteEstado}}</td>
+                <td class="line">{{$direc->Desarrolladores}}</td>
               
-            </tr>
-            </tbody>
-
-    </table>
-    <h1 class="features">Decisión Jurados</h1>
-    <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-            <th class="line"><b>Jurado </b></th>
-            <th class="line"><b>Comentarios</b></th>
-            <th class="line"><b>Decisión</b></th>
-           
-        </tr>
-        </thead>
-        @foreach($jurados as $jurado)
-            <tbody>
-            <tr>
-                <td class="line">{{$jurado->Jurado}}</td>
-                <td class="line">{{$jurado->Des}}</td>
-                <td class="line">{{$jurado->Estado}}</td>
-                
             </tr>
         @endforeach
             </tbody>
 
     </table>
+    <h1 class="features" >Anteproyectos Asignados a este usuario</h1>
+    @endif
+</div>
+	</div>
+
+
 </body>
 <footer>
 <div id="head">

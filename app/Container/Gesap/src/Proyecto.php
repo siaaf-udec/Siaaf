@@ -17,7 +17,8 @@ class Proyecto extends Model
     protected $fillable = [
         'FK_NPRY_IdMctr008',
         'FK_EST_Id',
-        'PYT_Fecha_Radicacion'
+        'PYT_Fecha_Radicacion',
+        'FK_NPRY_Director',
     ];
 
     public function relacionAnteproyecto()
@@ -28,4 +29,9 @@ class Proyecto extends Model
     {
           return $this->hasone(EstadoAnteproyecto::class, 'PK_EST_Id', 'FK_EST_Id');
     }
+     //esta es la relacion que tiene el anteproyecto con su predirecor     
+     public function relacionDirectores() 
+     {
+          return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_NPRY_Director');
+      }
 }
