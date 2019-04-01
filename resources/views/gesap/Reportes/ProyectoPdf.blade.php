@@ -5,11 +5,11 @@
   <title>UDEC - GESAP(REPORTES)</title>
 	<style type="text/css">
   @font-face {
-    font-family: 'Anton';
+    font-family: 'Arial';
     font-style: normal;
     font-weight: 400;
   }
-	body{font-family:Arial, Helvetica, sans-serif; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
+	body{font-family:Arial, sans-serif; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
 	.clear{clear:both;}
 	.blue{color:#045A16;}
 
@@ -24,12 +24,12 @@
 	#head .line{font-size:1em; font-style: italic; color:#999;}
 
 	/*Features*/
-	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Anton, sans-serif; text-transform: uppercase;}
+	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
 	.feature{float:center; width:100%;}
 	.feature h2{font-size:1.1em; text-transform: uppercase;}
     .feature p{color:#555;}
 	.feature:nth-child(even){float:right;}
-    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Anton, sans-serif; text-transform: uppercase;}
+    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
      /* table */
 
      table { font-size: 75%; table-layout: fixed; width: 100%; }
