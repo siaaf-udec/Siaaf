@@ -77,12 +77,26 @@
                      <br>
                      <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-5">
+                            <div class="col-md-12 col-md-offset-2">
+                            @if($datos['Primera'] != $datos[0]['PK_MCT_IdMctr008'])
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                                               class="btn btn-outline red button-anterior"><i
+                                            class="fa fa-angle-left"></i>
+                                    Actividad Anterior
+                                </a>@endpermission
+                                @endif
                                 @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
+                                @if($datos['Ultima'] != $datos[0]['PK_MCT_IdMctr008'])
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                                               class="btn btn-outline blue button-siguiente"><i
+                                            class="fa fa-angle-rigth"></i>
+                                    Siguente Actividad
+                                </a>@endpermission
+                                @endif
                                
                             </div>
                             
@@ -188,7 +202,23 @@ $(document).ready(function(){
 
             FormValidationMd.init(form, rules, false, CrearComentario());
            
-
+            $('.button-anterior').on('click', function (e) {
+            e.preventDefault();
+            idn = 0;
+            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            var route = '{{ route('DocenteGesap.navegacionActividadesP') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
+             //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
+        });
+        
+        $('.button-siguiente').on('click', function (e) {
+            e.preventDefault();
+            idn = 1;
+            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            var route = '{{ route('DocenteGesap.navegacionActividadesP') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
+             //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
+        });
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

@@ -31,6 +31,7 @@
 
 @section('content')
     @permission('GESAP_ADMIN')
+  
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
@@ -53,11 +54,14 @@
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Anteproyectos</a>@endpermission
+                         
                         <br>
                     </div>
 
                 </div>
             </div>
+            <br>
+            <br><br>
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -70,6 +74,7 @@
                             'Pre Director',
                             'Estado',
                             'Fecha Radicación',
+                            'Desarrolladores',
                             'Acciones'
                         ])
                     @endcomponent
@@ -112,6 +117,8 @@
 
     jQuery(document).ready(function () {
 
+
+
         var table, url, columns;
         table = $('#listaAnteproyecto');
         url = "{{ route('AnteproyectosGesap.List')}}";
@@ -123,7 +130,8 @@
             {data: 'Nombre', name: 'Nombre'},
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
-      
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
+
             {
                 defaultContent: '@permission('GESAP_ADMIN_REPORT_ANTE')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_UPDATE_ANTE')<a href="javascript:;" title="Editar" class="btn btn-success editar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_ADMIN_VER_ANTE')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
@@ -203,7 +211,15 @@
                 });
 
         });
-      
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}'+ '/' + 1);
+            });
+        });
+
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('AnteproyectosGesap.create') }}';
@@ -215,7 +231,21 @@
             var route = '{{ route('AnteproyectosGesap.mct') }}';
             $(".content-ajax").load(route);
         });
+      
+        $('.reports_est').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-create-reporte_estado').modal('toggle');
+        });
         
+        
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008 + '/'+ 1);
+            });
+        });
 
         table.on('click', '.Ver', function (e) {
             e.preventDefault();

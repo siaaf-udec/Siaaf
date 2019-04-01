@@ -67,7 +67,13 @@ class StudentController extends Controller
 			return view($this->path . 'IndexEstudiante');
 		
     }
-    public function VerActividadesList(Request $request)
+    public function indexProyecto(Request $request)
+	{
+		
+			return view($this->path . 'IndexEstudianteProyecto');
+		
+    }
+    public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -75,6 +81,17 @@ class StudentController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Aprobar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
                    $numero = $numero +1 ;
                }
                   
@@ -94,7 +111,8 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    public function VerActividadesListProyecto(Request $request)
+    
+    public function VerActividadesListProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -102,6 +120,17 @@ class StudentController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Aprobar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
                    $numero = $numero +1 ;
                }
                   
@@ -236,7 +265,7 @@ class StudentController extends Controller
         }         
         
     }
-    public function VerRequerimientosList(Request $request)
+    public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
@@ -245,6 +274,17 @@ class StudentController extends Controller
 
             foreach($Actividades as $Actividad){
                 $Actividad->offsetSet('Numero', $numero);
+                $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                if($check != null){
+                    if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                       $Actividad->offsetSet('Check', 'Sin Aprobar');
+                    }else{
+                       $Actividad->offsetSet('Check', 'Aprobado');
+                    }
+                }else{
+                     $Actividad->offsetSet('Check', 'Sin Subir');
+                }
                 $numero = $numero +1 ;
             }
                   
@@ -280,6 +320,62 @@ class StudentController extends Controller
             }              
         
     }
+
+    public function SeguimientoCrono(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+                
+
+            $user = Auth::user();
+            $id = $user->identity_no;
+            
+            $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->where('Fk_IdEstado',1)->get();
+            if($desarrollador->IsEmpty()){
+                $Anteproyecto=[];
+            }else{
+            $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+            $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->first();
+            $now = date('Y-m-d');
+            $fechaactual = Carbon::now()->format('Y-m-d');
+            
+            $fecharadicacion = Carbon::parse($Proyecto ->PYT_Fecha_Radicacion );
+            $fechahoy = Carbon::parse($fechaactual);
+            $diasDiferencia = $fechahoy->diffInWeeks($fecharadicacion);
+            $Anteproyecto[0] -> offsetSet('semana', $diasDiferencia);
+            $Actividades = "";
+            $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+            $i = 0;
+            foreach($Cronograma as $crono){
+                $inicio = $crono->MCT_CRN_Semana_Inicio;
+                $fin =  $crono->MCT_CRN_Semana_Fin;
+                if($diasDiferencia >= $inicio && $diasDiferencia <= $fin ){
+                    if($i == 0){
+                        $Actividades = $Actividades."-".$crono->MCT_CRN_Actividad;
+                    }else{
+                        $Actividades = $Actividades.",".$crono->MCT_CRN_Actividad;
+                    }
+                }
+                
+            }
+            $Anteproyecto[0] -> offsetSet('actividades', $Actividades);
+        }
+            
+            return DataTables::of($Anteproyecto)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+             
+            ->addIndexColumn()
+            ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
     public function Radicar(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1898,27 +1994,32 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //funcion apra cargar los proyectos al estduiante
     public function ListaProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
-            $Anteproyecto = Desarrolladores::where('Fk_User_Codigo',$id)->first(); 
-            if($Anteproyecto == null){
-                $Proyecto = collect([]);
-            }else{
-                $Proyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Anteproyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Estado',4)->get();
-         
-                foreach($Proyecto as $Proyect){
-                    $ProyectoEstado = Proyecto::where('FK_NPRY_IdMctr008',$Proyect->PK_NPRY_IdMctr008)->first();
-                   
-                    $Proyect->OffsetSet('Estado',$ProyectoEstado -> relacionEstado -> EST_Estado  );
-                    $Proyect->OffsetSet('Fecha',$ProyectoEstado -> PYT_Fecha_Radicacion  );
-                     
-                }
-            }
+
+            $Anteproyecto = Desarrolladores::where('FK_User_Codigo',$id)->get(); 
             
-            return DataTables::of($Proyecto)
+           
+                foreach($Anteproyecto as $Ante){
+
+                        $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$Ante->FK_NPRY_IdMctr008)->first();
+                        if($Proyecto->FK_EST_Id != 1 && $Proyecto->FK_EST_Id != 7){
+                            $Ante->OffsetSet('Titulo',$Proyecto -> relacionAnteproyecto -> NPRY_Titulo  );
+                            $Ante->OffsetSet('Palabras',$Proyecto -> relacionAnteproyecto ->  NPRY_Keywords );                
+                            $Ante->OffsetSet('Des',$Proyecto ->  relacionAnteproyecto ->  NPRY_Descripcion);
+                            $Ante->OffsetSet('Duracion',$Proyecto -> relacionAnteproyecto ->  NPRY_Duracion  );                
+                            $Ante->OffsetSet('Estado',$Proyecto -> relacionEstado -> EST_Estado  );
+                            $Ante->OffsetSet('Fecha',$Proyecto -> PYT_Fecha_Radicacion  );                        
+                        }
+                }
+                
+            
+            
+            return DataTables::of($Anteproyecto)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
              
@@ -1948,49 +2049,43 @@ class StudentController extends Controller
              
         }              
     }
-    
+    //funcion que retorna los proyectos al estudiante
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
-		    $id = $user->identity_no;
-       
+            $id = $user->identity_no;
+            $i=0;
+            $Desarrollos=Desarrolladores::where('FK_User_Codigo', $id)->get();
+            $concatenado=[];
+            foreach($Desarrollos as $Desarrollo){
+                
+                if($Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 1 && $Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 7 ){
+                    $collection = collect([]);
+                    $collection->put('Titulo',$Desarrollo -> relacionAnteproyecto-> NPRY_Titulo);
+                    $collection->put('Palabras',$Desarrollo -> relacionAnteproyecto->NPRY_Keywords);
+                    $collection->put('Des',$Desarrollo -> relacionAnteproyecto->NPRY_Descripcion);
+                    $collection->put('Duracion',$Desarrollo -> relacionAnteproyecto-> NPRY_Duracion);
+                    $collection->put('Estado',$Desarrollo -> relacionAnteproyecto->relacionEstado->EST_Estado );
+                    $collection->put('Fecha',$Desarrollo -> relacionAnteproyecto->NPRY_FCH_Radicacion);
+                    $collection->put('Codigo',$Desarrollo -> relacionAnteproyecto->PK_NPRY_IdMctr008);
 
-           $Desarrollo=Desarrolladores::where('FK_User_Codigo', $id)->where('FK_IdEstado',1)->first();
-        
-           if($Desarrollo===null){
-               $anteproyecto = [];
-           }else{
-            $anteproyecto = $Desarrollo -> relacionAnteproyecto()->get();   
-               if( $anteproyecto[0]->FK_NPRY_Estado == 1 || $anteproyecto[0]->FK_NPRY_Estado == 5 || $anteproyecto[0]->FK_NPRY_Estado == 7 ){
-                $anteproyecto = [];
-               }else{
-                
-           
-                $i=0;
-                $i2=0;
-     
-                foreach($anteproyecto as $ante){
-                 $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
-                
+                    $concatenado[$i]= $collection;
+                    
                     $i=$i+1;
                 }
-                $j=0;
-                foreach ($anteproyecto as $ante) {
                 
-                 $ante->offsetSet('Estado', $s[$j]);
-                 $j=$j+1;
-                
-               }
             }
-        }
+        
+
+         
           
-               return DataTables::of($anteproyecto)
-               ->removeColumn('created_at')
-			   ->removeColumn('updated_at')
-			    
-			   ->addIndexColumn()
-               ->make(true);
+            return DataTables::of($concatenado)
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+                    
+            ->addIndexColumn()
+            ->make(true);
         
 
         }

@@ -66,11 +66,12 @@
 
     $(document).ready(function () {
         
+        idp='{{  $Anteproyecto[0]  }}';
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerActividadesListProyectoDirector') }}';
+        url = '{{ route('DocenteGesap.VerActividadesListProyectoDirector') }}'+'/'+idp;
     
-        idp='{{  $Anteproyecto[0]  }}';
+        
     
         columns = [
             {data: 'Numero', name: 'Numero'},
@@ -113,7 +114,7 @@
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('DocenteGesap.index.ajax') }}';
-            location.href="{{route('DocenteGesap.index')}}";
+            location.href="{{route('DocenteGesap.indexProyecto')}}";
             //$(".content-ajax").load(route);
         });
 

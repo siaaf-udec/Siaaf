@@ -55,12 +55,14 @@
 
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
+                    @if($datos['Estado'] == 'RADICADO')
                     @permission('GESAP_DOCENTE_DECISION_JUDMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
                             </i>Tomar Desición
                         </a>@endpermission
+                    @endif
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados'])
                         @slot('columns', [
                             'Jurado',

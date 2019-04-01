@@ -74,7 +74,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerActividadesList') }}';
+        url = '{{ route('DocenteGesap.VerActividadesListJ') }}';
     
         idp='{{  $Anteproyecto[0]  }}';
     
@@ -86,7 +86,7 @@
             
       
             {
-                defaultContent: '@permission('GESAP_DOCENTE_VER_ACT')<a href="javascript:;" title="Subir Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_DOCENTE_VER_ACT')<a href="javascript:;" title="Ver Actividad" class="btn btn-simple btn-warning btn-icon Actividad"><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

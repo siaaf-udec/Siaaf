@@ -70,43 +70,49 @@ class DocenteController extends Controller
 			return view($this->path . 'IndexDocente');
 		
     }
+    public function indexProyecto(Request $request)
+	{
+		
+			return view($this->path . 'IndexDocenteProyectos');
+		
+    }
+    //con esta funcion traemos los proyectos asignados como director
     public function AnteproyectoList(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
            //$anteproyecto=Anteproyecto::where('FK_NPRY_Pre_Director', $id) -> get();
-           $anteproyecto = Anteproyecto::where('FK_NPRY_Pre_Director', $id)->where('FK_NPRY_Estado','!=',7)->get();
+           $anteproyectos = Anteproyecto::where('FK_NPRY_Pre_Director', $id)->where('FK_NPRY_Estado','!=',7)->get();
               
-           
-           $i=0;
-           $i2=0;
+            
+           $desarrolladorP = "";
+           foreach($anteproyectos as $anteproyecto){
 
-           foreach($anteproyecto as $ante){
-            $s[$i]=$anteproyecto[$i] -> relacionEstado -> EST_Estado;
-           
-               $i=$i+1;
+            $estado = $anteproyecto -> relacionEstado -> EST_Estado;
+            $anteproyecto->offsetSet('Estado',  $estado );
+
+            $Predirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
+            $anteproyecto->offsetSet('Nombre',  $Predirector );
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->get();
+            $i=0;
+            if($desarrolladores->IsEmpty()){
+                $anteproyecto->offsetSet('Desarrolladores',  'Sin Asignar' );
+            }else{
+                foreach($desarrolladores as $desarrollador){
+                    if($i==0){
+                        $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                        $i=1;
+                    }else{
+                        $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                    }
+                }
+                
+                $anteproyecto->offsetSet('Desarrolladores',  $desarrolladorP );
+            }
            }
-           $j=0;
-           foreach ($anteproyecto as $ante) {
-           
-            $ante->offsetSet('Estado', $s[$j]);
-            $j=$j+1;
-            }
 
-            foreach($anteproyecto as $antep){
-                $s2[$i2]=$anteproyecto[$i2]-> relacionPredirectores-> User_Nombre1;
-               
-                $i2=$i2+1;
-            }
-            $j2=0;
-           foreach ($anteproyecto as $antep) {
-           
-            $antep->offsetSet('Nombre', $s2[$j2]);
-            $j2=$j2+1;
-            }
-          
-               return DataTables::of($anteproyecto)
+               return DataTables::of($anteproyectos)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
 			    
@@ -174,6 +180,7 @@ class DocenteController extends Controller
         );
 
     }   
+    //Lista de anteproyectos para jurados
     public function AnteproyectoListJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -184,21 +191,35 @@ class DocenteController extends Controller
            $concatenado=[];
            foreach($jurado as $jur){
 
-                $ante = $jur -> FK_NPRY_IdMctr008;
-                $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $ante)->first();
+               
+                $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $jur -> FK_NPRY_IdMctr008)->first();
                 $collection = collect([]);
                 $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
                 $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
+                $collection->put('Estado',$anteproyecto-> relacionEstado-> EST_Estado);
                 $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
                 $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);
                 $collection->put('Fecha_Radicacion',$anteproyecto-> NPRY_FCH_Radicacion);
-                $director = Usuarios::where('PK_user_Codigo', $anteproyecto-> FK_NPRY_Pre_Director)->first();
-                $nombred = $director -> User_Nombre1;
-                $apellidod = $director -> User_Apellido1;
-                $space = " ";
-                $NombreDirector = $nombred.$space.$apellidod;
+                $NombreDirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
                 $collection->put('Director',$NombreDirector);
-              //  $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$ante)->get();
+                $j=0;
+                $desarrolladorP="";
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto-> PK_NPRY_IdMctr008)->get();
+                if($desarrolladores->IsEmpty()){
+                    $collection->put('Desarrolladores',  "Sin Asignar" );
+                }else{
+                    foreach($desarrolladores as $desarrollador){
+                        if($j==0){
+                            $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            $j=1;
+                        }else{
+                            $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                        }
+                    }
+                    $collection->put('Desarrolladores',  $desarrolladorP );
+
+                }
+               
 
                 $concatenado[$i]= $collection;
 
@@ -218,44 +239,64 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
-    public function ProyectosListRadicados(Request $request, $id)
+    //funcion para listar los proyectos para el rol docente(Jurado)
+    public function ProyectosListRadicados(Request $request, $idx)
     {
         if ($request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
-           $jurado = Jurados::where('FK_User_Codigo',$id)->get(); 
+           $Proyectos = Proyecto::all(); 
            $i=0;
            $concatenado=[];
-           foreach($jurado as $jur){
+           if($Proyectos->IsEmpty()){
+                $concatenado=[];
+           }else{
+                
+                foreach($Proyectos as $Proyecto){
 
-                $ante = $jur -> FK_NPRY_IdMctr008;
-                $proyecto = Proyecto::where('FK_NPRY_IdMctr008', $ante)->first();
-                if( $proyecto == null){
-                    $concatenado=[];
-                }else{
+                    $Jurados = jurados::where('FK_NPRY_IdMctr008', $Proyecto-> FK_NPRY_IdMctr008)->get();
 
-                $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $proyecto-> FK_NPRY_IdMctr008)->first();
-                $proyectofecha = Proyecto::where('FK_NPRY_IdMctr008', $proyecto-> FK_NPRY_IdMctr008)->first();
-                $collection = collect([]);
-                $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
-                $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
-                $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
-                $collection->put('Duracion',$anteproyecto-> NPRY_Duracion);                
-                $collection->put('Fecha_Radicacion',$proyectofecha-> PYT_Fecha_Radicacion);
-                $director = Usuarios::where('PK_user_Codigo', $anteproyecto-> FK_NPRY_Pre_Director)->first();
-                $nombred = $director -> User_Nombre1;
-                $apellidod = $director -> User_Apellido1;
-                $space = " ";
-                $NombreDirector = $nombred.$space.$apellidod;
-                $collection->put('Director',$NombreDirector);
-                  //  $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$ante)->get();
-    
-                $concatenado[$i]= $collection;
-    
-                $i=$i+1;
-                }
-        }
+                    foreach($Jurados as $jurado){
+                        if($jurado->FK_User_Codigo == $id){
+                            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Proyecto-> FK_NPRY_IdMctr008)->first();
+                            //$proyectofecha = Proyecto::where('FK_NPRY_IdMctr008', $Proyecto-> FK_NPRY_IdMctr008)->first();
+                            $collection = collect([]);
+                            $collection->put('Codigo',$anteproyecto-> PK_NPRY_IdMctr008);
+                            $collection->put('Titulo',$anteproyecto-> NPRY_Titulo);
+                            $collection->put('Descripcion',$anteproyecto-> NPRY_Descripcion);
+                            $collection->put('Estado',$Proyecto-> relacionEstado-> EST_Estado );
+                            $collection->put('Duracion',$anteproyecto-> NPRY_Duracion." meses");                
+                            $collection->put('Fecha_Radicacion',$Proyecto-> PYT_Fecha_Radicacion);
+                            $NombreDirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
+                            $collection->put('Director',$NombreDirector);
+                            $j=0;
+                            $desarrolladorP="";
+                            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$Proyecto-> FK_NPRY_IdMctr008)->get();
+                            if($desarrolladores->IsEmpty()){
+                                $collection->put('Desarrolladores',  'Sin Asignar' );
+                            }else{
+                                foreach($desarrolladores as $desarrollador){
+                                    if($j==0){
+                                        $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                        $j=1;
+                                    }else{
+                                        $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                    }
+                                }
+                                $collection->put('Desarrolladores',  $desarrolladorP );
+
+                            }
+                        
+                            $concatenado[$i]= $collection;
+
+                            $i=$i+1;
+                            
+                        }
+                    }
+
+                    
+                }   
+            }
           
                return DataTables::of($concatenado)
                ->removeColumn('created_at')
@@ -408,6 +449,13 @@ class DocenteController extends Controller
                 $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
 
             }
+            $actividadesAct = Mctr008::where('FK_Id_Formato',3)->get();
+            $PrimeraAct = $actividadesAct -> first();
+            $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+            
+            $UltimaAct = $actividadesAct -> last();
+            $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+            $Actividad->offsetSet('Proyecto', $idp );
         
                return view($this->path .'.Proyecto.Jurado.VerActividadProyectoJurado',
                 [
@@ -423,11 +471,49 @@ class DocenteController extends Controller
             );         
         
     }
-    public function VerActividadesListProyectoDirector(Request $request)
+    public function VerActividadesListProyectoDirector(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
                $Actividades=Mctr008::where('FK_Id_Formato',3)->get();
+               $numero = 1 ;
+               foreach($Actividades as $Actividad){
+                   $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Aprobar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
+                   $numero = $numero +1 ;
+               }
+                  
+        
+               return DataTables::of($Actividades)
+               ->removeColumn('created_at')
+			   ->removeColumn('updated_at')
+			    
+			   ->addIndexColumn()
+               ->make(true);
+        
+
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    public function VerActividadesListJ(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+               $Actividades=Mctr008::where('FK_Id_Formato',1)->get();
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
@@ -450,7 +536,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //con esta funcion traemos los poryectos asignados a los directores
     public function ProyectosList(Request $request, $id)
     {
         if ( $request->isMethod('GET')) {
@@ -461,10 +547,12 @@ class DocenteController extends Controller
             $concatenado=[];
             foreach($proyectos as $proyecto){
                 
-                $proyectodirector = Anteproyecto::where('PK_NPRY_IdMctr008',$proyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Pre_Director',$id)->first();
-                if($proyectodirector==null){
+                $proyectodirectorv = Proyecto::where('FK_NPRY_IdMctr008',$proyecto->FK_NPRY_IdMctr008)->where('FK_NPRY_Director',$id)->first();
+                if($proyectodirectorv==null){
                     $collection = collect([]);
                 }else{
+                    $proyectodirector = Anteproyecto::where('PK_NPRY_IdMctr008',$proyectodirectorv->FK_NPRY_IdMctr008)->first();
+                
                     $collection = collect([]);
 
                     $collection->put('Codigo',$proyectodirector-> PK_NPRY_IdMctr008);
@@ -472,11 +560,29 @@ class DocenteController extends Controller
                     $collection->put('Titulo',$proyectodirector-> NPRY_Titulo);
                        
                     $collection->put('Descripcion',$proyectodirector-> NPRY_Descripcion);
-                    $collection->put('Duracion',$proyectodirector->  NPRY_Duracion);
+                    $collection->put('Duracion',$proyectodirector->  NPRY_Duracion." meses");
                     $collection->put('Fecha_Radicacion',$proyecto->  PYT_Fecha_Radicacion);
-                    $collection->put('Director',$proyectodirector -> relacionPredirectores -> User_Nombre1 );
-                    $collection->put('Estado',$proyecto->relacionEstado->EST_estado );
-                          
+                    $collection->put('Director',$proyectodirectorv -> relacionDirectores -> User_Nombre1 );
+                    $collection->put('Estado',$proyecto-> relacionEstado-> EST_Estado );
+
+                    $j=0;
+                    $desarrolladorP="";
+                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$proyectodirector-> PK_NPRY_IdMctr008)->get();
+                    if($desarrolladores->IsEmpty()){
+                        $collection->put('Desarrolladores',  'Sin Asignar' );
+                    }else{
+                        foreach($desarrolladores as $desarrollador){
+                            if($j==0){
+                                $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                $j=1;
+                            }else{
+                                $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            }
+                        }
+                        $collection->put('Desarrolladores',  $desarrolladorP );
+
+                    }
+                    
           
                            
                     $concatenado[$i]= $collection;
@@ -660,7 +766,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    public function VerActividadesList(Request $request)
+    public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -668,6 +774,18 @@ class DocenteController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Calificar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
+                   
                    $numero = $numero +1 ;
                }
                   
@@ -768,6 +886,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $desicion = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
 
             foreach($desicion as $des){
                
@@ -776,10 +895,16 @@ class DocenteController extends Controller
                 $space = " ";
                 $Nombre = $Nombre1.$space.$Apellido;
                 $Estado = $des -> relacionEstadoJurado -> EST_Estado;
+                $estadoproyecto = $proyecto->relacionEstado->EST_Estado;
+                if($estadoproyecto == "ASIGNADO"){
+                    $des-> offsetSet('Estado',"ASIGNADO");
 
+                } else{
+                    $des-> offsetSet('Estado',$Estado);
+
+                }
                 $des-> offsetSet('Jurado',$Nombre);
-                $des-> offsetSet('Estado',$Estado);
-
+                
             }
                      
             return DataTables::of($desicion)
@@ -816,7 +941,7 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+		    $id = $user->identity_no;
 
             $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
 
@@ -833,13 +958,15 @@ class DocenteController extends Controller
             $fecha = Fechas::where('PK_Id_Radicacion',4)->first();
 
             if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
+                //aprobado
                 $anteproyecto -> FK_NPRY_Estado = 4;
                 $anteproyecto -> save();
-                //aprobado
+                
                 Proyecto::create([
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
-                    'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion
+                    'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion,
+                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director
                 ]);
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -849,9 +976,17 @@ class DocenteController extends Controller
             }
 
             if(($DesiciónJuradoUno=="REPROBADO")&&($DesiciónJuradoDos=="REPROBADO")){
-                $anteproyecto -> FK_NPRY_Estado = 5;
                 //rechazado
+                $anteproyecto -> FK_NPRY_Estado = 5;
                 $anteproyecto -> save();
+                
+                $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $desarrollador-> Fk_IdEstado = 2;
+                    $desarrollador->save();
+
+                }
+                
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -859,9 +994,16 @@ class DocenteController extends Controller
 
             }
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
-                $anteproyecto -> FK_NPRY_Estado = 6;
                 //aplazado
+                
+                $anteproyecto -> FK_NPRY_Estado = 6;
                 $anteproyecto -> save();
+                $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get(); 
+                foreach($actividades as $actividad){
+                    $actividad->FK_CHK_Checklist = 1;
+                    $actividad->save();
+                }
+                
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -892,7 +1034,7 @@ class DocenteController extends Controller
 
             $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
             $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
-            
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
             $Jurado -> save();
             
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
@@ -917,6 +1059,15 @@ class DocenteController extends Controller
                 $Proyecto -> FK_EST_Id = 5;
                 //rechazado
                 $Proyecto -> save();
+                $anteproyecto -> FK_NPRY_Estado = 5;
+                $anteproyecto -> save();
+                
+                $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $desarrollador-> Fk_IdEstado = 2;
+                    $desarrollador->save();
+
+                }
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -926,7 +1077,16 @@ class DocenteController extends Controller
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
                 $Proyecto -> FK_EST_Id = 6;
                 //aplazado
+                 
+               
                 $Proyecto -> save();
+                $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->where('CMMT_Formato',3)->get(); 
+                foreach($actividades as $actividad){
+                    $actividad->FK_CHK_Checklist = 1;
+                    $actividad->save();
+                }
+
+               
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -1351,7 +1511,7 @@ class DocenteController extends Controller
             }              
         
     }
-    public function VerRequerimientosList(Request $request)
+    public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -1359,6 +1519,17 @@ class DocenteController extends Controller
                $numero = 1 ;
                foreach($Actividades as $Actividad){
                    $Actividad->offsetSet('Numero', $numero);
+                   $check = Commits::where('FK_MCT_IdMctr008', $Actividad->PK_MCT_IdMctr008)->where('FK_NPRY_IdMctr008',$id)->first();
+                   
+                   if($check != null){
+                       if($check ->relacionEstado -> CHK_Checlist == "EN CALIFICACIÓN"){
+                          $Actividad->offsetSet('Check', 'Sin Calificar');
+                       }else{
+                          $Actividad->offsetSet('Check', 'Aprobado');
+                       }
+                   }else{
+                        $Actividad->offsetSet('Check', 'Sin Subir');
+                   }
                    $numero = $numero +1 ;
                }
                   
@@ -1507,6 +1678,13 @@ public function RequerimientosJurado(Request $request, $id, $idp)
 
         }
         $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+        $actividadesAct = Mctr008::where('FK_Id_Formato',2)->get();
+            $PrimeraAct = $actividadesAct -> first();
+            $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+            
+            $UltimaAct = $actividadesAct -> last();
+            $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+            $Actividad->offsetSet('Proyecto', $idp );
         if($act->MCT_Actividad == "Funciones"){
             return view($this->path .'.Jurado.VerRequerimientoFuncionesJurado',
             [
@@ -1654,7 +1832,189 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                           ->make(true);
                    }
                }
-  
+               
+    public function navegacionActividades(Request $request, $id, $idp,$idn)
+            {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           if($idn == 0){
+            
+            $id = $id - 1;
+           }else{
+            
+            $id = $id + 1;
+           }
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
+                               
+            $Actividad->offsetSet('Anteproyecto', $idp);
+           
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null){
+                  $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
+                  $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                           
+            }else{
+                  $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                  $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+           
+            }
+                       $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+                       $actividadesAct = Mctr008::where('FK_Id_Formato',1)->get();
+                       $PrimeraAct = $actividadesAct -> first();
+                       $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+                       
+                       $UltimaAct = $actividadesAct -> last();
+                       $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+                       $Actividad->offsetSet('Proyecto', $idp );
+                       if($act->MCT_Actividad == "Cronograma"){
+                           return view($this->path .'.Jurado.ActividadCronogramaJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+           
+                       
+                       }if($act->MCT_Actividad == "Detalles de personas"){
+                           return view($this->path .'.Jurado.ActividadDetallesJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+           
+                       }if($act->MCT_Actividad == "Financiacion"){
+                           return view($this->path .'.Jurado.ActividadFinanciacionJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+           
+                       
+                       }if($act->MCT_Actividad == "Resultados"){
+                           return view($this->path .'.Jurado.ActividadResultadosJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+           
+                       }
+                       if($act->MCT_Actividad == "Resumen De Rubros"){
+                           return view($this->path .'.Jurado.ActividadRubrosJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+           
+                       }
+                          return view($this->path .'.Jurado.VerActividadJurado',
+                           [
+                           'datos' => $Actividad,
+                           ]);
+                       
+                          
+                            
+                       }     
+                       return AjaxResponse::fail(
+                           '¡Lo sentimos!',
+                           'No se pudo completar tu solicitud.'
+                       );         
+                  
+    }
+    
+               
+    public function navegacionActividadesP(Request $request, $id, $idp,$idn)
+            {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           if($idn == 0){
+            
+            $id = $id - 1;
+           }else{
+            
+            $id = $id + 1;
+           }
+           $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
+                    
+           $Actividad->offsetSet('Anteproyecto', $idp);
+
+           $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+           $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+           if($commit2 == null)
+           {
+               $Actividad->offsetSet('Commit',"documents/GESAPPDF.pdf");
+               $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+               
+           }else{
+               $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+               $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+
+           }
+                       $actividadesAct = Mctr008::where('FK_Id_Formato',3)->get();
+                       $PrimeraAct = $actividadesAct -> first();
+                       $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+                       
+                       $UltimaAct = $actividadesAct -> last();
+                       $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+                       $Actividad->offsetSet('Proyecto', $idp );
+                       return view($this->path .'.Proyecto.Jurado.VerActividadProyectoJurado',
+                       [
+                       'datos' => $Actividad,
+                       ]);
+                   
+                      
+                        
+                   }     
+                   return AjaxResponse::fail(
+                       '¡Lo sentimos!',
+                       'No se pudo completar tu solicitud.'
+                   );         
+    }
+           
+               
+    public function navegacionActividadesR(Request $request, $id, $idp,$idn)
+            {
+                   if ($request->ajax() && $request->isMethod('GET')) {
+           if($idn == 0){
+            
+            $id = $id - 1;
+           }else{
+            
+            $id = $id + 1;
+           }
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
+                               
+            $Actividad->offsetSet('Anteproyecto', $idp);
+           
+            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
+            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+            if($commit2 == null){
+                  $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
+                  $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
+                           
+            }else{
+                  $Actividad->offsetSet('Estado', $commit[0] -> relacionEstado -> CHK_Checlist);
+                  $Actividad->offsetSet('Commit', $commit[0] -> CMMT_Commit);
+           
+            }
+                       $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+                       $actividadesAct = Mctr008::where('FK_Id_Formato',2)->get();
+                       $PrimeraAct = $actividadesAct -> first();
+                       $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+                       
+                       $UltimaAct = $actividadesAct -> last();
+                       $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+                       $Actividad->offsetSet('Proyecto', $idp );
+                       if($act->MCT_Actividad == "Funciones"){
+                        return view($this->path .'.Jurado.VerRequerimientoFuncionesJurado',
+                        [
+                        'datos' => $Actividad,
+                        ]);   
+                         
+                    }     
+                    return view($this->path .'.Jurado.VerRequerimientoJurado',
+                    [
+                    'datos' => $Actividad,
+                    ]);
+                    return AjaxResponse::fail(
+                        '¡Lo sentimos!',
+                        'No se pudo completar tu solicitud.'
+                    );    
+                }     
+    }
+           
     public function VerActividadJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1676,6 +2036,13 @@ public function RequerimientosJurado(Request $request, $id, $idp)
 
             }
             $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
+            $actividadesAct = Mctr008::where('FK_Id_Formato',1)->get();
+            $PrimeraAct = $actividadesAct -> first();
+            $Actividad->offsetSet('Primera', $PrimeraAct->PK_MCT_IdMctr008 );
+            
+            $UltimaAct = $actividadesAct -> last();
+            $Actividad->offsetSet('Ultima', $UltimaAct->PK_MCT_IdMctr008 );
+            $Actividad->offsetSet('Proyecto', $idp );
             if($act->MCT_Actividad == "Cronograma"){
                 return view($this->path .'.Jurado.ActividadCronogramaJurado',
                 [

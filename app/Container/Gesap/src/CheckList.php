@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Checklist extends Model
-{
+{   
+    //este modelo es para el estado de la actividad APROBADO// EN CALIFICACIÓN
     
     protected $connection = 'gesap';
 

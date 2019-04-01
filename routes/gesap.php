@@ -59,6 +59,38 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@MctLimit',  
 			'as' => 'AnteproyectosGesap.MctLimit'
 		]);
+		Route::get('ReportesAnteproyectos/{id?}', [
+			'uses' => $controller . 'PdfController@reporteAnteproyectos',  
+			'as' => 'AnteproyectosGesap.ReportesAnteproyecto'
+		]);
+		
+		Route::get('ReportesUsuarios/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteUsuarios',  
+			'as' => 'AnteproyectosGesap.ReportesUsuarios'
+		]);
+
+		Route::get('ReportesAnteproyecto/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteAnteproyecto',  
+			'as' => 'AnteproyectosGesap.ReporteAnteproyecto'
+		]);
+		Route::get('ReportesProyectos/{id?}', [
+			'uses' => $controller . 'PdfController@reporteProyectos',  
+			'as' => 'AnteproyectosGesap.ReportesProyecto'
+		]);
+		Route::get('reporteUsuario/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteUsuario',  
+			'as' => 'AnteproyectosGesap.reporteUsuario'
+		]);
+		Route::get('ReportesProyecto/{id?}/{idd?}', [
+			'uses' => $controller . 'PdfController@reporteProyecto',  
+			'as' => 'AnteproyectosGesap.ReporteProyecto'
+		]);
+		
+	
+		Route::get('descargarReporteAnteproyectos', [
+			'uses' => $controller . 'PdfController@descargarReporteAnteproyectos',  
+			'as' => 'AnteproyectosGesap.descargarReporteAnteproyectos'
+		]);
 		
 		
 		Route::get('verdesarroladores/{id?}', [
@@ -160,6 +192,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'Proyectos.indexajax'
 		]);
 
+		
+		Route::post('updateproy/', [
+            'uses' => $controller . 'CoordinatorController@updateProy',   
+            'as' => 'Proyecto.updateProy'
+		]);
 		Route::get('Proyectos/', [
             'uses' => $controller . 'CoordinatorController@ProyectosList',   
             'as' => 'Proyectos.List'
@@ -283,6 +320,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@index',  
 			'as' => 'EstudianteGesap.index'
 		]);
+		Route::get('indexProyecto', [
+			'uses' => $controller . 'StudentController@indexProyecto',  
+			'as' => 'EstudianteGesap.indexProyecto'
+		]);
 		Route::get('indexAjax', [
 			'uses' => $controller . 'StudentController@index',  
 			'as' => 'EstudianteGesap.index.ajax'
@@ -381,6 +422,11 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Financiacion/{id?}', [
 			'uses' => $controller . 'StudentController@Financiacion',  
 			'as' => 'EstudianteGesap.Financiacion'
+		]);
+		
+		Route::get('SeguimientoCrono', [
+			'uses' => $controller . 'StudentController@SeguimientoCrono',  
+			'as' => 'EstudianteGesap.SeguimientoCrono'
 		]);
 		
 		Route::post('SolicitudStore', [
@@ -597,6 +643,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@index',  
 			'as' => 'DocenteGesap.index'
 		]);
+		Route::get('indexProyecto', [
+			'uses' => $controller . 'DocenteController@indexProyecto',  
+			'as' => 'DocenteGesap.indexProyecto'
+		]);
 		Route::get('indexAjax', [
 			'uses' => $controller . 'DocenteController@index',  
 			'as' => 'DocenteGesap.index.ajax'
@@ -700,6 +750,11 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerActividadesList',  
 			'as' => 'DocenteGesap.VerActividadesList'
 		]);
+		
+		Route::get('ActividadesListJ/{id?}', [
+			'uses' => $controller . 'DocenteController@VerActividadesListJ',  
+			'as' => 'DocenteGesap.VerActividadesListJ'
+		]);
 		Route::get('VerActividad/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividad',  
 			'as' => 'DocenteGesap.VerActividad'
@@ -719,6 +774,19 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('VerActividadJurado/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerActividadJurado',  
 			'as' => 'DocenteGesap.VerActividadJurado'
+		]);
+		
+		Route::get('navegacionActividades/{id?}/{idp?}/{idn?}', [
+			'uses' => $controller . 'DocenteController@navegacionActividades',  
+			'as' => 'DocenteGesap.navegacionActividades'
+		]);
+		Route::get('navegacionActividadesR/{id?}/{idp?}/{idn?}', [
+			'uses' => $controller . 'DocenteController@navegacionActividadesR',  
+			'as' => 'DocenteGesap.navegacionActividadesR'
+		]);
+		Route::get('navegacionActividadesP/{id?}/{idp?}/{idn?}', [
+			'uses' => $controller . 'DocenteController@navegacionActividadesP',  
+			'as' => 'DocenteGesap.navegacionActividadesP'
 		]);
 		Route::get('Actividades/{id?}', [
 			'uses' => $controller . 'DocenteController@VerActividades',  

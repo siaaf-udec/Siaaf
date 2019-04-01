@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Cronograma extends Model
 {
-    
+    //modelo con el cual se guarda el coronograma del anteproyecto   
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Cronograma';

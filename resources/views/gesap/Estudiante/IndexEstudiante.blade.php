@@ -75,7 +75,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
                         @slot('columns', [
                             'Solicitud',
                             'Estado',
@@ -96,7 +96,7 @@
             <!--FIN VER SOLICITUDES-->
     @permission('GESAP_STUDENT')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap: '])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Gesap Anteproyectos: '])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -144,18 +144,7 @@
                     @endcomponent
                     <br><br>
                     <br><br>
-                    <h4>Proyecto De Grado </h4>
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyecto'])
-                        @slot('columns', [
-                            'Titulo',
-                            'Palabras clave',
-                            'Descripción',
-                            'Duracion en meses',
-                            'Estado',
-                            'Fecha Radicación',
-                            'Acciones'
-                        ])
-                    @endcomponent
+                  
                     
                 </div>
             </div>
@@ -195,6 +184,18 @@
     <script type="text/javascript">
 
     jQuery(document).ready(function () {
+
+        var tablecrono, urlcrono, columnscrono;
+        tablecrono = $('#listaCronograma');
+        urlcrono = '{{ route('EstudianteGesap.SeguimientoCrono')}}';
+        columnscrono = [
+            {data: 'semana', name: 'semana'},
+            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+        ];
+        
+      
+        dataTableServer.init(tablecrono, urlcrono, columnscrono);
+        tablecrono = tablecrono.DataTable();
 
         var tablesol, urlsol, columnssol;
         tablesol = $('#listaSolicitudes');
@@ -288,13 +289,12 @@
         id = 123456789 ;
         url = '{{ route('EstudianteGesap.Desarrolladores')}}'+ '/' + id;
         columns = [
-            {data: 'NPRY_Titulo', name: 'NPRY_Titulo'},
-            {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
-            {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
-            {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-           
+            {data: 'Titulo', name: 'Titulo'},
+            {data: 'Palabras', name: 'Palabras'},
+            {data: 'Des', name: 'Des'},
+            {data: 'Duracion', name: 'Duracion'},  
             {data: 'Estado', name: 'Estado'},
-            {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Fecha', name: 'Fecha'},
       
             {
                 defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-pencil"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
@@ -320,7 +320,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);
@@ -331,7 +331,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerComentariosJuradoAnteproyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerComentariosJuradoAnteproyecto') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);
@@ -341,7 +341,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.Codigo;
             var type = 'GET';
             var async = async || false;
             swal({

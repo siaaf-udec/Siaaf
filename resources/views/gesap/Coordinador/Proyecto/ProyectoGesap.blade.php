@@ -32,7 +32,7 @@
 @section('content')
     @permission('GESAP_ADMIN')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos registrados:'])
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -65,6 +65,7 @@
                             'Director',
                             'Estado',
                             'Fecha Radicación',
+                            'Desarrolladores',
                             'Acciones'
                         ])
                     @endcomponent
@@ -118,6 +119,7 @@
             {data: 'Director', name: 'Director'},
             {data: 'Estado', name: 'Estado'},
             {data: 'Fecha', name: 'Fecha'},
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
       
             {
                 defaultContent: '@permission('GESAP_ADMIN_REPORT_LIBRO')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_VER_LIBRO')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
@@ -197,6 +199,23 @@
                 });
 
         });
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReportesProyecto') }}'+'/'+ 1);
+            });
+        });
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReporteProyecto') }}' + '/' + dataTable.FK_NPRY_IdMctr008+'/'+1);
+            });
+        });
+
         table.on('click', '.Ver', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');

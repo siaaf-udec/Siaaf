@@ -27,6 +27,7 @@
                             '#',
                             'Actividad',
                             'Descripción',
+                            'CheckList',
                             'Acciones'
                         ])
                     @endcomponent
@@ -72,16 +73,18 @@
 
     $(document).ready(function () {
         
+        idp='{{  $Anteproyecto[0]  }}';
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('EstudianteGesap.VerActividadesList') }}';
+        url = '{{ route('EstudianteGesap.VerActividadesList') }}'+'/'+'{{  $Anteproyecto[0]  }}';
     
-        idp='{{  $Anteproyecto[0]  }}';
+        
     
         columns = [
             {data: 'Numero', name: 'Numero'},
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
             {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
+            {data: 'Check', name: 'Check'},
             
             
       

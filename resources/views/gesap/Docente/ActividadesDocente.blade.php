@@ -26,6 +26,7 @@
                             '#',
                             'Actividad',
                             'Descripcion',
+                            'CheckList',
                             'Acciones'
                         ])
                     @endcomponent
@@ -71,16 +72,19 @@
 
     $(document).ready(function () {
         
+        idp='{{  $Anteproyecto[0]  }}';
+
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerActividadesList') }}';
+        url = '{{ route('DocenteGesap.VerActividadesList') }}' + '/' + '{{  $Anteproyecto[0]  }}';
     
-        idp='{{  $Anteproyecto[0]  }}';
+        
     
         columns = [
             {data: 'Numero', name: 'Numero'},
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
             {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
+            {data: 'Check', name: 'Check'},
             
             
       
@@ -107,7 +111,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ '{{  $Anteproyecto[0]  }}';
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 

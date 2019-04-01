@@ -28,6 +28,10 @@ class Jurados extends Model
     {
          return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
      }
+     public function relacionProyecto()
+    {
+         return $this->hasOne(Proyecto::class, 'FK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
+     }
      public function relacionUsuarios()
     {
          return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_User_Codigo');

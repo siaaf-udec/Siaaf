@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estados extends Model
 {
+    //modelo donde se encuentran los estados de los usuarios ACTIVO/INACTIVO
     protected $connection = 'gesap';
 
     protected $table = 'TBL_Estados';

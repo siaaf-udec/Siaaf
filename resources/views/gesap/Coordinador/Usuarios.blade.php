@@ -180,7 +180,22 @@
                 });
 
         });
-        
+        $(".reports").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.ReportesUsuarios') }}'+ '/' + 1);
+            });
+        });
+        table.on('click', '.reporte', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('AnteproyectosGesap.reporteUsuario') }}' + '/' + dataTable.PK_User_Codigo + '/'+ 1);
+            });
+        });
         $(".create").on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('UsuariosGesap.create') }}';

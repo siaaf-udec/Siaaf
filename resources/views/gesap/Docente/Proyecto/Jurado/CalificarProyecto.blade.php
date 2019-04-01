@@ -56,7 +56,7 @@
 
                     <h4> Desiciónes de los jurados</h4>
                     <br><br>
-                    @if($datos['IdEstado'] >= '3')
+                    @if($datos['Estado'] == 'RADICADO')
                     @permission('GESAP_DOCENTE_DECISION_JUDMENT')<a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="Gestionar Mct">
@@ -233,7 +233,7 @@ $(document).ready(function(){
     $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             var route = '{{ route('DocenteGesap.index.ajax') }}';
-            location.href="{{route('DocenteGesap.index')}}";
+            location.href="{{route('DocenteGesap.indexProyecto')}}";
             //$(".content-ajax").load(route);
         });
             

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fechas extends Model
 {
+    //en este modelo se guardan las fechas de radicacion para proyecto ya nteproyecto
     protected $connection = 'gesap';
 
     protected $table = 'TBL_Fechas_Radicacion';
@@ -16,6 +17,6 @@ class Fechas extends Model
         'FCH_Radicacion'
     ];
 
-    //Relacion del Estado con el Usuario
+    
    
 }

@@ -13,7 +13,15 @@
 		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
     	   <a href="{{ route('DocenteGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-list-alt"></i>
-                <span class="title">Mis Anteproyectos Y Proyectos(Docente)</span>
+                <span class="title">Mis Anteproyectos</span>
+            </a>    	    	
+    	</li>
+		@endpermission
+		@permission('GESAP_DOCENTE')
+		<li class="nav-item {{ active(['DocenteGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('DocenteGesap.indexProyecto') }}" class="nav-link nav-toggle">
+                <i class="fa fa-list-alt"></i>
+                <span class="title">Mis Proyectos</span>
             </a>    	    	
     	</li>
 		@endpermission
@@ -21,7 +29,15 @@
 		<li class="nav-item {{ active(['EstudianteGesap.*'], 'start active open') }}">
     	   <a href="{{ route('EstudianteGesap.index') }}" class="nav-link nav-toggle">
                 <i class="fa fa-list-alt"></i>
-                <span class="title">Mis Anteproyectos Y Proyectos(Estudiante)</span>
+                <span class="title">Mis Anteproyectos </span>
+            </a>    	    	
+    	</li>
+		@endpermission
+		@permission('GESAP_STUDENT')
+		<li class="nav-item {{ active(['EstudianteGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('EstudianteGesap.indexProyecto') }}" class="nav-link nav-toggle">
+                <i class="fa fa-list-alt"></i>
+                <span class="title">Mis Proyectos</span>
             </a>    	    	
     	</li>
 		@endpermission

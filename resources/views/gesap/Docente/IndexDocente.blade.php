@@ -127,7 +127,7 @@
             </div>
             <br>
             <div class="row">
-            <h3>Anteproyectos Asignados</h3>
+            <h3>Anteproyectos Asignados Como Director</h3>
 
                 <div class="col-md-12">
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaAnteproyecto'])
@@ -138,12 +138,13 @@
                             'Duracion en meses',
                             'Estado',
                             'Fecha Radicación',
+                            'Desarrolladores',
                             'Acciones'
                         ])
                     @endcomponent
                 </div>
                 <br><br>
-            <h3>Anteproyectos Asignados como Jurado</h3>
+            <h3>Anteproyectos Asignados Como Jurado</h3>
     
     <br><br>
             <div class="col-md-12">
@@ -154,43 +155,13 @@
                         'Duracion en meses',
                         'Fecha Radicación',
                         'Director',
-                        'Acciones'
-                    ])
-                @endcomponent
-            </div>
-    <h3>Proyectos Asignados</h3>
-    
-    <br><br>
-            <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyectos'])
-                    @slot('columns', [
-                        'Titulo',
-                        'Descripción',
-                        'Duracion en meses',
-                        'Fecha Radicación',
-                        'Director',
                         'Estado',
+                        'Desarrolladores',
                         'Acciones'
                     ])
                 @endcomponent
             </div>
-    <h3>Proyectos Asigandos como Jurado</h3>
-    
-    <br><br>
-            <div class="col-md-12">
-                @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaProyetoJurado'])
-                    @slot('columns', [
-                        'Titulo',
-                        'Descripción',
-                        'Duracion en meses',
-                        'Fecha Radicación',
-                        'Director',
-                        'Acciones'
-                    ])
-                @endcomponent
-            </div>
-            </div>
-        @endcomponent
+    @endcomponent
         
         
     </div>
@@ -419,9 +390,10 @@ jQuery(document).ready(function () {
            
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
+            {data: 'Desarrolladores', name: 'Desarrolladores'},
       
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -460,9 +432,11 @@ jQuery(document).ready(function () {
             {data: 'Duracion', name: 'Duracion'},
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
+            {data: 'Estado' ,name: 'Estado'},
+            {data: 'Desarrolladores' ,name: 'Desarrolladores'},
            
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -494,7 +468,7 @@ jQuery(document).ready(function () {
             {data: 'Estado', name: 'Estado'},
            
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -524,7 +498,7 @@ jQuery(document).ready(function () {
             {data: 'Fecha_Radicacion', name: 'Fecha_Radicacion'},        
             {data: 'Director', name: 'Director'},
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_JURADO')<a href="javascript:;" title="Ver" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_JURADO')<a href="javascript:;" title="Ver Actividades" class="btn btn-success VerPJ" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_CALIFICAR_JURADO')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
