@@ -3,6 +3,7 @@
 namespace App\Container\Gesap\src\Controllers;
 
 
+
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,7 +56,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Carbon\Carbon;
 
 use App\Container\Users\src\Controllers\UsersUdecController;
-use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class PdfController extends Controller
@@ -124,11 +125,13 @@ class PdfController extends Controller
 
             }
             if($id == 1){
+                $n=1;
                 return view($this->path .'AnteproyectosPdf',
-                compact('anteproyectos', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'));
+                compact('anteproyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'));
             }else{
-                return SnappyPdf::loadView($this->path .'AnteproyectosPdf',
-                compact('anteproyectos', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'))->download('ReporteAnteproyectos.pdf');
+                $n=2;
+                return PDF::loadView($this->path .'AnteproyectosPdf',
+                compact('anteproyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'))->download('ReporteAnteproyectos.pdf');
             }
               
         }
@@ -142,6 +145,9 @@ class PdfController extends Controller
             $j=0;
             $desarrollador1="Sin Asignar";
             $desarrollador2="Sin Asignar";
+            $desarrollador1id = 0;
+            $desarrollador2id = 0;
+            
             
             $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto-> PK_NPRY_IdMctr008)->get();
                 if($desarrolladores->IsEmpty()){
@@ -149,12 +155,28 @@ class PdfController extends Controller
                     foreach($desarrolladores as $desarrollador){
                         if($j==0){
                             $desarrollador1 = $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            $desarrollador1id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
+                            $interacciones1 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
                             $j=1;
                         }else{
                             $desarrollador2 =  $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            $desarrollador2id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
+                            $interacciones2 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
                         }
                     }
             }
+            //interacciones de los desarrolladores
+            $interacciontotal = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->get();
+            if($interacciontotal->IsEmpty()){
+                $inestotal = 1 ;
+            }else{
+                $inestotal = $interacciontotal->count();
+            }
+            $inest1 = $interacciones1->count();
+            $inest2 = $interacciones2->count();
+            $interaccionest1 = ($inest1*100)/$inestotal;
+            $interaccionest2 = ($inest2*100)/$inestotal;
+            //
             $i=0;
             $jurado1="Sin Asignar";
             $jurado2="Sin Asignar";
@@ -188,15 +210,18 @@ class PdfController extends Controller
 
 
             $title = "Reporte : Anteproyecto De Grado Específico";
-         
+            $n=1;
             if($idd == 1){
                 return view($this->path .'AnteproyectoPdf',
-                compact('title' ,'fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados'));
+                compact('title' ,'n','fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'));
             }else{
-                return SnappyPdf::loadView($this->path .'AnteproyectoPdf',
-                compact('title' ,'fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados'))->download('ReporteAnteproyecto.pdf');
+                $n=2;
+                return PDF::loadView($this->path .'AnteproyectoPdf',
+                compact('title','n','fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'))->download('ReporteAnteproyecto.pdf');
         
             }
+
+            
               
      
         }
@@ -217,7 +242,7 @@ class PdfController extends Controller
             $j=0;
             $desarrolladorP = "";
             $title = "Reporte : Historial de Proyectos de Grado";
-           
+
             foreach($proyectos as $proyecto){
                 setlocale(LC_TIME, 'es_ES'); 
                 $fecha = Carbon::now()->formatlocalized('%A %d %B %Y');
@@ -266,12 +291,13 @@ class PdfController extends Controller
 
             }
             if($id == 1){
+                $n=1;
                 return view($this->path .'ProyectosPdf',
-                compact('proyectos', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'));  
+                compact('proyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'));  
         
             }else{
-
-                $data = compact('proyectos', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp');
+                $n=2;
+                $data = compact('proyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp');
                 $pdf = PDF::loadView($this->path .'ProyectosPdf', $data);
                 return $pdf->download('Proyectos.pdf');
 
@@ -286,7 +312,7 @@ class PdfController extends Controller
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y');
             $title = "Reporte : Usuario Especifico";
             setlocale(LC_TIME, 'es_ES'); 
-       
+            
             if($usuario->FK_User_IdEstado == 1){
                 $usuario->offsetSet('Estado',  'Activo' );
             }else{
@@ -298,6 +324,7 @@ class PdfController extends Controller
             if($usuario->FK_User_IdRol == 1){//est
                 $jurado="";
                 $director="";
+                $Proydirector="";
                 $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->get();
                 if($desarrollador->IsEmpty()){
                     $usuario->offsetSet('Ante', 'Sin Asignar');
@@ -319,56 +346,136 @@ class PdfController extends Controller
             if($usuario->FK_User_IdRol == 2){//docente
                 $desarrollador = "";
                 $director = Anteproyecto::where('FK_NPRY_Pre_Director',$id)->get();
+                //pre director director
                 foreach($director as $direc){
-                    $director->offsetSet('AnteEstado', $direc->relacionEstado->EST_Estado);
-                    $director->offsetSet('Titulo', $direc->NPRY_Titulo);
+                    $direc->offsetSet('AnteEstado', $direc->relacionEstado->EST_Estado);
+                    $direc->offsetSet('Titulo', $direc->NPRY_Titulo);
                     $j=0;
                     $desarrolladorP="";
-                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$direc-> PK_NPRY_IdMctr008)->get();
+                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$direc->PK_NPRY_IdMctr008)->get();
                     if($desarrolladores->IsEmpty()){
-                        $director->offsetSet('Desarrolladores',  'Sin Asignar' );
+                        $direc->offsetSet('AnteDesarrolladores',  'Sin Asignar' );
                     }else{
                         foreach($desarrolladores as $desarrollador){
                             if($j==0){
-                                $desarrolladorP = $desarrolladorP.$desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                $desarrolladorP = $desarrolladorP.$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
                                 $j=1;
                             }else{
-                                $desarrolladorP = $desarrolladorP.", ". $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                                $desarrolladorP = $desarrolladorP.", ".$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
                             }
                         }
                         $direc->offsetSet('AnteDesarrolladores',  $desarrolladorP );
     
                     }
-                    $jurado = Jurados::where('FK_User_Codigo',$id)->get();
-                    foreach($jurado as $jur){
-                        $jurado->offsetSet('AnteJurado', $jur->relacionAnteproyecto->NPRY_Titulo);
-                        $jurado->offsetSet('AnteJuradoEstado', $jur->relacionAnteproyecto->relacionEstado->EST_Estado);
-                        $jurado->offsetSet('AnteDes', $jur->relacionEstado->EST_Estado);
-                    
-                        $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$jur->FK_NPRY_IdMctr008)->first();
-                        if($proyecto != null){
-                            $jurado->offsetSet('ProyJurado', $jur->relacionAnteproyecto->NPRY_Titulo);
-                            $jurado->offsetSet('ProyJuradoEstado', $proyecto->relacionEstado->EST_Estado);
-                            $jurado->offsetSet('ProyDes', $jur->relacionEstadoJurado->EST_Estado);
-                                    
-                        }                   
+
+                }
+                //proyectos director
+                $Proydirector= Proyecto::where('FK_NPRY_Director',$id)->get();
+                foreach($Proydirector as $proydirec){
+                    $proydirec->offsetSet('Titulo',$proydirec->relacionAnteproyecto->NPRY_Titulo);
+                    $proydirec->offsetSet('EstadoProy',$proydirec->relacionEstado->EST_Estado);
+                    $jj=0;
+                    $desarrolladorProy="";
+                    $desarrolladoresProyecto = Desarrolladores::where('FK_NPRY_IdMctr008',$proydirec->FK_NPRY_IdMctr008)->get();
+                    if($desarrolladoresProyecto->IsEmpty()){
+                        $proydirec->offsetSet('ProyDesarrolladores',  'Sin Asignar' );
+                    }else{
+                        foreach($desarrolladoresProyecto as $desarrollador){
+                            if($jj==0){
+                                $desarrolladorProy = $desarrolladorProy.$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                                $jj=1;
+                            }else{
+                                $desarrolladorProy = $desarrolladorProy.", ".$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                            }
+                        }
+                        $proydirec->offsetSet('ProyDesarrolladores',  $desarrolladorProy );
+    
                     }
 
                 }
+                //anteproyecto como jurado
+                $juradosante = Jurados::where('FK_User_Codigo',$id)->get();
+                foreach($juradosante as $juradoante){
+                    $juradoante->offsetSet('Titulo', $juradoante->relacionAnteproyecto->NPRY_Titulo );
+                    $juradoante->offsetSet('Estado',$juradoante->relacionAnteproyecto->relacionEstado->EST_Estado );
+                    $juradoante->offsetSet('EstadoJur',$juradoante->relacionEstado->EST_Estado );
+
+                    $jja=0;
+                    $desarrolladorAntroyjur="";
+                    $desarrolladoresAnteproyectojur = Desarrolladores::where('FK_NPRY_IdMctr008',$juradoante->FK_NPRY_IdMctr008)->get();
+
+                    if($desarrolladoresAnteproyectojur->IsEmpty()){
+                        $juradoante->offsetSet('Desarrolladores',  'Sin Asignar' );
+                    }else{
+                        foreach($desarrolladoresAnteproyectojur as $desarrollador){
+                            if($jja==0){
+                                $desarrolladorAntroyjur = $desarrolladorAntroyjur.$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                                $jja=1;
+                            }else{
+                                $desarrolladorAntroyjur = $desarrolladorAntroyjur.", ".$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                            }
+                        }
+                        $juradoante->offsetSet('Desarrolladores',  $desarrolladorAntroyjur );
+    
+                    }
+                   
+                }
+                //proyecto asignado como juruado
+                $juradosproy = Jurados::where('FK_User_Codigo',$id)->get();
+                $concatenadoi=0;
+                $proyectossirve=[];
+                foreach($juradosproy as $juradoproy){
+                    $juradoproy->offsetSet('Titulo',$juradoproy->relacionAnteproyecto->NPRY_Titulo);
+                    if($juradoproy->relacionAnteproyecto->FK_NPRY_Estado == 4 ){
+                       
+                        $juradoproy->offsetSet('Estado',$juradoproy->relacionProyecto->relacionEstado->EST_Estado);      
+                    }else{
+                        $juradoproy->offsetSet('Estado','Sin Aprobar');
+                    }
+                    $jjp=0;
+                    $desarrolladorProyjur="";
+                    $desarrolladoresProyectojurado = Desarrolladores::where('FK_NPRY_IdMctr008',$juradoproy->FK_NPRY_IdMctr008)->get();
+
+                    if($desarrolladoresProyectojurado->IsEmpty()){
+                        $juradoproy->offsetSet('Desarrolladores',  'Sin Asignar' );
+                    }else{
+                        foreach($desarrolladoresProyectojurado as $desarrollador){
+                            if($jjp==0){
+                                $desarrolladorProyjur = $desarrolladorProyjur.$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                                $jjp=1;
+                            }else{
+                                $desarrolladorProyjur = $desarrolladorProyjur.", ".$desarrollador->relacionUsuario->User_Nombre1." ".$desarrollador->relacionUsuario->User_Apellido1 ;
+                            }
+                        }
+                        $juradoproy->offsetSet('Desarrolladores',  $desarrolladorProyjur );
+    
+                    }
+                    if( $juradoproy->relacionEstadoJurado->EST_Estado == "RADICADO"){
+                        $juradoproy->offsetSet('EstadoJur',"ASIGNADO");
+                    }else{
+                        $juradoproy->offsetSet('EstadoJur',  $juradoproy->relacionEstadoJurado->EST_Estado );
+                    }  
+                    
+
+                    
+                }
+               
 
 
             }
 
 
             if($idd == 1){
+                $n=1;
                 return view($this->path .'UsuarioPdf',
-                compact('usuario', 'fecha','title','desarrollador','director','jurado'));  
+                compact('usuario','n', 'fecha','title','desarrollador','director','jurado','Proydirector','juradosante','juradosproy'));  
+         
         
             }else{
-
-                $data = compact('usuarios','fecha','title');
-                $pdf = PDF::loadView($this->path .'UsuarioPdf', $data);
-                return $pdf->download('Usuarios.pdf');
+                $n=2;
+                $data = compact('usuario','n', 'fecha','title','desarrollador','director','jurado','Proydirector','juradosante','juradosproy');
+                $pdf = PDF::loadView($this->path .'UsuarioPdfD', $data);
+                return $pdf->download('Usuario.pdf');
 
             }
         }
@@ -409,12 +516,13 @@ class PdfController extends Controller
                 setlocale(LC_TIME, 'es_ES'); 
             }
             if($id == 1){
+                $n=1;
                 return view($this->path .'UsuariosPdf',
-                compact('usuarios', 'estudiantes' ,'profesores','admin','total','fecha','title'));  
+                compact('usuarios','n', 'estudiantes' ,'profesores','admin','total','fecha','title'));  
         
             }else{
-
-                $data = compact('usuarios', 'estudiantes' ,'profesores','admin','total','fecha','title');
+                $n=0;
+                $data = compact('usuarios','n', 'estudiantes' ,'profesores','admin','total','fecha','title');
                 $pdf = PDF::loadView($this->path .'UsuariosPdf', $data);
                 return $pdf->download('Usuarios.pdf');
 
@@ -437,15 +545,33 @@ class PdfController extends Controller
                     foreach($desarrolladores as $desarrollador){
                         if($j==0){
                             $desarrollador1 = $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            $desarrollador1id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
+                            $interacciones1 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                       
                             $j=1;
                         }else{
                             $desarrollador2 =  $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
+                            $desarrollador2id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
+                            $interacciones2 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                       
                         }
                     }
             }
             $i=0;
             $jurado1="Sin Asignar";
             $jurado2="Sin Asignar";
+              //interacciones de los desarrolladores
+              $interacciontotal = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();
+              if($interacciontotal->IsEmpty()){
+                  $inestotal = 1 ;
+              }else{
+                  $inestotal = $interacciontotal->count();
+              }
+              $inest1 = $interacciones1->count();
+              $inest2 = $interacciones2->count();
+              $interaccionest1 = ($inest1*100)/$inestotal;
+              $interaccionest2 = ($inest2*100)/$inestotal;
+              //
             
             $jurados=Jurados::where('FK_NPRY_IdMctr008',$proyecto->FK_NPRY_IdMctr008)->get();
    
@@ -467,6 +593,7 @@ class PdfController extends Controller
                     }
                 }
             }
+
             $proyecto->offsetSet('Titulo',  $proyecto->relacionAnteproyecto-> NPRY_Titulo);
             $proyecto->offsetSet('Descripcion',  $proyecto->relacionAnteproyecto-> NPRY_Descripcion);
             $proyecto->offsetSet('Director', $proyecto->relacionDirectores->User_Nombre1." ".$proyecto->relacionDirectores->User_Apellido1);
@@ -482,12 +609,14 @@ class PdfController extends Controller
             $title = "Reporte : Proyecto De Grado Específico";
             
             if($idd == 1){
+                $n=1;
                 return view($this->path .'ProyectoPdf',
-                  compact('title' ,'fecha','proyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados'));  
+                  compact('title','n','fecha','proyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'));  
      
             }else{
-                return SnappyPdf::loadView($this->path .'ProyectoPdf',
-                compact('title' ,'fecha','proyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados'))->download('ReporteProyecto.pdf');
+                $n=2;
+                return PDF::loadView($this->path .'ProyectoPdf',
+                compact('title','n','fecha','proyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'))->download('ReporteProyecto.pdf');
      
             }
             

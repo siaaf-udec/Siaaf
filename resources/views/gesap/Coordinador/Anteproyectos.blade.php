@@ -31,6 +31,7 @@
 
 @section('content')
     @permission('GESAP_ADMIN')
+  
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
@@ -53,12 +54,14 @@
                                                        class="btn btn-simple btn-success btn-icon reports"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Anteproyectos</a>@endpermission
-                            
+                         
                         <br>
                     </div>
 
                 </div>
             </div>
+            <br>
+            <br><br>
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -113,6 +116,8 @@
     <script type="text/javascript">
 
     jQuery(document).ready(function () {
+
+
 
         var table, url, columns;
         table = $('#listaAnteproyecto');
@@ -226,7 +231,11 @@
             var route = '{{ route('AnteproyectosGesap.mct') }}';
             $(".content-ajax").load(route);
         });
-        
+      
+        $('.reports_est').on('click', function (e) {
+                e.preventDefault();
+                $('#modal-create-reporte_estado').modal('toggle');
+        });
         
         
         table.on('click', '.reporte', function (e) {
