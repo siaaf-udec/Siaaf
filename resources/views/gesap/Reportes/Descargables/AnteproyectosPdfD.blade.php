@@ -62,8 +62,7 @@
 <body>
 	<div id="head">
 		<!-- Embeaded image :-) --> 
-    <img src="{{ asset('css/LogoUDEC.png') }}">
-
+       <img src="{{ base_path('public/css/LogoUDEC.png')}}">
         <h1 class="features">REPORTE GENEREADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Proyectos y Anteproyectos De Grado (GESAP)</p>

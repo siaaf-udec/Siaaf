@@ -130,7 +130,7 @@ class PdfController extends Controller
                 compact('anteproyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'));
             }else{
                 $n=2;
-                return PDF::loadView($this->path .'AnteproyectosPdf',
+                return PDF::loadView($this->path .'.Descargables.AnteproyectosPdfD',
                 compact('anteproyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp'))->download('ReporteAnteproyectos.pdf');
             }
               
@@ -147,7 +147,8 @@ class PdfController extends Controller
             $desarrollador2="Sin Asignar";
             $desarrollador1id = 0;
             $desarrollador2id = 0;
-            
+            $interacciones1v = null;
+            $interacciones2v = null;
             
             $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto-> PK_NPRY_IdMctr008)->get();
                 if($desarrolladores->IsEmpty()){
@@ -157,11 +158,13 @@ class PdfController extends Controller
                             $desarrollador1 = $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
                             $desarrollador1id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
                             $interacciones1 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                            $interacciones1v= Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->first();
                             $j=1;
                         }else{
                             $desarrollador2 =  $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
                             $desarrollador2id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
                             $interacciones2 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                            $interacciones2v = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato','<',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->first();
                         }
                     }
             }
@@ -172,8 +175,17 @@ class PdfController extends Controller
             }else{
                 $inestotal = $interacciontotal->count();
             }
-            $inest1 = $interacciones1->count();
-            $inest2 = $interacciones2->count();
+            if($interacciones1v==null){
+                $inest1 = 0;
+            }else{
+                $inest1 = $interacciones1->count();
+            }
+            
+            if($interacciones2v==null){
+                $inest2 = 0;
+            }else{
+                $inest2 = $interacciones2->count();
+            }
             $interaccionest1 = ($inest1*100)/$inestotal;
             $interaccionest2 = ($inest2*100)/$inestotal;
             //
@@ -216,7 +228,7 @@ class PdfController extends Controller
                 compact('title' ,'n','fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'));
             }else{
                 $n=2;
-                return PDF::loadView($this->path .'AnteproyectoPdf',
+                return PDF::loadView($this->path .'.Descargables.AnteproyectoPdfD',
                 compact('title','n','fecha','anteproyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'))->download('ReporteAnteproyecto.pdf');
         
             }
@@ -298,7 +310,7 @@ class PdfController extends Controller
             }else{
                 $n=2;
                 $data = compact('proyectos','n', 'title' ,'fecha','cantidad','CAsig','CRad','CApr','CRepro','CAplz','CCancel','CEsp');
-                $pdf = PDF::loadView($this->path .'ProyectosPdf', $data);
+                $pdf = PDF::loadView($this->path .'.Descargables.ProyectosPdfD', $data);
                 return $pdf->download('Proyectos.pdf');
 
             }
@@ -324,7 +336,9 @@ class PdfController extends Controller
             if($usuario->FK_User_IdRol == 1){//est
                 $jurado="";
                 $director="";
+                $juradosproy="";
                 $Proydirector="";
+                $juradosante="";
                 $desarrollador = Desarrolladores::where('FK_User_Codigo',$id)->get();
                 if($desarrollador->IsEmpty()){
                     $usuario->offsetSet('Ante', 'Sin Asignar');
@@ -345,6 +359,7 @@ class PdfController extends Controller
 
             if($usuario->FK_User_IdRol == 2){//docente
                 $desarrollador = "";
+                $jurado="";
                 $director = Anteproyecto::where('FK_NPRY_Pre_Director',$id)->get();
                 //pre director director
                 foreach($director as $direc){
@@ -474,7 +489,7 @@ class PdfController extends Controller
             }else{
                 $n=2;
                 $data = compact('usuario','n', 'fecha','title','desarrollador','director','jurado','Proydirector','juradosante','juradosproy');
-                $pdf = PDF::loadView($this->path .'UsuarioPdfD', $data);
+                $pdf = PDF::loadView($this->path .'.Descargables.UsuarioPdfD', $data);
                 return $pdf->download('Usuario.pdf');
 
             }
@@ -523,7 +538,7 @@ class PdfController extends Controller
             }else{
                 $n=0;
                 $data = compact('usuarios','n', 'estudiantes' ,'profesores','admin','total','fecha','title');
-                $pdf = PDF::loadView($this->path .'UsuariosPdf', $data);
+                $pdf = PDF::loadView($this->path .'.Descargables.UsuariosPdfD', $data);
                 return $pdf->download('Usuarios.pdf');
 
             }
@@ -538,7 +553,8 @@ class PdfController extends Controller
             $j=0;
             $desarrollador1="Sin Asignar";
             $desarrollador2="Sin Asignar";
-            
+            $interacciones1v=null;
+            $interacciones2v=null;
             $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$proyecto-> FK_NPRY_IdMctr008)->get();
                 if($desarrolladores->IsEmpty()){
                 }else{
@@ -547,12 +563,14 @@ class PdfController extends Controller
                             $desarrollador1 = $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
                             $desarrollador1id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
                             $interacciones1 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                            $interacciones1v = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->first();
                        
                             $j=1;
                         }else{
                             $desarrollador2 =  $desarrollador -> relacionUsuario-> User_Nombre1 ." ".$desarrollador -> relacionUsuario-> User_Apellido1 ;
                             $desarrollador2id = $desarrollador -> relacionUsuario-> PK_User_Codigo;
                             $interacciones2 = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->get();
+                            $interacciones2v = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->where('FK_User_Codigo',$desarrollador -> relacionUsuario-> PK_User_Codigo)->first();
                        
                         }
                     }
@@ -567,8 +585,22 @@ class PdfController extends Controller
               }else{
                   $inestotal = $interacciontotal->count();
               }
-              $inest1 = $interacciones1->count();
-              $inest2 = $interacciones2->count();
+              if($interacciontotal->IsEmpty()){
+                $inestotal = 1 ;
+                }else{
+                    $inestotal = $interacciontotal->count();
+                }
+                if($interacciones1v==null){
+                    $inest1 = 0;
+                }else{
+                    $inest1 = $interacciones1->count();
+                }
+                
+                if($interacciones2v==null){
+                    $inest2 = 0;
+                }else{
+                    $inest2 = $interacciones2->count();
+                }
               $interaccionest1 = ($inest1*100)/$inestotal;
               $interaccionest2 = ($inest2*100)/$inestotal;
               //
@@ -615,7 +647,7 @@ class PdfController extends Controller
      
             }else{
                 $n=2;
-                return PDF::loadView($this->path .'ProyectoPdf',
+                return PDF::loadView($this->path .'.Descargables.ProyectoPdf',
                 compact('title','n','fecha','proyecto','desarrollador1','desarrollador2','jurado1','jurado2','jurados','interaccionest1','interaccionest2'))->download('ReporteProyecto.pdf');
      
             }

@@ -10,7 +10,7 @@
     font-family: 'Anton';
     font-style: normal;
     font-weight: 400;
- 
+    
   }
 
 
@@ -62,19 +62,19 @@
 <body>
 	<div id="head">
 		<!-- Embeaded image :-) --> 
-    <img src="{{ asset('css/LogoUDEC.png') }}">
-
+    <img src="{{ base_path('public/css/LogoUDEC.png')}}">
         <h1 class="features">REPORTE GENEREADO POR</h1>
  
-        <p class="line">Plataforma Web Para La Gestión De Proyectos y Anteproyectos De Grado (GESAP)</p>
+        <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
         <p class="line">Universidad de Cundinamarca - Ext. Facatativá</p>
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-        @if($n==1)
-        <a  href="{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}/ 2">Descargar</a>
+          @if($n==1)
+        <a  href="{{ route('AnteproyectosGesap.ReportesUsuarios') }}/ 2">Descargar</a>
         @endif
+ 		
 	</div>
 
     <div id="features">
@@ -83,81 +83,44 @@
     
     <table class="meta">
           <tr>
-            <th><span contenteditable># Proyectos Registrados</span></th>
-            <td><span contenteditable>{{$cantidad}}</span></td>
+            <th><span contenteditable># Usuarios Registrados</span></th>
+            <td><span contenteditable>{{$total}}</span></td>
           </tr>
-          @if($CEsp > 0)
-       
           <tr>
-            <th><span contenteditable># En Espera</span></th>
-            <td><span contenteditable>{{$CEsp}}</span></td>
-          </tr>
-          @endif
-          @if($CAsig > 0)
-       
+            <th><span contenteditable># De Estudiantes</span></th>
+            <td><span contenteditable>{{$estudiantes}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable># Asignados</span></th>
-            <td><span contenteditable>{{$CAsig}}</span></td>
-          </tr>
-          @endif
-          @if($CRad)
-       
+            <th><span contenteditable># De Docentes</span></th>
+            <td><span contenteditable>{{$profesores}}</span></td>
+           </tr>
           <tr>
-            <th><span contenteditable># Radicados(En Evaluacion)</span></th>
-            <td><span contenteditable>{{$CRad}}</span></td>
-          </tr>
-          @endif
-          @if($CApr)
-       
-          <tr>
-            <th><span contenteditable># Aprobados</span></th>
-            <td><span contenteditable>{{$CApr}}</span></td>
-          </tr>
-          @endif
-          @if($CRepro)
-       
-          <tr>
-            <th><span contenteditable># Reprobados</span></th>
-            <td><span contenteditable>{{$CRepro}}</span></td>
-          </tr>
-          @endif
-          @if($CAplz)
-       
-          <tr>
-            <th><span contenteditable># Aplazados</span></th>
-            <td><span contenteditable>{{$CAplz}}</span></td>
-          </tr>
-          @endif
-       
-          @if($CCancel)
-          <tr>
-            <th><span contenteditable># Cancelados</span></th>
-            <td><span contenteditable>{{$CCancel}}</span></td>
-          </tr>
-          @endif
+            <th><span contenteditable># Admin</span></th>
+            <td><span contenteditable>{{$admin}}</span></td>
+           </tr>
+          
         </table>
 
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Anteproyecto</b></th>
-            <th class="line"><b>Descripción</b></th>
-            <th class="line"><b>Pre-Director</b></th>
-            <th class="line"><b>Estudiantes</b></th>
-            <th class="line"><b>Fecha De Radicación</b></th>
+            <th class="line"><b>Codigo</b></th>
+            <th class="line"><b>Nombre</b></th>
+            <th class="line"><b>Apellido</b></th>
+            <th class="line"><b>Correo</b></th>
+            <th class="line"><b>Rol</b></th>
             <th class="line"><b>Estado</b></th>
-           
         </tr>
         </thead>
-        @foreach($anteproyectos as $anteproyecto)
+        @foreach($usuarios as $usuario)
             <tbody>
             <tr>
-                <td class="line">{{$anteproyecto->NPRY_Titulo}}</td>
-                <td class="line">{{$anteproyecto->NPRY_Descripcion}}</td>
-                <td class="line">{{$anteproyecto->Director}}</td>
-                <td class="line">{{$anteproyecto->Desarrolladores}}</td>
-                <td class="line">{{$anteproyecto->NPRY_FCH_Radicacion}}</td>
-                <td class="line">{{$anteproyecto->Estado}}</td>
+                <td class="line">{{$usuario->PK_User_Codigo}}</td>
+                <td class="line">{{$usuario->User_Nombre1}}</td>
+                <td class="line">{{$usuario->User_Apellido1}}</td>
+                <td class="line">{{$usuario->User_Correo}}</td>
+                <td class="line">{{$usuario->Rol}}</td>
+                <td class="line">{{$usuario->Estado}}</td>
               
             </tr>
             @endforeach

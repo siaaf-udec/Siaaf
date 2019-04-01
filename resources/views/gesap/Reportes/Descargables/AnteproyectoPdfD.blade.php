@@ -4,12 +4,19 @@
   <meta charset="utf-8">
   <title>UDEC - GESAP(REPORTES)</title>
 	<style type="text/css">
+
+	/*Embeaded font :-)*/
   @font-face {
     font-family: 'Anton';
     font-style: normal;
     font-weight: 400;
+  
   }
+
+
 	body{font-family:Arial, Helvetica, sans-serif; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
+
+	/*Common*/
 	.clear{clear:both;}
 	.blue{color:#045A16;}
 
@@ -51,24 +58,22 @@
 
 
 	</style>
-  
 </head>
 <body>
 	<div id="head">
 		<!-- Embeaded image :-) --> 
-    <img src="{{ asset('css/LogoUDEC.png') }}">
-          <h1 class="features">REPORTE GENEREADO POR</h1>
+        <img src="{{ base_path('public/css/LogoUDEC.png')}}">
+        <h1 class="features">REPORTE GENEREADO POR</h1>
  
-        <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
+        <p class="line">Plataforma Web Para La Gestión De Proyectos y Anteproyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
         <p class="line">Universidad de Cundinamarca - Ext. Facatativá</p>
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-      @if($n == 1)
-        <a href="{{ route('AnteproyectosGesap.ReporteProyecto') }}/{{$proyecto->FK_NPRY_IdMctr008}}/ 2">Descargar</a>
-      @endif
- 			
+        @if($n==1)
+        <a href="{{ route('AnteproyectosGesap.ReporteAnteproyecto') }}/{{$anteproyecto->PK_NPRY_IdMctr008}}/ 2">Descargar</a>
+        @endif
 	</div>
 
     <div id="features">
@@ -78,39 +83,39 @@
     <table class="meta">
           <tr>
             <th><span contenteditable>Fecha De Radicacón</span></th>
-            <td><span contenteditable>{{$proyecto->PYT_Fecha_Radicacion}}</span></td>
+            <td><span contenteditable>{{$anteproyecto->NPRY_FCH_Radicacion}}</span></td>
           </tr>
           <tr>
-            <th><span contenteditable>Estado Del Proyecto</span></th>
-            <td><span contenteditable>{{$proyecto->Estado}}</span></td>
+            <th><span contenteditable>Estado Del Anteproyecto</span></th>
+            <td><span contenteditable>{{$anteproyecto->Estado}}</span></td>
           </tr>
           <tr>
             <th><span contenteditable>Duración</span></th>
-            <td><span contenteditable>{{$proyecto->Duracion}}</span></td>
+            <td><span contenteditable>{{$anteproyecto->Duracion}}</span></td>
           </tr>
           <tr>
             <th><span contenteditable>Semillero</span></th>
-            <td><span contenteditable>{{$proyecto->Semillero}}</span></td>
+            <td><span contenteditable>{{$anteproyecto->NPRY_Semillero}}</span></td>
           </tr>
         </table>
 
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Proyecto</b></th>
+            <th class="line"><b>Anteproyecto</b></th>
             <th class="line"><b>Descripción</b></th>
             <th class="line"><b>Palabras Clave</b></th>
-            <th class="line"><b>Director</b></th>
+            <th class="line"><b>Pre-Director</b></th>
            
         </tr>
         </thead>
       
             <tbody>
             <tr>
-                <td class="line">{{$proyecto->Titulo}}</td>
-                <td class="line">{{$proyecto->Descripcion}}</td>
-                <td class="line">{{$proyecto->Palabras}}</td>
-                <td class="line">{{$proyecto->Director}}</td>
+                <td class="line">{{$anteproyecto->NPRY_Titulo}}</td>
+                <td class="line">{{$anteproyecto->NPRY_Descripcion}}</td>
+                <td class="line">{{$anteproyecto->NPRY_Keywords}}</td>
+                <td class="line">{{$anteproyecto->Director}}</td>
               
             </tr>
             </tbody>
@@ -161,7 +166,7 @@
             </tbody>
 
     </table>
-    <h1 class="features">Interacción De los estudiantes para con el Proyecto</h1>
+    <h1 class="features">Interacción De los estudiantes para con el Anteproyecto</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
