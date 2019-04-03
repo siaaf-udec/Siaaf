@@ -67,7 +67,7 @@
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados'])
                         @slot('columns', [
                             'Jurado',
-                            'Estado Proyecto',
+                            'Desición Jurado',
                             'Observaciónes'                           
                         ])
                     @endcomponent

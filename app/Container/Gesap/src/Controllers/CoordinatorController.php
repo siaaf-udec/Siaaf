@@ -303,16 +303,15 @@ class CoordinatorController extends Controller
 		   
            $anteproyectos=Anteproyecto::all();
            
-           $desarrolladorP = "";
+           
            foreach($anteproyectos as $anteproyecto){
-
+            $desarrolladorP = "";
             $estado = $anteproyecto -> relacionEstado -> EST_Estado;
             $anteproyecto->offsetSet('Estado',  $estado );
 
             $Predirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
             $anteproyecto->offsetSet('Nombre',  $Predirector );
             $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->get();
-            $desarrolladoresv = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->first();
             $i=0;
             if($desarrolladores->IsEmpty()){
                 $anteproyecto->offsetSet('Desarrolladores',  'Sin Asignar' );
@@ -1000,6 +999,7 @@ class CoordinatorController extends Controller
         }
         
     }
+    //funcion que crea os jurados de un anteproyecto o proyecto//
     public function juradostore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1023,6 +1023,8 @@ class CoordinatorController extends Controller
                 'FK_NPRY_Estado_Proyecto' => 3,
                 'JR_Comentario' => "Sin Comentarios.",
                 'JR_Comentario_Proyecto' => "Sin Comentarios.",
+                'JR_Comentario_2' => "inhabilitado",
+                'JR_Comentario_Proyecto_2' => "inhabilitado",
                
             ]);
             

@@ -69,7 +69,7 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('EstudianteGesap.VerActividadesListProyecto') }}'+'/'+'{{  $Anteproyecto[0]  }}';
+        url = '{{ route('EstudianteGesap.VerActividadesListProyecto') }}'+'/'+'{{  $Anteproyecto }}';
     
         idp='{{  $Anteproyecto[0]  }}';
     

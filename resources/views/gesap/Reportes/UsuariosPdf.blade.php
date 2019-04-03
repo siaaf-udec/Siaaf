@@ -14,7 +14,7 @@
   }
 
 
-	body{font-family:Arial, sans-serif; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
+	body{font-family:Arial; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
 
 	/*Common*/
 	.clear{clear:both;}
@@ -31,12 +31,12 @@
 	#head .line{font-size:1em; font-style: italic; color:#999;}
 
 	/*Features*/
-	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
+	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial; text-transform: uppercase;}
 	.feature{float:center; width:100%;}
 	.feature h2{font-size:1.1em; text-transform: uppercase;}
     .feature p{color:#555;}
 	.feature:nth-child(even){float:right;}
-    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
+    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Arial; text-transform: uppercase;}
      /* table */
 
      table { font-size: 75%; table-layout: fixed; width: 100%; }
@@ -63,7 +63,7 @@
 	<div id="head">
 		<!-- Embeaded image :-) --> 
     <img src="{{ asset('css/LogoUDEC.png') }}">
-            <h1 class="features">REPORTE GENEREADO POR</h1>
+            <h1 class="features">REPORTE GENERADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
@@ -95,7 +95,7 @@
             <td><span contenteditable>{{$profesores}}</span></td>
            </tr>
           <tr>
-            <th><span contenteditable># Admin</span></th>
+            <th><span contenteditable># Coor</span></th>
             <td><span contenteditable>{{$admin}}</span></td>
            </tr>
           
@@ -107,7 +107,6 @@
             <th class="line"><b>Codigo</b></th>
             <th class="line"><b>Nombre</b></th>
             <th class="line"><b>Apellido</b></th>
-            <th class="line"><b>Correo</b></th>
             <th class="line"><b>Rol</b></th>
             <th class="line"><b>Estado</b></th>
         </tr>
@@ -118,7 +117,6 @@
                 <td class="line">{{$usuario->PK_User_Codigo}}</td>
                 <td class="line">{{$usuario->User_Nombre1}}</td>
                 <td class="line">{{$usuario->User_Apellido1}}</td>
-                <td class="line">{{$usuario->User_Correo}}</td>
                 <td class="line">{{$usuario->Rol}}</td>
                 <td class="line">{{$usuario->Estado}}</td>
               

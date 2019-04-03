@@ -827,17 +827,26 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para guardar el comentaro del anteproyecto del jurado
     public function ComentarioStoreJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+            $id = $user->identity_no;
+            
+            $desjurado = Jurados::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_User_Codigo',$id)->first();
+            if($desjurado->JR_Comentario_2 == "inhabilitado"){
+                $entrega = 1;
+            }else{
+                $entrega = 2;
+            }
                      ObservacionesMctJurado::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
                      'OBS_Observacion' => $request['OBS_observacion'],
                      'OBS_Formato' => $request['OBS_Formato'],
+                     'OBS_Entrega' => $entrega,
                      
 
                     ]);
@@ -944,11 +953,17 @@ class DocenteController extends Controller
 		    $id = $user->identity_no;
 
             $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
-
-            $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
-            $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
+            if($Jurado->JR_Comentario_2 == 'inhabilitado'){
+                $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
             
-            $Jurado -> save();
+                $Jurado -> save();
+            
+            }else{
+                $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario_2 =  $request['JR_Comentario'];
+                $Jurado -> save();
+            }
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
             $DesiciónJuradoUno=$Jurado[0]->relacionEstado->EST_Estado ;
             $DesiciónJuradoDos=$Jurado[1]->relacionEstado->EST_Estado ;
@@ -995,13 +1010,17 @@ class DocenteController extends Controller
             }
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
                 //aplazado
-                
                 $anteproyecto -> FK_NPRY_Estado = 6;
                 $anteproyecto -> save();
                 $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get(); 
                 foreach($actividades as $actividad){
                     $actividad->FK_CHK_Checklist = 1;
                     $actividad->save();
+                }
+                $Juradod = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($Juradod as $Jura){
+                    $Jura ->  JR_Comentario_2 = 'habilitado';
+                    $Jura -> save();
                 }
                 
                 return AjaxResponse::success(
@@ -1181,7 +1200,7 @@ class DocenteController extends Controller
             );              
         
     }
-    
+    //tomar la decision final del abteproyecto con la id del anteproyecto de grado///
     public function CalificarJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1198,7 +1217,6 @@ class DocenteController extends Controller
             $cadena = " ";
             
             $i=0;
-            $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->get();
             $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->first();
             $Jurado = Jurados::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->first();
             if($Comentarios_Juradof == null){
@@ -1206,24 +1224,47 @@ class DocenteController extends Controller
                 $Anteproyecto -> offsetSet('Comentarios_Jurado', "Sin Comentarios En las Actividades");
                 
             }else{
-                if( $Jurado -> JR_Comentario == "Sin Comentarios."){
-                    foreach($Comentarios_Jurado as $Comentario_Jurado){
+                if($Jurado->JR_Comentario_2 != 'inhabilitado' ){
+                    if( $Jurado -> JR_Comentario_2 == "habilitado"){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->where('OBS_Entrega',2)->get();                
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
                         
-                        $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
-                        if($i==0){
-                            $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
-                            $i = $i +1 ; 
-                        }else{
-                            $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
-                        }      
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
                     }
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
-                    
+                    $Anteproyecto -> offsetSet('N_Radicado', 2);
                 }else{
-                    
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
-                }
+                    if( $Jurado -> JR_Comentario == "Sin Comentarios."){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->where('OBS_Entrega',1)->get();                
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                        
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
+                    }
+                    $Anteproyecto -> offsetSet('N_Radicado', 1);
+                } 
                 
+               
                 
             }
 
@@ -1237,12 +1278,7 @@ class DocenteController extends Controller
                
                 'datos' => $Anteproyecto,
             ]);
-     
-           
-    
-
-                  
-                return AjaxResponse::success(
+            return AjaxResponse::success(
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
@@ -1832,7 +1868,8 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                           ->make(true);
                    }
                }
-               
+
+    ///funcion que redirecciona a las actividades para calificar como jurado//
     public function navegacionActividades(Request $request, $id, $idp,$idn)
             {
                    if ($request->ajax() && $request->isMethod('GET')) {
