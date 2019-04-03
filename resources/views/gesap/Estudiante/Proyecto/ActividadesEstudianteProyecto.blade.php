@@ -71,7 +71,7 @@
         table = $('#listaActividades');
         url = '{{ route('EstudianteGesap.VerActividadesListProyecto') }}'+'/'+'{{  $Anteproyecto }}';
     
-        idp='{{  $Anteproyecto[0]  }}';
+        idp='{{  $Anteproyecto  }}';
     
         columns = [
             {data: 'Numero', name: 'Numero'},
@@ -104,7 +104,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('EstudianteGesap.SubirActividadProyecto') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('EstudianteGesap.SubirActividadProyecto') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ '{{  $Anteproyecto }}';
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 

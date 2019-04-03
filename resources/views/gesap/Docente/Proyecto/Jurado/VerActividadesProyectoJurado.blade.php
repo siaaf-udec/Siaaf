@@ -66,7 +66,7 @@
 
     $(document).ready(function () {
         
-        idp='{{  $Anteproyecto[0]  }}';
+        idp='{{  $Anteproyecto  }}';
         var table, url, columns;
         table = $('#listaActividades');
         url = '{{ route('DocenteGesap.VerActividadesListProyectoDirector') }}'+'/'+idp;

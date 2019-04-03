@@ -746,6 +746,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@ComentarioStoreJurado',  
 			'as' => 'DocenteGesap.ComentarioStoreJurado'
 		]);
+		Route::post('ComentarioStoreJuradoProyecto', [
+			'uses' => $controller . 'DocenteController@ComentarioStoreJuradoProyecto',  
+			'as' => 'DocenteGesap.ComentarioStoreJuradoProyecto'
+		]);
 		Route::get('ActividadesList/{id?}', [
 			'uses' => $controller . 'DocenteController@VerActividadesList',  
 			'as' => 'DocenteGesap.VerActividadesList'

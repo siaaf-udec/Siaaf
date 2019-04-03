@@ -435,7 +435,7 @@
       e.preventDefault();
       $tr = $(this).closest('tr');
       var dataTable = tablep.row($tr).data();
-      var route = '{{ route('EstudianteGesap.RADICARPROYECTO') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+      var route = '{{ route('EstudianteGesap.RADICARPROYECTO') }}'+'/'+dataTable.Codigo;
       var type = 'GET';
       var async = async || false;
       swal({
@@ -571,7 +571,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = tablep.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);
@@ -580,7 +580,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = tablep.row($tr).data();
-            var route = '{{ route('EstudianteGesap.VerComentariosJuradoProyecto') }}' + '/' + dataTable.PK_NPRY_IdMctr008;
+            var route = '{{ route('EstudianteGesap.VerComentariosJuradoProyecto') }}' + '/' + dataTable.Codigo;
             $(".content-ajax").load(route);
 
      //       $(".content-ajax").load(route_ver);

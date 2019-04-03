@@ -75,7 +75,7 @@
         table = $('#listaActividades');
         url = '{{ route('DocenteGesap.VerRequerimientosList') }}';
     
-        idp='{{  $Anteproyecto[0]  }}';
+        idp='{{  $Anteproyecto  }}';
     
         columns = [
             {data: 'Numero', name: 'Numero'},

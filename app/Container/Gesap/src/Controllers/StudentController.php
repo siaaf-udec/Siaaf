@@ -1995,31 +1995,41 @@ class StudentController extends Controller
         }
     }
     //funcion apra cargar los proyectos al estduiante
-    public function ListaProyecto(Request $request,$id)
+    public function ListaProyecto(Request $request,$idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             $user = Auth::user();
             $id = $user->identity_no;
 
             $Anteproyecto = Desarrolladores::where('FK_User_Codigo',$id)->get(); 
-            
-           
+            $i = 0 ;
+            $concatenado=[];
+       
                 foreach($Anteproyecto as $Ante){
 
-                        $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$Ante->FK_NPRY_IdMctr008)->first();
-                        if($Proyecto->FK_EST_Id != 1 && $Proyecto->FK_EST_Id != 7){
-                            $Ante->OffsetSet('Titulo',$Proyecto -> relacionAnteproyecto -> NPRY_Titulo  );
-                            $Ante->OffsetSet('Palabras',$Proyecto -> relacionAnteproyecto ->  NPRY_Keywords );                
-                            $Ante->OffsetSet('Des',$Proyecto ->  relacionAnteproyecto ->  NPRY_Descripcion);
-                            $Ante->OffsetSet('Duracion',$Proyecto -> relacionAnteproyecto ->  NPRY_Duracion  );                
-                            $Ante->OffsetSet('Estado',$Proyecto -> relacionEstado -> EST_Estado  );
-                            $Ante->OffsetSet('Fecha',$Proyecto -> PYT_Fecha_Radicacion  );                        
-                        }
+                    if($Ante->relacionAnteproyecto->relacionEstado->EST_Estado == "APROBADO"){
+
+                        $Proyecto = Proyecto::where('FK_NPRY_IdMctr008',$Ante->FK_NPRY_IdMctr008 )->first(); 
+                        $collection = collect([]);
+                        $collection->put('Titulo',$Proyecto -> relacionAnteproyecto -> NPRY_Titulo  );
+                        $collection->put('Palabras',$Proyecto -> relacionAnteproyecto ->  NPRY_Keywords );                
+                        $collection->put('Des',$Proyecto ->  relacionAnteproyecto ->  NPRY_Descripcion);
+                        $collection->put('Duracion',$Proyecto -> relacionAnteproyecto ->  NPRY_Duracion  );                
+                        $collection->put('Estado',$Proyecto -> relacionEstado -> EST_Estado  );
+                        $collection->put('Fecha',$Proyecto -> PYT_Fecha_Radicacion  );                              
+                        $collection->put('Codigo',$Proyecto -> FK_NPRY_IdMctr008  );  
+                        $concatenado[$i]= $collection;
+
+                        $i=$i+1;
+                   
+                    }
+                    
                 }
-                
+
+          
             
             
-            return DataTables::of($Anteproyecto)
+            return DataTables::of($concatenado)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
              
